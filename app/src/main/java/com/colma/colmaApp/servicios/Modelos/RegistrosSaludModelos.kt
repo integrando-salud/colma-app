@@ -5,8 +5,9 @@ class RegistrosSaludModelos {
         val id: Long,
         val idUsuario: Int?,
         val valorMgdl: Double?,
-        val fechaRegistro: String?,
-        val horaRegistro: String?
+        val ayuno: Int?,
+        val fecha_registro: String?,
+        val fecha_sincronizacion: String?
     )
 
     data class PresionRecord(
@@ -14,7 +15,7 @@ class RegistrosSaludModelos {
         val idUsuario: Int?,
         val sistolica: Double?,
         val diastolica: Double?,
-        val fechaRegistro: String?,
-        val horaRegistro: String?
+        val fecha_registro: String?,
+        val fecha_sincronizacion: String?
     )
 }

@@ -8,6 +8,7 @@ import androidx.activity.viewModels
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -16,6 +17,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -43,8 +45,12 @@ import androidx.core.view.WindowCompat
 import androidx.compose.material3.OutlinedTextField as OutlinedTextField1
 
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -59,7 +65,7 @@ import com.colma.colmaApp.ui.theme.ColmaAppTheme
 import android.graphics.Color as AndroidColor
 
 
-class LoginUI : ComponentActivity(){
+class LoginUI : ComponentActivity() {
 
     private val viewModel: LoginViewModel by viewModels()
 
@@ -67,21 +73,24 @@ class LoginUI : ComponentActivity(){
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
-        // --- SET STATUS BAR + NAVIGATION BAR COLORS TO WHITE ---
-        // Use android.graphics.Color (aliased as AndroidColor above)
-        window.statusBarColor = AndroidColor.WHITE
-        window.navigationBarColor = AndroidColor.WHITE
+        // Make the status & navigation bars transparent so our gradient shows behind them
+        window.statusBarColor = AndroidColor.TRANSPARENT
+        window.navigationBarColor = AndroidColor.TRANSPARENT
 
-        // Make status & nav bar icons dark so they are visible over white background
-        // WindowInsetsControllerCompat works across Android versions
+        // Choose icon colors depending on the brightness of the background.
+        // If your gradient is light, use 'true' to get dark icons; if dark, set false.
         WindowInsetsControllerCompat(window, window.decorView).apply {
-            isAppearanceLightStatusBars = true       // dark status bar icons
+            isAppearanceLightStatusBars =
+                true       // dark status bar icons (set false if gradient is dark)
             isAppearanceLightNavigationBars = true   // dark nav bar icons
         }
+
         setContent {
             ColmaAppTheme {
+                // observe the navigation event from the ViewModel and navigate to MenuMain
                 LaunchedEffect(viewModel.navigateToMain) {
                     viewModel.navigateToMain.collect {
+                        // navigate to MenuMain when the ViewModel emits
                         startActivity(Intent(this@LoginUI, MenuMain::class.java))
                         finish()
                     }
@@ -97,126 +106,152 @@ class LoginUI : ComponentActivity(){
         var email by remember { mutableStateOf("") }
         var password by remember { mutableStateOf("") }
 
-        val dbHelper = DBhelper(applicationContext)
-        val db = dbHelper.readableDatabase
-
-        Column(
+        // Root box paints the full-bleed gradient (no systemBarsPadding here)
+        Box(
             modifier = Modifier
                 .fillMaxSize()
-                .systemBarsPadding()
-                .background(Color.White)
-                .padding(horizontal = 24.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+                .background(
+                    colorResource(R.color.background)
+                )
         ) {
-
-            Image(
-                painter = painterResource(R.drawable.colma_logo),
-                contentDescription = "Logo",
-                contentScale = ContentScale.Fit,
+            // Inner column holds the real content and *respects* the status & nav bars
+            Column(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp)
-                    .fillMaxHeight(0.40f)
-            )
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp),
-                shape = RoundedCornerShape(16.dp),
-                elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
-                colors = CardDefaults.cardColors(containerColor = Color.White)
+                    .fillMaxSize()
+                    .statusBarsPadding()        // keeps content below the status bar
+                    // keeps content above nav bar and avoids IME
+                    .padding(horizontal = 24.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Column(
+
+                Image(
+                    painter = painterResource(R.drawable.colma_logo),
+                    contentDescription = "Logo",
+                    contentScale = ContentScale.Fit,
                     modifier = Modifier
-                        .padding(16.dp)
-                        .fillMaxWidth(),
-                    horizontalAlignment = Alignment.CenterHorizontally
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp)
+                        .fillMaxHeight(0.40f)
+                )
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp),
+                    shape = RoundedCornerShape(16.dp),
+                    elevation = CardDefaults.cardElevation(defaultElevation = 18.dp),
+                    colors = CardDefaults.cardColors(containerColor = Color.White)
                 ) {
-
-                    Text(
-                        "Ingresar",
-                        color = Color.Black,
-                        fontSize = 18.sp,
-                        fontWeight = FontWeight.Bold,
-                    )
-
-                    Text(
-                        text = "Solicite usuario y contraseña a su promotor de salud asignado",
-                        fontSize = 16.sp,
-                        color = Color.hsl(0f, 0f, 0.70f),
-                        textAlign = TextAlign.Center,
+                    Column(
                         modifier = Modifier
-                            .padding(top = 5.dp)
-                    )
-
-                    Spacer(modifier = Modifier.height(16.dp))
-
-                    OutlinedTextField1(
-                        value = email,
-                        onValueChange = { email = it },
-                        label = { Text("Correo electrónico") },
-                        singleLine = true,
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-                        colors = OutlinedTextFieldDefaults.colors(
-                            Color(0xFF333333),
-                            cursorColor = Color(0xFFE84589),
-                            focusedBorderColor = Color(0xFFE84589),
-                            unfocusedBorderColor = Color(0xFFCCCCCC),
-                            focusedLabelColor = Color(0xFFE84589),
-                            unfocusedLabelColor = Color(0xFF666666)
-                        ),
-                        modifier = Modifier
-                            .fillMaxWidth()
-                    )
-
-                    Spacer(Modifier.height(16.dp))
-
-                    OutlinedTextField1(
-                        value = password,
-                        onValueChange = { password = it },
-                        label = { Text("Contraseña") },
-                        singleLine = true,
-                        visualTransformation = PasswordVisualTransformation(),
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-                        colors = OutlinedTextFieldDefaults.colors(
-                            Color(0xFF333333),
-                            cursorColor = Color(0xFFE84589),
-                            focusedBorderColor = Color(0xFFE84589),
-                            unfocusedBorderColor = Color(0xFFCCCCCC),
-                            focusedLabelColor = Color(0xFFE84589),
-                            unfocusedLabelColor = Color(0xFF666666)
-                        ),
-                        modifier = Modifier.fillMaxWidth()
-                    )
-
-                    Spacer(Modifier.height(40.dp))
-
-                    Button(
-                        onClick = { viewModel.onLoginClick() },
-                        colors = ButtonDefaults.buttonColors(
-                            Color(0xFFE84589),
-                            Color.White
-                        ),
-                        modifier = Modifier
-                            .fillMaxWidth()
+                            .padding(16.dp)
+                            .fillMaxWidth(),
+                        horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        Text(text = "Ingresar")
+
+                        Text(
+                            "Ingresar",
+                            color = Color.Black,
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.Bold,
+                        )
+
+                        Text(
+                            text = "Solicite usuario y contraseña a su promotor de salud asignado",
+                            fontSize = 16.sp,
+                            color = Color.hsl(0f, 0f, 0.70f),
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier
+                                .padding(top = 5.dp)
+                        )
+
+                        Spacer(modifier = Modifier.height(16.dp))
+
+                        OutlinedTextField1(
+                            value = email,
+                            onValueChange = { email = it },
+                            label = { Text("Correo electrónico") },
+                            singleLine = true,
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+                            colors = OutlinedTextFieldDefaults.colors(
+                                Color(0xFF333333),
+                                cursorColor = colorResource(R.color.principal),
+                                focusedBorderColor = colorResource(R.color.principal),
+                                unfocusedBorderColor = Color(0xFFCCCCCC),
+                                focusedLabelColor = colorResource(R.color.principal),
+                                unfocusedLabelColor = Color(0xFF666666)
+                            ),
+                            textStyle = TextStyle(color = colorResource(R.color.black)),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                        )
+
+                        Spacer(Modifier.height(16.dp))
+
+                        OutlinedTextField1(
+                            value = password,
+                            onValueChange = { password = it },
+                            label = { Text("Contraseña") },
+                            singleLine = true,
+                            visualTransformation = PasswordVisualTransformation(),
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                            colors = OutlinedTextFieldDefaults.colors(
+                                Color(0xFF333333),
+                                cursorColor = colorResource(R.color.principal),
+                                focusedBorderColor = colorResource(R.color.principal),
+                                unfocusedBorderColor = Color(0xFFCCCCCC),
+                                focusedLabelColor = colorResource(R.color.principal),
+                                unfocusedLabelColor = Color(0xFF666666)
+                            ),
+                            modifier = Modifier.fillMaxWidth(),
+                            textStyle = TextStyle(color = colorResource(R.color.black))
+                        )
+
+                        Spacer(Modifier.height(40.dp))
+
+                        Button(
+                            onClick = { viewModel.onLoginClick() },
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = Color.Transparent, // so gradient shows
+                                contentColor = Color.White
+                            ),
+                            shape = RoundedCornerShape(8.dp),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .shadow( // ensures gradient keeps a soft shadow
+                                    elevation = 6.dp,
+                                    shape = RoundedCornerShape(8.dp),
+                                    clip = false
+                                )
+                                .background(
+                                    colorResource(R.color.light_principal)
+                                )
+                        ) {
+                            Text(text = "Ingresar")
+                        }
+
                     }
 
-                    Spacer(Modifier.height(32.dp))
-
-                    Text(
-                        text = "¿Desea recuperar su contraseña?",
-                        color = Color(0xC4E84589)
-                    )
 
                 }
 
+                Spacer(modifier = Modifier.height(35.dp))
+
+                Text(
+                    text = "Recordar contraseña",
+                    textAlign = TextAlign.Center,
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = colorResource(R.color.principal),
+                    modifier = Modifier
+                        .padding(16.dp)
+                )
 
             }
+
+
         }
     }
 }
