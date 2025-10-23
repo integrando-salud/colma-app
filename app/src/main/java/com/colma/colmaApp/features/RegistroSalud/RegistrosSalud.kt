@@ -1,12 +1,15 @@
 package com.colma.colmaApp.features.RegistroSalud
 
+import android.app.TimePickerDialog
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.lazy.LazyColumn
@@ -15,9 +18,11 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -36,6 +41,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.colma.colmaApp.R
+import com.colma.colmaApp.features.EstadoAnimoMenu.EstadoAnimoMenuActivity
+import com.colma.colmaApp.features.estadoAnimo.EstadoAnimoActivity
 import com.colma.colmaApp.servicios.database.dbhelper.DBhelper
 import com.colma.colmaApp.ui.theme.ColmaAppTheme
 import kotlinx.coroutines.Dispatchers
@@ -114,13 +121,45 @@ fun RegistrosSaludScreen(
     var lastGlucosaFasting by rememberSaveable { mutableStateOf(false) }
     var lastPresionFasting by rememberSaveable { mutableStateOf(false) }
 
+    // for Presion dialog
+    var presionDateTime by rememberSaveable { mutableStateOf(System.currentTimeMillis()) } // millis
+    val presionCalendar = remember { java.util.Calendar.getInstance().apply { timeInMillis = presionDateTime } }
+
+// for Glucosa dialog
+    var glucosaDateTime by rememberSaveable { mutableStateOf(System.currentTimeMillis()) } // millis
+    val glucosaCalendar = remember { java.util.Calendar.getInstance().apply { timeInMillis = glucosaDateTime } }
+
+    var pendingPresionFechaRegistro by rememberSaveable { mutableStateOf<String?>(null) }
+    var pendingGlucosaFechaRegistro by rememberSaveable { mutableStateOf<String?>(null) }
+
     // in-memory history (newest first)
     val history = remember { mutableStateListOf<HealthEntry>() }
 
     val timeFormatter = remember {
         SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
     }
+
+    val dateFormatter = remember { java.text.SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()) }
+    val timeFormatterOnly = remember { java.text.SimpleDateFormat("HH:mm", Locale.getDefault()) }
+    // add near timeFormatter
+    val isoFormatter = remember { java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()) }
+
     fun formattedNow(): String = timeFormatter.format(Date())
+
+    var glucosaSyncChecked by rememberSaveable { mutableStateOf(false) }
+    var presionSyncChecked by rememberSaveable { mutableStateOf(false) }
+
+    var glucosaSyncDateTime by rememberSaveable { mutableStateOf(System.currentTimeMillis()) }
+    val glucosaSyncCalendar = remember { java.util.Calendar.getInstance().apply { timeInMillis = glucosaSyncDateTime } }
+
+    var presionSyncDateTime by rememberSaveable { mutableStateOf(System.currentTimeMillis()) }
+    val presionSyncCalendar = remember { java.util.Calendar.getInstance().apply { timeInMillis = presionSyncDateTime } }
+
+    // add near pendingPresionFechaRegistro / pendingGlucosaFechaRegistro
+    var pendingGlucosaFechaSincronizacion by rememberSaveable { mutableStateOf<String?>(null) }
+    var pendingPresionFechaSincronizacion by rememberSaveable { mutableStateOf<String?>(null) }
+
+
 
     // When the screen changes to a detail screen, attempt to load latest from DB for that metric
     LaunchedEffect(screen) {
@@ -133,7 +172,7 @@ fun RegistrosSaludScreen(
                     // map DB rows -> HealthEntry (with timestamp and formatted display)
                     val entries = all.mapNotNull { g ->
                         // parse DB datetime to millis (fallback to now)
-                        val millis = parseDateTimeToMillis(g.fecha_registro) ?: System.currentTimeMillis()
+                        val millis = parseDateTimeToMillis(g.fecha_hora_edicion) ?: System.currentTimeMillis()
 
                         // format value nicely (no decimals when integer, otherwise one decimal)
                         val valueText = g.valorMgdl?.let { v ->
@@ -156,12 +195,12 @@ fun RegistrosSaludScreen(
                     history.addAll(0, sorted)
 
                     // update the "last" summary fields from the most recent DB record (if present)
-                    val newestRecord = all.maxByOrNull { parseDateTimeToMillis(it.fecha_registro) ?: 0L }
+                    val newestRecord = all.maxByOrNull { parseDateTimeToMillis(it.fecha_hora_edicion) ?: 0L }
                     newestRecord?.let { g ->
                         lastGlucosaValue = g.valorMgdl?.let {
                             if (it % 1.0 == 0.0) it.toInt().toString() else it.toString()
                         } ?: ""
-                        val millis = parseDateTimeToMillis(g.fecha_registro) ?: System.currentTimeMillis()
+                        val millis = parseDateTimeToMillis(g.fecha_hora_edicion) ?: System.currentTimeMillis()
                         lastGlucosaTime = formatTimestamp(millis)
                         lastGlucosaFasting = (g.ayuno ?: 0) == 1
                     }
@@ -180,7 +219,7 @@ fun RegistrosSaludScreen(
 
                     // map to HealthEntry
                     val entries = all.mapNotNull { p ->
-                        val millis = parseDateTimeToMillis(p.fecha_registro) ?: System.currentTimeMillis()
+                        val millis = parseDateTimeToMillis(p.fecha_hora_edicion) ?: System.currentTimeMillis()
                         val syst = fmt(p.sistolica)
                         val dia = fmt(p.diastolica)
                         val valueText = if (syst.isNotBlank() && dia.isNotBlank()) "$syst/$dia mmHg" else ""
@@ -192,7 +231,7 @@ fun RegistrosSaludScreen(
                     history.addAll(0, entries)
 
                     // update the "last" summary fields from most recent DB record (if present)
-                    val newestRecord = all.maxByOrNull { parseDateTimeToMillis(it.fecha_registro) ?: 0L }
+                    val newestRecord = all.maxByOrNull { parseDateTimeToMillis(it.fecha_hora_edicion) ?: 0L }
                     newestRecord?.let { p ->
                         fun fmtSingle(v: Double?) = when {
                             v == null -> ""
@@ -202,7 +241,7 @@ fun RegistrosSaludScreen(
                         val syst = fmtSingle(p.sistolica)
                         val dia = fmtSingle(p.diastolica)
                         lastPresionValue = if (syst.isNotBlank() && dia.isNotBlank()) "$syst/$dia" else ""
-                        val millis = parseDateTimeToMillis(p.fecha_registro) ?: System.currentTimeMillis()
+                        val millis = parseDateTimeToMillis(p.fecha_hora_edicion) ?: System.currentTimeMillis()
                         lastPresionTime = formatTimestamp(millis)
                     }
                 }
@@ -220,13 +259,28 @@ fun RegistrosSaludScreen(
             "Glucosa" -> {
                 glucosaValue = ""
                 glucosaError = null
-                glucosaFasting = null        // require user selection each time
+                glucosaFasting = null
+                glucosaDateTime = System.currentTimeMillis()
+                glucosaCalendar.timeInMillis = glucosaDateTime
+
+                // sync defaults
+                glucosaSyncChecked = false
+                glucosaSyncDateTime = System.currentTimeMillis()
+                glucosaSyncCalendar.timeInMillis = glucosaSyncDateTime
             }
+
             "Presion" -> {
                 presionSys = ""
                 presionDia = ""
                 presionError = null
                 presionFasting = null
+                presionDateTime = System.currentTimeMillis()
+                presionCalendar.timeInMillis = presionDateTime
+
+                // sync defaults
+                presionSyncChecked = false
+                presionSyncDateTime = System.currentTimeMillis()
+                presionSyncCalendar.timeInMillis = presionSyncDateTime
             }
             "Depresion" -> {
                 depresionValue = ""
@@ -235,26 +289,21 @@ fun RegistrosSaludScreen(
         }
         dialogOpen = true
     }
-
     fun closeDialog() {
         dialogOpen = false
         dialogLabel = ""
     }
 
     fun handleSave() {
+        // do not call any @Composable here!
         when (dialogLabel) {
             "Glucosa" -> {
-                if (glucosaValue.isBlank()) {
-                    glucosaError = "Por favor ingrese un valor"
-                    return
-                }
-                val number = glucosaValue.replace(',', '.').toDoubleOrNull()
+                // validate again defensively
+                val number = glucosaValue.trim().replace(',', '.').toDoubleOrNull()
                 if (number == null) {
                     glucosaError = "Ingrese un número válido"
                     return
                 }
-
-                // require fasting choice
                 if (glucosaFasting == null) {
                     glucosaError = "Seleccione si está en ayuno o no"
                     return
@@ -262,59 +311,142 @@ fun RegistrosSaludScreen(
 
                 coroutineScope.launch {
                     try {
+                        // --> NEW: fecha_registro = system now (ISO)
+                        val fechaRegistroIso = isoFormatter.format(Date())
+
+                        // fecha_hora_edicion = user-picked datetime (prefer pending ISO override, otherwise use glucosaDateTime)
+                        val fechaEdicionIso = pendingGlucosaFechaRegistro ?: isoFormatter.format(Date(glucosaDateTime))
+
                         val rowId = withContext(Dispatchers.IO) {
                             dbHelper.insertGlucosa(
                                 valorMgdl = number,
                                 idUsuario = 1,
-                                ayuno = glucosaFasting  // pass Boolean? directly
+                                ayuno = glucosaFasting,
+                                fechaRegistro = fechaRegistroIso,
+                                fechaHoraEdicion = fechaEdicionIso
                             )
                         }
+
                         if (rowId > 0L) {
-                            lastGlucosaValue = glucosaValue
-                            lastGlucosaTime = formattedNow()
-                            val now = System.currentTimeMillis()
-                            val suffix = if (glucosaFasting == true) " · Ayuno" else " · Sin ayuno"
-                            history.add(0, HealthEntry("Glucosa", "${glucosaValue} mg/dl$suffix", now))
-                            Toast.makeText(context, "Guardado: Glucosa = $glucosaValue mg/dl", Toast.LENGTH_SHORT).show()
+                            // Use the user-picked (edit) datetime for display/history
+                            lastGlucosaValue = if (number % 1.0 == 0.0)
+                                number.toInt().toString()
+                            else
+                                String.format(Locale.getDefault(), "%.1f", number)
+
+                            // show the user-picked time
+                            lastGlucosaTime = formatTimestamp(parseDateTimeToMillis(fechaEdicionIso) ?: System.currentTimeMillis())
+                            lastGlucosaFasting = glucosaFasting == true
+
+                            val suffix = if (glucosaFasting == true) " · Ayuno" else " · Sin Ayuno"
+                            val millis = parseDateTimeToMillis(fechaEdicionIso) ?: System.currentTimeMillis()
+                            history.add(0, HealthEntry("Glucosa", "${lastGlucosaValue} mg/dl$suffix", millis))
+
+                            Toast.makeText(context, "Guardado: Glucosa = $lastGlucosaValue mg/dl", Toast.LENGTH_SHORT).show()
+
+                            // ONLY write fecha_sincronizacion if there's an explicit pending sync timestamp
+                            val syncIso = pendingGlucosaFechaSincronizacion
+                            if (!syncIso.isNullOrBlank()) {
+                                withContext(Dispatchers.IO) {
+                                    try {
+                                        dbHelper.updateGlucosaSyncTimestamps(mapOf(rowId to syncIso))
+                                        dbHelper.insertSincronizacion(syncIso, "OK", null)
+                                    } catch (e: Exception) {
+                                        e.printStackTrace()
+                                        dbHelper.insertSincronizacion(syncIso, "ERROR", e.message)
+                                    }
+                                }
+                            }
+
+                            // close dialogs
+                            confirmSaveDialogOpen = false
                             closeDialog()
                         } else {
-                            Toast.makeText(context, "Error guardando en la base de datos", Toast.LENGTH_SHORT).show()
+                            withContext(Dispatchers.Main) {
+                                Toast.makeText(context, "Error guardando en la base de datos", Toast.LENGTH_SHORT).show()
+                            }
                         }
                     } catch (e: Exception) {
                         e.printStackTrace()
-                        Toast.makeText(context, "Error: ${e.message}", Toast.LENGTH_LONG).show()
+                        withContext(Dispatchers.Main) {
+                            Toast.makeText(context, "Error: ${e.message}", Toast.LENGTH_LONG).show()
+                        }
                     }
                 }
             }
 
             "Presion" -> {
-                if (presionSys.isBlank() || presionDia.isBlank()) {
-                    presionError = "Ingrese ambos valores"
-                    return
-                }
-                val sys = presionSys.replace(',', '.').toDoubleOrNull()
-                val dia = presionDia.replace(',', '.').toDoubleOrNull()
+                // validate
+                val sys = presionSys.trim().replace(',', '.').toDoubleOrNull()
+                val dia = presionDia.trim().replace(',', '.').toDoubleOrNull()
                 if (sys == null || dia == null) {
                     presionError = "Ingrese números válidos"
+                    return
+                }
+                if (sys <= dia) {
+                    presionError = "El valor mayor debe ser mayor que el menor"
                     return
                 }
 
                 coroutineScope.launch {
                     try {
-                        val rowId = withContext(Dispatchers.IO) { dbHelper.insertPresion(sistolica = sys, diastolica = dia, idUsuario = 1) }
+                        // fecha_registro = system now (ISO)
+                        val fechaRegistroIso = isoFormatter.format(Date())
+
+                        // fecha_hora_edicion = user-picked datetime (prefer pending ISO override, otherwise use presionDateTime)
+                        val fechaEdicionIso = pendingPresionFechaRegistro ?: isoFormatter.format(Date(presionDateTime))
+
+                        val rowId = withContext(Dispatchers.IO) {
+                            dbHelper.insertPresion(
+                                sistolica = sys,
+                                diastolica = dia,
+                                idUsuario = 1,
+                                fechaRegistro = fechaRegistroIso,
+                                fechaHoraEdicionIso = fechaEdicionIso
+                            )
+                        }
+
                         if (rowId > 0L) {
-                            lastPresionValue = "${sys.toInt()}/${dia.toInt()}"
-                            lastPresionTime = formattedNow()
-                            val now = System.currentTimeMillis()
-                            history.add(0, HealthEntry("Presion", "${sys.toInt()}/${dia.toInt()} mmHg", now))
-                            Toast.makeText(context, "Guardado: Presión = ${sys.toInt()}/${dia.toInt()} mmHg", Toast.LENGTH_SHORT).show()
+                            // update UI state using the user-picked (edit) datetime
+                            lastPresionValue = if (sys % 1.0 == 0.0 && dia % 1.0 == 0.0) {
+                                "${sys.toInt()}/${dia.toInt()}"
+                            } else {
+                                "${String.format(Locale.getDefault(), "%.1f", sys)}/${String.format(Locale.getDefault(), "%.1f", dia)}"
+                            }
+
+                            // show the user-picked edit time
+                            val millis = parseDateTimeToMillis(fechaEdicionIso) ?: System.currentTimeMillis()
+                            lastPresionTime = formatTimestamp(millis)
+                            history.add(0, HealthEntry("Presion", "$lastPresionValue mmHg", millis))
+
+                            Toast.makeText(context, "Guardado: Presión = $lastPresionValue", Toast.LENGTH_SHORT).show()
+
+                            // ONLY write fecha_sincronizacion if there's an explicit pending sync timestamp
+                            val syncIso = pendingPresionFechaSincronizacion
+                            if (!syncIso.isNullOrBlank()) {
+                                withContext(Dispatchers.IO) {
+                                    try {
+                                        dbHelper.updatePresionSyncTimestamps(mapOf(rowId to syncIso))
+                                        dbHelper.insertSincronizacion(syncIso, "OK", null)
+                                    } catch (e: Exception) {
+                                        e.printStackTrace()
+                                        dbHelper.insertSincronizacion(syncIso, "ERROR", e.message)
+                                    }
+                                }
+                            }
+
+                            confirmSaveDialogOpen = false
                             closeDialog()
                         } else {
-                            Toast.makeText(context, "Error guardando Presión en la base de datos", Toast.LENGTH_SHORT).show()
+                            withContext(Dispatchers.Main) {
+                                Toast.makeText(context, "Error guardando en la base de datos", Toast.LENGTH_SHORT).show()
+                            }
                         }
                     } catch (e: Exception) {
                         e.printStackTrace()
-                        Toast.makeText(context, "Error: ${e.message}", Toast.LENGTH_LONG).show()
+                        withContext(Dispatchers.Main) {
+                            Toast.makeText(context, "Error: ${e.message}", Toast.LENGTH_LONG).show()
+                        }
                     }
                 }
             }
@@ -327,11 +459,11 @@ fun RegistrosSaludScreen(
                 val now = System.currentTimeMillis()
                 history.add(0, HealthEntry("Depresion", depresionValue, now))
                 Toast.makeText(context, "Guardado: Depresion", Toast.LENGTH_SHORT).show()
+                confirmSaveDialogOpen = false
                 closeDialog()
             }
         }
     }
-
     // UI
     Scaffold(
         topBar = {
@@ -459,7 +591,14 @@ fun RegistrosSaludScreen(
 
                         // Depresion button
                         Button(
-                            onClick = { screen = RSscreen.Depresion },
+                            onClick = {
+                                val intent = Intent(context, EstadoAnimoMenuActivity::class.java)
+
+                                // Optional: pass extras, e.g. patient id
+                                // intent.putExtra("idPaciente", thePatientId)
+
+                                context.startActivity(intent)
+                            },
                             modifier = Modifier
                                 .fillMaxWidth(0.85f)
                                 .height(56.dp),
@@ -484,7 +623,7 @@ fun RegistrosSaludScreen(
                                 Spacer(modifier = Modifier.width(12.dp))
 
                                 Text(
-                                    text = "Depresion",
+                                    text = "Estado de animo",
                                     fontSize = 18.sp,
                                     fontWeight = FontWeight.SemiBold,
                                     modifier = Modifier.weight(1f),
@@ -565,14 +704,7 @@ fun RegistrosSaludScreen(
                                         singleLine = true,
                                         keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
                                         modifier = Modifier.fillMaxWidth(),
-                                        trailingIcon = {
-                                            Text(
-                                                text = "mg/dl",
-                                                fontSize = 12.sp,
-                                                color = Color.Gray,
-                                                modifier = Modifier.padding(end = 8.dp)
-                                            )
-                                        },
+
                                         placeholder = { Text(text = "Ej: 120") },
                                         textStyle = TextStyle(color = Color.Black)
                                     )
@@ -596,6 +728,77 @@ fun RegistrosSaludScreen(
                                         )
                                         Spacer(modifier = Modifier.width(6.dp))
                                         Text(text = "No ayuno")
+                                    }
+
+                                    Spacer(modifier = Modifier.height(12.dp))
+                                    Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
+                                        // date display field (read-only, opens DatePicker) — shows only the date
+                                        OutlinedTextField(
+                                            value = dateFormatter.format(java.util.Date(glucosaDateTime)),
+                                            onValueChange = {},
+                                            readOnly = true,
+                                            modifier = Modifier
+                                                .weight(1f)
+                                                .clickable {
+                                                    val c = glucosaCalendar
+                                                    val dpd = android.app.DatePickerDialog(
+                                                        context,
+                                                        { _, y, m, d ->
+                                                            // set only date components, preserve time (hour/minute)
+                                                            c.set(java.util.Calendar.YEAR, y)
+                                                            c.set(java.util.Calendar.MONTH, m)
+                                                            c.set(java.util.Calendar.DAY_OF_MONTH, d)
+                                                            glucosaDateTime = c.timeInMillis
+                                                        },
+                                                        c.get(java.util.Calendar.YEAR),
+                                                        c.get(java.util.Calendar.MONTH),
+                                                        c.get(java.util.Calendar.DAY_OF_MONTH)
+                                                    )
+                                                    dpd.show()
+                                                }
+                                                .padding(end = 8.dp),
+                                            trailingIcon = {
+                                                IconButton(onClick = {
+                                                    val c = glucosaCalendar
+                                                    val dpd = android.app.DatePickerDialog(
+                                                        context,
+                                                        { _, y, m, d ->
+                                                            c.set(java.util.Calendar.YEAR, y)
+                                                            c.set(java.util.Calendar.MONTH, m)
+                                                            c.set(java.util.Calendar.DAY_OF_MONTH, d)
+                                                            glucosaDateTime = c.timeInMillis
+                                                        },
+                                                        c.get(java.util.Calendar.YEAR),
+                                                        c.get(java.util.Calendar.MONTH),
+                                                        c.get(java.util.Calendar.DAY_OF_MONTH)
+                                                    )
+                                                    dpd.show()
+                                                }) {
+                                                    Icon(imageVector = Icons.Default.DateRange, contentDescription = "Fecha")
+                                                }
+                                            }
+                                        )
+
+                                        Spacer(modifier = Modifier.width(8.dp))
+
+                                        // time button opens TimePicker and shows only time (HH:mm)
+                                        OutlinedButton(onClick = {
+                                            val c = glucosaCalendar
+                                            val tpd = android.app.TimePickerDialog(
+                                                context,
+                                                { _, hour, minute ->
+                                                    c.set(java.util.Calendar.HOUR_OF_DAY, hour)
+                                                    c.set(java.util.Calendar.MINUTE, minute)
+                                                    glucosaDateTime = c.timeInMillis
+                                                },
+                                                c.get(java.util.Calendar.HOUR_OF_DAY),
+                                                c.get(java.util.Calendar.MINUTE),
+                                                true
+                                            )
+                                            tpd.show()
+                                        }) {
+                                            Text(text = timeFormatterOnly.format(java.util.Date(glucosaDateTime)))
+                                        }
                                     }
 
                                     // validation / last saved
@@ -673,9 +876,6 @@ fun RegistrosSaludScreen(
                                             .fillMaxWidth()
                                             .height(60.dp),
                                         placeholder = { Text(text = "Ej: 100") },
-                                        trailingIcon = {
-                                            Text(text = "mmHg", fontSize = 12.sp, color = Color.Gray, modifier = Modifier.padding(end = 8.dp))
-                                        },
                                         textStyle = TextStyle(color = Color.Black)
                                     )
 
@@ -694,11 +894,76 @@ fun RegistrosSaludScreen(
                                             .fillMaxWidth()
                                             .height(60.dp),
                                         placeholder = { Text(text = "Ej: 80") },
-                                        trailingIcon = {
-                                            Text(text = "mmHg", fontSize = 12.sp, color = Color.Gray, modifier = Modifier.padding(end = 8.dp))
-                                        },
                                         textStyle = TextStyle(color = Color.Black)
                                     )
+
+                                    Spacer(modifier = Modifier.height(12.dp))
+                                    Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
+                                        OutlinedTextField(
+                                            value = dateFormatter.format(java.util.Date(presionDateTime)),
+                                            onValueChange = {},
+                                            readOnly = true,
+                                            modifier = Modifier
+                                                .weight(1f)
+                                                .clickable {
+                                                    val c = presionCalendar
+                                                    val dpd = android.app.DatePickerDialog(
+                                                        context,
+                                                        { _, y, m, d ->
+                                                            c.set(java.util.Calendar.YEAR, y)
+                                                            c.set(java.util.Calendar.MONTH, m)
+                                                            c.set(java.util.Calendar.DAY_OF_MONTH, d)
+                                                            presionDateTime = c.timeInMillis
+                                                        },
+                                                        c.get(java.util.Calendar.YEAR),
+                                                        c.get(java.util.Calendar.MONTH),
+                                                        c.get(java.util.Calendar.DAY_OF_MONTH)
+                                                    )
+                                                    dpd.show()
+                                                }
+                                                .padding(end = 8.dp),
+                                            trailingIcon = {
+                                                IconButton(onClick = {
+                                                    val c = presionCalendar
+                                                    val dpd = android.app.DatePickerDialog(
+                                                        context,
+                                                        { _, y, m, d ->
+                                                            c.set(java.util.Calendar.YEAR, y)
+                                                            c.set(java.util.Calendar.MONTH, m)
+                                                            c.set(java.util.Calendar.DAY_OF_MONTH, d)
+                                                            presionDateTime = c.timeInMillis
+                                                        },
+                                                        c.get(java.util.Calendar.YEAR),
+                                                        c.get(java.util.Calendar.MONTH),
+                                                        c.get(java.util.Calendar.DAY_OF_MONTH)
+                                                    )
+                                                    dpd.show()
+                                                }) {
+                                                    Icon(imageVector = Icons.Default.DateRange, contentDescription = "Fecha")
+                                                }
+                                            }
+                                        )
+
+                                        Spacer(modifier = Modifier.width(8.dp))
+
+                                        OutlinedButton(onClick = {
+                                            val c = presionCalendar
+                                            val tpd = android.app.TimePickerDialog(
+                                                context,
+                                                { _, hour, minute ->
+                                                    c.set(java.util.Calendar.HOUR_OF_DAY, hour)
+                                                    c.set(java.util.Calendar.MINUTE, minute)
+                                                    presionDateTime = c.timeInMillis
+                                                },
+                                                c.get(java.util.Calendar.HOUR_OF_DAY),
+                                                c.get(java.util.Calendar.MINUTE),
+                                                true
+                                            )
+                                            tpd.show()
+                                        }) {
+                                            Text(text = timeFormatterOnly.format(java.util.Date(presionDateTime)))
+                                        }
+                                    }
 
                                     if (presionError != null) {
                                         Spacer(modifier = Modifier.height(6.dp))
@@ -794,24 +1059,112 @@ fun RegistrosSaludScreen(
             }
 
             if (confirmSaveDialogOpen) {
-                // Build a helpful message depending on what the user is about to save
+                // Build basic confirm message depending on what the user is about to save
                 val confirmMessage = when (confirmLabel) {
                     "Glucosa" -> {
-                        val v = if (glucosaValue.isBlank()) "(sin valor)" else "${glucosaValue} mg/dl"
+                        val v = if (glucosaValue.isBlank()) "(sin valor)" else glucosaValue
                         val fast = when (glucosaFasting) {
                             true -> " · Ayuno"
                             false -> " · No ayuno"
-                            null -> "" // nothing selected
+                            null -> ""
                         }
                         "¿Está seguro que desea guardar Glucosa: $v$fast ?"
                     }
                     "Presion" -> {
                         val syst = presionSys.ifBlank { "(sin valor)" }
                         val dia = presionDia.ifBlank { "(sin valor)" }
-                        "¿Está seguro que desea guardar Presión: $syst / $dia mmHg?"
+                        "¿Está seguro que desea guardar Presión: $syst / $dia?"
                     }
                     else -> "¿Está seguro que desea guardar los datos?"
                 }
+
+                // Compute warning and impossible detection in one remember block
+                val (warningText, warningColor, impossibleReason) = remember(
+                    confirmLabel, glucosaValue, glucosaFasting, presionSys, presionDia
+                ) {
+                    var wTxt: String? = null
+                    var wColor: Color? = null
+                    var impossible: String? = null
+
+                    try {
+                        when (confirmLabel) {
+                            "Glucosa" -> {
+                                // normalize decimal comma to dot and parse
+                                val v = glucosaValue.trim().replace(',', '.').toDoubleOrNull()
+                                if (v != null) {
+                                    // --- IMPOSSIBLE thresholds (adjust if you want) ---
+                                    if (v < 10.0) {
+                                        impossible = "Valor imposible: Glucosa demasiado baja para ser plausible."
+                                    } else if (v > 1000.0) {
+                                        impossible = "Valor imposible: Glucosa extremadamente alta para ser plausible."
+                                    }
+
+                                    // --- WARNING thresholds (still allow save) ---
+                                    // low < 70 ; high: fasting >=126 else >=180
+                                    val low = v < 70.0
+                                    val high = if (glucosaFasting == true) v >= 126.0 else v >= 180.0
+                                    when {
+                                        low -> {
+                                            wTxt = "Advertencia: Glucosa baja (hipoglucemia). Por favor consulte con un médico."
+                                            wColor = Color(0xFFD32F2F) // red
+                                        }
+                                        high -> {
+                                            wTxt = "Advertencia: Glucosa alta (hiperglucemia). Por favor consulte con un médico."
+                                            wColor = Color(0xFFFFA000) // amber
+                                        }
+                                        else -> {
+                                            wTxt = null
+                                            wColor = null
+                                        }
+                                    }
+                                }
+                            }
+
+                            "Presion" -> {
+                                // parse integers (ignore blanks)
+                                val s = presionSys.trim().toIntOrNull()
+                                val d = presionDia.trim().toIntOrNull()
+
+                                // --- IMPOSSIBLE checks ---
+                                if (s != null && (s < 40 || s > 300)) {
+                                    impossible = "Valor imposible: presión sistólica fuera de rango plausible."
+                                } else if (d != null && (d < 20 || d > 200)) {
+                                    impossible = "Valor imposible: presión diastólica fuera de rango plausible."
+                                } else if (s != null && d != null && s < d) {
+                                    impossible = "Valor imposible: la presión sistólica no puede ser menor que la diastólica."
+                                }
+
+                                // --- WARNING checks (still allow save) ---
+                                val highS = s != null && s > 140
+                                val lowS = s != null && s < 90
+                                val highD = d != null && d > 90
+                                val lowD = d != null && d < 60
+
+                                val parts = mutableListOf<String>()
+                                if (lowS || lowD) parts.add("presión baja")
+                                if (highS || highD) parts.add("presión alta")
+                                if (parts.isNotEmpty()) {
+                                    wTxt = "Advertencia: " + parts.joinToString(" y ") + ". Por favor consulte con un médico."
+                                    wColor = if (lowS || lowD || highS) Color(0xFFD32F2F) else Color(0xFFFFA000)
+                                }
+                            }
+
+                            else -> {
+                                // no special validations
+                            }
+                        }
+                    } catch (e: Exception) {
+                        // swallow parsing errors and treat as no warning/no impossible
+                        wTxt = null
+                        wColor = null
+                        impossible = null
+                    }
+
+                    Triple(wTxt, wColor, impossible)
+                }
+
+                // derive boolean quickly
+                val isImpossible = impossibleReason != null
 
                 AlertDialog(
                     onDismissRequest = { confirmSaveDialogOpen = false },
@@ -820,22 +1173,78 @@ fun RegistrosSaludScreen(
                             text = "Confirmar",
                             fontWeight = FontWeight.Bold,
                             color = colorResource(R.color.black)
-                            )
-                            },
-                    text = {
-                        Text(
-                            text = confirmMessage,
-                            color = colorResource(R.color.black)
-
                         )
-                           },
+                    },
+                    text = {
+                        Column {
+                            Text(text = confirmMessage, color = colorResource(R.color.black))
+
+                            Spacer(modifier = Modifier.height(10.dp))
+
+                            // show impossible message first (if present) — blocks saving
+                            if (isImpossible) {
+                                Row(
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .background(color = Color(0xFFFFEBEE), shape = RoundedCornerShape(6.dp))
+                                        .padding(8.dp)
+                                ) {
+                                    Icon(
+                                        imageVector = Icons.Default.Warning,
+                                        contentDescription = "Error",
+                                        tint = Color(0xFFD32F2F),
+                                        modifier = Modifier.size(20.dp)
+                                    )
+                                    Spacer(modifier = Modifier.width(8.dp))
+                                    Text(
+                                        text = impossibleReason ?: "Valor imposible",
+                                        color = Color(0xFFD32F2F),
+                                        style = MaterialTheme.typography.bodySmall,
+                                        fontWeight = FontWeight.SemiBold
+                                    )
+                                }
+
+                                Spacer(modifier = Modifier.height(8.dp))
+                            }
+
+                            // show the regular warning row if needed (but this is not blocking)
+                            if (warningText != null && warningColor != null) {
+                                Row(
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .background(color = warningColor.copy(alpha = 0.08f), shape = RoundedCornerShape(6.dp))
+                                        .padding(8.dp)
+                                ) {
+                                    Icon(
+                                        imageVector = Icons.Default.Warning,
+                                        contentDescription = "Advertencia",
+                                        tint = warningColor,
+                                        modifier = Modifier.size(20.dp)
+                                    )
+                                    Spacer(modifier = Modifier.width(8.dp))
+                                    Text(
+                                        text = warningText,
+                                        color = warningColor,
+                                        style = MaterialTheme.typography.bodySmall,
+                                        fontWeight = FontWeight.SemiBold
+                                    )
+                                }
+                            }
+                        }
+                    },
                     confirmButton = {
-                        TextButton(onClick = {
-                            // user confirmed -> perform the save
-                            confirmSaveDialogOpen = false
-                            // handleSave will validate and insert and close the input dialog on success
-                            handleSave()
-                        }) {
+                        // disable the confirm button if impossible
+                        TextButton(
+                            onClick = {
+                                if (!isImpossible) {
+                                    confirmSaveDialogOpen = false
+                                    handleSave()
+                                }
+                            },
+                            enabled = !isImpossible
+                        ) {
                             Text("Sí")
                         }
                     },
@@ -848,6 +1257,7 @@ fun RegistrosSaludScreen(
                     shape = RoundedCornerShape(10.dp)
                 )
             }
+
         }
     }
 }
@@ -915,6 +1325,54 @@ fun HistoryRow(entry: HealthEntry, modifier: Modifier = Modifier) {
         else -> Triple(rememberVectorPainter(Icons.Default.Face), 0.12f, Color.Black)
     }
 
+    // Build display value:
+    // 1) detect and keep a fasting-like suffix (e.g. "· Ayuno", "· Sin Ayuno", "Ayuno", "fasting")
+    //    - capture optional separator (· • - |) preceding the token
+    // 2) clean the main part removing unit tokens (mg/dl, mmHg, etc.)
+    // 3) trim and reattach the suffix (preserving the separator)
+    val displayValue = remember(entry.value) {
+        val raw = (entry.value ?: "").trim()
+        if (raw.isEmpty()) return@remember raw
+
+        // regex to capture suffix (including optional preceding separator like "·")
+        val fastingRegex = Regex(
+            """(?i)(?:\s*[·•\-\|]\s*)?(ayuno|sin ayuno|sinayuno|ayunas?|fasting|no fasting)\b.*$"""
+        )
+        val fastingMatch = fastingRegex.find(raw)
+
+        val mainPart: String
+        val suffixPart: String
+        if (fastingMatch != null) {
+            // keep the suffix exactly as it appears (including separator)
+            suffixPart = raw.substring(fastingMatch.range.first).trim()
+            mainPart = raw.substring(0, fastingMatch.range.first).trim()
+        } else {
+            suffixPart = ""
+            mainPart = raw
+        }
+
+        // remove common explicit unit tokens from the main part
+        var main = mainPart.replace(Regex("""(?i)\b(mg\/dl|mmhg|mmol\/l|bpm|kg|cm|%|mmol\/L)\b"""), "").trim()
+
+        // remove any trailing punctuation/words that are not part of numeric values.
+        // keep digits, slash (for pressure), dot/comma, hyphen.
+        main = main.replace(Regex("""\s*[^\d\/\.,-]+$"""), "").trim()
+
+        // avoid dangling separators: if main becomes only a separator (like "/"), drop it
+        if (main.matches(Regex("""^[\/\-,\.]+$"""))) {
+            main = ""
+        }
+
+        // reattach suffix if present
+        val combined = when {
+            main.isNotBlank() && suffixPart.isNotBlank() -> "$main $suffixPart"
+            main.isBlank() && suffixPart.isNotBlank() -> suffixPart
+            else -> main
+        }
+
+        combined
+    }
+
     Card(
         modifier = modifier
             .fillMaxWidth()
@@ -948,7 +1406,12 @@ fun HistoryRow(entry: HealthEntry, modifier: Modifier = Modifier) {
                 Text(text = remember(entry.timestamp) { formatter.format(Date(entry.timestamp)) }, fontSize = 12.sp, color = Color.Gray)
             }
 
-            Text(text = entry.value, fontSize = 14.sp, fontWeight = androidx.compose.ui.text.font.FontWeight.SemiBold, color = valueColor)
+            Text(
+                text = displayValue,
+                fontSize = 14.sp,
+                fontWeight = androidx.compose.ui.text.font.FontWeight.SemiBold,
+                color = valueColor
+            )
         }
     }
 }

@@ -123,7 +123,8 @@ fun MenuScreen(
     val coroutineScope = rememberCoroutineScope()
     var lastResponse by remember { mutableStateOf<String?>(null) }
 
-    val webhookUrl = "https://webhook.site/5ccfb264-270b-4f56-b7a0-7d3452246c16"
+
+    val webhookUrl = "https://webhook.site/b14715a9-ec5c-4cfe-9e87-91648a2c024d"
 
     val dbHelper = remember { com.colma.colmaApp.servicios.database.dbhelper.DBhelper(context.applicationContext) }
 
@@ -372,39 +373,44 @@ fun MenuScreen(
                         onClick = {
                             coroutineScope.launch {
                                 try {
-                                    // 1) Read DB on IO thread
-                                    val (glucosaList, presionList) = withContext(Dispatchers.IO) {
-                                        val g = dbHelper.getPendingGlucosa(1)   // user id = 1
+                                    // 0) choose one sync timestamp for this operation (local device time)
+                                    val syncTs = nowLocal()
+
+                                    // 1) Read DB on IO thread: glucosa, presion, estado_animo
+                                    val (glucosaList, presionList, estadoAnimoList) = withContext(Dispatchers.IO) {
+                                        val g = dbHelper.getPendingGlucosa(1)   // user id = 1 (adjust as needed)
                                         val p = dbHelper.getPendingPresion(1)
-                                        g to p
+                                        val e = dbHelper.getPendingEstadoAnimoList(1)
+                                        Triple(g, p, e)
                                     }
 
-                                    // Build JSON
+                                    // Build JSON root
                                     val root = JSONObject().apply {
                                         put("deviceTimestamp", System.currentTimeMillis())
                                         put("userId", 1)
                                         put("app", "colmaApp")
+                                        // include clientSyncTimestamp top-level so server knows the client timestamp
+                                        put("clientSyncTimestamp", syncTs)
                                     }
 
-                                    // glucosa array (match new schema)
+                                    // glucosa array (include fecha_sincronizacion = syncTs)
                                     val gArray = JSONArray()
                                     val glucosaIdsToMark = mutableListOf<Long>()
                                     glucosaList.forEach { g ->
                                         val gObj = JSONObject()
-                                        gObj.put("id_glucosa", g.id) // your model id field
+                                        gObj.put("id_glucosa", g.id)
                                         gObj.put("id_usuario", g.idUsuario ?: JSONObject.NULL)
                                         gObj.put("valor_mgdl", g.valorMgdl ?: JSONObject.NULL)
                                         gObj.put("ayuno", g.ayuno ?: JSONObject.NULL)
                                         gObj.put("fecha_registro", g.fecha_registro ?: JSONObject.NULL)
+                                        // send the chosen sync timestamp (client-chosen)
+                                        gObj.put("fecha_sincronizacion", syncTs)
                                         gArray.put(gObj)
-
-                                        // collect ids that are not marked as sent (optionally only include envio_sn check)
-                                        // assuming your model doesn't include enviado_sn field; if it does, check it before adding
                                         glucosaIdsToMark.add(g.id)
                                     }
                                     root.put("glucosa", gArray)
 
-                                    // presion array
+                                    // presion array (include fecha_sincronizacion = syncTs)
                                     val pArray = JSONArray()
                                     val presionIdsToMark = mutableListOf<Long>()
                                     presionList.forEach { p ->
@@ -414,11 +420,30 @@ fun MenuScreen(
                                         pObj.put("sistolica", p.sistolica ?: JSONObject.NULL)
                                         pObj.put("diastolica", p.diastolica ?: JSONObject.NULL)
                                         pObj.put("fecha_registro", p.fecha_registro ?: JSONObject.NULL)
+                                        pObj.put("fecha_sincronizacion", syncTs)
                                         pArray.put(pObj)
-
                                         presionIdsToMark.add(p.id)
                                     }
                                     root.put("presion", pArray)
+
+                                    // estado_animo array (include fecha_sincronizacion = syncTs)
+                                    val eArray = JSONArray()
+                                    val estadoIdsToMark = mutableListOf<Long>()
+                                    estadoAnimoList.forEach { e ->
+                                        val eObj = JSONObject()
+                                        eObj.put("id_estado_animo", e.rowid) // use rowid as id
+                                        eObj.put("id_paciente", e.idPaciente ?: JSONObject.NULL)
+                                        eObj.put("fecha_registro", e.fechaRegistro ?: JSONObject.NULL)
+                                        for (i in 1..9) {
+                                            val value = e.preguntas.getOrNull(i - 1)
+                                            if (value == null) eObj.put("pregunta_$i", JSONObject.NULL)
+                                            else eObj.put("pregunta_$i", value)
+                                        }
+                                        eObj.put("fecha_sincronizacion", syncTs)
+                                        eArray.put(eObj)
+                                        estadoIdsToMark.add(e.rowid)
+                                    }
+                                    root.put("estado_animo", eArray)
 
                                     val jsonToSend = root.toString(2)
 
@@ -427,121 +452,151 @@ fun MenuScreen(
 
                                     withContext(Dispatchers.Main) {
                                         postResult.fold(onSuccess = { resp ->
+                                            // success path
                                             lastResponse = "Enviado correctamente: $resp"
                                             Toast.makeText(context, "Enviado correctamente", Toast.LENGTH_SHORT).show()
 
-                                            // Determine per-id timestamps from server response if provided,
-                                            // otherwise use current time for all returned ids.
+                                            // default: use the client sync timestamp unless server provides specific timestamps
+                                            val defaultTimestamp = syncTs
+
+                                            // parse server response — try to prefer server timestamps / status
                                             val glucosaTimestampMap = mutableMapOf<Long, String>()
                                             val presionTimestampMap = mutableMapOf<Long, String>()
-                                            val defaultTimestamp = nowLocal()
+                                            val estadoTimestampMap = mutableMapOf<Long, String>()
+
+                                            var serverStatus = "200"
+                                            var serverSyncedAt: String? = null
 
                                             try {
-                                                // Attempt to parse server response if it's JSON
                                                 val respStr = resp?.toString() ?: ""
                                                 if (respStr.isNotBlank()) {
-                                                    try {
-                                                        val root = org.json.JSONObject(respStr)
+                                                    val rootResp = org.json.JSONObject(respStr)
 
-                                                        // Option 1: server returns arrays with per-id timestamps:
-                                                        // { "glucosa": [ { "id_glucosa": 123, "fecha_sincronizacion": "..." }, ... ], "presion": [...] }
-                                                        if (root.has("glucosa")) {
-                                                            val ga = root.optJSONArray("glucosa")
-                                                            if (ga != null) {
-                                                                for (i in 0 until ga.length()) {
-                                                                    val o = ga.optJSONObject(i) ?: continue
-                                                                    val id = o.optLong("id_glucosa", -1L)
-                                                                    val fecha = o.optString("fecha_sincronizacion", null)
-                                                                    if (id > 0) {
-                                                                        glucosaTimestampMap[id] = if (!fecha.isNullOrBlank()) fecha else defaultTimestamp
-                                                                    }
-                                                                }
-                                                            }
-                                                        }
-                                                        if (root.has("presion")) {
-                                                            val pa = root.optJSONArray("presion")
-                                                            if (pa != null) {
-                                                                for (i in 0 until pa.length()) {
-                                                                    val o = pa.optJSONObject(i) ?: continue
-                                                                    val id = o.optLong("id_presion", -1L)
-                                                                    val fecha = o.optString("fecha_sincronizacion", null)
-                                                                    if (id > 0) {
-                                                                        presionTimestampMap[id] = if (!fecha.isNullOrBlank()) fecha else defaultTimestamp
-                                                                    }
-                                                                }
-                                                            }
-                                                        }
+                                                    // possible top-level status / code
+                                                    serverStatus = when {
+                                                        rootResp.has("code") -> rootResp.optString("code", serverStatus)
+                                                        rootResp.has("status") -> rootResp.optString("status", serverStatus)
+                                                        rootResp.has("statusCode") -> rootResp.optString("statusCode", serverStatus)
+                                                        else -> serverStatus
+                                                    }
 
-                                                        // Option 2: server returns single timestamp for all
-                                                        // { "syncedAt": "2025-10-12T10:00:00Z" }
-                                                        if (glucosaTimestampMap.isEmpty() && presionTimestampMap.isEmpty() && root.has("syncedAt")) {
-                                                            val s = root.optString("syncedAt", defaultTimestamp)
-                                                            val ts = if (s.isNullOrBlank()) defaultTimestamp else s
-                                                            glucosaIdsToMark.forEach { glucosaTimestampMap[it] = ts }
-                                                            presionIdsToMark.forEach { presionTimestampMap[it] = ts }
-                                                        }
+                                                    // server might return a global timestamp (syncedAt)
+                                                    if (rootResp.has("syncedAt")) serverSyncedAt = rootResp.optString("syncedAt", null)
 
-                                                        // Option 3: server returns list of ids only, use default timestamp
-                                                        // e.g. { "glucosaIds": [123,124], "presionIds":[...] }
-                                                        if (glucosaTimestampMap.isEmpty() && root.has("glucosaIds")) {
-                                                            val ga = root.optJSONArray("glucosaIds")
-                                                            if (ga != null) {
-                                                                for (i in 0 until ga.length()) {
-                                                                    val id = ga.optLong(i, -1L)
-                                                                    if (id > 0) glucosaTimestampMap[id] = defaultTimestamp
-                                                                }
+                                                    // per-item timestamp arrays (prefer these)
+                                                    if (rootResp.has("glucosa")) {
+                                                        val ga = rootResp.optJSONArray("glucosa")
+                                                        if (ga != null) {
+                                                            for (i in 0 until ga.length()) {
+                                                                val o = ga.optJSONObject(i) ?: continue
+                                                                val id = o.optLong("id_glucosa", -1L)
+                                                                val fecha = o.optString("fecha_sincronizacion", null)
+                                                                if (id > 0) glucosaTimestampMap[id] = if (!fecha.isNullOrBlank()) fecha else defaultTimestamp
                                                             }
                                                         }
-                                                        if (presionTimestampMap.isEmpty() && root.has("presionIds")) {
-                                                            val pa = root.optJSONArray("presionIds")
-                                                            if (pa != null) {
-                                                                for (i in 0 until pa.length()) {
-                                                                    val id = pa.optLong(i, -1L)
-                                                                    if (id > 0) presionTimestampMap[id] = defaultTimestamp
-                                                                }
+                                                    }
+                                                    if (rootResp.has("presion")) {
+                                                        val pa = rootResp.optJSONArray("presion")
+                                                        if (pa != null) {
+                                                            for (i in 0 until pa.length()) {
+                                                                val o = pa.optJSONObject(i) ?: continue
+                                                                val id = o.optLong("id_presion", -1L)
+                                                                val fecha = o.optString("fecha_sincronizacion", null)
+                                                                if (id > 0) presionTimestampMap[id] = if (!fecha.isNullOrBlank()) fecha else defaultTimestamp
                                                             }
                                                         }
-                                                    } catch (je: Exception) {
-                                                        // not JSON or unexpected shape — we'll fallback to marking all with now
+                                                    }
+                                                    if (rootResp.has("estado_animo")) {
+                                                        val ea = rootResp.optJSONArray("estado_animo")
+                                                        if (ea != null) {
+                                                            for (i in 0 until ea.length()) {
+                                                                val o = ea.optJSONObject(i) ?: continue
+                                                                val id = o.optLong("id_estado_animo", -1L)
+                                                                val fecha = o.optString("fecha_sincronizacion", null)
+                                                                if (id > 0) estadoTimestampMap[id] = if (!fecha.isNullOrBlank()) fecha else defaultTimestamp
+                                                            }
+                                                        }
+                                                    }
+
+                                                    // if server returned a unified timestamp and we have no per-id, use it
+                                                    if (glucosaTimestampMap.isEmpty() && presionTimestampMap.isEmpty() && estadoTimestampMap.isEmpty() && serverSyncedAt != null) {
+                                                        val ts = if (serverSyncedAt.isNullOrBlank()) defaultTimestamp else serverSyncedAt
+                                                        glucosaIdsToMark.forEach { glucosaTimestampMap[it] = ts }
+                                                        presionIdsToMark.forEach { presionTimestampMap[it] = ts }
+                                                        estadoIdsToMark.forEach { estadoTimestampMap[it] = ts }
+                                                    }
+
+                                                    // fallback: if per-id maps are still empty but server returned lists of ids,
+                                                    // mark with defaultTimestamp
+                                                    if (glucosaTimestampMap.isEmpty() && rootResp.has("glucosaIds")) {
+                                                        val ga = rootResp.optJSONArray("glucosaIds")
+                                                        if (ga != null) for (i in 0 until ga.length()) { val id = ga.optLong(i, -1L); if (id > 0) glucosaTimestampMap[id] = defaultTimestamp }
+                                                    }
+                                                    if (presionTimestampMap.isEmpty() && rootResp.has("presionIds")) {
+                                                        val pa = rootResp.optJSONArray("presionIds")
+                                                        if (pa != null) for (i in 0 until pa.length()) { val id = pa.optLong(i, -1L); if (id > 0) presionTimestampMap[id] = defaultTimestamp }
+                                                    }
+                                                    if (estadoTimestampMap.isEmpty() && rootResp.has("estadoIds")) {
+                                                        val ea = rootResp.optJSONArray("estadoIds")
+                                                        if (ea != null) for (i in 0 until ea.length()) { val id = ea.optLong(i, -1L); if (id > 0) estadoTimestampMap[id] = defaultTimestamp }
                                                     }
                                                 }
                                             } catch (e: Exception) {
                                                 e.printStackTrace()
                                             }
 
-                                            // If maps are still empty, mark each id with default timestamp
-                                            if (glucosaTimestampMap.isEmpty()) {
-                                                glucosaIdsToMark.forEach { glucosaTimestampMap[it] = defaultTimestamp }
-                                            }
-                                            if (presionTimestampMap.isEmpty()) {
-                                                presionIdsToMark.forEach { presionTimestampMap[it] = defaultTimestamp }
-                                            }
+                                            // Final fallback: mark each id with the client syncTs
+                                            if (glucosaTimestampMap.isEmpty()) glucosaIdsToMark.forEach { glucosaTimestampMap[it] = defaultTimestamp }
+                                            if (presionTimestampMap.isEmpty()) presionIdsToMark.forEach { presionTimestampMap[it] = defaultTimestamp }
+                                            if (estadoTimestampMap.isEmpty()) estadoIdsToMark.forEach { estadoTimestampMap[it] = defaultTimestamp }
 
-                                            // Now persist to DB on IO dispatcher
-                                            coroutineScope.launch {
-                                                withContext(Dispatchers.IO) {
+                                            // Persist two things on IO:
+                                            //  a) insert a row into sincronizacion_table marking this sync attempt as success
+                                            //  b) update per-record fecha_sincronizacion maps
+                                            val recordTimestampForSyncTable = serverSyncedAt ?: syncTs
+                                            withContext(Dispatchers.IO) {
+                                                try {
+                                                    // insert a summary sync record (success)
                                                     try {
-                                                        if (glucosaTimestampMap.isNotEmpty()) {
-                                                            dbHelper.updateGlucosaSyncTimestamps(glucosaTimestampMap)
-                                                        }
-                                                        if (presionTimestampMap.isNotEmpty()) {
-                                                            dbHelper.updatePresionSyncTimestamps(presionTimestampMap)
-                                                        }
-                                                    } catch (e: Exception) {
-                                                        e.printStackTrace()
-                                                    }
+                                                        dbHelper.insertSincronizacion(recordTimestampForSyncTable, serverStatus, null)
+                                                    } catch (ie: Exception) { ie.printStackTrace() }
+
+                                                    // update per-row timestamps
+                                                    if (glucosaTimestampMap.isNotEmpty()) dbHelper.updateGlucosaSyncTimestamps(glucosaTimestampMap)
+                                                    if (presionTimestampMap.isNotEmpty()) dbHelper.updatePresionSyncTimestamps(presionTimestampMap)
+                                                    if (estadoTimestampMap.isNotEmpty()) dbHelper.updateEstadoAnimoSyncTimestamps(estadoTimestampMap)
+                                                } catch (e: Exception) {
+                                                    e.printStackTrace()
                                                 }
                                             }
                                         }, onFailure = { err ->
-                                            lastResponse = "Error: ${err.message}"
-                                            Toast.makeText(context, "Error: ${err.message}", Toast.LENGTH_LONG).show()
+                                            // failure path
+                                            lastResponse = "Error: ${err?.message}"
+                                            Toast.makeText(context, "Error: ${err?.message}", Toast.LENGTH_LONG).show()
+
+                                            // save failure into sincronizacion_table including the payload for later inspection/resend
+                                            val errDesc = (err?.message ?: "network/error")
+                                            withContext(Dispatchers.IO) {
+                                                try {
+                                                    dbHelper.insertSincronizacion(syncTs, errDesc, jsonToSend)
+                                                } catch (e: Exception) {
+                                                    e.printStackTrace()
+                                                }
+                                            }
                                         })
-                                    }
+                                    } // end withContext(Main)
                                 } catch (e: Exception) {
                                     e.printStackTrace()
                                     withContext(Dispatchers.Main) {
                                         lastResponse = "Error inesperado: ${e.message}"
                                         Toast.makeText(context, "Error inesperado: ${e.message}", Toast.LENGTH_LONG).show()
+                                        // Save unexpected exceptions to sync table with payload for debugging
+                                        val syncTs = nowLocal()
+                                        withContext(Dispatchers.IO) {
+                                            try {
+                                                dbHelper.insertSincronizacion(syncTs, e.message ?: "exception", /* optionally save payload? */ null)
+                                            } catch (ie: Exception) { ie.printStackTrace() }
+                                        }
                                     }
                                 }
                             }
@@ -557,7 +612,7 @@ fun MenuScreen(
                         elevation = ButtonDefaults.buttonElevation(
                             defaultElevation = 6.dp,
                             pressedElevation = 10.dp
-                        ),
+                        )
                     ) {
                         Row(
                             modifier = Modifier.fillMaxWidth(),
@@ -590,6 +645,8 @@ fun MenuScreen(
         }
     }
 }
+
+
 
 suspend fun postJsonRaw(urlString: String, jsonBody: String, timeoutMs: Int = 15000): Result<String> {
     return withContext(Dispatchers.IO) {
@@ -636,6 +693,7 @@ suspend fun postJsonRaw(urlString: String, jsonBody: String, timeoutMs: Int = 15
 
 fun nowLocal(): String {
     val sdf = java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss", java.util.Locale.getDefault())
-    // Do NOT call sdf.timeZone = ... — leaving it unset uses the device timezone
+    // keep device local timezone
+    sdf.timeZone = java.util.TimeZone.getDefault()
     return sdf.format(java.util.Date())
 }

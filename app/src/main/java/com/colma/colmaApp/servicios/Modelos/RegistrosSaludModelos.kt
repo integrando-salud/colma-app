@@ -7,7 +7,8 @@ class RegistrosSaludModelos {
         val valorMgdl: Double?,
         val ayuno: Int?,
         val fecha_registro: String?,
-        val fecha_sincronizacion: String?
+        val fecha_sincronizacion: String?,
+        val fecha_hora_edicion: String? // ISO string
     )
 
     data class PresionRecord(
@@ -16,6 +17,7 @@ class RegistrosSaludModelos {
         val sistolica: Double?,
         val diastolica: Double?,
         val fecha_registro: String?,
-        val fecha_sincronizacion: String?
+        val fecha_sincronizacion: String?,
+        val fecha_hora_edicion: String? // epoch millis
     )
 }
