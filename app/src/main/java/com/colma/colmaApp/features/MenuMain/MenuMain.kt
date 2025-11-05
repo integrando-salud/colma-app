@@ -69,6 +69,7 @@ import com.colma.colmaApp.R
 import com.colma.colmaApp.features.RegistroSalud.RegistrosSalud
 import com.colma.colmaApp.features.login.ui.LoginUI
 import com.colma.colmaApp.features.main.ui.MainScreen
+import com.colma.colmaApp.features.sesiones.WelcomeActivity
 import com.colma.colmaApp.ui.theme.ColmaAppTheme
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -89,6 +90,10 @@ class MenuMain : ComponentActivity() {
         setContent {
             ColmaAppTheme {
                 MenuScreen(
+                    onSessionsClick = {
+                        val intent = Intent(this@MenuMain, WelcomeActivity::class.java)
+                        startActivity(intent)
+                    },
                     onHealthRegistersClick = {
                         val intent = Intent(this@MenuMain, RegistrosSalud::class.java)
                         startActivity(intent)
@@ -124,7 +129,7 @@ fun MenuScreen(
     var lastResponse by remember { mutableStateOf<String?>(null) }
 
 
-    val webhookUrl = "https://webhook.site/b14715a9-ec5c-4cfe-9e87-91648a2c024d"
+    val webhookUrl = "https://webhook.site/12930f51-dcee-43ca-8b6a-84aec1e7164a"
 
     val dbHelper = remember { com.colma.colmaApp.servicios.database.dbhelper.DBhelper(context.applicationContext) }
 

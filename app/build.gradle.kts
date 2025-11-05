@@ -59,4 +59,5 @@ dependencies {
 
     implementation ("com.readystatesoftware.sqliteasset:sqliteassethelper:+") // or use a concrete version
 
+
 }

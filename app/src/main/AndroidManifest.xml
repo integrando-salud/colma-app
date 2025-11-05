@@ -32,6 +32,15 @@
 
         </activity>
 
+        <activity android:name=".features.sesiones.WelcomeActivity"
+            android:exported="false"/>
+
+        <activity android:name=".features.sesiones.ActionActivity"
+            android:exported="false"/>
+
+        <activity android:name=".features.sesiones.FinishActivity"
+            android:exported="false"/>
+
         <activity android:name=".features.instructions.ui.InstructionsActivity"
             android:exported="false">
         </activity>

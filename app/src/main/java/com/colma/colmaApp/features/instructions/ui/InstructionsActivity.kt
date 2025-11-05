@@ -157,9 +157,7 @@ fun InstructionPage(pageIndex: Int) {
             verticalArrangement = Arrangement.Top
         ) {
             when (pageIndex) {
-                0 -> WelcomePage()
-                1 -> ActionPage()
-                2 -> FinishPage()
+
             }
         }
     }
@@ -188,44 +186,7 @@ fun DotsIndicator(
 }
 
 
-@Composable
-fun WelcomePage() {
-    Card(
-        shape = RoundedCornerShape(16.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.White),
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(8.dp)
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(24.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Top
-        ) {
-            Text(
-                "Información importante",
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold
-            )
-            Spacer(Modifier.height(16.dp))
-            Icon(
-                painter = painterResource(R.drawable.outline_unknown_document_24),
-                contentDescription = null,
-                modifier = Modifier.size(64.dp),
-                tint = Color(0xFFE84589)
-            )
-            Spacer(Modifier.height(16.dp))
-            Text(
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed laoreet ligula, et semper nisi. Donec a elit eget justo rutrum porttitor et non lectus. Praesent ultricies, nulla non tincidunt dapibus, ex est efficitur justo, ac placerat libero velit ac justo. Aenean ornare sem nibh, eu pharetra dolor gravida vitae. Phasellus hendrerit orci id libero auctor tempor. Praesent tincidunt sed lacus nec condimentum. Sed commodo consequat lacus, eu pharetra quam auctor et. Proin sed metus pulvinar, blandit neque ut, iaculis augue. Etiam egestas velit at magna laoreet dapibus. Nulla facilisi. Curabitur in arcu non orci sollicitudin dictum.",
-                fontSize = 16.sp,
-                textAlign = TextAlign.Left
-            )
-        }
-    }
-}
+
 
 @Composable
 fun ActionPage() {
