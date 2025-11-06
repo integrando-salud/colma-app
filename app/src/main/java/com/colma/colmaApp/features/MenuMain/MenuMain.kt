@@ -319,7 +319,7 @@ fun MenuScreen(
                             Spacer(modifier = Modifier.width(12.dp))
 
                             Text(
-                                text = "Mis Sesiones",
+                                text = "Tema de hoy",
                                 fontSize = 18.sp,
                                 color = Color.White,
                                 fontWeight = FontWeight.SemiBold,

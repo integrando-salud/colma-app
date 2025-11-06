@@ -136,7 +136,7 @@ fun WelcomePage() {
             )
             Spacer(Modifier.height(16.dp))
             Text(
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed laoreet ligula, et semper nisi. Donec a elit eget justo rutrum porttitor et non lectus. Praesent ultricies, nulla non tincidunt dapibus, ex est efficitur justo, ac placerat libero velit ac justo. Aenean ornare sem nibh, eu pharetra dolor gravida vitae. Phasellus hendrerit orci id libero auctor tempor. Praesent tincidunt sed lacus nec condimentum. Sed commodo consequat lacus, eu pharetra quam auctor et. Proin sed metus pulvinar, blandit neque ut, iaculis augue. Etiam egestas velit at magna laoreet dapibus. Nulla facilisi. Curabitur in arcu non orci sollicitudin dictum.",
+                "Caminar de forma regular es uno de los ejercicios más recomendados para personas con hipertensión. Se sugiere realizar caminatas de 30 minutos a un ritmo moderado, al menos cinco veces por semana. Es importante comenzar con pasos suaves, mantener una respiración cómoda y aumentar la duración de forma gradual. Este hábito ayuda a controlar la presión arterial, mejorar la circulación y fortalecer el corazón.",
                 fontSize = 16.sp,
                 textAlign = TextAlign.Left
             )
