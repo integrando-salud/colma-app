@@ -25,7 +25,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -39,12 +38,10 @@ import androidx.compose.material.icons.filled.Call
 import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Info
-import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
-import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -68,8 +65,7 @@ import androidx.compose.ui.unit.sp
 import com.colma.colmaApp.R
 import com.colma.colmaApp.features.RegistroSalud.RegistrosSalud
 import com.colma.colmaApp.features.login.ui.LoginUI
-import com.colma.colmaApp.features.main.ui.MainScreen
-import com.colma.colmaApp.features.sesiones.WelcomeActivity
+import com.colma.colmaApp.features.multimediaScreens.WelcomeActivity
 import com.colma.colmaApp.ui.theme.ColmaAppTheme
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
