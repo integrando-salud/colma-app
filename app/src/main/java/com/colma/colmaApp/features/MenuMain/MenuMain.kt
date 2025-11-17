@@ -65,7 +65,7 @@ import androidx.compose.ui.unit.sp
 import com.colma.colmaApp.R
 import com.colma.colmaApp.features.RegistroSalud.RegistrosSalud
 import com.colma.colmaApp.features.login.ui.LoginUI
-import com.colma.colmaApp.features.multimediaScreens.WelcomeActivity
+import com.colma.colmaApp.features.sesiones.SesionesMenu
 import com.colma.colmaApp.ui.theme.ColmaAppTheme
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -87,7 +87,7 @@ class MenuMain : ComponentActivity() {
             ColmaAppTheme {
                 MenuScreen(
                     onSessionsClick = {
-                        val intent = Intent(this@MenuMain, WelcomeActivity::class.java)
+                        val intent = Intent(this@MenuMain, SesionesMenu::class.java)
                         startActivity(intent)
                     },
                     onHealthRegistersClick = {

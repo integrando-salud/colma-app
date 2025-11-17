@@ -54,8 +54,7 @@ class FinishActivity : ComponentActivity() {
                     audioResId = R.raw.audio_explicativo,
                     onBack = { finish() },
                     onFinish = {
-                        val intent = Intent(this@FinishActivity, MenuMain::class.java)
-                        startActivity(intent)
+                        finish()
                     }
                 )
             }

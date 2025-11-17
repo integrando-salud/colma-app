@@ -33,6 +33,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material3.Icon
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
+import com.colma.colmaApp.features.MenuMain.MenuMain
 import com.colma.colmaApp.utils.videoPlayer.FullscreenVideoActivity
 import com.google.android.exoplayer2.ui.AspectRatioFrameLayout
 
@@ -47,6 +48,9 @@ class ActionActivity : ComponentActivity() {
                     onBack = { finish() },
                     onNext = {
                         startActivity(Intent(this@ActionActivity, FinishActivity::class.java))
+                    },
+                    onFinish = {
+                        finish()
                     }
                 )
             }
@@ -56,7 +60,7 @@ class ActionActivity : ComponentActivity() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ActionPageScreen(onBack: () -> Unit = {}, onNext: () -> Unit = {}) {
+fun ActionPageScreen(onBack: () -> Unit = {}, onNext: () -> Unit = {}, onFinish: () -> Unit = {}) {
     val signatureColor = Color(0xFF0D97B6) // use your color
     Surface(color = Color.White, modifier = Modifier.fillMaxSize()) {
         Column(modifier = Modifier.fillMaxSize()) {
@@ -87,14 +91,16 @@ fun ActionPageScreen(onBack: () -> Unit = {}, onNext: () -> Unit = {}) {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Button(
-                    onClick = onNext,
+                    onClick = {
+                        onFinish()
+                    },
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(52.dp),
                     colors = ButtonDefaults.buttonColors(containerColor = signatureColor, contentColor = Color.White),
-                    shape = RoundedCornerShape(8.dp)
+                    shape = androidx.compose.foundation.shape.RoundedCornerShape(8.dp)
                 ) {
-                    Text(text = "Siguiente", fontWeight = FontWeight.SemiBold)
+                    Text(text = "Terminar", fontWeight = FontWeight.SemiBold)
                 }
             }
         }

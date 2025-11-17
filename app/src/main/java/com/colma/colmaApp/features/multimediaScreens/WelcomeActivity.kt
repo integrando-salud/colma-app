@@ -38,10 +38,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.colma.colmaApp.R
+import com.colma.colmaApp.features.MenuMain.MenuMain
 import com.colma.colmaApp.ui.theme.ColmaAppTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
-class WelcomeActivity : ComponentActivity() {
+class DescriptionActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -50,7 +51,10 @@ class WelcomeActivity : ComponentActivity() {
                 WelcomePageScreen(
                     onBack = { finish() },
                     onNext = {
-                        startActivity(Intent(this@WelcomeActivity, ActionActivity::class.java))
+                        startActivity(Intent(this@DescriptionActivity, ActionActivity::class.java))
+                    },
+                    onFinish = {
+                        finish()
                     }
                 )
             }
@@ -60,7 +64,7 @@ class WelcomeActivity : ComponentActivity() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun WelcomePageScreen(onBack: () -> Unit = {}, onNext: () -> Unit = {}) {
+fun WelcomePageScreen(onBack: () -> Unit = {}, onNext: () -> Unit = {}, onFinish: () -> Unit = {}) {
     val signatureColor = colorResource(R.color.principal)
     Surface(color = Color.White, modifier = Modifier.fillMaxSize()) {
         Column(modifier = Modifier.fillMaxSize()) {
@@ -91,14 +95,16 @@ fun WelcomePageScreen(onBack: () -> Unit = {}, onNext: () -> Unit = {}) {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Button(
-                    onClick = onNext,
+                    onClick = {
+                        onFinish()
+                    },
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(52.dp),
                     colors = ButtonDefaults.buttonColors(containerColor = signatureColor, contentColor = Color.White),
                     shape = androidx.compose.foundation.shape.RoundedCornerShape(8.dp)
                 ) {
-                    Text(text = "Siguiente", fontWeight = FontWeight.SemiBold)
+                    Text(text = "Terminar", fontWeight = FontWeight.SemiBold)
                 }
             }
         }

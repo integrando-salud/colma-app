@@ -73,9 +73,11 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.IconButton
 import androidx.compose.runtime.saveable.rememberSaveable
 
 
@@ -105,14 +107,15 @@ class SesionesMenu : ComponentActivity() {
 
                     },
                     onSubSessionClick = { parentId, subId, title ->
-                        val i = Intent(ctx, SessionContent::class.java).apply {
+                        val i = Intent(ctx, MultimediaSelector::class.java).apply {
                             putExtra("sessionId", parentId)
                             putExtra("sessionTitle", "Semana $parentId")
                             putExtra("subSessionId", subId)
-                            putExtra("subSessionTitle", title) 
+                            putExtra("subSessionTitle", title)
                         }
                         startActivity(i)
-                    }
+                    },
+                    onBack = { finish() }
                 )
             }
         }
@@ -123,16 +126,27 @@ class SesionesMenu : ComponentActivity() {
 fun SesionesMenuScreen(
     sessions: List<SessionItem>,
     onSessionClick: (Long, String) -> Unit,
-    onSubSessionClick: (parentSessionId: Long, subSessionId: Long, title: String) -> Unit
+    onSubSessionClick: (parentSessionId: Long, subSessionId: Long, title: String) -> Unit,
+    onBack: () -> Unit = {}
 ) {
     val signatureColor = colorResource(R.color.principal)
 
     Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
         Column(modifier = Modifier.fillMaxSize()) {
             TopAppBar(
-                title = { Text("Sesiones", fontWeight = FontWeight.Bold) },
+                navigationIcon = {
+                    IconButton(onClick = onBack) {
+                        Icon(
+                            imageVector = androidx.compose.material.icons.Icons.Default.ArrowBack,
+                            contentDescription = "Volver",
+                            tint = Color.White
+                        )
+                    }
+                },
+                title = { Text("Sesiones", color = colorResource(R.color.white), fontWeight = FontWeight.Bold)},
                 colors = TopAppBarDefaults.topAppBarColors(containerColor = signatureColor)
             )
+
 
             Divider()
 
@@ -318,13 +332,33 @@ fun sampleSessions(): List<SessionItem> = listOf(
     SessionItem(1, "Semana 1", thumbnailRes = R.drawable.missing_photo),
     SessionItem(2, "Semana 2", thumbnailRes = R.drawable.missing_photo),
     SessionItem(3, "Semana 3", thumbnailRes = R.drawable.missing_photo),
-    SessionItem(4, "Semana 4", thumbnailRes = R.drawable.missing_photo)
+    SessionItem(4, "Semana 4", thumbnailRes = R.drawable.missing_photo),
+    SessionItem(5, "Semana 5", thumbnailRes = R.drawable.missing_photo),
+    SessionItem(6, "Semana 6", thumbnailRes = R.drawable.missing_photo),
+    SessionItem(7, "Semana 7", thumbnailRes = R.drawable.missing_photo),
+    SessionItem(8, "Semana 8", thumbnailRes = R.drawable.missing_photo),
+    SessionItem(9, "Semana 9", thumbnailRes = R.drawable.missing_photo),
+    SessionItem(10, "Semana 10", thumbnailRes = R.drawable.missing_photo),
+
 )
 
 fun sampleSubSessions(parentId: Long): List<SubSessionItem> {
     return listOf(
-        SubSessionItem(parentId * 10 + 1, "Sesion 1", "05:00"),
-        SubSessionItem(parentId * 10 + 2, "Sesion 2", "07:00"),
-        SubSessionItem(parentId * 10 + 3, "Sesion 3", "03:00")
+        SubSessionItem(1, "Sesion 1", "05:00"),
+        SubSessionItem(2, "Sesion 2", "07:00"),
+        SubSessionItem(3, "Sesion 3", "03:00"),
+        SubSessionItem(4, "Sesion 4", "05:00"),
+        SubSessionItem(5, "Sesion 5", "07:00"),
+        SubSessionItem(6, "Sesion 6", "03:00"),
+        SubSessionItem(7, "Sesion 7", "05:00"),
+        SubSessionItem(8, "Sesion 8", "07:00"),
+        SubSessionItem(9, "Sesion 9", "03:00"),
+        SubSessionItem(10, "Sesion 10", "05:00"),
+        SubSessionItem(11, "Sesion 11", "07:00"),
+        SubSessionItem(12, "Sesion 12", "03:00"),
+        SubSessionItem(13, "Sesion 13", "03:00"),
+        SubSessionItem(14, "Sesion 14", "05:00"),
+        SubSessionItem(15, "Sesion 15", "07:00"),
+        SubSessionItem(16, "Sesion 16", "03:00")
     )
 }
