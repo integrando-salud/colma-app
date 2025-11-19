@@ -78,6 +78,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.IconButton
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.runtime.saveable.rememberSaveable
 
 
@@ -131,7 +132,7 @@ fun SesionesMenuScreen(
 ) {
     val signatureColor = colorResource(R.color.principal)
 
-    Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
+    Surface(modifier = Modifier.fillMaxSize().systemBarsPadding(), color = MaterialTheme.colorScheme.background) {
         Column(modifier = Modifier.fillMaxSize()) {
             TopAppBar(
                 navigationIcon = {

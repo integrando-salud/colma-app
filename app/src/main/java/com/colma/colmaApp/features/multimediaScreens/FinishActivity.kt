@@ -8,6 +8,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RawRes
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -126,7 +127,7 @@ fun FinishPageScreen(
     // Pause when lifecycle indicates (activity pause) - Compose doesn't provide lifecycle directly here,
     // but ExoPlayer will be released on DisposableEffect. If you need stricter lifecycle sync,
     // you can control it via Activity callbacks.
-    Surface(color = Color.White, modifier = Modifier.fillMaxSize()) {
+    Surface(color = Color.White, modifier = Modifier.fillMaxSize().systemBarsPadding()) {
         Column(modifier = Modifier.fillMaxSize()) {
             TopAppBar(
                 title = { Text("Finalizar", fontSize = 18.sp, color = Color.White) },

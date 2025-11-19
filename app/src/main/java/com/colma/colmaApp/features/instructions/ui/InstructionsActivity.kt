@@ -44,6 +44,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -80,7 +81,7 @@ fun InstructionsScreen() {
     val pagerState = rememberPagerState { pageCount }
     val scope = rememberCoroutineScope()
 
-    Surface(color = Color.White, modifier = Modifier.fillMaxSize()) {
+    Surface(color = Color.White, modifier = Modifier.fillMaxSize().systemBarsPadding()) {
         Column(modifier = Modifier.fillMaxSize()) {
             // 1) TopAppBar (optional)
             TopAppBar(

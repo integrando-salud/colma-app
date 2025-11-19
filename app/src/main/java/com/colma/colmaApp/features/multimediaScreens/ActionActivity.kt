@@ -8,6 +8,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RawRes
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -62,7 +63,7 @@ class ActionActivity : ComponentActivity() {
 @Composable
 fun ActionPageScreen(onBack: () -> Unit = {}, onNext: () -> Unit = {}, onFinish: () -> Unit = {}) {
     val signatureColor = Color(0xFF0D97B6) // use your color
-    Surface(color = Color.White, modifier = Modifier.fillMaxSize()) {
+    Surface(color = Color.White, modifier = Modifier.fillMaxSize().systemBarsPadding()) {
         Column(modifier = Modifier.fillMaxSize()) {
             TopAppBar(
                 title = { Text("Acción", fontSize = 18.sp, color = Color.White) },

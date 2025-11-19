@@ -4,9 +4,11 @@ import android.app.Activity
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.verticalScroll
@@ -39,6 +41,7 @@ import java.util.Locale
 class EstadoAnimoActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
         setContent {
             ColmaAppTheme {
                 // pass an onBack that returns RESULT_OK so caller can detect success
@@ -183,6 +186,7 @@ fun EstadoAnimoScreen(
     }
 
     Scaffold(
+        modifier = Modifier.systemBarsPadding(),
         topBar = {
             TopAppBar(
                 title = { Text(text = "Estado de ánimo", fontWeight = androidx.compose.ui.text.font.FontWeight.Bold) },

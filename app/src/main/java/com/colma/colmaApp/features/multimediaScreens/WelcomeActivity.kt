@@ -1,5 +1,7 @@
 package com.colma.colmaApp.features.multimediaScreens
 
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -12,6 +14,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -66,7 +69,7 @@ class DescriptionActivity : ComponentActivity() {
 @Composable
 fun WelcomePageScreen(onBack: () -> Unit = {}, onNext: () -> Unit = {}, onFinish: () -> Unit = {}) {
     val signatureColor = colorResource(R.color.principal)
-    Surface(color = Color.White, modifier = Modifier.fillMaxSize()) {
+    Surface(color = Color.White, modifier = Modifier.fillMaxSize().systemBarsPadding()) {
         Column(modifier = Modifier.fillMaxSize()) {
             TopAppBar(
                 title = { Text("Información", fontSize = 18.sp, color = Color.White) },
@@ -124,7 +127,8 @@ fun WelcomePage() {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(24.dp),
+                .padding(24.dp)
+                .verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top
         ) {
@@ -142,7 +146,9 @@ fun WelcomePage() {
             )
             Spacer(Modifier.height(16.dp))
             Text(
-                "Caminar de forma regular es uno de los ejercicios más recomendados para personas con hipertensión. Se sugiere realizar caminatas de 30 minutos a un ritmo moderado, al menos cinco veces por semana. Es importante comenzar con pasos suaves, mantener una respiración cómoda y aumentar la duración de forma gradual. Este hábito ayuda a controlar la presión arterial, mejorar la circulación y fortalecer el corazón.",
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin facilisis nisi sit amet justo suscipit semper. Ut vitae nisl quis mauris iaculis tempus et eget eros. Aenean facilisis, urna at viverra feugiat, massa enim ultrices tortor, vitae blandit mauris est a quam. Nulla sit amet pulvinar dolor. Nunc vel quam massa. Mauris ac risus vel lacus pellentesque vestibulum. Pellentesque mauris nisi, sodales vel ornare sed, posuere eget magna. Praesent quam ante, bibendum eu condimentum sit amet, faucibus non ante. Suspendisse interdum varius cursus. Donec ut semper sem, nec consequat risus. Nam commodo faucibus arcu non dapibus. Suspendisse bibendum mauris sit amet ante ornare laoreet non nec ante. Sed vulputate condimentum metus, vitae consequat lacus sagittis et. In id purus lacinia nunc imperdiet volutpat. Duis eu libero vestibulum, malesuada justo ac, blandit lacus. Donec ornare mauris non est semper vulputate.\n" +
+                        "\n" +
+                        "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Praesent elit ante, rhoncus et dui eleifend, volutpat dictum mauris. Phasellus fringilla dolor ligula. Vivamus ultricies nisi et tortor hendrerit egestas. Nulla ultrices quam ipsum, vitae luctus libero facilisis tempus. Integer fermentum turpis sed leo tempor vehicula. Aenean suscipit ornare odio.",
                 fontSize = 16.sp,
                 textAlign = TextAlign.Left
             )

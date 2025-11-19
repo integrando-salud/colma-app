@@ -8,6 +8,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RawRes
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
@@ -162,6 +163,7 @@ fun SessionContentScreen(
     }
 
     Scaffold(
+        modifier = Modifier.systemBarsPadding(),
         topBar = {
             TopAppBar(
                 title = {

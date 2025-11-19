@@ -6,6 +6,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -13,6 +14,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -49,6 +51,7 @@ class EstadoAnimoMenuActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
         setContent {
             ColmaAppTheme {
                 EstadoAnimoMenuScreen(onBack = { finish() })
@@ -134,6 +137,7 @@ fun EstadoAnimoMenuScreen(onBack: () -> Unit = {}) {
     }
 
     Scaffold(
+        modifier = Modifier.systemBarsPadding(),
         topBar = {
             TopAppBar(
                 title = { Text(text = "Estado de ánimo", fontWeight = androidx.compose.ui.text.font.FontWeight.Bold) },

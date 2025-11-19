@@ -11,6 +11,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -466,6 +467,7 @@ fun RegistrosSaludScreen(
     }
     // UI
     Scaffold(
+        modifier = Modifier.systemBarsPadding(),
         topBar = {
             TopAppBar(
                 title = { Text(text = "Registro de Salud", fontWeight = androidx.compose.ui.text.font.FontWeight.Bold) },

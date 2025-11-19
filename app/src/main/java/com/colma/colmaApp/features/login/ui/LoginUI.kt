@@ -118,7 +118,7 @@ class LoginUI : ComponentActivity() {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .statusBarsPadding()        // keeps content below the status bar
+                    .systemBarsPadding()        // keeps content below the status bar
                     // keeps content above nav bar and avoids IME
                     .padding(horizontal = 24.dp),
                 horizontalAlignment = Alignment.CenterHorizontally

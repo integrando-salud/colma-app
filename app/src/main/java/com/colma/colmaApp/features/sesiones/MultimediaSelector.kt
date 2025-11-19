@@ -48,10 +48,12 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.IconButton
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.ui.res.painterResource
 import com.colma.colmaApp.features.multimediaScreens.ActionActivity
 import com.colma.colmaApp.features.multimediaScreens.DescriptionActivity
 import com.colma.colmaApp.features.multimediaScreens.FinishActivity
+import com.colma.colmaApp.features.multimediaScreens.MetasActivity
 
 /**
  * MultimediaSelector Activity: shows three stacked cards: Descripción, Video, Audio.
@@ -114,7 +116,7 @@ fun MultimediaSelectorScreen(
         }
     }
 
-    Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
+    Surface(modifier = Modifier.fillMaxSize().systemBarsPadding(), color = MaterialTheme.colorScheme.background) {
         Column(modifier = Modifier.fillMaxSize()) {
             TopAppBar(
                 title = {
@@ -301,6 +303,60 @@ fun MultimediaSelectorScreen(
                         Spacer(modifier = Modifier.width(12.dp))
                         Button(onClick = {
                             val i = Intent(context, FinishActivity::class.java).apply {
+                                putExtra("sessionId", sessionId)
+                                putExtra("sessionTitle", sessionTitle)
+                                putExtra("subSessionId", subSessionId)
+                                putExtra("subSessionTitle", subSessionTitle)
+                            }
+                            context.startActivity(i)
+                        }, colors = ButtonDefaults.buttonColors(containerColor = signatureColor)) {
+                            Text("Abrir")
+                        }
+                    }
+                }
+
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .shadow(elevation = 6.dp, shape = RoundedCornerShape(12.dp))
+                        .clickable {
+                            // start ActionActivity for video (reuses your existing ActionActivity)
+                            val i = Intent(context, MetasActivity::class.java).apply {
+                                putExtra("sessionId", sessionId)
+                                putExtra("sessionTitle", sessionTitle)
+                                putExtra("subSessionId", subSessionId)
+                                putExtra("subSessionTitle", subSessionTitle)
+                            }
+                            context.startActivity(i)
+                        },
+                    shape = RoundedCornerShape(12.dp),
+                    elevation = CardDefaults.cardElevation(defaultElevation = 6.dp),
+                    colors = CardDefaults.cardColors(containerColor = Color.White)
+                ) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(20.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(
+                            painter = painterResource(R.drawable.outline_trophy_24),
+                            contentDescription = "Metas",
+                            tint = signatureColor,
+                            modifier = Modifier.size(36.dp)
+                        )
+
+                        Spacer(modifier = Modifier.width(16.dp))
+
+                        Column(modifier = Modifier.weight(1f)) {
+                            Text("Metas", fontSize = 18.sp, fontWeight = FontWeight.SemiBold)
+                            Spacer(modifier = Modifier.height(6.dp))
+                            Text("Configura tus metas para esta sesion", fontSize = 13.sp, color = Color.Gray)
+                        }
+
+                        Spacer(modifier = Modifier.width(12.dp))
+                        Button(onClick = {
+                            val i = Intent(context, ActionActivity::class.java).apply {
                                 putExtra("sessionId", sessionId)
                                 putExtra("sessionTitle", sessionTitle)
                                 putExtra("subSessionId", subSessionId)
