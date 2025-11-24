@@ -2,12 +2,20 @@ package com.colma.colmaApp.features.multimediaScreens
 
 import CardThatOpensEditDialog
 import SimpleTextDialog
+import android.widget.Toast
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.platform.LocalContext
+import com.colma.colmaApp.servicios.Modelos.RegistrosSaludModelos
+import com.colma.colmaApp.servicios.database.dbhelper.DBhelper
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import android.graphics.Color as AndroidColor
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -24,7 +32,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -49,8 +56,11 @@ import androidx.compose.ui.unit.dp
 import com.colma.colmaApp.R
 import com.colma.colmaApp.ui.theme.ColmaAppTheme
 import com.colma.colmaApp.utils.varios.CardThatOpensDateTimeDialog
-import com.colma.colmaApp.utils.varios.CardThatOpensEmptyDialog
 import com.colma.colmaApp.utils.varios.CardThatOpensSelectionDialog
+import java.util.Calendar // Added import for Calendar
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 
 class MetasActivity : ComponentActivity() {
@@ -83,11 +93,28 @@ class MetasActivity : ComponentActivity() {
 @Composable
 fun MetasScreen(onBack: () -> Unit = {}, onFinish: () -> Unit = {}) {
 
+    val context = LocalContext.current
+    val dbHelper = remember { DBhelper(context) }
+    val scope = rememberCoroutineScope()
+
+    val defaultDateTimeFormat = remember { SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US) }
+
     val tipoActividad = rememberSaveable { mutableStateOf<String?>(null) }
     val actividad = rememberSaveable { mutableStateOf<String?>(null) }
     val conQuien = rememberSaveable { mutableStateOf<String?>(null) }
     val donde = rememberSaveable { mutableStateOf<String?>(null) }
-    val fecha = rememberSaveable { mutableStateOf<String?>(null) }
+
+    // Calculate default dates
+    val today = Calendar.getInstance()
+    val todayMillis = today.timeInMillis
+    val todayString = defaultDateTimeFormat.format(today.time)
+
+    val tomorrow = Calendar.getInstance().apply { add(Calendar.DATE, 1) }
+    val tomorrowMillis = tomorrow.timeInMillis
+    val tomorrowString = defaultDateTimeFormat.format(tomorrow.time)
+
+    val fecha = rememberSaveable { mutableStateOf(tomorrowString) }
+    val fechaEdicion = rememberSaveable { mutableStateOf(todayString) }
 
     var showSummaryDialog by rememberSaveable { mutableStateOf(false) }
     var summaryMessage by rememberSaveable { mutableStateOf("") }
@@ -125,89 +152,101 @@ fun MetasScreen(onBack: () -> Unit = {}, onFinish: () -> Unit = {}) {
                         .padding(16.dp)
                 ) {
 
-                                        Column(
-                                            modifier = Modifier
-                                                .fillMaxWidth()
-                                                .verticalScroll(rememberScrollState())
-                                                .padding(bottom = 84.dp), // Adjust this padding to accommodate the fixed button
-                                            horizontalAlignment = Alignment.CenterHorizontally
-                                        ) {
-                                            CardThatOpensSelectionDialog(
-                                                title = "Tipo de Actividad",
-                                                description = "Selecciona el tipo de actividad que deseas realizar.",
-                                                items = listOf("Actividad Fisica", "Habitos", "Bienestar"),
-                                                label = { it },
-                                                onItemSelected = { chosen ->
-                                                    tipoActividad.value = chosen
-                                                }
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .verticalScroll(rememberScrollState())
+                            .padding(bottom = 84.dp), // Adjust this padding to accommodate the fixed button
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        CardThatOpensSelectionDialog(
+                            title = "Tipo de Actividad",
+                            description = "Selecciona el tipo de actividad que deseas realizar.",
+                            items = listOf("Actividad Fisica", "Habitos", "Bienestar"),
+                            label = { it },
+                            onItemSelected = { chosen ->
+                                tipoActividad.value = chosen
+                            }
 
-                                            )
+                        )
 
-                                            Spacer(modifier = Modifier.padding(8.dp))
+                        Spacer(modifier = Modifier.padding(8.dp))
 
-                                            CardThatOpensSelectionDialog(
-                                                title = "Actividad",
-                                                description = "Seleccione la actividad concreta que desee realizar.",
-                                                items = listOf("Caminar 30 minutos", "Yoga", "Correr"),
-                                                label = { it },
-                                                onItemSelected = { chosen ->
-                                                    actividad.value = chosen
-                                                }
-                                            )
+                        CardThatOpensSelectionDialog(
+                            title = "Actividad",
+                            description = "Seleccione la actividad concreta que desee realizar.",
+                            items = listOf("Caminar 30 minutos", "Yoga", "Correr"),
+                            label = { it },
+                            onItemSelected = { chosen ->
+                                actividad.value = chosen
+                            }
+                        )
 
-                                            Spacer(modifier = Modifier.padding(8.dp))
+                        Spacer(modifier = Modifier.padding(8.dp))
 
-                                            CardThatOpensEditDialog(
-                                                title = "Con quien?",
-                                                description = "Describe brevemente con quien iras",
-                                                onSave = { newDesc ->
-                                                    conQuien.value = newDesc
-                                                }
-                                            )
+                        CardThatOpensEditDialog(
+                            title = "Con quien?",
+                            description = "Describe brevemente con quien iras",
+                            onSave = { newDesc ->
+                                conQuien.value = newDesc
+                            }
+                        )
 
-                                            Spacer(modifier = Modifier.padding(8.dp))
+                        Spacer(modifier = Modifier.padding(8.dp))
 
-                                            CardThatOpensEditDialog(
-                                                title = "Donde?",
-                                                description = "Describe brevemente en donde lo harás",
-                                                onSave = { newDesc ->
-                                                    donde.value = newDesc
-                                                }
-                                            )
+                        CardThatOpensEditDialog(
+                            title = "Donde?",
+                            description = "Describe brevemente en donde lo harás",
+                            onSave = { newDesc ->
+                                donde.value = newDesc
+                            }
+                        )
 
-                                            Spacer(modifier = Modifier.padding(8.dp))
+                        Spacer(modifier = Modifier.padding(8.dp))
 
-                                            CardThatOpensDateTimeDialog(
-                                                title = "Fecha de registro",
-                                                description = "Toca para cambiar",
-                                                initialMillis = System.currentTimeMillis(),
-                                                onDateTimeSelected = { datetime ->
-                                                    fecha.value = datetime
-                                                }
-                                            )
-                                        }
-                                        Column(
-                                            modifier = Modifier
-                                                .fillMaxWidth()
-                                                .align(Alignment.BottomCenter), // Align to the bottom center
-                                            horizontalAlignment = Alignment.CenterHorizontally
-                                        ) {
-                                            Button(
-                                                onClick = {
-                                                    val missing = buildList {
-                                                        if (tipoActividad.value.isNullOrBlank()) add("Tipo de actividad")
-                                                        if (actividad.value.isNullOrBlank()) add("Actividad")
-                                                        if (conQuien.value.isNullOrBlank()) add("Con quién")
-                                                        if (donde.value.isNullOrBlank()) add("Dónde")
-                                                        if (fecha.value.isNullOrBlank()) add("Fecha y Hora")
-                                                    }
-                                                    shouldExecuteFinalAction = missing.isEmpty()
-                                                    if (missing.isNotEmpty()) {
-                                                        summaryMessage =
-                                                            "Faltan completar los siguientes campos:\n\n• " +
-                                                                    missing.joinToString("\n• ")
-                                                    } else {
-                                                        summaryMessage = """
+                        CardThatOpensDateTimeDialog (
+                            title = "Fecha Objetivo",
+                            description = "Selecciona la fecha límite para tu meta.",
+                            initialMillis = tomorrowMillis,
+                            onDateTimeSelected = { datetime ->
+                                fecha.value = datetime
+                            }
+                        )
+
+                        Spacer(modifier = Modifier.padding(8.dp))
+
+                        CardThatOpensDateTimeDialog(
+                            title = "Fecha de Creación",
+                            description = "Selecciona la fecha en que creaste esta meta.",
+                            initialMillis = todayMillis,
+                            onDateTimeSelected = { datetime ->
+                                fechaEdicion.value = datetime
+                            }
+                        )
+                    }
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .align(Alignment.BottomCenter), // Align to the bottom center
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Button(
+                            onClick = {
+                                val missing = buildList {
+                                    if (tipoActividad.value.isNullOrBlank()) add("Tipo de actividad")
+                                    if (actividad.value.isNullOrBlank()) add("Actividad")
+                                    if (conQuien.value.isNullOrBlank()) add("Con quién")
+                                    if (donde.value.isNullOrBlank()) add("Dónde")
+                                    if (fecha.value.isNullOrBlank()) add("Fecha Objetivo")
+                                    if (fechaEdicion.value.isNullOrBlank()) add("Fecha de Creación")
+                                }
+                                shouldExecuteFinalAction = missing.isEmpty()
+                                if (missing.isNotEmpty()) {
+                                    summaryMessage =
+                                        "Faltan completar los siguientes campos:\n\n• " +
+                                                missing.joinToString("\n• ")
+                                } else {
+                                    summaryMessage = """
                                                             Resumen de registro:
                                                             • Tipo de actividad: ${tipoActividad.value}
 
@@ -217,38 +256,70 @@ fun MetasScreen(onBack: () -> Unit = {}, onFinish: () -> Unit = {}) {
 
                                                             • Dónde: ${donde.value}
 
-                                                            • Fecha y hora: ${fecha.value}
+                                                            • Fecha Objetivo: ${fecha.value}
+                                                            
+                                                            • Fecha de Creación: ${fechaEdicion.value}
                                                         """.trimIndent()
-                                                    }
-                                                    showSummaryDialog = true
-                                                },
+                                }
+                                showSummaryDialog = true
+                            },
 
-                                                modifier = Modifier
-                                                    .fillMaxWidth()
-                                                    .height(52.dp),
-                                                colors = ButtonDefaults.buttonColors(
-                                                    containerColor = colorResource(R.color.principal),
-                                                    contentColor = Color.White
-                                                ),
-                                                shape = RoundedCornerShape(8.dp)
-                                            ) {
-                                                Text(text = "Terminar", fontWeight = FontWeight.SemiBold)
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(52.dp),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = colorResource(R.color.principal),
+                                contentColor = Color.White
+                            ),
+                            shape = RoundedCornerShape(8.dp)
+                        ) {
+                            Text(text = "Terminar", fontWeight = FontWeight.SemiBold)
+                        }
+                        if (showSummaryDialog) {
+                            SimpleTextDialog(
+                                show = showSummaryDialog,
+                                onDismissRequest = { showSummaryDialog = false },
+                                title = "Resultado",
+                                description = summaryMessage,
+                                confirmLabel = "OK",
+                                onConfirm = {
+                                    if (shouldExecuteFinalAction) {
+                                        scope.launch {
+                                            val newMeta = RegistrosSaludModelos.MetaRecord(
+                                                id_meta = 0,
+                                                id_usuario = 1,
+                                                semana = null,
+                                                sesion = null,
+                                                tipo_actividad = tipoActividad.value,
+                                                actividad = actividad.value,
+                                                lugar = donde.value,
+                                                acompañante = conQuien.value,
+                                                fecha_regisitro = null,
+                                                fecha_edicion = fechaEdicion.value,
+                                                fecha_sincronizacion = null,
+                                                meta_cumplida = 0,
+                                                fecha_objetivo = fecha.value
+                                            )
+                                            val result = withContext(Dispatchers.IO) {
+                                                dbHelper.insertMeta(newMeta)
                                             }
-                                            if (showSummaryDialog) {
-                                                SimpleTextDialog(
-                                                    show = showSummaryDialog,
-                                                    onDismissRequest = { showSummaryDialog = false },
-                                                    title = "Resultado",
-                                                    description = summaryMessage,
-                                                    confirmLabel = "OK",
-                                                    onConfirm = {
-                                                        if (shouldExecuteFinalAction) {
-                                                            onFinish()
-                                                        }
-                                                    }
-                                                )
+                                            if (result != -1L) {
+                                                withContext(Dispatchers.Main) {
+                                                    Toast.makeText(context, "Meta guardada exitosamente", Toast.LENGTH_SHORT).show()
+                                                    onFinish()
+                                                }
+                                            } else {
+                                                withContext(Dispatchers.Main) {
+                                                    Toast.makeText(context, "Error al guardar la meta", Toast.LENGTH_SHORT).show()
+                                                }
                                             }
                                         }
+                                    }
+                                    showSummaryDialog = false
+                                }
+                            )
+                        }
+                    }
 
                 }
 

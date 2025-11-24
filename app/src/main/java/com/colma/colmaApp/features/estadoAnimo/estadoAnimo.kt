@@ -625,7 +625,7 @@ private fun QuestionRow(
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
                             RadioButton(
-                                selected = selected == idx + 2, 
+                                selected = selected == idx + 2,
                                 onClick = { if (!disabled) onSelect(idx + 2) },
                                 enabled = !disabled,
                                 colors = RadioButtonDefaults.colors(

@@ -88,7 +88,7 @@ fun CardThatOpensEditDialog(
             text = {
                 Column(modifier = Modifier.fillMaxWidth()) {
                     OutlinedTextField(
-                        value = editBuffer,
+                        value = "",
                         onValueChange = {
                             editBuffer = it
                             if (!it.isBlank()) error = null

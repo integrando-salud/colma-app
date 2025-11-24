@@ -181,7 +181,7 @@ fun DateTimePickerDialog(
                             .weight(1f)
                             .height(55.dp) // keep consistent height if you want
                     ) {
-                        Text("Seleccionar fecha")
+                        Text("Fecha")
                     }
 
                     Button(
@@ -190,7 +190,7 @@ fun DateTimePickerDialog(
                             .weight(1f)
                             .height(55.dp)
                     ) {
-                        Text("Seleccionar hora")
+                        Text("Hora")
                     }
                 }
             }

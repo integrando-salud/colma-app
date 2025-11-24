@@ -860,6 +860,197 @@ class DBhelper(context: Context) :
         }
         return rowId
     }
+
+    // Metas Table Methods
+
+    fun insertMeta(meta: RegistrosSaludModelos.MetaRecord): Long {
+        val db = writableDatabase
+        val values = ContentValues().apply {
+            put("id_usuario", meta.id_usuario)
+            put("semana", meta.semana)
+            put("sesion", meta.sesion)
+            put("tipo_actividad", meta.tipo_actividad)
+            put("actividad", meta.actividad)
+            put("lugar", meta.lugar)
+            put("acompañante", meta.acompañante)
+            put("fecha_regisitro", meta.fecha_regisitro ?: defaultDateTimeFormat.format(Date()))
+            put("fecha_edicion", meta.fecha_edicion ?: defaultDateTimeFormat.format(Date()))
+            put("meta_cumplida", meta.meta_cumplida)
+            put("fecha_objetivo", meta.fecha_objetivo)
+        }
+
+        var rowId: Long = -1L
+        db.beginTransaction()
+        try {
+            rowId = db.insert("metas_table", null, values)
+            db.setTransactionSuccessful()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        } finally {
+            db.endTransaction()
+        }
+        return rowId
+    }
+
+    fun updateMeta(meta: RegistrosSaludModelos.MetaRecord): Int {
+        val db = writableDatabase
+        val values = ContentValues().apply {
+            put("id_usuario", meta.id_usuario)
+            put("semana", meta.semana)
+            put("sesion", meta.sesion)
+            put("tipo_actividad", meta.tipo_actividad)
+            put("actividad", meta.actividad)
+            put("lugar", meta.lugar)
+            put("acompañante", meta.acompañante)
+            put("fecha_edicion", defaultDateTimeFormat.format(Date()))
+            put("meta_cumplida", meta.meta_cumplida)
+            put("fecha_objetivo", meta.fecha_objetivo)
+        }
+
+        var affectedRows = 0
+        db.beginTransaction()
+        try {
+            affectedRows = db.update("metas_table", values, "id_meta = ?", arrayOf(meta.id_meta.toString()))
+            db.setTransactionSuccessful()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        } finally {
+            db.endTransaction()
+        }
+        return affectedRows
+    }
+
+    fun deleteMeta(id: Long): Int {
+        val db = writableDatabase
+        var affectedRows = 0
+        db.beginTransaction()
+        try {
+            affectedRows = db.delete("metas_table", "id_meta = ?", arrayOf(id.toString()))
+            db.setTransactionSuccessful()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        } finally {
+            db.endTransaction()
+        }
+        return affectedRows
+    }
+
+    fun getMetaById(id: Long): RegistrosSaludModelos.MetaRecord? {
+        val db = readableDatabase
+        val cursor = db.query(
+            "metas_table",
+            null,
+            "id_meta = ?",
+            arrayOf(id.toString()),
+            null,
+            null,
+            null
+        )
+
+        cursor.use { c ->
+            if (c.moveToFirst()) {
+                return cursorToMetaRecord(c)
+            }
+        }
+        return null
+    }
+
+    fun getAllMetas(idUsuario: Int? = null): List<RegistrosSaludModelos.MetaRecord> {
+        val results = mutableListOf<RegistrosSaludModelos.MetaRecord>()
+        val db = readableDatabase
+        val selection = idUsuario?.let { "id_usuario = ?" }
+        val selectionArgs = idUsuario?.let { arrayOf(it.toString()) }
+
+        val cursor = db.query(
+            "metas_table",
+            null,
+            selection,
+            selectionArgs,
+            null,
+            null,
+            "id_meta DESC"
+        )
+
+        cursor.use { c ->
+            if (c.moveToFirst()) {
+                do {
+                    results.add(cursorToMetaRecord(c))
+                } while (c.moveToNext())
+            }
+        }
+        return results
+    }
+
+    fun getPendingMetas(idUsuario: Int? = 1): List<RegistrosSaludModelos.MetaRecord> {
+        val results = mutableListOf<RegistrosSaludModelos.MetaRecord>()
+        val db = readableDatabase
+
+        val selectionParts = mutableListOf<String>("(fecha_sincronizacion IS NULL OR fecha_sincronizacion = '')")
+        val selectionArgsList = mutableListOf<String>()
+        if (idUsuario != null) {
+            selectionParts.add("id_usuario = ?")
+            selectionArgsList.add(idUsuario.toString())
+        }
+        val selection = selectionParts.joinToString(" AND ")
+        val selectionArgs = if (selectionArgsList.isNotEmpty()) selectionArgsList.toTypedArray() else null
+
+        val cursor = db.query(
+            "metas_table",
+            null,
+            selection,
+            selectionArgs,
+            null,
+            null,
+            "id_meta DESC"
+        )
+
+        cursor.use { c ->
+            if (c.moveToFirst()) {
+                do {
+                    results.add(cursorToMetaRecord(c))
+                } while (c.moveToNext())
+            }
+        }
+        return results
+    }
+
+    fun markMetasSent(ids: List<Long>) {
+        if (ids.isEmpty()) return
+        val db = writableDatabase
+        db.beginTransaction()
+        try {
+            val now = defaultDateTimeFormat.format(Date())
+            val args = ids.joinToString(",")
+            val sql = "UPDATE metas_table SET fecha_sincronizacion = ? WHERE id_meta IN ($args)"
+            db.compileStatement(sql).apply {
+                bindString(1, now)
+                execute()
+            }
+            db.setTransactionSuccessful()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        } finally {
+            db.endTransaction()
+        }
+    }
+
+    private fun cursorToMetaRecord(c: Cursor): RegistrosSaludModelos.MetaRecord {
+        return RegistrosSaludModelos.MetaRecord(
+            id_meta = c.getLongOrNull("id_meta") ?: -1L,
+            id_usuario = c.getIntOrNull("id_usuario"),
+            semana = c.getIntOrNull("semana"),
+            sesion = c.getIntOrNull("sesion"),
+            tipo_actividad = c.getStringOrNull("tipo_actividad"),
+            actividad = c.getStringOrNull("actividad"),
+            lugar = c.getStringOrNull("lugar"),
+            acompañante = c.getStringOrNull("acompañante"),
+            fecha_regisitro = c.getStringOrNull("fecha_regisitro"),
+            fecha_edicion = c.getStringOrNull("fecha_edicion"),
+            fecha_sincronizacion = c.getStringOrNull("fecha_sincronizacion"),
+            meta_cumplida = c.getIntOrNull("meta_cumplida"),
+            fecha_objetivo = c.getStringOrNull("fecha_objetivo")
+        )
+    }
 }
 
 /* Cursor helper extension functions */
