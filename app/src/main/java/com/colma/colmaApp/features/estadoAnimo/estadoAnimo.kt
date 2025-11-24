@@ -6,6 +6,7 @@ import android.graphics.Color as AndroidColor
 import android.app.Activity
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
@@ -115,10 +116,16 @@ fun EstadoAnimoScreen(
         }
     }
 
-    // show rest only after pressing Enviar (and sum >= 3)
+    val anyAnswered by remember {
+        derivedStateOf {
+            answersState.value.any { it != -1 }
+        }
+    }
+
+
     var showRest by rememberSaveable { mutableStateOf(false) }
 
-    // lock first two answers after pressing Enviar
+
     var lockedFirstTwo by rememberSaveable { mutableStateOf(false) }
 
     val snackbarHostState = remember { SnackbarHostState() }
@@ -127,7 +134,6 @@ fun EstadoAnimoScreen(
     val dateFormatter = remember { java.text.SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()) }
     val timeFormatterOnly = remember { java.text.SimpleDateFormat("HH:mm", Locale.getDefault()) }
 
-// NEW ISO formatter used for DB timestamps (YYYY-MM-DD HH:mm:ss)
     val isoFormatter = remember { java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()) }
 
     var estadoDateTime by rememberSaveable { mutableStateOf(System.currentTimeMillis()) } // epoch millis
@@ -135,7 +141,6 @@ fun EstadoAnimoScreen(
 
     var confirmSubmitOpen by rememberSaveable { mutableStateOf(false) }
 
-// pending payload to persist when user confirms
     var pendingFullMap by remember { mutableStateOf<Map<Int, Int?>?>(null) }
     var pendingIdPaciente by remember { mutableStateOf<Int?>(null) }
     var pendingIsPartialSubmit by remember { mutableStateOf(false) }
@@ -143,18 +148,30 @@ fun EstadoAnimoScreen(
     var pendingDraftRowId by rememberSaveable { mutableStateOf<Long?>(null) }
 
 
+    val onBackHandler = {
+        scope.launch {
+            if (!anyAnswered && pendingDraftRowId != null) {
+                try {
+                    withContext(Dispatchers.IO) {
+                        dbHelper.deleteEstadoAnimoRow(pendingDraftRowId!!)
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
+            onBack()
+        }
+    }
+
     fun setAnswer(index: Int, value: Int) {
         val tmp = answersState.value.toMutableList()
         tmp[index] = value
         answersState.value = tmp.toList()
 
-        // If user answered one of the first two, immediately save partial
         if (index == 0 || index == 1) {
             val p1 = answersState.value.getOrNull(0)
             val p2 = answersState.value.getOrNull(1)
-            // only persist when at least one of them has non-negative value
             if ((p1 ?: -1) >= 0 || (p2 ?: -1) >= 0) {
-                // launch IO save
                 scope.launch {
                     try {
                         withContext(Dispatchers.IO) {
@@ -166,14 +183,12 @@ fun EstadoAnimoScreen(
                                 if (pendingDraftRowId != null) {
                                     dbHelper.updateEstadoAnimoRow(pendingDraftRowId!!, map, fechaEdicion = isoFormatter.format(java.util.Date(estadoDateTime)))
                                 } else {
-                                    // fallback: create one (very unlikely because LaunchedEffect creates it)
                                     val newId = dbHelper.insertEstadoAnimo(idPaciente, map, fechaRegistro = null, fechaEdicion = isoFormatter.format(java.util.Date(estadoDateTime)))
                                     if (newId > 0L) pendingDraftRowId = newId
                                 }
                             }
                         }
                     } catch (e: Exception) {
-                        // handle/log error as needed
                         e.printStackTrace()
                     }
                 }
@@ -203,7 +218,7 @@ fun EstadoAnimoScreen(
             TopAppBar(
                 title = { Text(text = "Estado de ánimo", fontWeight = androidx.compose.ui.text.font.FontWeight.Bold) },
                 navigationIcon = {
-                    IconButton(onClick = onBack) {
+                    IconButton(onClick = { onBackHandler() }) {
                         Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "Volver")
                     }
                 },
@@ -216,12 +231,13 @@ fun EstadoAnimoScreen(
         },
         snackbarHost = { SnackbarHost(snackbarHostState) }
     ) { innerPadding ->
+        BackHandler(onBack = { onBackHandler() })
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
                 .padding(horizontal = 16.dp, vertical = 12.dp)
-                .verticalScroll(rememberScrollState()) // Moved verticalScroll here
+                  .verticalScroll(rememberScrollState())
         ) {
             Text(
                 text = "Contesta las siguientes preguntas seleccionando la opción que mejor te describe:",
@@ -286,7 +302,7 @@ fun EstadoAnimoScreen(
 
                 Spacer(modifier = Modifier.width(8.dp))
 
-                // Time button - shows only HH:mm and opens TimePickerDialog
+
                 OutlinedButton(onClick = {
                     val c = estadoCalendar
                     c.timeInMillis = estadoDateTime
@@ -308,13 +324,12 @@ fun EstadoAnimoScreen(
             }
 
             Spacer(Modifier.height(12.dp))
-            // ---------------------------------------------------------
+
 
             Column(
-                modifier = Modifier, // Removed .weight(1f)
+                modifier = Modifier,
                 verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
-                // first two questions — pass disabled based on lockedFirstTwo
                 QuestionRow(
                     question = allQuestions[0],
                     optionLabels = optionLabels,
@@ -351,59 +366,61 @@ fun EstadoAnimoScreen(
                 onClick = {
                     scope.launch {
                         try {
+                            lockedFirstTwo = true
 
-                            if (!lockedFirstTwo) lockedFirstTwo = true
+                            if (!firstTwoAnswered) {
+                                lockedFirstTwo = false
+                                snackbarHostState.showSnackbar("Por favor responda las dos primeras preguntas")
+                                return@launch
+                            }
 
-                            if (!showRest) {
-                                // validate first two answered
-                                if (!firstTwoAnswered) {
-                                    // unlock to allow correction
-                                    lockedFirstTwo = false
-                                    snackbarHostState.showSnackbar("Por favor responda las dos primeras preguntas")
-                                    return@launch
+
+                            if (firstTwoSum < 3) {
+                                if (showRest) {
+                                    showRest = false
+                                    val clearedAnswers = answersState.value.toMutableList()
+                                    for (i in 2 until clearedAnswers.size) {
+                                        clearedAnswers[i] = -1
+                                    }
+                                    answersState.value = clearedAnswers
                                 }
 
-                                if (firstTwoSum >= 3) {
-                                    // reveal rest (do not submit yet)
+
+                                val fullMap = (1..9).associateWith { idx ->
+                                    val v = answersState.value.getOrNull(idx - 1)
+                                    if (idx <= 2 && v != null && v >= 0) v else null
+                                }
+
+                                pendingFullMap = fullMap
+                                pendingIdPaciente = 1
+                                pendingIsPartialSubmit = true
+                                confirmSubmitOpen = true
+
+                            } else {
+                                if (!showRest) {
                                     showRest = true
                                     snackbarHostState.showSnackbar("Contesta las preguntas adicionales")
                                     return@launch
-                                } else {
-                                    // submit only first two answers (persist as a full row where remaining preguntas are NULL)
-                                    val fullMap = (1..9).associateWith { idx ->
-                                        val v = answersState.value.getOrNull(idx - 1)
-                                        if (v != null && v >= 0) v else null
-                                    }
-
-                                    // prepare pending submission and open confirmation dialog
-                                    pendingFullMap = fullMap
-                                    pendingIdPaciente = 1
-                                    pendingIsPartialSubmit = true
-                                    confirmSubmitOpen = true
-                                    return@launch
                                 }
-                            } else {
-                                // rest already visible: validate all visible questions
-                                val visibleCount = allQuestions.size
-                                val unanswered = answersState.value.take(visibleCount).count { it == -1 }
+
+                                val unanswered = answersState.value.count { it == -1 }
                                 if (unanswered > 0) {
                                     snackbarHostState.showSnackbar("Por favor responda todas las preguntas")
                                     return@launch
                                 }
 
-                                // Build full map 1..9, unanswered -> null
+
                                 val fullMap = (1..9).associateWith { idx ->
                                     val v = answersState.value.getOrNull(idx - 1)
                                     if (v != null && v >= 0) v else null
                                 }
 
-                                // prepare pending submission and open confirmation dialog
                                 pendingFullMap = fullMap
                                 pendingIdPaciente = 1
                                 pendingIsPartialSubmit = false
                                 confirmSubmitOpen = true
-                                return@launch
                             }
+
                         } catch (e: Exception) {
                             e.printStackTrace()
                             snackbarHostState.showSnackbar("Error inesperado: ${e.localizedMessage ?: e.message}")
@@ -467,16 +484,15 @@ fun EstadoAnimoScreen(
                                     val results = allQuestions.mapIndexed { idx, q -> q to (toSave?.get(idx + 1) ?: -1) }.toMap()
                                     onSubmitResults(results)
 
-                                    // show snackbar in a separate coroutine so it does not block navigation
+
                                     scope.launch {
                                         snackbarHostState.showSnackbar("Respuestas guardadas")
                                     }
 
-                                    // navigate back (calls the onBack callback passed from the Activity)
+
                                     onBack()
                                 } catch (e: Exception) {
                                     e.printStackTrace()
-                                    // show error snackbar (non-blocking)
                                     scope.launch {
                                         snackbarHostState.showSnackbar("Error guardando: ${e.localizedMessage ?: e.message}")
                                     }
@@ -494,12 +510,11 @@ fun EstadoAnimoScreen(
                 )
             }
 
-            // optional: provide a "Modificar" button that unlocks first two (if you want)
+
             if (lockedFirstTwo) {
                 Spacer(modifier = Modifier.height(8.dp))
                 OutlinedButton(
                     onClick = {
-                        // Let user change first two again (if desired)
                         lockedFirstTwo = false
                     },
                     modifier = Modifier.fillMaxWidth()
@@ -511,7 +526,7 @@ fun EstadoAnimoScreen(
     }
 }
 
-/** Updated QuestionRow to accept disabled flag and dim when disabled */
+
 @Composable
 private fun QuestionRow(
     question: String,
@@ -524,7 +539,7 @@ private fun QuestionRow(
     val screenWidthDp = config.screenWidthDp
     val small = screenWidthDp < 360
 
-    // visual alpha for disabled state
+
     val contentAlpha = if (disabled) 0.5f else 1.0f
 
     Card(
@@ -542,45 +557,95 @@ private fun QuestionRow(
                 fontSize = if (small) 13.sp else 15.sp
             )
 
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .selectableGroup(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.Top
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                optionLabels.forEachIndexed { idx, label ->
-                    Column(
-                        modifier = Modifier
-                            .weight(1f)
-                            .widthIn(min = 64.dp)
-                            .padding(horizontal = 6.dp)
-                            .clickable(enabled = !disabled) { onSelect(idx) }
-                            .semantics { this.selected = (selected == idx) },
-                        verticalArrangement = Arrangement.Top,
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        RadioButton(
-                            selected = selected == idx,
-                            onClick = { if (!disabled) onSelect(idx) },
-                            enabled = !disabled,
-                            colors = RadioButtonDefaults.colors(
-                                selectedColor = colorResource(R.color.light_principal),
-                                unselectedColor = Color.Gray,
-                                disabledSelectedColor = Color.LightGray,
-                                disabledUnselectedColor = Color(0xFFB0BEC5)
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .selectableGroup(),
+                    horizontalArrangement = Arrangement.SpaceAround,
+                    verticalAlignment = Alignment.Top
+                ) {
+                    optionLabels.take(2).forEachIndexed { idx, label ->
+                        Column(
+                            modifier = Modifier
+                                .weight(1f)
+                                .widthIn(min = 64.dp)
+                                .padding(horizontal = 6.dp)
+                                .clickable(enabled = !disabled) { onSelect(idx) }
+                                .semantics { this.selected = (selected == idx) },
+                            verticalArrangement = Arrangement.Top,
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            RadioButton(
+                                selected = selected == idx,
+                                onClick = { if (!disabled) onSelect(idx) },
+                                enabled = !disabled,
+                                colors = RadioButtonDefaults.colors(
+                                    selectedColor = colorResource(R.color.light_principal),
+                                    unselectedColor = Color.Gray,
+                                    disabledSelectedColor = Color.LightGray,
+                                    disabledUnselectedColor = Color(0xFFB0BEC5)
+                                )
                             )
-                        )
 
-                        Spacer(modifier = Modifier.height(6.dp))
+                            Spacer(modifier = Modifier.height(6.dp))
 
-                        Text(
-                            text = label,
-                            style = MaterialTheme.typography.bodySmall,
-                            fontSize = if (small) 11.sp else 12.sp,
-                            textAlign = TextAlign.Center,
-                            maxLines = 2
-                        )
+                            Text(
+                                text = label,
+                                style = MaterialTheme.typography.bodySmall,
+                                fontSize = if (small) 11.sp else 12.sp,
+                                textAlign = TextAlign.Center,
+                                maxLines = 2
+                            )
+                        }
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(12.dp))
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .selectableGroup(),
+                    horizontalArrangement = Arrangement.SpaceAround,
+                    verticalAlignment = Alignment.Top
+                ) {
+                    optionLabels.drop(2).forEachIndexed { idx, label ->
+                        Column(
+                            modifier = Modifier
+                                .weight(1f)
+                                .widthIn(min = 64.dp)
+                                .padding(horizontal = 6.dp)
+                                .clickable(enabled = !disabled) { onSelect(idx + 2) }
+                                .semantics { this.selected = (selected == idx + 2) },
+                            verticalArrangement = Arrangement.Top,
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            RadioButton(
+                                selected = selected == idx + 2, 
+                                onClick = { if (!disabled) onSelect(idx + 2) },
+                                enabled = !disabled,
+                                colors = RadioButtonDefaults.colors(
+                                    selectedColor = colorResource(R.color.light_principal),
+                                    unselectedColor = Color.Gray,
+                                    disabledSelectedColor = Color.LightGray,
+                                    disabledUnselectedColor = Color(0xFFB0BEC5)
+                                )
+                            )
+
+                            Spacer(modifier = Modifier.height(6.dp))
+
+                            Text(
+                                text = label,
+                                style = MaterialTheme.typography.bodySmall,
+                                fontSize = if (small) 11.sp else 12.sp,
+                                textAlign = TextAlign.Center,
+                                maxLines = 2
+                            )
+                        }
                     }
                 }
             }

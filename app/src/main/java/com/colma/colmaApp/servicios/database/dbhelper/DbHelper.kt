@@ -647,6 +647,19 @@ class DBhelper(context: Context) :
             db.endTransaction()
         }
     }
+
+    fun deleteEstadoAnimoRow(rowid: Long) {
+        val db = writableDatabase
+        db.beginTransaction()
+        try {
+            db.delete("estado_animo_table", "rowid = ?", arrayOf(rowid.toString()))
+            db.setTransactionSuccessful()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        } finally {
+            db.endTransaction()
+        }
+    }
     /**
      * Convenience upsert: update the pending row for idPaciente if exists, otherwise insert.
      * Returns the rowid of the pending/created row.
