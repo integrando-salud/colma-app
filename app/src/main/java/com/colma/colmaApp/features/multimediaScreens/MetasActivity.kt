@@ -2,6 +2,9 @@ package com.colma.colmaApp.features.multimediaScreens
 
 import CardThatOpensEditDialog
 import SimpleTextDialog
+import androidx.core.content.ContextCompat
+import androidx.core.view.WindowInsetsControllerCompat
+import android.graphics.Color as AndroidColor
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -16,6 +19,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -52,6 +57,15 @@ class MetasActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
+        window.statusBarColor = ContextCompat.getColor(this, R.color.principal)
+        window.navigationBarColor = AndroidColor.WHITE
+
+        WindowInsetsControllerCompat(window, window.decorView).apply {
+            isAppearanceLightStatusBars = false // Dark status bar (principal color), so light icons
+            isAppearanceLightNavigationBars = true // White navigation bar, so dark icons
+        }
+
         setContent {
             ColmaAppTheme {
                 MetasScreen(
@@ -111,126 +125,130 @@ fun MetasScreen(onBack: () -> Unit = {}, onFinish: () -> Unit = {}) {
                         .padding(16.dp)
                 ) {
 
+                                        Column(
+                                            modifier = Modifier
+                                                .fillMaxWidth()
+                                                .verticalScroll(rememberScrollState())
+                                                .padding(bottom = 84.dp), // Adjust this padding to accommodate the fixed button
+                                            horizontalAlignment = Alignment.CenterHorizontally
+                                        ) {
+                                            CardThatOpensSelectionDialog(
+                                                title = "Tipo de Actividad",
+                                                description = "Selecciona el tipo de actividad que deseas realizar.",
+                                                items = listOf("Actividad Fisica", "Habitos", "Bienestar"),
+                                                label = { it },
+                                                onItemSelected = { chosen ->
+                                                    tipoActividad.value = chosen
+                                                }
 
-                    Column(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
+                                            )
 
-                        CardThatOpensSelectionDialog(
-                            title = "Tipo de Actividad",
-                            description = "Selecciona el tipo de actividad que deseas realizar.",
-                            items = listOf("Actividad Fisica", "Habitos", "Bienestar"),
-                            label = { it },
-                            onItemSelected = { chosen ->
-                                tipoActividad.value = chosen
-                            }
-                        )
+                                            Spacer(modifier = Modifier.padding(8.dp))
 
-                        Spacer(modifier = Modifier.padding(8.dp))
+                                            CardThatOpensSelectionDialog(
+                                                title = "Actividad",
+                                                description = "Seleccione la actividad concreta que desee realizar.",
+                                                items = listOf("Caminar 30 minutos", "Yoga", "Correr"),
+                                                label = { it },
+                                                onItemSelected = { chosen ->
+                                                    actividad.value = chosen
+                                                }
+                                            )
 
-                        CardThatOpensSelectionDialog(
-                            title = "Actividad",
-                            description = "Seleccione la actividad concreta que desee realizar.",
-                            items = listOf("Caminar 30 minutos", "Yoga", "Correr"),
-                            label = { it },
-                            onItemSelected = { chosen ->
-                                actividad.value = chosen
-                            }
-                        )
+                                            Spacer(modifier = Modifier.padding(8.dp))
 
-                        Spacer(modifier = Modifier.padding(8.dp))
+                                            CardThatOpensEditDialog(
+                                                title = "Con quien?",
+                                                description = "Describe brevemente con quien iras",
+                                                onSave = { newDesc ->
+                                                    conQuien.value = newDesc
+                                                }
+                                            )
 
-                        CardThatOpensEditDialog(
-                            title = "Con quien?",
-                            description = "Describe brevemente con quien iras",
-                            onSave = { newDesc ->
-                                conQuien.value = newDesc
-                            }
-                        )
+                                            Spacer(modifier = Modifier.padding(8.dp))
 
-                        Spacer(modifier = Modifier.padding(8.dp))
+                                            CardThatOpensEditDialog(
+                                                title = "Donde?",
+                                                description = "Describe brevemente en donde lo harás",
+                                                onSave = { newDesc ->
+                                                    donde.value = newDesc
+                                                }
+                                            )
 
-                        CardThatOpensEditDialog(
-                            title = "Donde?",
-                            description = "Describe brevemente en donde lo harás",
-                            onSave = { newDesc ->
-                                donde.value = newDesc
-                            }
-                        )
+                                            Spacer(modifier = Modifier.padding(8.dp))
 
-                        Spacer(modifier = Modifier.padding(8.dp))
+                                            CardThatOpensDateTimeDialog(
+                                                title = "Fecha de registro",
+                                                description = "Toca para cambiar",
+                                                initialMillis = System.currentTimeMillis(),
+                                                onDateTimeSelected = { datetime ->
+                                                    fecha.value = datetime
+                                                }
+                                            )
+                                        }
+                                        Column(
+                                            modifier = Modifier
+                                                .fillMaxWidth()
+                                                .align(Alignment.BottomCenter), // Align to the bottom center
+                                            horizontalAlignment = Alignment.CenterHorizontally
+                                        ) {
+                                            Button(
+                                                onClick = {
+                                                    val missing = buildList {
+                                                        if (tipoActividad.value.isNullOrBlank()) add("Tipo de actividad")
+                                                        if (actividad.value.isNullOrBlank()) add("Actividad")
+                                                        if (conQuien.value.isNullOrBlank()) add("Con quién")
+                                                        if (donde.value.isNullOrBlank()) add("Dónde")
+                                                        if (fecha.value.isNullOrBlank()) add("Fecha y Hora")
+                                                    }
+                                                    shouldExecuteFinalAction = missing.isEmpty()
+                                                    if (missing.isNotEmpty()) {
+                                                        summaryMessage =
+                                                            "Faltan completar los siguientes campos:\n\n• " +
+                                                                    missing.joinToString("\n• ")
+                                                    } else {
+                                                        summaryMessage = """
+                                                            Resumen de registro:
+                                                            • Tipo de actividad: ${tipoActividad.value}
 
-                        CardThatOpensDateTimeDialog(
-                            title = "Fecha de registro",
-                            description = "Toca para cambiar",
-                            initialMillis = System.currentTimeMillis(),
-                            onDateTimeSelected = { datetime ->
-                                fecha.value = datetime
-                            }
-                        )
+                                                            • Actividad: ${actividad.value}
 
+                                                            • Con quién: ${conQuien.value}
 
-                        Spacer(modifier = Modifier.weight(1f))
+                                                            • Dónde: ${donde.value}
 
-                        Button(
-                            onClick = {
-                                val missing = buildList {
-                                    if (tipoActividad.value.isNullOrBlank()) add("Tipo de actividad")
-                                    if (actividad.value.isNullOrBlank()) add("Actividad")
-                                    if (conQuien.value.isNullOrBlank()) add("Con quién")
-                                    if (donde.value.isNullOrBlank()) add("Dónde")
-                                    if (fecha.value.isNullOrBlank()) add("Fecha y Hora")
-                                }
+                                                            • Fecha y hora: ${fecha.value}
+                                                        """.trimIndent()
+                                                    }
+                                                    showSummaryDialog = true
+                                                },
 
-                                shouldExecuteFinalAction = missing.isEmpty()
-
-                                if (missing.isNotEmpty()) {
-                                    summaryMessage =
-                                        "Faltan completar los siguientes campos:\n\n• " +
-                                                missing.joinToString("\n• ")
-                                } else {
-                                    summaryMessage = """
-                                        Resumen de registro:
-                                        
-                                        • Tipo de actividad: ${tipoActividad.value}
-                                        • Actividad: ${actividad.value}
-                                        • Con quién: ${conQuien.value}
-                                        • Dónde: ${donde.value}
-                                        • Fecha y hora: ${fecha.value}
-                                    """.trimIndent()
-                                }
-
-                                showSummaryDialog = true
-                            },
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(52.dp),
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = colorResource(R.color.principal),
-                                contentColor = Color.White
-                            ),
-                            shape = RoundedCornerShape(8.dp)
-                        ) {
-                            Text(text = "Terminar", fontWeight = FontWeight.SemiBold)
-                        }
-
-                        if (showSummaryDialog) {
-                            SimpleTextDialog(
-                                show = showSummaryDialog,
-                                onDismissRequest = { showSummaryDialog = false },
-                                title = "Resultado",
-                                description = summaryMessage,
-                                confirmLabel = "OK",
-                                onConfirm = {
-                                    if (shouldExecuteFinalAction) {
-                                        onFinish()
-                                    }
-                                }
-                            )
-                        }
-
-                    }
+                                                modifier = Modifier
+                                                    .fillMaxWidth()
+                                                    .height(52.dp),
+                                                colors = ButtonDefaults.buttonColors(
+                                                    containerColor = colorResource(R.color.principal),
+                                                    contentColor = Color.White
+                                                ),
+                                                shape = RoundedCornerShape(8.dp)
+                                            ) {
+                                                Text(text = "Terminar", fontWeight = FontWeight.SemiBold)
+                                            }
+                                            if (showSummaryDialog) {
+                                                SimpleTextDialog(
+                                                    show = showSummaryDialog,
+                                                    onDismissRequest = { showSummaryDialog = false },
+                                                    title = "Resultado",
+                                                    description = summaryMessage,
+                                                    confirmLabel = "OK",
+                                                    onConfirm = {
+                                                        if (shouldExecuteFinalAction) {
+                                                            onFinish()
+                                                        }
+                                                    }
+                                                )
+                                            }
+                                        }
 
                 }
 

@@ -1,6 +1,7 @@
 package com.colma.colmaApp.features.login.ui
 
 import android.content.Intent
+import androidx.core.content.ContextCompat
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -19,6 +20,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
@@ -73,16 +76,12 @@ class LoginUI : ComponentActivity() {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
-        // Make the status & navigation bars transparent so our gradient shows behind them
-        window.statusBarColor = AndroidColor.TRANSPARENT
-        window.navigationBarColor = AndroidColor.TRANSPARENT
+        window.statusBarColor = ContextCompat.getColor(this, R.color.principal)
+        window.navigationBarColor = android.graphics.Color.WHITE
 
-        // Choose icon colors depending on the brightness of the background.
-        // If your gradient is light, use 'true' to get dark icons; if dark, set false.
         WindowInsetsControllerCompat(window, window.decorView).apply {
-            isAppearanceLightStatusBars =
-                true       // dark status bar icons (set false if gradient is dark)
-            isAppearanceLightNavigationBars = true   // dark nav bar icons
+            isAppearanceLightStatusBars = false // Dark status bar (principal color), so light icons
+            isAppearanceLightNavigationBars = true // White navigation bar, so dark icons
         }
 
         setContent {
@@ -112,15 +111,17 @@ class LoginUI : ComponentActivity() {
                 .fillMaxSize()
                 .background(
                     colorResource(R.color.background)
-                )
+                ),
+            contentAlignment = Alignment.Center // Center the content vertically
         ) {
             // Inner column holds the real content and *respects* the status & nav bars
             Column(
                 modifier = Modifier
-                    .fillMaxSize()
+                    .fillMaxWidth()
                     .systemBarsPadding()        // keeps content below the status bar
                     // keeps content above nav bar and avoids IME
-                    .padding(horizontal = 24.dp),
+                    .padding(horizontal = 24.dp)
+                    .verticalScroll(rememberScrollState()),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
 
@@ -134,7 +135,7 @@ class LoginUI : ComponentActivity() {
                         .fillMaxHeight(0.40f)
                 )
 
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(50.dp))
 
                 Card(
                     modifier = Modifier
@@ -172,9 +173,9 @@ class LoginUI : ComponentActivity() {
                         OutlinedTextField1(
                             value = email,
                             onValueChange = { email = it },
-                            label = { Text("Correo electrónico") },
+                            label = { Text("DNI") },
                             singleLine = true,
-                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                             colors = OutlinedTextFieldDefaults.colors(
                                 Color(0xFF333333),
                                 cursorColor = colorResource(R.color.principal),
@@ -237,7 +238,7 @@ class LoginUI : ComponentActivity() {
 
                 }
 
-                Spacer(modifier = Modifier.height(35.dp))
+                Spacer(modifier = Modifier.height(10.dp))
 
                 Text(
                     text = "Recordar contraseña",

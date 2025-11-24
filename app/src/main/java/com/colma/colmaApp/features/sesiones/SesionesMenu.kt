@@ -1,5 +1,8 @@
 package com.colma.colmaApp.features.sesiones
 
+import androidx.core.content.ContextCompat
+import androidx.core.view.WindowInsetsControllerCompat
+import android.graphics.Color as AndroidColor
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
@@ -99,6 +102,15 @@ class SesionesMenu : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
+        window.statusBarColor = ContextCompat.getColor(this, R.color.principal)
+        window.navigationBarColor = AndroidColor.WHITE
+
+        WindowInsetsControllerCompat(window, window.decorView).apply {
+            isAppearanceLightStatusBars = false // Dark status bar (principal color), so light icons
+            isAppearanceLightNavigationBars = true // White navigation bar, so dark icons
+        }
+
         setContent {
             ColmaAppTheme {
                 val ctx = this
@@ -254,14 +266,6 @@ fun SessionCard(session: SessionItem, selected: Boolean = false, onClick: () -> 
 
             Spacer(modifier = Modifier.width(8.dp))
 
-            // pequeño icono indicativo
-            Button(
-                onClick = onClick,
-                colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.principal), contentColor = colorResource(id = R.color.white)),
-                modifier = Modifier.height(40.dp)
-            ) {
-                Text("Abrir")
-            }
         }
     }
 }
@@ -348,18 +352,6 @@ fun sampleSubSessions(parentId: Long): List<SubSessionItem> {
         SubSessionItem(1, "Sesion 1", "05:00"),
         SubSessionItem(2, "Sesion 2", "07:00"),
         SubSessionItem(3, "Sesion 3", "03:00"),
-        SubSessionItem(4, "Sesion 4", "05:00"),
-        SubSessionItem(5, "Sesion 5", "07:00"),
-        SubSessionItem(6, "Sesion 6", "03:00"),
-        SubSessionItem(7, "Sesion 7", "05:00"),
-        SubSessionItem(8, "Sesion 8", "07:00"),
-        SubSessionItem(9, "Sesion 9", "03:00"),
-        SubSessionItem(10, "Sesion 10", "05:00"),
-        SubSessionItem(11, "Sesion 11", "07:00"),
-        SubSessionItem(12, "Sesion 12", "03:00"),
-        SubSessionItem(13, "Sesion 13", "03:00"),
-        SubSessionItem(14, "Sesion 14", "05:00"),
-        SubSessionItem(15, "Sesion 15", "07:00"),
-        SubSessionItem(16, "Sesion 16", "03:00")
+
     )
 }

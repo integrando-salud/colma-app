@@ -1,6 +1,9 @@
 package com.colma.colmaApp.features.sesiones
 
 import android.content.Intent
+import androidx.core.content.ContextCompat
+import androidx.core.view.WindowInsetsControllerCompat
+import android.graphics.Color as AndroidColor
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -49,6 +52,8 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.IconButton
 import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.ui.res.painterResource
 import com.colma.colmaApp.features.multimediaScreens.ActionActivity
 import com.colma.colmaApp.features.multimediaScreens.DescriptionActivity
@@ -68,6 +73,14 @@ class MultimediaSelector : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
+        window.statusBarColor = ContextCompat.getColor(this, R.color.principal)
+        window.navigationBarColor = AndroidColor.WHITE
+
+        WindowInsetsControllerCompat(window, window.decorView).apply {
+            isAppearanceLightStatusBars = false // Dark status bar (principal color), so light icons
+            isAppearanceLightNavigationBars = true // White navigation bar, so dark icons
+        }
 
         // read incoming extras (if any)
         val sessionId = intent?.getLongExtra("sessionId", -1L) ?: -1L
@@ -144,7 +157,8 @@ fun MultimediaSelectorScreen(
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(16.dp),
+                    .padding(16.dp)
+                    .verticalScroll(rememberScrollState()),
                 verticalArrangement = Arrangement.spacedBy(12.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
@@ -189,19 +203,6 @@ fun MultimediaSelectorScreen(
                             Text("Ver información y objetivos de la sesión", fontSize = 13.sp, color = Color.Gray)
                         }
 
-                        Spacer(modifier = Modifier.width(12.dp))
-                        // small affordance button (optional)
-                        Button(onClick = {
-                            val i = Intent(context, DescriptionActivity::class.java).apply {
-                                putExtra("sessionId", sessionId)
-                                putExtra("sessionTitle", sessionTitle)
-                                putExtra("subSessionId", subSessionId)
-                                putExtra("subSessionTitle", subSessionTitle)
-                            }
-                            context.startActivity(i)
-                        }, colors = ButtonDefaults.buttonColors(containerColor = signatureColor)) {
-                            Text("Abrir")
-                        }
                     }
                 }
 
@@ -245,18 +246,7 @@ fun MultimediaSelectorScreen(
                             Text("Ver el vídeo explicativo de la sesión", fontSize = 13.sp, color = Color.Gray)
                         }
 
-                        Spacer(modifier = Modifier.width(12.dp))
-                        Button(onClick = {
-                            val i = Intent(context, ActionActivity::class.java).apply {
-                                putExtra("sessionId", sessionId)
-                                putExtra("sessionTitle", sessionTitle)
-                                putExtra("subSessionId", subSessionId)
-                                putExtra("subSessionTitle", subSessionTitle)
-                            }
-                            context.startActivity(i)
-                        }, colors = ButtonDefaults.buttonColors(containerColor = signatureColor)) {
-                            Text("Abrir")
-                        }
+
                     }
                 }
 
@@ -300,18 +290,6 @@ fun MultimediaSelectorScreen(
                             Text("Escuchar el audio explicativo de la sesión", fontSize = 13.sp, color = Color.Gray)
                         }
 
-                        Spacer(modifier = Modifier.width(12.dp))
-                        Button(onClick = {
-                            val i = Intent(context, FinishActivity::class.java).apply {
-                                putExtra("sessionId", sessionId)
-                                putExtra("sessionTitle", sessionTitle)
-                                putExtra("subSessionId", subSessionId)
-                                putExtra("subSessionTitle", subSessionTitle)
-                            }
-                            context.startActivity(i)
-                        }, colors = ButtonDefaults.buttonColors(containerColor = signatureColor)) {
-                            Text("Abrir")
-                        }
                     }
                 }
 
@@ -354,18 +332,7 @@ fun MultimediaSelectorScreen(
                             Text("Configura tus metas para esta sesion", fontSize = 13.sp, color = Color.Gray)
                         }
 
-                        Spacer(modifier = Modifier.width(12.dp))
-                        Button(onClick = {
-                            val i = Intent(context, ActionActivity::class.java).apply {
-                                putExtra("sessionId", sessionId)
-                                putExtra("sessionTitle", sessionTitle)
-                                putExtra("subSessionId", subSessionId)
-                                putExtra("subSessionTitle", subSessionTitle)
-                            }
-                            context.startActivity(i)
-                        }, colors = ButtonDefaults.buttonColors(containerColor = signatureColor)) {
-                            Text("Abrir")
-                        }
+
                     }
                 }
 

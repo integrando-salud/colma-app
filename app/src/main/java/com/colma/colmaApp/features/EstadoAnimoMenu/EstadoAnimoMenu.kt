@@ -1,5 +1,8 @@
 package com.colma.colmaApp.features.EstadoAnimoMenu
 
+import androidx.core.content.ContextCompat
+import androidx.core.view.WindowInsetsControllerCompat
+import android.graphics.Color as AndroidColor
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
@@ -15,6 +18,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -33,6 +38,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import com.colma.colmaApp.R
 import com.colma.colmaApp.features.RegistroSalud.HealthEntry
 import com.colma.colmaApp.features.RegistroSalud.HealthRecordCard
 import com.colma.colmaApp.features.RegistroSalud.HistoryCard
@@ -52,6 +58,15 @@ class EstadoAnimoMenuActivity : ComponentActivity() {
 
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
+        window.statusBarColor = ContextCompat.getColor(this, R.color.principal)
+        window.navigationBarColor = AndroidColor.WHITE
+
+        WindowInsetsControllerCompat(window, window.decorView).apply {
+            isAppearanceLightStatusBars = false // Dark status bar (principal color), so light icons
+            isAppearanceLightNavigationBars = true // White navigation bar, so dark icons
+        }
+
         setContent {
             ColmaAppTheme {
                 EstadoAnimoMenuScreen(onBack = { finish() })
@@ -159,7 +174,8 @@ fun EstadoAnimoMenuScreen(onBack: () -> Unit = {}) {
                 .fillMaxSize()
                 .padding(innerPadding)
                 .padding(horizontal = 20.dp)
-                .padding(top = 12.dp),
+                .padding(top = 12.dp)
+                .verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             // Top card that navigates to the existing EstadoAnimoActivity via the launcher

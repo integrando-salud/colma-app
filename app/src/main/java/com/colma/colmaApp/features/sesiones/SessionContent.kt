@@ -1,5 +1,8 @@
 package com.colma.colmaApp.features.sesiones
 
+import androidx.core.content.ContextCompat
+import androidx.core.view.WindowInsetsControllerCompat
+import android.graphics.Color as AndroidColor
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -9,6 +12,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RawRes
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
@@ -46,6 +51,14 @@ class SessionContent : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
+        window.statusBarColor = ContextCompat.getColor(this, R.color.principal)
+        window.navigationBarColor = AndroidColor.WHITE
+
+        WindowInsetsControllerCompat(window, window.decorView).apply {
+            isAppearanceLightStatusBars = false // Dark status bar (principal color), so light icons
+            isAppearanceLightNavigationBars = true // White navigation bar, so dark icons
+        }
 
         val sessionId = intent?.getLongExtra("sessionId", -1L) ?: -1L
         val sessionTitle = intent?.getStringExtra("sessionTitle") ?: "Sesión"
@@ -221,7 +234,8 @@ fun SessionContentScreen(
             modifier = Modifier
                 .padding(inner)
                 .fillMaxSize()
-                .padding(16.dp),
+                .padding(horizontal = 16.dp)
+                .verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             TabRow(selectedTabIndex = selectedTab) {

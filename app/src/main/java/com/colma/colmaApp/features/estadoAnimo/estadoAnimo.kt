@@ -1,5 +1,8 @@
 package com.colma.colmaApp.features.estadoAnimo
 
+import androidx.core.content.ContextCompat
+import androidx.core.view.WindowInsetsControllerCompat
+import android.graphics.Color as AndroidColor
 import android.app.Activity
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -42,6 +45,15 @@ class EstadoAnimoActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
+        window.statusBarColor = ContextCompat.getColor(this, R.color.principal)
+        window.navigationBarColor = AndroidColor.WHITE
+
+        WindowInsetsControllerCompat(window, window.decorView).apply {
+            isAppearanceLightStatusBars = false // Dark status bar (principal color), so light icons
+            isAppearanceLightNavigationBars = true // White navigation bar, so dark icons
+        }
+
         setContent {
             ColmaAppTheme {
                 // pass an onBack that returns RESULT_OK so caller can detect success
@@ -209,6 +221,7 @@ fun EstadoAnimoScreen(
                 .fillMaxSize()
                 .padding(innerPadding)
                 .padding(horizontal = 16.dp, vertical = 12.dp)
+                .verticalScroll(rememberScrollState()) // Moved verticalScroll here
         ) {
             Text(
                 text = "Contesta las siguientes preguntas seleccionando la opción que mejor te describe:",
@@ -298,9 +311,7 @@ fun EstadoAnimoScreen(
             // ---------------------------------------------------------
 
             Column(
-                modifier = Modifier
-                    .weight(1f)
-                    .verticalScroll(rememberScrollState()),
+                modifier = Modifier, // Removed .weight(1f)
                 verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
                 // first two questions — pass disabled based on lockedFirstTwo
@@ -407,7 +418,7 @@ fun EstadoAnimoScreen(
                     contentColor = Color.White
                 )
             ) {
-                Text(text = "Enviar")
+                Text(text = "Guardar")
             }
 
             if (confirmSubmitOpen) {
@@ -419,11 +430,11 @@ fun EstadoAnimoScreen(
                     title = { Text("Confirmar envío") },
                     text = {
                         Column {
-                            Text("Vas a enviar $summaryCount respuestas.")
+                            Text("Vas a guardar $summaryCount respuestas.")
                             Spacer(Modifier.height(8.dp))
-                            Text("Fecha de envio seleccionada: $dateLabel $timeLabel")
+                            Text("Fecha de guardado seleccionada: $dateLabel $timeLabel")
                             Spacer(Modifier.height(8.dp))
-                            Text("¿Deseas confirmar el envío?")
+                            Text("¿Deseas confirmar el guardado?")
                         }
                     },
                     confirmButton = {

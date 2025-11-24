@@ -1,5 +1,8 @@
 package com.colma.colmaApp.features.RegistroSalud
 
+import androidx.core.content.ContextCompat
+import androidx.core.view.WindowInsetsControllerCompat
+import android.graphics.Color as AndroidColor
 import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent
@@ -12,6 +15,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -67,6 +72,15 @@ class RegistrosSalud : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
+        window.statusBarColor = ContextCompat.getColor(this, R.color.principal)
+        window.navigationBarColor = AndroidColor.WHITE
+
+        WindowInsetsControllerCompat(window, window.decorView).apply {
+            isAppearanceLightStatusBars = false // Dark status bar (principal color), so light icons
+            isAppearanceLightNavigationBars = true // White navigation bar, so dark icons
+        }
+
         setContent {
             ColmaAppTheme {
                 RegistrosSaludScreen(onBack = { finish() })
@@ -503,7 +517,8 @@ fun RegistrosSaludScreen(
                         modifier = Modifier
                             .fillMaxSize()
                             .padding(horizontal = 24.dp)
-                            .padding(top = 40.dp),
+                            .padding(top = 40.dp)
+                            .verticalScroll(rememberScrollState()),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Text(
@@ -520,7 +535,7 @@ fun RegistrosSaludScreen(
                             onClick = { screen = RSscreen.Glucosa },
                             modifier = Modifier
                                 .fillMaxWidth(0.85f)
-                                .height(56.dp),
+                                .height(65.dp),
                             colors = ButtonDefaults.buttonColors(
                                 containerColor = Color(0xFFF0F0F0),
                                 contentColor = Color.Black
@@ -558,7 +573,7 @@ fun RegistrosSaludScreen(
                             onClick = { screen = RSscreen.Presion },
                             modifier = Modifier
                                 .fillMaxWidth(0.85f)
-                                .height(56.dp),
+                                .height(65.dp),
                             colors = ButtonDefaults.buttonColors(
                                 containerColor = Color(0xFFF0F0F0),
                                 contentColor = Color.Black
@@ -603,7 +618,7 @@ fun RegistrosSaludScreen(
                             },
                             modifier = Modifier
                                 .fillMaxWidth(0.85f)
-                                .height(56.dp),
+                                .height(65.dp),
                             colors = ButtonDefaults.buttonColors(
                                 containerColor = Color(0xFFF7F7F8),
                                 contentColor = Color.Black
@@ -642,7 +657,8 @@ fun RegistrosSaludScreen(
                         modifier = Modifier
                             .fillMaxSize()
                             .padding(horizontal = 20.dp)
-                            .padding(top = 12.dp),
+                            .padding(top = 12.dp)
+                            .verticalScroll(rememberScrollState()),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         // a single HealthRecordCard for Glucosa (opens the input dialog)
@@ -661,7 +677,8 @@ fun RegistrosSaludScreen(
                         modifier = Modifier
                             .fillMaxSize()
                             .padding(horizontal = 20.dp)
-                            .padding(top = 12.dp),
+                            .padding(top = 12.dp)
+                            .verticalScroll(rememberScrollState()),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         HealthRecordCard(label = "Presion", onClick = { openDialogFor("Presion") }, modifier = Modifier.fillMaxWidth())
@@ -677,7 +694,8 @@ fun RegistrosSaludScreen(
                         modifier = Modifier
                             .fillMaxSize()
                             .padding(horizontal = 20.dp)
-                            .padding(top = 12.dp),
+                            .padding(top = 12.dp)
+                            .verticalScroll(rememberScrollState()),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         HealthRecordCard(label = "Depresion", onClick = { openDialogFor("Depresion") }, modifier = Modifier.fillMaxWidth())
@@ -847,7 +865,7 @@ fun RegistrosSaludScreen(
                                     confirmLabel = "Glucosa"
                                     confirmSaveDialogOpen = true
                                 }) {
-                                    Text("Actualizar")
+                                    Text("Guardar")
                                 }
                             },
                             dismissButton = {
@@ -1011,7 +1029,7 @@ fun RegistrosSaludScreen(
                                     confirmLabel = "Presion"
                                     confirmSaveDialogOpen = true
                                 }) {
-                                    Text("Actualizar")
+                                    Text("Guardar")
                                 }
                             },
                             dismissButton = {

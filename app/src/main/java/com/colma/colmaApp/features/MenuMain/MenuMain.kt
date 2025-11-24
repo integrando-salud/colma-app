@@ -1,5 +1,8 @@
 package com.colma.colmaApp.features.MenuMain
 
+import androidx.core.content.ContextCompat
+import androidx.core.view.WindowInsetsControllerCompat
+import android.graphics.Color as AndroidColor
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
@@ -23,6 +26,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -84,6 +89,15 @@ class MenuMain : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
+        window.statusBarColor = ContextCompat.getColor(this, R.color.principal)
+        window.navigationBarColor = AndroidColor.WHITE
+
+        WindowInsetsControllerCompat(window, window.decorView).apply {
+            isAppearanceLightStatusBars = false // Dark status bar (principal color), so light icons
+            isAppearanceLightNavigationBars = true // White navigation bar, so dark icons
+        }
+
         setContent {
             ColmaAppTheme {
                 MenuScreen(
@@ -269,7 +283,8 @@ fun MenuScreen(
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(horizontal = 24.dp)
-                        .padding(top = 50.dp),
+                        .padding(top = 50.dp)
+                        .verticalScroll(rememberScrollState()),
                     verticalArrangement = Arrangement.Top,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
@@ -289,7 +304,7 @@ fun MenuScreen(
                         shape = RoundedCornerShape(8.dp),
                         modifier = Modifier
                             .fillMaxWidth(0.85f)
-                            .height(56.dp)
+                            .height(65.dp)
                             .shadow(elevation = 6.dp, shape = RoundedCornerShape(8.dp), clip = false)
                             .background(
                                 brush = Brush.horizontalGradient(
@@ -333,7 +348,7 @@ fun MenuScreen(
                         onClick = onHealthRegistersClick,
                         modifier = Modifier
                             .fillMaxWidth(0.85f)
-                            .height(56.dp),
+                            .height(65.dp),
                         colors = ButtonDefaults.buttonColors(
                             containerColor = Color(0xFFF0F0F0),
                             contentColor = Color.Black
@@ -606,7 +621,7 @@ fun MenuScreen(
                         },
                         modifier = Modifier
                             .fillMaxWidth(0.85f)
-                            .height(56.dp),
+                            .height(65.dp),
                         colors = ButtonDefaults.buttonColors(
                             containerColor = Color(0xFFF0F0F0),
                             contentColor = Color.Black
@@ -632,7 +647,7 @@ fun MenuScreen(
                             Spacer(modifier = Modifier.width(12.dp))
 
                             Text(
-                                text = "Sincronizar datos",
+                                text = "Actualizar datos",
                                 fontSize = 16.sp,
                                 fontWeight = FontWeight.SemiBold,
                                 modifier = Modifier.weight(1f),
