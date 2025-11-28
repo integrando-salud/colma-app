@@ -1,7 +1,7 @@
 package com.colma.colmaApp.features.multimediaScreens
 
-import CardThatOpensEditDialog
-import SimpleTextDialog
+import com.colma.colmaApp.utils.varios.CardThatOpensEditDialog
+import com.colma.colmaApp.utils.varios.CustomAlertDialog
 import android.widget.Toast
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -276,13 +276,13 @@ fun MetasScreen(onBack: () -> Unit = {}, onFinish: () -> Unit = {}) {
                             Text(text = "Terminar", fontWeight = FontWeight.SemiBold)
                         }
                         if (showSummaryDialog) {
-                            SimpleTextDialog(
+                            CustomAlertDialog(
                                 show = showSummaryDialog,
                                 onDismissRequest = { showSummaryDialog = false },
                                 title = "Resultado",
                                 description = summaryMessage,
-                                confirmLabel = "OK",
-                                onConfirm = {
+                                yesLabel = "OK",
+                                onYes = {
                                     if (shouldExecuteFinalAction) {
                                         scope.launch {
                                             val newMeta = RegistrosSaludModelos.MetaRecord(

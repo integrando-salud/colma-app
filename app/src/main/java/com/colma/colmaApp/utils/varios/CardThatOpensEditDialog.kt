@@ -1,3 +1,5 @@
+package com.colma.colmaApp.utils.varios
+
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -88,7 +90,7 @@ fun CardThatOpensEditDialog(
             text = {
                 Column(modifier = Modifier.fillMaxWidth()) {
                     OutlinedTextField(
-                        value = "",
+                        value = editBuffer,
                         onValueChange = {
                             editBuffer = it
                             if (!it.isBlank()) error = null

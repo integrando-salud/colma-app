@@ -1,17 +1,13 @@
 package com.colma.colmaApp.features.MenuMain
 
-import androidx.core.content.ContextCompat
-import androidx.core.view.WindowInsetsControllerCompat
-import android.graphics.Color as AndroidColor
 import android.content.Intent
+import android.graphics.Color as AndroidColor
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.runtime.Composable
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -24,37 +20,44 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
-
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Icon
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Call
 import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Info
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DrawerValue
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.RadioButton
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberDrawerState
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
-
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
@@ -68,11 +71,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import com.colma.colmaApp.R
 import com.colma.colmaApp.features.RegistroSalud.RegistrosSalud
 import com.colma.colmaApp.features.login.ui.LoginUI
 import com.colma.colmaApp.features.sesiones.SesionesMenu
+import com.colma.colmaApp.servicios.Modelos.RegistrosSaludModelos
+import com.colma.colmaApp.servicios.database.dbhelper.DBhelper
 import com.colma.colmaApp.ui.theme.ColmaAppTheme
+import com.colma.colmaApp.utils.varios.CustomAlertDialog
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -142,7 +150,125 @@ fun MenuScreen(
 
     val webhookUrl = "https://webhook.site/12930f51-dcee-43ca-8b6a-84aec1e7164a"
 
-    val dbHelper = remember { com.colma.colmaApp.servicios.database.dbhelper.DBhelper(context.applicationContext) }
+    val dbHelper = remember { DBhelper(context.applicationContext) }
+
+    var showObjectiveDialog by remember { mutableStateOf(false) }
+    var todaysObjective by remember { mutableStateOf<RegistrosSaludModelos.MetaRecord?>(null) }
+    var showReasonDialog by remember { mutableStateOf(false) }
+    var showOtherReasonDialog by remember { mutableStateOf(false) }
+    var otherReason by remember { mutableStateOf("") }
+
+    LaunchedEffect(Unit) {
+        withContext(Dispatchers.IO) {
+            val objective = dbHelper.getMetaForToday(1) // Assuming user id 1
+            if (objective != null) {
+                todaysObjective = objective
+                showObjectiveDialog = true
+            }
+        }
+    }
+
+    if (showObjectiveDialog && todaysObjective != null) {
+        CustomAlertDialog(
+            show = true,
+            onDismissRequest = { showObjectiveDialog = false },
+            title = "Objetivo para Hoy",
+            description = "¿Completaste este objetivo?: ${todaysObjective?.actividad ?: "No hay detalles."}",
+            onYes = {
+                todaysObjective?.let {
+                    val updatedObjective = it.copy(meta_cumplida = 1)
+                    scope.launch {
+                        withContext(Dispatchers.IO) {
+                            dbHelper.updateMeta(updatedObjective)
+                        }
+                    }
+                }
+            },
+            onNo = {
+                showReasonDialog = true
+            }
+        )
+    }
+
+    if (showReasonDialog) {
+        val reasons = listOf("No tuve tiempo", "El clima no ayudo", "otro")
+        var selectedReason by remember { mutableStateOf("") }
+
+        AlertDialog(
+            onDismissRequest = { showReasonDialog = false },
+            title = { Text("¿Por qué no completaste el objetivo?") },
+            text = {
+                LazyColumn {
+                    items(reasons) { reason ->
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clickable { selectedReason = reason },
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            RadioButton(
+                                selected = (reason == selectedReason),
+                                onClick = { selectedReason = reason }
+                            )
+                            Text(text = reason, modifier = Modifier.padding(start = 8.dp))
+                        }
+                    }
+                }
+            },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        if (selectedReason == "otro") {
+                            showOtherReasonDialog = true
+                        } else {
+                            todaysObjective?.let {
+                                val updatedObjective = it.copy(meta_cumplida = 0, motivo_incumplimiento = selectedReason)
+                                scope.launch {
+                                    withContext(Dispatchers.IO) {
+                                        dbHelper.updateMeta(updatedObjective)
+                                    }
+                                }
+                            }
+                        }
+                        showReasonDialog = false
+                    }
+                ) {
+                    Text("Aceptar")
+                }
+            }
+        )
+    }
+
+    if (showOtherReasonDialog) {
+        AlertDialog(
+            onDismissRequest = { showOtherReasonDialog = false },
+            title = { Text("Por favor, explica la razón") },
+            text = {
+                OutlinedTextField(
+                    value = otherReason,
+                    onValueChange = { otherReason = it },
+                    label = { Text("Razón") }
+                )
+            },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        todaysObjective?.let {
+                            val updatedObjective = it.copy(meta_cumplida = 0, motivo_incumplimiento = otherReason)
+                            scope.launch {
+                                withContext(Dispatchers.IO) {
+                                    dbHelper.updateMeta(updatedObjective)
+                                }
+                            }
+                        }
+                        showOtherReasonDialog = false
+                    }
+                ) {
+                    Text("Aceptar")
+                }
+            }
+        )
+    }
 
     ModalNavigationDrawer(
         drawerState = drawerState,
@@ -583,10 +709,9 @@ fun MenuScreen(
                                                     if (glucosaTimestampMap.isNotEmpty()) dbHelper.updateGlucosaSyncTimestamps(glucosaTimestampMap)
                                                     if (presionTimestampMap.isNotEmpty()) dbHelper.updatePresionSyncTimestamps(presionTimestampMap)
                                                     if (estadoTimestampMap.isNotEmpty()) dbHelper.updateEstadoAnimoSyncTimestamps(estadoTimestampMap)
-                                                } catch (e: Exception) {
-                                                    e.printStackTrace()
-                                                }
-                                            }
+                                                                                                 } catch (e: Exception) {
+                                                                                                     e.printStackTrace()
+                                                                                                 }                                            }
                                         }, onFailure = { err ->
                                             // failure path
                                             lastResponse = "Error: ${err?.message}"

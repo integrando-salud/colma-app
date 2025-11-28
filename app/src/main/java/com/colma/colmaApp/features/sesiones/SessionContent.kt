@@ -43,6 +43,7 @@ import androidx.compose.foundation.layout.padding
 import com.colma.colmaApp.features.multimediaScreens.ActionPage
 import com.colma.colmaApp.features.multimediaScreens.FinishPage
 import com.colma.colmaApp.features.multimediaScreens.WelcomePage
+import android.app.Activity
 
 /**
  * SessionContent Activity that reuses WelcomePage, ActionPage and FinishPage.
@@ -81,6 +82,7 @@ class SessionContent : ComponentActivity() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
+@Suppress("ContextCastToActivity")
 fun SessionContentScreen(
     sessionId: Long,
     sessionTitle: String,
@@ -90,7 +92,7 @@ fun SessionContentScreen(
 ) {
     val signatureColor = colorResource(R.color.principal)
     val context = LocalContext.current
-    val activity = LocalContext.current as? ComponentActivity
+    val activity = LocalContext.current as? Activity
 
     // Tabs
     var selectedTab by rememberSaveable { mutableStateOf(0) }

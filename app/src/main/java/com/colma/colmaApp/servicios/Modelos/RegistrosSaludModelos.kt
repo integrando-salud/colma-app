@@ -34,6 +34,7 @@ class RegistrosSaludModelos {
         val fecha_edicion: String?,
         val fecha_sincronizacion: String?,
         val meta_cumplida: Int?,
-        val fecha_objetivo: String?
+        val fecha_objetivo: String?,
+        val motivo_incumplimiento: String? = null
     )
 }

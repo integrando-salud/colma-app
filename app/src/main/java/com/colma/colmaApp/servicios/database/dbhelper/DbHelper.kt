@@ -24,43 +24,14 @@ class DBhelper(context: Context) :
 
     companion object {
         private const val DATABASE_NAME = "colmadb.db"
-        private const val DATABASE_VERSION = 1
+        private const val DATABASE_VERSION = 2
     }
 
-    init {
-        val db = writableDatabase
-        if (!checkDatabaseExistence(db.path)) {
-            try {
-                copyDatabase(context)
-            } catch (e: IOException) {
-                throw RuntimeException("Error copying prepackaged database", e)
-            }
+    override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
+        if (oldVersion < 2) {
+            db.execSQL("ALTER TABLE metas_table ADD COLUMN motivo_incumplimiento TEXT;")
         }
     }
-
-    private fun checkDatabaseExistence(dbPath: String): Boolean {
-        val file = File(dbPath)
-        return file.exists()
-    }
-
-    @Throws(IOException::class)
-    private fun copyDatabase(context: Context) {
-        close()
-
-        val outPath = getDatabasePath(context)
-        File(outPath).parentFile?.let { parent ->
-            if (!parent.exists()) parent.mkdirs()
-        }
-
-        context.assets.open("databases/$DATABASE_NAME").use { input ->
-            FileOutputStream(outPath).use { output ->
-                input.copyTo(output)
-                output.flush()
-            }
-        }
-    }
-
-    private fun getDatabasePath(context: Context): String = context.getDatabasePath(DATABASE_NAME).path
 
     // -------------------------
     // Inserts
@@ -441,6 +412,7 @@ class DBhelper(context: Context) :
                 } while (c.moveToNext())
             }
         }
+
         return results
     }
 
@@ -779,8 +751,6 @@ class DBhelper(context: Context) :
                 db.update("estado_animo_table", cv, "rowid = ?", arrayOf(id.toString()))
             }
             db.setTransactionSuccessful()
-        } catch (e: Exception) {
-            e.printStackTrace()
         } finally {
             db.endTransaction()
         }
@@ -877,6 +847,7 @@ class DBhelper(context: Context) :
             put("fecha_edicion", meta.fecha_edicion ?: defaultDateTimeFormat.format(Date()))
             put("meta_cumplida", meta.meta_cumplida)
             put("fecha_objetivo", meta.fecha_objetivo)
+            put("motivo_incumplimiento", meta.motivo_incumplimiento)
         }
 
         var rowId: Long = -1L
@@ -905,6 +876,7 @@ class DBhelper(context: Context) :
             put("fecha_edicion", defaultDateTimeFormat.format(Date()))
             put("meta_cumplida", meta.meta_cumplida)
             put("fecha_objetivo", meta.fecha_objetivo)
+            put("motivo_incumplimiento", meta.motivo_incumplimiento)
         }
 
         var affectedRows = 0
@@ -919,6 +891,7 @@ class DBhelper(context: Context) :
         }
         return affectedRows
     }
+
 
     fun deleteMeta(id: Long): Int {
         val db = writableDatabase
@@ -979,6 +952,38 @@ class DBhelper(context: Context) :
             }
         }
         return results
+    }
+
+    fun getMetaForToday(idUsuario: Int? = 1): RegistrosSaludModelos.MetaRecord? {
+        val db = readableDatabase
+        val selectionParts = mutableListOf<String>("date(fecha_objetivo) = date('now', 'localtime')")
+        val selectionArgsList = mutableListOf<String>()
+
+        if (idUsuario != null) {
+            selectionParts.add("id_usuario = ?")
+            selectionArgsList.add(idUsuario.toString())
+        }
+
+        val selection = selectionParts.joinToString(" AND ")
+        val selectionArgs = if (selectionArgsList.isNotEmpty()) selectionArgsList.toTypedArray() else null
+
+        val cursor = db.query(
+            "metas_table",
+            null,
+            selection,
+            selectionArgs,
+            null,
+            null,
+            "id_meta DESC",
+            "1"
+        )
+
+        cursor.use { c ->
+            if (c.moveToFirst()) {
+                return cursorToMetaRecord(c)
+            }
+        }
+        return null
     }
 
     fun getPendingMetas(idUsuario: Int? = 1): List<RegistrosSaludModelos.MetaRecord> {
@@ -1048,7 +1053,8 @@ class DBhelper(context: Context) :
             fecha_edicion = c.getStringOrNull("fecha_edicion"),
             fecha_sincronizacion = c.getStringOrNull("fecha_sincronizacion"),
             meta_cumplida = c.getIntOrNull("meta_cumplida"),
-            fecha_objetivo = c.getStringOrNull("fecha_objetivo")
+            fecha_objetivo = c.getStringOrNull("fecha_objetivo"),
+            motivo_incumplimiento = c.getStringOrNull("motivo_incumplimiento")
         )
     }
 }

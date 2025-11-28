@@ -1,3 +1,5 @@
+package com.colma.colmaApp.utils.varios
+
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.material3.*
@@ -16,13 +18,15 @@ import androidx.compose.ui.Modifier
  * @param onConfirm called when user presses confirm (dialog will still be dismissed by caller if desired)
  */
 @Composable
-fun SimpleTextDialog(
+fun CustomAlertDialog(
     show: Boolean,
     onDismissRequest: () -> Unit,
     title: String,
     description: String,
-    confirmLabel: String = "OK",
-    onConfirm: () -> Unit = {}
+    yesLabel: String = "Sí",
+    noLabel: String = "No",
+    onYes: () -> Unit = {},
+    onNo: () -> Unit = {}
 ) {
     if (!show) return
 
@@ -38,10 +42,18 @@ fun SimpleTextDialog(
         },
         confirmButton = {
             TextButton(onClick = {
-                onConfirm()
+                onYes()
                 onDismissRequest()
             }) {
-                Text(confirmLabel)
+                Text(yesLabel)
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = {
+                onNo()
+                onDismissRequest()
+            }) {
+                Text(noLabel)
             }
         }
     )
