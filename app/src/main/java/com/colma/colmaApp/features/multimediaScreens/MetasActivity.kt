@@ -132,7 +132,7 @@ fun MetasScreen(onBack: () -> Unit = {}, onFinish: () -> Unit = {}) {
                             Icon(
                                 imageVector = Icons.Default.ArrowBack,
                                 contentDescription = "Volver",
-                                tint = colorResource(R.color.white)
+                                tint = colorResource(R.color.background)
                             )
                         }
                     },
@@ -143,6 +143,7 @@ fun MetasScreen(onBack: () -> Unit = {}, onFinish: () -> Unit = {}) {
             bottomBar = {
 
             },
+            containerColor = colorResource(R.color.white),
             content = { innerPadding ->
 
                 Box(
@@ -160,22 +161,16 @@ fun MetasScreen(onBack: () -> Unit = {}, onFinish: () -> Unit = {}) {
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         CardThatOpensSelectionDialog(
-                            title = "Tipo de Actividad",
-                            description = "Selecciona el tipo de actividad que deseas realizar.",
-                            items = listOf("Actividad Fisica", "Habitos", "Bienestar"),
-                            label = { it },
-                            onItemSelected = { chosen ->
-                                tipoActividad.value = chosen
-                            }
-
-                        )
-
-                        Spacer(modifier = Modifier.padding(8.dp))
-
-                        CardThatOpensSelectionDialog(
                             title = "Actividad",
                             description = "Seleccione la actividad concreta que desee realizar.",
-                            items = listOf("Caminar 30 minutos", "Yoga", "Correr"),
+                            items = listOf(
+                                "Subir escaleras en lugar de usar el ascensor.",
+                                "Bajar una parada de colectivo antes para caminar un poco más",
+                                "Bailar una canción en casa.",
+                                "Caminar al mercado, centro de salud, casa de un familia",
+                                "Pasear en bicicleta.",
+                                "Jugar algún deporte recreativo (fútbol, voley,etc.)."
+                            ),
                             label = { it },
                             onItemSelected = { chosen ->
                                 actividad.value = chosen
@@ -184,11 +179,13 @@ fun MetasScreen(onBack: () -> Unit = {}, onFinish: () -> Unit = {}) {
 
                         Spacer(modifier = Modifier.padding(8.dp))
 
-                        CardThatOpensEditDialog(
-                            title = "Con quien?",
-                            description = "Describe brevemente con quien iras",
-                            onSave = { newDesc ->
-                                conQuien.value = newDesc
+                        CardThatOpensSelectionDialog(
+                            title = "Con quien",
+                            description = "Quien te acompañará en esta actividad?",
+                            items = listOf("Solo/a", "Familiar", "Pareja", "Amigo/a", "Vecino/a", "Mascota"),
+                            label = { it },
+                            onItemSelected = { chosen ->
+                                conQuien.value = chosen
                             }
                         )
 
@@ -197,6 +194,7 @@ fun MetasScreen(onBack: () -> Unit = {}, onFinish: () -> Unit = {}) {
                         CardThatOpensEditDialog(
                             title = "Donde?",
                             description = "Describe brevemente en donde lo harás",
+                            placeholder = "Escribe el lugar...",
                             onSave = { newDesc ->
                                 donde.value = newDesc
                             }
@@ -213,16 +211,6 @@ fun MetasScreen(onBack: () -> Unit = {}, onFinish: () -> Unit = {}) {
                             }
                         )
 
-                        Spacer(modifier = Modifier.padding(8.dp))
-
-                        CardThatOpensDateTimeDialog(
-                            title = "Fecha de Creación",
-                            description = "Selecciona la fecha en que creaste esta meta.",
-                            initialMillis = todayMillis,
-                            onDateTimeSelected = { datetime ->
-                                fechaEdicion.value = datetime
-                            }
-                        )
                     }
                     Column(
                         modifier = Modifier

@@ -230,7 +230,8 @@ fun SessionContentScreen(
                     }
                 }
             }
-        }
+        },
+        containerColor = colorResource(R.color.background)
     ) { inner ->
         Column(
             modifier = Modifier

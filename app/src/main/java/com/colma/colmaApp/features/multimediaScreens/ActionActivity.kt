@@ -57,9 +57,13 @@ class ActionActivity : ComponentActivity() {
             isAppearanceLightNavigationBars = true // White navigation bar, so dark icons
         }
 
+        // Retrieve contentAssetId from Intent, defaulting to R.raw.exercise if not found
+        val contentAssetId = intent.getIntExtra("contentAssetId", R.raw.exercise)
+
         setContent {
             ColmaAppTheme {
                 ActionPageScreen(
+                    contentAssetId = contentAssetId,
                     onBack = { finish() },
                     onNext = {
                         startActivity(Intent(this@ActionActivity, FinishActivity::class.java))
@@ -75,7 +79,7 @@ class ActionActivity : ComponentActivity() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ActionPageScreen(onBack: () -> Unit = {}, onNext: () -> Unit = {}, onFinish: () -> Unit = {}) {
+fun ActionPageScreen(contentAssetId: Int, onBack: () -> Unit = {}, onNext: () -> Unit = {}, onFinish: () -> Unit = {}) {
     val signatureColor = Color(0xFF0D97B6) // use your color
     Surface(color = Color.White, modifier = Modifier.fillMaxSize().systemBarsPadding()) {
         Column(modifier = Modifier.fillMaxSize()) {
@@ -96,7 +100,7 @@ fun ActionPageScreen(onBack: () -> Unit = {}, onNext: () -> Unit = {}, onFinish:
                     .padding(16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                ActionPage()
+                ActionPage(contentAssetId = contentAssetId)
             }
 
             Column(
@@ -123,7 +127,7 @@ fun ActionPageScreen(onBack: () -> Unit = {}, onNext: () -> Unit = {}, onFinish:
 }
 
 @Composable
-fun ActionPage() {
+fun ActionPage(contentAssetId: Int = R.raw.exercise) {
     Card(
         shape = RoundedCornerShape(16.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
@@ -161,9 +165,11 @@ fun ActionPage() {
             Spacer(Modifier.height(16.dp))
 
             // Video player - replace missing_photo thumbnail with actual player
-            VideoPlayerWithFullscreen(resId = R.raw.exercise, modifier = Modifier
-                .size(width = 320.dp, height = 200.dp)
-                .clip(RoundedCornerShape(8.dp))
+            VideoPlayerWithFullscreen(
+                resId = contentAssetId, // Use the dynamically provided contentAssetId
+                modifier = Modifier
+                    .size(width = 320.dp, height = 200.dp)
+                    .clip(RoundedCornerShape(8.dp))
             )
 
             Spacer(Modifier.height(16.dp))
@@ -199,7 +205,13 @@ fun VideoPlayerWithFullscreen(
     }
 
     // Release when leaving composable
-    DisposableEffect(Unit) {
+    DisposableEffect(resId) { // Add resId to the key to re-initialize player if it changes
+        exoPlayer.apply {
+            val uri = Uri.parse("android.resource://${context.packageName}/$resId")
+            setMediaItem(MediaItem.fromUri(uri))
+            playWhenReady = false
+            prepare()
+        }
         onDispose {
             try {
                 exoPlayer.release()

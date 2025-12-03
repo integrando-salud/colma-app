@@ -2,8 +2,7 @@
 
 ## Project Overview
 
-This is an Android application named "colmaApp", built with Kotlin and Jetpack Compose. The name "colma" is likely a play on the Spanish word "calma" (calm), suggesting a focus on health and mental well-being.
-
+This is an Android application named "colmaApp", built with Kotlin and Jetpack Compose.
 The application allows users to log in, track health data, and engage with daily content. It features offline capabilities, storing data in a local SQLite database, and a synchronization mechanism to send the collected data to a remote server.
 
 ### Key Technologies:
@@ -49,3 +48,6 @@ The recommended way to run the application is to open the project in Android Stu
 - Jetpack Compose is used for building the UI, with a theme defined in `app/src/main/java/com/colma/colmaApp/ui/theme/`.
 - The app uses a local SQLite database (`colmadb.db` in `app/src/main/assets/databases/`) for data storage and has a `DbHelper` class to manage database interactions.
 - Data synchronization is handled in `MenuMain.kt`, which collects data from the local database and sends it to a hardcoded webhook URL.
+
+## Development Workflow
+- At the end of each request, run a build to check if the implementation is working correctly. Use the command: `./gradlew build`

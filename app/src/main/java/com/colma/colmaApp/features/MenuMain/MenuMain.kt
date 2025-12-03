@@ -160,7 +160,7 @@ fun MenuScreen(
 
     LaunchedEffect(Unit) {
         withContext(Dispatchers.IO) {
-            val objective = dbHelper.getMetaForToday(1) // Assuming user id 1
+            val objective = dbHelper.getPendingPastMeta(1) // Assuming user id 1
             if (objective != null) {
                 todaysObjective = objective
                 showObjectiveDialog = true
@@ -176,15 +176,17 @@ fun MenuScreen(
             description = "¿Completaste este objetivo?: ${todaysObjective?.actividad ?: "No hay detalles."}",
             onYes = {
                 todaysObjective?.let {
-                    val updatedObjective = it.copy(meta_cumplida = 1)
+                    val updatedObjective = it.copy(meta_cumplida = 2)
                     scope.launch {
                         withContext(Dispatchers.IO) {
                             dbHelper.updateMeta(updatedObjective)
                         }
                     }
                 }
+                showObjectiveDialog = false
             },
             onNo = {
+                showObjectiveDialog = false
                 showReasonDialog = true
             }
         )
@@ -222,7 +224,7 @@ fun MenuScreen(
                             showOtherReasonDialog = true
                         } else {
                             todaysObjective?.let {
-                                val updatedObjective = it.copy(meta_cumplida = 0, motivo_incumplimiento = selectedReason)
+                                val updatedObjective = it.copy(meta_cumplida = 1, motivo_incumplimiento = selectedReason)
                                 scope.launch {
                                     withContext(Dispatchers.IO) {
                                         dbHelper.updateMeta(updatedObjective)
@@ -254,7 +256,7 @@ fun MenuScreen(
                 TextButton(
                     onClick = {
                         todaysObjective?.let {
-                            val updatedObjective = it.copy(meta_cumplida = 0, motivo_incumplimiento = otherReason)
+                            val updatedObjective = it.copy(meta_cumplida = 1, motivo_incumplimiento = otherReason)
                             scope.launch {
                                 withContext(Dispatchers.IO) {
                                     dbHelper.updateMeta(updatedObjective)

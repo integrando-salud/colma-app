@@ -29,6 +29,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -41,12 +42,15 @@ fun <T> CardThatOpensSelectionDialog(
     items: List<T>,
     label: (T) -> String = { it.toString() },
     onItemSelected: (T) -> Unit = {},
+    initialSelection: String? = null, // New parameter
     modifier: Modifier = Modifier
 ) {
     var showDialog by rememberSaveable { mutableStateOf(false) }
 
-    // string shown on the card as the last selected item (initially description param if provided)
-    var selectedLabel by rememberSaveable { mutableStateOf(description ?: "") }
+    // Initialize selectedLabel using initialSelection if provided, else description, else empty string
+    var selectedLabel by rememberSaveable {
+        mutableStateOf(initialSelection ?: description ?: "")
+    }
 
     // index used inside dialog to highlight selection; not saved across process death (T might not be savable)
     var selectedIndex by remember { mutableStateOf<Int?>(null) }
@@ -62,7 +66,7 @@ fun <T> CardThatOpensSelectionDialog(
                 showDialog = true
             },
         elevation = CardDefaults.cardElevation(defaultElevation = 6.dp),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
+        colors = CardDefaults.cardColors(containerColor = Color.White)
     ) {
         Row(
             modifier = Modifier
@@ -117,6 +121,7 @@ fun <T> CardThatOpensSelectionDialog(
     if (showDialog) {
         AlertDialog(
             onDismissRequest = { showDialog = false },
+            containerColor = Color.White,
             title = { Text(text = title) },
             text = {
                 if (items.isEmpty()) {

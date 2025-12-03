@@ -144,7 +144,7 @@ fun SesionesMenuScreen(
 ) {
     val signatureColor = colorResource(R.color.principal)
 
-    Surface(modifier = Modifier.fillMaxSize().systemBarsPadding(), color = MaterialTheme.colorScheme.background) {
+    Surface(modifier = Modifier.fillMaxSize().systemBarsPadding(), color = colorResource(R.color.background)) {
         Column(modifier = Modifier.fillMaxSize()) {
             TopAppBar(
                 navigationIcon = {
@@ -335,15 +335,6 @@ fun SubSessionRow(sub: SubSessionItem, onClick: () -> Unit) {
 
 fun sampleSessions(): List<SessionItem> = listOf(
     SessionItem(1, "Semana 1", thumbnailRes = R.drawable.missing_photo),
-    SessionItem(2, "Semana 2", thumbnailRes = R.drawable.missing_photo),
-    SessionItem(3, "Semana 3", thumbnailRes = R.drawable.missing_photo),
-    SessionItem(4, "Semana 4", thumbnailRes = R.drawable.missing_photo),
-    SessionItem(5, "Semana 5", thumbnailRes = R.drawable.missing_photo),
-    SessionItem(6, "Semana 6", thumbnailRes = R.drawable.missing_photo),
-    SessionItem(7, "Semana 7", thumbnailRes = R.drawable.missing_photo),
-    SessionItem(8, "Semana 8", thumbnailRes = R.drawable.missing_photo),
-    SessionItem(9, "Semana 9", thumbnailRes = R.drawable.missing_photo),
-    SessionItem(10, "Semana 10", thumbnailRes = R.drawable.missing_photo),
 
 )
 

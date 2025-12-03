@@ -3,6 +3,7 @@ package com.colma.colmaApp.utils.varios
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.material3.*
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.ui.Modifier
@@ -32,6 +33,7 @@ fun CustomAlertDialog(
 
     AlertDialog(
         onDismissRequest = onDismissRequest,
+        containerColor = Color.White,
         title = { Text(text = title) },
         text = {
             Text(

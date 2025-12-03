@@ -10,6 +10,7 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -46,7 +47,7 @@ fun CardThatOpensDateTimeDialog(
             .heightIn(min = 72.dp)
             .clickable { showDialog = true },
         elevation = CardDefaults.cardElevation(defaultElevation = 6.dp),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
+        colors = CardDefaults.cardColors(containerColor = Color.White)
     ) {
         Row(
             modifier = Modifier
@@ -99,7 +100,7 @@ fun CardThatOpensDateTimeDialog(
 /**
  * Dialog that shows current selection and uses platform pickers.
  *
- * Uses a state backed Long (millis) so Compose recomposes on changes coming from pickers.
+ * Uses a state backed Long (millis) so Compose will recompose on changes coming from pickers.
  */
 @Composable
 fun DateTimePickerDialog(
@@ -160,6 +161,7 @@ fun DateTimePickerDialog(
 
     AlertDialog(
         onDismissRequest = onDismissRequest,
+        containerColor = Color.White,
         title = { Text(text = "Seleccionar fecha y hora") },
         text = {
             Column(modifier = Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(12.dp)) {

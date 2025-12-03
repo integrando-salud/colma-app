@@ -24,12 +24,60 @@ class DBhelper(context: Context) :
 
     companion object {
         private const val DATABASE_NAME = "colmadb.db"
-        private const val DATABASE_VERSION = 2
+        private const val DATABASE_VERSION = 4
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
-        if (oldVersion < 2) {
-            db.execSQL("ALTER TABLE metas_table ADD COLUMN motivo_incumplimiento TEXT;")
+        // This onUpgrade is designed to be robust and fix schema issues from previous versions.
+
+        // Step 1: Ensure metas_table exists. This fixes crashes for users where the table is missing.
+        try {
+            db.execSQL("""
+                CREATE TABLE IF NOT EXISTS metas_table (
+                    id_meta INTEGER PRIMARY KEY AUTOINCREMENT,
+                    id_usuario INTEGER,
+                    semana INTEGER,
+                    sesion INTEGER,
+                    tipo_actividad TEXT,
+                    actividad TEXT,
+                    lugar TEXT,
+                    acompañante TEXT,
+                    fecha_regisitro TEXT,
+                    fecha_edicion TEXT,
+                    fecha_sincronizacion TEXT,
+                    meta_cumplida INTEGER,
+                    fecha_objetivo TEXT
+                );
+            """)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+        // Step 2: Ensure the 'motivo_incumplimiento' column exists.
+        // This handles both the original v2 migration and fixes broken v2 schemas.
+        var columnExists = false
+        try {
+            db.rawQuery("PRAGMA table_info(metas_table)", null)?.use { cursor ->
+                val nameIndex = cursor.getColumnIndex("name")
+                if (nameIndex != -1) {
+                    while (cursor.moveToNext()) {
+                        if ("motivo_incumplimiento" == cursor.getString(nameIndex)) {
+                            columnExists = true
+                            break
+                        }
+                    }
+                }
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+        if (!columnExists) {
+            try {
+                db.execSQL("ALTER TABLE metas_table ADD COLUMN motivo_incumplimiento TEXT;")
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
     }
 
@@ -975,6 +1023,38 @@ class DBhelper(context: Context) :
             null,
             null,
             "id_meta DESC",
+            "1"
+        )
+
+        cursor.use { c ->
+            if (c.moveToFirst()) {
+                return cursorToMetaRecord(c)
+            }
+        }
+        return null
+    }
+
+    fun getPendingPastMeta(idUsuario: Int? = 1): RegistrosSaludModelos.MetaRecord? {
+        val db = readableDatabase
+        val selectionParts = mutableListOf<String>("meta_cumplida = 0", "date(fecha_objetivo) <= date('now', 'localtime')")
+        val selectionArgsList = mutableListOf<String>()
+
+        if (idUsuario != null) {
+            selectionParts.add("id_usuario = ?")
+            selectionArgsList.add(idUsuario.toString())
+        }
+
+        val selection = selectionParts.joinToString(" AND ")
+        val selectionArgs = if (selectionArgsList.isNotEmpty()) selectionArgsList.toTypedArray() else null
+
+        val cursor = db.query(
+            "metas_table",
+            null,
+            selection,
+            selectionArgs,
+            null,
+            null,
+            "fecha_objetivo ASC", // Get the oldest one first
             "1"
         )
 
