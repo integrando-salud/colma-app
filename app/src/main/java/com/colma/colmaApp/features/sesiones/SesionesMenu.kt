@@ -156,7 +156,7 @@ fun SesionesMenuScreen(
                         )
                     }
                 },
-                title = { Text("Sesiones", color = colorResource(R.color.white), fontWeight = FontWeight.Bold)},
+                title = { Text("HTA", color = colorResource(R.color.white), fontWeight = FontWeight.Bold)},
                 colors = TopAppBarDefaults.topAppBarColors(containerColor = signatureColor)
             )
 

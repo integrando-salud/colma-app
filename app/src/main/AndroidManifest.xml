@@ -39,6 +39,10 @@
 
         </activity>
 
+        <activity android:name=".features.multimediaScreens.HTAQuiz"
+            android:exported="false">
+        </activity>
+
         <activity android:name=".features.multimediaScreens.DescriptionActivity"
             android:exported="false"/>
 

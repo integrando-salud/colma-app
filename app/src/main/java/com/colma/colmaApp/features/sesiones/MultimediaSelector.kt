@@ -55,6 +55,7 @@ import com.colma.colmaApp.ui.theme.ColmaAppTheme
 import com.colma.colmaApp.features.multimediaScreens.ActionActivity
 import com.colma.colmaApp.features.multimediaScreens.DescriptionActivity
 import com.colma.colmaApp.features.multimediaScreens.FinishActivity
+import com.colma.colmaApp.features.multimediaScreens.HTAQuiz
 import com.colma.colmaApp.features.multimediaScreens.MetasActivity
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material3.contentColorFor
@@ -64,7 +65,8 @@ enum class MultimediaContentType {
     DESCRIPTION,
     VIDEO,
     AUDIO,
-    METAS
+    METAS,
+    QUIZ
 }
 
 data class MultimediaOption(
@@ -108,6 +110,12 @@ fun getMultimediaOptionsForSubSession(subSessionId: Long): List<MultimediaOption
                 description = "Ver el vídeo explicativo de la sesión",
                 iconImageVector = Icons.Default.PlayArrow,
                 contentAssetId = R.raw.hta_sesion_5_2 // Video 2 asset. TODO: Replace with a different video asset if available.
+            ),
+            MultimediaOption(
+                type = MultimediaContentType.QUIZ,
+                title = "Quiz Módulo 5",
+                description = "Responde las preguntas del módulo 5",
+                iconResId = R.drawable.outline_trophy_24
             )
         )
         3L -> listOf(
@@ -263,6 +271,7 @@ fun MultimediaSelectorScreen(
                             MultimediaContentType.VIDEO -> Intent(context, ActionActivity::class.java)
                             MultimediaContentType.AUDIO -> Intent(context, FinishActivity::class.java)
                             MultimediaContentType.METAS -> Intent(context, MetasActivity::class.java)
+                            MultimediaContentType.QUIZ -> Intent(context, HTAQuiz::class.java)
                         }
                         intent.apply {
                             putExtra("sessionId", sessionId)

@@ -151,8 +151,6 @@ fun <T> CardThatOpensSelectionDialog(
                                     Column(modifier = Modifier.weight(1f)) {
                                         Text(
                                             text = label(item),
-                                            maxLines = 2,
-                                            overflow = TextOverflow.Ellipsis,
                                             fontWeight = if (isSelected) FontWeight.SemiBold else FontWeight.Normal
                                         )
                                     }
