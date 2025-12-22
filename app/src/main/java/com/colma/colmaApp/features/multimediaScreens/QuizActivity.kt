@@ -7,7 +7,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.*
@@ -30,12 +30,14 @@ data class QuizQuestion(
     val correctAnswerIndex: Int,
 )
 
-class HTAQuiz : ComponentActivity() {
+class QuizActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val quizId = intent.getStringExtra("quizId") ?: "hta" // Default to HTA
         setContent {
             ColmaAppTheme {
-                HTAQuizScreen(
+                QuizScreen(
+                    quizId = quizId,
                     onBack = { finish() }
                 )
             }
@@ -45,8 +47,20 @@ class HTAQuiz : ComponentActivity() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HTAQuizScreen(onBack: () -> Unit) {
-    val quizQuestions = remember { getHtaQuizQuestions() }
+fun QuizScreen(quizId: String, onBack: () -> Unit) {
+    val quizQuestions = remember(quizId) {
+        when (quizId) {
+            "diabetes" -> getDiabetesQuizQuestions()
+            else -> getHtaQuizQuestions()
+        }
+    }
+    val title = remember(quizId) {
+        when (quizId) {
+            "diabetes" -> "Quiz Diabetes"
+            else -> "Quiz Hipertensión"
+        }
+    }
+
     var currentQuestionIndex by remember { mutableStateOf(0) }
     val userAnswers = remember { mutableStateMapOf<Int, Int>() }
 
@@ -55,11 +69,11 @@ fun HTAQuizScreen(onBack: () -> Unit) {
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Quiz Módulo 5", color = colorResource(R.color.white)) },
+                title = { Text(title, color = colorResource(R.color.white)) },
                 colors = TopAppBarDefaults.topAppBarColors(containerColor = colorResource(R.color.principal)),
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "Volver", tint = Color.White)
+                        Icon(imageVector = Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Volver", tint = Color.White)
                     }
                 }
             )
@@ -204,6 +218,37 @@ fun getHtaQuizQuestions(): List<QuizQuestion> {
                 "Necesito continuar tomandola todos los días"
             ),
             correctAnswerIndex = 2
+        )
+    )
+}
+
+fun getDiabetesQuizQuestions(): List<QuizQuestion> {
+    return listOf(
+        QuizQuestion(
+            questionText = "La insulina es como una llave que permite que la glucosa entre en las células y nos dé energía",
+            options = listOf(
+                "Verdadero",
+                "Falso"
+            ),
+            correctAnswerIndex = 0
+        ),
+        QuizQuestion(
+            questionText = "Tener mucha sed, orinar mucho y tener mucha hambre pueden ser señales de que...",
+            options = listOf(
+                "La glucosa está baja y necesitas comer algo",
+                "La glucosa está alta y necesita controlarse",
+                "La glucosa está equilibrada"
+            ),
+            correctAnswerIndex = 1
+        ),
+        QuizQuestion(
+            questionText = "La mejor forma de saber cómo está mi glucosa es...",
+            options = listOf(
+                "Midiéndola con un glucómetro o un análisis de sangre",
+                "Solo reconociendo las señales de mi cuerpo",
+                "No es necesario saberlo"
+            ),
+            correctAnswerIndex = 0
         )
     )
 }

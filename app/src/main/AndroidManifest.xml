@@ -39,11 +39,11 @@
 
         </activity>
 
-        <activity android:name=".features.multimediaScreens.HTAQuiz"
+        <activity android:name=".features.multimediaScreens.QuizActivity"
             android:exported="false">
         </activity>
 
-        <activity android:name=".features.multimediaScreens.DescriptionActivity"
+        <activity android:name=".features.multimediaScreens.WelcomeActivity"
             android:exported="false"/>
 
         <activity android:name=".features.multimediaScreens.ActionActivity"

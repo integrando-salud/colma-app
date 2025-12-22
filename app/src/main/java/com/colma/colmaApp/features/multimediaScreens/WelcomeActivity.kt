@@ -44,11 +44,19 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.colma.colmaApp.R
-import com.colma.colmaApp.features.MenuMain.MenuMain
 import com.colma.colmaApp.ui.theme.ColmaAppTheme
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.shape.CircleShape // Added for indicator shape
+import androidx.compose.ui.unit.Dp // Added for indicator parameters
+import androidx.compose.runtime.remember
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
 
-@OptIn(ExperimentalMaterial3Api::class)
-class DescriptionActivity : ComponentActivity() {
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
+class WelcomeActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -61,12 +69,15 @@ class DescriptionActivity : ComponentActivity() {
             isAppearanceLightNavigationBars = true // White navigation bar, so dark icons
         }
 
+        val displayContent = intent.getStringExtra("displayContent") ?: "No content provided."
+
         setContent {
             ColmaAppTheme {
                 WelcomePageScreen(
+                    displayContent = displayContent,
                     onBack = { finish() },
                     onNext = {
-                        startActivity(Intent(this@DescriptionActivity, ActionActivity::class.java))
+                        startActivity(Intent(this@WelcomeActivity, ActionActivity::class.java))
                     },
                     onFinish = {
                         finish()
@@ -77,10 +88,14 @@ class DescriptionActivity : ComponentActivity() {
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
-fun WelcomePageScreen(onBack: () -> Unit = {}, onNext: () -> Unit = {}, onFinish: () -> Unit = {}) {
+fun WelcomePageScreen(displayContent: String, onBack: () -> Unit = {}, onNext: () -> Unit = {}, onFinish: () -> Unit = {}) {
     val signatureColor = colorResource(R.color.principal)
+    val paragraphs = remember {
+        displayContent.split("\n\n").filter { it.isNotBlank() }
+    }
+    val pagerState = rememberPagerState(pageCount = { paragraphs.size })
     Surface(color = Color.White, modifier = Modifier.fillMaxSize().systemBarsPadding()) {
         Column(modifier = Modifier.fillMaxSize()) {
             TopAppBar(
@@ -97,10 +112,30 @@ fun WelcomePageScreen(onBack: () -> Unit = {}, onNext: () -> Unit = {}, onFinish
             Column(modifier = Modifier
                 .fillMaxWidth()
                 .weight(1f)
-                .padding(16.dp),
+                .padding(horizontal = 16.dp, vertical = 8.dp), // Adjust vertical padding for pager
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                WelcomePage() // reuse composable you already have
+                if (paragraphs.isNotEmpty()) {
+                    HorizontalPager(
+                        state = pagerState,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .weight(1f)
+                    ) { page ->
+                        WelcomePage(displayContent = paragraphs[page])
+                    }
+                    Spacer(Modifier.height(16.dp))
+                    HorizontalPagerIndicator(
+                        pagerState = pagerState,
+                        pageCount = paragraphs.size,
+                        activeColor = signatureColor,
+                        inactiveColor = Color.LightGray,
+                        modifier = Modifier
+                            .padding(top = 8.dp)
+                    )
+                } else {
+                    WelcomePage(displayContent = "No content provided.")
+                }
             }
 
             // Bottom button row
@@ -121,49 +156,78 @@ fun WelcomePageScreen(onBack: () -> Unit = {}, onNext: () -> Unit = {}, onFinish
                 ) {
                     Text(text = "Terminar", fontWeight = FontWeight.SemiBold)
                 }
-            }
-        }
-    }
-}
-
-@Composable
-fun WelcomePage() {
-    Card(
-        shape = RoundedCornerShape(16.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.White),
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(8.dp)
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(24.dp)
-                .verticalScroll(rememberScrollState()),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Top
-        ) {
-            Text(
-                "Información importante",
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold
-            )
-            Spacer(Modifier.height(16.dp))
-            Icon(
-                painter = painterResource(R.drawable.outline_unknown_document_24),
-                contentDescription = null,
-                modifier = Modifier.size(64.dp),
-                tint = Color(0xFFE84589)
-            )
-            Spacer(Modifier.height(16.dp))
-            Text(
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin facilisis nisi sit amet justo suscipit semper. Ut vitae nisl quis mauris iaculis tempus et eget eros. Aenean facilisis, urna at viverra feugiat, massa enim ultrices tortor, vitae blandit mauris est a quam. Nulla sit amet pulvinar dolor. Nunc vel quam massa. Mauris ac risus vel lacus pellentesque vestibulum. Pellentesque mauris nisi, sodales vel ornare sed, posuere eget magna. Praesent quam ante, bibendum eu condimentum sit amet, faucibus non ante. Suspendisse interdum varius cursus. Donec ut semper sem, nec consequat risus. Nam commodo faucibus arcu non dapibus. Suspendisse bibendum mauris sit amet ante ornare laoreet non nec ante. Sed vulputate condimentum metus, vitae consequat lacus sagittis et. In id purus lacinia nunc imperdiet volutpat. Duis eu libero vestibulum, malesuada justo ac, blandit lacus. Donec ornare mauris non est semper vulputate.\n" +
-                        "\n" +
-                        "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Praesent elit ante, rhoncus et dui eleifend, volutpat dictum mauris. Phasellus fringilla dolor ligula. Vivamus ultricies nisi et tortor hendrerit egestas. Nulla ultrices quam ipsum, vitae luctus libero facilisis tempus. Integer fermentum turpis sed leo tempor vehicula. Aenean suscipit ornare odio.",
-                fontSize = 16.sp,
-                textAlign = TextAlign.Left
-            )
-        }
-    }
-}
+                            }
+                        }
+                    }
+                }
+                
+                // NOTE: This WelcomePage composable will now receive a single paragraph string
+                @Composable
+                fun WelcomePage(displayContent: String) {
+                    Card(
+                        shape = RoundedCornerShape(16.dp),
+                        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
+                        colors = CardDefaults.cardColors(containerColor = Color.White),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(8.dp)
+                    ) {
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(24.dp)
+                                .verticalScroll(rememberScrollState()),
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.Top
+                        ) {
+                            Text(
+                                "Información importante",
+                                fontSize = 20.sp,
+                                fontWeight = FontWeight.Bold
+                            )
+                            Spacer(Modifier.height(16.dp))
+                            Icon(
+                                painter = painterResource(R.drawable.outline_unknown_document_24),
+                                contentDescription = null,
+                                modifier = Modifier.size(64.dp),
+                                tint = Color(0xFFE84589)
+                            )
+                            Spacer(Modifier.height(16.dp))
+                            Text(
+                                displayContent,
+                                fontSize = 16.sp,
+                                textAlign = TextAlign.Left
+                            )
+                        }
+                    }
+                }
+                
+                @OptIn(ExperimentalFoundationApi::class)
+                @Composable
+                fun HorizontalPagerIndicator(
+                    pagerState: androidx.compose.foundation.pager.PagerState,
+                    pageCount: Int,
+                    modifier: Modifier = Modifier,
+                    activeColor: Color = Color.White,
+                    inactiveColor: Color = Color.Gray,
+                    indicatorWidth: Dp = 8.dp,
+                    indicatorHeight: Dp = 8.dp,
+                    spacing: Dp = 8.dp,
+                    indicatorShape: androidx.compose.ui.graphics.Shape = androidx.compose.foundation.shape.CircleShape
+                ) {
+                    Row(
+                        horizontalArrangement = Arrangement.Center,
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = modifier,
+                    ) {
+                        repeat(pageCount) { index ->
+                            val color = if (pagerState.currentPage == index) activeColor else inactiveColor
+                            Box(
+                                modifier = Modifier
+                                    .padding(horizontal = spacing / 2)
+                                    .size(indicatorWidth, indicatorHeight)
+                                    .background(color = color, shape = indicatorShape)
+                            )
+                        }
+                    }
+                }

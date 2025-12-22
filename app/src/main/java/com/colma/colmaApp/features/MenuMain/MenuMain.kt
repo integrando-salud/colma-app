@@ -77,6 +77,7 @@ import com.colma.colmaApp.R
 import com.colma.colmaApp.features.RegistroSalud.RegistrosSalud
 import com.colma.colmaApp.features.login.ui.LoginUI
 import com.colma.colmaApp.features.sesiones.SesionesMenu
+import com.colma.colmaApp.features.sesiones.TreatmentType
 import com.colma.colmaApp.servicios.Modelos.RegistrosSaludModelos
 import com.colma.colmaApp.servicios.database.dbhelper.DBhelper
 import com.colma.colmaApp.ui.theme.ColmaAppTheme
@@ -110,7 +111,9 @@ class MenuMain : ComponentActivity() {
             ColmaAppTheme {
                 MenuScreen(
                     onSessionsClick = {
-                        val intent = Intent(this@MenuMain, SesionesMenu::class.java)
+                        val intent = Intent(this@MenuMain, SesionesMenu::class.java).apply {
+                            putExtra("treatmentType", TreatmentType.DIABETES.name)
+                        }
                         startActivity(intent)
                     },
                     onHealthRegistersClick = {

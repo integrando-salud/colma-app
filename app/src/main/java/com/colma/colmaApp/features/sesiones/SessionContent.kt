@@ -252,7 +252,7 @@ fun SessionContentScreen(
             when (selectedTab) {
                 0 -> {
                     Column(modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-                        WelcomePage()
+                        WelcomePage(displayContent = "No custom information available for this session.")
                     }
                 }
                 1 -> {

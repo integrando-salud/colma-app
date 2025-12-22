@@ -53,10 +53,10 @@ import androidx.compose.foundation.verticalScroll
 import com.colma.colmaApp.R
 import com.colma.colmaApp.ui.theme.ColmaAppTheme
 import com.colma.colmaApp.features.multimediaScreens.ActionActivity
-import com.colma.colmaApp.features.multimediaScreens.DescriptionActivity
+import com.colma.colmaApp.features.multimediaScreens.WelcomeActivity
 import com.colma.colmaApp.features.multimediaScreens.FinishActivity
-import com.colma.colmaApp.features.multimediaScreens.HTAQuiz
 import com.colma.colmaApp.features.multimediaScreens.MetasActivity
+import com.colma.colmaApp.features.multimediaScreens.QuizActivity
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material3.contentColorFor
 
@@ -69,13 +69,18 @@ enum class MultimediaContentType {
     QUIZ
 }
 
+enum class TreatmentType { HTA, DIABETES }
+
 data class MultimediaOption(
     val type: MultimediaContentType,
     val title: String,
-    val description: String,
+    val description: String, // Short description for the card
+    val fullDescription: String? = null, // Long description for WelcomeActivity
     val iconResId: Int? = null, // For drawable resources (e.g., R.drawable.xxx)
     val iconImageVector: ImageVector? = null, // For ImageVector icons (e.g., Icons.Default.PlayArrow)
-    val contentAssetId: Int? = null // For raw resource IDs (e.g., R.raw.xxx)
+    val contentAssetId: Int? = null, // For raw resource IDs (e.g., R.raw.xxx)
+    val quizId: String? = null, // New field for quiz identification
+    val metasId: String? = null // New field for metas identification
 )
 
 /**
@@ -85,85 +90,184 @@ data class MultimediaOption(
  * and referenced here. `ActionActivity` must be updated to consume
  * the `contentAssetId` extra to play the correct media.
  */
-fun getMultimediaOptionsForSubSession(subSessionId: Long): List<MultimediaOption> {
-    val descriptionOption = MultimediaOption(
-        type = MultimediaContentType.DESCRIPTION,
-        title = "Descripción",
-        description = "Ver información y objetivos de la sesión",
-        iconResId = R.drawable.outline_unknown_document_24
-    )
+fun getMultimediaOptions(treatmentType: TreatmentType, subSessionId: Long): List<MultimediaOption> {
 
-    return when (subSessionId) {
-        1L -> listOf(
-            MultimediaOption(
-                type = MultimediaContentType.VIDEO,
-                title = "Video Introducción",
-                description = "Ver el vídeo de introducción a la sesión",
-                iconImageVector = Icons.Default.PlayArrow,
-                contentAssetId = R.raw.hta_sesion_5_1 // Video 1 asset
+    return when (treatmentType) {
+        TreatmentType.HTA -> when (subSessionId) {
+            1L -> listOf(
+                MultimediaOption(
+                    type = MultimediaContentType.VIDEO,
+                    title = "Video Introducción",
+                    description = "Ver el vídeo de introducción a la sesión",
+                    iconImageVector = Icons.Default.PlayArrow,
+                    contentAssetId = R.raw.hta_sesion_5_1 // Video 1 asset
+                ),
+
             )
-        )
-        2L -> listOf(
-            MultimediaOption(
-                type = MultimediaContentType.VIDEO,
-                title = "Video Explicativo",
-                description = "Ver el vídeo explicativo de la sesión",
-                iconImageVector = Icons.Default.PlayArrow,
-                contentAssetId = R.raw.hta_sesion_5_2 // Video 2 asset. TODO: Replace with a different video asset if available.
-            ),
-            MultimediaOption(
-                type = MultimediaContentType.QUIZ,
-                title = "Quiz Módulo 5",
-                description = "Responde las preguntas del módulo 5",
-                iconResId = R.drawable.outline_trophy_24
+            2L -> listOf(
+                MultimediaOption(
+                    type = MultimediaContentType.VIDEO,
+                    title = "Video Explicativo",
+                    description = "Ver el vídeo explicativo de la sesión",
+                    iconImageVector = Icons.Default.PlayArrow,
+                    contentAssetId = R.raw.hta_sesion_5_2 // Video 2 asset
+                ),
+                MultimediaOption(
+                    type = MultimediaContentType.QUIZ,
+                    title = "Quiz Módulo 5 (HTA)",
+                    description = "Responde las preguntas del módulo 5 de HTA",
+                    iconResId = R.drawable.outline_trophy_24,
+                    quizId = "hta"
+                ),
+
             )
-        )
-        3L -> listOf(
-            MultimediaOption(
-                type = MultimediaContentType.VIDEO,
-                title = "Video Principal",
-                description = "Primer video de la sesión",
-                iconImageVector = Icons.Default.PlayArrow,
-                contentAssetId = R.raw.hta_sesion_5_3 // Video A asset
-            ),
-            MultimediaOption(
-                type = MultimediaContentType.VIDEO,
-                title = "Video Complementario",
-                description = "Segundo video de la sesión",
-                iconImageVector = Icons.Default.PlayArrow,
-                contentAssetId = R.raw.hta_sesion_5_3_experiencia // Video B asset. TODO: Replace with a different video asset if available.
-            ),
-            MultimediaOption(
-                type = MultimediaContentType.METAS,
-                title = "Metas",
-                description = "Configura tus metas para esta sesión",
-                iconResId = R.drawable.outline_trophy_24
+            3L -> listOf(
+                MultimediaOption(
+                    type = MultimediaContentType.VIDEO,
+                    title = "Video Principal",
+                    description = "Primer video de la sesión",
+                    iconImageVector = Icons.Default.PlayArrow,
+                    contentAssetId = R.raw.hta_sesion_5_3 // Video A asset
+                ),
+                MultimediaOption(
+                    type = MultimediaContentType.VIDEO,
+                    title = "Video Complementario",
+                    description = "Segundo video de la sesión",
+                    iconImageVector = Icons.Default.PlayArrow,
+                    contentAssetId = R.raw.hta_sesion_5_3_experiencia // Video B asset
+                ),
+                MultimediaOption(
+                    type = MultimediaContentType.METAS,
+                    title = "Metas",
+                    description = "Configura tus metas para esta sesión",
+                    iconResId = R.drawable.outline_trophy_24,
+                    metasId = "hta"
+                ),
+
             )
-        )
-        // Default options if subSessionId does not match any specific case
-        else -> listOf(
-            descriptionOption,
-            MultimediaOption(
-                type = MultimediaContentType.VIDEO,
-                title = "Video Genérico",
-                description = "Ver el vídeo genérico de la sesión",
-                iconImageVector = Icons.Default.PlayArrow,
-                contentAssetId = R.raw.exercise
-            ),
-            MultimediaOption(
-                type = MultimediaContentType.AUDIO,
-                title = "Audio Genérico",
-                description = "Escuchar el audio genérico de la sesión",
-                iconResId = R.drawable.outline_headphones_24,
-                contentAssetId = R.raw.audio_explicativo
-            ),
-            MultimediaOption(
-                type = MultimediaContentType.METAS,
-                title = "Metas",
-                description = "Configura tus metas para esta sesión",
-                iconResId = R.drawable.outline_trophy_24
+            else -> listOf( // Default HTA options
+
+                MultimediaOption(
+                    type = MultimediaContentType.VIDEO,
+                    title = "Video Genérico",
+                    description = "Ver el vídeo genérico de la sesión",
+                    iconImageVector = Icons.Default.PlayArrow,
+                    contentAssetId = R.raw.exercise
+                ),
+                MultimediaOption(
+                    type = MultimediaContentType.AUDIO,
+                    title = "Audio Genérico",
+                    description = "Escuchar el audio genérico de la sesión",
+                    iconResId = R.drawable.outline_headphones_24,
+                    contentAssetId = R.raw.audio_explicativo
+                ),
+                MultimediaOption(
+                    type = MultimediaContentType.METAS,
+                    title = "Metas",
+                    description = "Configura tus metas para esta sesión",
+                    iconResId = R.drawable.outline_trophy_24,
+                    metasId = "hta"
+                )
             )
-        )
+        }
+        TreatmentType.DIABETES -> when (subSessionId) {
+            1L -> listOf(
+                MultimediaOption(
+                    type = MultimediaContentType.DESCRIPTION,
+                    title = "Descripción (Diabetes)",
+                    description = "Conoce más sobre la diabetes.", // Short description for the card
+                    fullDescription = """
+                        ¿Cómo puedes saber si tus niveles de glucosa están controlados o no?
+                        La única forma confiable de medir tu glucosa es analizar tu sangre. Algunas aplicaciones de celular dicen que pueden hacerlo con la cámara, ¡pero eso no es cierto!
+                        Solo los glucómetros y los análisis de sangre realizados por profesionales pueden darte resultados reales.
+                        Si te haces la prueba en ayunas y tu glucosa sale 126 o más, significa que está alta.
+                        
+                        Y si en cualquier momento del día el resultado sale 200 o más, también es una señal de que tu glucosa está elevada.
+                        Además, tu médico puede pedirte un análisis de sangre para revisar la hemoglobina glicosilada 👨🏻‍⚕️ Este resultado muestra cómo han estado tus niveles de glucosa durante los últimos dos o tres meses. Si el valor es de 6.5% o más, significa que tu glucosa ha estado elevada de forma constante 🚨
+
+                        Es muy importante que midas tu glucosa frecuentemente para ver si está controlada. Los médicos te pueden recomendar que te hagas una prueba de hemoglobina glicosilada cada tres meses.
+                        
+                        Hoy aprendiste qué es la diabetes y cómo saber si tu glucosa está alta. Cuidar tu glucosa es cuidar de ti. Con hábitos y constancia, puedes mantenerte fuerte y saludable cada día ✨
+                    """.trimIndent(), // Long description for WelcomeActivity
+                    iconResId = R.drawable.outline_unknown_document_24
+                ),
+
+                MultimediaOption(
+                    type = MultimediaContentType.VIDEO,
+                    title = "Video Introducción (Diabetes)",
+                    description = "Ver el vídeo de introducción a la sesión de diabetes",
+                    iconImageVector = Icons.Default.PlayArrow,
+                    contentAssetId = R.raw.diabetes_sesion_1_1 // Placeholder for diabetes video
+                ),
+
+
+            )
+            2L -> listOf(
+                MultimediaOption(
+                    type = MultimediaContentType.VIDEO,
+                    title = "Video Explicativo (Diabetes)",
+                    description = "Ver el vídeo explicativo de la sesión de diabetes",
+                    iconImageVector = Icons.Default.PlayArrow,
+                    contentAssetId = R.raw.diabetes_sesion_2_1 // Placeholder for diabetes video
+                ),
+                MultimediaOption(
+                    type = MultimediaContentType.QUIZ,
+                    title = "Quiz Módulo 5 (Diabetes)",
+                    description = "Responde las preguntas del módulo 5 de Diabetes",
+                    iconResId = R.drawable.outline_trophy_24,
+                    quizId = "diabetes"
+                ),
+
+            )
+            3L -> listOf(
+                MultimediaOption(
+                    type = MultimediaContentType.VIDEO,
+                    title = "Video Principal (Diabetes)",
+                    description = "Primer video de la sesión de diabetes",
+                    iconImageVector = Icons.Default.PlayArrow,
+                    contentAssetId = R.raw.diabetes_sesion_3_1 // Placeholder for diabetes video
+                ),
+                MultimediaOption(
+                    type = MultimediaContentType.VIDEO,
+                    title = "Video Complementario (Diabetes)",
+                    description = "Segundo video de la sesión de diabetes",
+                    iconImageVector = Icons.Default.PlayArrow,
+                    contentAssetId = R.raw.diabetes_sesion_3_3 // Placeholder for diabetes video
+                ),
+                MultimediaOption(
+                    type = MultimediaContentType.METAS,
+                    title = "Metas (Diabetes)",
+                    description = "Configura tus metas para esta sesión de diabetes",
+                    iconResId = R.drawable.outline_trophy_24,
+                    metasId = "diabetes"
+                ),
+
+            )
+            else -> listOf( // Default Diabetes options
+
+                MultimediaOption(
+                    type = MultimediaContentType.VIDEO,
+                    title = "Video Genérico (Diabetes)",
+                    description = "Ver el vídeo genérico de la sesión de diabetes",
+                    iconImageVector = Icons.Default.PlayArrow,
+                    contentAssetId = R.raw.exercise
+                ),
+                MultimediaOption(
+                    type = MultimediaContentType.AUDIO,
+                    title = "Audio Genérico (Diabetes)",
+                    description = "Escuchar el audio genérico de la sesión de diabetes",
+                    iconResId = R.drawable.outline_headphones_24,
+                    contentAssetId = R.raw.audio_explicativo
+                ),
+                MultimediaOption(
+                    type = MultimediaContentType.METAS,
+                    title = "Metas (Diabetes)",
+                    description = "Configura tus metas para esta sesión de diabetes",
+                    iconResId = R.drawable.outline_trophy_24,
+                    metasId = "diabetes"
+                )
+            )
+        }
     }
 }
 
@@ -187,6 +291,17 @@ class MultimediaSelector : ComponentActivity() {
         val sessionTitle = intent?.getStringExtra("sessionTitle") ?: "Sesión"
         val subSessionId = intent?.getLongExtra("subSessionId", -1L) ?: -1L
         val subSessionTitle = intent?.getStringExtra("subSessionTitle") ?: ""
+        val treatmentTypeString = intent?.getStringExtra("treatmentType")
+        val treatmentType = if (treatmentTypeString != null) {
+            try {
+                TreatmentType.valueOf(treatmentTypeString)
+            } catch (e: IllegalArgumentException) {
+                TreatmentType.HTA // Default to HTA if invalid string
+            }
+        } else {
+            TreatmentType.HTA // Default to HTA if no extra is passed
+        }
+
 
         setContent {
             ColmaAppTheme {
@@ -195,6 +310,7 @@ class MultimediaSelector : ComponentActivity() {
                     sessionTitle = sessionTitle,
                     subSessionId = subSessionId,
                     subSessionTitle = subSessionTitle,
+                    treatmentType = treatmentType,
                     onBack = { finish() }
                 )
             }
@@ -209,6 +325,7 @@ fun MultimediaSelectorScreen(
     sessionTitle: String,
     subSessionId: Long,
     subSessionTitle: String,
+    treatmentType: TreatmentType,
     onBack: () -> Unit = {}
 ) {
     val signatureColor = colorResource(R.color.principal)
@@ -254,7 +371,7 @@ fun MultimediaSelectorScreen(
             )
 
             // Dynamic content based on subSessionId
-            val multimediaOptions = getMultimediaOptionsForSubSession(subSessionId)
+            val multimediaOptions = getMultimediaOptions(treatmentType, subSessionId)
 
             Column(
                 modifier = Modifier
@@ -267,11 +384,13 @@ fun MultimediaSelectorScreen(
                 multimediaOptions.forEach { option ->
                     MultimediaOptionCard(option = option, signatureColor = signatureColor) {
                         val intent = when (option.type) {
-                            MultimediaContentType.DESCRIPTION -> Intent(context, DescriptionActivity::class.java)
+                            MultimediaContentType.DESCRIPTION -> Intent(context, WelcomeActivity::class.java).apply {
+                                putExtra("displayContent", option.fullDescription ?: option.description)
+                            }
                             MultimediaContentType.VIDEO -> Intent(context, ActionActivity::class.java)
                             MultimediaContentType.AUDIO -> Intent(context, FinishActivity::class.java)
                             MultimediaContentType.METAS -> Intent(context, MetasActivity::class.java)
-                            MultimediaContentType.QUIZ -> Intent(context, HTAQuiz::class.java)
+                            MultimediaContentType.QUIZ -> Intent(context, QuizActivity::class.java)
                         }
                         intent.apply {
                             putExtra("sessionId", sessionId)
@@ -281,6 +400,12 @@ fun MultimediaSelectorScreen(
                             // Pass the specific asset ID if available
                             if (option.contentAssetId != null) {
                                 putExtra("contentAssetId", option.contentAssetId)
+                            }
+                            if (option.quizId != null) {
+                                putExtra("quizId", option.quizId)
+                            }
+                            if (option.metasId != null) {
+                                putExtra("metasType", option.metasId)
                             }
                         }
                         context.startActivity(intent)

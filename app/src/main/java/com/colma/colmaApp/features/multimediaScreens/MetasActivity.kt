@@ -31,7 +31,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -61,7 +61,10 @@ import java.util.Calendar // Added import for Calendar
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import com.colma.colmaApp.features.sesiones.TreatmentType
 
+const val METAS_TYPE_HTA = "hta"
+const val METAS_TYPE_DIABETES = "diabetes"
 
 class MetasActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -76,9 +79,21 @@ class MetasActivity : ComponentActivity() {
             isAppearanceLightNavigationBars = true // White navigation bar, so dark icons
         }
 
+        val metasTypeString = intent.getStringExtra("metasType")
+        val treatmentType = if (metasTypeString != null) {
+            try {
+                TreatmentType.valueOf(metasTypeString.uppercase(Locale.ROOT))
+            } catch (e: IllegalArgumentException) {
+                TreatmentType.HTA // Default to HTA if invalid string
+            }
+        } else {
+            TreatmentType.HTA // Default to HTA if no extra is passed
+        }
+
         setContent {
             ColmaAppTheme {
                 MetasScreen(
+                    treatmentType = treatmentType,
                     onBack = { finish() },
                     onFinish = {
                         finish()
@@ -91,7 +106,7 @@ class MetasActivity : ComponentActivity() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MetasScreen(onBack: () -> Unit = {}, onFinish: () -> Unit = {}) {
+fun MetasScreen(treatmentType: TreatmentType, onBack: () -> Unit = {}, onFinish: () -> Unit = {}) {
 
     val context = LocalContext.current
     val dbHelper = remember { DBhelper(context) }
@@ -121,16 +136,23 @@ fun MetasScreen(onBack: () -> Unit = {}, onFinish: () -> Unit = {}) {
 
     var shouldExecuteFinalAction by rememberSaveable { mutableStateOf(false) }
 
+    val topBarTitle = remember(treatmentType) {
+        when (treatmentType) {
+            TreatmentType.DIABETES -> "Metas Diabetes"
+            else -> "Metas HTA"
+        }
+    }
+
     Surface(modifier = Modifier.fillMaxSize()) {
         Scaffold(
             modifier = Modifier.systemBarsPadding(),
             topBar = {
                 TopAppBar(
-                    title = { Text("Metas", color = colorResource(R.color.white)) },
+                    title = { Text(topBarTitle, color = colorResource(R.color.white)) },
                     navigationIcon = {
                         IconButton(onClick = onBack) {
                             Icon(
-                                imageVector = Icons.Default.ArrowBack,
+                                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                                 contentDescription = "Volver",
                                 tint = colorResource(R.color.background)
                             )
@@ -160,17 +182,24 @@ fun MetasScreen(onBack: () -> Unit = {}, onFinish: () -> Unit = {}) {
                             .padding(bottom = 84.dp), // Adjust this padding to accommodate the fixed button
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
+                        val (actividades, conQuienOptions) = getMetasOptions(treatmentType)
+
+                        CardThatOpensSelectionDialog(
+                            title = "Tipo de actividad",
+                            description = "Seleccione el tipo de actividad para su meta.",
+                            items = listOf("Actividad física"),
+                            label = { it },
+                            onItemSelected = { chosen ->
+                                tipoActividad.value = chosen
+                            }
+                        )
+
+                        Spacer(modifier = Modifier.padding(8.dp))
+
                         CardThatOpensSelectionDialog(
                             title = "Actividad",
                             description = "Seleccione la actividad concreta que desee realizar.",
-                            items = listOf(
-                                "Subir escaleras en lugar de usar el ascensor.",
-                                "Bajar una parada de colectivo antes para caminar un poco más",
-                                "Bailar una canción en casa.",
-                                "Caminar al mercado, centro de salud, casa de un familia",
-                                "Pasear en bicicleta.",
-                                "Jugar algún deporte recreativo (fútbol, voley,etc.)."
-                            ),
+                            items = actividades,
                             label = { it },
                             onItemSelected = { chosen ->
                                 actividad.value = chosen
@@ -182,7 +211,7 @@ fun MetasScreen(onBack: () -> Unit = {}, onFinish: () -> Unit = {}) {
                         CardThatOpensSelectionDialog(
                             title = "Con quien",
                             description = "Quien te acompañará en esta actividad?",
-                            items = listOf("Solo/a", "Familiar", "Pareja", "Amigo/a", "Vecino/a", "Mascota"),
+                            items = conQuienOptions,
                             label = { it },
                             onItemSelected = { chosen ->
                                 conQuien.value = chosen
@@ -313,6 +342,38 @@ fun MetasScreen(onBack: () -> Unit = {}, onFinish: () -> Unit = {}) {
 
 
             }
+        )
+    }
+}
+
+fun getMetasOptions(treatmentType: TreatmentType): Pair<List<String>, List<String>> {
+    val conQuienOptions = listOf("Solo/a", "Familiar", "Pareja", "Amigo/a", "Vecino/a", "Mascota")
+
+    return when (treatmentType) {
+        TreatmentType.DIABETES -> Pair(
+            listOf(
+                "Ordenar la cocina o una habitación.",
+                "Ir de compras o ir al mercado.",
+                "Hacer un trámite pendiente (ej, hacer una llamada, realizar una consulta, sacar un turno)",
+                "Revisar mis documentos personales o médicos.",
+                "Limpiar un espacio de la casa que he dejado pendiente.",
+                "Reparar o arreglar algo roto o que no funciona.",
+                "Lavar o planchar ropa acumulada.",
+                "Ir al banco, correo u oficina municipal.",
+                "Organizar la semana con una lista de pendientes."
+            ),
+            conQuienOptions
+        )
+        TreatmentType.HTA -> Pair( // Explicitly handle HTA
+            listOf(
+                "Subir escaleras en lugar de usar el ascensor.",
+                "Bajar una parada de colectivo antes para caminar un poco más",
+                "Bailar una canción en casa.",
+                "Caminar al mercado, centro de salud, casa de un familia",
+                "Pasear en bicicleta.",
+                "Jugar algún deporte recreativo (fútbol, voley,etc.)."
+            ),
+            conQuienOptions
         )
     }
 }

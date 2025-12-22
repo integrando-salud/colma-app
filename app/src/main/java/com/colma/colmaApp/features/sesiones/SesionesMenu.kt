@@ -1,6 +1,7 @@
 package com.colma.colmaApp.features.sesiones
 
 import androidx.core.content.ContextCompat
+import com.colma.colmaApp.features.sesiones.TreatmentType
 import androidx.core.view.WindowInsetsControllerCompat
 import android.graphics.Color as AndroidColor
 import android.content.Intent
@@ -114,17 +115,28 @@ class SesionesMenu : ComponentActivity() {
         setContent {
             ColmaAppTheme {
                 val ctx = this
+                val treatmentTypeString = intent?.getStringExtra("treatmentType")
+                val currentTreatmentType = if (treatmentTypeString != null) {
+                    try {
+                        TreatmentType.valueOf(treatmentTypeString)
+                    } catch (e: IllegalArgumentException) {
+                        TreatmentType.HTA // Default if invalid string
+                    }
+                } else {
+                    TreatmentType.HTA // Default if no extra is passed
+                }
                 SesionesMenuScreen(
-                    sessions = sampleSessions(),
+                    treatmentType = currentTreatmentType,
                     onSessionClick = { sessionId, title ->
 
                     },
-                    onSubSessionClick = { parentId, subId, title ->
+                    onSubSessionClick = { parentId, subId, title, treatmentType ->
                         val i = Intent(ctx, MultimediaSelector::class.java).apply {
                             putExtra("sessionId", parentId)
                             putExtra("sessionTitle", "Semana $parentId")
                             putExtra("subSessionId", subId)
                             putExtra("subSessionTitle", title)
+                            putExtra("treatmentType", treatmentType.name)
                         }
                         startActivity(i)
                     },
@@ -137,12 +149,24 @@ class SesionesMenu : ComponentActivity() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SesionesMenuScreen(
-    sessions: List<SessionItem>,
+    treatmentType: TreatmentType,
     onSessionClick: (Long, String) -> Unit,
-    onSubSessionClick: (parentSessionId: Long, subSessionId: Long, title: String) -> Unit,
+    onSubSessionClick: (parentSessionId: Long, subSessionId: Long, title: String, treatmentType: TreatmentType) -> Unit,
     onBack: () -> Unit = {}
 ) {
     val signatureColor = colorResource(R.color.principal)
+    val sessionItems = remember(treatmentType) {
+        when (treatmentType) {
+            TreatmentType.HTA -> HTASession()
+            TreatmentType.DIABETES -> DiabetesSession()
+        }
+    }
+    val topBarTitle = remember(treatmentType) {
+        when (treatmentType) {
+            TreatmentType.HTA -> "HTA"
+            TreatmentType.DIABETES -> "Diabetes"
+        }
+    }
 
     Surface(modifier = Modifier.fillMaxSize().systemBarsPadding(), color = colorResource(R.color.background)) {
         Column(modifier = Modifier.fillMaxSize()) {
@@ -156,7 +180,7 @@ fun SesionesMenuScreen(
                         )
                     }
                 },
-                title = { Text("HTA", color = colorResource(R.color.white), fontWeight = FontWeight.Bold)},
+                title = { Text(topBarTitle, color = colorResource(R.color.white), fontWeight = FontWeight.Bold)},
                 colors = TopAppBarDefaults.topAppBarColors(containerColor = signatureColor)
             )
 
@@ -174,7 +198,7 @@ fun SesionesMenuScreen(
                 verticalArrangement = Arrangement.spacedBy(8.dp),
                 contentPadding = PaddingValues(vertical = 12.dp)
             ) {
-                items(sessions, key = { it.id }) { session ->
+                items(sessionItems, key = { session: SessionItem -> session.id }) { session: SessionItem ->
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -207,9 +231,12 @@ fun SesionesMenuScreen(
                             SecondarySessionList(
                                 modifier = Modifier.fillMaxWidth(),
                                 parentSession = session,
-                                items = sampleSubSessions(session.id),
+                                items = when (treatmentType) {
+                                    TreatmentType.HTA -> HTASubSessions(session.id)
+                                    TreatmentType.DIABETES -> DiabetesSubSessions(session.id)
+                                },
                                 onSubClick = { sub ->
-                                    onSubSessionClick(session.id, sub.id, sub.title)
+                                    onSubSessionClick(session.id, sub.id, sub.title, treatmentType)
                                 }
                             )
                         }
@@ -333,16 +360,29 @@ fun SubSessionRow(sub: SubSessionItem, onClick: () -> Unit) {
 }
 
 
-fun sampleSessions(): List<SessionItem> = listOf(
+fun HTASession(): List<SessionItem> = listOf(
     SessionItem(1, "Semana 1", thumbnailRes = R.drawable.missing_photo),
-
 )
 
-fun sampleSubSessions(parentId: Long): List<SubSessionItem> {
+fun HTASubSessions(parentId: Long): List<SubSessionItem> {
     return listOf(
         SubSessionItem(1, "Sesion 1", "05:00"),
         SubSessionItem(2, "Sesion 2", "07:00"),
         SubSessionItem(3, "Sesion 3", "03:00"),
-
     )
 }
+
+fun DiabetesSession(): List<SessionItem> = listOf(
+    SessionItem(1, "Semana 1", thumbnailRes = R.drawable.missing_photo),
+)
+
+fun DiabetesSubSessions(parentId: Long): List<SubSessionItem> {
+    return listOf(
+        SubSessionItem(1, "Sesion 1", "05:00"),
+        SubSessionItem(2, "Sesion 2", "07:00"),
+        SubSessionItem(3, "Sesion 3", "03:00"),
+    )
+}
+
+
+
