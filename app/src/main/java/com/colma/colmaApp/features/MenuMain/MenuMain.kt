@@ -33,11 +33,15 @@ import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Badge
+import androidx.compose.material3.BadgedBox
+import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalDrawerSheet
@@ -74,6 +78,7 @@ import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import com.colma.colmaApp.R
+import com.colma.colmaApp.features.MetasHistory.MetasHistoryActivity
 import com.colma.colmaApp.features.RegistroSalud.RegistrosSalud
 import com.colma.colmaApp.features.login.ui.LoginUI
 import com.colma.colmaApp.features.sesiones.SesionesMenu
@@ -120,6 +125,10 @@ class MenuMain : ComponentActivity() {
                         val intent = Intent(this@MenuMain, RegistrosSalud::class.java)
                         startActivity(intent)
                     },
+                    onMetasHistoryClick = {
+                        val intent = Intent(this@MenuMain, MetasHistoryActivity::class.java)
+                        startActivity(intent)
+                    },
                     onSalirClick = {
                         val intent = Intent(this@MenuMain, LoginUI::class.java)
                         startActivity(intent)
@@ -137,8 +146,9 @@ fun MenuScreen(
     onMenuClick: () -> Unit = {},
     onSessionsClick: () -> Unit = {},
     onHealthRegistersClick: () -> Unit = {},
+    onMetasHistoryClick: () -> Unit = {},
     onSalirClick: () -> Unit = {},
-    onSyncClick: () -> Unit = {},         // new parameter
+    onSyncClick: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     val signatureColor = colorResource(R.color.principal)
@@ -160,16 +170,20 @@ fun MenuScreen(
     var showReasonDialog by remember { mutableStateOf(false) }
     var showOtherReasonDialog by remember { mutableStateOf(false) }
     var otherReason by remember { mutableStateOf("") }
+    var pendingMetasCount by remember { mutableStateOf(0) }
 
-    LaunchedEffect(Unit) {
+    LaunchedEffect(key1 = Unit) {
         withContext(Dispatchers.IO) {
             val objective = dbHelper.getPendingPastMeta(1) // Assuming user id 1
             if (objective != null) {
                 todaysObjective = objective
                 showObjectiveDialog = true
             }
+            // Fetch pending metas count
+            pendingMetasCount = dbHelper.getPendingFutureMetasCount(1)
         }
     }
+
 
     if (showObjectiveDialog && todaysObjective != null) {
         CustomAlertDialog(
@@ -280,7 +294,6 @@ fun MenuScreen(
         modifier = Modifier.systemBarsPadding(),
         drawerContent = {
             ModalDrawerSheet(drawerContainerColor = Color.White) {
-                // App logo
                 Image(
                     painter = painterResource(id = R.drawable.colma_logo),
                     contentDescription = "App Logo",
@@ -293,7 +306,6 @@ fun MenuScreen(
 
                 Spacer(Modifier.height(12.dp))
 
-                // small helper composable for rows
                 @Composable
                 fun DrawerItem(label: String, icon: ImageVector, onClick: () -> Unit) {
                     Row(
@@ -319,10 +331,8 @@ fun MenuScreen(
                     }
                 }
 
-                // context for toasts
                 val context = LocalContext.current
 
-                // Drawer items
                 Column {
                     DrawerItem("Inicio", Icons.Default.Home) {
                         scope.launch { drawerState.close() }
@@ -347,7 +357,6 @@ fun MenuScreen(
 
                 Spacer(Modifier.height(28.dp))
 
-                // existing Salir button (keeps its behavior)
                 Button(
                     onClick = {
                         scope.launch { drawerState.close() }
@@ -376,7 +385,7 @@ fun MenuScreen(
                     navigationIcon = {
                         Surface(
                             shape = RoundedCornerShape(12.dp),
-                            color = Color.White.copy(alpha = 0.20f), // subtle white background
+                            color = Color.White.copy(alpha = 0.20f),
                             modifier = Modifier
                                 .padding(start = 8.dp)
                                 .height(36.dp)
@@ -396,13 +405,30 @@ fun MenuScreen(
                             }
                         }
                     },
+                    actions = {
+                        IconButton(onClick = onMetasHistoryClick) {
+                            BadgedBox(
+                                badge = {
+                                    if (pendingMetasCount > 0) {
+                                        Badge { Text("$pendingMetasCount") }
+                                    }
+                                }
+                            ) {
+                                Icon(
+                                    painter = painterResource(R.drawable.outline_trophy_24),
+                                    contentDescription = "Historial de Metas",
+                                    tint = Color.White
+                                )
+                            }
+                        }
+                    },
                     colors = TopAppBarDefaults.topAppBarColors(
                         containerColor = signatureColor,
                         titleContentColor = Color.White,
                         navigationIconContentColor = Color.White
                     )
                 )
-            },
+            }
         ) { innerPadding ->
             Box(
                 modifier = Modifier
@@ -452,12 +478,10 @@ fun MenuScreen(
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.Start
                         ) {
-                            // If you want the icon without tint (keeps PNG/vector original colors) use Image:
                             Image(
                                 painter = painterResource(id = R.drawable.sesion_logo),
                                 contentDescription = "Sesiones",
-                                modifier = Modifier
-                                    .size(24.dp) // slightly larger for touch affordance
+                                modifier = Modifier.size(24.dp)
                             )
 
                             Spacer(modifier = Modifier.width(12.dp))
@@ -485,7 +509,7 @@ fun MenuScreen(
                             contentColor = Color.Black
                         ),
                         shape = MaterialTheme.shapes.medium,
-                        elevation = ButtonDefaults.buttonElevation( // subtle shadow
+                        elevation = ButtonDefaults.buttonElevation(
                             defaultElevation = 6.dp,
                             pressedElevation = 10.dp
                         ),
@@ -514,35 +538,28 @@ fun MenuScreen(
                         }
                     }
 
-                    // push footer to bottom
                     Spacer(modifier = Modifier.weight(1f))
 
-                    // Footer: Sincronizar datos button with left icon
                     Button(
                         onClick = {
                             coroutineScope.launch {
                                 try {
-                                    // 0) choose one sync timestamp for this operation (local device time)
                                     val syncTs = nowLocal()
 
-                                    // 1) Read DB on IO thread: glucosa, presion, estado_animo
                                     val (glucosaList, presionList, estadoAnimoList) = withContext(Dispatchers.IO) {
-                                        val g = dbHelper.getPendingGlucosa(1)   // user id = 1 (adjust as needed)
+                                        val g = dbHelper.getPendingGlucosa(1)
                                         val p = dbHelper.getPendingPresion(1)
                                         val e = dbHelper.getPendingEstadoAnimoList(1)
                                         Triple(g, p, e)
                                     }
 
-                                    // Build JSON root
                                     val root = JSONObject().apply {
                                         put("deviceTimestamp", System.currentTimeMillis())
                                         put("userId", 1)
                                         put("app", "colmaApp")
-                                        // include clientSyncTimestamp top-level so server knows the client timestamp
                                         put("clientSyncTimestamp", syncTs)
                                     }
 
-                                    // glucosa array (include fecha_sincronizacion = syncTs)
                                     val gArray = JSONArray()
                                     val glucosaIdsToMark = mutableListOf<Long>()
                                     glucosaList.forEach { g ->
@@ -552,14 +569,12 @@ fun MenuScreen(
                                         gObj.put("valor_mgdl", g.valorMgdl ?: JSONObject.NULL)
                                         gObj.put("ayuno", g.ayuno ?: JSONObject.NULL)
                                         gObj.put("fecha_registro", g.fecha_registro ?: JSONObject.NULL)
-                                        // send the chosen sync timestamp (client-chosen)
                                         gObj.put("fecha_sincronizacion", syncTs)
                                         gArray.put(gObj)
                                         glucosaIdsToMark.add(g.id)
                                     }
                                     root.put("glucosa", gArray)
 
-                                    // presion array (include fecha_sincronizacion = syncTs)
                                     val pArray = JSONArray()
                                     val presionIdsToMark = mutableListOf<Long>()
                                     presionList.forEach { p ->
@@ -575,12 +590,11 @@ fun MenuScreen(
                                     }
                                     root.put("presion", pArray)
 
-                                    // estado_animo array (include fecha_sincronizacion = syncTs)
                                     val eArray = JSONArray()
                                     val estadoIdsToMark = mutableListOf<Long>()
                                     estadoAnimoList.forEach { e ->
                                         val eObj = JSONObject()
-                                        eObj.put("id_estado_animo", e.rowid) // use rowid as id
+                                        eObj.put("id_estado_animo", e.rowid)
                                         eObj.put("id_paciente", e.idPaciente ?: JSONObject.NULL)
                                         eObj.put("fecha_registro", e.fechaRegistro ?: JSONObject.NULL)
                                         for (i in 1..9) {
@@ -595,44 +609,31 @@ fun MenuScreen(
                                     root.put("estado_animo", eArray)
 
                                     val jsonToSend = root.toString(2)
-
-                                    // 3) Post JSON
+                                    
                                     val postResult = postJsonRaw(webhookUrl, jsonToSend)
 
                                     withContext(Dispatchers.Main) {
                                         postResult.fold(onSuccess = { resp ->
-                                            // success path
                                             lastResponse = "Enviado correctamente: $resp"
                                             Toast.makeText(context, "Enviado correctamente", Toast.LENGTH_SHORT).show()
 
-                                            // default: use the client sync timestamp unless server provides specific timestamps
                                             val defaultTimestamp = syncTs
-
-                                            // parse server response — try to prefer server timestamps / status
                                             val glucosaTimestampMap = mutableMapOf<Long, String>()
                                             val presionTimestampMap = mutableMapOf<Long, String>()
                                             val estadoTimestampMap = mutableMapOf<Long, String>()
-
                                             var serverStatus = "200"
                                             var serverSyncedAt: String? = null
-
                                             try {
                                                 val respStr = resp?.toString() ?: ""
                                                 if (respStr.isNotBlank()) {
                                                     val rootResp = org.json.JSONObject(respStr)
-
-                                                    // possible top-level status / code
                                                     serverStatus = when {
                                                         rootResp.has("code") -> rootResp.optString("code", serverStatus)
                                                         rootResp.has("status") -> rootResp.optString("status", serverStatus)
                                                         rootResp.has("statusCode") -> rootResp.optString("statusCode", serverStatus)
                                                         else -> serverStatus
                                                     }
-
-                                                    // server might return a global timestamp (syncedAt)
                                                     if (rootResp.has("syncedAt")) serverSyncedAt = rootResp.optString("syncedAt", null)
-
-                                                    // per-item timestamp arrays (prefer these)
                                                     if (rootResp.has("glucosa")) {
                                                         val ga = rootResp.optJSONArray("glucosa")
                                                         if (ga != null) {
@@ -666,17 +667,12 @@ fun MenuScreen(
                                                             }
                                                         }
                                                     }
-
-                                                    // if server returned a unified timestamp and we have no per-id, use it
                                                     if (glucosaTimestampMap.isEmpty() && presionTimestampMap.isEmpty() && estadoTimestampMap.isEmpty() && serverSyncedAt != null) {
                                                         val ts = if (serverSyncedAt.isNullOrBlank()) defaultTimestamp else serverSyncedAt
                                                         glucosaIdsToMark.forEach { glucosaTimestampMap[it] = ts }
                                                         presionIdsToMark.forEach { presionTimestampMap[it] = ts }
                                                         estadoIdsToMark.forEach { estadoTimestampMap[it] = ts }
                                                     }
-
-                                                    // fallback: if per-id maps are still empty but server returned lists of ids,
-                                                    // mark with defaultTimestamp
                                                     if (glucosaTimestampMap.isEmpty() && rootResp.has("glucosaIds")) {
                                                         val ga = rootResp.optJSONArray("glucosaIds")
                                                         if (ga != null) for (i in 0 until ga.length()) { val id = ga.optLong(i, -1L); if (id > 0) glucosaTimestampMap[id] = defaultTimestamp }
@@ -693,36 +689,27 @@ fun MenuScreen(
                                             } catch (e: Exception) {
                                                 e.printStackTrace()
                                             }
-
-                                            // Final fallback: mark each id with the client syncTs
                                             if (glucosaTimestampMap.isEmpty()) glucosaIdsToMark.forEach { glucosaTimestampMap[it] = defaultTimestamp }
                                             if (presionTimestampMap.isEmpty()) presionIdsToMark.forEach { presionTimestampMap[it] = defaultTimestamp }
                                             if (estadoTimestampMap.isEmpty()) estadoIdsToMark.forEach { estadoTimestampMap[it] = defaultTimestamp }
-
-                                            // Persist two things on IO:
-                                            //  a) insert a row into sincronizacion_table marking this sync attempt as success
-                                            //  b) update per-record fecha_sincronizacion maps
+                                            
                                             val recordTimestampForSyncTable = serverSyncedAt ?: syncTs
                                             withContext(Dispatchers.IO) {
                                                 try {
-                                                    // insert a summary sync record (success)
                                                     try {
                                                         dbHelper.insertSincronizacion(recordTimestampForSyncTable, serverStatus, null)
                                                     } catch (ie: Exception) { ie.printStackTrace() }
-
-                                                    // update per-row timestamps
                                                     if (glucosaTimestampMap.isNotEmpty()) dbHelper.updateGlucosaSyncTimestamps(glucosaTimestampMap)
                                                     if (presionTimestampMap.isNotEmpty()) dbHelper.updatePresionSyncTimestamps(presionTimestampMap)
                                                     if (estadoTimestampMap.isNotEmpty()) dbHelper.updateEstadoAnimoSyncTimestamps(estadoTimestampMap)
-                                                                                                 } catch (e: Exception) {
-                                                                                                     e.printStackTrace()
-                                                                                                 }                                            }
+                                                } catch (e: Exception) {
+                                                    e.printStackTrace()
+                                                }
+                                            }
                                         }, onFailure = { err ->
-                                            // failure path
                                             lastResponse = "Error: ${err?.message}"
                                             Toast.makeText(context, "Error: ${err?.message}", Toast.LENGTH_LONG).show()
-
-                                            // save failure into sincronizacion_table including the payload for later inspection/resend
+                                            
                                             val errDesc = (err?.message ?: "network/error")
                                             withContext(Dispatchers.IO) {
                                                 try {
@@ -732,17 +719,16 @@ fun MenuScreen(
                                                 }
                                             }
                                         })
-                                    } // end withContext(Main)
+                                    }
                                 } catch (e: Exception) {
                                     e.printStackTrace()
                                     withContext(Dispatchers.Main) {
                                         lastResponse = "Error inesperado: ${e.message}"
                                         Toast.makeText(context, "Error inesperado: ${e.message}", Toast.LENGTH_LONG).show()
-                                        // Save unexpected exceptions to sync table with payload for debugging
                                         val syncTs = nowLocal()
                                         withContext(Dispatchers.IO) {
                                             try {
-                                                dbHelper.insertSincronizacion(syncTs, e.message ?: "exception", /* optionally save payload? */ null)
+                                                dbHelper.insertSincronizacion(syncTs, e.message ?: "exception", null)
                                             } catch (ie: Exception) { ie.printStackTrace() }
                                         }
                                     }
@@ -810,7 +796,6 @@ suspend fun postJsonRaw(urlString: String, jsonBody: String, timeoutMs: Int = 15
                 setRequestProperty("Accept", "application/json")
             }
 
-            // write body
             conn.outputStream.use { out ->
                 BufferedOutputStream(out).use { bos ->
                     bos.write(jsonBody.toByteArray(Charsets.UTF_8))
@@ -841,7 +826,6 @@ suspend fun postJsonRaw(urlString: String, jsonBody: String, timeoutMs: Int = 15
 
 fun nowLocal(): String {
     val sdf = java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss", java.util.Locale.getDefault())
-    // keep device local timezone
     sdf.timeZone = java.util.TimeZone.getDefault()
     return sdf.format(java.util.Date())
 }

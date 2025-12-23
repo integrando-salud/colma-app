@@ -82,6 +82,10 @@
 
         </activity>
 
+        <activity android:name=".features.MetasHistory.MetasHistoryActivity"
+            android:exported="false">
+        </activity>
+
         <activity android:name=".features.sesiones.SessionContent"
             android:exported="false"/>
 

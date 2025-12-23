@@ -1034,6 +1034,29 @@ class DBhelper(context: Context) :
         return null
     }
 
+    fun getPendingFutureMetasCount(idUsuario: Int? = 1): Int {
+        val db = readableDatabase
+        val selectionParts = mutableListOf<String>("meta_cumplida = 0", "date(fecha_objetivo) >= date('now', 'localtime')")
+        val selectionArgsList = mutableListOf<String>()
+
+        if (idUsuario != null) {
+            selectionParts.add("id_usuario = ?")
+            selectionArgsList.add(idUsuario.toString())
+        }
+
+        val selection = selectionParts.joinToString(" AND ")
+        val selectionArgs = if (selectionArgsList.isNotEmpty()) selectionArgsList.toTypedArray() else null
+
+        val cursor = db.rawQuery("SELECT COUNT(*) FROM metas_table WHERE $selection", selectionArgs)
+
+        cursor.use { c ->
+            if (c.moveToFirst()) {
+                return c.getInt(0)
+            }
+        }
+        return 0
+    }
+
     fun getPendingPastMeta(idUsuario: Int? = 1): RegistrosSaludModelos.MetaRecord? {
         val db = readableDatabase
         val selectionParts = mutableListOf<String>("meta_cumplida = 0", "date(fecha_objetivo) <= date('now', 'localtime')")

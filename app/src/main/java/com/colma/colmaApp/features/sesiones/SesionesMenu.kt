@@ -133,13 +133,13 @@ class SesionesMenu : ComponentActivity() {
                     onSessionClick = { sessionId, title ->
                         // No-op for now
                     },
-                    onSubSessionClick = { parentId, subId, title, treatmentTypes ->
+                    onSubSessionClick = { parentId, subId, title, treatmentType ->
                         val intent = Intent(ctx, MultimediaSelector::class.java).apply {
                             putExtra("sessionId", parentId)
                             putExtra("sessionTitle", "Semana $parentId")
                             putExtra("subSessionId", subId)
                             putExtra("subSessionTitle", title)
-                            putExtra("treatmentTypes", treatmentTypes.joinToString(",") { it.name })
+                            putExtra("treatmentTypes", treatmentType.name)
                         }
                         startActivity(intent)
                     },
@@ -154,7 +154,7 @@ class SesionesMenu : ComponentActivity() {
 fun SesionesMenuScreen(
     treatmentTypes: List<TreatmentType>,
     onSessionClick: (Long, String) -> Unit,
-    onSubSessionClick: (parentSessionId: Long, subSessionId: Long, title: String, treatmentTypes: List<TreatmentType>) -> Unit,
+    onSubSessionClick: (parentSessionId: Long, subSessionId: Long, title: String, treatmentType: TreatmentType) -> Unit,
     onBack: () -> Unit = {}
 ) {
     val signatureColor = colorResource(R.color.principal)
@@ -204,7 +204,6 @@ fun SesionesMenuScreen(
                         SessionItemView(
                             session = session,
                             expandedId = expandedId,
-                            treatmentTypes = treatmentTypes,
                             onExpand = { id -> expandedId = if (expandedId == id) null else id },
                             onSessionClick = onSessionClick,
                             onSubSessionClick = onSubSessionClick
@@ -230,7 +229,6 @@ fun SesionesMenuScreen(
                         SessionItemView(
                             session = session,
                             expandedId = expandedId,
-                            treatmentTypes = treatmentTypes,
                             onExpand = { id -> expandedId = if (expandedId == id) null else id },
                             onSessionClick = onSessionClick,
                             onSubSessionClick = onSubSessionClick
@@ -257,10 +255,9 @@ fun TreatmentHeader(title: String) {
 fun SessionItemView(
     session: SessionItem,
     expandedId: Long?,
-    treatmentTypes: List<TreatmentType>,
     onExpand: (Long) -> Unit,
     onSessionClick: (Long, String) -> Unit,
-    onSubSessionClick: (parentSessionId: Long, subSessionId: Long, title: String, treatmentTypes: List<TreatmentType>) -> Unit
+    onSubSessionClick: (parentSessionId: Long, subSessionId: Long, title: String, treatmentType: TreatmentType) -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -299,7 +296,7 @@ fun SessionItemView(
                     TreatmentType.DIABETES -> DiabetesSubSessions(session.id)
                 },
                 onSubClick = { sub ->
-                    onSubSessionClick(session.id, sub.id, sub.title, treatmentTypes)
+                    onSubSessionClick(session.id, sub.id, sub.title, session.treatmentType)
                 }
             )
         }
