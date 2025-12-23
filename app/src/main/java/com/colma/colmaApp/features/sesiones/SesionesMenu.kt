@@ -34,10 +34,11 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -77,7 +78,6 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -89,6 +89,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 data class SessionItem(
     val id: Long,
     val title: String,
+    val treatmentType: TreatmentType,
     val thumbnailRes: Int = R.drawable.missing_photo,
     val duration: String = "10 min"
 )
@@ -112,33 +113,35 @@ class SesionesMenu : ComponentActivity() {
             isAppearanceLightNavigationBars = true // White navigation bar, so dark icons
         }
 
+        val treatmentTypesString = intent?.getStringExtra("treatmentTypes") ?: "HTA"
+
         setContent {
+            val treatmentTypes = remember(treatmentTypesString) {
+                treatmentTypesString.split(',').mapNotNull {
+                    try {
+                        TreatmentType.valueOf(it.trim().uppercase())
+                    } catch (e: IllegalArgumentException) {
+                        null
+                    }
+                }.ifEmpty { listOf(TreatmentType.HTA) }
+            }
+
             ColmaAppTheme {
                 val ctx = this
-                val treatmentTypeString = intent?.getStringExtra("treatmentType")
-                val currentTreatmentType = if (treatmentTypeString != null) {
-                    try {
-                        TreatmentType.valueOf(treatmentTypeString)
-                    } catch (e: IllegalArgumentException) {
-                        TreatmentType.HTA // Default if invalid string
-                    }
-                } else {
-                    TreatmentType.HTA // Default if no extra is passed
-                }
                 SesionesMenuScreen(
-                    treatmentType = currentTreatmentType,
+                    treatmentTypes = treatmentTypes,
                     onSessionClick = { sessionId, title ->
-
+                        // No-op for now
                     },
-                    onSubSessionClick = { parentId, subId, title, treatmentType ->
-                        val i = Intent(ctx, MultimediaSelector::class.java).apply {
+                    onSubSessionClick = { parentId, subId, title, treatmentTypes ->
+                        val intent = Intent(ctx, MultimediaSelector::class.java).apply {
                             putExtra("sessionId", parentId)
                             putExtra("sessionTitle", "Semana $parentId")
                             putExtra("subSessionId", subId)
                             putExtra("subSessionTitle", title)
-                            putExtra("treatmentType", treatmentType.name)
+                            putExtra("treatmentTypes", treatmentTypes.joinToString(",") { it.name })
                         }
-                        startActivity(i)
+                        startActivity(intent)
                     },
                     onBack = { finish() }
                 )
@@ -149,22 +152,18 @@ class SesionesMenu : ComponentActivity() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SesionesMenuScreen(
-    treatmentType: TreatmentType,
+    treatmentTypes: List<TreatmentType>,
     onSessionClick: (Long, String) -> Unit,
-    onSubSessionClick: (parentSessionId: Long, subSessionId: Long, title: String, treatmentType: TreatmentType) -> Unit,
+    onSubSessionClick: (parentSessionId: Long, subSessionId: Long, title: String, treatmentTypes: List<TreatmentType>) -> Unit,
     onBack: () -> Unit = {}
 ) {
     val signatureColor = colorResource(R.color.principal)
-    val sessionItems = remember(treatmentType) {
-        when (treatmentType) {
-            TreatmentType.HTA -> HTASession()
-            TreatmentType.DIABETES -> DiabetesSession()
-        }
-    }
-    val topBarTitle = remember(treatmentType) {
-        when (treatmentType) {
-            TreatmentType.HTA -> "HTA"
-            TreatmentType.DIABETES -> "Diabetes"
+    val topBarTitle = remember(treatmentTypes) {
+        when {
+            treatmentTypes.contains(TreatmentType.HTA) && treatmentTypes.contains(TreatmentType.DIABETES) -> "HTA y Diabetes"
+            treatmentTypes.contains(TreatmentType.HTA) -> "HTA"
+            treatmentTypes.contains(TreatmentType.DIABETES) -> "Diabetes"
+            else -> "Sesiones"
         }
     }
 
@@ -174,7 +173,7 @@ fun SesionesMenuScreen(
                 navigationIcon = {
                     IconButton(onClick = onBack) {
                         Icon(
-                            imageVector = androidx.compose.material.icons.Icons.Default.ArrowBack,
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = "Volver",
                             tint = Color.White
                         )
@@ -184,10 +183,6 @@ fun SesionesMenuScreen(
                 colors = TopAppBarDefaults.topAppBarColors(containerColor = signatureColor)
             )
 
-
-            Divider()
-
-            // Estado local: id de la tarjeta expandida (solo una a la vez)
             var expandedId by rememberSaveable { mutableStateOf<Long?>(null) }
 
             LazyColumn(
@@ -198,48 +193,48 @@ fun SesionesMenuScreen(
                 verticalArrangement = Arrangement.spacedBy(8.dp),
                 contentPadding = PaddingValues(vertical = 12.dp)
             ) {
-                items(sessionItems, key = { session: SessionItem -> session.id }) { session: SessionItem ->
-                    Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .animateContentSize()
-                            .padding(vertical = 11.dp)
-                            .padding(horizontal = 11.dp)
-                    ) {
-                        val selected = expandedId == session.id
+                val hasHta = treatmentTypes.contains(TreatmentType.HTA)
+                val hasDiabetes = treatmentTypes.contains(TreatmentType.DIABETES)
 
-                        SessionCard(
+                if (hasHta) {
+                    item {
+                        TreatmentHeader(title = "Hipertensión Arterial")
+                    }
+                    items(HTASession(), key = { "hta-${it.id}" }) { session ->
+                        SessionItemView(
                             session = session,
-                            selected = selected,
-                            onClick = {
-                                expandedId = if (selected) null else session.id
-                                onSessionClick(session.id, session.title)
-                            }
+                            expandedId = expandedId,
+                            treatmentTypes = treatmentTypes,
+                            onExpand = { id -> expandedId = if (expandedId == id) null else id },
+                            onSessionClick = onSessionClick,
+                            onSubSessionClick = onSubSessionClick
                         )
+                    }
+                }
 
-                        AnimatedVisibility(
-                            visible = selected,
-                            enter = expandVertically(
-                                expandFrom = Alignment.Top,
-                                animationSpec = tween(durationMillis = 280, easing = FastOutSlowInEasing)
-                            ) + fadeIn(animationSpec = tween(200)),
-                            exit = shrinkVertically(
-                                shrinkTowards = Alignment.Top,
-                                animationSpec = tween(durationMillis = 220, easing = FastOutSlowInEasing)
-                            ) + fadeOut(animationSpec = tween(180))
-                        ) {
-                            SecondarySessionList(
-                                modifier = Modifier.fillMaxWidth(),
-                                parentSession = session,
-                                items = when (treatmentType) {
-                                    TreatmentType.HTA -> HTASubSessions(session.id)
-                                    TreatmentType.DIABETES -> DiabetesSubSessions(session.id)
-                                },
-                                onSubClick = { sub ->
-                                    onSubSessionClick(session.id, sub.id, sub.title, treatmentType)
-                                }
-                            )
-                        }
+                if (hasHta && hasDiabetes) {
+                    item {
+                        HorizontalDivider(
+                            modifier = Modifier.padding(vertical = 16.dp, horizontal = 8.dp),
+                            thickness = 1.dp,
+                            color = Color.LightGray
+                        )
+                    }
+                }
+
+                if (hasDiabetes) {
+                    item {
+                        TreatmentHeader(title = "Diabetes")
+                    }
+                    items(DiabetesSession(), key = { "diabetes-${it.id}" }) { session ->
+                        SessionItemView(
+                            session = session,
+                            expandedId = expandedId,
+                            treatmentTypes = treatmentTypes,
+                            onExpand = { id -> expandedId = if (expandedId == id) null else id },
+                            onSessionClick = onSessionClick,
+                            onSubSessionClick = onSubSessionClick
+                        )
                     }
                 }
             }
@@ -248,9 +243,74 @@ fun SesionesMenuScreen(
 }
 
 @Composable
+fun TreatmentHeader(title: String) {
+    Text(
+        text = title,
+        fontSize = 20.sp,
+        fontWeight = FontWeight.Bold,
+        color = colorResource(id = R.color.principal),
+        modifier = Modifier.padding(bottom = 8.dp, top = 4.dp, start = 11.dp)
+    )
+}
+
+@Composable
+fun SessionItemView(
+    session: SessionItem,
+    expandedId: Long?,
+    treatmentTypes: List<TreatmentType>,
+    onExpand: (Long) -> Unit,
+    onSessionClick: (Long, String) -> Unit,
+    onSubSessionClick: (parentSessionId: Long, subSessionId: Long, title: String, treatmentTypes: List<TreatmentType>) -> Unit
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .animateContentSize()
+            .padding(vertical = 11.dp)
+            .padding(horizontal = 11.dp)
+    ) {
+        val selected = expandedId == session.id
+
+        SessionCard(
+            session = session,
+            selected = selected,
+            onClick = {
+                onExpand(session.id)
+                onSessionClick(session.id, session.title)
+            }
+        )
+
+        AnimatedVisibility(
+            visible = selected,
+            enter = expandVertically(
+                expandFrom = Alignment.Top,
+                animationSpec = tween(durationMillis = 280, easing = FastOutSlowInEasing)
+            ) + fadeIn(animationSpec = tween(200)),
+            exit = shrinkVertically(
+                shrinkTowards = Alignment.Top,
+                animationSpec = tween(durationMillis = 220, easing = FastOutSlowInEasing)
+            ) + fadeOut(animationSpec = tween(180))
+        ) {
+            SecondarySessionList(
+                modifier = Modifier.fillMaxWidth(),
+                parentSession = session,
+                items = when (session.treatmentType) {
+                    TreatmentType.HTA -> HTASubSessions(session.id)
+                    TreatmentType.DIABETES -> DiabetesSubSessions(session.id)
+                },
+                onSubClick = { sub ->
+                    onSubSessionClick(session.id, sub.id, sub.title, treatmentTypes)
+                }
+            )
+        }
+    }
+}
+
+
+@Composable
 fun SessionCard(session: SessionItem, selected: Boolean = false, onClick: () -> Unit) {
-    val backgroundColor by animateColorAsState(targetValue = if (selected) colorResource(R.color.principal) else colorResource(R.color.white))
-    val titleColor by animateColorAsState(targetValue = if (selected) Color.White else Color.Black)
+    val backgroundColor by animateColorAsState(targetValue = if (selected) colorResource(R.color.principal) else colorResource(R.color.white), label = "")
+    val titleColor by animateColorAsState(targetValue = if (selected) Color.White else Color.Black, label = "")
     val shape = if (selected) RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp, bottomStart = 0.dp, bottomEnd = 0.dp) else RoundedCornerShape(12.dp)
 
     Card(
@@ -314,10 +374,9 @@ fun SecondarySessionList(
             .fillMaxWidth()
             .padding(vertical = 8.dp, horizontal = 12.dp)
         ) {
-            // optional header line
             Text(text = "Contenidos de ${parentSession.title}", fontWeight = FontWeight.Medium, fontSize = 14.sp, color = Color.DarkGray)
             Spacer(modifier = Modifier.height(8.dp))
-            Divider()
+            HorizontalDivider()
 
             Spacer(modifier = Modifier.height(8.dp))
 
@@ -361,7 +420,7 @@ fun SubSessionRow(sub: SubSessionItem, onClick: () -> Unit) {
 
 
 fun HTASession(): List<SessionItem> = listOf(
-    SessionItem(1, "Semana 1", thumbnailRes = R.drawable.missing_photo),
+    SessionItem(1, "Semana 1 HTA", TreatmentType.HTA, thumbnailRes = R.drawable.missing_photo),
 )
 
 fun HTASubSessions(parentId: Long): List<SubSessionItem> {
@@ -373,7 +432,7 @@ fun HTASubSessions(parentId: Long): List<SubSessionItem> {
 }
 
 fun DiabetesSession(): List<SessionItem> = listOf(
-    SessionItem(1, "Semana 1", thumbnailRes = R.drawable.missing_photo),
+    SessionItem(2, "Semana 1 Diabetes", TreatmentType.DIABETES, thumbnailRes = R.drawable.missing_photo),
 )
 
 fun DiabetesSubSessions(parentId: Long): List<SubSessionItem> {
@@ -383,6 +442,3 @@ fun DiabetesSubSessions(parentId: Long): List<SubSessionItem> {
         SubSessionItem(3, "Sesion 3", "03:00"),
     )
 }
-
-
-

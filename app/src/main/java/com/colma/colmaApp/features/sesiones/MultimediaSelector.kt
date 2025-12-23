@@ -23,7 +23,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.PlayArrow
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -58,9 +58,7 @@ import com.colma.colmaApp.features.multimediaScreens.FinishActivity
 import com.colma.colmaApp.features.multimediaScreens.MetasActivity
 import com.colma.colmaApp.features.multimediaScreens.QuizActivity
 import androidx.compose.foundation.layout.Row
-import androidx.compose.material3.contentColorFor
 
-// New enum and data class for multimedia options
 enum class MultimediaContentType {
     DESCRIPTION,
     VIDEO,
@@ -83,13 +81,6 @@ data class MultimediaOption(
     val metasId: String? = null // New field for metas identification
 )
 
-/**
- * Helper function to define multimedia options based on the subSessionId.
- * Note: For video assets, `R.raw.exercise` is used as a placeholder.
- * For distinct videos, different raw video assets would need to be added
- * and referenced here. `ActionActivity` must be updated to consume
- * the `contentAssetId` extra to play the correct media.
- */
 fun getMultimediaOptions(treatmentType: TreatmentType, subSessionId: Long): List<MultimediaOption> {
 
     return when (treatmentType) {
@@ -291,26 +282,26 @@ class MultimediaSelector : ComponentActivity() {
         val sessionTitle = intent?.getStringExtra("sessionTitle") ?: "Sesión"
         val subSessionId = intent?.getLongExtra("subSessionId", -1L) ?: -1L
         val subSessionTitle = intent?.getStringExtra("subSessionTitle") ?: ""
-        val treatmentTypeString = intent?.getStringExtra("treatmentType")
-        val treatmentType = if (treatmentTypeString != null) {
-            try {
-                TreatmentType.valueOf(treatmentTypeString)
-            } catch (e: IllegalArgumentException) {
-                TreatmentType.HTA // Default to HTA if invalid string
-            }
-        } else {
-            TreatmentType.HTA // Default to HTA if no extra is passed
-        }
+        val treatmentTypesString = intent?.getStringExtra("treatmentTypes") ?: "HTA"
 
 
         setContent {
+            val treatmentTypes = remember(treatmentTypesString) {
+                treatmentTypesString.split(',').mapNotNull {
+                    try {
+                        TreatmentType.valueOf(it.trim().uppercase())
+                    } catch (e: IllegalArgumentException) {
+                        null
+                    }
+                }.ifEmpty { listOf(TreatmentType.HTA) }
+            }
             ColmaAppTheme {
                 MultimediaSelectorScreen(
                     sessionId = sessionId,
                     sessionTitle = sessionTitle,
                     subSessionId = subSessionId,
                     subSessionTitle = subSessionTitle,
-                    treatmentType = treatmentType,
+                    treatmentTypes = treatmentTypes,
                     onBack = { finish() }
                 )
             }
@@ -325,13 +316,11 @@ fun MultimediaSelectorScreen(
     sessionTitle: String,
     subSessionId: Long,
     subSessionTitle: String,
-    treatmentType: TreatmentType,
+    treatmentTypes: List<TreatmentType>,
     onBack: () -> Unit = {}
 ) {
     val signatureColor = colorResource(R.color.principal)
     val context = LocalContext.current
-    val sTitle = remember(sessionTitle) { sessionTitle }
-
 
     fun friendlySubLabel(subId: Long, parentId: Long): String {
         return try {
@@ -353,25 +342,26 @@ fun MultimediaSelectorScreen(
                     Column {
                         Text(text = sessionTitle, fontSize = 16.sp, color = Color.White, fontWeight = FontWeight.SemiBold)
                         val secondLine = when {
-                            !subSessionTitle.isNullOrBlank() -> subSessionTitle
+                            subSessionTitle.isNotBlank() -> subSessionTitle
                             subSessionId != -1L && sessionId >= 0L -> friendlySubLabel(subSessionId, sessionId)
-                            else -> null
+                            else -> ""
                         }
-                        if (secondLine != null) {
-                            Text(text = secondLine, fontSize = 12.sp, color = Color.White.copy(alpha = 0.9f))
-                        }
+                        Text(text = secondLine, fontSize = 12.sp, color = Color.White.copy(alpha = 0.9f))
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(containerColor = signatureColor),
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "Volver", tint = Color.White)
+                        Icon(imageVector = Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Volver", tint = Color.White)
                     }
                 }
             )
 
-            // Dynamic content based on subSessionId
-            val multimediaOptions = getMultimediaOptions(treatmentType, subSessionId)
+            val multimediaOptions = remember(treatmentTypes, subSessionId) {
+                treatmentTypes.flatMap { type ->
+                    getMultimediaOptions(type, subSessionId)
+                }
+            }
 
             Column(
                 modifier = Modifier
@@ -397,7 +387,6 @@ fun MultimediaSelectorScreen(
                             putExtra("sessionTitle", sessionTitle)
                             putExtra("subSessionId", subSessionId)
                             putExtra("subSessionTitle", subSessionTitle)
-                            // Pass the specific asset ID if available
                             if (option.contentAssetId != null) {
                                 putExtra("contentAssetId", option.contentAssetId)
                             }
@@ -417,9 +406,6 @@ fun MultimediaSelectorScreen(
     }
 }
 
-/**
- * Reusable Composable to display a multimedia option as a Card.
- */
 @Composable
 fun MultimediaOptionCard(
     option: MultimediaOption,

@@ -112,7 +112,7 @@ class MenuMain : ComponentActivity() {
                 MenuScreen(
                     onSessionsClick = {
                         val intent = Intent(this@MenuMain, SesionesMenu::class.java).apply {
-                            putExtra("treatmentType", TreatmentType.DIABETES.name)
+                            putExtra("treatmentTypes", "HTA,DIABETES")
                         }
                         startActivity(intent)
                     },

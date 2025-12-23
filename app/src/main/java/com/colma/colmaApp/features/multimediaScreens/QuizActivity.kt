@@ -61,10 +61,11 @@ fun QuizScreen(quizId: String, onBack: () -> Unit) {
         }
     }
 
-    var currentQuestionIndex by remember { mutableStateOf(0) }
     val userAnswers = remember { mutableStateMapOf<Int, Int>() }
+    var quizSubmitted by remember { mutableStateOf(false) }
+    var showConfirmationDialog by remember { mutableStateOf(false) }
 
-    val currentQuestion = quizQuestions.getOrNull(currentQuestionIndex)
+    val allQuestionsAnswered = userAnswers.size == quizQuestions.size
 
     Scaffold(
         topBar = {
@@ -80,108 +81,135 @@ fun QuizScreen(quizId: String, onBack: () -> Unit) {
         },
         containerColor = colorResource(R.color.background)
     ) { paddingValues ->
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues)
-                .padding(16.dp)
-        ) {
-            if (currentQuestion != null) {
-                Column(
-                    modifier = Modifier.fillMaxSize(),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center
-                ) {
-                    Text(
-                        text = currentQuestion.questionText,
-                        fontSize = 20.sp,
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier.padding(bottom = 24.dp)
-                    )
-
-                    key(currentQuestionIndex) {
-                        CardThatOpensSelectionDialog(
-                            title = "Selecciona tu respuesta",
-                            items = currentQuestion.options,
-                            onItemSelected = { selectedOption ->
-                                val selectedIndex = currentQuestion.options.indexOf(selectedOption)
-                                userAnswers[currentQuestionIndex] = selectedIndex
-                                currentQuestionIndex++
-                            }
-                        )
-                    }
-                }
-            } else {
-                // Quiz finished - Summary Screen
-                var score = 0
-                quizQuestions.forEachIndexed { index, question ->
-                    if (userAnswers[index] == question.correctAnswerIndex) {
-                        score++
-                    }
-                }
-
-                Column(
-                    modifier = Modifier.fillMaxSize(),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Text("¡Quiz completado!", fontSize = 24.sp, fontWeight = FontWeight.Bold)
-                    Spacer(modifier = Modifier.height(16.dp))
-                    Text("Tu puntaje: $score de ${quizQuestions.size}", fontSize = 20.sp)
-                    Spacer(modifier = Modifier.height(24.dp))
-
-                    LazyColumn(
-                        modifier = Modifier.weight(1f),
-                        verticalArrangement = Arrangement.spacedBy(16.dp)
-                    ) {
-                        itemsIndexed(quizQuestions) { index, question ->
-                            val userAnswerIndex = userAnswers[index]
-                            val isCorrect = userAnswerIndex == question.correctAnswerIndex
-                            val correctAnswerText = question.options[question.correctAnswerIndex]
-                            val userAnswerText = userAnswerIndex?.let { question.options.getOrNull(it) } ?: "No respondida"
-
-                            Card(
-                                modifier = Modifier.fillMaxWidth(),
-                                colors = CardDefaults.cardColors(containerColor = Color.White),
-                                elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
-                            ) {
-                                Column(modifier = Modifier.padding(16.dp)) {
-                                    Row(verticalAlignment = Alignment.CenterVertically) {
-                                        Text(
-                                            text = "Pregunta ${index + 1}",
-                                            style = MaterialTheme.typography.titleMedium,
-                                            modifier = Modifier.weight(1f)
-                                        )
-                                        Icon(
-                                            imageVector = if (isCorrect) Icons.Default.Check else Icons.Default.Close,
-                                            contentDescription = if (isCorrect) "Correcto" else "Incorrecto",
-                                            tint = if (isCorrect) Color(0xFF008000) else Color.Red
-                                        )
-                                    }
-                                    Spacer(modifier = Modifier.height(8.dp))
-                                    Text(text = question.questionText, fontWeight = FontWeight.SemiBold)
-                                    Spacer(modifier = Modifier.height(8.dp))
-                                    Text("Tu respuesta: $userAnswerText")
-                                    if (!isCorrect) {
-                                        Text("Respuesta correcta: $correctAnswerText", color = Color(0xFF008000))
-                                    }
-                                }
+        Box(modifier = Modifier.fillMaxSize().padding(paddingValues)) {
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(bottom = 80.dp), // Space for the button
+                contentPadding = PaddingValues(16.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                itemsIndexed(quizQuestions) { index, question ->
+                    QuestionCard(
+                        questionIndex = index,
+                        question = question,
+                        selectedAnswerIndex = userAnswers[index],
+                        isSubmitted = quizSubmitted,
+                        onAnswerSelected = { answerIndex ->
+                            if (!quizSubmitted) {
+                                userAnswers[index] = answerIndex
                             }
                         }
-                    }
+                    )
+                }
+            }
 
-                    Spacer(modifier = Modifier.height(16.dp))
-                    Button(
-                        onClick = onBack,
-                        modifier = Modifier.fillMaxWidth(),
-                        colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.principal))
-                    ) {
-                        Text("Finalizar")
+            // --- Confirmation Dialog ---
+            if (showConfirmationDialog) {
+                AlertDialog(
+                    onDismissRequest = { showConfirmationDialog = false },
+                    title = { Text("Confirmar respuestas") },
+                    text = { Text("¿Estás seguro de que quieres confirmar tus respuestas? No podrás cambiarlas después.") },
+                    confirmButton = {
+                        Button(
+                            onClick = {
+                                showConfirmationDialog = false
+                                quizSubmitted = true
+                            }
+                        ) {
+                            Text("Confirmar")
+                        }
+                    },
+                    dismissButton = {
+                        TextButton(onClick = { showConfirmationDialog = false }) {
+                            Text("Cancelar")
+                        }
                     }
+                )
+            }
+
+            // --- Bottom Button ---
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(16.dp),
+                contentAlignment = Alignment.BottomCenter
+            ) {
+                Button(
+                    onClick = {
+                        if (quizSubmitted) {
+                            onBack()
+                        } else {
+                            showConfirmationDialog = true
+                        }
+                    },
+                    enabled = if (quizSubmitted) true else allQuestionsAnswered,
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.principal))
+                ) {
+                    Text(if (quizSubmitted) "Finalizar" else "Confirmar")
                 }
             }
         }
     }
 }
+
+@Composable
+fun QuestionCard(
+    questionIndex: Int,
+    question: QuizQuestion,
+    selectedAnswerIndex: Int?,
+    isSubmitted: Boolean,
+    onAnswerSelected: (Int) -> Unit
+) {
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        colors = CardDefaults.cardColors(containerColor = Color.White),
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+    ) {
+        Column(modifier = Modifier.padding(16.dp)) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Text(
+                    text = "Pregunta ${questionIndex + 1}",
+                    style = MaterialTheme.typography.titleMedium,
+                    modifier = Modifier.weight(1f)
+                )
+                if (isSubmitted) {
+                    val isCorrect = selectedAnswerIndex == question.correctAnswerIndex
+                    Icon(
+                        imageVector = if (isCorrect) Icons.Default.Check else Icons.Default.Close,
+                        contentDescription = if (isCorrect) "Correcto" else "Incorrecto",
+                        tint = if (isCorrect) Color(0xFF008000) else Color.Red
+                    )
+                }
+            }
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(text = question.questionText, fontWeight = FontWeight.SemiBold)
+            Spacer(modifier = Modifier.height(16.dp))
+
+            if (isSubmitted) {
+                // --- Show Results ---
+                val userAnswerText = selectedAnswerIndex?.let { question.options.getOrNull(it) } ?: "No respondida"
+                val correctAnswerText = question.options[question.correctAnswerIndex]
+                Text("Tu respuesta: $userAnswerText")
+                if (selectedAnswerIndex != question.correctAnswerIndex) {
+                    Text("Respuesta correcta: $correctAnswerText", color = Color(0xFF008000))
+                }
+            } else {
+                // --- Show Answer Selector ---
+                CardThatOpensSelectionDialog(
+                    title = "Selecciona tu respuesta",
+                    description = selectedAnswerIndex?.let { question.options.getOrNull(it) } ?: "Toca para responder",
+                    items = question.options,
+                    onItemSelected = { selectedOption ->
+                        onAnswerSelected(question.options.indexOf(selectedOption))
+                    }
+                )
+            }
+        }
+    }
+}
+
 
 fun getHtaQuizQuestions(): List<QuizQuestion> {
     return listOf(
