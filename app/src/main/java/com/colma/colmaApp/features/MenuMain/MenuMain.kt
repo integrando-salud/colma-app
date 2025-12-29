@@ -464,12 +464,7 @@ fun MenuScreen(
                             .height(65.dp)
                             .shadow(elevation = 6.dp, shape = RoundedCornerShape(8.dp), clip = false)
                             .background(
-                                brush = Brush.horizontalGradient(
-                                    colors = listOf(
-                                        colorResource(id = R.color.light_principal),
-                                        colorResource(id = R.color.dark_principal)
-                                    )
-                                ),
+                                color = colorResource(R.color.principal),
                                 shape = RoundedCornerShape(8.dp)
                             )
                     ) {

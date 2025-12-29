@@ -3,7 +3,7 @@ package com.colma.colmaApp.features.RegistroSalud
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import android.graphics.Color as AndroidColor
-import android.app.TimePickerDialog
+
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -54,6 +54,8 @@ import com.colma.colmaApp.ui.theme.ColmaAppTheme
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import androidx.compose.runtime.remember
+import com.colma.colmaApp.utils.varios.TimeInputDialog
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -173,6 +175,35 @@ fun RegistrosSaludScreen(
     // add near pendingPresionFechaRegistro / pendingGlucosaFechaRegistro
     var pendingGlucosaFechaSincronizacion by rememberSaveable { mutableStateOf<String?>(null) }
     var pendingPresionFechaSincronizacion by rememberSaveable { mutableStateOf<String?>(null) }
+
+    var showGlucosaTimePicker by remember { mutableStateOf(false) }
+    var showPresionTimePicker by remember { mutableStateOf(false) }
+
+    TimeInputDialog(
+        show = showGlucosaTimePicker,
+        onDismiss = { showGlucosaTimePicker = false },
+        onTimeSelected = { hour, minute ->
+            glucosaCalendar.set(java.util.Calendar.HOUR_OF_DAY, hour)
+            glucosaCalendar.set(java.util.Calendar.MINUTE, minute)
+            glucosaDateTime = glucosaCalendar.timeInMillis
+            showGlucosaTimePicker = false
+        },
+        initialHour = glucosaCalendar.get(java.util.Calendar.HOUR_OF_DAY),
+        initialMinute = glucosaCalendar.get(java.util.Calendar.MINUTE)
+    )
+
+    TimeInputDialog(
+        show = showPresionTimePicker,
+        onDismiss = { showPresionTimePicker = false },
+        onTimeSelected = { hour, minute ->
+            presionCalendar.set(java.util.Calendar.HOUR_OF_DAY, hour)
+            presionCalendar.set(java.util.Calendar.MINUTE, minute)
+            presionDateTime = presionCalendar.timeInMillis
+            showPresionTimePicker = false
+        },
+        initialHour = presionCalendar.get(java.util.Calendar.HOUR_OF_DAY),
+        initialMinute = presionCalendar.get(java.util.Calendar.MINUTE)
+    )
 
 
 
@@ -725,7 +756,7 @@ fun RegistrosSaludScreen(
                                         keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
                                         modifier = Modifier.fillMaxWidth(),
 
-                                        placeholder = { Text(text = "Ej: 120") },
+                                        placeholder = { Text(text = "") },
                                         textStyle = TextStyle(color = Color.Black)
                                     )
 
@@ -803,19 +834,7 @@ fun RegistrosSaludScreen(
 
                                         // time button opens TimePicker and shows only time (HH:mm)
                                         OutlinedButton(onClick = {
-                                            val c = glucosaCalendar
-                                            val tpd = android.app.TimePickerDialog(
-                                                context,
-                                                { _, hour, minute ->
-                                                    c.set(java.util.Calendar.HOUR_OF_DAY, hour)
-                                                    c.set(java.util.Calendar.MINUTE, minute)
-                                                    glucosaDateTime = c.timeInMillis
-                                                },
-                                                c.get(java.util.Calendar.HOUR_OF_DAY),
-                                                c.get(java.util.Calendar.MINUTE),
-                                                true
-                                            )
-                                            tpd.show()
+                                            showGlucosaTimePicker = true
                                         }) {
                                             Text(text = timeFormatterOnly.format(java.util.Date(glucosaDateTime)))
                                         }
@@ -895,7 +914,7 @@ fun RegistrosSaludScreen(
                                         modifier = Modifier
                                             .fillMaxWidth()
                                             .height(60.dp),
-                                        placeholder = { Text(text = "Ej: 100") },
+                                        placeholder = { Text(text = "") },
                                         textStyle = TextStyle(color = Color.Black)
                                     )
 
@@ -913,7 +932,7 @@ fun RegistrosSaludScreen(
                                         modifier = Modifier
                                             .fillMaxWidth()
                                             .height(60.dp),
-                                        placeholder = { Text(text = "Ej: 80") },
+                                        placeholder = { Text(text = "") },
                                         textStyle = TextStyle(color = Color.Black)
                                     )
 
@@ -967,19 +986,7 @@ fun RegistrosSaludScreen(
                                         Spacer(modifier = Modifier.width(8.dp))
 
                                         OutlinedButton(onClick = {
-                                            val c = presionCalendar
-                                            val tpd = android.app.TimePickerDialog(
-                                                context,
-                                                { _, hour, minute ->
-                                                    c.set(java.util.Calendar.HOUR_OF_DAY, hour)
-                                                    c.set(java.util.Calendar.MINUTE, minute)
-                                                    presionDateTime = c.timeInMillis
-                                                },
-                                                c.get(java.util.Calendar.HOUR_OF_DAY),
-                                                c.get(java.util.Calendar.MINUTE),
-                                                true
-                                            )
-                                            tpd.show()
+                                            showPresionTimePicker = true
                                         }) {
                                             Text(text = timeFormatterOnly.format(java.util.Date(presionDateTime)))
                                         }
