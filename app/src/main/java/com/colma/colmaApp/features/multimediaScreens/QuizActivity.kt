@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
+import androidx.compose.foundation.background
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Close
@@ -108,6 +109,7 @@ fun QuizScreen(quizId: String, onBack: () -> Unit) {
             if (showConfirmationDialog) {
                 AlertDialog(
                     onDismissRequest = { showConfirmationDialog = false },
+                    containerColor = Color.White,
                     title = { Text("Confirmar respuestas") },
                     text = { Text("¿Estás seguro de que quieres confirmar tus respuestas? No podrás cambiarlas después.") },
                     confirmButton = {
@@ -115,13 +117,17 @@ fun QuizScreen(quizId: String, onBack: () -> Unit) {
                             onClick = {
                                 showConfirmationDialog = false
                                 quizSubmitted = true
-                            }
+                            },
+                            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF008000), contentColor = Color.White) // Green background, white text
                         ) {
                             Text("Confirmar")
                         }
                     },
                     dismissButton = {
-                        TextButton(onClick = { showConfirmationDialog = false }) {
+                        TextButton(
+                            onClick = { showConfirmationDialog = false },
+                            colors = ButtonDefaults.textButtonColors(containerColor = Color.Red, contentColor = Color.White) // Red background, white text
+                        ) {
                             Text("Cancelar")
                         }
                     }
@@ -176,10 +182,16 @@ fun QuestionCard(
                 )
                 if (isSubmitted) {
                     val isCorrect = selectedAnswerIndex == question.correctAnswerIndex
-                    Icon(
-                        imageVector = if (isCorrect) Icons.Default.Check else Icons.Default.Close,
-                        contentDescription = if (isCorrect) "Correcto" else "Incorrecto",
-                        tint = if (isCorrect) Color(0xFF008000) else Color.Red
+                    val text = if (isCorrect) "Correcto" else "Incorrecto"
+                    val bgColor = if (isCorrect) Color(0xFF008000) else Color.Red
+                    Text(
+                        text = text,
+                        color = Color.White, // White text for contrast
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 14.sp,
+                        modifier = Modifier
+                            .background(bgColor, shape = MaterialTheme.shapes.small) // Rounded background
+                            .padding(horizontal = 8.dp, vertical = 4.dp)
                     )
                 }
             }

@@ -115,13 +115,17 @@ fun CardThatOpensEditDialog(
                         savedText = trimmed
                         onSave(trimmed)
                         showDialog = false
-                    }
+                    },
+                    colors = ButtonDefaults.textButtonColors(containerColor = Color(0xFF008000), contentColor = Color.White)
                 ) {
                     Text(confirmLabel)
                 }
             },
             dismissButton = {
-                TextButton(onClick = { showDialog = false }) { Text(cancelLabel) }
+                TextButton(
+                    onClick = { showDialog = false },
+                    colors = ButtonDefaults.textButtonColors(containerColor = Color.Red, contentColor = Color.White)
+                ) { Text(cancelLabel) }
             }
         )
     }

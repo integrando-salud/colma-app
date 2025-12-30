@@ -43,18 +43,24 @@ fun CustomAlertDialog(
             )
         },
         confirmButton = {
-            TextButton(onClick = {
+            TextButton(
+                onClick = {
                 onYes()
                 onDismissRequest()
-            }) {
+            },
+                colors = ButtonDefaults.textButtonColors(containerColor = Color(0xFF008000), contentColor = Color.White)
+            ) {
                 Text(yesLabel)
             }
         },
         dismissButton = {
-            TextButton(onClick = {
+            TextButton(
+                onClick = {
                 onNo()
                 onDismissRequest()
-            }) {
+            },
+                colors = ButtonDefaults.textButtonColors(containerColor = Color.Red, contentColor = Color.White)
+            ) {
                 Text(noLabel)
             }
         }

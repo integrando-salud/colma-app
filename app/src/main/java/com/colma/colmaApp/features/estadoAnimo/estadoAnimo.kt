@@ -16,9 +16,11 @@ import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.DateRange
+import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -38,6 +40,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.style.TextAlign
 import com.colma.colmaApp.R
 import com.colma.colmaApp.servicios.database.dbhelper.DBhelper
+import com.colma.colmaApp.utils.varios.TimeInputDialog
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.util.Locale
@@ -147,6 +150,21 @@ fun EstadoAnimoScreen(
 
     var pendingDraftRowId by rememberSaveable { mutableStateOf<Long?>(null) }
 
+    var showTimePicker by remember { mutableStateOf(false) }
+
+    TimeInputDialog(
+        show = showTimePicker,
+        onDismiss = { showTimePicker = false },
+        onTimeSelected = { hour, minute ->
+            estadoCalendar.set(java.util.Calendar.HOUR_OF_DAY, hour)
+            estadoCalendar.set(java.util.Calendar.MINUTE, minute)
+            estadoDateTime = estadoCalendar.timeInMillis
+            showTimePicker = false
+        },
+        initialHour = estadoCalendar.get(java.util.Calendar.HOUR_OF_DAY),
+        initialMinute = estadoCalendar.get(java.util.Calendar.MINUTE)
+    )
+
 
     val onBackHandler = {
         scope.launch {
@@ -232,295 +250,300 @@ fun EstadoAnimoScreen(
         snackbarHost = { SnackbarHost(snackbarHostState) }
     ) { innerPadding ->
         BackHandler(onBack = { onBackHandler() })
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(innerPadding)
-                .padding(horizontal = 16.dp, vertical = 12.dp)
-                  .verticalScroll(rememberScrollState())
-        ) {
-            Text(
-                text = "Contesta las siguientes preguntas seleccionando la opción que mejor te describe:",
-                style = MaterialTheme.typography.bodyMedium
-            )
-
-            Spacer(Modifier.height(12.dp))
-
-
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.fillMaxWidth()
-            ) {
-
-                OutlinedTextField(
-                    value = dateFormatter.format(java.util.Date(estadoDateTime)),
-                    onValueChange = {},
-                    readOnly = true,
-                    modifier = Modifier
-                        .weight(1f)
-                        .clickable {
-                            val c = estadoCalendar
-                            // ensure calendar reflects current state
-                            c.timeInMillis = estadoDateTime
-                            val dpd = android.app.DatePickerDialog(
-                                context,
-                                { _, y, m, d ->
-                                    c.set(java.util.Calendar.YEAR, y)
-                                    c.set(java.util.Calendar.MONTH, m)
-                                    c.set(java.util.Calendar.DAY_OF_MONTH, d)
-                                    estadoDateTime = c.timeInMillis
-                                },
-                                c.get(java.util.Calendar.YEAR),
-                                c.get(java.util.Calendar.MONTH),
-                                c.get(java.util.Calendar.DAY_OF_MONTH)
-                            )
-                            dpd.show()
-                        }
-                        .padding(end = 8.dp),
-                    trailingIcon = {
-                        IconButton(onClick = {
-                            val c = estadoCalendar
-                            c.timeInMillis = estadoDateTime
-                            val dpd = android.app.DatePickerDialog(
-                                context,
-                                { _, y, m, d ->
-                                    c.set(java.util.Calendar.YEAR, y)
-                                    c.set(java.util.Calendar.MONTH, m)
-                                    c.set(java.util.Calendar.DAY_OF_MONTH, d)
-                                    estadoDateTime = c.timeInMillis
-                                },
-                                c.get(java.util.Calendar.YEAR),
-                                c.get(java.util.Calendar.MONTH),
-                                c.get(java.util.Calendar.DAY_OF_MONTH)
-                            )
-                            dpd.show()
-                        }) {
-                            Icon(imageVector = Icons.Default.DateRange, contentDescription = "Fecha")
-                        }
-                    }
-                )
-
-                Spacer(modifier = Modifier.width(8.dp))
-
-
-                OutlinedButton(onClick = {
-                    val c = estadoCalendar
-                    c.timeInMillis = estadoDateTime
-                    val tpd = android.app.TimePickerDialog(
-                        context,
-                        { _, hour, minute ->
-                            c.set(java.util.Calendar.HOUR_OF_DAY, hour)
-                            c.set(java.util.Calendar.MINUTE, minute)
-                            estadoDateTime = c.timeInMillis
-                        },
-                        c.get(java.util.Calendar.HOUR_OF_DAY),
-                        c.get(java.util.Calendar.MINUTE),
-                        true
-                    )
-                    tpd.show()
-                }) {
-                    Text(text = timeFormatterOnly.format(java.util.Date(estadoDateTime)))
-                }
-            }
-
-            Spacer(Modifier.height(12.dp))
-
-
+        Box(modifier = Modifier.fillMaxSize().padding(innerPadding)) {
+            val scrollState = rememberScrollState()
             Column(
-                modifier = Modifier,
-                verticalArrangement = Arrangement.spacedBy(12.dp)
-            ) {
-                QuestionRow(
-                    question = allQuestions[0],
-                    optionLabels = optionLabels,
-                    selected = answersState.value[0],
-                    onSelect = { sel -> if (!lockedFirstTwo) setAnswer(0, sel) },
-                    disabled = lockedFirstTwo
-                )
-
-                QuestionRow(
-                    question = allQuestions[1],
-                    optionLabels = optionLabels,
-                    selected = answersState.value[1],
-                    onSelect = { sel -> if (!lockedFirstTwo) setAnswer(1, sel) },
-                    disabled = lockedFirstTwo
-                )
-
-
-                if (showRest) {
-                    for (i in 2 until allQuestions.size) {
-                        QuestionRow(
-                            question = allQuestions[i],
-                            optionLabels = optionLabels,
-                            selected = answersState.value[i],
-                            onSelect = { sel -> setAnswer(i, sel) },
-                            disabled = false // extra questions remain editable
-                        )
-                    }
-                }
-            }
-
-            Spacer(Modifier.height(12.dp))
-
-            Button(
-                onClick = {
-                    scope.launch {
-                        try {
-                            lockedFirstTwo = true
-
-                            if (!firstTwoAnswered) {
-                                lockedFirstTwo = false
-                                snackbarHostState.showSnackbar("Por favor responda las dos primeras preguntas")
-                                return@launch
-                            }
-
-
-                            if (firstTwoSum < 3) {
-                                if (showRest) {
-                                    showRest = false
-                                    val clearedAnswers = answersState.value.toMutableList()
-                                    for (i in 2 until clearedAnswers.size) {
-                                        clearedAnswers[i] = -1
-                                    }
-                                    answersState.value = clearedAnswers
-                                }
-
-
-                                val fullMap = (1..9).associateWith { idx ->
-                                    val v = answersState.value.getOrNull(idx - 1)
-                                    if (idx <= 2 && v != null && v >= 0) v else null
-                                }
-
-                                pendingFullMap = fullMap
-                                pendingIdPaciente = 1
-                                pendingIsPartialSubmit = true
-                                confirmSubmitOpen = true
-
-                            } else {
-                                if (!showRest) {
-                                    showRest = true
-                                    snackbarHostState.showSnackbar("Contesta las preguntas adicionales")
-                                    return@launch
-                                }
-
-                                val unanswered = answersState.value.count { it == -1 }
-                                if (unanswered > 0) {
-                                    snackbarHostState.showSnackbar("Por favor responda todas las preguntas")
-                                    return@launch
-                                }
-
-
-                                val fullMap = (1..9).associateWith { idx ->
-                                    val v = answersState.value.getOrNull(idx - 1)
-                                    if (v != null && v >= 0) v else null
-                                }
-
-                                pendingFullMap = fullMap
-                                pendingIdPaciente = 1
-                                pendingIsPartialSubmit = false
-                                confirmSubmitOpen = true
-                            }
-
-                        } catch (e: Exception) {
-                            e.printStackTrace()
-                            snackbarHostState.showSnackbar("Error inesperado: ${e.localizedMessage ?: e.message}")
-                        }
-                    }
-                },
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .height(52.dp),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = colorResource(R.color.principal),
-                    contentColor = Color.White
-                )
+                    .fillMaxSize()
+                    .padding(horizontal = 16.dp, vertical = 12.dp)
+                    .verticalScroll(scrollState)
             ) {
-                Text(text = "Guardar")
-            }
-
-            if (confirmSubmitOpen) {
-                val summaryCount = pendingFullMap?.count { it.value != null } ?: 0
-                val dateLabel = dateFormatter.format(java.util.Date(estadoDateTime))
-                val timeLabel = timeFormatterOnly.format(java.util.Date(estadoDateTime))
-                AlertDialog(
-                    onDismissRequest = { confirmSubmitOpen = false },
-                    title = { Text("Confirmar envío") },
-                    text = {
-                        Column {
-                            Text("Vas a guardar $summaryCount respuestas.")
-                            Spacer(Modifier.height(8.dp))
-                            Text("Fecha de guardado seleccionada: $dateLabel $timeLabel")
-                            Spacer(Modifier.height(8.dp))
-                            Text("¿Deseas confirmar el guardado?")
-                        }
-                    },
-                    confirmButton = {
-                        TextButton(onClick = {
-
-                            confirmSubmitOpen = false
-                            val toSave = pendingFullMap
-                            val idPac = pendingIdPaciente ?: 1
-
-                            pendingFullMap = null
-                            pendingIdPaciente = null
-
-
-                            scope.launch {
-                                try {
-                                    withContext(Dispatchers.IO) {
-                                        val fechaEdicionIso = isoFormatter.format(java.util.Date(estadoDateTime))
-                                        val idPac = pendingIdPaciente ?: 1
-
-                                        if (pendingDraftRowId != null) {
-                                            dbHelper.updateEstadoAnimoRow(pendingDraftRowId!!, toSave ?: emptyMap(), fechaEdicion = fechaEdicionIso)
-                                            pendingDraftRowId = null
-                                        } else {
-
-                                            dbHelper.insertEstadoAnimo(idPac, toSave ?: emptyMap(), fechaRegistro = null, fechaEdicion = fechaEdicionIso)
-                                        }
-                                    }
-
-
-                                    val results = allQuestions.mapIndexed { idx, q -> q to (toSave?.get(idx + 1) ?: -1) }.toMap()
-                                    onSubmitResults(results)
-
-
-                                    scope.launch {
-                                        snackbarHostState.showSnackbar("Respuestas guardadas")
-                                    }
-
-
-                                    onBack()
-                                } catch (e: Exception) {
-                                    e.printStackTrace()
-                                    scope.launch {
-                                        snackbarHostState.showSnackbar("Error guardando: ${e.localizedMessage ?: e.message}")
-                                    }
-                                }
-                            }
-                        }) {
-                            Text("Sí")
-                        }
-                    },
-                    dismissButton = {
-                        TextButton(onClick = { confirmSubmitOpen = false }) {
-                            Text("No")
-                        }
-                    }
+                Text(
+                    text = "Contesta las siguientes preguntas seleccionando la opción que mejor te describe:",
+                    style = MaterialTheme.typography.bodyMedium
                 )
-            }
+
+                Spacer(Modifier.height(12.dp))
 
 
-            if (lockedFirstTwo) {
-                Spacer(modifier = Modifier.height(8.dp))
-                OutlinedButton(
-                    onClick = {
-                        lockedFirstTwo = false
-                    },
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    Text("Modificar respuestas iniciales")
+
+                    OutlinedTextField(
+                        value = dateFormatter.format(java.util.Date(estadoDateTime)),
+                        onValueChange = {},
+                        readOnly = true,
+                        modifier = Modifier
+                            .weight(1f)
+                            .clickable {
+                                val c = estadoCalendar
+                                // ensure calendar reflects current state
+                                c.timeInMillis = estadoDateTime
+                                val dpd = android.app.DatePickerDialog(
+                                    context,
+                                    { _, y, m, d ->
+                                        c.set(java.util.Calendar.YEAR, y)
+                                        c.set(java.util.Calendar.MONTH, m)
+                                        c.set(java.util.Calendar.DAY_OF_MONTH, d)
+                                        estadoDateTime = c.timeInMillis
+                                    },
+                                    c.get(java.util.Calendar.YEAR),
+                                    c.get(java.util.Calendar.MONTH),
+                                    c.get(java.util.Calendar.DAY_OF_MONTH)
+                                )
+                                dpd.show()
+                            }
+                            .padding(end = 8.dp),
+                        trailingIcon = {
+                            IconButton(onClick = {
+                                val c = estadoCalendar
+                                c.timeInMillis = estadoDateTime
+                                val dpd = android.app.DatePickerDialog(
+                                    context,
+                                    { _, y, m, d ->
+                                        c.set(java.util.Calendar.YEAR, y)
+                                        c.set(java.util.Calendar.MONTH, m)
+                                        c.set(java.util.Calendar.DAY_OF_MONTH, d)
+                                        estadoDateTime = c.timeInMillis
+                                    },
+                                    c.get(java.util.Calendar.YEAR),
+                                    c.get(java.util.Calendar.MONTH),
+                                    c.get(java.util.Calendar.DAY_OF_MONTH)
+                                )
+                                dpd.show()
+                            }) {
+                                Icon(imageVector = Icons.Default.DateRange, contentDescription = "Fecha")
+                            }
+                        }
+                    )
+
+                    Spacer(modifier = Modifier.width(8.dp))
+
+
+                    OutlinedButton(onClick = {
+                        showTimePicker = true
+                    }) {
+                        Text(text = timeFormatterOnly.format(java.util.Date(estadoDateTime)))
+                    }
                 }
+
+                Spacer(Modifier.height(12.dp))
+
+
+                Column(
+                    modifier = Modifier,
+                    verticalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
+                    QuestionRow(
+                        question = allQuestions[0],
+                        optionLabels = optionLabels,
+                        selected = answersState.value[0],
+                        onSelect = { sel -> if (!lockedFirstTwo) setAnswer(0, sel) },
+                        disabled = lockedFirstTwo
+                    )
+
+                    QuestionRow(
+                        question = allQuestions[1],
+                        optionLabels = optionLabels,
+                        selected = answersState.value[1],
+                        onSelect = { sel -> if (!lockedFirstTwo) setAnswer(1, sel) },
+                        disabled = lockedFirstTwo
+                    )
+
+
+                    if (showRest) {
+                        for (i in 2 until allQuestions.size) {
+                            QuestionRow(
+                                question = allQuestions[i],
+                                optionLabels = optionLabels,
+                                selected = answersState.value[i],
+                                onSelect = { sel -> setAnswer(i, sel) },
+                                disabled = false // extra questions remain editable
+                            )
+                        }
+                    }
+                }
+
+                Spacer(Modifier.height(12.dp))
+
+                Button(
+                    onClick = {
+                        scope.launch {
+                            try {
+                                lockedFirstTwo = true
+
+                                if (!firstTwoAnswered) {
+                                    lockedFirstTwo = false
+                                    snackbarHostState.showSnackbar("Por favor responda las dos primeras preguntas")
+                                    return@launch
+                                }
+
+
+                                if (firstTwoSum < 3) {
+                                    if (showRest) {
+                                        showRest = false
+                                        val clearedAnswers = answersState.value.toMutableList()
+                                        for (i in 2 until clearedAnswers.size) {
+                                            clearedAnswers[i] = -1
+                                        }
+                                        answersState.value = clearedAnswers
+                                    }
+
+
+                                    val fullMap = (1..9).associateWith { idx ->
+                                        val v = answersState.value.getOrNull(idx - 1)
+                                        if (idx <= 2 && v != null && v >= 0) v else null
+                                    }
+
+                                    pendingFullMap = fullMap
+                                    pendingIdPaciente = 1
+                                    pendingIsPartialSubmit = true
+                                    confirmSubmitOpen = true
+
+                                } else {
+                                    if (!showRest) {
+                                        showRest = true
+                                        snackbarHostState.showSnackbar("Contesta las preguntas adicionales")
+                                        return@launch
+                                    }
+
+                                    val unanswered = answersState.value.count { it == -1 }
+                                    if (unanswered > 0) {
+                                        snackbarHostState.showSnackbar("Por favor responda todas las preguntas")
+                                        return@launch
+                                    }
+
+
+                                    val fullMap = (1..9).associateWith { idx ->
+                                        val v = answersState.value.getOrNull(idx - 1)
+                                        if (v != null && v >= 0) v else null
+                                    }
+
+                                    pendingFullMap = fullMap
+                                    pendingIdPaciente = 1
+                                    pendingIsPartialSubmit = false
+                                    confirmSubmitOpen = true
+                                }
+
+                            } catch (e: Exception) {
+                                e.printStackTrace()
+                                snackbarHostState.showSnackbar("Error inesperado: ${e.localizedMessage ?: e.message}")
+                            }
+                        }
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(52.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = colorResource(R.color.principal),
+                        contentColor = Color.White
+                    )
+                ) {
+                    Text(text = "Guardar")
+                }
+
+                if (confirmSubmitOpen) {
+                    val summaryCount = pendingFullMap?.count { it.value != null } ?: 0
+                    val dateLabel = dateFormatter.format(java.util.Date(estadoDateTime))
+                    val timeLabel = timeFormatterOnly.format(java.util.Date(estadoDateTime))
+                    AlertDialog(
+                        onDismissRequest = { confirmSubmitOpen = false },
+                        title = { Text("Confirmar envío") },
+                        text = {
+                            Column {
+                                Text("Vas a guardar $summaryCount respuestas.")
+                                Spacer(Modifier.height(8.dp))
+                                Text("Fecha de guardado seleccionada: $dateLabel $timeLabel")
+                                Spacer(Modifier.height(8.dp))
+                                Text("¿Deseas confirmar el guardado?")
+                            }
+                        },
+                        confirmButton = {
+                            TextButton(onClick = {
+
+                                confirmSubmitOpen = false
+                                val toSave = pendingFullMap
+                                val idPac = pendingIdPaciente ?: 1
+
+                                pendingFullMap = null
+                                pendingIdPaciente = null
+
+
+                                scope.launch {
+                                    try {
+                                        withContext(Dispatchers.IO) {
+                                            val fechaEdicionIso = isoFormatter.format(java.util.Date(estadoDateTime))
+                                            val idPac = pendingIdPaciente ?: 1
+
+                                            if (pendingDraftRowId != null) {
+                                                dbHelper.updateEstadoAnimoRow(pendingDraftRowId!!, toSave ?: emptyMap(), fechaEdicion = fechaEdicionIso)
+                                                pendingDraftRowId = null
+                                            } else {
+
+                                                dbHelper.insertEstadoAnimo(idPac, toSave ?: emptyMap(), fechaRegistro = null, fechaEdicion = fechaEdicionIso)
+                                            }
+                                        }
+
+
+                                        val results = allQuestions.mapIndexed { idx, q -> q to (toSave?.get(idx + 1) ?: -1) }.toMap()
+                                        onSubmitResults(results)
+
+
+                                        scope.launch {
+                                            snackbarHostState.showSnackbar("Respuestas guardadas")
+                                        }
+
+
+                                        onBack()
+                                    } catch (e: Exception) {
+                                        e.printStackTrace()
+                                        scope.launch {
+                                            snackbarHostState.showSnackbar("Error guardando: ${e.localizedMessage ?: e.message}")
+                                        }
+                                    }
+                                }
+                            }) {
+                                Text("Sí")
+                            }
+                        },
+                        dismissButton = {
+                            TextButton(onClick = { confirmSubmitOpen = false }) {
+                                Text("No")
+                            }
+                        }
+                    )
+                }
+
+
+                if (lockedFirstTwo) {
+                    Spacer(modifier = Modifier.height(8.dp))
+                    OutlinedButton(
+                        onClick = {
+                            lockedFirstTwo = false
+                        },
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Text("Modificar respuestas iniciales")
+                    }
+                }
+                Spacer(modifier = Modifier.height(40.dp))
+            }
+            if (scrollState.canScrollForward) {
+                Icon(
+                    imageVector = Icons.Default.KeyboardArrowDown,
+                    contentDescription = "Deslizar para ver más",
+                    tint = Color.White,
+                    modifier = Modifier
+                        .align(Alignment.BottomEnd)
+                        .padding(end = 16.dp, bottom = 16.dp)
+                        .background(
+                            color = colorResource(id = R.color.principal),
+                            shape = CircleShape
+                        )
+                        .size(48.dp)
+                )
             }
         }
     }
@@ -544,8 +567,8 @@ private fun QuestionRow(
 
     Card(
         modifier = Modifier.fillMaxWidth(),
-        colors = CardDefaults.cardColors(containerColor = Color(0xFFFFFFFF)),
-        elevation = CardDefaults.cardElevation(defaultElevation = 16.dp)
+        colors = CardDefaults.cardColors(containerColor = colorResource(id = R.color.white)),
+        elevation = CardDefaults.cardElevation(defaultElevation = 20.dp)
     ) {
         Column(modifier = Modifier.padding(12.dp).alpha(contentAlpha)) {
             Text(
@@ -553,7 +576,7 @@ private fun QuestionRow(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(bottom = 12.dp),
-                style = MaterialTheme.typography.bodyMedium,
+                style = MaterialTheme.typography.labelLarge,
                 fontSize = if (small) 13.sp else 15.sp
             )
 
@@ -596,7 +619,8 @@ private fun QuestionRow(
                             Text(
                                 text = label,
                                 style = MaterialTheme.typography.bodySmall,
-                                fontSize = if (small) 11.sp else 12.sp,
+                                fontSize = if (small) 13.sp else 14.sp,
+                                fontWeight = FontWeight.SemiBold,
                                 textAlign = TextAlign.Center,
                                 maxLines = 2
                             )
@@ -641,7 +665,8 @@ private fun QuestionRow(
                             Text(
                                 text = label,
                                 style = MaterialTheme.typography.bodySmall,
-                                fontSize = if (small) 11.sp else 12.sp,
+                                fontSize = if (small) 13.sp else 14.sp,
+                                fontWeight = FontWeight.SemiBold,
                                 textAlign = TextAlign.Center,
                                 maxLines = 2
                             )

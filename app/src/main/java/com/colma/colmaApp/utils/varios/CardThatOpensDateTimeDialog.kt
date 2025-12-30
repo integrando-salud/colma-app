@@ -198,13 +198,19 @@ fun DateTimePickerDialog(
             }
         },
         confirmButton = {
-            TextButton(onClick = {
+            TextButton(
+                onClick = {
                 val cal = calFromMillis(selectedMillis)
                 onConfirm(cal)
-            }) { Text("Confirmar") }
+            },
+                colors = ButtonDefaults.textButtonColors(containerColor = Color(0xFF008000), contentColor = Color.White)
+            ) { Text("Confirmar") }
         },
         dismissButton = {
-            TextButton(onClick = onDismissRequest) { Text("Cancelar") }
+            TextButton(
+                onClick = onDismissRequest,
+                colors = ButtonDefaults.textButtonColors(containerColor = Color.Red, contentColor = Color.White)
+            ) { Text("Cancelar") }
         }
     )
 }
