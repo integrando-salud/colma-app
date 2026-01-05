@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.sp
 import com.colma.colmaApp.ui.theme.ColmaAppTheme
 import com.colma.colmaApp.utils.varios.CardThatOpensSelectionDialog
 import com.colma.colmaApp.R
+import com.colma.colmaApp.features.multimediaScreens.navigateToNextOrFinish
 
 data class QuizQuestion(
     val questionText: String,
@@ -34,12 +35,31 @@ data class QuizQuestion(
 class QuizActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val sessionId = intent.getLongExtra("sessionId", -1L)
+        val sessionTitle = intent.getStringExtra("sessionTitle") ?: "Sesión"
+        val subSessionId = intent.getLongExtra("subSessionId", -1L)
+        val subSessionTitle = intent.getStringExtra("subSessionTitle") ?: ""
+        val treatmentTypesString = intent.getStringExtra("treatmentTypes") ?: ""
+        val currentMultimediaIndex = intent.getIntExtra("currentMultimediaIndex", -1)
         val quizId = intent.getStringExtra("quizId") ?: "hta" // Default to HTA
+
         setContent {
             ColmaAppTheme {
                 QuizScreen(
                     quizId = quizId,
-                    onBack = { finish() }
+                    onBack = { finish() },
+                    onFinish = {
+                        navigateToNextOrFinish(
+                            activity = this@QuizActivity,
+                            sessionId = sessionId,
+                            sessionTitle = sessionTitle,
+                            subSessionId = subSessionId,
+                            subSessionTitle = subSessionTitle,
+                            treatmentTypesString = treatmentTypesString,
+                            currentMultimediaIndex = currentMultimediaIndex
+                        )
+                    }
                 )
             }
         }
@@ -48,7 +68,7 @@ class QuizActivity : ComponentActivity() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun QuizScreen(quizId: String, onBack: () -> Unit) {
+fun QuizScreen(quizId: String, onBack: () -> Unit, onFinish: () -> Unit) {
     val quizQuestions = remember(quizId) {
         when (quizId) {
             "diabetes" -> getDiabetesQuizQuestions()
@@ -144,7 +164,7 @@ fun QuizScreen(quizId: String, onBack: () -> Unit) {
                 Button(
                     onClick = {
                         if (quizSubmitted) {
-                            onBack()
+                            onFinish()
                         } else {
                             showConfirmationDialog = true
                         }

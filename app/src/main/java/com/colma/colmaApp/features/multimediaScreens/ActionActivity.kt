@@ -14,7 +14,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -39,7 +39,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material3.Icon
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
-import com.colma.colmaApp.features.MenuMain.MenuMain
+import com.colma.colmaApp.features.multimediaScreens.navigateToNextOrFinish
 import com.colma.colmaApp.utils.videoPlayer.FullscreenVideoActivity
 import com.google.android.exoplayer2.ui.AspectRatioFrameLayout
 
@@ -57,7 +57,12 @@ class ActionActivity : ComponentActivity() {
             isAppearanceLightNavigationBars = true // White navigation bar, so dark icons
         }
 
-        // Retrieve contentAssetId from Intent, defaulting to R.raw.exercise if not found
+        val sessionId = intent.getLongExtra("sessionId", -1L)
+        val sessionTitle = intent.getStringExtra("sessionTitle") ?: "Sesión"
+        val subSessionId = intent.getLongExtra("subSessionId", -1L)
+        val subSessionTitle = intent.getStringExtra("subSessionTitle") ?: ""
+        val treatmentTypesString = intent.getStringExtra("treatmentTypes") ?: ""
+        val currentMultimediaIndex = intent.getIntExtra("currentMultimediaIndex", -1)
         val contentAssetId = intent.getIntExtra("contentAssetId", R.raw.exercise)
 
         setContent {
@@ -65,11 +70,16 @@ class ActionActivity : ComponentActivity() {
                 ActionPageScreen(
                     contentAssetId = contentAssetId,
                     onBack = { finish() },
-                    onNext = {
-                        startActivity(Intent(this@ActionActivity, FinishActivity::class.java))
-                    },
                     onFinish = {
-                        finish()
+                        navigateToNextOrFinish(
+                            activity = this@ActionActivity,
+                            sessionId = sessionId,
+                            sessionTitle = sessionTitle,
+                            subSessionId = subSessionId,
+                            subSessionTitle = subSessionTitle,
+                            treatmentTypesString = treatmentTypesString,
+                            currentMultimediaIndex = currentMultimediaIndex
+                        )
                     }
                 )
             }
@@ -79,7 +89,7 @@ class ActionActivity : ComponentActivity() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ActionPageScreen(contentAssetId: Int, onBack: () -> Unit = {}, onNext: () -> Unit = {}, onFinish: () -> Unit = {}) {
+fun ActionPageScreen(contentAssetId: Int, onBack: () -> Unit = {}, onFinish: () -> Unit = {}) {
     val signatureColor = Color(0xFF0D97B6) // use your color
     Surface(color = Color.White, modifier = Modifier.fillMaxSize().systemBarsPadding()) {
         Column(modifier = Modifier.fillMaxSize()) {
@@ -88,7 +98,7 @@ fun ActionPageScreen(contentAssetId: Int, onBack: () -> Unit = {}, onNext: () ->
                 colors = TopAppBarDefaults.topAppBarColors(containerColor = signatureColor),
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "Volver", tint = Color.White)
+                        Icon(imageVector = Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Volver", tint = Color.White)
                     }
                 }
             )

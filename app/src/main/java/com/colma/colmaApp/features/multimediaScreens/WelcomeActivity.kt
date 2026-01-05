@@ -46,14 +46,18 @@ import androidx.compose.ui.unit.sp
 import com.colma.colmaApp.R
 import com.colma.colmaApp.ui.theme.ColmaAppTheme
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.pager.HorizontalPager
-import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.foundation.shape.CircleShape // Added for indicator shape
-import androidx.compose.ui.unit.Dp // Added for indicator parameters
-import androidx.compose.runtime.remember
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.runtime.remember
+import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.unit.Dp
+import com.colma.colmaApp.features.multimediaScreens.navigateToNextOrFinish
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 class WelcomeActivity : ComponentActivity() {
@@ -69,6 +73,12 @@ class WelcomeActivity : ComponentActivity() {
             isAppearanceLightNavigationBars = true // White navigation bar, so dark icons
         }
 
+        val sessionId = intent.getLongExtra("sessionId", -1L)
+        val sessionTitle = intent.getStringExtra("sessionTitle") ?: "Sesión"
+        val subSessionId = intent.getLongExtra("subSessionId", -1L)
+        val subSessionTitle = intent.getStringExtra("subSessionTitle") ?: ""
+        val treatmentTypesString = intent.getStringExtra("treatmentTypes") ?: ""
+        val currentMultimediaIndex = intent.getIntExtra("currentMultimediaIndex", -1)
         val displayContent = intent.getStringExtra("displayContent") ?: "No content provided."
 
         setContent {
@@ -76,11 +86,16 @@ class WelcomeActivity : ComponentActivity() {
                 WelcomePageScreen(
                     displayContent = displayContent,
                     onBack = { finish() },
-                    onNext = {
-                        startActivity(Intent(this@WelcomeActivity, ActionActivity::class.java))
-                    },
                     onFinish = {
-                        finish()
+                        navigateToNextOrFinish(
+                            activity = this@WelcomeActivity,
+                            sessionId = sessionId,
+                            sessionTitle = sessionTitle,
+                            subSessionId = subSessionId,
+                            subSessionTitle = subSessionTitle,
+                            treatmentTypesString = treatmentTypesString,
+                            currentMultimediaIndex = currentMultimediaIndex
+                        )
                     }
                 )
             }
@@ -90,7 +105,7 @@ class WelcomeActivity : ComponentActivity() {
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
-fun WelcomePageScreen(displayContent: String, onBack: () -> Unit = {}, onNext: () -> Unit = {}, onFinish: () -> Unit = {}) {
+fun WelcomePageScreen(displayContent: String, onBack: () -> Unit = {}, onFinish: () -> Unit = {}) {
     val signatureColor = colorResource(R.color.principal)
     val paragraphs = remember {
         displayContent.split("\n\n").filter { it.isNotBlank() }
@@ -103,7 +118,7 @@ fun WelcomePageScreen(displayContent: String, onBack: () -> Unit = {}, onNext: (
                 colors = TopAppBarDefaults.topAppBarColors(containerColor = signatureColor),
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "Volver", tint = Color.White)
+                        Icon(imageVector = Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Volver", tint = Color.White)
                     }
                 }
             )
@@ -152,82 +167,82 @@ fun WelcomePageScreen(displayContent: String, onBack: () -> Unit = {}, onNext: (
                         .fillMaxWidth()
                         .height(52.dp),
                     colors = ButtonDefaults.buttonColors(containerColor = signatureColor, contentColor = Color.White),
-                    shape = androidx.compose.foundation.shape.RoundedCornerShape(8.dp)
+                    shape = RoundedCornerShape(8.dp)
                 ) {
                     Text(text = "Terminar", fontWeight = FontWeight.SemiBold)
                 }
-                            }
-                        }
-                    }
-                }
-                
-                // NOTE: This WelcomePage composable will now receive a single paragraph string
-                @Composable
-                fun WelcomePage(displayContent: String) {
-                    Card(
-                        shape = RoundedCornerShape(16.dp),
-                        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
-                        colors = CardDefaults.cardColors(containerColor = Color.White),
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(8.dp)
-                    ) {
-                        Column(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(24.dp)
-                                .verticalScroll(rememberScrollState()),
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                            verticalArrangement = Arrangement.Top
-                        ) {
-                            Text(
-                                "Información importante",
-                                fontSize = 20.sp,
-                                fontWeight = FontWeight.Bold
-                            )
-                            Spacer(Modifier.height(16.dp))
-                            Icon(
-                                painter = painterResource(R.drawable.outline_unknown_document_24),
-                                contentDescription = null,
-                                modifier = Modifier.size(64.dp),
-                                tint = Color(0xFFE84589)
-                            )
-                            Spacer(Modifier.height(16.dp))
-                            Text(
-                                displayContent,
-                                fontSize = 16.sp,
-                                textAlign = TextAlign.Left
-                            )
-                        }
-                    }
-                }
-                
-                @OptIn(ExperimentalFoundationApi::class)
-                @Composable
-                fun HorizontalPagerIndicator(
-                    pagerState: androidx.compose.foundation.pager.PagerState,
-                    pageCount: Int,
-                    modifier: Modifier = Modifier,
-                    activeColor: Color = Color.White,
-                    inactiveColor: Color = Color.Gray,
-                    indicatorWidth: Dp = 8.dp,
-                    indicatorHeight: Dp = 8.dp,
-                    spacing: Dp = 8.dp,
-                    indicatorShape: androidx.compose.ui.graphics.Shape = androidx.compose.foundation.shape.CircleShape
-                ) {
-                    Row(
-                        horizontalArrangement = Arrangement.Center,
-                        verticalAlignment = Alignment.CenterVertically,
-                        modifier = modifier,
-                    ) {
-                        repeat(pageCount) { index ->
-                            val color = if (pagerState.currentPage == index) activeColor else inactiveColor
-                            Box(
-                                modifier = Modifier
-                                    .padding(horizontal = spacing / 2)
-                                    .size(indicatorWidth, indicatorHeight)
-                                    .background(color = color, shape = indicatorShape)
-                            )
-                        }
-                    }
-                }
+            }
+        }
+    }
+}
+
+// NOTE: This WelcomePage composable will now receive a single paragraph string
+@Composable
+fun WelcomePage(displayContent: String) {
+    Card(
+        shape = RoundedCornerShape(16.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
+        colors = CardDefaults.cardColors(containerColor = Color.White),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(8.dp)
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(24.dp)
+                .verticalScroll(rememberScrollState()),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Top
+        ) {
+            Text(
+                "Información importante",
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold
+            )
+            Spacer(Modifier.height(16.dp))
+            Icon(
+                painter = painterResource(R.drawable.outline_unknown_document_24),
+                contentDescription = null,
+                modifier = Modifier.size(64.dp),
+                tint = Color(0xFFE84589)
+            )
+            Spacer(Modifier.height(16.dp))
+            Text(
+                displayContent,
+                fontSize = 16.sp,
+                textAlign = TextAlign.Left
+            )
+        }
+    }
+}
+
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+fun HorizontalPagerIndicator(
+    pagerState: androidx.compose.foundation.pager.PagerState,
+    pageCount: Int,
+    modifier: Modifier = Modifier,
+    activeColor: Color = Color.White,
+    inactiveColor: Color = Color.Gray,
+    indicatorWidth: Dp = 8.dp,
+    indicatorHeight: Dp = 8.dp,
+    spacing: Dp = 8.dp,
+    indicatorShape: Shape = CircleShape
+) {
+    Row(
+        horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = modifier,
+    ) {
+        repeat(pageCount) { index ->
+            val color = if (pagerState.currentPage == index) activeColor else inactiveColor
+            Box(
+                modifier = Modifier
+                    .padding(horizontal = spacing / 2)
+                    .size(indicatorWidth, indicatorHeight)
+                    .background(color = color, shape = indicatorShape)
+            )
+        }
+    }
+}

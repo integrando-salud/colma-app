@@ -160,8 +160,8 @@ fun SesionesMenuScreen(
     val signatureColor = colorResource(R.color.principal)
     val topBarTitle = remember(treatmentTypes) {
         when {
-            treatmentTypes.contains(TreatmentType.HTA) && treatmentTypes.contains(TreatmentType.DIABETES) -> "HTA y Diabetes"
-            treatmentTypes.contains(TreatmentType.HTA) -> "HTA"
+            treatmentTypes.contains(TreatmentType.HTA) && treatmentTypes.contains(TreatmentType.DIABETES) -> "Hipertensión y Diabetes"
+            treatmentTypes.contains(TreatmentType.HTA) -> "Hipertensión"
             treatmentTypes.contains(TreatmentType.DIABETES) -> "Diabetes"
             else -> "Sesiones"
         }
@@ -417,7 +417,7 @@ fun SubSessionRow(sub: SubSessionItem, onClick: () -> Unit) {
 
 
 fun HTASession(): List<SessionItem> = listOf(
-    SessionItem(1, "Semana 1 HTA", TreatmentType.HTA, thumbnailRes = R.drawable.missing_photo),
+    SessionItem(1, "Semana 1 hipertensión", TreatmentType.HTA, thumbnailRes = R.drawable.missing_photo),
 )
 
 fun HTASubSessions(parentId: Long): List<SubSessionItem> {

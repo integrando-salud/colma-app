@@ -61,6 +61,7 @@ import java.util.Calendar // Added import for Calendar
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import com.colma.colmaApp.features.multimediaScreens.navigateToNextOrFinish
 import com.colma.colmaApp.features.sesiones.TreatmentType
 
 const val METAS_TYPE_HTA = "hta"
@@ -79,7 +80,14 @@ class MetasActivity : ComponentActivity() {
             isAppearanceLightNavigationBars = true // White navigation bar, so dark icons
         }
 
+        val sessionId = intent.getLongExtra("sessionId", -1L)
+        val sessionTitle = intent.getStringExtra("sessionTitle") ?: "Sesión"
+        val subSessionId = intent.getLongExtra("subSessionId", -1L)
+        val subSessionTitle = intent.getStringExtra("subSessionTitle") ?: ""
+        val treatmentTypesString = intent.getStringExtra("treatmentTypes") ?: ""
+        val currentMultimediaIndex = intent.getIntExtra("currentMultimediaIndex", -1)
         val metasTypeString = intent.getStringExtra("metasType")
+
         val treatmentType = if (metasTypeString != null) {
             try {
                 TreatmentType.valueOf(metasTypeString.uppercase(Locale.ROOT))
@@ -96,7 +104,15 @@ class MetasActivity : ComponentActivity() {
                     treatmentType = treatmentType,
                     onBack = { finish() },
                     onFinish = {
-                        finish()
+                        navigateToNextOrFinish(
+                            activity = this@MetasActivity,
+                            sessionId = sessionId,
+                            sessionTitle = sessionTitle,
+                            subSessionId = subSessionId,
+                            subSessionTitle = subSessionTitle,
+                            treatmentTypesString = treatmentTypesString,
+                            currentMultimediaIndex = currentMultimediaIndex
+                        )
                     }
                 )
             }

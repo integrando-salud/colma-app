@@ -105,7 +105,7 @@ fun getMultimediaOptions(treatmentType: TreatmentType, subSessionId: Long): List
                 ),
                 MultimediaOption(
                     type = MultimediaContentType.QUIZ,
-                    title = "Quiz Módulo 5 (HTA)",
+                    title = "Cuestionario Módulo 5",
                     description = "Responde las preguntas del módulo 5 de HTA",
                     iconResId = R.drawable.outline_trophy_24,
                     quizId = "hta"
@@ -203,7 +203,7 @@ fun getMultimediaOptions(treatmentType: TreatmentType, subSessionId: Long): List
                 ),
                 MultimediaOption(
                     type = MultimediaContentType.QUIZ,
-                    title = "Quiz Módulo 5 (Diabetes)",
+                    title = "Cuestionario Módulo 5",
                     description = "Responde las preguntas del módulo 5 de Diabetes",
                     iconResId = R.drawable.outline_trophy_24,
                     quizId = "diabetes"
@@ -341,10 +341,22 @@ fun MultimediaSelectorScreen(
                 title = {
                     Column {
                         Text(text = sessionTitle, fontSize = 16.sp, color = Color.White, fontWeight = FontWeight.SemiBold)
-                        val secondLine = when {
+                        val secondLinePrefix = when {
                             subSessionTitle.isNotBlank() -> subSessionTitle
                             subSessionId != -1L && sessionId >= 0L -> friendlySubLabel(subSessionId, sessionId)
                             else -> ""
+                        }
+                        val treatmentDisplay = treatmentTypes.firstOrNull()?.let {
+                            when (it) {
+                                TreatmentType.HTA -> "Hipertension"
+                                TreatmentType.DIABETES -> "Diabetes"
+                            }
+                        } ?: ""
+
+                        val secondLine = if (secondLinePrefix.isNotBlank() && treatmentDisplay.isNotBlank()) {
+                            "$secondLinePrefix: $treatmentDisplay"
+                        } else {
+                            secondLinePrefix
                         }
                         Text(text = secondLine, fontSize = 12.sp, color = Color.White.copy(alpha = 0.9f))
                     }
@@ -371,7 +383,7 @@ fun MultimediaSelectorScreen(
                 verticalArrangement = Arrangement.spacedBy(12.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                multimediaOptions.forEach { option ->
+                multimediaOptions.forEachIndexed { index, option ->
                     MultimediaOptionCard(option = option, signatureColor = signatureColor) {
                         val intent = when (option.type) {
                             MultimediaContentType.DESCRIPTION -> Intent(context, WelcomeActivity::class.java).apply {
@@ -387,6 +399,9 @@ fun MultimediaSelectorScreen(
                             putExtra("sessionTitle", sessionTitle)
                             putExtra("subSessionId", subSessionId)
                             putExtra("subSessionTitle", subSessionTitle)
+                            putExtra("treatmentTypes", treatmentTypes.joinToString(",") { it.name })
+                            putExtra("currentMultimediaIndex", index)
+
                             if (option.contentAssetId != null) {
                                 putExtra("contentAssetId", option.contentAssetId)
                             }

@@ -16,8 +16,9 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import com.colma.colmaApp.features.multimediaScreens.navigateToNextOrFinish
+import java.util.concurrent.TimeUnit
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -25,7 +26,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.colma.colmaApp.R
-import com.colma.colmaApp.features.MenuMain.MenuMain
 import com.colma.colmaApp.ui.theme.ColmaAppTheme
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
@@ -38,14 +38,8 @@ import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.runtime.DisposableEffect
-import androidx.compose.ui.Alignment.Companion.CenterVertically
 import java.util.Locale
-import java.util.concurrent.TimeUnit
+import androidx.compose.ui.Alignment.Companion.CenterVertically
 
 @OptIn(ExperimentalMaterial3Api::class)
 class FinishActivity : ComponentActivity() {
@@ -62,14 +56,30 @@ class FinishActivity : ComponentActivity() {
             isAppearanceLightNavigationBars = true // White navigation bar, so dark icons
         }
 
+        val sessionId = intent.getLongExtra("sessionId", -1L)
+        val sessionTitle = intent.getStringExtra("sessionTitle") ?: "Sesión"
+        val subSessionId = intent.getLongExtra("subSessionId", -1L)
+        val subSessionTitle = intent.getStringExtra("subSessionTitle") ?: ""
+        val treatmentTypesString = intent.getStringExtra("treatmentTypes") ?: ""
+        val currentMultimediaIndex = intent.getIntExtra("currentMultimediaIndex", -1)
+        val audioResId = intent.getIntExtra("contentAssetId", R.raw.audio_explicativo)
+
+
         setContent {
             ColmaAppTheme {
-                // pass the raw audio resource id you want to play; default is R.raw.exercise
                 FinishPageScreen(
-                    audioResId = R.raw.audio_explicativo,
+                    audioResId = audioResId,
                     onBack = { finish() },
                     onFinish = {
-                        finish()
+                        navigateToNextOrFinish(
+                            activity = this@FinishActivity,
+                            sessionId = sessionId,
+                            sessionTitle = sessionTitle,
+                            subSessionId = subSessionId,
+                            subSessionTitle = subSessionTitle,
+                            treatmentTypesString = treatmentTypesString,
+                            currentMultimediaIndex = currentMultimediaIndex
+                        )
                     }
                 )
             }
@@ -148,7 +158,7 @@ fun FinishPageScreen(
                 colors = TopAppBarDefaults.topAppBarColors(containerColor = signatureColor),
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "Volver", tint = Color.White)
+                        Icon(imageVector = Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Volver", tint = Color.White)
                     }
                 }
             )
