@@ -55,10 +55,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.colma.colmaApp.R
 import com.colma.colmaApp.ui.theme.ColmaAppTheme
-import com.colma.colmaApp.utils.varios.CardThatOpensDateTimeDialog
-import com.colma.colmaApp.utils.varios.CardThatOpensSelectionDialog
-import java.util.Calendar // Added import for Calendar
+import com.colma.colmaApp.utils.varios.CardThatOpensDateDialog
 import java.text.SimpleDateFormat
+import com.colma.colmaApp.utils.varios.CardThatOpensSelectionDialog
+import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 import com.colma.colmaApp.features.multimediaScreens.navigateToNextOrFinish
@@ -128,7 +128,8 @@ fun MetasScreen(treatmentType: TreatmentType, onBack: () -> Unit = {}, onFinish:
     val dbHelper = remember { DBhelper(context) }
     val scope = rememberCoroutineScope()
 
-    val defaultDateTimeFormat = remember { SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US) }
+    val dbDateTimeFormat = remember { SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US) }
+    val displayDateFormat = remember { SimpleDateFormat("dd/MM/yyyy", Locale.US) }
 
     val tipoActividad = rememberSaveable { mutableStateOf<String?>(null) }
     val actividad = rememberSaveable { mutableStateOf<String?>(null) }
@@ -137,14 +138,11 @@ fun MetasScreen(treatmentType: TreatmentType, onBack: () -> Unit = {}, onFinish:
 
     // Calculate default dates
     val today = Calendar.getInstance()
-    val todayMillis = today.timeInMillis
-    val todayString = defaultDateTimeFormat.format(today.time)
+    val todayString = dbDateTimeFormat.format(today.time)
 
     val tomorrow = Calendar.getInstance().apply { add(Calendar.DATE, 1) }
-    val tomorrowMillis = tomorrow.timeInMillis
-    val tomorrowString = defaultDateTimeFormat.format(tomorrow.time)
 
-    val fecha = rememberSaveable { mutableStateOf(tomorrowString) }
+    val fecha = rememberSaveable { mutableStateOf(dbDateTimeFormat.format(tomorrow.time)) }
     val fechaEdicion = rememberSaveable { mutableStateOf(todayString) }
 
     var showSummaryDialog by rememberSaveable { mutableStateOf(false) }
@@ -247,12 +245,16 @@ fun MetasScreen(treatmentType: TreatmentType, onBack: () -> Unit = {}, onFinish:
 
                         Spacer(modifier = Modifier.padding(8.dp))
 
-                        CardThatOpensDateTimeDialog (
+                        CardThatOpensDateDialog(
                             title = "Fecha Objetivo",
                             description = "Selecciona la fecha límite para tu meta.",
-                            initialMillis = tomorrowMillis,
-                            onDateTimeSelected = { datetime ->
-                                fecha.value = datetime
+                            initialMillis = tomorrow.timeInMillis,
+                            onDateSelected = { selectedCal ->
+                                val now = Calendar.getInstance()
+                                selectedCal.set(Calendar.HOUR_OF_DAY, now.get(Calendar.HOUR_OF_DAY))
+                                selectedCal.set(Calendar.MINUTE, now.get(Calendar.MINUTE))
+                                selectedCal.set(Calendar.SECOND, now.get(Calendar.SECOND))
+                                fecha.value = dbDateTimeFormat.format(selectedCal.time)
                             }
                         )
 
@@ -279,6 +281,8 @@ fun MetasScreen(treatmentType: TreatmentType, onBack: () -> Unit = {}, onFinish:
                                         "Faltan completar los siguientes campos:\n\n• " +
                                                 missing.joinToString("\n• ")
                                 } else {
+                                    val fechaObjetivoForDisplay = dbDateTimeFormat.parse(fecha.value)?.let { displayDateFormat.format(it) } ?: fecha.value
+                                    val fechaCreacionForDisplay = dbDateTimeFormat.parse(fechaEdicion.value)?.let { displayDateFormat.format(it) } ?: fechaEdicion.value
                                     summaryMessage = """
                                                             Resumen de registro:
                                                             • Tipo de actividad: ${tipoActividad.value}
@@ -289,9 +293,9 @@ fun MetasScreen(treatmentType: TreatmentType, onBack: () -> Unit = {}, onFinish:
 
                                                             • Dónde: ${donde.value}
 
-                                                            • Fecha Objetivo: ${fecha.value}
+                                                            • Fecha Objetivo: $fechaObjetivoForDisplay
                                                             
-                                                            • Fecha de Creación: ${fechaEdicion.value}
+                                                            • Fecha de Creación: $fechaCreacionForDisplay
                                                         """.trimIndent()
                                 }
                                 showSummaryDialog = true
