@@ -52,9 +52,9 @@ fun TimeInputDialog(
                         onTimeSelected(timePickerState.hour, timePickerState.minute)
                         onDismiss()
                     },
-                    colors = ButtonDefaults.textButtonColors(containerColor = Color(0xFF008000), contentColor = Color.White)
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF008000), contentColor = Color.White)
                 ) {
-                    Text("OK", color = signatureColor)
+                    Text("OK")
                 }
             },
             dismissButton = {
@@ -62,7 +62,7 @@ fun TimeInputDialog(
                     onClick = onDismiss,
                     colors = ButtonDefaults.textButtonColors(containerColor = Color.Red, contentColor = Color.White)
                 ) {
-                    Text("Cancelar", color = signatureColor)
+                    Text("Cancelar")
                 }
             },
             containerColor = Color.White,

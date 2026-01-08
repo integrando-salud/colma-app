@@ -782,14 +782,15 @@ fun RegistrosSaludScreen(
                                     }
 
                                     Spacer(modifier = Modifier.height(12.dp))
-                                    Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
-                                        // date display field (read-only, opens DatePicker) — shows only the date
+                                    Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxWidth()) {
+                                        Text(text = "Fecha registro", fontSize = 15.sp, color = Color.Black)
                                         OutlinedTextField(
                                             value = dateFormatter.format(java.util.Date(glucosaDateTime)),
                                             onValueChange = {},
                                             readOnly = true,
+                                            textStyle = TextStyle(fontSize = 18.sp),
                                             modifier = Modifier
-                                                .weight(1f)
+                                                .fillMaxWidth()
                                                 .clickable {
                                                     val c = glucosaCalendar
                                                     val dpd = android.app.DatePickerDialog(
@@ -806,8 +807,7 @@ fun RegistrosSaludScreen(
                                                         c.get(java.util.Calendar.DAY_OF_MONTH)
                                                     )
                                                     dpd.show()
-                                                }
-                                                .padding(end = 8.dp),
+                                                },
                                             trailingIcon = {
                                                 IconButton(onClick = {
                                                     val c = glucosaCalendar
@@ -830,13 +830,14 @@ fun RegistrosSaludScreen(
                                             }
                                         )
 
-                                        Spacer(modifier = Modifier.width(8.dp))
+                                        Spacer(modifier = Modifier.height(8.dp))
 
-                                        // time button opens TimePicker and shows only time (HH:mm)
-                                        OutlinedButton(onClick = {
-                                            showGlucosaTimePicker = true
-                                        }) {
-                                            Text(text = timeFormatterOnly.format(java.util.Date(glucosaDateTime)))
+                                        Text(text = "Hora", fontSize = 15.sp, color = Color.Black)
+                                        OutlinedButton(
+                                            onClick = { showGlucosaTimePicker = true },
+                                            modifier = Modifier.fillMaxWidth()
+                                        ) {
+                                            Text(text = timeFormatterOnly.format(java.util.Date(glucosaDateTime)), fontSize = 18.sp)
                                         }
                                     }
 
@@ -859,36 +860,44 @@ fun RegistrosSaludScreen(
                                 }
                             },
                             confirmButton = {
-                                TextButton(onClick = {
-                                    // validate value
-                                    if (glucosaValue.isBlank()) {
-                                        glucosaError = "Por favor ingrese un valor"
-                                        return@TextButton
-                                    }
+                                TextButton(
+                                    onClick = {
+                                        // validate value
+                                        if (glucosaValue.isBlank()) {
+                                            glucosaError = "Por favor ingrese un valor"
+                                            return@TextButton
+                                        }
 
-                                    // validate numeric
-                                    val number = glucosaValue.replace(',', '.').toDoubleOrNull()
-                                    if (number == null) {
-                                        glucosaError = "Ingrese un número válido"
-                                        return@TextButton
-                                    }
+                                        // validate numeric
+                                        val number = glucosaValue.replace(',', '.').toDoubleOrNull()
+                                        if (number == null) {
+                                            glucosaError = "Ingrese un número válido"
+                                            return@TextButton
+                                        }
 
-                                    // validate fasting selection
-                                    if (glucosaFasting == null) {
-                                        glucosaError = "Seleccione si está en ayuno o no"
-                                        return@TextButton
-                                    }
+                                        // validate fasting selection
+                                        if (glucosaFasting == null) {
+                                            glucosaError = "Seleccione si está en ayuno o no"
+                                            return@TextButton
+                                        }
 
-                                    // all good -> clear error and open confirmation
-                                    glucosaError = null
-                                    confirmLabel = "Glucosa"
-                                    confirmSaveDialogOpen = true
-                                }) {
+                                        // all good -> clear error and open confirmation
+                                        glucosaError = null
+                                        confirmLabel = "Glucosa"
+                                        confirmSaveDialogOpen = true
+                                    },
+                                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF008000), contentColor = Color.White)
+                                ) {
                                     Text("Guardar")
                                 }
                             },
                             dismissButton = {
-                                TextButton(onClick = { closeDialog() }) { Text("Cancelar") }
+                                TextButton(
+                                    onClick = { closeDialog() },
+                                    colors = ButtonDefaults.textButtonColors(containerColor = Color.Red, contentColor = Color.White)
+                                ) {
+                                    Text("Cancelar")
+                                }
                             },
                             containerColor = Color.White,
                             shape = RoundedCornerShape(12.dp),
@@ -937,13 +946,15 @@ fun RegistrosSaludScreen(
                                     )
 
                                     Spacer(modifier = Modifier.height(12.dp))
-                                    Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
+                                    Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxWidth()) {
+                                        Text(text = "Fecha registro", fontSize = 15.sp, color = Color.Black)
                                         OutlinedTextField(
                                             value = dateFormatter.format(java.util.Date(presionDateTime)),
                                             onValueChange = {},
                                             readOnly = true,
+                                            textStyle = TextStyle(fontSize = 18.sp),
                                             modifier = Modifier
-                                                .weight(1f)
+                                                .fillMaxWidth()
                                                 .clickable {
                                                     val c = presionCalendar
                                                     val dpd = android.app.DatePickerDialog(
@@ -959,8 +970,7 @@ fun RegistrosSaludScreen(
                                                         c.get(java.util.Calendar.DAY_OF_MONTH)
                                                     )
                                                     dpd.show()
-                                                }
-                                                .padding(end = 8.dp),
+                                                },
                                             trailingIcon = {
                                                 IconButton(onClick = {
                                                     val c = presionCalendar
@@ -983,12 +993,14 @@ fun RegistrosSaludScreen(
                                             }
                                         )
 
-                                        Spacer(modifier = Modifier.width(8.dp))
+                                        Spacer(modifier = Modifier.height(8.dp))
 
-                                        OutlinedButton(onClick = {
-                                            showPresionTimePicker = true
-                                        }) {
-                                            Text(text = timeFormatterOnly.format(java.util.Date(presionDateTime)))
+                                        Text(text = "Hora", fontSize = 15.sp, color = Color.Black)
+                                        OutlinedButton(
+                                            onClick = { showPresionTimePicker = true },
+                                            modifier = Modifier.fillMaxWidth()
+                                        ) {
+                                            Text(text = timeFormatterOnly.format(java.util.Date(presionDateTime)), fontSize = 18.sp)
                                         }
                                     }
 
@@ -1007,40 +1019,48 @@ fun RegistrosSaludScreen(
                                 }
                             },
                             confirmButton = {
-                                TextButton(onClick = {
-                                    // validate presence
-                                    if (presionSys.isBlank() || presionDia.isBlank()) {
-                                        presionError = "Ingrese ambos valores (mayor y menor)"
-                                        return@TextButton
-                                    }
+                                TextButton(
+                                    onClick = {
+                                        // validate presence
+                                        if (presionSys.isBlank() || presionDia.isBlank()) {
+                                            presionError = "Ingrese ambos valores (mayor y menor)"
+                                            return@TextButton
+                                        }
 
-                                    // validate numeric
-                                    val sys = presionSys.replace(',', '.').toDoubleOrNull()
-                                    val dia = presionDia.replace(',', '.').toDoubleOrNull()
-                                    if (sys == null || dia == null) {
-                                        presionError = "Ingrese números válidos"
-                                        return@TextButton
-                                    }
+                                        // validate numeric
+                                        val sys = presionSys.replace(',', '.').toDoubleOrNull()
+                                        val dia = presionDia.replace(',', '.').toDoubleOrNull()
+                                        if (sys == null || dia == null) {
+                                            presionError = "Ingrese números válidos"
+                                            return@TextButton
+                                        }
 
-                                    // optional: ensure systolic > diastolic (if desired)
-                                    if (sys <= dia) {
-                                        presionError = "El valor mayor debe ser mayor que el menor"
-                                        return@TextButton
-                                    }
+                                        // optional: ensure systolic > diastolic (if desired)
+                                        if (sys <= dia) {
+                                            presionError = "El valor mayor debe ser mayor que el menor"
+                                            return@TextButton
+                                        }
 
-                                    // optional fasting check if you want:
-                                    // if (presionFasting == null) { presionError = "Seleccione si está en ayuno o no"; return@TextButton }
+                                        // optional fasting check if you want:
+                                        // if (presionFasting == null) { presionError = "Seleccione si está en ayuno o no"; return@TextButton }
 
-                                    // all good -> clear errors and open confirm
-                                    presionError = null
-                                    confirmLabel = "Presion"
-                                    confirmSaveDialogOpen = true
-                                }) {
+                                        // all good -> clear errors and open confirm
+                                        presionError = null
+                                        confirmLabel = "Presion"
+                                        confirmSaveDialogOpen = true
+                                    },
+                                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF008000), contentColor = Color.White)
+                                ) {
                                     Text("Guardar")
                                 }
                             },
                             dismissButton = {
-                                TextButton(onClick = { closeDialog() }) { Text("Cancelar") }
+                                TextButton(
+                                    onClick = { closeDialog() },
+                                    colors = ButtonDefaults.textButtonColors(containerColor = Color.Red, contentColor = Color.White)
+                                ) {
+                                    Text("Cancelar")
+                                }
                             },
                             containerColor = Color.White,
                             shape = RoundedCornerShape(12.dp),

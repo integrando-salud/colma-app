@@ -56,6 +56,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -69,10 +70,12 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
@@ -241,7 +244,10 @@ fun MenuScreen(
                             showOtherReasonDialog = true
                         } else {
                             todaysObjective?.let {
-                                val updatedObjective = it.copy(meta_cumplida = 1, motivo_incumplimiento = selectedReason)
+                                val updatedObjective = it.copy(
+                                    meta_cumplida = 1,
+                                    motivo_incumplimiento = selectedReason
+                                )
                                 scope.launch {
                                     withContext(Dispatchers.IO) {
                                         dbHelper.updateMeta(updatedObjective)
@@ -273,7 +279,8 @@ fun MenuScreen(
                 TextButton(
                     onClick = {
                         todaysObjective?.let {
-                            val updatedObjective = it.copy(meta_cumplida = 1, motivo_incumplimiento = otherReason)
+                            val updatedObjective =
+                                it.copy(meta_cumplida = 1, motivo_incumplimiento = otherReason)
                             scope.launch {
                                 withContext(Dispatchers.IO) {
                                     dbHelper.updateMeta(updatedObjective)
@@ -289,486 +296,679 @@ fun MenuScreen(
         )
     }
 
-    ModalNavigationDrawer(
-        drawerState = drawerState,
-        modifier = Modifier.systemBarsPadding(),
-        drawerContent = {
-            ModalDrawerSheet(drawerContainerColor = Color.White) {
-                Image(
-                    painter = painterResource(id = R.drawable.colma_logo),
-                    contentDescription = "App Logo",
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 24.dp)
-                        .size(200.dp)
-                        .align(Alignment.CenterHorizontally)
-                )
-
-                Spacer(Modifier.height(12.dp))
-
-                @Composable
-                fun DrawerItem(label: String, icon: ImageVector, onClick: () -> Unit) {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .clickable { onClick() }
-                            .padding(horizontal = 16.dp, vertical = 12.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Icon(
-                            imageVector = icon,
-                            contentDescription = label,
-                            tint = Color(0xFF333333),
-                            modifier = Modifier.size(24.dp)
-                        )
-                        Spacer(modifier = Modifier.size(12.dp))
-                        Text(
-                            text = label,
-                            fontSize = 16.sp,
-                            color = Color.Black,
-                            fontWeight = FontWeight.Medium
-                        )
-                    }
-                }
-
-                val context = LocalContext.current
-
-                Column {
-                    DrawerItem("Inicio", Icons.Default.Home) {
-                        scope.launch { drawerState.close() }
-                        Toast.makeText(context, "Inicio", Toast.LENGTH_SHORT).show()
-                    }
-
-                    DrawerItem("Ayuda técnica del promotor de salud", Icons.Default.Call) {
-                        scope.launch { drawerState.close() }
-                        Toast.makeText(context, "Ayuda técnica", Toast.LENGTH_SHORT).show()
-                    }
-
-                    DrawerItem("Enlaces útiles", Icons.Default.Info) {
-                        scope.launch { drawerState.close() }
-                        Toast.makeText(context, "Enlaces útiles", Toast.LENGTH_SHORT).show()
-                    }
-
-                    DrawerItem("Tutorial de Usuario", Icons.Default.Face) {
-                        scope.launch { drawerState.close() }
-                        Toast.makeText(context, "Manual de Usuario", Toast.LENGTH_SHORT).show()
-                    }
-                }
-
-                Spacer(Modifier.height(28.dp))
-
-                Button(
-                    onClick = {
-                        scope.launch { drawerState.close() }
-                        onSalirClick()
-                    },
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = colorResource(R.color.principal),
-                        contentColor = Color.White
-                    ),
-                    modifier = Modifier
-                        .fillMaxWidth(0.7f)
-                        .align(Alignment.CenterHorizontally)
-                ) {
-                    Text(text = "Salir")
-                }
-
-                Spacer(Modifier.height(18.dp))
-            }
-        }
-    ){
-        Scaffold(
-            modifier = modifier.fillMaxSize(),
-            topBar = {
-                TopAppBar(
-                    title = { Text(text = title, fontWeight = FontWeight.Bold) },
-                    navigationIcon = {
-                        Surface(
-                            shape = RoundedCornerShape(12.dp),
-                            color = Color.White.copy(alpha = 0.20f),
+    CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
+        ModalNavigationDrawer(
+            drawerState = drawerState,
+            modifier = Modifier.systemBarsPadding(),
+            drawerContent = {
+                CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
+                    ModalDrawerSheet(drawerContainerColor = Color.White) {
+                        Image(
+                            painter = painterResource(id = R.drawable.colma_logo),
+                            contentDescription = "App Logo",
                             modifier = Modifier
-                                .padding(start = 8.dp)
-                                .height(36.dp)
-                                .clickable { scope.launch { drawerState.open() } }
-                        ) {
-                            Box(
+                                .fillMaxWidth()
+                                .padding(vertical = 24.dp)
+                                .size(200.dp)
+                                .align(Alignment.CenterHorizontally)
+                        )
+
+                        Spacer(Modifier.height(12.dp))
+
+                        @Composable
+                        fun DrawerItem(label: String, icon: ImageVector, onClick: () -> Unit) {
+                            Row(
                                 modifier = Modifier
-                                    .padding(horizontal = 12.dp),
-                                contentAlignment = Alignment.Center
-                            ) {
-                                Text(
-                                    text = "Menu",
-                                    color = Color.White,
-                                    fontWeight = FontWeight.SemiBold,
-                                    fontSize = 14.sp
-                                )
-                            }
-                        }
-                    },
-                    actions = {
-                        IconButton(onClick = onMetasHistoryClick) {
-                            BadgedBox(
-                                badge = {
-                                    if (pendingMetasCount > 0) {
-                                        Badge { Text("$pendingMetasCount") }
-                                    }
-                                }
+                                    .fillMaxWidth()
+                                    .clickable { onClick() }
+                                    .padding(horizontal = 16.dp, vertical = 12.dp),
+                                verticalAlignment = Alignment.CenterVertically
                             ) {
                                 Icon(
-                                    painter = painterResource(R.drawable.outline_trophy_24),
-                                    contentDescription = "Historial de Metas",
-                                    tint = Color.White
+                                    imageVector = icon,
+                                    contentDescription = label,
+                                    tint = Color(0xFF333333),
+                                    modifier = Modifier.size(24.dp)
+                                )
+                                Spacer(modifier = Modifier.size(12.dp))
+                                Text(
+                                    text = label,
+                                    fontSize = 16.sp,
+                                    color = Color.Black,
+                                    fontWeight = FontWeight.Medium
                                 )
                             }
                         }
-                    },
-                    colors = TopAppBarDefaults.topAppBarColors(
-                        containerColor = signatureColor,
-                        titleContentColor = Color.White,
-                        navigationIconContentColor = Color.White
-                    )
-                )
+
+                        val context = LocalContext.current
+
+                        Column {
+                            DrawerItem("Inicio", Icons.Default.Home) {
+                                scope.launch { drawerState.close() }
+                                Toast.makeText(context, "Inicio", Toast.LENGTH_SHORT).show()
+                            }
+
+                            DrawerItem(
+                                "Ayuda técnica del promotor de salud",
+                                Icons.Default.Call
+                            ) {
+                                scope.launch { drawerState.close() }
+                                Toast
+                                    .makeText(context, "Ayuda técnica", Toast.LENGTH_SHORT)
+                                    .show()
+                            }
+
+                            DrawerItem("Enlaces útiles", Icons.Default.Info) {
+                                scope.launch { drawerState.close() }
+                                Toast
+                                    .makeText(context, "Enlaces útiles", Toast.LENGTH_SHORT)
+                                    .show()
+                            }
+
+                            DrawerItem("Tutorial de Usuario", Icons.Default.Face) {
+                                scope.launch { drawerState.close() }
+                                Toast
+                                    .makeText(context, "Manual de Usuario", Toast.LENGTH_SHORT)
+                                    .show()
+                            }
+                        }
+
+                        Spacer(Modifier.height(28.dp))
+
+                        Button(
+                            onClick = {
+                                scope.launch { drawerState.close() }
+                                onSalirClick()
+                            },
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = colorResource(R.color.principal),
+                                contentColor = Color.White
+                            ),
+                            modifier = Modifier
+                                .fillMaxWidth(0.7f)
+                                .align(Alignment.CenterHorizontally)
+                        ) {
+                            Text(text = "Salir")
+                        }
+
+                        Spacer(Modifier.height(18.dp))
+                    }
+                }
             }
-        ) { innerPadding ->
-            Box(
-                modifier = Modifier
-                    .padding(innerPadding)
-                    .fillMaxSize()
-                    .background(Color.White)
-            ) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(horizontal = 24.dp)
-                        .padding(top = 50.dp)
-                        .verticalScroll(rememberScrollState()),
-                    verticalArrangement = Arrangement.Top,
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Text(
-                        text = "¿Que te gustaria hacer hoy?",
-                        fontSize = 25.sp,
-                        color = signatureColor,
-                        textAlign = TextAlign.Center,
-                        fontWeight = FontWeight.Bold,
-                    )
-
-                    Spacer(modifier = Modifier.height(55.dp))
-
-                    Button(
-                        onClick = onSessionsClick,
-                        colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent),
-                        shape = RoundedCornerShape(8.dp),
-                        modifier = Modifier
-                            .fillMaxWidth(0.85f)
-                            .height(65.dp)
-                            .shadow(elevation = 6.dp, shape = RoundedCornerShape(8.dp), clip = false)
-                            .background(
-                                color = colorResource(R.color.principal),
-                                shape = RoundedCornerShape(8.dp)
-                            )
-                    ) {
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.Start
-                        ) {
-                            Image(
-                                painter = painterResource(id = R.drawable.sesion_logo),
-                                contentDescription = "Sesiones",
-                                modifier = Modifier.size(24.dp)
-                            )
-
-                            Spacer(modifier = Modifier.width(12.dp))
-
-                            Text(
-                                text = "Tema de hoy",
-                                fontSize = 18.sp,
-                                color = Color.White,
-                                fontWeight = FontWeight.SemiBold,
-                                modifier = Modifier.weight(1f),
-                                textAlign = TextAlign.Start
-                            )
-                        }
-                    }
-
-                    Spacer(modifier = Modifier.height(16.dp))
-
-                    Button(
-                        onClick = onHealthRegistersClick,
-                        modifier = Modifier
-                            .fillMaxWidth(0.85f)
-                            .height(65.dp),
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = Color(0xFFF0F0F0),
-                            contentColor = Color.Black
-                        ),
-                        shape = MaterialTheme.shapes.medium,
-                        elevation = ButtonDefaults.buttonElevation(
-                            defaultElevation = 6.dp,
-                            pressedElevation = 10.dp
-                        ),
-                    ) {
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.Start
-                        ) {
-                            Icon(
-                                painter = painterResource(R.drawable.outline_unknown_document_24),
-                                contentDescription = "Registros",
-                                tint = LocalContentColor.current,
-                                modifier = Modifier.size(20.dp)
-                            )
-
-                            Spacer(modifier = Modifier.width(12.dp))
-
-                            Text(
-                                text = "Mis Registros de Salud",
-                                fontSize = 18.sp,
-                                fontWeight = FontWeight.SemiBold,
-                                modifier = Modifier.weight(1f),
-                                textAlign = TextAlign.Start
-                            )
-                        }
-                    }
-
-                    Spacer(modifier = Modifier.weight(1f))
-
-                    Button(
-                        onClick = {
-                            coroutineScope.launch {
-                                try {
-                                    val syncTs = nowLocal()
-
-                                    val (glucosaList, presionList, estadoAnimoList) = withContext(Dispatchers.IO) {
-                                        val g = dbHelper.getPendingGlucosa(1)
-                                        val p = dbHelper.getPendingPresion(1)
-                                        val e = dbHelper.getPendingEstadoAnimoList(1)
-                                        Triple(g, p, e)
-                                    }
-
-                                    val root = JSONObject().apply {
-                                        put("deviceTimestamp", System.currentTimeMillis())
-                                        put("userId", 1)
-                                        put("app", "colmaApp")
-                                        put("clientSyncTimestamp", syncTs)
-                                    }
-
-                                    val gArray = JSONArray()
-                                    val glucosaIdsToMark = mutableListOf<Long>()
-                                    glucosaList.forEach { g ->
-                                        val gObj = JSONObject()
-                                        gObj.put("id_glucosa", g.id)
-                                        gObj.put("id_usuario", g.idUsuario ?: JSONObject.NULL)
-                                        gObj.put("valor_mgdl", g.valorMgdl ?: JSONObject.NULL)
-                                        gObj.put("ayuno", g.ayuno ?: JSONObject.NULL)
-                                        gObj.put("fecha_registro", g.fecha_registro ?: JSONObject.NULL)
-                                        gObj.put("fecha_sincronizacion", syncTs)
-                                        gArray.put(gObj)
-                                        glucosaIdsToMark.add(g.id)
-                                    }
-                                    root.put("glucosa", gArray)
-
-                                    val pArray = JSONArray()
-                                    val presionIdsToMark = mutableListOf<Long>()
-                                    presionList.forEach { p ->
-                                        val pObj = JSONObject()
-                                        pObj.put("id_presion", p.id)
-                                        pObj.put("id_usuario", p.idUsuario ?: JSONObject.NULL)
-                                        pObj.put("sistolica", p.sistolica ?: JSONObject.NULL)
-                                        pObj.put("diastolica", p.diastolica ?: JSONObject.NULL)
-                                        pObj.put("fecha_registro", p.fecha_registro ?: JSONObject.NULL)
-                                        pObj.put("fecha_sincronizacion", syncTs)
-                                        pArray.put(pObj)
-                                        presionIdsToMark.add(p.id)
-                                    }
-                                    root.put("presion", pArray)
-
-                                    val eArray = JSONArray()
-                                    val estadoIdsToMark = mutableListOf<Long>()
-                                    estadoAnimoList.forEach { e ->
-                                        val eObj = JSONObject()
-                                        eObj.put("id_estado_animo", e.rowid)
-                                        eObj.put("id_paciente", e.idPaciente ?: JSONObject.NULL)
-                                        eObj.put("fecha_registro", e.fechaRegistro ?: JSONObject.NULL)
-                                        for (i in 1..9) {
-                                            val value = e.preguntas.getOrNull(i - 1)
-                                            if (value == null) eObj.put("pregunta_$i", JSONObject.NULL)
-                                            else eObj.put("pregunta_$i", value)
+        ) {
+            CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
+                Scaffold(
+                    modifier = modifier.fillMaxSize(),
+                    topBar = {
+                        TopAppBar(
+                            title = { Text(text = title, fontWeight = FontWeight.Bold) },
+                            navigationIcon = {
+                                IconButton(onClick = onMetasHistoryClick) {
+                                    BadgedBox(
+                                        badge = {
+                                            if (pendingMetasCount > 0) {
+                                                Badge { Text("$pendingMetasCount") }
+                                            }
                                         }
-                                        eObj.put("fecha_sincronizacion", syncTs)
-                                        eArray.put(eObj)
-                                        estadoIdsToMark.add(e.rowid)
-                                    }
-                                    root.put("estado_animo", eArray)
-
-                                    val jsonToSend = root.toString(2)
-                                    
-                                    val postResult = postJsonRaw(webhookUrl, jsonToSend)
-
-                                    withContext(Dispatchers.Main) {
-                                        postResult.fold(onSuccess = { resp ->
-                                            lastResponse = "Enviado correctamente: $resp"
-                                            Toast.makeText(context, "Enviado correctamente", Toast.LENGTH_SHORT).show()
-
-                                            val defaultTimestamp = syncTs
-                                            val glucosaTimestampMap = mutableMapOf<Long, String>()
-                                            val presionTimestampMap = mutableMapOf<Long, String>()
-                                            val estadoTimestampMap = mutableMapOf<Long, String>()
-                                            var serverStatus = "200"
-                                            var serverSyncedAt: String? = null
-                                            try {
-                                                val respStr = resp?.toString() ?: ""
-                                                if (respStr.isNotBlank()) {
-                                                    val rootResp = org.json.JSONObject(respStr)
-                                                    serverStatus = when {
-                                                        rootResp.has("code") -> rootResp.optString("code", serverStatus)
-                                                        rootResp.has("status") -> rootResp.optString("status", serverStatus)
-                                                        rootResp.has("statusCode") -> rootResp.optString("statusCode", serverStatus)
-                                                        else -> serverStatus
-                                                    }
-                                                    if (rootResp.has("syncedAt")) serverSyncedAt = rootResp.optString("syncedAt", null)
-                                                    if (rootResp.has("glucosa")) {
-                                                        val ga = rootResp.optJSONArray("glucosa")
-                                                        if (ga != null) {
-                                                            for (i in 0 until ga.length()) {
-                                                                val o = ga.optJSONObject(i) ?: continue
-                                                                val id = o.optLong("id_glucosa", -1L)
-                                                                val fecha = o.optString("fecha_sincronizacion", null)
-                                                                if (id > 0) glucosaTimestampMap[id] = if (!fecha.isNullOrBlank()) fecha else defaultTimestamp
-                                                            }
-                                                        }
-                                                    }
-                                                    if (rootResp.has("presion")) {
-                                                        val pa = rootResp.optJSONArray("presion")
-                                                        if (pa != null) {
-                                                            for (i in 0 until pa.length()) {
-                                                                val o = pa.optJSONObject(i) ?: continue
-                                                                val id = o.optLong("id_presion", -1L)
-                                                                val fecha = o.optString("fecha_sincronizacion", null)
-                                                                if (id > 0) presionTimestampMap[id] = if (!fecha.isNullOrBlank()) fecha else defaultTimestamp
-                                                            }
-                                                        }
-                                                    }
-                                                    if (rootResp.has("estado_animo")) {
-                                                        val ea = rootResp.optJSONArray("estado_animo")
-                                                        if (ea != null) {
-                                                            for (i in 0 until ea.length()) {
-                                                                val o = ea.optJSONObject(i) ?: continue
-                                                                val id = o.optLong("id_estado_animo", -1L)
-                                                                val fecha = o.optString("fecha_sincronizacion", null)
-                                                                if (id > 0) estadoTimestampMap[id] = if (!fecha.isNullOrBlank()) fecha else defaultTimestamp
-                                                            }
-                                                        }
-                                                    }
-                                                    if (glucosaTimestampMap.isEmpty() && presionTimestampMap.isEmpty() && estadoTimestampMap.isEmpty() && serverSyncedAt != null) {
-                                                        val ts = if (serverSyncedAt.isNullOrBlank()) defaultTimestamp else serverSyncedAt
-                                                        glucosaIdsToMark.forEach { glucosaTimestampMap[it] = ts }
-                                                        presionIdsToMark.forEach { presionTimestampMap[it] = ts }
-                                                        estadoIdsToMark.forEach { estadoTimestampMap[it] = ts }
-                                                    }
-                                                    if (glucosaTimestampMap.isEmpty() && rootResp.has("glucosaIds")) {
-                                                        val ga = rootResp.optJSONArray("glucosaIds")
-                                                        if (ga != null) for (i in 0 until ga.length()) { val id = ga.optLong(i, -1L); if (id > 0) glucosaTimestampMap[id] = defaultTimestamp }
-                                                    }
-                                                    if (presionTimestampMap.isEmpty() && rootResp.has("presionIds")) {
-                                                        val pa = rootResp.optJSONArray("presionIds")
-                                                        if (pa != null) for (i in 0 until pa.length()) { val id = pa.optLong(i, -1L); if (id > 0) presionTimestampMap[id] = defaultTimestamp }
-                                                    }
-                                                    if (estadoTimestampMap.isEmpty() && rootResp.has("estadoIds")) {
-                                                        val ea = rootResp.optJSONArray("estadoIds")
-                                                        if (ea != null) for (i in 0 until ea.length()) { val id = ea.optLong(i, -1L); if (id > 0) estadoTimestampMap[id] = defaultTimestamp }
-                                                    }
-                                                }
-                                            } catch (e: Exception) {
-                                                e.printStackTrace()
-                                            }
-                                            if (glucosaTimestampMap.isEmpty()) glucosaIdsToMark.forEach { glucosaTimestampMap[it] = defaultTimestamp }
-                                            if (presionTimestampMap.isEmpty()) presionIdsToMark.forEach { presionTimestampMap[it] = defaultTimestamp }
-                                            if (estadoTimestampMap.isEmpty()) estadoIdsToMark.forEach { estadoTimestampMap[it] = defaultTimestamp }
-                                            
-                                            val recordTimestampForSyncTable = serverSyncedAt ?: syncTs
-                                            withContext(Dispatchers.IO) {
-                                                try {
-                                                    try {
-                                                        dbHelper.insertSincronizacion(recordTimestampForSyncTable, serverStatus, null)
-                                                    } catch (ie: Exception) { ie.printStackTrace() }
-                                                    if (glucosaTimestampMap.isNotEmpty()) dbHelper.updateGlucosaSyncTimestamps(glucosaTimestampMap)
-                                                    if (presionTimestampMap.isNotEmpty()) dbHelper.updatePresionSyncTimestamps(presionTimestampMap)
-                                                    if (estadoTimestampMap.isNotEmpty()) dbHelper.updateEstadoAnimoSyncTimestamps(estadoTimestampMap)
-                                                } catch (e: Exception) {
-                                                    e.printStackTrace()
-                                                }
-                                            }
-                                        }, onFailure = { err ->
-                                            lastResponse = "Error: ${err?.message}"
-                                            Toast.makeText(context, "Error: ${err?.message}", Toast.LENGTH_LONG).show()
-                                            
-                                            val errDesc = (err?.message ?: "network/error")
-                                            withContext(Dispatchers.IO) {
-                                                try {
-                                                    dbHelper.insertSincronizacion(syncTs, errDesc, jsonToSend)
-                                                } catch (e: Exception) {
-                                                    e.printStackTrace()
-                                                }
-                                            }
-                                        })
-                                    }
-                                } catch (e: Exception) {
-                                    e.printStackTrace()
-                                    withContext(Dispatchers.Main) {
-                                        lastResponse = "Error inesperado: ${e.message}"
-                                        Toast.makeText(context, "Error inesperado: ${e.message}", Toast.LENGTH_LONG).show()
-                                        val syncTs = nowLocal()
-                                        withContext(Dispatchers.IO) {
-                                            try {
-                                                dbHelper.insertSincronizacion(syncTs, e.message ?: "exception", null)
-                                            } catch (ie: Exception) { ie.printStackTrace() }
-                                        }
+                                    ) {
+                                        Icon(
+                                            painter = painterResource(R.drawable.outline_trophy_24),
+                                            contentDescription = "Historial de Metas",
+                                            tint = Color.White
+                                        )
                                     }
                                 }
-                            }
-                        },
-                        modifier = Modifier
-                            .fillMaxWidth(0.85f)
-                            .height(65.dp),
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = Color(0xFFF0F0F0),
-                            contentColor = Color.Black
-                        ),
-                        shape = MaterialTheme.shapes.medium,
-                        elevation = ButtonDefaults.buttonElevation(
-                            defaultElevation = 6.dp,
-                            pressedElevation = 10.dp
+                            },
+                            actions = {
+                                Surface(
+                                    shape = RoundedCornerShape(12.dp),
+                                    color = Color.White.copy(alpha = 0.20f),
+                                    modifier = Modifier
+                                        .padding(end = 8.dp) // Changed from start to end
+                                        .height(36.dp)
+                                        .clickable { scope.launch { drawerState.open() } }
+                                ) {
+                                    Box(
+                                        modifier = Modifier
+                                            .padding(horizontal = 12.dp),
+                                        contentAlignment = Alignment.Center
+                                    ) {
+                                        Text(
+                                            text = "Menu",
+                                            color = Color.White,
+                                            fontWeight = FontWeight.SemiBold,
+                                            fontSize = 14.sp
+                                        )
+                                    }
+                                }
+                            }, colors = TopAppBarDefaults.topAppBarColors(
+                                containerColor = signatureColor,
+                                titleContentColor = Color.White,
+                                navigationIconContentColor = Color.White
+                            )
                         )
+                    }
+                ) { innerPadding ->
+                    Box(
+                        modifier = Modifier
+                            .padding(innerPadding)
+                            .fillMaxSize()
+                            .background(Color.White)
                     ) {
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.Start
+                        Column(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(horizontal = 24.dp)
+                                .padding(top = 50.dp)
+                                .verticalScroll(rememberScrollState()),
+                            verticalArrangement = Arrangement.Top,
+                            horizontalAlignment = Alignment.CenterHorizontally
                         ) {
-                            Icon(
-                                painter = painterResource(R.drawable.baseline_sync_24),
-                                contentDescription = "Sincronizar",
-                                tint = LocalContentColor.current,
-                                modifier = Modifier.size(20.dp)
-                            )
-
-                            Spacer(modifier = Modifier.width(12.dp))
-
                             Text(
-                                text = "Actualizar datos",
-                                fontSize = 16.sp,
-                                fontWeight = FontWeight.SemiBold,
-                                modifier = Modifier.weight(1f),
-                                textAlign = TextAlign.Start
+                                text = "Elige una opcion",
+                                fontSize = 25.sp,
+                                color = signatureColor,
+                                textAlign = TextAlign.Center,
+                                fontWeight = FontWeight.Bold,
                             )
+
+                            Spacer(modifier = Modifier.height(55.dp))
+
+                            Button(
+                                onClick = onSessionsClick,
+                                colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent),
+                                shape = RoundedCornerShape(8.dp),
+                                modifier = Modifier
+                                    .fillMaxWidth(0.85f)
+                                    .height(65.dp)
+                                    .shadow(
+                                        elevation = 6.dp,
+                                        shape = RoundedCornerShape(8.dp),
+                                        clip = false
+                                    )
+                                    .background(
+                                        color = colorResource(R.color.principal),
+                                        shape = RoundedCornerShape(8.dp)
+                                    )
+                            ) {
+                                Row(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    horizontalArrangement = Arrangement.Start
+                                ) {
+                                    Image(
+                                        painter = painterResource(id = R.drawable.sesion_logo),
+                                        contentDescription = "Sesiones",
+                                        modifier = Modifier.size(24.dp)
+                                    )
+
+                                    Spacer(modifier = Modifier.width(12.dp))
+
+                                    Text(
+                                        text = "Tema de hoy",
+                                        fontSize = 18.sp,
+                                        color = Color.White,
+                                        fontWeight = FontWeight.SemiBold,
+                                        modifier = Modifier.weight(1f),
+                                        textAlign = TextAlign.Start
+                                    )
+                                }
+                            }
+
+                            Spacer(modifier = Modifier.height(16.dp))
+
+                            Button(
+                                onClick = onHealthRegistersClick,
+                                modifier = Modifier
+                                    .fillMaxWidth(0.85f)
+                                    .height(65.dp),
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = Color(0xFFF0F0F0),
+                                    contentColor = Color.Black
+                                ),
+                                shape = MaterialTheme.shapes.medium,
+                                elevation = ButtonDefaults.buttonElevation(
+                                    defaultElevation = 6.dp,
+                                    pressedElevation = 10.dp
+                                ),
+                            ) {
+                                Row(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    horizontalArrangement = Arrangement.Start
+                                ) {
+                                    Icon(
+                                        painter = painterResource(R.drawable.outline_unknown_document_24),
+                                        contentDescription = "Registros",
+                                        tint = LocalContentColor.current,
+                                        modifier = Modifier.size(20.dp)
+                                    )
+
+                                    Spacer(modifier = Modifier.width(12.dp))
+
+                                    Text(
+                                        text = "Mis Registros de Salud",
+                                        fontSize = 18.sp,
+                                        fontWeight = FontWeight.SemiBold,
+                                        modifier = Modifier.weight(1f),
+                                        textAlign = TextAlign.Start
+                                    )
+                                }
+                            }
+
+                            Spacer(modifier = Modifier.weight(1f))
+
+                            Button(
+                                onClick = {
+                                    coroutineScope.launch {
+                                        try {
+                                            val syncTs = nowLocal()
+
+                                            val (glucosaList, presionList, estadoAnimoList) = withContext(
+                                                Dispatchers.IO
+                                            ) {
+                                                val g = dbHelper.getPendingGlucosa(1)
+                                                val p = dbHelper.getPendingPresion(1)
+                                                val e = dbHelper.getPendingEstadoAnimoList(1)
+                                                Triple(g, p, e)
+                                            }
+
+                                            val root = JSONObject().apply {
+                                                put("deviceTimestamp", System.currentTimeMillis())
+                                                put("userId", 1)
+                                                put("app", "colmaApp")
+                                                put("clientSyncTimestamp", syncTs)
+                                            }
+
+                                            val gArray = JSONArray()
+                                            val glucosaIdsToMark = mutableListOf<Long>()
+                                            glucosaList.forEach { g ->
+                                                val gObj = JSONObject()
+                                                gObj.put("id_glucosa", g.id)
+                                                gObj.put(
+                                                    "id_usuario",
+                                                    g.idUsuario ?: JSONObject.NULL
+                                                )
+                                                gObj.put(
+                                                    "valor_mgdl",
+                                                    g.valorMgdl ?: JSONObject.NULL
+                                                )
+                                                gObj.put("ayuno", g.ayuno ?: JSONObject.NULL)
+                                                gObj.put(
+                                                    "fecha_registro",
+                                                    g.fecha_registro ?: JSONObject.NULL
+                                                )
+                                                gObj.put("fecha_sincronizacion", syncTs)
+                                                gArray.put(gObj)
+                                                glucosaIdsToMark.add(g.id)
+                                            }
+                                            root.put("glucosa", gArray)
+
+                                            val pArray = JSONArray()
+                                            val presionIdsToMark = mutableListOf<Long>()
+                                            presionList.forEach { p ->
+                                                val pObj = JSONObject()
+                                                pObj.put("id_presion", p.id)
+                                                pObj.put(
+                                                    "id_usuario",
+                                                    p.idUsuario ?: JSONObject.NULL
+                                                )
+                                                pObj.put(
+                                                    "sistolica",
+                                                    p.sistolica ?: JSONObject.NULL
+                                                )
+                                                pObj.put(
+                                                    "diastolica",
+                                                    p.diastolica ?: JSONObject.NULL
+                                                )
+                                                pObj.put(
+                                                    "fecha_registro",
+                                                    p.fecha_registro ?: JSONObject.NULL
+                                                )
+                                                pObj.put("fecha_sincronizacion", syncTs)
+                                                pArray.put(pObj)
+                                                presionIdsToMark.add(p.id)
+                                            }
+                                            root.put("presion", pArray)
+
+                                            val eArray = JSONArray()
+                                            val estadoIdsToMark = mutableListOf<Long>()
+                                            estadoAnimoList.forEach { e ->
+                                                val eObj = JSONObject()
+                                                eObj.put("id_estado_animo", e.rowid)
+                                                eObj.put(
+                                                    "id_paciente",
+                                                    e.idPaciente ?: JSONObject.NULL
+                                                )
+                                                eObj.put(
+                                                    "fecha_registro",
+                                                    e.fechaRegistro ?: JSONObject.NULL
+                                                )
+                                                for (i in 1..9) {
+                                                    val value = e.preguntas.getOrNull(i - 1)
+                                                    if (value == null) eObj.put(
+                                                        "pregunta_$i",
+                                                        JSONObject.NULL
+                                                    )
+                                                    else eObj.put("pregunta_$i", value)
+                                                }
+                                                eObj.put("fecha_sincronizacion", syncTs)
+                                                eArray.put(eObj)
+                                                estadoIdsToMark.add(e.rowid)
+                                            }
+                                            root.put("estado_animo", eArray)
+
+                                            val jsonToSend = root.toString(2)
+
+                                            val postResult = postJsonRaw(webhookUrl, jsonToSend)
+
+                                            withContext(Dispatchers.Main) {
+                                                postResult.fold(onSuccess = { resp ->
+                                                    lastResponse = "Enviado correctamente: $resp"
+                                                    Toast
+                                                        .makeText(
+                                                            context,
+                                                            "Enviado correctamente",
+                                                            Toast.LENGTH_SHORT
+                                                        )
+                                                        .show()
+
+                                                    val defaultTimestamp = syncTs
+                                                    val glucosaTimestampMap =
+                                                        mutableMapOf<Long, String>()
+                                                    val presionTimestampMap =
+                                                        mutableMapOf<Long, String>()
+                                                    val estadoTimestampMap =
+                                                        mutableMapOf<Long, String>()
+                                                    var serverStatus = "200"
+                                                    var serverSyncedAt: String? = null
+                                                    try {
+                                                        val respStr = resp?.toString() ?: ""
+                                                        if (respStr.isNotBlank()) {
+                                                            val rootResp =
+                                                                org.json.JSONObject(respStr)
+                                                            serverStatus = when {
+                                                                rootResp.has("code") -> rootResp.optString(
+                                                                    "code",
+                                                                    serverStatus
+                                                                )
+
+                                                                rootResp.has("status") -> rootResp.optString(
+                                                                    "status",
+                                                                    serverStatus
+                                                                )
+
+                                                                rootResp.has("statusCode") -> rootResp.optString(
+                                                                    "statusCode",
+                                                                    serverStatus
+                                                                )
+
+                                                                else -> serverStatus
+                                                            }
+                                                            if (rootResp.has("syncedAt")) serverSyncedAt =
+                                                                rootResp.optString(
+                                                                    "syncedAt",
+                                                                    null
+                                                                )
+                                                            if (rootResp.has("glucosa")) {
+                                                                val ga =
+                                                                    rootResp.optJSONArray("glucosa")
+                                                                if (ga != null) {
+                                                                    for (i in 0 until ga.length()) {
+                                                                        val o =
+                                                                            ga.optJSONObject(i)
+                                                                                ?: continue
+                                                                        val id = o.optLong(
+                                                                            "id_glucosa",
+                                                                            -1L
+                                                                        )
+                                                                        val fecha =
+                                                                            o.optString(
+                                                                                "fecha_sincronizacion",
+                                                                                null
+                                                                            )
+                                                                        if (id > 0) glucosaTimestampMap[id] =
+                                                                            if (!fecha.isNullOrBlank()) fecha else defaultTimestamp
+                                                                    }
+                                                                }
+                                                            }
+                                                            if (rootResp.has("presion")) {
+                                                                val pa =
+                                                                    rootResp.optJSONArray("presion")
+                                                                if (pa != null) {
+                                                                    for (i in 0 until pa.length()) {
+                                                                        val o =
+                                                                            pa.optJSONObject(i)
+                                                                                ?: continue
+                                                                        val id = o.optLong(
+                                                                            "id_presion",
+                                                                            -1L
+                                                                        )
+                                                                        val fecha =
+                                                                            o.optString(
+                                                                                "fecha_sincronizacion",
+                                                                                null
+                                                                            )
+                                                                        if (id > 0) presionTimestampMap[id] =
+                                                                            if (!fecha.isNullOrBlank()) fecha else defaultTimestamp
+                                                                    }
+                                                                }
+                                                            }
+                                                            if (rootResp.has("estado_animo")) {
+                                                                val ea =
+                                                                    rootResp.optJSONArray("estado_animo")
+                                                                if (ea != null) {
+                                                                    for (i in 0 until ea.length()) {
+                                                                        val o =
+                                                                            ea.optJSONObject(i)
+                                                                                ?: continue
+                                                                        val id = o.optLong(
+                                                                            "id_estado_animo",
+                                                                            -1L
+                                                                        )
+                                                                        val fecha =
+                                                                            o.optString(
+                                                                                "fecha_sincronizacion",
+                                                                                null
+                                                                            )
+                                                                        if (id > 0) estadoTimestampMap[id] =
+                                                                            if (!fecha.isNullOrBlank()) fecha else defaultTimestamp
+                                                                    }
+                                                                }
+                                                            }
+                                                            if (glucosaTimestampMap.isEmpty() && presionTimestampMap.isEmpty() && estadoTimestampMap.isEmpty() && serverSyncedAt != null) {
+                                                                val ts =
+                                                                    if (serverSyncedAt.isNullOrBlank()) defaultTimestamp else serverSyncedAt
+                                                                glucosaIdsToMark.forEach {
+                                                                    glucosaTimestampMap[it] = ts
+                                                                }
+                                                                presionIdsToMark.forEach {
+                                                                    presionTimestampMap[it] = ts
+                                                                }
+                                                                estadoIdsToMark.forEach {
+                                                                    estadoTimestampMap[it] = ts
+                                                                }
+                                                            }
+                                                            if (glucosaTimestampMap.isEmpty() && rootResp.has(
+                                                                    "glucosaIds"
+                                                                )
+                                                            ) {
+                                                                val ga =
+                                                                    rootResp.optJSONArray("glucosaIds")
+                                                                if (ga != null) for (i in 0 until ga.length()) {
+                                                                    val id =
+                                                                        ga.optLong(
+                                                                            i,
+                                                                            -1L
+                                                                        ); if (id > 0) glucosaTimestampMap[id] =
+                                                                        defaultTimestamp
+                                                                }
+                                                            }
+                                                            if (presionTimestampMap.isEmpty() && rootResp.has(
+                                                                    "presionIds"
+                                                                )
+                                                            ) {
+                                                                val pa =
+                                                                    rootResp.optJSONArray("presionIds")
+                                                                if (pa != null) for (i in 0 until pa.length()) {
+                                                                    val id =
+                                                                        pa.optLong(
+                                                                            i,
+                                                                            -1L
+                                                                        ); if (id > 0) presionTimestampMap[id] =
+                                                                        defaultTimestamp
+                                                                }
+                                                            }
+                                                            if (estadoTimestampMap.isEmpty() && rootResp.has(
+                                                                    "estadoIds"
+                                                                )
+                                                            ) {
+                                                                val ea =
+                                                                    rootResp.optJSONArray("estadoIds")
+                                                                if (ea != null) for (i in 0 until ea.length()) {
+                                                                    val id =
+                                                                        ea.optLong(
+                                                                            i,
+                                                                            -1L
+                                                                        ); if (id > 0) estadoTimestampMap[id] =
+                                                                        defaultTimestamp
+                                                                }
+                                                            }
+                                                        }
+                                                    } catch (e: Exception) {
+                                                        e.printStackTrace()
+                                                    }
+                                                    if (glucosaTimestampMap.isEmpty()) glucosaIdsToMark.forEach {
+                                                        glucosaTimestampMap[it] =
+                                                            defaultTimestamp
+                                                    }
+                                                    if (presionTimestampMap.isEmpty()) presionIdsToMark.forEach {
+                                                        presionTimestampMap[it] =
+                                                            defaultTimestamp
+                                                    }
+                                                    if (estadoTimestampMap.isEmpty()) estadoIdsToMark.forEach {
+                                                        estadoTimestampMap[it] =
+                                                            defaultTimestamp
+                                                    }
+
+                                                    val recordTimestampForSyncTable =
+                                                        serverSyncedAt ?: syncTs
+                                                    withContext(Dispatchers.IO) {
+                                                        try {
+                                                            try {
+                                                                dbHelper.insertSincronizacion(
+                                                                    recordTimestampForSyncTable,
+                                                                    serverStatus,
+                                                                    null
+                                                                )
+                                                            } catch (ie: Exception) {
+                                                                ie.printStackTrace()
+                                                            }
+                                                            if (glucosaTimestampMap.isNotEmpty()) dbHelper.updateGlucosaSyncTimestamps(
+                                                                glucosaTimestampMap
+                                                            )
+                                                            if (presionTimestampMap.isNotEmpty()) dbHelper.updatePresionSyncTimestamps(
+                                                                presionTimestampMap
+                                                            )
+                                                            if (estadoTimestampMap.isNotEmpty()) dbHelper.updateEstadoAnimoSyncTimestamps(
+                                                                estadoTimestampMap
+                                                            )
+                                                        } catch (e: Exception) {
+                                                            e.printStackTrace()
+                                                        }
+                                                    }
+                                                }, onFailure = { err ->
+                                                    lastResponse = "Error: ${err?.message}"
+                                                    Toast
+                                                        .makeText(
+                                                            context,
+                                                            "Error: ${err?.message}",
+                                                            Toast.LENGTH_LONG
+                                                        )
+                                                        .show()
+
+                                                    val errDesc = (err?.message ?: "network/error")
+                                                    withContext(Dispatchers.IO) {
+                                                        try {
+                                                            dbHelper.insertSincronizacion(
+                                                                syncTs,
+                                                                errDesc,
+                                                                jsonToSend
+                                                            )
+                                                        } catch (e: Exception) {
+                                                            e.printStackTrace()
+                                                        }
+                                                    }
+                                                })
+                                            }
+                                        } catch (e: Exception) {
+                                            e.printStackTrace()
+                                            withContext(Dispatchers.Main) {
+                                                lastResponse = "Error inesperado: ${e.message}"
+                                                Toast
+                                                    .makeText(
+                                                        context,
+                                                        "Error inesperado: ${e.message}",
+                                                        Toast.LENGTH_LONG
+                                                    )
+                                                    .show()
+                                                val syncTs = nowLocal()
+                                                withContext(Dispatchers.IO) {
+                                                    try {
+                                                        dbHelper.insertSincronizacion(
+                                                            syncTs,
+                                                            e.message ?: "exception",
+                                                            null
+                                                        )
+                                                    } catch (ie: Exception) {
+                                                        ie.printStackTrace()
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                modifier = Modifier
+                                    .fillMaxWidth(0.85f)
+                                    .height(65.dp),
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = Color(0xFFF0F0F0),
+                                    contentColor = Color.Black
+                                ),
+                                shape = MaterialTheme.shapes.medium,
+                                elevation = ButtonDefaults.buttonElevation(
+                                    defaultElevation = 6.dp,
+                                    pressedElevation = 10.dp
+                                )
+                            ) {
+                                Row(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    horizontalArrangement = Arrangement.Start
+                                ) {
+                                    Icon(
+                                        painter = painterResource(R.drawable.baseline_sync_24),
+                                        contentDescription = "Sincronizar",
+                                        tint = LocalContentColor.current,
+                                        modifier = Modifier.size(20.dp)
+                                    )
+
+                                    Spacer(modifier = Modifier.width(12.dp))
+
+                                    Text(
+                                        text = "Actualizar datos",
+                                        fontSize = 16.sp,
+                                        fontWeight = FontWeight.SemiBold,
+                                        modifier = Modifier.weight(1f),
+                                        textAlign = TextAlign.Start
+                                    )
+                                }
+                            }
+
+
+                            Spacer(modifier = Modifier.height(28.dp))
                         }
                     }
-
-
-                    Spacer(modifier = Modifier.height(28.dp))
                 }
             }
         }
@@ -776,8 +976,11 @@ fun MenuScreen(
 }
 
 
-
-suspend fun postJsonRaw(urlString: String, jsonBody: String, timeoutMs: Int = 15000): Result<String> {
+suspend fun postJsonRaw(
+    urlString: String,
+    jsonBody: String,
+    timeoutMs: Int = 15000
+): Result<String> {
     return withContext(Dispatchers.IO) {
         try {
             val url = URL(urlString)
