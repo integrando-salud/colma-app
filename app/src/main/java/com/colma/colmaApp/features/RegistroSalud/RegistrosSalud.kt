@@ -588,7 +588,7 @@ fun RegistrosSaludScreen(
                                 Spacer(modifier = Modifier.width(12.dp))
 
                                 Text(
-                                    text = "Glucosa",
+                                    text = "Medicion de Glucosa",
                                     fontSize = 18.sp,
                                     fontWeight = FontWeight.SemiBold,
                                     modifier = Modifier.weight(1f),
@@ -626,7 +626,7 @@ fun RegistrosSaludScreen(
                                 Spacer(modifier = Modifier.width(12.dp))
 
                                 Text(
-                                    text = "Presion Arterial",
+                                    text = "Medicion de Presion",
                                     fontSize = 18.sp,
                                     fontWeight = FontWeight.SemiBold,
                                     modifier = Modifier.weight(1f),
@@ -748,8 +748,8 @@ fun RegistrosSaludScreen(
                                 Column {
                                     OutlinedTextField(
                                         value = glucosaValue,
-                                        onValueChange = {
-                                            glucosaValue = it
+                                        onValueChange = { newValue ->
+                                            glucosaValue = if (newValue.length <= 3) newValue else newValue.substring(0, 3)
                                             glucosaError = null
                                         },
                                         singleLine = true,
@@ -914,8 +914,8 @@ fun RegistrosSaludScreen(
                                     Text(text = "Ingresar valor mayor", fontSize = 15.sp, color = Color.Black)
                                     OutlinedTextField(
                                         value = presionSys,
-                                        onValueChange = {
-                                            presionSys = it
+                                        onValueChange = { newValue ->
+                                            presionSys = if (newValue.length <= 3) newValue else newValue.substring(0, 3)
                                             presionError = null
                                         },
                                         singleLine = true,
@@ -932,8 +932,8 @@ fun RegistrosSaludScreen(
                                     Text(text = "Ingresar valor menor", fontSize = 15.sp, color = Color.Black)
                                     OutlinedTextField(
                                         value = presionDia,
-                                        onValueChange = {
-                                            presionDia = it
+                                        onValueChange = { newValue ->
+                                            presionDia = if (newValue.length <= 3) newValue else newValue.substring(0, 3)
                                             presionError = null
                                         },
                                         singleLine = true,
