@@ -60,7 +60,14 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 /** Simple data class for history items */
-data class HealthEntry(val label: String, val value: String, val timestamp: Long)
+data class HealthEntry(
+    val label: String,
+    val value: String,
+    val timestamp: Long,
+    val rawValue1: Double? = null,
+    val rawValue2: Double? = null,
+    val isFasting: Boolean? = null
+)
 
 /** Simple local screen enum */
 private sealed class RSscreen {
@@ -119,8 +126,8 @@ fun RegistrosSaludScreen(
     var presionError by rememberSaveable { mutableStateOf<String?>(null) }
     var presionFasting by rememberSaveable { mutableStateOf<Boolean?>(null) }
 
-    var confirmSaveDialogOpen by rememberSaveable { mutableStateOf(false) }
-    var confirmLabel by rememberSaveable { mutableStateOf("") }
+    var showDetailsDialog by remember { mutableStateOf(false) }
+    var entryForDialog by remember { mutableStateOf<HealthEntry?>(null) }
 
     var depresionValue by rememberSaveable { mutableStateOf("") }
     var depresionError by rememberSaveable { mutableStateOf<String?>(null) }
@@ -231,7 +238,13 @@ fun RegistrosSaludScreen(
                         val display = "${valueText} mg/dl$suffix"
 
                         // build HealthEntry — ensure label consistent with previous code
-                        HealthEntry("Glucosa", display, millis)
+                        HealthEntry(
+                            label = "Glucosa",
+                            value = display,
+                            timestamp = millis,
+                            rawValue1 = g.valorMgdl,
+                            isFasting = fasting
+                        )
                     }
                     // sort newest first
                     val sorted = entries.sortedByDescending { it.timestamp }
@@ -269,7 +282,13 @@ fun RegistrosSaludScreen(
                         val syst = fmt(p.sistolica)
                         val dia = fmt(p.diastolica)
                         val valueText = if (syst.isNotBlank() && dia.isNotBlank()) "$syst/$dia mmHg" else ""
-                        HealthEntry("Presion", valueText, millis)
+                        HealthEntry(
+                            label = "Presion",
+                            value = valueText,
+                            timestamp = millis,
+                            rawValue1 = p.sistolica,
+                            rawValue2 = p.diastolica
+                        )
                     }.sortedByDescending { it.timestamp }
 
                     // clear previous Presion entries and add all loaded ones
@@ -386,9 +405,34 @@ fun RegistrosSaludScreen(
 
                             val suffix = if (glucosaFasting == true) " · Ayuno" else " · Sin Ayuno"
                             val millis = parseDateTimeToMillis(fechaEdicionIso) ?: System.currentTimeMillis()
-                            history.add(0, HealthEntry("Glucosa", "${lastGlucosaValue} mg/dl$suffix", millis))
+                            history.add(
+                                0, HealthEntry(
+                                    label = "Glucosa",
+                                    value = "${lastGlucosaValue} mg/dl$suffix",
+                                    timestamp = millis,
+                                    rawValue1 = number,
+                                    isFasting = glucosaFasting
+                                )
+                            )
 
                             Toast.makeText(context, "Guardado: Glucosa = $lastGlucosaValue mg/dl", Toast.LENGTH_SHORT).show()
+
+                            // --- WARNING thresholds (still allow save) ---
+                            // low < 70 ; high: fasting >=126 else >=180
+                            val low = number < 70.0
+                            val high = if (glucosaFasting == true) number >= 126.0 else number >= 180.0
+                            var warningText: String? = null
+                            when {
+                                low -> {
+                                    warningText = "Advertencia: Glucosa baja (hipoglucemia). Por favor consulte con un médico."
+                                }
+                                high -> {
+                                    warningText = "Advertencia: Glucosa alta (hiperglucemia). Por favor consulte con un médico."
+                                }
+                            }
+                            if (warningText != null) {
+                                Toast.makeText(context, warningText, Toast.LENGTH_LONG).show()
+                            }
 
                             // ONLY write fecha_sincronizacion if there's an explicit pending sync timestamp
                             val syncIso = pendingGlucosaFechaSincronizacion
@@ -405,7 +449,6 @@ fun RegistrosSaludScreen(
                             }
 
                             // close dialogs
-                            confirmSaveDialogOpen = false
                             closeDialog()
                         } else {
                             withContext(Dispatchers.Main) {
@@ -463,9 +506,31 @@ fun RegistrosSaludScreen(
                             // show the user-picked edit time
                             val millis = parseDateTimeToMillis(fechaEdicionIso) ?: System.currentTimeMillis()
                             lastPresionTime = formatTimestamp(millis)
-                            history.add(0, HealthEntry("Presion", "$lastPresionValue mmHg", millis))
+                            history.add(
+                                0, HealthEntry(
+                                    label = "Presion",
+                                    value = "$lastPresionValue mmHg",
+                                    timestamp = millis,
+                                    rawValue1 = sys,
+                                    rawValue2 = dia
+                                )
+                            )
 
                             Toast.makeText(context, "Guardado: Presión = $lastPresionValue", Toast.LENGTH_SHORT).show()
+
+                            // --- WARNING checks (still allow save) ---
+                            val highS = sys > 140
+                            val lowS = sys < 90
+                            val highD = dia > 90
+                            val lowD = dia < 60
+
+                            val parts = mutableListOf<String>()
+                            if (lowS || lowD) parts.add("presión baja")
+                            if (highS || highD) parts.add("presión alta")
+                            if (parts.isNotEmpty()) {
+                                val warningText = "Advertencia: " + parts.joinToString(" y ") + ". Por favor consulte con un médico."
+                                Toast.makeText(context, warningText, Toast.LENGTH_LONG).show()
+                            }
 
                             // ONLY write fecha_sincronizacion if there's an explicit pending sync timestamp
                             val syncIso = pendingPresionFechaSincronizacion
@@ -481,7 +546,6 @@ fun RegistrosSaludScreen(
                                 }
                             }
 
-                            confirmSaveDialogOpen = false
                             closeDialog()
                         } else {
                             withContext(Dispatchers.Main) {
@@ -505,7 +569,6 @@ fun RegistrosSaludScreen(
                 val now = System.currentTimeMillis()
                 history.add(0, HealthEntry("Depresion", depresionValue, now))
                 Toast.makeText(context, "Guardado: Depresion", Toast.LENGTH_SHORT).show()
-                confirmSaveDialogOpen = false
                 closeDialog()
             }
         }
@@ -698,7 +761,10 @@ fun RegistrosSaludScreen(
 
                         // history filtered to Glucosa
                         val glucosaHistory = history.filter { it.label.equals("Glucosa", ignoreCase = true) }
-                        HistoryCard(history = glucosaHistory, onClear = { history.removeAll(glucosaHistory) }, modifier = Modifier.fillMaxWidth().weight(1f).padding(bottom = 16.dp))
+                        HistoryCard(history = glucosaHistory, onClear = { history.removeAll(glucosaHistory) }, onEntryClick = {
+                            entryForDialog = it
+                            showDetailsDialog = true
+                        }, modifier = Modifier.fillMaxWidth().weight(1f).padding(bottom = 16.dp))
                     }
                 }
 
@@ -716,7 +782,10 @@ fun RegistrosSaludScreen(
                         Spacer(modifier = Modifier.height(18.dp))
 
                         val presionHistory = history.filter { it.label.startsWith("Presion", ignoreCase = true) || it.label.startsWith("Presión", ignoreCase = true) }
-                        HistoryCard(history = presionHistory, onClear = { history.removeAll(presionHistory) }, modifier = Modifier.fillMaxWidth().weight(1f).padding(bottom = 16.dp))
+                        HistoryCard(history = presionHistory, onClear = { history.removeAll(presionHistory) }, onEntryClick = { 
+                            entryForDialog = it
+                            showDetailsDialog = true
+                        }, modifier = Modifier.fillMaxWidth().weight(1f).padding(bottom = 16.dp))
                     }
                 }
 
@@ -732,9 +801,74 @@ fun RegistrosSaludScreen(
                         HealthRecordCard(label = "Depresion", onClick = { openDialogFor("Depresion") }, modifier = Modifier.fillMaxWidth())
                         Spacer(modifier = Modifier.height(18.dp))
                         val depresionHistory = history.filter { it.label.equals("Depresion", ignoreCase = true) }
-                        HistoryCard(history = depresionHistory, onClear = { history.removeAll(depresionHistory) }, modifier = Modifier.fillMaxWidth().weight(1f).padding(bottom = 16.dp))
+                        HistoryCard(history = depresionHistory, onClear = { history.removeAll(depresionHistory) }, onEntryClick = {
+                            entryForDialog = it
+                            showDetailsDialog = true
+                        }, modifier = Modifier.fillMaxWidth().weight(1f).padding(bottom = 16.dp))
                     }
                 }
+            }
+
+            if (showDetailsDialog) {
+                val entry = entryForDialog!!
+                val (isDangerous, warningText) = remember(entry) {
+                    var dangerous = false
+                    var text: String? = null
+                    when (entry.label.lowercase(Locale.getDefault())) {
+                        "glucosa" -> {
+                            entry.rawValue1?.let { v ->
+                                val low = v < 70.0
+                                val high = if (entry.isFasting == true) v >= 126.0 else v >= 180.0
+                                if (low) {
+                                    dangerous = true
+                                    text = "Glucosa baja (hipoglucemia)."
+                                } else if (high) {
+                                    dangerous = true
+                                    text = "Glucosa alta (hiperglucemia)."
+                                }
+                            }
+                        }
+                        "presion", "presión", "presion arterial" -> {
+                            val s = entry.rawValue1
+                            val d = entry.rawValue2
+                            if (s != null && d != null) {
+                                val highS = s > 140
+                                val lowS = s < 90
+                                val highD = d > 90
+                                val lowD = d < 60
+                                if (highS || lowS || highD || lowD) {
+                                    dangerous = true
+                                    val parts = mutableListOf<String>()
+                                    if (lowS || lowD) parts.add("presión baja")
+                                    if (highS || highD) parts.add("presión alta")
+                                    text = parts.joinToString(" y ")
+                                }
+                            }
+                        }
+                    }
+                    Pair(dangerous, text)
+                }
+
+                AlertDialog(
+                    onDismissRequest = { showDetailsDialog = false },
+                    title = { Text("Detalle del Registro") },
+                    text = {
+                        Column {
+                            Text("Tipo: ${entry.label}")
+                            Text("Valor: ${entry.value}")
+                            Text("Fecha: ${SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault()).format(Date(entry.timestamp))}")
+                            if (isDangerous && warningText != null) {
+                                Spacer(modifier = Modifier.height(8.dp))
+                                Text("Advertencia: $warningText Por favor consulte con un médico.", color = Color.Red)
+                            }
+                        }
+                    },
+                    confirmButton = {
+                        TextButton(onClick = { showDetailsDialog = false }) {
+                            Text("Cerrar")
+                        }
+                    }
+                )
             }
 
             // Dialogs (shared)
@@ -881,10 +1015,18 @@ fun RegistrosSaludScreen(
                                             return@TextButton
                                         }
 
-                                        // all good -> clear error and open confirmation
+                                        // --- IMPOSSIBLE thresholds (adjust if you want) ---
+                                        if (number < 10.0) {
+                                            glucosaError = "Valor imposible: Glucosa demasiado baja para ser plausible."
+                                            return@TextButton
+                                        } else if (number > 1000.0) {
+                                            glucosaError = "Valor imposible: Glucosa extremadamente alta para ser plausible."
+                                            return@TextButton
+                                        }
+
+                                        // all good -> clear error and save
                                         glucosaError = null
-                                        confirmLabel = "Glucosa"
-                                        confirmSaveDialogOpen = true
+                                        handleSave()
                                     },
                                     colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF008000), contentColor = Color.White)
                                 ) {
@@ -1041,13 +1183,21 @@ fun RegistrosSaludScreen(
                                             return@TextButton
                                         }
 
+                                        // --- IMPOSSIBLE checks ---
+                                        if (sys < 40.0 || sys > 300.0) {
+                                            presionError = "Valor imposible: presión sistólica fuera de rango plausible."
+                                            return@TextButton
+                                        } else if (dia < 20.0 || dia > 200.0) {
+                                            presionError = "Valor imposible: presión diastólica fuera de rango plausible."
+                                            return@TextButton
+                                        }
+
                                         // optional fasting check if you want:
                                         // if (presionFasting == null) { presionError = "Seleccione si está en ayuno o no"; return@TextButton }
 
-                                        // all good -> clear errors and open confirm
+                                        // all good -> clear errors and save
                                         presionError = null
-                                        confirmLabel = "Presion"
-                                        confirmSaveDialogOpen = true
+                                        handleSave()
                                     },
                                     colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF008000), contentColor = Color.White)
                                 ) {
@@ -1105,206 +1255,6 @@ fun RegistrosSaludScreen(
                 }
             }
 
-            if (confirmSaveDialogOpen) {
-                // Build basic confirm message depending on what the user is about to save
-                val confirmMessage = when (confirmLabel) {
-                    "Glucosa" -> {
-                        val v = if (glucosaValue.isBlank()) "(sin valor)" else glucosaValue
-                        val fast = when (glucosaFasting) {
-                            true -> " · Ayuno"
-                            false -> " · No ayuno"
-                            null -> ""
-                        }
-                        "¿Está seguro que desea guardar Glucosa: $v$fast ?"
-                    }
-                    "Presion" -> {
-                        val syst = presionSys.ifBlank { "(sin valor)" }
-                        val dia = presionDia.ifBlank { "(sin valor)" }
-                        "¿Está seguro que desea guardar Presión: $syst / $dia?"
-                    }
-                    else -> "¿Está seguro que desea guardar los datos?"
-                }
-
-                // Compute warning and impossible detection in one remember block
-                val (warningText, warningColor, impossibleReason) = remember(
-                    confirmLabel, glucosaValue, glucosaFasting, presionSys, presionDia
-                ) {
-                    var wTxt: String? = null
-                    var wColor: Color? = null
-                    var impossible: String? = null
-
-                    try {
-                        when (confirmLabel) {
-                            "Glucosa" -> {
-                                // normalize decimal comma to dot and parse
-                                val v = glucosaValue.trim().replace(',', '.').toDoubleOrNull()
-                                if (v != null) {
-                                    // --- IMPOSSIBLE thresholds (adjust if you want) ---
-                                    if (v < 10.0) {
-                                        impossible = "Valor imposible: Glucosa demasiado baja para ser plausible."
-                                    } else if (v > 1000.0) {
-                                        impossible = "Valor imposible: Glucosa extremadamente alta para ser plausible."
-                                    }
-
-                                    // --- WARNING thresholds (still allow save) ---
-                                    // low < 70 ; high: fasting >=126 else >=180
-                                    val low = v < 70.0
-                                    val high = if (glucosaFasting == true) v >= 126.0 else v >= 180.0
-                                    when {
-                                        low -> {
-                                            wTxt = "Advertencia: Glucosa baja (hipoglucemia). Por favor consulte con un médico."
-                                            wColor = Color(0xFFD32F2F) // red
-                                        }
-                                        high -> {
-                                            wTxt = "Advertencia: Glucosa alta (hiperglucemia). Por favor consulte con un médico."
-                                            wColor = Color(0xFFFFA000) // amber
-                                        }
-                                        else -> {
-                                            wTxt = null
-                                            wColor = null
-                                        }
-                                    }
-                                }
-                            }
-
-                            "Presion" -> {
-                                // parse integers (ignore blanks)
-                                val s = presionSys.trim().toIntOrNull()
-                                val d = presionDia.trim().toIntOrNull()
-
-                                // --- IMPOSSIBLE checks ---
-                                if (s != null && (s < 40 || s > 300)) {
-                                    impossible = "Valor imposible: presión sistólica fuera de rango plausible."
-                                } else if (d != null && (d < 20 || d > 200)) {
-                                    impossible = "Valor imposible: presión diastólica fuera de rango plausible."
-                                } else if (s != null && d != null && s < d) {
-                                    impossible = "Valor imposible: la presión sistólica no puede ser menor que la diastólica."
-                                }
-
-                                // --- WARNING checks (still allow save) ---
-                                val highS = s != null && s > 140
-                                val lowS = s != null && s < 90
-                                val highD = d != null && d > 90
-                                val lowD = d != null && d < 60
-
-                                val parts = mutableListOf<String>()
-                                if (lowS || lowD) parts.add("presión baja")
-                                if (highS || highD) parts.add("presión alta")
-                                if (parts.isNotEmpty()) {
-                                    wTxt = "Advertencia: " + parts.joinToString(" y ") + ". Por favor consulte con un médico."
-                                    wColor = if (lowS || lowD || highS) Color(0xFFD32F2F) else Color(0xFFFFA000)
-                                }
-                            }
-
-                            else -> {
-                                // no special validations
-                            }
-                        }
-                    } catch (e: Exception) {
-                        // swallow parsing errors and treat as no warning/no impossible
-                        wTxt = null
-                        wColor = null
-                        impossible = null
-                    }
-
-                    Triple(wTxt, wColor, impossible)
-                }
-
-                // derive boolean quickly
-                val isImpossible = impossibleReason != null
-
-                AlertDialog(
-                    onDismissRequest = { confirmSaveDialogOpen = false },
-                    title = {
-                        Text(
-                            text = "Confirmar",
-                            fontWeight = FontWeight.Bold,
-                            color = colorResource(R.color.black)
-                        )
-                    },
-                    text = {
-                        Column {
-                            Text(text = confirmMessage, color = colorResource(R.color.black))
-
-                            Spacer(modifier = Modifier.height(10.dp))
-
-                            // show impossible message first (if present) — blocks saving
-                            if (isImpossible) {
-                                Row(
-                                    verticalAlignment = Alignment.CenterVertically,
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .background(color = Color(0xFFFFEBEE), shape = RoundedCornerShape(6.dp))
-                                        .padding(8.dp)
-                                ) {
-                                    Icon(
-                                        imageVector = Icons.Default.Warning,
-                                        contentDescription = "Error",
-                                        tint = Color(0xFFD32F2F),
-                                        modifier = Modifier.size(20.dp)
-                                    )
-                                    Spacer(modifier = Modifier.width(8.dp))
-                                    Text(
-                                        text = impossibleReason ?: "Valor imposible",
-                                        color = Color(0xFFD32F2F),
-                                        style = MaterialTheme.typography.bodySmall,
-                                        fontWeight = FontWeight.SemiBold
-                                    )
-                                }
-
-                                Spacer(modifier = Modifier.height(8.dp))
-                            }
-
-                            // show the regular warning row if needed (but this is not blocking)
-                            if (warningText != null && warningColor != null) {
-                                Row(
-                                    verticalAlignment = Alignment.CenterVertically,
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .background(color = warningColor.copy(alpha = 0.08f), shape = RoundedCornerShape(6.dp))
-                                        .padding(8.dp)
-                                ) {
-                                    Icon(
-                                        imageVector = Icons.Default.Warning,
-                                        contentDescription = "Advertencia",
-                                        tint = warningColor,
-                                        modifier = Modifier.size(20.dp)
-                                    )
-                                    Spacer(modifier = Modifier.width(8.dp))
-                                    Text(
-                                        text = warningText,
-                                        color = warningColor,
-                                        style = MaterialTheme.typography.bodySmall,
-                                        fontWeight = FontWeight.SemiBold
-                                    )
-                                }
-                            }
-                        }
-                    },
-                    confirmButton = {
-                        // disable the confirm button if impossible
-                        TextButton(
-                            onClick = {
-                                if (!isImpossible) {
-                                    confirmSaveDialogOpen = false
-                                    handleSave()
-                                }
-                            },
-                            enabled = !isImpossible
-                        ) {
-                            Text("Sí")
-                        }
-                    },
-                    dismissButton = {
-                        TextButton(onClick = { confirmSaveDialogOpen = false }) {
-                            Text("No")
-                        }
-                    },
-                    containerColor = Color.White,
-                    shape = RoundedCornerShape(10.dp)
-                )
-            }
-
         }
     }
 }
@@ -1314,7 +1264,8 @@ fun RegistrosSaludScreen(
 fun HistoryCard(
     history: List<HealthEntry>,
     onClear: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onEntryClick: ((HealthEntry) -> Unit)? = null
 ) {
     Card(
         modifier = modifier
@@ -1351,7 +1302,7 @@ fun HistoryCard(
             } else {
                 LazyColumn(modifier = Modifier.fillMaxWidth()) {
                     items(history) { entry ->
-                        HistoryRow(entry)
+                        HistoryRow(entry, onClick = onEntryClick?.let { { it(entry) } })
                     }
                 }
             }
@@ -1360,7 +1311,7 @@ fun HistoryCard(
 }
 
 @Composable
-fun HistoryRow(entry: HealthEntry, modifier: Modifier = Modifier) {
+fun HistoryRow(entry: HealthEntry, modifier: Modifier = Modifier, onClick: (() -> Unit)? = null) {
     val formatter = remember { SimpleDateFormat("dd/MM HH:mm", Locale.getDefault()) }
 
     // Visual mapping per type
@@ -1420,14 +1371,8 @@ fun HistoryRow(entry: HealthEntry, modifier: Modifier = Modifier) {
         combined
     }
 
-    Card(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(vertical = 6.dp),
-        shape = RoundedCornerShape(10.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.White),
-        elevation = CardDefaults.cardElevation(defaultElevation = 3.dp)
-    ) {
+    @Composable
+    fun CardContent() {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -1453,12 +1398,78 @@ fun HistoryRow(entry: HealthEntry, modifier: Modifier = Modifier) {
                 Text(text = remember(entry.timestamp) { formatter.format(Date(entry.timestamp)) }, fontSize = 12.sp, color = Color.Gray)
             }
 
-            Text(
-                text = displayValue,
-                fontSize = 14.sp,
-                fontWeight = androidx.compose.ui.text.font.FontWeight.SemiBold,
-                color = valueColor
-            )
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                val isDangerous = remember(entry) {
+                    var dangerous = false
+                    when (entry.label.lowercase(Locale.getDefault())) {
+                        "glucosa" -> {
+                            entry.rawValue1?.let { v ->
+                                val low = v < 70.0
+                                val high = if (entry.isFasting == true) v >= 126.0 else v >= 180.0
+                                if (low || high) {
+                                    dangerous = true
+                                }
+                            }
+                        }
+                        "presion", "presión", "presion arterial" -> {
+                            val s = entry.rawValue1
+                            val d = entry.rawValue2
+                            if (s != null && d != null) {
+                                val highS = s > 140
+                                val lowS = s < 90
+                                val highD = d > 90
+                                val lowD = d < 60
+                                if (highS || lowS || highD || lowD) {
+                                    dangerous = true
+                                }
+                            }
+                        }
+                    }
+                    dangerous
+                }
+
+                if (isDangerous) {
+                    Icon(
+                        imageVector = Icons.Default.Warning,
+                        contentDescription = "Advertencia",
+                        tint = Color.Red,
+                        modifier = Modifier.size(16.dp)
+                    )
+                    Spacer(modifier = Modifier.width(4.dp))
+                }
+                val textColor = if (isDangerous) Color.Red else Color.Green
+                Text(
+                    text = displayValue,
+                    fontSize = 14.sp,
+                    fontWeight = androidx.compose.ui.text.font.FontWeight.SemiBold,
+                    color = textColor
+                )
+            }
+        }
+    }
+
+    if (onClick != null) {
+        Card(
+            onClick = onClick,
+            modifier = modifier
+                .fillMaxWidth()
+                .padding(vertical = 6.dp),
+            shape = RoundedCornerShape(10.dp),
+            colors = CardDefaults.cardColors(containerColor = Color.White),
+            elevation = CardDefaults.cardElevation(defaultElevation = 3.dp)
+        ) {
+            CardContent()
+        }
+    } else {
+        Card(
+            modifier = modifier
+                .fillMaxWidth()
+                .padding(vertical = 6.dp),
+            shape = RoundedCornerShape(10.dp),
+            colors = CardDefaults.cardColors(containerColor = Color.White),
+            elevation = CardDefaults.cardElevation(defaultElevation = 3.dp)
+        ) {
+            CardContent()
         }
     }
 }
