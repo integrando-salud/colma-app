@@ -135,7 +135,7 @@ fun EstadoAnimoScreen(
     val scope = rememberCoroutineScope()
 
     val dateFormatter = remember { java.text.SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()) }
-    val timeFormatterOnly = remember { java.text.SimpleDateFormat("HH:mm", Locale.getDefault()) }
+
 
     val isoFormatter = remember { java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()) }
 
@@ -150,20 +150,7 @@ fun EstadoAnimoScreen(
 
     var pendingDraftRowId by rememberSaveable { mutableStateOf<Long?>(null) }
 
-    var showTimePicker by remember { mutableStateOf(false) }
 
-    TimeInputDialog(
-        show = showTimePicker,
-        onDismiss = { showTimePicker = false },
-        onTimeSelected = { hour, minute ->
-            estadoCalendar.set(java.util.Calendar.HOUR_OF_DAY, hour)
-            estadoCalendar.set(java.util.Calendar.MINUTE, minute)
-            estadoDateTime = estadoCalendar.timeInMillis
-            showTimePicker = false
-        },
-        initialHour = estadoCalendar.get(java.util.Calendar.HOUR_OF_DAY),
-        initialMinute = estadoCalendar.get(java.util.Calendar.MINUTE)
-    )
 
 
     val onBackHandler = {
@@ -271,62 +258,48 @@ fun EstadoAnimoScreen(
                     modifier = Modifier.fillMaxWidth()
                 ) {
 
-                    OutlinedTextField(
-                        value = dateFormatter.format(java.util.Date(estadoDateTime)),
-                        onValueChange = {},
-                        readOnly = true,
-                        modifier = Modifier
-                            .weight(1f)
-                            .clickable {
-                                val c = estadoCalendar
-                                // ensure calendar reflects current state
-                                c.timeInMillis = estadoDateTime
-                                val dpd = android.app.DatePickerDialog(
-                                    context,
-                                    { _, y, m, d ->
-                                        c.set(java.util.Calendar.YEAR, y)
-                                        c.set(java.util.Calendar.MONTH, m)
-                                        c.set(java.util.Calendar.DAY_OF_MONTH, d)
-                                        estadoDateTime = c.timeInMillis
-                                    },
-                                    c.get(java.util.Calendar.YEAR),
-                                    c.get(java.util.Calendar.MONTH),
-                                    c.get(java.util.Calendar.DAY_OF_MONTH)
-                                )
-                                dpd.show()
-                            }
-                            .padding(end = 8.dp),
-                        trailingIcon = {
-                            IconButton(onClick = {
-                                val c = estadoCalendar
-                                c.timeInMillis = estadoDateTime
-                                val dpd = android.app.DatePickerDialog(
-                                    context,
-                                    { _, y, m, d ->
-                                        c.set(java.util.Calendar.YEAR, y)
-                                        c.set(java.util.Calendar.MONTH, m)
-                                        c.set(java.util.Calendar.DAY_OF_MONTH, d)
-                                        estadoDateTime = c.timeInMillis
-                                    },
-                                    c.get(java.util.Calendar.YEAR),
-                                    c.get(java.util.Calendar.MONTH),
-                                    c.get(java.util.Calendar.DAY_OF_MONTH)
-                                )
-                                dpd.show()
-                            }) {
+                    Box(modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable {
+                            val c = estadoCalendar
+                            // ensure calendar reflects current state
+                            c.timeInMillis = estadoDateTime
+                            val dpd = android.app.DatePickerDialog(
+                                context,
+                                { _, y, m, d ->
+                                    c.set(java.util.Calendar.YEAR, y)
+                                    c.set(java.util.Calendar.MONTH, m)
+                                    c.set(java.util.Calendar.DAY_OF_MONTH, d)
+                                    estadoDateTime = c.timeInMillis
+                                },
+                                c.get(java.util.Calendar.YEAR),
+                                c.get(java.util.Calendar.MONTH),
+                                c.get(java.util.Calendar.DAY_OF_MONTH)
+                            )
+                            dpd.show()
+                        }) {
+                        OutlinedTextField(
+                            value = dateFormatter.format(java.util.Date(estadoDateTime)),
+                            onValueChange = {},
+                            readOnly = true,
+                            enabled = false, // Make it non-focusable
+                            modifier = Modifier.fillMaxWidth(),
+                            colors = OutlinedTextFieldDefaults.colors(
+                                disabledTextColor = MaterialTheme.colorScheme.onSurface,
+                                disabledBorderColor = MaterialTheme.colorScheme.outline,
+                                disabledLeadingIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                                disabledTrailingIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                                disabledLabelColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                                // For Icons
+                                disabledPlaceholderColor = MaterialTheme.colorScheme.onSurfaceVariant
+                            ),
+                            trailingIcon = {
                                 Icon(imageVector = Icons.Default.DateRange, contentDescription = "Fecha")
                             }
-                        }
-                    )
-
-                    Spacer(modifier = Modifier.width(8.dp))
-
-
-                    OutlinedButton(onClick = {
-                        showTimePicker = true
-                    }) {
-                        Text(text = timeFormatterOnly.format(java.util.Date(estadoDateTime)))
+                        )
                     }
+
+
                 }
 
                 Spacer(Modifier.height(12.dp))
@@ -447,7 +420,7 @@ fun EstadoAnimoScreen(
                 if (confirmSubmitOpen) {
                     val summaryCount = pendingFullMap?.count { it.value != null } ?: 0
                     val dateLabel = dateFormatter.format(java.util.Date(estadoDateTime))
-                    val timeLabel = timeFormatterOnly.format(java.util.Date(estadoDateTime))
+
                     AlertDialog(
                         onDismissRequest = { confirmSubmitOpen = false },
                         title = { Text("Confirmar envío") },
@@ -455,7 +428,7 @@ fun EstadoAnimoScreen(
                             Column {
                                 Text("Vas a guardar $summaryCount respuestas.")
                                 Spacer(Modifier.height(8.dp))
-                                Text("Fecha de guardado seleccionada: $dateLabel $timeLabel")
+                                Text("Fecha de guardado seleccionada: $dateLabel")
                                 Spacer(Modifier.height(8.dp))
                                 Text("¿Deseas confirmar el guardado?")
                             }
