@@ -144,12 +144,12 @@ fun DateTimePickerDialogComposable(
             selectedMillis = cc.timeInMillis
         }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH))
 
-        val tomorrow = Calendar.getInstance().apply { add(Calendar.DATE, 1) }
-        tomorrow.set(Calendar.HOUR_OF_DAY, 0)
-        tomorrow.set(Calendar.MINUTE, 0)
-        tomorrow.set(Calendar.SECOND, 0)
-        tomorrow.set(Calendar.MILLISECOND, 0)
-        dialog.datePicker.minDate = tomorrow.timeInMillis
+        val today = Calendar.getInstance()
+        today.set(Calendar.HOUR_OF_DAY, 0)
+        today.set(Calendar.MINUTE, 0)
+        today.set(Calendar.SECOND, 0)
+        today.set(Calendar.MILLISECOND, 0)
+        dialog.datePicker.minDate = today.timeInMillis
 
         dialog.show()
     }

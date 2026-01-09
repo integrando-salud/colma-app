@@ -248,7 +248,7 @@ fun MetasScreen(treatmentType: TreatmentType, onBack: () -> Unit = {}, onFinish:
                         CardThatOpensDateTimeDialog(
                             title = "Fecha Objetivo",
                             description = "Selecciona la fecha límite para tu meta.",
-                            initialMillis = tomorrow.timeInMillis,
+                            initialMillis = today.timeInMillis,
                             onDateTimeSelected = { selectedCal ->
                                 selectedCal.set(Calendar.SECOND, 0)
                                 fecha.value = dbDateTimeFormat.format(selectedCal.time)

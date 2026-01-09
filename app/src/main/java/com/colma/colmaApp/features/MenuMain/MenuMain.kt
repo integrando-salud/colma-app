@@ -204,6 +204,7 @@ fun MenuScreen(
                     }
                 }
                 showObjectiveDialog = false
+                todaysObjective = null
             },
             onNo = {
                 showObjectiveDialog = false
@@ -240,6 +241,7 @@ fun MenuScreen(
             confirmButton = {
                 TextButton(
                     onClick = {
+                        showReasonDialog = false
                         if (selectedReason == "otro") {
                             showOtherReasonDialog = true
                         } else {
@@ -254,8 +256,8 @@ fun MenuScreen(
                                     }
                                 }
                             }
+                            todaysObjective = null
                         }
-                        showReasonDialog = false
                     }
                 ) {
                     Text("Aceptar")
@@ -278,6 +280,7 @@ fun MenuScreen(
             confirmButton = {
                 TextButton(
                     onClick = {
+                        showOtherReasonDialog = false
                         todaysObjective?.let {
                             val updatedObjective =
                                 it.copy(meta_cumplida = 1, motivo_incumplimiento = otherReason)
@@ -287,7 +290,7 @@ fun MenuScreen(
                                 }
                             }
                         }
-                        showOtherReasonDialog = false
+                        todaysObjective = null
                     }
                 ) {
                     Text("Aceptar")
