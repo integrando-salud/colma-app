@@ -17,6 +17,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -204,39 +205,39 @@ fun VideoPlayerWithFullscreen(
 ) {
     val context = LocalContext.current
 
-    // Keep a single player instance for this composable
+    // States to be saved across configuration changes
+    var playbackPosition by rememberSaveable { mutableStateOf(0L) }
+    var playWhenReady by rememberSaveable { mutableStateOf(false) }
+
+    // ExoPlayer instance
     val exoPlayer = remember {
-        ExoPlayer.Builder(context).build().apply {
-            val uri = Uri.parse("android.resource://${context.packageName}/$resId")
-            setMediaItem(MediaItem.fromUri(uri))
-            playWhenReady = false
-            prepare()
-        }
+        ExoPlayer.Builder(context).build()
     }
 
-    // Release when leaving composable
-    DisposableEffect(resId) { // Add resId to the key to re-initialize player if it changes
-        exoPlayer.apply {
-            val uri = Uri.parse("android.resource://${context.packageName}/$resId")
-            setMediaItem(MediaItem.fromUri(uri))
-            playWhenReady = false
-            prepare()
-        }
+    // Set up the player and release it when the composable is disposed
+    DisposableEffect(key1 = resId) {
+        val uri = Uri.parse("android.resource://${context.packageName}/$resId")
+        exoPlayer.setMediaItem(MediaItem.fromUri(uri))
+        exoPlayer.prepare()
+        exoPlayer.seekTo(playbackPosition)
+        exoPlayer.playWhenReady = playWhenReady
+
         onDispose {
-            try {
-                exoPlayer.release()
-            } catch (_: Exception) { }
+            // Store position and play state for restoration
+            playbackPosition = exoPlayer.currentPosition
+            playWhenReady = exoPlayer.playWhenReady
+            // Release the player
+            exoPlayer.release()
         }
     }
 
-    // Inline player (small)
+    // UI
     Box(modifier = modifier) {
         AndroidView(
             factory = { ctx ->
                 PlayerView(ctx).apply {
                     player = exoPlayer
                     useController = true
-                    // choose Fit or Fill depending on desired behavior
                     resizeMode = AspectRatioFrameLayout.RESIZE_MODE_FIT
                 }
             },
@@ -246,16 +247,13 @@ fun VideoPlayerWithFullscreen(
                 .align(Alignment.Center)
         )
 
-        // Fullscreen button: launch the FullscreenVideoActivity directly
+        // Fullscreen button
         IconButton(
             onClick = {
-                // build the same URI you used to prepare the inline player
                 val uriString = "android.resource://${context.packageName}/$resId"
-                // capture current playback position
                 val positionMs = exoPlayer.currentPosition
-                // pause inline playback so we don't have two players playing
+                // Pause the small player before launching fullscreen
                 exoPlayer.playWhenReady = false
-                // start fullscreen activity
                 FullscreenVideoActivity.start(context, uriString, positionMs)
             },
             modifier = Modifier

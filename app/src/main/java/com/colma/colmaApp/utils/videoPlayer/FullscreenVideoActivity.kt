@@ -27,6 +27,9 @@ class FullscreenVideoActivity : ComponentActivity() {
         private const val EXTRA_URI = "extra_video_uri"
         private const val EXTRA_POSITION = "extra_position_ms"
         const val RESULT_POSITION = "result_position_ms"
+        private const val STATE_POSITION = "state_position"
+        private const val STATE_PLAY_WHEN_READY = "state_play_when_ready"
+
 
         /**
          * Start fullscreen player. Use the ActivityResult API if you want to receive the final
@@ -43,6 +46,8 @@ class FullscreenVideoActivity : ComponentActivity() {
 
     private var exoPlayer: ExoPlayer? = null
     private var playerView: PlayerView? = null
+    private var playWhenReady = true
+    private var playbackPosition = 0L
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,9 +65,18 @@ class FullscreenVideoActivity : ComponentActivity() {
                 WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
         }
 
+        // Restore state
+        if (savedInstanceState != null) {
+            playbackPosition = savedInstanceState.getLong(STATE_POSITION)
+            playWhenReady = savedInstanceState.getBoolean(STATE_PLAY_WHEN_READY)
+        } else {
+            playbackPosition = intent.getLongExtra(EXTRA_POSITION, 0L)
+        }
+
+
         // Read intent
         val uriString = intent.getStringExtra(EXTRA_URI)
-        val startPosition = intent.getLongExtra(EXTRA_POSITION, 0L)
+
 
         if (uriString == null) {
             finish() // nothing to play
@@ -74,8 +88,8 @@ class FullscreenVideoActivity : ComponentActivity() {
             val mediaItem = MediaItem.fromUri(Uri.parse(uriString))
             player.setMediaItem(mediaItem)
             player.prepare()
-            if (startPosition > 0L) player.seekTo(startPosition)
-            player.playWhenReady = true
+            player.seekTo(playbackPosition)
+            player.playWhenReady = playWhenReady
         }
 
         // PlayerView set up
@@ -140,17 +154,30 @@ class FullscreenVideoActivity : ComponentActivity() {
         setContentView(root)
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        exoPlayer?.let { player ->
+            outState.putLong(STATE_POSITION, player.currentPosition)
+            outState.putBoolean(STATE_PLAY_WHEN_READY, player.playWhenReady)
+        }
+    }
+
+
     override fun onResume() {
         super.onResume()
         // Ensure system bars are hidden again when resuming
         WindowInsetsControllerCompat(window, window.decorView).hide(WindowInsetsCompat.Type.systemBars())
-        exoPlayer?.playWhenReady = true
+        exoPlayer?.playWhenReady = playWhenReady
     }
 
     override fun onPause() {
         super.onPause()
         // pause playback to avoid audio playing in background
-        exoPlayer?.playWhenReady = false
+        exoPlayer?.let { player ->
+            playbackPosition = player.currentPosition
+            playWhenReady = player.playWhenReady
+            player.playWhenReady = false
+        }
     }
 
     override fun onDestroy() {
