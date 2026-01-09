@@ -55,7 +55,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.colma.colmaApp.R
 import com.colma.colmaApp.ui.theme.ColmaAppTheme
-import com.colma.colmaApp.utils.varios.CardThatOpensDateDialog
+import com.colma.colmaApp.utils.varios.CardThatOpensDateTimeDialog
 import java.text.SimpleDateFormat
 import com.colma.colmaApp.utils.varios.CardThatOpensSelectionDialog
 import java.util.Calendar
@@ -245,15 +245,12 @@ fun MetasScreen(treatmentType: TreatmentType, onBack: () -> Unit = {}, onFinish:
 
                         Spacer(modifier = Modifier.padding(8.dp))
 
-                        CardThatOpensDateDialog(
+                        CardThatOpensDateTimeDialog(
                             title = "Fecha Objetivo",
                             description = "Selecciona la fecha límite para tu meta.",
                             initialMillis = tomorrow.timeInMillis,
-                            onDateSelected = { selectedCal ->
-                                val now = Calendar.getInstance()
-                                selectedCal.set(Calendar.HOUR_OF_DAY, now.get(Calendar.HOUR_OF_DAY))
-                                selectedCal.set(Calendar.MINUTE, now.get(Calendar.MINUTE))
-                                selectedCal.set(Calendar.SECOND, now.get(Calendar.SECOND))
+                            onDateTimeSelected = { selectedCal ->
+                                selectedCal.set(Calendar.SECOND, 0)
                                 fecha.value = dbDateTimeFormat.format(selectedCal.time)
                             }
                         )

@@ -416,9 +416,9 @@ fun SubSessionRow(sub: SubSessionItem, onClick: () -> Unit) {
 }
 
 
-fun HTASession(): List<SessionItem> = listOf(
-    SessionItem(1, "Semana 1 hipertensión", TreatmentType.HTA, thumbnailRes = R.drawable.missing_photo),
-)
+fun HTASession(): List<SessionItem> = (1..16).map {
+    SessionItem(it.toLong(), "Semana $it hipertensión", TreatmentType.HTA, thumbnailRes = R.drawable.missing_photo)
+}
 
 fun HTASubSessions(parentId: Long): List<SubSessionItem> {
     return listOf(
@@ -428,9 +428,9 @@ fun HTASubSessions(parentId: Long): List<SubSessionItem> {
     )
 }
 
-fun DiabetesSession(): List<SessionItem> = listOf(
-    SessionItem(2, "Semana 1 Diabetes", TreatmentType.DIABETES, thumbnailRes = R.drawable.missing_photo),
-)
+fun DiabetesSession(): List<SessionItem> = (1..16).map {
+    SessionItem(it.toLong() + 16, "Semana $it Diabetes", TreatmentType.DIABETES, thumbnailRes = R.drawable.missing_photo)
+}
 
 fun DiabetesSubSessions(parentId: Long): List<SubSessionItem> {
     return listOf(

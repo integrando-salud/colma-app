@@ -3,33 +3,61 @@ package com.colma.colmaApp.utils.varios
 import android.app.DatePickerDialog
 import android.content.Context
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.TimeInput
+import androidx.compose.material3.TimePickerDefaults
+import androidx.compose.material3.rememberTimePickerState
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.colma.colmaApp.R
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CardThatOpensDateDialog(
-    title: String = "Seleccionar fecha",
+fun CardThatOpensDateTimeDialog(
+    title: String = "Seleccionar fecha y hora",
     description: String? = null,
     initialMillis: Long? = null,
     modifier: Modifier = Modifier,
-    onDateSelected: (Calendar) -> Unit = {}
+    onDateTimeSelected: (Calendar) -> Unit = {}
 ) {
     var showDialog by rememberSaveable { mutableStateOf(false) }
     val ctx = LocalContext.current
 
-    val previewFormat = remember { SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()) }
+    val previewFormat = remember { SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault()) }
     var previewMillis by rememberSaveable { mutableStateOf(initialMillis ?: System.currentTimeMillis()) }
 
     val previewText = remember(previewMillis) { previewFormat.format(Date(previewMillis)) }
@@ -62,7 +90,7 @@ fun CardThatOpensDateDialog(
 
             Icon(
                 painter = painterResource(id = R.drawable.outline_more_time_24),
-                contentDescription = "Fecha",
+                contentDescription = "Fecha y Hora",
                 tint = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
                 modifier = Modifier.size(24.dp)
             )
@@ -70,27 +98,35 @@ fun CardThatOpensDateDialog(
     }
 
     if (showDialog) {
-        DatePickerDialogComposable(
+        DateTimePickerDialogComposable(
             context = ctx,
             initialMillis = previewMillis,
             onDismissRequest = { showDialog = false },
             onConfirm = { selectedCal ->
                 previewMillis = selectedCal.timeInMillis
                 showDialog = false
-                onDateSelected(selectedCal)
+                onDateTimeSelected(selectedCal)
             }
         )
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DatePickerDialogComposable(
+fun DateTimePickerDialogComposable(
     context: Context,
     initialMillis: Long,
     onDismissRequest: () -> Unit,
     onConfirm: (Calendar) -> Unit
 ) {
     var selectedMillis by rememberSaveable { mutableStateOf(initialMillis) }
+    val initialCal = remember { Calendar.getInstance().apply { timeInMillis = initialMillis } }
+
+    val timePickerState = rememberTimePickerState(
+        initialHour = initialCal.get(Calendar.HOUR_OF_DAY),
+        initialMinute = initialCal.get(Calendar.MINUTE),
+        is24Hour = true
+    )
 
     fun calFromMillis(ms: Long): Calendar {
         return Calendar.getInstance().apply { timeInMillis = ms }
@@ -100,19 +136,28 @@ fun DatePickerDialogComposable(
 
     fun openDatePicker() {
         val c = calFromMillis(selectedMillis)
-        DatePickerDialog(context, { _, yy, mm, dd ->
+        val dialog = DatePickerDialog(context, { _, yy, mm, dd ->
             val cc = calFromMillis(selectedMillis)
             cc.set(Calendar.YEAR, yy)
             cc.set(Calendar.MONTH, mm)
             cc.set(Calendar.DAY_OF_MONTH, dd)
             selectedMillis = cc.timeInMillis
-        }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH)).show()
+        }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH))
+
+        val tomorrow = Calendar.getInstance().apply { add(Calendar.DATE, 1) }
+        tomorrow.set(Calendar.HOUR_OF_DAY, 0)
+        tomorrow.set(Calendar.MINUTE, 0)
+        tomorrow.set(Calendar.SECOND, 0)
+        tomorrow.set(Calendar.MILLISECOND, 0)
+        dialog.datePicker.minDate = tomorrow.timeInMillis
+
+        dialog.show()
     }
 
     AlertDialog(
         onDismissRequest = onDismissRequest,
         containerColor = Color.White,
-        title = { Text(text = "Seleccionar fecha") },
+        title = { Text(text = "Seleccionar fecha y hora") },
         text = {
             Column(modifier = Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(12.dp)) {
                 val currentCal = calFromMillis(selectedMillis)
@@ -124,12 +169,25 @@ fun DatePickerDialogComposable(
                 ) {
                     Text("Cambiar Fecha")
                 }
+                Spacer(modifier = Modifier.height(16.dp))
+                Text(text = "Hora:")
+                TimeInput(
+                    state = timePickerState,
+                    colors = TimePickerDefaults.colors(
+                        timeSelectorSelectedContainerColor = colorResource(R.color.principal),
+                        timeSelectorUnselectedContainerColor = Color(0xFFF0F0F0),
+                        timeSelectorSelectedContentColor = Color.White,
+                        timeSelectorUnselectedContentColor = Color.Black
+                    )
+                )
             }
         },
         confirmButton = {
             TextButton(
                 onClick = {
                     val cal = calFromMillis(selectedMillis)
+                    cal.set(Calendar.HOUR_OF_DAY, timePickerState.hour)
+                    cal.set(Calendar.MINUTE, timePickerState.minute)
                     onConfirm(cal)
                 },
                 colors = ButtonDefaults.textButtonColors(containerColor = Color(0xFF008000), contentColor = Color.White)
@@ -143,4 +201,3 @@ fun DatePickerDialogComposable(
         }
     )
 }
-
