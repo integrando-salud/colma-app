@@ -164,7 +164,7 @@ fun RegistrosSaludScreen(
     }
 
     val dateFormatter = remember { java.text.SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()) }
-    val timeFormatterOnly = remember { java.text.SimpleDateFormat("HH:mm", Locale.getDefault()) }
+    val timeFormatterOnly = remember { java.text.SimpleDateFormat("hh:mm a", Locale.getDefault()) }
     // add near timeFormatter
     val isoFormatter = remember { java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()) }
 

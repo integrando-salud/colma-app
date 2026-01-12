@@ -28,7 +28,7 @@ fun TimeInputDialog(
         val timePickerState = rememberTimePickerState(
             initialHour = initialHour,
             initialMinute = initialMinute,
-            is24Hour = true
+            is24Hour = false
         )
         val signatureColor = colorResource(R.color.principal)
 
