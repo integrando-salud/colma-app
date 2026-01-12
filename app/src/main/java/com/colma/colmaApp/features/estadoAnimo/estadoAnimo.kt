@@ -91,8 +91,7 @@ fun EstadoAnimoScreen(
         "Poco apetito o comer mucho?",
         "Te sientes mal sobre ti mismo -- o que eres un fracaso o has decepcionado a ti mismo o tu familia",
         "Problemas para concentrarte en cosas, como leer el periodico o ver la television",
-        "¿Se mueve o habla tan despacio que otras personas podrían haberlo notado? ¿O está tan inquieto que se ha estado moviendo mucho más de lo habitual?",
-        "¿Pensamientos de que estarías mejor muerto o pensamientos de hacerte daño de alguna manera?"
+        "¿Se mueve o habla tan despacio que otras personas podrían haberlo notado? ¿O está tan inquieto que se ha estado moviendo mucho más de lo habitual?"
     )
 
     val optionLabels = listOf(
@@ -253,58 +252,6 @@ fun EstadoAnimoScreen(
                 Spacer(Modifier.height(12.dp))
 
 
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-
-                    Box(modifier = Modifier
-                        .fillMaxWidth()
-                        .clickable {
-                            val c = estadoCalendar
-                            // ensure calendar reflects current state
-                            c.timeInMillis = estadoDateTime
-                            val dpd = android.app.DatePickerDialog(
-                                context,
-                                { _, y, m, d ->
-                                    c.set(java.util.Calendar.YEAR, y)
-                                    c.set(java.util.Calendar.MONTH, m)
-                                    c.set(java.util.Calendar.DAY_OF_MONTH, d)
-                                    estadoDateTime = c.timeInMillis
-                                },
-                                c.get(java.util.Calendar.YEAR),
-                                c.get(java.util.Calendar.MONTH),
-                                c.get(java.util.Calendar.DAY_OF_MONTH)
-                            )
-                            dpd.show()
-                        }) {
-                        OutlinedTextField(
-                            value = dateFormatter.format(java.util.Date(estadoDateTime)),
-                            onValueChange = {},
-                            readOnly = true,
-                            enabled = false, // Make it non-focusable
-                            modifier = Modifier.fillMaxWidth(),
-                            colors = OutlinedTextFieldDefaults.colors(
-                                disabledTextColor = MaterialTheme.colorScheme.onSurface,
-                                disabledBorderColor = MaterialTheme.colorScheme.outline,
-                                disabledLeadingIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                                disabledTrailingIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                                disabledLabelColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                                // For Icons
-                                disabledPlaceholderColor = MaterialTheme.colorScheme.onSurfaceVariant
-                            ),
-                            trailingIcon = {
-                                Icon(imageVector = Icons.Default.DateRange, contentDescription = "Fecha")
-                            }
-                        )
-                    }
-
-
-                }
-
-                Spacer(Modifier.height(12.dp))
-
-
                 Column(
                     modifier = Modifier,
                     verticalArrangement = Arrangement.spacedBy(12.dp)
@@ -365,9 +312,9 @@ fun EstadoAnimoScreen(
                                     }
 
 
-                                    val fullMap = (1..9).associateWith { idx ->
+                                    val fullMap = (1..8).associateWith { idx ->
                                         val v = answersState.value.getOrNull(idx - 1)
-                                        if (idx <= 2 && v != null && v >= 0) v else null
+                                        return@associateWith if (idx <= 2 && v != null && v >= 0) v else null
                                     }
 
                                     pendingFullMap = fullMap
@@ -389,9 +336,9 @@ fun EstadoAnimoScreen(
                                     }
 
 
-                                    val fullMap = (1..9).associateWith { idx ->
+                                    val fullMap = (1..8).associateWith { idx ->
                                         val v = answersState.value.getOrNull(idx - 1)
-                                        if (v != null && v >= 0) v else null
+                                        return@associateWith if (v != null && v >= 0) v else null
                                     }
 
                                     pendingFullMap = fullMap
@@ -427,8 +374,6 @@ fun EstadoAnimoScreen(
                         text = {
                             Column {
                                 Text("Vas a guardar $summaryCount respuestas.")
-                                Spacer(Modifier.height(8.dp))
-                                Text("Fecha de guardado seleccionada: $dateLabel")
                                 Spacer(Modifier.height(8.dp))
                                 Text("¿Deseas confirmar el guardado?")
                             }
