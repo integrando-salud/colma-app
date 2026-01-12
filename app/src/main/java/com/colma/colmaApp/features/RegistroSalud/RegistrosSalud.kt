@@ -418,9 +418,8 @@ fun RegistrosSaludScreen(
                             Toast.makeText(context, "Guardado: Glucosa = $lastGlucosaValue mg/dl", Toast.LENGTH_SHORT).show()
 
                             // --- WARNING thresholds (still allow save) ---
-                            // low < 70 ; high: fasting >=126 else >=180
-                            val low = number < 70.0
-                            val high = if (glucosaFasting == true) number >= 126.0 else number >= 180.0
+                            val low = number <= 69.0
+                            val high = if (glucosaFasting == true) number >= 131.0 else number >= 181.0
                             var warningText: String? = null
                             when {
                                 low -> {
@@ -1404,8 +1403,8 @@ fun HistoryRow(entry: HealthEntry, modifier: Modifier = Modifier, onClick: (() -
                     when (entry.label.lowercase(Locale.getDefault())) {
                         "glucosa" -> {
                             entry.rawValue1?.let { v ->
-                                val low = v < 70.0
-                                val high = if (entry.isFasting == true) v >= 126.0 else v >= 180.0
+                                val low = v <= 69.0
+                                val high = if (entry.isFasting == true) v >= 131.0 else v >= 181.0
                                 if (low || high) {
                                     dangerous = true
                                 }
