@@ -122,12 +122,6 @@ fun DateTimePickerDialogComposable(
     var selectedMillis by rememberSaveable { mutableStateOf(initialMillis) }
     val initialCal = remember { Calendar.getInstance().apply { timeInMillis = initialMillis } }
 
-    val timePickerState = rememberTimePickerState(
-        initialHour = initialCal.get(Calendar.HOUR_OF_DAY),
-        initialMinute = initialCal.get(Calendar.MINUTE),
-        is24Hour = true
-    )
-
     fun calFromMillis(ms: Long): Calendar {
         return Calendar.getInstance().apply { timeInMillis = ms }
     }
@@ -141,6 +135,10 @@ fun DateTimePickerDialogComposable(
             cc.set(Calendar.YEAR, yy)
             cc.set(Calendar.MONTH, mm)
             cc.set(Calendar.DAY_OF_MONTH, dd)
+            val currentHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
+            val currentMinute = Calendar.getInstance().get(Calendar.MINUTE)
+            cc.set(Calendar.HOUR_OF_DAY, currentHour)
+            cc.set(Calendar.MINUTE, currentMinute)
             selectedMillis = cc.timeInMillis
         }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH))
 
@@ -169,25 +167,17 @@ fun DateTimePickerDialogComposable(
                 ) {
                     Text("Cambiar Fecha")
                 }
-                Spacer(modifier = Modifier.height(16.dp))
-                Text(text = "Hora:")
-                TimeInput(
-                    state = timePickerState,
-                    colors = TimePickerDefaults.colors(
-                        timeSelectorSelectedContainerColor = colorResource(R.color.principal),
-                        timeSelectorUnselectedContainerColor = Color(0xFFF0F0F0),
-                        timeSelectorSelectedContentColor = Color.White,
-                        timeSelectorUnselectedContentColor = Color.Black
-                    )
-                )
+
             }
         },
         confirmButton = {
             TextButton(
                 onClick = {
                     val cal = calFromMillis(selectedMillis)
-                    cal.set(Calendar.HOUR_OF_DAY, timePickerState.hour)
-                    cal.set(Calendar.MINUTE, timePickerState.minute)
+                    val currentHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
+                    val currentMinute = Calendar.getInstance().get(Calendar.MINUTE)
+                    cal.set(Calendar.HOUR_OF_DAY, currentHour)
+                    cal.set(Calendar.MINUTE, currentMinute)
                     onConfirm(cal)
                 },
                 colors = ButtonDefaults.textButtonColors(containerColor = Color(0xFF008000), contentColor = Color.White)

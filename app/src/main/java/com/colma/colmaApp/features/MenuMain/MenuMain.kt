@@ -306,46 +306,23 @@ fun MenuScreen(
             drawerContent = {
                 CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
                     ModalDrawerSheet(drawerContainerColor = Color.White) {
-                        Image(
-                            painter = painterResource(id = R.drawable.colma_logo),
-                            contentDescription = "App Logo",
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(vertical = 24.dp)
-                                .size(200.dp)
-                                .align(Alignment.CenterHorizontally)
-                        )
-
-                        Spacer(Modifier.height(12.dp))
-
-                        @Composable
-                        fun DrawerItem(label: String, icon: ImageVector, onClick: () -> Unit) {
-                            Row(
+                        Column(
+                            modifier = Modifier.verticalScroll(rememberScrollState())
+                        ) {
+                            Image(
+                                painter = painterResource(id = R.drawable.colma_logo),
+                                contentDescription = "App Logo",
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .clickable { onClick() }
-                                    .padding(horizontal = 16.dp, vertical = 12.dp),
-                                verticalAlignment = Alignment.CenterVertically
-                            ) {
-                                Icon(
-                                    imageVector = icon,
-                                    contentDescription = label,
-                                    tint = Color(0xFF333333),
-                                    modifier = Modifier.size(24.dp)
-                                )
-                                Spacer(modifier = Modifier.size(12.dp))
-                                Text(
-                                    text = label,
-                                    fontSize = 16.sp,
-                                    color = Color.Black,
-                                    fontWeight = FontWeight.Medium
-                                )
-                            }
-                        }
+                                    .padding(vertical = 24.dp)
+                                    .size(200.dp)
+                                    .align(Alignment.CenterHorizontally)
+                            )
 
-                        val context = LocalContext.current
+                            Spacer(Modifier.height(12.dp))
 
-                        Column {
+                            val context = LocalContext.current
+
                             DrawerItem("Inicio", Icons.Default.Home) {
                                 scope.launch { drawerState.close() }
                                 Toast.makeText(context, "Inicio", Toast.LENGTH_SHORT).show()
@@ -374,27 +351,27 @@ fun MenuScreen(
                                     .makeText(context, "Manual de Usuario", Toast.LENGTH_SHORT)
                                     .show()
                             }
+
+                            Spacer(Modifier.height(28.dp))
+
+                            Button(
+                                onClick = {
+                                    scope.launch { drawerState.close() }
+                                    onSalirClick()
+                                },
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = colorResource(R.color.principal),
+                                    contentColor = Color.White
+                                ),
+                                modifier = Modifier
+                                    .fillMaxWidth(0.7f)
+                                    .align(Alignment.CenterHorizontally)
+                            ) {
+                                Text(text = "Salir")
+                            }
+
+                            Spacer(Modifier.height(18.dp))
                         }
-
-                        Spacer(Modifier.height(28.dp))
-
-                        Button(
-                            onClick = {
-                                scope.launch { drawerState.close() }
-                                onSalirClick()
-                            },
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = colorResource(R.color.principal),
-                                contentColor = Color.White
-                            ),
-                            modifier = Modifier
-                                .fillMaxWidth(0.7f)
-                                .align(Alignment.CenterHorizontally)
-                        ) {
-                            Text(text = "Salir")
-                        }
-
-                        Spacer(Modifier.height(18.dp))
                     }
                 }
             }
@@ -1022,6 +999,31 @@ suspend fun postJsonRaw(
         } catch (e: Exception) {
             Result.failure(e)
         }
+    }
+}
+
+@Composable
+fun DrawerItem(label: String, icon: ImageVector, onClick: () -> Unit) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable { onClick() }
+            .padding(horizontal = 16.dp, vertical = 12.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Icon(
+            imageVector = icon,
+            contentDescription = label,
+            tint = Color(0xFF333333),
+            modifier = Modifier.size(24.dp)
+        )
+        Spacer(modifier = Modifier.size(12.dp))
+        Text(
+            text = label,
+            fontSize = 16.sp,
+            color = Color.Black,
+            fontWeight = FontWeight.Medium
+        )
     }
 }
 
