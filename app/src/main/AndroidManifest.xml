@@ -59,7 +59,7 @@
             android:exported="false">
         </activity>
 
-        <activity android:name=".features.MenuMain.MenuMain"
+        <activity android:name=".features.MenuMain.ui.MenuMainUI"
             android:exported="false">
 
         </activity>

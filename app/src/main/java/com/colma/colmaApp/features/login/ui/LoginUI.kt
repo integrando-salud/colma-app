@@ -32,7 +32,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import com.colma.colmaApp.R
-import com.colma.colmaApp.features.MenuMain.MenuMain
+import com.colma.colmaApp.features.MenuMain.ui.MenuMainUI
 import com.colma.colmaApp.features.login.data.LoginRepositoryImpl
 import com.colma.colmaApp.features.login.viewmodel.LoginEvent
 import com.colma.colmaApp.features.login.viewmodel.LoginUiState
@@ -68,7 +68,7 @@ class LoginUI : ComponentActivity() {
                     viewModel.navigationEvent.collect { event ->
                         when (event) {
                             is LoginViewModel.NavigationEvent.NavigateToHome -> {
-                                startActivity(Intent(this@LoginUI, MenuMain::class.java))
+                                startActivity(Intent(this@LoginUI, MenuMainUI::class.java))
                                 finish()
                             }
                         }
