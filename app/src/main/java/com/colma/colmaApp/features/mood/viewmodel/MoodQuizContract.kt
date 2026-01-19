@@ -1,0 +1,22 @@
+package com.colma.colmaApp.features.mood.viewmodel
+
+data class MoodQuizUiState(
+    val questions: List<String> = emptyList(),
+    val optionLabels: List<String> = emptyList(),
+    val answers: List<Int> = emptyList(),
+    val showRestOfQuestions: Boolean = false,
+    val firstTwoQuestionsLocked: Boolean = false,
+    val showConfirmDialog: Boolean = false,
+    val draftRecordId: Long? = null,
+    val error: String? = null,
+    val isLoading: Boolean = false,
+)
+
+sealed class MoodQuizEvent {
+    data class AnswerQuestion(val index: Int, val answer: Int) : MoodQuizEvent()
+    object SaveClicked : MoodQuizEvent()
+    object ConfirmSubmit : MoodQuizEvent()
+    object DismissConfirmDialog : MoodQuizEvent()
+    object UnlockFirstTwoQuestions : MoodQuizEvent()
+    object BackPressed : MoodQuizEvent()
+}

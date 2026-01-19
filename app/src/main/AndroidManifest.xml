@@ -73,14 +73,15 @@
         <activity             android:name=".features.presion.ui.PresionUI"
             android:exported="false"/>
 
-        <activity android:name=".features.EstadoAnimoMenu.EstadoAnimoMenuActivity"
-            android:exported="false"/>
+        <activity
 
-        <activity android:name=".features.estadoAnimo.EstadoAnimoActivity"
-            android:exported="false">
+                    android:name=".features.mood.MoodMenuActivity"
 
+                    android:exported="false" />
 
-        </activity>
+<activity
+            android:name=".features.mood.MoodQuizActivity"
+            android:exported="false" />
 
         <activity android:name=".features.sesiones.SesionesMenu"
             android:exported="false">

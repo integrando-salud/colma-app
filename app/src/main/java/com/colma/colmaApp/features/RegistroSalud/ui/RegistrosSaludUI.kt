@@ -48,7 +48,7 @@ import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import com.colma.colmaApp.R
-import com.colma.colmaApp.features.EstadoAnimoMenu.EstadoAnimoMenuActivity
+import com.colma.colmaApp.features.mood.MoodMenuActivity
 import com.colma.colmaApp.features.RegistroSalud.data.RegistroSaludRepositoryImpl
 import com.colma.colmaApp.features.RegistroSalud.viewmodel.RegistroSaludEvent
 import com.colma.colmaApp.features.RegistroSalud.viewmodel.RegistroSaludViewModel
@@ -87,7 +87,7 @@ class RegistrosSaludUI : ComponentActivity() {
                                 startActivity(Intent(this@RegistrosSaludUI, PresionUI::class.java))
                             }
                             is RegistroSaludViewModel.NavigationEvent.NavigateToEstadoAnimo -> {
-                                startActivity(Intent(this@RegistrosSaludUI, EstadoAnimoMenuActivity::class.java))
+                                startActivity(Intent(this@RegistrosSaludUI, MoodMenuActivity::class.java))
                             }
                             is RegistroSaludViewModel.NavigationEvent.NavigateBack -> {
                                 finish()
