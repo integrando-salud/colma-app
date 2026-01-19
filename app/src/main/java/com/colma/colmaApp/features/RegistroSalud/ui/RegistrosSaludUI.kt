@@ -53,8 +53,8 @@ import com.colma.colmaApp.features.RegistroSalud.data.RegistroSaludRepositoryImp
 import com.colma.colmaApp.features.RegistroSalud.viewmodel.RegistroSaludEvent
 import com.colma.colmaApp.features.RegistroSalud.viewmodel.RegistroSaludViewModel
 import com.colma.colmaApp.features.RegistroSalud.viewmodel.RegistroSaludViewModelFactory
-import com.colma.colmaApp.features.glucosa.GlucosaActivity
-import com.colma.colmaApp.features.presion.PresionActivity
+import com.colma.colmaApp.features.glucosa.ui.GlucosaUI
+import com.colma.colmaApp.features.presion.ui.PresionUI
 import com.colma.colmaApp.ui.theme.ColmaAppTheme
 import android.graphics.Color as AndroidColor
 
@@ -81,10 +81,10 @@ class RegistrosSaludUI : ComponentActivity() {
                     viewModel.navigationEvent.collect { event ->
                         when (event) {
                             is RegistroSaludViewModel.NavigationEvent.NavigateToGlucosa -> {
-                                startActivity(Intent(this@RegistrosSaludUI, GlucosaActivity::class.java))
+                                startActivity(Intent(this@RegistrosSaludUI, GlucosaUI::class.java))
                             }
                             is RegistroSaludViewModel.NavigationEvent.NavigateToPresion -> {
-                                startActivity(Intent(this@RegistrosSaludUI, PresionActivity::class.java))
+                                startActivity(Intent(this@RegistrosSaludUI, PresionUI::class.java))
                             }
                             is RegistroSaludViewModel.NavigationEvent.NavigateToEstadoAnimo -> {
                                 startActivity(Intent(this@RegistrosSaludUI, EstadoAnimoMenuActivity::class.java))

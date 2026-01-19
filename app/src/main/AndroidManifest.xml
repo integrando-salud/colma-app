@@ -67,10 +67,10 @@
         <activity android:name=".features.RegistroSalud.ui.RegistrosSaludUI"
             android:exported="false"/>
 
-        <activity android:name=".features.glucosa.GlucosaActivity"
+        <activity             android:name=".features.glucosa.ui.GlucosaUI"
             android:exported="false"/>
 
-        <activity android:name=".features.presion.PresionActivity"
+        <activity             android:name=".features.presion.ui.PresionUI"
             android:exported="false"/>
 
         <activity android:name=".features.EstadoAnimoMenu.EstadoAnimoMenuActivity"
