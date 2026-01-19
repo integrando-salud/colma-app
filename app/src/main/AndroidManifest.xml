@@ -64,7 +64,13 @@
 
         </activity>
 
-        <activity android:name=".features.RegistroSalud.RegistrosSalud"
+        <activity android:name=".features.RegistroSalud.ui.RegistrosSaludUI"
+            android:exported="false"/>
+
+        <activity android:name=".features.glucosa.GlucosaActivity"
+            android:exported="false"/>
+
+        <activity android:name=".features.presion.PresionActivity"
             android:exported="false"/>
 
         <activity android:name=".features.EstadoAnimoMenu.EstadoAnimoMenuActivity"

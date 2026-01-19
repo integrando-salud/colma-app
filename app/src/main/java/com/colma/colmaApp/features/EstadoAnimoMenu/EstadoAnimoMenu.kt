@@ -39,13 +39,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.colma.colmaApp.R
-import com.colma.colmaApp.features.RegistroSalud.HealthEntry
-import com.colma.colmaApp.features.RegistroSalud.HealthRecordCard
-import com.colma.colmaApp.features.RegistroSalud.HistoryCard
 import com.colma.colmaApp.features.estadoAnimo.EstadoAnimoActivity
-import com.colma.colmaApp.features.estadoAnimo.EstadoAnimoScreen
 import com.colma.colmaApp.servicios.database.dbhelper.DBhelper
 import com.colma.colmaApp.ui.theme.ColmaAppTheme
+import com.colma.colmaApp.utils.varios.HealthEntry
+import com.colma.colmaApp.utils.varios.HealthRecordCard
+import com.colma.colmaApp.utils.varios.HistoryCard
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext

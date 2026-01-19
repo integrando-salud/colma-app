@@ -91,7 +91,7 @@ import com.colma.colmaApp.features.MenuMain.viewmodel.MenuMainUiState
 import com.colma.colmaApp.features.MenuMain.viewmodel.MenuMainViewModel
 import com.colma.colmaApp.features.MenuMain.viewmodel.MenuMainViewModelFactory
 import com.colma.colmaApp.features.MetasHistory.MetasHistoryActivity
-import com.colma.colmaApp.features.RegistroSalud.RegistrosSalud
+import com.colma.colmaApp.features.RegistroSalud.ui.RegistrosSaludUI
 import com.colma.colmaApp.features.login.ui.LoginUI
 import com.colma.colmaApp.features.sesiones.SesionesMenu
 import com.colma.colmaApp.servicios.database.dbhelper.DBhelper
@@ -134,7 +134,7 @@ class MenuMainUI : ComponentActivity() {
                                 startActivity(intent)
                             }
                             is MenuMainViewModel.NavigationEvent.NavigateToHealthRegisters -> {
-                                val intent = Intent(this@MenuMainUI, RegistrosSalud::class.java)
+                                val intent = Intent(this@MenuMainUI, RegistrosSaludUI::class.java)
                                 startActivity(intent)
                             }
                             is MenuMainViewModel.NavigationEvent.NavigateToMetasHistory -> {
