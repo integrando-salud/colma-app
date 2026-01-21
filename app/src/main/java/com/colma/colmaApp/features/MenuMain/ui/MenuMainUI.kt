@@ -65,8 +65,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -93,7 +91,7 @@ import com.colma.colmaApp.features.MenuMain.viewmodel.MenuMainViewModelFactory
 import com.colma.colmaApp.features.MetasHistory.MetasHistoryActivity
 import com.colma.colmaApp.features.RegistroSalud.ui.RegistrosSaludUI
 import com.colma.colmaApp.features.login.ui.LoginUI
-import com.colma.colmaApp.features.sesiones.SesionesMenu
+import com.colma.colmaApp.features.sesiones.SesionesMenu.ui.SesionesMenuUI
 import com.colma.colmaApp.servicios.database.dbhelper.DBhelper
 import com.colma.colmaApp.ui.theme.ColmaAppTheme
 import com.colma.colmaApp.utils.varios.CustomAlertDialog
@@ -128,7 +126,7 @@ class MenuMainUI : ComponentActivity() {
                     viewModel.navigationEvent.collect { event ->
                         when (event) {
                             is MenuMainViewModel.NavigationEvent.NavigateToSessions -> {
-                                val intent = Intent(this@MenuMainUI, SesionesMenu::class.java).apply {
+                                val intent = Intent(this@MenuMainUI, SesionesMenuUI::class.java).apply {
                                     putExtra("treatmentTypes", "HTA,DIABETES") // TODO: Move to constants/config
                                 }
                                 startActivity(intent)

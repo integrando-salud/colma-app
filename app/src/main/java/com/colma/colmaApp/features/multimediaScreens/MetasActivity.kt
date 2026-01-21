@@ -15,7 +15,6 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import android.graphics.Color as AndroidColor
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -59,10 +58,8 @@ import com.colma.colmaApp.utils.varios.CardThatOpensDateTimeDialog
 import java.text.SimpleDateFormat
 import com.colma.colmaApp.utils.varios.CardThatOpensSelectionDialog
 import java.util.Calendar
-import java.util.Date
 import java.util.Locale
-import com.colma.colmaApp.features.multimediaScreens.navigateToNextOrFinish
-import com.colma.colmaApp.features.sesiones.TreatmentType
+import com.colma.colmaApp.features.sesiones.MultimediaSelector.TreatmentType
 
 const val METAS_TYPE_HTA = "hta"
 const val METAS_TYPE_DIABETES = "diabetes"

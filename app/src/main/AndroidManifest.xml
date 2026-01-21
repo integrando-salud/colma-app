@@ -52,7 +52,7 @@
         <activity android:name=".features.multimediaScreens.FinishActivity"
             android:exported="false"/>
 
-        <activity android:name=".features.sesiones.MultimediaSelector"
+        <activity android:name=".features.sesiones.MultimediaSelector.MultimediaSelector"
             android:exported="false"/>
 
         <activity android:name=".features.instructions.ui.InstructionsActivity"
@@ -83,7 +83,7 @@
             android:name=".features.mood.MoodQuizActivity"
             android:exported="false" />
 
-        <activity android:name=".features.sesiones.SesionesMenu"
+        <activity android:name=".features.sesiones.SesionesMenu.ui.SesionesMenuUI"
             android:exported="false">
 
 
@@ -93,7 +93,7 @@
             android:exported="false">
         </activity>
 
-        <activity android:name=".features.sesiones.SessionContent"
+        <activity android:name=".features.sesiones.SessionContent.SessionContent"
             android:exported="false"/>
 
         <activity android:name=".utils.videoPlayer.FullscreenVideoActivity"

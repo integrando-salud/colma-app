@@ -1,9 +1,8 @@
-package com.colma.colmaApp.features.sesiones
+package com.colma.colmaApp.features.sesiones.SessionContent
 
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import android.graphics.Color as AndroidColor
-import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -31,11 +30,9 @@ import com.google.android.exoplayer2.C
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.isActive
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -44,6 +41,7 @@ import com.colma.colmaApp.features.multimediaScreens.ActionPage
 import com.colma.colmaApp.features.multimediaScreens.FinishPage
 import com.colma.colmaApp.features.multimediaScreens.WelcomePage
 import android.app.Activity
+import androidx.compose.foundation.shape.RoundedCornerShape
 
 /**
  * SessionContent Activity that reuses WelcomePage, ActionPage and FinishPage.
@@ -140,14 +138,14 @@ fun SessionContentScreen(
 
     LaunchedEffect(exoPlayer) {
         var attempts = 0
-        while ((durationMs <= 0L || durationMs == com.google.android.exoplayer2.C.TIME_UNSET) && attempts < 30) {
+        while ((durationMs <= 0L || durationMs == C.TIME_UNSET) && attempts < 30) {
             val d = exoPlayer.duration
-            if (d > 0 && d != com.google.android.exoplayer2.C.TIME_UNSET) {
+            if (d > 0 && d != C.TIME_UNSET) {
                 durationMs = d
                 break
             }
             attempts++
-            kotlinx.coroutines.delay(120)
+            delay(120)
         }
         if (durationMs <= 0L) durationMs = exoPlayer.duration.coerceAtLeast(0L)
     }
@@ -159,7 +157,7 @@ fun SessionContentScreen(
             while (isPlaying) {
                 playbackPositionMs = exoPlayer.currentPosition
                 durationMs = exoPlayer.duration.coerceAtLeast(0L)
-                kotlinx.coroutines.delay(250L)
+                delay(250L)
             }
         } else {
             exoPlayer.playWhenReady = false
@@ -224,7 +222,7 @@ fun SessionContentScreen(
                             containerColor = signatureColor,
                             contentColor = Color.White
                         ),
-                        shape = androidx.compose.foundation.shape.RoundedCornerShape(8.dp)
+                        shape = RoundedCornerShape(8.dp)
                     ) {
                         Text(text = "Terminar", fontWeight = FontWeight.SemiBold)
                     }

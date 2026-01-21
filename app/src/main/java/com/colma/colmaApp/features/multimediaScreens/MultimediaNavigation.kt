@@ -2,9 +2,9 @@ package com.colma.colmaApp.features.multimediaScreens
 
 import android.app.Activity
 import android.content.Intent
-import com.colma.colmaApp.features.sesiones.MultimediaContentType
-import com.colma.colmaApp.features.sesiones.TreatmentType
-import com.colma.colmaApp.features.sesiones.getMultimediaOptions
+import com.colma.colmaApp.features.sesiones.MultimediaSelector.MultimediaContentType
+import com.colma.colmaApp.features.sesiones.MultimediaSelector.TreatmentType
+import com.colma.colmaApp.features.sesiones.MultimediaSelector.getMultimediaOptions
 
 fun navigateToNextOrFinish(
     activity: Activity,
