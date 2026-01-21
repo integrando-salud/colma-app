@@ -93,7 +93,7 @@
             android:exported="false">
         </activity>
 
-        <activity android:name=".features.sesiones.SessionContent.SessionContent"
+        <activity android:name=".features.sesiones.SessionContent.ui.SessionContentUI"
             android:exported="false"/>
 
         <activity android:name=".utils.videoPlayer.FullscreenVideoActivity"
