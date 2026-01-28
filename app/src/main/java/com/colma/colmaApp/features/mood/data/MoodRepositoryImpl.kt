@@ -34,8 +34,8 @@ class MoodRepositoryImpl(private val context: Context) : MoodRepository {
             all.mapNotNull { e ->
                 val datetime = e.fechaEdicion ?: e.fechaRegistro
                 val millis = parseDateTimeToMillis(datetime) ?: System.currentTimeMillis()
-                val answeredCount = e.preguntas.count { it != null }
-                val display = if (answeredCount > 0) "$answeredCount respuestas" else "Sin respuestas"
+                val totalScore = e.preguntas.filterNotNull().sum()
+                val display = "Puntuación: $totalScore"
                 HealthEntry("Estado de ánimo", display, millis)
             }.sortedByDescending { it.timestamp }
         } catch (e: Exception) {
