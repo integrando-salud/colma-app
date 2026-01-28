@@ -1,0 +1,404 @@
+{
+  "apiDocumentation": {
+    "title": "ColmaApp Backend API Data Structures",
+    "description": "Complete data structures sent by ColmaApp during synchronization",
+    "version": "1.0",
+    "endpoint": "POST /api/sync",
+    "contentType": "application/json"
+  },
+  "rootStructure": {
+    "type": "object",
+    "description": "Main synchronization payload containing all health data",
+    "properties": {
+      "deviceTimestamp": {
+        "type": "integer",
+        "description": "Unix timestamp in milliseconds when sync was initiated",
+        "example": 1705023456789
+      },
+      "userId": {
+        "type": "integer",
+        "description": "User identifier (can be null)",
+        "example": 1,
+        "nullable": true
+      },
+      "app": {
+        "type": "string",
+        "description": "Application identifier",
+        "example": "colmaApp"
+      },
+      "clientSyncTimestamp": {
+        "type": "string",
+        "description": "Local timestamp in format 'yyyy-MM-dd HH:mm:ss'",
+        "example": "2024-01-12 14:30:45"
+      },
+      "glucosa": {
+        "type": "array",
+        "description": "Array of glucose records pending synchronization",
+        "items": { "$ref": "#/definitions/glucosaRecord" }
+      },
+      "presion": {
+        "type": "array", 
+        "description": "Array of blood pressure records pending synchronization",
+        "items": { "$ref": "#/definitions/presionRecord" }
+      },
+      "estado_animo": {
+        "type": "array",
+        "description": "Array of mood state records pending synchronization", 
+        "items": { "$ref": "#/definitions/estadoAnimoRecord" }
+      }
+    },
+    "required": ["deviceTimestamp", "app", "clientSyncTimestamp"]
+  },
+  "definitions": {
+    "glucosaRecord": {
+      "type": "object",
+      "description": "Glucose measurement record",
+      "properties": {
+        "id_glucosa": {
+          "type": "integer",
+          "description": "Primary key from glucosa_table",
+          "example": 123
+        },
+        "id_usuario": {
+          "type": "integer",
+          "description": "User ID (can be null)",
+          "example": 1,
+          "nullable": true
+        },
+        "valor_mgdl": {
+          "type": "number",
+          "description": "Glucose value in mg/dL",
+          "example": 95.5,
+          "nullable": true
+        },
+        "ayuno": {
+          "type": "integer",
+          "description": "Fasting status: 1 = fasting, 0 = not fasting",
+          "example": 1,
+          "nullable": true
+        },
+        "fecha_registro": {
+          "type": "string",
+          "description": "Initial registration timestamp in 'yyyy-MM-dd HH:mm:ss' format",
+          "example": "2024-01-12 08:00:00",
+          "nullable": true
+        },
+        "fecha_sincronizacion": {
+          "type": "string",
+          "description": "Synchronization timestamp set during sync",
+          "example": "2024-01-12 14:30:45"
+        }
+      },
+      "required": ["id_glucosa", "fecha_sincronizacion"]
+    },
+    "presionRecord": {
+      "type": "object",
+      "description": "Blood pressure measurement record",
+      "properties": {
+        "id_presion": {
+          "type": "integer",
+          "description": "Primary key from presion_table",
+          "example": 456
+        },
+        "id_usuario": {
+          "type": "integer",
+          "description": "User ID (can be null)",
+          "example": 1,
+          "nullable": true
+        },
+        "sistolica": {
+          "type": "number",
+          "description": "Systolic blood pressure value",
+          "example": 120.0,
+          "nullable": true
+        },
+        "diastolica": {
+          "type": "number",
+          "description": "Diastolic blood pressure value", 
+          "example": 80.0,
+          "nullable": true
+        },
+        "fecha_registro": {
+          "type": "string",
+          "description": "Initial registration timestamp in 'yyyy-MM-dd HH:mm:ss' format",
+          "example": "2024-01-12 08:00:00",
+          "nullable": true
+        },
+        "fecha_sincronizacion": {
+          "type": "string",
+          "description": "Synchronization timestamp set during sync",
+          "example": "2024-01-12 14:30:45"
+        }
+      },
+      "required": ["id_presion", "fecha_sincronizacion"]
+    },
+    "estadoAnimoRecord": {
+      "type": "object",
+      "description": "Mood state assessment record with 9 questions",
+      "properties": {
+        "id_estado_animo": {
+          "type": "integer",
+          "description": "Row ID from estado_animo_table",
+          "example": 789
+        },
+        "id_paciente": {
+          "type": "integer",
+          "description": "Patient ID (can be null)",
+          "example": 1,
+          "nullable": true
+        },
+        "fecha_registro": {
+          "type": "string",
+          "description": "Initial registration timestamp in 'yyyy-MM-dd HH:mm:ss' format",
+          "example": "2024-01-12 09:00:00",
+          "nullable": true
+        },
+        "pregunta_1": {
+          "type": "integer",
+          "description": "Answer to question 1 (scale varies by question)",
+          "example": 3,
+          "nullable": true
+        },
+        "pregunta_2": {
+          "type": "integer",
+          "description": "Answer to question 2",
+          "example": 2,
+          "nullable": true
+        },
+        "pregunta_3": {
+          "type": "integer",
+          "description": "Answer to question 3",
+          "example": 4,
+          "nullable": true
+        },
+        "pregunta_4": {
+          "type": "integer",
+          "description": "Answer to question 4",
+          "example": 1,
+          "nullable": true
+        },
+        "pregunta_5": {
+          "type": "integer",
+          "description": "Answer to question 5",
+          "example": 3,
+          "nullable": true
+        },
+        "pregunta_6": {
+          "type": "integer",
+          "description": "Answer to question 6",
+          "example": 2,
+          "nullable": true
+        },
+        "pregunta_7": {
+          "type": "integer",
+          "description": "Answer to question 7",
+          "example": 4,
+          "nullable": true
+        },
+        "pregunta_8": {
+          "type": "integer",
+          "description": "Answer to question 8",
+          "example": 3,
+          "nullable": true
+        },
+        "pregunta_9": {
+          "type": "integer",
+          "description": "Answer to question 9",
+          "example": 2,
+          "nullable": true
+        },
+        "fecha_sincronizacion": {
+          "type": "string",
+          "description": "Synchronization timestamp set during sync",
+          "example": "2024-01-12 14:30:45"
+        }
+      },
+      "required": ["id_estado_animo", "fecha_sincronizacion"]
+    }
+  },
+  "databaseSchema": {
+    "glucosa_table": {
+      "columns": [
+        {"name": "id_glucosa", "type": "INTEGER PRIMARY KEY AUTOINCREMENT"},
+        {"name": "id_usuario", "type": "INTEGER", "nullable": true},
+        {"name": "valor_mgdl", "type": "REAL", "nullable": true},
+        {"name": "ayuno", "type": "INTEGER", "nullable": true, "description": "0=not fasting, 1=fasting"},
+        {"name": "fecha_registro", "type": "TEXT", "nullable": true, "format": "yyyy-MM-dd HH:mm:ss"},
+        {"name": "fecha_hora_edicion", "type": "TEXT", "nullable": true, "format": "yyyy-MM-dd HH:mm:ss"},
+        {"name": "fecha_sincronizacion", "type": "TEXT", "nullable": true, "format": "yyyy-MM-dd HH:mm:ss"}
+      ]
+    },
+    "presion_table": {
+      "columns": [
+        {"name": "id_presion", "type": "INTEGER PRIMARY KEY AUTOINCREMENT"},
+        {"name": "id_usuario", "type": "INTEGER", "nullable": true},
+        {"name": "sistolica", "type": "REAL", "nullable": true},
+        {"name": "diastolica", "type": "REAL", "nullable": true},
+        {"name": "fecha_registro", "type": "TEXT", "nullable": true, "format": "yyyy-MM-dd HH:mm:ss"},
+        {"name": "fecha_hora_edicion", "type": "TEXT", "nullable": true, "format": "yyyy-MM-dd HH:mm:ss"},
+        {"name": "fecha_sincronizacion", "type": "TEXT", "nullable": true, "format": "yyyy-MM-dd HH:mm:ss"}
+      ]
+    },
+    "estado_animo_table": {
+      "columns": [
+        {"name": "rowid", "type": "INTEGER PRIMARY KEY AUTOINCREMENT"},
+        {"name": "id_paciente", "type": "INTEGER", "nullable": true},
+        {"name": "fecha_registro", "type": "TEXT", "nullable": true, "format": "yyyy-MM-dd HH:mm:ss"},
+        {"name": "fecha_edicion", "type": "TEXT", "nullable": true, "format": "yyyy-MM-dd HH:mm:ss"},
+        {"name": "pregunta_1", "type": "INTEGER", "nullable": true},
+        {"name": "pregunta_2", "type": "INTEGER", "nullable": true},
+        {"name": "pregunta_3", "type": "INTEGER", "nullable": true},
+        {"name": "pregunta_4", "type": "INTEGER", "nullable": true},
+        {"name": "pregunta_5", "type": "INTEGER", "nullable": true},
+        {"name": "pregunta_6", "type": "INTEGER", "nullable": true},
+        {"name": "pregunta_7", "type": "INTEGER", "nullable": true},
+        {"name": "pregunta_8", "type": "INTEGER", "nullable": true},
+        {"name": "pregunta_9", "type": "INTEGER", "nullable": true},
+        {"name": "fecha_sincronizacion", "type": "TEXT", "nullable": true, "format": "yyyy-MM-dd HH:mm:ss"}
+      ]
+    },
+    "metas_table": {
+      "description": "Goals/activities tracking table (not currently synced but available)",
+      "columns": [
+        {"name": "id_meta", "type": "INTEGER PRIMARY KEY AUTOINCREMENT"},
+        {"name": "id_usuario", "type": "INTEGER", "nullable": true},
+        {"name": "semana", "type": "INTEGER", "nullable": true},
+        {"name": "sesion", "type": "INTEGER", "nullable": true},
+        {"name": "tipo_actividad", "type": "TEXT", "nullable": true},
+        {"name": "actividad", "type": "TEXT", "nullable": true},
+        {"name": "lugar", "type": "TEXT", "nullable": true},
+        {"name": "acompañante", "type": "TEXT", "nullable": true},
+        {"name": "fecha_regisitro", "type": "TEXT", "nullable": true, "format": "yyyy-MM-dd HH:mm:ss"},
+        {"name": "fecha_edicion", "type": "TEXT", "nullable": true, "format": "yyyy-MM-dd HH:mm:ss"},
+        {"name": "fecha_sincronizacion", "type": "TEXT", "nullable": true, "format": "yyyy-MM-dd HH:mm:ss"},
+        {"name": "meta_cumplida", "type": "INTEGER", "nullable": true, "description": "0=not completed, 1=completed"},
+        {"name": "fecha_objetivo", "type": "TEXT", "nullable": true, "format": "yyyy-MM-dd HH:mm:ss"},
+        {"name": "motivo_incumplimiento", "type": "TEXT", "nullable": true}
+      ]
+    },
+    "sincronizacion_table": {
+      "description": "Synchronization log table",
+      "columns": [
+        {"name": "rowid", "type": "INTEGER PRIMARY KEY AUTOINCREMENT"},
+        {"name": "fecha_sincronizacion", "type": "TEXT", "format": "yyyy-MM-dd HH:mm:ss"},
+        {"name": "estado", "type": "TEXT", "description": "HTTP status or error description"},
+        {"name": "data", "type": "TEXT", "nullable": true, "description": "JSON payload sent"}
+      ]
+    }
+  },
+  "examplePayload": {
+    "deviceTimestamp": 1705023456789,
+    "userId": 1,
+    "app": "colmaApp",
+    "clientSyncTimestamp": "2024-01-12 14:30:45",
+    "glucosa": [
+      {
+        "id_glucosa": 123,
+        "id_usuario": 1,
+        "valor_mgdl": 95.5,
+        "ayuno": 1,
+        "fecha_registro": "2024-01-12 08:00:00",
+        "fecha_sincronizacion": "2024-01-12 14:30:45"
+      },
+      {
+        "id_glucosa": 124,
+        "id_usuario": null,
+        "valor_mgdl": 110.0,
+        "ayuno": 0,
+        "fecha_registro": "2024-01-12 12:30:00",
+        "fecha_sincronizacion": "2024-01-12 14:30:45"
+      }
+    ],
+    "presion": [
+      {
+        "id_presion": 456,
+        "id_usuario": 1,
+        "sistolica": 120.0,
+        "diastolica": 80.0,
+        "fecha_registro": "2024-01-12 08:00:00",
+        "fecha_sincronizacion": "2024-01-12 14:30:45"
+      }
+    ],
+    "estado_animo": [
+      {
+        "id_estado_animo": 789,
+        "id_paciente": 1,
+        "fecha_registro": "2024-01-12 09:00:00",
+        "pregunta_1": 3,
+        "pregunta_2": 2,
+        "pregunta_3": 4,
+        "pregunta_4": 1,
+        "pregunta_5": 3,
+        "pregunta_6": 2,
+        "pregunta_7": 4,
+        "pregunta_8": 3,
+        "pregunta_9": 2,
+        "fecha_sincronizacion": "2024-01-12 14:30:45"
+      }
+    ]
+  },
+  "serverResponse": {
+    "description": "Expected server response format",
+    "properties": {
+      "code": {
+        "type": "string",
+        "description": "HTTP status code or custom status",
+        "example": "200"
+      },
+      "status": {
+        "type": "string", 
+        "description": "Alternative status field",
+        "example": "success"
+      },
+      "syncedAt": {
+        "type": "string",
+        "description": "Server timestamp when sync was processed",
+        "example": "2024-01-12 14:30:50"
+      },
+      "glucosa": {
+        "type": "array",
+        "description": "Array of processed glucose records with server timestamps",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id_glucosa": {"type": "integer"},
+            "fecha_sincronizacion": {"type": "string"}
+          }
+        }
+      },
+      "presion": {
+        "type": "array",
+        "description": "Array of processed pressure records with server timestamps",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id_presion": {"type": "integer"},
+            "fecha_sincronizacion": {"type": "string"}
+          }
+        }
+      },
+      "estado_animo": {
+        "type": "array",
+        "description": "Array of processed mood records with server timestamps",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id_estado_animo": {"type": "integer"},
+            "fecha_sincronizacion": {"type": "string"}
+          }
+        }
+      }
+    }
+  },
+  "syncLogic": {
+    "pendingRecords": "Records where fecha_sincronizacion IS NULL or empty string",
+    "syncProcess": [
+      "Fetch all pending records from glucosa_table, presion_table, estado_animo_table",
+      "Build JSON payload with current sync timestamp",
+      "POST to webhook endpoint",
+      "On success: Update fecha_sincronizacion for all sent records",
+      "Log synchronization attempt in sincronizacion_table"
+    ],
+    "errorHandling": "Failed sync attempts are logged with error description in sincronizacion_table"
+  }
+}

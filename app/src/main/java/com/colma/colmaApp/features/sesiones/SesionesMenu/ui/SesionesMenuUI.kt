@@ -68,8 +68,8 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import com.colma.colmaApp.R
-import com.colma.colmaApp.features.sesiones.MultimediaSelector.MultimediaSelector
-import com.colma.colmaApp.features.sesiones.MultimediaSelector.TreatmentType
+import com.colma.colmaApp.features.sesiones.MultimediaSelector.ui.MultimediaSelectorUI
+import com.colma.colmaApp.features.sesiones.MultimediaSelector.domain.TreatmentType
 import com.colma.colmaApp.features.sesiones.SesionesMenu.data.SesionesRepositoryImpl
 import com.colma.colmaApp.features.sesiones.SesionesMenu.domain.SessionItem
 import com.colma.colmaApp.features.sesiones.SesionesMenu.domain.SubSessionItem
@@ -117,7 +117,7 @@ class SesionesMenuUI : ComponentActivity() {
                     viewModel.navigationEvent.collect { event ->
                         when (event) {
                             is SesionesViewModel.NavigationEvent.NavigateToMultimediaSelector -> {
-                                val intent = Intent(context, MultimediaSelector::class.java).apply {
+                                val intent = Intent(context, MultimediaSelectorUI::class.java).apply {
                                     putExtra("sessionId", event.parentSessionId)
                                     putExtra("sessionTitle", event.sessionTitle)
                                     putExtra("subSessionId", event.subSessionId)

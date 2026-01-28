@@ -18,7 +18,7 @@ class RegistrosSaludModelos {
         val diastolica: Double?,
         val fecha_registro: String?,
         val fecha_sincronizacion: String?,
-        val fecha_hora_edicion: String? // epoch millis
+        val fecha_hora_edicion: String?, // epoch millis
     )
 
     data class MetaRecord(

@@ -59,7 +59,7 @@ import java.text.SimpleDateFormat
 import com.colma.colmaApp.utils.varios.CardThatOpensSelectionDialog
 import java.util.Calendar
 import java.util.Locale
-import com.colma.colmaApp.features.sesiones.MultimediaSelector.TreatmentType
+import com.colma.colmaApp.features.sesiones.MultimediaSelector.domain.TreatmentType
 
 const val METAS_TYPE_HTA = "hta"
 const val METAS_TYPE_DIABETES = "diabetes"

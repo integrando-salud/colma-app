@@ -1,0 +1,25 @@
+package com.colma.colmaApp.features.sesiones.MultimediaSelector.domain
+
+import androidx.compose.ui.graphics.vector.ImageVector
+
+enum class MultimediaContentType {
+    DESCRIPTION,
+    VIDEO,
+    AUDIO,
+    METAS,
+    QUIZ
+}
+
+enum class TreatmentType { HTA, DIABETES }
+
+data class MultimediaOption(
+    val type: MultimediaContentType,
+    val title: String,
+    val description: String, // Short description for the card
+    val fullDescription: String? = null, // Long description for WelcomeActivity
+    val iconResId: Int? = null, // For drawable resources (e.g., R.drawable.xxx)
+    val iconImageVector: ImageVector? = null, // For ImageVector icons (e.g., Icons.Default.PlayArrow)
+    val contentAssetId: Int? = null, // For raw resource IDs (e.g., R.raw.xxx)
+    val quizId: String? = null, // New field for quiz identification
+    val metasId: String? = null // New field for metas identification
+)

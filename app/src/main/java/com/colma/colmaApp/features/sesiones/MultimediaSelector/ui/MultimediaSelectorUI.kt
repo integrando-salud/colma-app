@@ -1,0 +1,266 @@
+package com.colma.colmaApp.features.sesiones.MultimediaSelector.ui
+
+import android.content.Intent
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.activity.viewModels
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material3.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsControllerCompat
+import com.colma.colmaApp.R
+import com.colma.colmaApp.features.multimediaScreens.ActionActivity
+import com.colma.colmaApp.features.multimediaScreens.FinishActivity
+import com.colma.colmaApp.features.multimediaScreens.MetasActivity
+import com.colma.colmaApp.features.multimediaScreens.QuizActivity
+import com.colma.colmaApp.features.multimediaScreens.WelcomeActivity
+import com.colma.colmaApp.features.sesiones.MultimediaSelector.data.MultimediaRepositoryImpl
+import com.colma.colmaApp.features.sesiones.MultimediaSelector.domain.MultimediaContentType
+import com.colma.colmaApp.features.sesiones.MultimediaSelector.domain.MultimediaOption
+import com.colma.colmaApp.features.sesiones.MultimediaSelector.domain.TreatmentType
+import com.colma.colmaApp.features.sesiones.MultimediaSelector.viewmodel.MultimediaSelectorEvent
+import com.colma.colmaApp.features.sesiones.MultimediaSelector.viewmodel.MultimediaSelectorUiState
+import com.colma.colmaApp.features.sesiones.MultimediaSelector.viewmodel.MultimediaSelectorViewModel
+import com.colma.colmaApp.features.sesiones.MultimediaSelector.viewmodel.MultimediaSelectorViewModelFactory
+import com.colma.colmaApp.ui.theme.ColmaAppTheme
+
+class MultimediaSelectorUI : ComponentActivity() {
+
+    private val viewModel: MultimediaSelectorViewModel by viewModels {
+        MultimediaSelectorViewModelFactory(
+            MultimediaRepositoryImpl()
+        )
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+
+        window.statusBarColor = ContextCompat.getColor(this, R.color.principal)
+        window.navigationBarColor = android.graphics.Color.WHITE
+
+        WindowInsetsControllerCompat(window, window.decorView).apply {
+            isAppearanceLightStatusBars = false
+            isAppearanceLightNavigationBars = true
+        }
+
+        val sessionId = intent?.getLongExtra("sessionId", -1L) ?: -1L
+        val sessionTitle = intent?.getStringExtra("sessionTitle") ?: "Sesión"
+        val subSessionId = intent?.getLongExtra("subSessionId", -1L) ?: -1L
+        val subSessionTitle = intent?.getStringExtra("subSessionTitle") ?: ""
+        val treatmentTypesString = intent?.getStringExtra("treatmentTypes") ?: "HTA"
+        val treatmentTypes = treatmentTypesString.split(',').mapNotNull {
+            try {
+                TreatmentType.valueOf(it.trim().uppercase())
+            } catch (e: IllegalArgumentException) {
+                null
+            }
+        }.ifEmpty { listOf(TreatmentType.HTA) }
+
+        viewModel.initialize(sessionId, sessionTitle, subSessionId, subSessionTitle, treatmentTypes)
+
+        setContent {
+            ColmaAppTheme {
+                val uiState by viewModel.uiState.collectAsState()
+
+                LaunchedEffect(Unit) {
+                    viewModel.navigationEvent.collect { event ->
+                        when (event) {
+                            is MultimediaSelectorViewModel.NavigationEvent.NavigateToMultimedia -> {
+                                navigateToMultimedia(event.option, event.index, uiState)
+                            }
+                            is MultimediaSelectorViewModel.NavigationEvent.NavigateBack -> {
+                                finish()
+                            }
+                        }
+                    }
+                }
+
+                MultimediaSelectorScreen(
+                    uiState = uiState,
+                    onEvent = viewModel::onEvent
+                )
+            }
+        }
+    }
+
+    private fun navigateToMultimedia(option: MultimediaOption, index: Int, uiState: MultimediaSelectorUiState) {
+        val intent = when (option.type) {
+            MultimediaContentType.DESCRIPTION -> Intent(this, WelcomeActivity::class.java).apply {
+                putExtra("displayContent", option.fullDescription ?: option.description)
+            }
+            MultimediaContentType.VIDEO -> Intent(this, ActionActivity::class.java)
+            MultimediaContentType.AUDIO -> Intent(this, FinishActivity::class.java)
+            MultimediaContentType.METAS -> Intent(this, MetasActivity::class.java)
+            MultimediaContentType.QUIZ -> Intent(this, QuizActivity::class.java)
+        }
+        intent.apply {
+            putExtra("sessionId", uiState.sessionId)
+            putExtra("sessionTitle", uiState.sessionTitle)
+            putExtra("subSessionId", uiState.subSessionId)
+            putExtra("subSessionTitle", uiState.subSessionTitle)
+            putExtra("treatmentTypes", uiState.treatmentTypes.joinToString(",") { it.name })
+            putExtra("currentMultimediaIndex", index)
+
+            if (option.contentAssetId != null) {
+                putExtra("contentAssetId", option.contentAssetId)
+            }
+            if (option.quizId != null) {
+                putExtra("quizId", option.quizId)
+            }
+            if (option.metasId != null) {
+                putExtra("metasType", option.metasId)
+            }
+        }
+        startActivity(intent)
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun MultimediaSelectorScreen(
+    uiState: MultimediaSelectorUiState,
+    onEvent: (MultimediaSelectorEvent) -> Unit
+) {
+    val signatureColor = colorResource(R.color.principal)
+
+    fun friendlySubLabel(subId: Long, parentId: Long): String {
+        return try {
+            val maybeIndex = subId - parentId * 10
+            if (maybeIndex in 1..999) "Semana $maybeIndex" else "Semana $subId"
+        } catch (e: Exception) {
+            "Semana $subId"
+        }
+    }
+
+    Surface(modifier = Modifier.fillMaxSize().systemBarsPadding(), color = colorResource(R.color.background)) {
+        Column(modifier = Modifier.fillMaxSize()) {
+            TopAppBar(
+                title = {
+                    Column {
+                        Text(text = uiState.sessionTitle, fontSize = 16.sp, color = Color.White, fontWeight = FontWeight.SemiBold)
+                        val secondLinePrefix = when {
+                            uiState.subSessionTitle.isNotBlank() -> uiState.subSessionTitle
+                            uiState.subSessionId != -1L && uiState.sessionId >= 0L -> friendlySubLabel(uiState.subSessionId, uiState.sessionId)
+                            else -> ""
+                        }
+                        val treatmentDisplay = uiState.treatmentTypes.firstOrNull()?.let {
+                            when (it) {
+                                TreatmentType.HTA -> "Hipertension"
+                                TreatmentType.DIABETES -> "Diabetes"
+                            }
+                        } ?: ""
+
+                        val secondLine = if (secondLinePrefix.isNotBlank() && treatmentDisplay.isNotBlank()) {
+                            "$secondLinePrefix: $treatmentDisplay"
+                        } else {
+                            secondLinePrefix
+                        }
+                        Text(text = secondLine, fontSize = 12.sp, color = Color.White.copy(alpha = 0.9f))
+                    }
+                },
+                colors = TopAppBarDefaults.topAppBarColors(containerColor = signatureColor),
+                navigationIcon = {
+                    IconButton(onClick = { onEvent(MultimediaSelectorEvent.BackClicked) }) {
+                        Icon(imageVector = Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Volver", tint = Color.White)
+                    }
+                }
+            )
+
+            if (uiState.isLoading) {
+                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                    CircularProgressIndicator()
+                }
+            } else if (uiState.error != null) {
+                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                    Text(text = "Error: ${uiState.error}", color = Color.Red)
+                }
+            } else {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(16.dp)
+                        .verticalScroll(rememberScrollState()),
+                    verticalArrangement = Arrangement.spacedBy(12.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    uiState.multimediaOptions.forEachIndexed { index, option ->
+                        MultimediaOptionCard(option = option, signatureColor = signatureColor) {
+                            onEvent(MultimediaSelectorEvent.MultimediaOptionClicked(option, index))
+                        }
+                    }
+                    Spacer(modifier = Modifier.weight(1f))
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun MultimediaOptionCard(
+    option: MultimediaOption,
+    signatureColor: Color,
+    onClick: () -> Unit
+) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .shadow(elevation = 6.dp, shape = RoundedCornerShape(12.dp))
+            .clickable { onClick() },
+        shape = RoundedCornerShape(12.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 6.dp),
+        colors = CardDefaults.cardColors(containerColor = Color.White)
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(20.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            if (option.iconImageVector != null) {
+                Icon(
+                    imageVector = option.iconImageVector,
+                    contentDescription = option.title,
+                    tint = signatureColor,
+                    modifier = Modifier.size(36.dp)
+                )
+            } else if (option.iconResId != null) {
+                Icon(
+                    painter = painterResource(id = option.iconResId),
+                    contentDescription = option.title,
+                    tint = signatureColor,
+                    modifier = Modifier.size(36.dp)
+                )
+            }
+
+            Spacer(modifier = Modifier.width(16.dp))
+
+            Column(modifier = Modifier.weight(1f)) {
+                Text(option.title, fontSize = 18.sp, fontWeight = FontWeight.SemiBold)
+                Spacer(modifier = Modifier.height(6.dp))
+                Text(option.description, fontSize = 13.sp, color = Color.Gray)
+            }
+        }
+    }
+}

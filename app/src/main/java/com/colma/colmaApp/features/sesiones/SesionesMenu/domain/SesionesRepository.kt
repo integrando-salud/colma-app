@@ -1,7 +1,7 @@
 package com.colma.colmaApp.features.sesiones.SesionesMenu.domain
 
 import com.colma.colmaApp.R
-import com.colma.colmaApp.features.sesiones.MultimediaSelector.TreatmentType
+import com.colma.colmaApp.features.sesiones.MultimediaSelector.domain.TreatmentType
 
 data class SessionItem(
     val id: Long,

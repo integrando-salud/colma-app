@@ -1,10 +1,15 @@
-package com.colma.colmaApp.features.multimediaScreens
+    package com.colma.colmaApp.features.multimediaScreens
 
 import android.app.Activity
 import android.content.Intent
-import com.colma.colmaApp.features.sesiones.MultimediaSelector.MultimediaContentType
-import com.colma.colmaApp.features.sesiones.MultimediaSelector.TreatmentType
-import com.colma.colmaApp.features.sesiones.MultimediaSelector.getMultimediaOptions
+import com.colma.colmaApp.features.sesiones.MultimediaSelector.domain.MultimediaContentType
+import com.colma.colmaApp.features.sesiones.MultimediaSelector.domain.MultimediaOption
+import com.colma.colmaApp.features.sesiones.MultimediaSelector.domain.TreatmentType
+import com.colma.colmaApp.features.sesiones.MultimediaSelector.data.MultimediaRepositoryImpl
+import kotlinx.coroutines.runBlocking // Using runBlocking for simplicity in a top-level function, ideally this would be handled differently
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+
 
 fun navigateToNextOrFinish(
     activity: Activity,
@@ -26,7 +31,10 @@ fun navigateToNextOrFinish(
         return
     }
 
-    val options = treatmentTypes.flatMap { getMultimediaOptions(it, subSessionId) }
+    val multimediaRepository = MultimediaRepositoryImpl()
+    val options: List<MultimediaOption> = runBlocking(Dispatchers.IO) { // Use runBlocking for synchronous call in this context
+        multimediaRepository.getMultimediaOptions(treatmentTypes, subSessionId).getOrNull() ?: emptyList()
+    }
     val nextIndex = currentMultimediaIndex + 1
 
     if (nextIndex < options.size) {
