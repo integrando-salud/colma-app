@@ -55,7 +55,7 @@ class GlucosaViewModel(private val repository: GlucosaRepository) : ViewModel() 
                 _uiState.update { it.copy(isFormVisible = false) }
             }
             is GlucosaEvent.GlucosaValueChanged -> {
-                val value = event.value
+                val value = event.value.filter { it.isDigit() }
                 if (value.length <= 3) {
                     _uiState.update { it.copy(glucosaValue = value, formError = null) }
                 }
@@ -90,7 +90,7 @@ class GlucosaViewModel(private val repository: GlucosaRepository) : ViewModel() 
 
     private fun saveGlucosa() {
         val state = _uiState.value
-        val number = state.glucosaValue.trim().replace(',', '.').toDoubleOrNull()
+        val number = state.glucosaValue.trim().toIntOrNull()
 
         if (number == null) {
             _uiState.update { it.copy(formError = "Ingrese un número válido") }
@@ -100,11 +100,11 @@ class GlucosaViewModel(private val repository: GlucosaRepository) : ViewModel() 
             _uiState.update { it.copy(formError = "Seleccione si está en ayuno o no") }
             return
         }
-        if (number < 10.0) {
+        if (number < 10) {
             _uiState.update { it.copy(formError = "Valor imposible: Glucosa demasiado baja para ser plausible.") }
             return
         }
-        if (number > 1000.0) {
+        if (number > 1000) {
             _uiState.update { it.copy(formError = "Valor imposible: Glucosa extremadamente alta para ser plausible.") }
             return
         }
@@ -114,7 +114,7 @@ class GlucosaViewModel(private val repository: GlucosaRepository) : ViewModel() 
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true) }
             val result = repository.saveGlucosa(
-                value = number,
+                value = number.toDouble(),
                 isFasting = state.isFasting,
                 dateTime = state.measurementTime
             )
@@ -132,8 +132,8 @@ class GlucosaViewModel(private val repository: GlucosaRepository) : ViewModel() 
                 }
                 _sideEffects.send(SideEffect.ShowToast("Guardado: Glucosa = ${newEntry.value}"))
 
-                val low = number <= 69.0
-                val high = if (state.isFasting) number >= 131.0 else number >= 181.0
+                val low = number <= 69
+                val high = if (state.isFasting) number >= 131 else number >= 181
                 when {
                     low -> _sideEffects.send(SideEffect.ShowToast("Advertencia: Glucosa baja (hipoglucemia). Por favor consulte con un médico.", Toast.LENGTH_LONG))
                     high -> _sideEffects.send(SideEffect.ShowToast("Advertencia: Glucosa alta (hiperglucemia). Por favor consulte con un médico.", Toast.LENGTH_LONG))

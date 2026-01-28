@@ -62,6 +62,7 @@ import com.colma.colmaApp.features.presion.viewmodel.PresionEvent
 import com.colma.colmaApp.features.presion.viewmodel.PresionUiState
 import com.colma.colmaApp.features.presion.viewmodel.PresionViewModel
 import com.colma.colmaApp.features.presion.viewmodel.PresionViewModelFactory
+import com.colma.colmaApp.features.presion.viewmodel.SideEffect
 import com.colma.colmaApp.ui.theme.ColmaAppTheme
 import com.colma.colmaApp.utils.varios.HealthRecordCard
 import com.colma.colmaApp.utils.varios.HistoryCard
@@ -97,7 +98,7 @@ class PresionUI : ComponentActivity() {
                 LaunchedEffect(Unit) {
                     viewModel.sideEffects.collect { effect ->
                         when (effect) {
-                            is PresionViewModel.SideEffect.ShowToast -> {
+                            is SideEffect.ShowToast -> {
                                 Toast.makeText(context, effect.message, effect.duration).show()
                             }
                         }

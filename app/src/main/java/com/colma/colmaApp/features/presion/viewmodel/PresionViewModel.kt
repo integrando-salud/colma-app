@@ -55,13 +55,15 @@ class PresionViewModel(private val repository: PresionRepository) : ViewModel() 
                 _uiState.update { it.copy(isFormVisible = false) }
             }
             is PresionEvent.SistolicaChanged -> {
-                 if (event.value.length <= 3) {
-                    _uiState.update { it.copy(sistolica = event.value, formError = null) }
+                val value = event.value.filter { it.isDigit() }
+                 if (value.length <= 3) {
+                    _uiState.update { it.copy(sistolica = value, formError = null) }
                  }
             }
             is PresionEvent.DiastolicaChanged -> {
-                if (event.value.length <= 3) {
-                    _uiState.update { it.copy(diastolica = event.value, formError = null) }
+                val value = event.value.filter { it.isDigit() }
+                if (value.length <= 3) {
+                    _uiState.update { it.copy(diastolica = value, formError = null) }
                 }
             }
             is PresionEvent.DateChanged -> {
@@ -91,8 +93,8 @@ class PresionViewModel(private val repository: PresionRepository) : ViewModel() 
 
     private fun savePresion() {
         val state = _uiState.value
-        val sys = state.sistolica.trim().replace(',', '.').toDoubleOrNull()
-        val dia = state.diastolica.trim().replace(',', '.').toDoubleOrNull()
+        val sys = state.sistolica.trim().toIntOrNull()
+        val dia = state.diastolica.trim().toIntOrNull()
 
         if (sys == null || dia == null) {
             _uiState.update { it.copy(formError = "Ingrese números válidos") }
@@ -102,11 +104,11 @@ class PresionViewModel(private val repository: PresionRepository) : ViewModel() 
             _uiState.update { it.copy(formError = "El valor mayor debe ser mayor que el menor") }
             return
         }
-        if (sys < 40.0 || sys > 300.0) {
+        if (sys < 40 || sys > 300) {
             _uiState.update { it.copy(formError = "Valor imposible: presión sistólica fuera de rango plausible.") }
             return
         }
-        if (dia < 20.0 || dia > 200.0) {
+        if (dia < 20 || dia > 200) {
             _uiState.update { it.copy(formError = "Valor imposible: presión diastólica fuera de rango plausible.") }
             return
         }
@@ -116,8 +118,8 @@ class PresionViewModel(private val repository: PresionRepository) : ViewModel() 
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true) }
             val result = repository.savePresion(
-                sistolica = sys,
-                diastolica = dia,
+                sistolica = sys.toDouble(),
+                diastolica = dia.toDouble(),
                 dateTime = state.measurementTime
             )
 
@@ -156,8 +158,8 @@ class PresionViewModel(private val repository: PresionRepository) : ViewModel() 
             }
         }
     }
+}
 
-    sealed class SideEffect {
-        data class ShowToast(val message: String, val duration: Int = Toast.LENGTH_SHORT) : SideEffect()
-    }
+sealed class SideEffect {
+    data class ShowToast(val message: String, val duration: Int = Toast.LENGTH_SHORT) : SideEffect()
 }
