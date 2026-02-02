@@ -97,14 +97,17 @@ class GlucosaUI : ComponentActivity() {
                 val uiState by viewModel.uiState.collectAsState()
                 val context = LocalContext.current
 
-                LaunchedEffect(Unit) {
-                    viewModel.sideEffects.collect { effect ->
-                        when (effect) {
-                            is GlucosaViewModel.SideEffect.ShowToast -> {
-                                Toast.makeText(context, effect.message, effect.duration).show()
+                if (uiState.warningDialog.show) {
+                    AlertDialog(
+                        onDismissRequest = { viewModel.onEvent(GlucosaEvent.DismissWarningDialog) },
+                        title = { Text("Advertencia") },
+                        text = { Text(uiState.warningDialog.message) },
+                        confirmButton = {
+                            TextButton(onClick = { viewModel.onEvent(GlucosaEvent.DismissWarningDialog) }) {
+                                Text("Ok")
                             }
                         }
-                    }
+                    )
                 }
 
                 GlucosaScreen(
@@ -133,6 +136,35 @@ fun GlucosaScreen(
 
     val measurementCalendar = remember { Calendar.getInstance() }
     measurementCalendar.timeInMillis = uiState.measurementTime
+
+    var showConfirmationDialog by remember { mutableStateOf(false) }
+
+    if (showConfirmationDialog) {
+        AlertDialog(
+            onDismissRequest = { showConfirmationDialog = false },
+            title = { Text("Confirmar Registro") },
+            text = { Text("¿Está seguro de que desea guardar este registro de glucosa?") },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        onEvent(GlucosaEvent.SaveGlucosaClicked)
+                        showConfirmationDialog = false
+                    },
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF008000), contentColor = Color.White)
+                ) {
+                    Text("Confirmar")
+                }
+            },
+            dismissButton = {
+                TextButton(
+                    onClick = { showConfirmationDialog = false },
+                    colors = ButtonDefaults.textButtonColors(containerColor = Color.Red, contentColor = Color.White)
+                ) {
+                    Text("Cancelar")
+                }
+            }
+        )
+    }
 
     TimeInputDialog(
         show = showGlucosaTimePicker,
@@ -294,7 +326,7 @@ fun GlucosaScreen(
                     },
                     confirmButton = {
                         TextButton(
-                            onClick = { onEvent(GlucosaEvent.SaveGlucosaClicked) },
+                            onClick = { showConfirmationDialog = true },
                             colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF008000), contentColor = Color.White)
                         ) { Text("Guardar") }
                     },

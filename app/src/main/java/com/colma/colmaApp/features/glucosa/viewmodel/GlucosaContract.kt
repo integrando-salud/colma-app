@@ -12,13 +12,20 @@ data class GlucosaUiState(
     val isFasting: Boolean? = null,
     val measurementTime: Long = System.currentTimeMillis(),
     val formError: String? = null,
-    
+
     // Details dialog
     val isDetailsDialogVisible: Boolean = false,
     val selectedEntry: HealthEntry? = null,
 
-    val lastGlucosa: HealthEntry? = null
-)
+    val lastGlucosa: HealthEntry? = null,
+
+    val warningDialog: WarningDialog = WarningDialog()
+) {
+    data class WarningDialog(
+        val show: Boolean = false,
+        val message: String = ""
+    )
+}
 
 sealed class GlucosaEvent {
     object AddGlucosaClicked : GlucosaEvent()
@@ -30,4 +37,5 @@ sealed class GlucosaEvent {
     data class TimeChanged(val hour: Int, val minute: Int) : GlucosaEvent()
     data class ShowDetails(val entry: HealthEntry): GlucosaEvent()
     object DismissDetailsDialog: GlucosaEvent()
+    object DismissWarningDialog : GlucosaEvent()
 }

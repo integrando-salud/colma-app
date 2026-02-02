@@ -103,7 +103,7 @@
 
         </activity>
 
-        <activity android:name=".features.MetasHistory.MetasHistoryActivity"
+        <activity android:name=".features.MetasHistory.ui.MetasHistoryUI"
             android:exported="false"
             android:screenOrientation="portrait">
         </activity>

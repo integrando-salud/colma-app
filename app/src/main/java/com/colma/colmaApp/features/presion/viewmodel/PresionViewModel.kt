@@ -1,13 +1,10 @@
 package com.colma.colmaApp.features.presion.viewmodel
 
-import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.colma.colmaApp.features.presion.domain.PresionRepository
-import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.util.Calendar
@@ -16,9 +13,6 @@ class PresionViewModel(private val repository: PresionRepository) : ViewModel() 
 
     private val _uiState = MutableStateFlow(PresionUiState())
     val uiState = _uiState.asStateFlow()
-
-    private val _sideEffects = Channel<SideEffect>()
-    val sideEffects = _sideEffects.receiveAsFlow()
 
     init {
         loadHistory()
@@ -88,6 +82,9 @@ class PresionViewModel(private val repository: PresionRepository) : ViewModel() 
             PresionEvent.DismissDetailsDialog -> {
                 _uiState.update { it.copy(isDetailsDialogVisible = false, selectedEntry = null) }
             }
+            PresionEvent.DismissWarningDialog -> {
+                _uiState.update { it.copy(warningDialog = PresionUiState.WarningDialog(show = false)) }
+            }
         }
     }
 
@@ -134,7 +131,6 @@ class PresionViewModel(private val repository: PresionRepository) : ViewModel() 
                         error = null
                     )
                 }
-                _sideEffects.send(SideEffect.ShowToast("Guardado: Presión = ${newEntry.value}"))
 
                 val highS = sys > 140
                 val lowS = sys < 90
@@ -145,7 +141,7 @@ class PresionViewModel(private val repository: PresionRepository) : ViewModel() 
                 if (highS || highD) parts.add("presión alta")
                 if (parts.isNotEmpty()) {
                     val warningText = "Advertencia: " + parts.joinToString(" y ") + ". Por favor consulte con un médico."
-                    _sideEffects.send(SideEffect.ShowToast(warningText, Toast.LENGTH_LONG))
+                    _uiState.update { it.copy(warningDialog = PresionUiState.WarningDialog(show = true, message = warningText)) }
                 }
             }.onFailure { error ->
                 _uiState.update {
@@ -154,12 +150,7 @@ class PresionViewModel(private val repository: PresionRepository) : ViewModel() 
                         error = error.message
                     )
                 }
-                _sideEffects.send(SideEffect.ShowToast("Error: ${error.message}"))
             }
         }
     }
-}
-
-sealed class SideEffect {
-    data class ShowToast(val message: String, val duration: Int = Toast.LENGTH_SHORT) : SideEffect()
 }

@@ -62,7 +62,6 @@ import com.colma.colmaApp.features.presion.viewmodel.PresionEvent
 import com.colma.colmaApp.features.presion.viewmodel.PresionUiState
 import com.colma.colmaApp.features.presion.viewmodel.PresionViewModel
 import com.colma.colmaApp.features.presion.viewmodel.PresionViewModelFactory
-import com.colma.colmaApp.features.presion.viewmodel.SideEffect
 import com.colma.colmaApp.ui.theme.ColmaAppTheme
 import com.colma.colmaApp.utils.varios.HealthRecordCard
 import com.colma.colmaApp.utils.varios.HistoryCard
@@ -95,14 +94,17 @@ class PresionUI : ComponentActivity() {
                 val uiState by viewModel.uiState.collectAsState()
                 val context = LocalContext.current
 
-                LaunchedEffect(Unit) {
-                    viewModel.sideEffects.collect { effect ->
-                        when (effect) {
-                            is SideEffect.ShowToast -> {
-                                Toast.makeText(context, effect.message, effect.duration).show()
+                if (uiState.warningDialog.show) {
+                    AlertDialog(
+                        onDismissRequest = { viewModel.onEvent(PresionEvent.DismissWarningDialog) },
+                        title = { Text("Advertencia") },
+                        text = { Text(uiState.warningDialog.message) },
+                        confirmButton = {
+                            TextButton(onClick = { viewModel.onEvent(PresionEvent.DismissWarningDialog) }) {
+                                Text("Ok")
                             }
                         }
-                    }
+                    )
                 }
 
                 PresionScreen(
@@ -124,13 +126,41 @@ fun PresionScreen(
 ) {
     val signatureColor = colorResource(R.color.principal)
     val context = LocalContext.current
-    
+    var showConfirmationDialog by remember { mutableStateOf(false) }
+
     val dateFormatter = remember { SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()) }
     val timeFormatterOnly = remember { SimpleDateFormat("hh:mm a", Locale.getDefault()) }
     var showPresionTimePicker by remember { mutableStateOf(false) }
 
     val measurementCalendar = remember { Calendar.getInstance() }
     measurementCalendar.timeInMillis = uiState.measurementTime
+
+    if (showConfirmationDialog) {
+        AlertDialog(
+            onDismissRequest = { showConfirmationDialog = false },
+            title = { Text("Confirmar Registro") },
+            text = { Text("¿Está seguro de que desea guardar este registro de presión?") },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        onEvent(PresionEvent.SavePresionClicked)
+                        showConfirmationDialog = false
+                    },
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF008000), contentColor = Color.White)
+                ) {
+                    Text("Confirmar")
+                }
+            },
+            dismissButton = {
+                TextButton(
+                    onClick = { showConfirmationDialog = false },
+                    colors = ButtonDefaults.textButtonColors(containerColor = Color.Red, contentColor = Color.White)
+                ) {
+                    Text("Cancelar")
+                }
+            }
+        )
+    }
 
     TimeInputDialog(
         show = showPresionTimePicker,
@@ -300,7 +330,7 @@ fun PresionScreen(
                     },
                     confirmButton = {
                         TextButton(
-                            onClick = { onEvent(PresionEvent.SavePresionClicked) },
+                            onClick = { showConfirmationDialog = true },
                             colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF008000), contentColor = Color.White)
                         ) { Text("Guardar") }
                     },

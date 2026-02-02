@@ -1,59 +1,52 @@
-package com.colma.colmaApp.features.MetasHistory
+package com.colma.colmaApp.features.MetasHistory.ui
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.activity.viewModels
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.colma.colmaApp.R
+import com.colma.colmaApp.features.MetasHistory.data.MetasHistoryRepositoryImpl
+import com.colma.colmaApp.features.MetasHistory.viewmodel.MetasHistoryUiState
+import com.colma.colmaApp.features.MetasHistory.viewmodel.MetasHistoryViewModel
+import com.colma.colmaApp.features.MetasHistory.viewmodel.MetasHistoryViewModelFactory
 import com.colma.colmaApp.servicios.Modelos.RegistrosSaludModelos
-import com.colma.colmaApp.servicios.database.dbhelper.DBhelper
 import com.colma.colmaApp.ui.theme.ColmaAppTheme
 import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
+import java.util.*
 
-class MetasHistoryActivity : ComponentActivity() {
+class MetasHistoryUI : ComponentActivity() {
+
+    private val viewModel: MetasHistoryViewModel by viewModels {
+        MetasHistoryViewModelFactory(MetasHistoryRepositoryImpl(applicationContext))
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             ColmaAppTheme {
-                MetasHistoryScreen(onBack = { finish() })
+                val uiState by viewModel.uiState.collectAsState()
+                MetasHistoryScreen(
+                    uiState = uiState,
+                    onBack = { finish() }
+                )
             }
         }
     }
@@ -61,16 +54,7 @@ class MetasHistoryActivity : ComponentActivity() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MetasHistoryScreen(onBack: () -> Unit) {
-    val context = LocalContext.current
-    val dbHelper = remember { DBhelper(context) }
-    var metas by remember { mutableStateOf<List<RegistrosSaludModelos.MetaRecord>>(emptyList()) }
-
-    LaunchedEffect(Unit) {
-        // Assuming user id is 1 for now
-        metas = dbHelper.getAllMetas(1)
-    }
-
+fun MetasHistoryScreen(uiState: MetasHistoryUiState, onBack: () -> Unit) {
     Scaffold(
         topBar = {
             TopAppBar(
@@ -91,24 +75,37 @@ fun MetasHistoryScreen(onBack: () -> Unit) {
         },
         containerColor = colorResource(id = R.color.background)
     ) { paddingValues ->
-        LazyColumn(
+        Box(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(paddingValues),
-            contentPadding = PaddingValues(16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+                .padding(paddingValues)
         ) {
-            if (metas.isEmpty()) {
-                item {
-                    Text(
-                        text = "Aún no has creado ninguna meta.",
-                        modifier = Modifier.fillMaxWidth().padding(32.dp),
-                        textAlign = androidx.compose.ui.text.style.TextAlign.Center
-                    )
-                }
+            if (uiState.isLoading) {
+                CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+            } else if (uiState.error != null) {
+                Text(
+                    text = "Error: ${uiState.error}",
+                    color = Color.Red,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier
+                        .align(Alignment.Center)
+                        .padding(16.dp)
+                )
+            } else if (uiState.metas.isEmpty()) {
+                Text(
+                    text = "Aún no has creado ninguna meta.",
+                    modifier = Modifier.fillMaxWidth().padding(32.dp).align(Alignment.Center),
+                    textAlign = TextAlign.Center
+                )
             } else {
-                items(metas, key = { it.id_meta }) { meta ->
-                    MetaItemCard(meta = meta)
+                LazyColumn(
+                    modifier = Modifier.fillMaxSize(),
+                    contentPadding = PaddingValues(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(16.dp)
+                ) {
+                    items(uiState.metas, key = { it.id_meta }) { meta ->
+                        MetaItemCard(meta = meta)
+                    }
                 }
             }
         }
@@ -177,7 +174,7 @@ fun MetaItemCard(meta: RegistrosSaludModelos.MetaRecord) {
                 )
             }
             Spacer(modifier = Modifier.height(12.dp))
-            
+
             MetaInfoRow(label = "Objetivo para el", value = fechaObjetivoDate?.let { friendlyDateFormatter.format(it) } ?: "N/A")
             MetaInfoRow(label = "Lugar", value = meta.lugar)
             MetaInfoRow(label = "Acompañante", value = meta.acompañante)

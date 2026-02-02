@@ -17,8 +17,15 @@ data class PresionUiState(
     val isDetailsDialogVisible: Boolean = false,
     val selectedEntry: HealthEntry? = null,
 
-    val lastPresion: HealthEntry? = null
-)
+    val lastPresion: HealthEntry? = null,
+
+    val warningDialog: WarningDialog = WarningDialog()
+) {
+    data class WarningDialog(
+        val show: Boolean = false,
+        val message: String = ""
+    )
+}
 
 sealed class PresionEvent {
     object AddPresionClicked : PresionEvent()
@@ -30,4 +37,5 @@ sealed class PresionEvent {
     data class TimeChanged(val hour: Int, val minute: Int) : PresionEvent()
     data class ShowDetails(val entry: HealthEntry) : PresionEvent()
     object DismissDetailsDialog : PresionEvent()
+    object DismissWarningDialog : PresionEvent()
 }

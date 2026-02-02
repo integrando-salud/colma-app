@@ -17,9 +17,6 @@ class GlucosaViewModel(private val repository: GlucosaRepository) : ViewModel() 
     private val _uiState = MutableStateFlow(GlucosaUiState())
     val uiState = _uiState.asStateFlow()
 
-    private val _sideEffects = Channel<SideEffect>()
-    val sideEffects = _sideEffects.receiveAsFlow()
-
     init {
         loadHistory()
     }
@@ -85,6 +82,9 @@ class GlucosaViewModel(private val repository: GlucosaRepository) : ViewModel() 
             GlucosaEvent.DismissDetailsDialog -> {
                 _uiState.update { it.copy(isDetailsDialogVisible = false, selectedEntry = null) }
             }
+            GlucosaEvent.DismissWarningDialog -> {
+                _uiState.update { it.copy(warningDialog = GlucosaUiState.WarningDialog(show = false)) }
+            }
         }
     }
 
@@ -130,13 +130,12 @@ class GlucosaViewModel(private val repository: GlucosaRepository) : ViewModel() 
                         error = null
                     )
                 }
-                _sideEffects.send(SideEffect.ShowToast("Guardado: Glucosa = ${newEntry.value}"))
 
                 val low = number <= 69
                 val high = if (state.isFasting) number >= 131 else number >= 181
                 when {
-                    low -> _sideEffects.send(SideEffect.ShowToast("Advertencia: Glucosa baja (hipoglucemia). Por favor consulte con un médico.", Toast.LENGTH_LONG))
-                    high -> _sideEffects.send(SideEffect.ShowToast("Advertencia: Glucosa alta (hiperglucemia). Por favor consulte con un médico.", Toast.LENGTH_LONG))
+                    low -> _uiState.update { it.copy(warningDialog = GlucosaUiState.WarningDialog(show = true, message = "Advertencia: Glucosa baja (hipoglucemia). Por favor consulte con un médico.")) }
+                    high -> _uiState.update { it.copy(warningDialog = GlucosaUiState.WarningDialog(show = true, message = "Advertencia: Glucosa alta (hiperglucemia). Por favor consulte con un médico.")) }
                 }
 
             }.onFailure { error ->
@@ -146,12 +145,7 @@ class GlucosaViewModel(private val repository: GlucosaRepository) : ViewModel() 
                         error = error.message
                     )
                 }
-                _sideEffects.send(SideEffect.ShowToast("Error: ${error.message}"))
             }
         }
-    }
-
-    sealed class SideEffect {
-        data class ShowToast(val message: String, val duration: Int = Toast.LENGTH_SHORT) : SideEffect()
     }
 }
