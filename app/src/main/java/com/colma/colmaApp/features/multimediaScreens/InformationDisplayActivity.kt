@@ -60,7 +60,7 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
-class WelcomeActivity : ComponentActivity() {
+class InformationDisplayActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -83,12 +83,12 @@ class WelcomeActivity : ComponentActivity() {
 
         setContent {
             ColmaAppTheme {
-                WelcomePageScreen(
+                InformationDisplayPageScreen(
                     displayContent = displayContent,
                     onBack = { finish() },
                     onFinish = {
                         navigateToNextOrFinish(
-                            activity = this@WelcomeActivity,
+                            activity = this@InformationDisplayActivity,
                             sessionId = sessionId,
                             sessionTitle = sessionTitle,
                             subSessionId = subSessionId,
@@ -105,7 +105,7 @@ class WelcomeActivity : ComponentActivity() {
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
-fun WelcomePageScreen(displayContent: String, onBack: () -> Unit = {}, onFinish: () -> Unit = {}) {
+fun InformationDisplayPageScreen(displayContent: String, onBack: () -> Unit = {}, onFinish: () -> Unit = {}) {
     val signatureColor = colorResource(R.color.principal)
     val paragraphs = remember {
         displayContent.split("\n\n").filter { it.isNotBlank() }
@@ -137,7 +137,7 @@ fun WelcomePageScreen(displayContent: String, onBack: () -> Unit = {}, onFinish:
                             .fillMaxWidth()
                             .weight(1f)
                     ) { page ->
-                        WelcomePage(displayContent = paragraphs[page])
+                        InformationCard(displayContent = paragraphs[page])
                     }
                     Spacer(Modifier.height(16.dp))
                     HorizontalPagerIndicator(
@@ -149,7 +149,7 @@ fun WelcomePageScreen(displayContent: String, onBack: () -> Unit = {}, onFinish:
                             .padding(top = 8.dp)
                     )
                 } else {
-                    WelcomePage(displayContent = "No content provided.")
+                    InformationCard(displayContent = "No content provided.")
                 }
             }
 
@@ -176,9 +176,8 @@ fun WelcomePageScreen(displayContent: String, onBack: () -> Unit = {}, onFinish:
     }
 }
 
-// NOTE: This WelcomePage composable will now receive a single paragraph string
 @Composable
-fun WelcomePage(displayContent: String) {
+fun InformationCard(displayContent: String) {
     Card(
         shape = RoundedCornerShape(16.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),

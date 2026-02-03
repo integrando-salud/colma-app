@@ -40,9 +40,9 @@ fun navigateToNextOrFinish(
     if (nextIndex < options.size) {
         val nextOption = options[nextIndex]
         val intent = when (nextOption.type) {
-            MultimediaContentType.DESCRIPTION -> Intent(activity, WelcomeActivity::class.java)
-            MultimediaContentType.VIDEO -> Intent(activity, ActionActivity::class.java)
-            MultimediaContentType.AUDIO -> Intent(activity, FinishActivity::class.java)
+            MultimediaContentType.DESCRIPTION -> Intent(activity, InformationDisplayActivity::class.java)
+            MultimediaContentType.VIDEO -> Intent(activity, InstructionalVideoActivity::class.java)
+            MultimediaContentType.AUDIO -> Intent(activity, ExplanatoryAudioActivity::class.java)
             MultimediaContentType.METAS -> Intent(activity, MetasActivity::class.java)
             MultimediaContentType.QUIZ -> Intent(activity, QuizActivity::class.java)
         }

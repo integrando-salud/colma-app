@@ -45,7 +45,7 @@ import com.colma.colmaApp.utils.videoPlayer.FullscreenVideoActivity
 import com.google.android.exoplayer2.ui.AspectRatioFrameLayout
 
 @OptIn(ExperimentalMaterial3Api::class)
-class ActionActivity : ComponentActivity() {
+class InstructionalVideoActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -68,12 +68,12 @@ class ActionActivity : ComponentActivity() {
 
         setContent {
             ColmaAppTheme {
-                ActionPageScreen(
+                InstructionalVideoPageScreen(
                     contentAssetId = contentAssetId,
                     onBack = { finish() },
                     onFinish = {
                         navigateToNextOrFinish(
-                            activity = this@ActionActivity,
+                            activity = this@InstructionalVideoActivity,
                             sessionId = sessionId,
                             sessionTitle = sessionTitle,
                             subSessionId = subSessionId,
@@ -90,7 +90,7 @@ class ActionActivity : ComponentActivity() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ActionPageScreen(contentAssetId: Int, onBack: () -> Unit = {}, onFinish: () -> Unit = {}) {
+fun InstructionalVideoPageScreen(contentAssetId: Int, onBack: () -> Unit = {}, onFinish: () -> Unit = {}) {
     val signatureColor = Color(0xFF0D97B6) // use your color
     Surface(color = Color.White, modifier = Modifier.fillMaxSize().systemBarsPadding()) {
         Column(modifier = Modifier.fillMaxSize()) {
@@ -270,4 +270,3 @@ fun VideoPlayerWithFullscreen(
         }
     }
 }
-

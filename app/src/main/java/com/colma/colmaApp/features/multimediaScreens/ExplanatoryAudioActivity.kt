@@ -42,7 +42,7 @@ import java.util.Locale
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 
 @OptIn(ExperimentalMaterial3Api::class)
-class FinishActivity : ComponentActivity() {
+class ExplanatoryAudioActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,12 +67,12 @@ class FinishActivity : ComponentActivity() {
 
         setContent {
             ColmaAppTheme {
-                FinishPageScreen(
+                ExplanatoryAudioPageScreen(
                     audioResId = audioResId,
                     onBack = { finish() },
                     onFinish = {
                         navigateToNextOrFinish(
-                            activity = this@FinishActivity,
+                            activity = this@ExplanatoryAudioActivity,
                             sessionId = sessionId,
                             sessionTitle = sessionTitle,
                             subSessionId = subSessionId,
@@ -89,7 +89,7 @@ class FinishActivity : ComponentActivity() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FinishPageScreen(
+fun ExplanatoryAudioPageScreen(
     @RawRes audioResId: Int = R.raw.audio_explicativo,
     onBack: () -> Unit = {},
     onFinish: () -> Unit = {}
@@ -215,7 +215,7 @@ fun FinishPageScreen(
 
 /**
  * Visual FinishPage composable containing the controls and text.
- * This is purely UI — the actual player control happens in the caller (FinishPageScreen).
+ * This is purely UI — the actual player control happens in the caller (ExplanatoryAudioPageScreen).
  */
 @Composable
 fun FinishPage(

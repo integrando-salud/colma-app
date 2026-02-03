@@ -47,15 +47,15 @@
             android:screenOrientation="portrait">
         </activity>
 
-        <activity android:name=".features.multimediaScreens.WelcomeActivity"
+        <activity android:name=".features.multimediaScreens.InformationDisplayActivity"
             android:exported="false"
             android:screenOrientation="portrait"/>
 
-        <activity android:name=".features.multimediaScreens.ActionActivity"
+        <activity android:name=".features.multimediaScreens.InstructionalVideoActivity"
             android:exported="false"
             android:screenOrientation="portrait"/>
 
-        <activity android:name=".features.multimediaScreens.FinishActivity"
+        <activity android:name=".features.multimediaScreens.ExplanatoryAudioActivity"
             android:exported="false"
             android:screenOrientation="portrait"/>
 

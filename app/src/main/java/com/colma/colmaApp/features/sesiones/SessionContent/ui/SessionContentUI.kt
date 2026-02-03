@@ -29,7 +29,8 @@ import androidx.core.view.WindowInsetsControllerCompat
 import com.colma.colmaApp.R
 import com.colma.colmaApp.features.multimediaScreens.ActionPage
 import com.colma.colmaApp.features.multimediaScreens.FinishPage
-import com.colma.colmaApp.features.multimediaScreens.WelcomePage
+import com.colma.colmaApp.features.multimediaScreens.InformationCard
+
 import com.colma.colmaApp.features.sesiones.SessionContent.data.SessionContentRepositoryImpl
 import com.colma.colmaApp.features.sesiones.SessionContent.viewmodel.SessionContentEvent
 import com.colma.colmaApp.features.sesiones.SessionContent.viewmodel.SessionContentUiState
@@ -236,7 +237,7 @@ fun SessionContentScreen(
                 when (uiState.selectedTab) {
                     0 -> {
                         Column(modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-                            WelcomePage(displayContent = uiState.informationContent)
+                            InformationCard(displayContent = uiState.informationContent)
                         }
                     }
                     1 -> {
