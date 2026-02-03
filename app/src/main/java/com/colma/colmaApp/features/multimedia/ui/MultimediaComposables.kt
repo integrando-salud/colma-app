@@ -1,0 +1,909 @@
+package com.colma.colmaApp.features.multimedia.ui
+
+import android.net.Uri
+import androidx.annotation.RawRes
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.PagerState
+import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.colma.colmaApp.R
+import com.google.android.exoplayer2.ExoPlayer
+import com.google.android.exoplayer2.MediaItem
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.isActive
+import java.util.*
+import java.util.concurrent.TimeUnit
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.viewinterop.AndroidView
+import com.colma.colmaApp.utils.videoPlayer.FullscreenVideoActivity
+import com.google.android.exoplayer2.ui.AspectRatioFrameLayout
+import com.google.android.exoplayer2.ui.PlayerView
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.TextButton
+import com.colma.colmaApp.utils.varios.CardThatOpensSelectionDialog
+import com.colma.colmaApp.utils.varios.CardThatOpensEditDialog
+import com.colma.colmaApp.utils.varios.CustomAlertDialog
+import android.widget.Toast
+import com.colma.colmaApp.servicios.Modelos.RegistrosSaludModelos
+import com.colma.colmaApp.servicios.database.dbhelper.DBhelper
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import com.colma.colmaApp.utils.varios.CardThatOpensDateTimeDialog
+import java.text.SimpleDateFormat
+import com.colma.colmaApp.features.sesiones.MultimediaSelector.domain.TreatmentType
+
+
+
+
+
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+fun InformationDisplayContent(displayContent: String) {
+    val signatureColor = colorResource(R.color.principal)
+    val paragraphs = remember(displayContent) {
+        displayContent.split("\n\n").filter { it.isNotBlank() }
+    }
+    val pagerState = rememberPagerState(pageCount = { paragraphs.size })
+
+    Column(modifier = Modifier
+        .fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        if (paragraphs.isNotEmpty()) {
+            HorizontalPager(
+                state = pagerState,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f)
+            ) { page ->
+                InformationCard(displayContent = paragraphs[page])
+            }
+            Spacer(Modifier.height(16.dp))
+            HorizontalPagerIndicator(
+                pagerState = pagerState,
+                pageCount = paragraphs.size,
+                activeColor = signatureColor,
+                inactiveColor = Color.LightGray,
+                modifier = Modifier
+                    .padding(top = 8.dp)
+            )
+        } else {
+            InformationCard(displayContent = "No content provided.")
+        }
+    }
+}
+
+@Composable
+fun InformationCard(displayContent: String) {
+    Card(
+        shape = RoundedCornerShape(16.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
+        colors = CardDefaults.cardColors(containerColor = Color.White),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(8.dp)
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(24.dp)
+                .verticalScroll(rememberScrollState()),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Top
+        ) {
+            Text(
+                "Información importante",
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold
+            )
+            Spacer(Modifier.height(16.dp))
+            Icon(
+                painter = painterResource(R.drawable.outline_unknown_document_24),
+                contentDescription = null,
+                modifier = Modifier.size(64.dp),
+                tint = Color(0xFFE84589)
+            )
+            Spacer(Modifier.height(16.dp))
+            Text(
+                displayContent,
+                fontSize = 16.sp,
+                textAlign = TextAlign.Left
+            )
+        }
+    }
+}
+
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+fun HorizontalPagerIndicator(
+    pagerState: PagerState,
+    pageCount: Int,
+    modifier: Modifier = Modifier,
+    activeColor: Color = Color.White,
+    inactiveColor: Color = Color.Gray,
+    indicatorWidth: Dp = 8.dp,
+    indicatorHeight: Dp = 8.dp,
+    spacing: Dp = 8.dp,
+    indicatorShape: Shape = CircleShape
+) {
+    Row(
+        horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = modifier,
+    ) {
+        repeat(pageCount) { index ->
+            val color = if (pagerState.currentPage == index) activeColor else inactiveColor
+            Box(
+                modifier = Modifier
+                    .padding(horizontal = spacing / 2)
+                    .size(indicatorWidth, indicatorHeight)
+                    .background(color = color, shape = indicatorShape)
+            )
+        }
+    }
+}
+
+@Composable
+fun AudioContent(
+    @RawRes audioResId: Int,
+) {
+    val context = LocalContext.current
+
+    val exoPlayer = remember(audioResId) {
+        ExoPlayer.Builder(context).build().apply {
+            val uri = Uri.parse("android.resource://${context.packageName}/$audioResId")
+            setMediaItem(MediaItem.fromUri(uri))
+            prepare()
+            playWhenReady = false
+        }
+    }
+
+    DisposableEffect(key1 = exoPlayer) {
+        onDispose {
+            try {
+                exoPlayer.stop()
+            } catch (_: Exception) {}
+            exoPlayer.release()
+        }
+    }
+
+    var isPlaying by rememberSaveable(audioResId) { mutableStateOf(false) }
+    var playbackPositionMs by remember(audioResId) { mutableStateOf(0L) }
+    var durationMs by remember(audioResId) { mutableStateOf(0L) }
+
+    LaunchedEffect(exoPlayer) {
+        var attempts = 0
+        while (durationMs <= 0 && attempts < 20) {
+            durationMs = exoPlayer.duration.coerceAtLeast(0L)
+            attempts++
+            delay(100)
+        }
+    }
+
+    LaunchedEffect(isPlaying, exoPlayer) {
+        if (isPlaying) {
+            exoPlayer.playWhenReady = true
+            while (isActive && isPlaying) {
+                playbackPositionMs = exoPlayer.currentPosition
+                durationMs = exoPlayer.duration.coerceAtLeast(0L)
+                delay(250L)
+            }
+        } else {
+            exoPlayer.playWhenReady = false
+        }
+    }
+
+    FinishPage(
+        audioDurationMs = if (durationMs > 0L) durationMs else 120_000L, // fallback duration
+        playbackPositionMs = playbackPositionMs,
+        isPlaying = isPlaying,
+        onPlayPauseToggle = {
+            isPlaying = !isPlaying
+        },
+        onSeek = { newPos ->
+            val pos = newPos.coerceIn(0L, (exoPlayer.duration.coerceAtLeast(0L)))
+            exoPlayer.seekTo(pos)
+            playbackPositionMs = pos
+        }
+    )
+}
+
+@Composable
+fun FinishPage(
+    audioDurationMs: Long = 120_000L,
+    playbackPositionMs: Long = 0L,
+    isPlaying: Boolean = false,
+    onPlayPauseToggle: () -> Unit = {},
+    onSeek: (Long) -> Unit = {}
+) {
+    Card(
+        shape = RoundedCornerShape(16.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
+        colors = CardDefaults.cardColors(containerColor = Color.White),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(8.dp)
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(24.dp)
+                .verticalScroll(rememberScrollState()),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center
+            ) {
+                Text(
+                    "Audio Explicativo",
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Medium
+                )
+                Spacer(Modifier.width(8.dp))
+                Icon(
+                    painter = painterResource(R.drawable.outline_headphones_24),
+                    contentDescription = null,
+                    modifier = Modifier.size(20.dp),
+                    tint = Color(0xFFE84589)
+                )
+            }
+
+            Spacer(Modifier.height(16.dp))
+
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                IconButton(onClick = onPlayPauseToggle) {
+                    Icon(
+                        painter = if (isPlaying) painterResource(R.drawable.baseline_pause_24) else painterResource(R.drawable.baseline_play_arrow_24),
+                        contentDescription = if (isPlaying) "Pausar" else "Reproducir",
+                        modifier = Modifier.size(36.dp),
+                        tint = Color(0xFFE84589)
+                    )
+                }
+
+                val duration = (audioDurationMs.coerceAtLeast(1L)).toFloat()
+                val position = (playbackPositionMs.coerceIn(0L, audioDurationMs)).toFloat()
+                Slider(
+                    value = if (duration > 0f) (position / duration) else 0f,
+                    onValueChange = { frac ->
+                        val newPos = (frac * duration).toLong()
+                        onSeek(newPos)
+                    },
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(horizontal = 8.dp)
+                )
+            }
+
+            Spacer(Modifier.height(8.dp))
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(formatTime(playbackPositionMs), fontSize = 12.sp, color = Color.Gray)
+                Text(formatTime(audioDurationMs), fontSize = 12.sp, color = Color.Gray)
+            }
+
+            Spacer(Modifier.height(16.dp))
+
+            Text(
+                "Pulsa el botón de play para escuchar el audio explicativo.",
+                fontSize = 16.sp,
+                textAlign = TextAlign.Center
+            )
+        }
+    }
+}
+
+private fun formatTime(ms: Long): String {
+    if (ms <= 0L) return "00:00"
+    val totalSeconds = TimeUnit.MILLISECONDS.toSeconds(ms)
+    val hours = totalSeconds / 3600
+    val minutes = (totalSeconds % 3600) / 60
+    val seconds = totalSeconds % 60
+
+    return if (hours > 0) {
+        String.format(Locale.getDefault(), "%d:%02d:%02d", hours, minutes, seconds)
+    } else {
+        String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds)
+    }
+}
+
+@Composable
+fun VideoContent(@RawRes contentAssetId: Int) {
+    Card(
+        shape = RoundedCornerShape(16.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
+        colors = CardDefaults.cardColors(containerColor = Color.White),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(8.dp)
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(24.dp)
+                .verticalScroll(rememberScrollState()),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            // Title + icon row
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center
+            ) {
+                Text(
+                    "Video Explicativo",
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold
+                )
+                Spacer(Modifier.width(8.dp))
+                Icon(
+                    painter = painterResource(R.drawable.outline_videocam_24),
+                    contentDescription = "Ver video",
+                    modifier = Modifier.size(32.dp),
+                    tint = Color(0xFFE84589)
+                )
+            }
+
+            Spacer(Modifier.height(16.dp))
+
+            // Video player - replace missing_photo thumbnail with actual player
+            VideoPlayerWithFullscreen(
+                resId = contentAssetId, // Use the dynamically provided contentAssetId
+                modifier = Modifier
+                    .size(width = 320.dp, height = 200.dp)
+                    .clip(RoundedCornerShape(8.dp))
+            )
+
+            Spacer(Modifier.height(16.dp))
+
+            Text(
+                "A continuación puedes ver un video explicativo para entender mejor los ejercicios de esta sesión.",
+                fontSize = 16.sp,
+                color = Color.Black,
+                modifier = Modifier.padding(horizontal = 4.dp),
+                // center text within card
+            )
+        }
+    }
+}
+
+    @Composable
+    fun VideoPlayerWithFullscreen(
+    @RawRes resId: Int,
+    modifier: Modifier = Modifier,
+    playerWidth: Dp = 320.dp,
+    playerHeight: Dp = 200.dp
+) {
+    val context = LocalContext.current
+    var playbackPosition by rememberSaveable(resId) { mutableStateOf(0L) }
+    var playWhenReady by rememberSaveable(resId) { mutableStateOf(true) }
+    val exoPlayer = remember(resId) {
+        ExoPlayer.Builder(context).build()
+    }
+    DisposableEffect(key1 = resId) {
+        val uri = Uri.parse("android.resource://${context.packageName}/$resId")
+        exoPlayer.setMediaItem(MediaItem.fromUri(uri))
+        exoPlayer.prepare()
+        exoPlayer.seekTo(playbackPosition)
+        exoPlayer.playWhenReady = playWhenReady
+        onDispose {
+            playbackPosition = exoPlayer.currentPosition
+            playWhenReady = exoPlayer.playWhenReady
+            exoPlayer.release()
+        }
+    }
+    Box(modifier = modifier) {
+        AndroidView(
+            factory = { ctx ->
+                PlayerView(ctx).apply {
+                    player = exoPlayer
+                    useController = true
+                    resizeMode = AspectRatioFrameLayout.RESIZE_MODE_FIT
+                }
+            },
+            modifier = Modifier
+                .size(width = playerWidth, height = playerHeight)
+                .clip(RoundedCornerShape(8.dp))
+                .align(Alignment.Center)
+        )
+        IconButton(
+            onClick = {
+                val uriString = "android.resource://${context.packageName}/$resId"
+                val positionMs = exoPlayer.currentPosition
+                exoPlayer.playWhenReady = false
+                FullscreenVideoActivity.start(context, uriString, positionMs)
+            },
+            modifier = Modifier
+                .align(Alignment.TopEnd)
+                .padding(6.dp)
+                .size(36.dp)
+                .background(Color.Black.copy(alpha = 0.35f), shape = RoundedCornerShape(6.dp))
+        ) {
+            Icon(
+                painter = painterResource(R.drawable.outline_fullscreen_24),
+                contentDescription = "Fullscreen",
+                tint = Color.White
+            )
+        }
+    }
+}
+
+data class QuizQuestion(
+    val questionText: String,
+    val options: List<String>,
+    val correctAnswerIndex: Int,
+)
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun QuizContent(quizId: String, onFinish: () -> Unit) {
+    val quizQuestions = remember(quizId) {
+        when (quizId) {
+            "diabetes" -> getDiabetesQuizQuestions()
+            else -> getHtaQuizQuestions()
+        }
+    }
+    val userAnswers = remember { mutableStateMapOf<Int, Int>() }
+    var quizSubmitted by remember { mutableStateOf(false) }
+    var showConfirmationDialog by remember { mutableStateOf(false) }
+
+    val allQuestionsAnswered = userAnswers.size == quizQuestions.size
+
+    Box(modifier = Modifier.fillMaxSize()) {
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(bottom = 80.dp), // Space for the button
+            contentPadding = PaddingValues(16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            itemsIndexed(quizQuestions) { index, question ->
+                QuestionCard(
+                    questionIndex = index,
+                    question = question,
+                    selectedAnswerIndex = userAnswers[index],
+                    isSubmitted = quizSubmitted,
+                    onAnswerSelected = { answerIndex ->
+                        if (!quizSubmitted) {
+                            userAnswers[index] = answerIndex
+                        }
+                    }
+                )
+            }
+        }
+
+        if (showConfirmationDialog) {
+            AlertDialog(
+                onDismissRequest = { showConfirmationDialog = false },
+                containerColor = Color.White,
+                title = { Text("Confirmar respuestas") },
+                text = { Text("¿Estás seguro de que quieres confirmar tus respuestas? No podrás cambiarlas después.") },
+                confirmButton = {
+                    Button(
+                        onClick = {
+                            showConfirmationDialog = false
+                            quizSubmitted = true
+                        },
+                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF008000), contentColor = Color.White)
+                    ) {
+                        Text("Confirmar")
+                    }
+                },
+                dismissButton = {
+                    TextButton(
+                        onClick = { showConfirmationDialog = false },
+                        colors = ButtonDefaults.textButtonColors(containerColor = Color.Red, contentColor = Color.White)
+                    ) {
+                        Text("Cancelar")
+                    }
+                }
+            )
+        }
+
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp),
+            contentAlignment = Alignment.BottomCenter
+        ) {
+            Button(
+                onClick = {
+                    if (quizSubmitted) {
+                        onFinish()
+                    } else {
+                        showConfirmationDialog = true
+                    }
+                },
+                enabled = if (quizSubmitted) true else allQuestionsAnswered,
+                modifier = Modifier.fillMaxWidth(),
+                colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.principal))
+            ) {
+                Text(if (quizSubmitted) "Finalizar" else "Confirmar")
+            }
+        }
+    }
+}
+
+@Composable
+fun QuestionCard(
+    questionIndex: Int,
+    question: QuizQuestion,
+    selectedAnswerIndex: Int?,
+    isSubmitted: Boolean,
+    onAnswerSelected: (Int) -> Unit
+) {
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        colors = CardDefaults.cardColors(containerColor = Color.White),
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+    ) {
+        Column(modifier = Modifier.padding(16.dp)) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Text(
+                    text = "Pregunta ${questionIndex + 1}",
+                    style = MaterialTheme.typography.titleMedium,
+                    modifier = Modifier.weight(1f)
+                )
+                if (isSubmitted) {
+                    val isCorrect = selectedAnswerIndex == question.correctAnswerIndex
+                    val text = if (isCorrect) "Correcto" else "Incorrecto"
+                    val bgColor = if (isCorrect) Color(0xFF008000) else Color.Red
+                    Text(
+                        text = text,
+                        color = Color.White,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 14.sp,
+                        modifier = Modifier
+                            .background(bgColor, shape = MaterialTheme.shapes.small)
+                            .padding(horizontal = 8.dp, vertical = 4.dp)
+                    )
+                }
+            }
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(text = question.questionText, fontWeight = FontWeight.SemiBold)
+            Spacer(modifier = Modifier.height(16.dp))
+
+            if (isSubmitted) {
+                val userAnswerText = selectedAnswerIndex?.let { question.options.getOrNull(it) } ?: "No respondida"
+                val correctAnswerText = question.options[question.correctAnswerIndex]
+                Text("Tu respuesta: $userAnswerText")
+                if (selectedAnswerIndex != question.correctAnswerIndex) {
+                    Text("Respuesta correcta: $correctAnswerText", color = Color(0xFF008000))
+                }
+            } else {
+                CardThatOpensSelectionDialog(
+                    title = "Selecciona tu respuesta",
+                    description = selectedAnswerIndex?.let { question.options.getOrNull(it) } ?: "Toca para responder",
+                    items = question.options,
+                    onItemSelected = { selectedOption ->
+                        onAnswerSelected(question.options.indexOf(selectedOption))
+                    }
+                )
+            }
+        }
+    }
+}
+
+fun getHtaQuizQuestions(): List<QuizQuestion> {
+    return listOf(
+        QuizQuestion(
+            questionText = "Tomás se siente muy bien y por eso decide dar un paseo por el parque. Mientras camina, ve un puesto sanitario con personal de salud, quienes le ofrecen tomarle la presion arterial. Le informan que la medicion fue: 150/90 mmHG ¿Qué debe hacer Tomás?",
+            options = listOf(
+                "Nada, él se siente muy bien y sólo estaba paseando",
+                "Programar una cita y consultar con su médico para hablar su presion arterial"
+            ),
+            correctAnswerIndex = 1
+        ),
+        QuizQuestion(
+            questionText = "¿Qué quiere decir que la presión alta es 'silenciosa'?",
+            options = listOf(
+                "Que no se habla lo suficiente de ella en los medios de comunicacion.",
+                "Que los aparatos que la miden no hacen ruido",
+                "Que la presion puede estar alta y no generar síntomas."
+            ),
+            correctAnswerIndex = 2
+        ),
+        QuizQuestion(
+            questionText = "La hipertension es una condición crónica, y ¿esto que quiere decir?",
+            options = listOf(
+                "Que nos acompañará toda la vida y no hay nada que podamos hacer al respecto",
+                "Que nos acompañará toda la vida pero podemos hacer muchas cosas para controlarla"
+            ),
+            correctAnswerIndex = 1
+        ),
+        QuizQuestion(
+            questionText = "Tengo presión alta pero me siento muy bien. ¿Qué hago con la medicacion que me recetó el médico?",
+            options = listOf(
+                "No tomarla más porque me siento bien",
+                "Dejo de tomarlas hasta hablar de nuevo con mi médico",
+                "Necesito continuar tomandola todos los días"
+            ),
+            correctAnswerIndex = 2
+        )
+    )
+}
+
+fun getDiabetesQuizQuestions(): List<QuizQuestion> {
+    return listOf(
+        QuizQuestion(
+            questionText = "La insulina es como una llave que permite que la glucosa entre en las células y nos dé energía",
+            options = listOf(
+                "Verdadero",
+                "Falso"
+            ),
+            correctAnswerIndex = 0
+        ),
+        QuizQuestion(
+            questionText = "Tener mucha sed, orinar mucho y tener mucha hambre pueden ser señales de que...",
+            options = listOf(
+                "La glucosa está baja y necesitas comer algo",
+                "La glucosa está alta y necesita controlarse",
+                "La glucosa está equilibrada"
+            ),
+            correctAnswerIndex = 1
+        ),
+        QuizQuestion(
+            questionText = "La mejor forma de saber cómo está mi glucosa es...",
+            options = listOf(
+                "Midiéndola con un glucómetro o un análisis de sangre",
+                "Solo reconociendo las señales de mi cuerpo",
+                "No es necesario saberlo"
+            ),
+            correctAnswerIndex = 0
+        )
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun MetasContent(metasId: String, onFinish: () -> Unit) {
+    val treatmentType = if (metasId != null) {
+        try {
+            TreatmentType.valueOf(metasId.uppercase(Locale.ROOT))
+        } catch (e: IllegalArgumentException) {
+            TreatmentType.HTA // Default to HTA if invalid string
+        }
+    } else {
+        TreatmentType.HTA // Default to HTA if no extra is passed
+    }
+
+    val context = LocalContext.current
+    val dbHelper = remember { DBhelper(context) }
+    val scope = rememberCoroutineScope()
+
+    val dbDateTimeFormat = remember { SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US) }
+    val displayDateFormat = remember { SimpleDateFormat("dd/MM/yyyy", Locale.US) }
+
+    val tipoActividad = rememberSaveable { mutableStateOf<String?>(null) }
+    val actividad = rememberSaveable { mutableStateOf<String?>(null) }
+    val conQuien = rememberSaveable { mutableStateOf<String?>(null) }
+    val donde = rememberSaveable { mutableStateOf<String?>(null) }
+
+    val today = Calendar.getInstance()
+    val todayString = dbDateTimeFormat.format(today.time)
+    val tomorrow = Calendar.getInstance().apply { add(Calendar.DATE, 1) }
+    val fecha = rememberSaveable { mutableStateOf(dbDateTimeFormat.format(tomorrow.time)) }
+    val fechaEdicion = rememberSaveable { mutableStateOf(todayString) }
+
+    var showSummaryDialog by rememberSaveable { mutableStateOf(false) }
+    var summaryMessage by rememberSaveable { mutableStateOf("") }
+    var shouldExecuteFinalAction by rememberSaveable { mutableStateOf(false) }
+
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp)
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .verticalScroll(rememberScrollState())
+                .padding(bottom = 84.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            val (actividades, conQuienOptions) = getMetasOptions(treatmentType)
+
+            CardThatOpensSelectionDialog(
+                title = "Tipo de actividad",
+                description = "Seleccione el tipo de actividad para su meta.",
+                items = listOf("Actividad física"),
+                label = { it },
+                onItemSelected = { chosen ->
+                    tipoActividad.value = chosen
+                }
+            )
+            Spacer(modifier = Modifier.padding(8.dp))
+            CardThatOpensSelectionDialog(
+                title = "Actividad",
+                description = "Seleccione la actividad concreta que desee realizar.",
+                items = actividades,
+                label = { it },
+                onItemSelected = { chosen ->
+                    actividad.value = chosen
+                }
+            )
+            Spacer(modifier = Modifier.padding(8.dp))
+            CardThatOpensSelectionDialog(
+                title = "Con quien",
+                description = "Quien te acompañará en esta actividad?",
+                items = conQuienOptions,
+                label = { it },
+                onItemSelected = { chosen ->
+                    conQuien.value = chosen
+                }
+            )
+            Spacer(modifier = Modifier.padding(8.dp))
+            CardThatOpensEditDialog(
+                title = "Donde?",
+                description = "Describe brevemente en donde lo harás",
+                placeholder = "Escribe el lugar...",
+                onSave = { newDesc ->
+                    donde.value = newDesc
+                }
+            )
+            Spacer(modifier = Modifier.padding(8.dp))
+            CardThatOpensDateTimeDialog(
+                title = "Fecha Objetivo",
+                description = "Selecciona la fecha límite para tu meta.",
+                initialMillis = today.timeInMillis,
+                onDateTimeSelected = { selectedCal ->
+                    selectedCal.set(Calendar.SECOND, 0)
+                    fecha.value = dbDateTimeFormat.format(selectedCal.time)
+                }
+            )
+        }
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .align(Alignment.BottomCenter),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Button(
+                onClick = {
+                    val missing = buildList {
+                        if (tipoActividad.value.isNullOrBlank()) add("Tipo de actividad")
+                        if (actividad.value.isNullOrBlank()) add("Actividad")
+                        if (conQuien.value.isNullOrBlank()) add("Con quién")
+                        if (donde.value.isNullOrBlank()) add("Dónde")
+                        if (fecha.value.isNullOrBlank()) add("Fecha Objetivo")
+                        if (fechaEdicion.value.isNullOrBlank()) add("Fecha de Creación")
+                    }
+                    shouldExecuteFinalAction = missing.isEmpty()
+                    if (missing.isNotEmpty()) {
+                        summaryMessage = "Faltan completar los siguientes campos:\n\n• " + missing.joinToString("\n• ")
+                    } else {
+                        val fechaObjetivoForDisplay = dbDateTimeFormat.parse(fecha.value)?.let { displayDateFormat.format(it) } ?: fecha.value
+                        val fechaCreacionForDisplay = dbDateTimeFormat.parse(fechaEdicion.value)?.let { displayDateFormat.format(it) } ?: fechaEdicion.value
+                        summaryMessage = """
+                            Resumen de registro:
+                            • Tipo de actividad: ${tipoActividad.value}
+                            • Actividad: ${actividad.value}
+                            • Con quién: ${conQuien.value}
+                            • Dónde: ${donde.value}
+                            • Fecha Objetivo: $fechaObjetivoForDisplay
+                            • Fecha de Creación: $fechaCreacionForDisplay
+                        """.trimIndent()
+                    }
+                    showSummaryDialog = true
+                },
+                modifier = Modifier.fillMaxWidth().height(52.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = colorResource(R.color.principal),
+                    contentColor = Color.White
+                ),
+                shape = RoundedCornerShape(8.dp)
+            ) {
+                Text(text = "Terminar", fontWeight = FontWeight.SemiBold)
+            }
+            if (showSummaryDialog) {
+                CustomAlertDialog(
+                    show = showSummaryDialog,
+                    onDismissRequest = { showSummaryDialog = false },
+                    title = "Resultado",
+                    description = summaryMessage,
+                    yesLabel = "OK",
+                    onYes = {
+                        if (shouldExecuteFinalAction) {
+                            scope.launch {
+                                val newMeta = RegistrosSaludModelos.MetaRecord(
+                                    id_meta = 0,
+                                    id_usuario = 1,
+                                    semana = null,
+                                    sesion = null,
+                                    tipo_actividad = tipoActividad.value,
+                                    actividad = actividad.value,
+                                    lugar = donde.value,
+                                    acompañante = conQuien.value,
+                                    fecha_regisitro = null,
+                                    fecha_edicion = fechaEdicion.value,
+                                    fecha_sincronizacion = null,
+                                    meta_cumplida = 0,
+                                    fecha_objetivo = fecha.value
+                                )
+                                val result = withContext(Dispatchers.IO) {
+                                    dbHelper.insertMeta(newMeta)
+                                }
+                                if (result != -1L) {
+                                    withContext(Dispatchers.Main) {
+                                        Toast.makeText(context, "Meta guardada exitosamente", Toast.LENGTH_SHORT).show()
+                                        onFinish()
+                                    }
+                                } else {
+                                    withContext(Dispatchers.Main) {
+                                        Toast.makeText(context, "Error al guardar la meta", Toast.LENGTH_SHORT).show()
+                                    }
+                                }
+                            }
+                        }
+                        showSummaryDialog = false
+                    }
+                )
+            }
+        }
+    }
+}
+
+fun getMetasOptions(treatmentType: TreatmentType): Pair<List<String>, List<String>> {
+    val conQuienOptions = listOf("Solo/a", "Familiar", "Pareja", "Amigo/a", "Vecino/a", "Mascota")
+
+    return when (treatmentType) {
+        TreatmentType.DIABETES -> Pair(
+            listOf(
+                "Ordenar la cocina o una habitación.",
+                "Ir de compras o ir al mercado.",
+                "Hacer un trámite pendiente (ej, hacer una llamada, realizar una consulta, sacar un turno)",
+                "Revisar mis documentos personales o médicos.",
+                "Limpiar un espacio de la casa que he dejado pendiente.",
+                "Reparar o arreglar algo roto o que no funciona.",
+                "Lavar o planchar ropa acumulada.",
+                "Ir al banco, correo u oficina municipal.",
+                "Organizar la semana con una lista de pendientes."
+            ),
+            conQuienOptions
+        )
+        TreatmentType.HTA -> Pair(
+            listOf(
+                "Subir escaleras en lugar de usar el ascensor.",
+                "Bajar una parada de colectivo antes para caminar un poco más",
+                "Bailar una canción en casa.",
+                "Caminar al mercado, centro de salud, casa de un familia",
+                "Pasear en bicicleta.",
+                "Jugar algún deporte recreativo (fútbol, voley,etc.)."
+            ),
+            conQuienOptions
+        )
+    }
+}
+
+
+
+

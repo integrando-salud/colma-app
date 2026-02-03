@@ -30,13 +30,9 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import com.colma.colmaApp.R
-import com.colma.colmaApp.features.multimediaScreens.InstructionalVideoActivity
-import com.colma.colmaApp.features.multimediaScreens.ExplanatoryAudioActivity
-import com.colma.colmaApp.features.multimediaScreens.MetasActivity
-import com.colma.colmaApp.features.multimediaScreens.QuizActivity
-import com.colma.colmaApp.features.multimediaScreens.InformationDisplayActivity
 import com.colma.colmaApp.features.sesiones.MultimediaSelector.data.MultimediaRepositoryImpl
 import com.colma.colmaApp.features.sesiones.MultimediaSelector.domain.MultimediaContentType
+
 import com.colma.colmaApp.features.sesiones.MultimediaSelector.domain.MultimediaOption
 import com.colma.colmaApp.features.sesiones.MultimediaSelector.domain.TreatmentType
 import com.colma.colmaApp.features.sesiones.MultimediaSelector.viewmodel.MultimediaSelectorEvent
@@ -106,15 +102,7 @@ class MultimediaSelectorUI : ComponentActivity() {
     }
 
     private fun navigateToMultimedia(option: MultimediaOption, index: Int, uiState: MultimediaSelectorUiState) {
-        val intent = when (option.type) {
-            MultimediaContentType.DESCRIPTION -> Intent(this, InformationDisplayActivity::class.java).apply {
-                putExtra("displayContent", option.fullDescription ?: option.description)
-            }
-            MultimediaContentType.VIDEO -> Intent(this, InstructionalVideoActivity::class.java)
-            MultimediaContentType.AUDIO -> Intent(this, ExplanatoryAudioActivity::class.java)
-            MultimediaContentType.METAS -> Intent(this, MetasActivity::class.java)
-            MultimediaContentType.QUIZ -> Intent(this, QuizActivity::class.java)
-        }
+        val intent = Intent(this, com.colma.colmaApp.features.multimedia.ui.MultimediaActivity::class.java)
         intent.apply {
             putExtra("sessionId", uiState.sessionId)
             putExtra("sessionTitle", uiState.sessionTitle)
@@ -122,16 +110,6 @@ class MultimediaSelectorUI : ComponentActivity() {
             putExtra("subSessionTitle", uiState.subSessionTitle)
             putExtra("treatmentTypes", uiState.treatmentTypes.joinToString(",") { it.name })
             putExtra("currentMultimediaIndex", index)
-
-            if (option.contentAssetId != null) {
-                putExtra("contentAssetId", option.contentAssetId)
-            }
-            if (option.quizId != null) {
-                putExtra("quizId", option.quizId)
-            }
-            if (option.metasId != null) {
-                putExtra("metasType", option.metasId)
-            }
         }
         startActivity(intent)
     }

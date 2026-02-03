@@ -27,9 +27,9 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import com.colma.colmaApp.R
-import com.colma.colmaApp.features.multimediaScreens.ActionPage
-import com.colma.colmaApp.features.multimediaScreens.FinishPage
-import com.colma.colmaApp.features.multimediaScreens.InformationCard
+import com.colma.colmaApp.features.multimedia.ui.VideoContent
+import com.colma.colmaApp.features.multimedia.ui.AudioContent
+import com.colma.colmaApp.features.multimedia.ui.InformationCard
 
 import com.colma.colmaApp.features.sesiones.SessionContent.data.SessionContentRepositoryImpl
 import com.colma.colmaApp.features.sesiones.SessionContent.viewmodel.SessionContentEvent
@@ -104,51 +104,11 @@ fun SessionContentScreen(
 
     @RawRes val audioRes = R.raw.audio_explicativo
 
-    val exoPlayer = remember {
-        ExoPlayer.Builder(context).build().apply {
-            val uri = Uri.parse("android.resource://${context.packageName}/$audioRes")
-            setMediaItem(MediaItem.fromUri(uri))
-            prepare()
-            playWhenReady = false
-        }
-    }
-
-    DisposableEffect(key1 = Unit) {
-        onDispose {
-            exoPlayer.release()
-        }
-    }
-    
-    LaunchedEffect(exoPlayer) {
-        while (true) {
-            val duration = exoPlayer.duration
-            if (duration > 0 && duration != C.TIME_UNSET) {
-                onEvent(SessionContentEvent.PlayerReady(duration))
-                break
-            }
-            delay(100)
-        }
-    }
-
-    LaunchedEffect(uiState.isPlaying) {
-        exoPlayer.playWhenReady = uiState.isPlaying
-
-        if (uiState.isPlaying) {
-            while (true) {
-                onEvent(SessionContentEvent.UpdatePlaybackPosition(exoPlayer.currentPosition))
-                delay(250)
-            }
-        }
-    }
-
     LaunchedEffect(Unit) {
         viewModel.navigationEvent.collect { event ->
             when (event) {
                 is SessionContentViewModel.NavigationEvent.NavigateBack -> {
                     activity?.finish()
-                }
-                is SessionContentViewModel.NavigationEvent.SeekAudio -> {
-                    exoPlayer.seekTo(event.position)
                 }
             }
         }
@@ -242,19 +202,12 @@ fun SessionContentScreen(
                     }
                     1 -> {
                         Column(modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-                            ActionPage()
+                            VideoContent(contentAssetId = R.raw.hta_sesion_5_1)
                         }
                     }
                     2 -> {
                         Column(modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-                            FinishPage(
-                                audioDurationMs = if (uiState.durationMs > 0L) uiState.durationMs else 120_000L,
-                                playbackPositionMs = uiState.playbackPositionMs,
-                                isPlaying = uiState.isPlaying,
-                                onPlayPauseToggle = { onEvent(SessionContentEvent.PlayPauseToggle) },
-                                onSeek = { onEvent(SessionContentEvent.SeekAudio(it)) }
-                            )
-                            Spacer(modifier = Modifier.height(8.dp))
+                            AudioContent(audioResId = audioRes)
                         }
                     }
                 }

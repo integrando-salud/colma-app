@@ -33,29 +33,12 @@ class SessionContentViewModel(private val repository: SessionContentRepository) 
                 loadContent()
             }
             is SessionContentEvent.TabSelected -> {
-                _uiState.update { it.copy(selectedTab = event.index, isPlaying = if (event.index != 2) false else it.isPlaying) }
-            }
-            is SessionContentEvent.UpdatePlaybackPosition -> {
-                if (_uiState.value.isPlaying) {
-                    _uiState.update { it.copy(playbackPositionMs = event.position) }
-                }
-            }
-            is SessionContentEvent.SeekAudio -> {
-                 _uiState.update { it.copy(playbackPositionMs = event.position) }
-                 viewModelScope.launch { _navigationEvent.send(NavigationEvent.SeekAudio(event.position)) }
-            }
-            SessionContentEvent.PlayPauseToggle -> {
-                val isPlaying = !_uiState.value.isPlaying
-                _uiState.update { it.copy(isPlaying = isPlaying) }
-            }
-            is SessionContentEvent.PlayerReady -> {
-                _uiState.update { it.copy(durationMs = event.duration) }
+                _uiState.update { it.copy(selectedTab = event.index) }
             }
             SessionContentEvent.BackClicked -> {
                 viewModelScope.launch { _navigationEvent.send(NavigationEvent.NavigateBack) }
             }
             SessionContentEvent.TerminarClicked -> {
-                _uiState.update { it.copy(isPlaying = false) } // Stop player
                 viewModelScope.launch { _navigationEvent.send(NavigationEvent.NavigateBack) }
             }
         }
@@ -84,6 +67,5 @@ class SessionContentViewModel(private val repository: SessionContentRepository) 
 
     sealed class NavigationEvent {
         object NavigateBack : NavigationEvent()
-        data class SeekAudio(val position: Long) : NavigationEvent()
     }
 }

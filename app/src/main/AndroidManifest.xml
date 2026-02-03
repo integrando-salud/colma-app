@@ -34,28 +34,7 @@
 
         </activity>
 
-        <activity android:name=".features.multimediaScreens.MetasActivity"
-            android:exported="false"
-            android:screenOrientation="portrait">
-
-
-
-        </activity>
-
-        <activity android:name=".features.multimediaScreens.QuizActivity"
-            android:exported="false"
-            android:screenOrientation="portrait">
-        </activity>
-
-        <activity android:name=".features.multimediaScreens.InformationDisplayActivity"
-            android:exported="false"
-            android:screenOrientation="portrait"/>
-
-        <activity android:name=".features.multimediaScreens.InstructionalVideoActivity"
-            android:exported="false"
-            android:screenOrientation="portrait"/>
-
-        <activity android:name=".features.multimediaScreens.ExplanatoryAudioActivity"
+        <activity android:name=".features.multimedia.ui.MultimediaActivity"
             android:exported="false"
             android:screenOrientation="portrait"/>
 
