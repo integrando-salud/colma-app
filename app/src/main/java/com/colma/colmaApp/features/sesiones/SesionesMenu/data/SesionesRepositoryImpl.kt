@@ -1,42 +1,73 @@
 package com.colma.colmaApp.features.sesiones.SesionesMenu.data
 
-import com.colma.colmaApp.R
+import android.content.Context
+import com.colma.colmaApp.features.content.domain.ContentRepository
 import com.colma.colmaApp.features.sesiones.MultimediaSelector.domain.TreatmentType
 import com.colma.colmaApp.features.sesiones.SesionesMenu.domain.SesionesRepository
 import com.colma.colmaApp.features.sesiones.SesionesMenu.domain.SessionItem
 import com.colma.colmaApp.features.sesiones.SesionesMenu.domain.SubSessionItem
-import kotlinx.coroutines.delay
+import com.colma.colmaApp.utils.ResourceUtils
 
-class SesionesRepositoryImpl : SesionesRepository {
+class SesionesRepositoryImpl(private val contentRepository: ContentRepository, private val context: Context) : SesionesRepository {
     override suspend fun getHtaSessions(): List<SessionItem> {
-        delay(500) // Simulate network/db call
-        return (1..16).map {
-            SessionItem(it.toLong(), "Semana $it hipertensión", TreatmentType.HTA, thumbnailRes = R.drawable.missing_photo)
-        }
+        return contentRepository.getAllTreatments().fold(
+            onSuccess = { treatmentContents ->
+                treatmentContents
+                    .filter { it.id == TreatmentType.HTA }
+                    .flatMap { it.sessions }
+                    .map { sessionContent ->
+                        SessionItem(
+                            id = sessionContent.id,
+                            title = sessionContent.title,
+                            treatmentType = TreatmentType.HTA,
+                            thumbnailRes = ResourceUtils.getResourceId(context, sessionContent.thumbnail, "drawable"),
+                            duration = sessionContent.duration
+                        )
+                    }
+            },
+            onFailure = { emptyList() }
+        )
     }
 
     override suspend fun getDiabetesSessions(): List<SessionItem> {
-        delay(500) // Simulate network/db call
-        return (1..16).map {
-            SessionItem(it.toLong() + 16, "Semana $it Diabetes", TreatmentType.DIABETES, thumbnailRes = R.drawable.missing_photo)
-        }
+        return contentRepository.getAllTreatments().fold(
+            onSuccess = { treatmentContents ->
+                treatmentContents
+                    .filter { it.id == TreatmentType.DIABETES }
+                    .flatMap { it.sessions }
+                    .map { sessionContent ->
+                        SessionItem(
+                            id = sessionContent.id,
+                            title = sessionContent.title,
+                            treatmentType = TreatmentType.DIABETES,
+                            thumbnailRes = ResourceUtils.getResourceId(context, sessionContent.thumbnail, "drawable"),
+                            duration = sessionContent.duration
+                        )
+                    }
+            },
+            onFailure = { emptyList() }
+        )
     }
 
     override suspend fun getHtaSubSessions(sessionId: Long): List<SubSessionItem> {
-        delay(200)
-        return listOf(
-            SubSessionItem(1, "Sesion 1", "05:00"),
-            SubSessionItem(2, "Sesion 2", "07:00"),
-            SubSessionItem(3, "Sesion 3", "03:00"),
-        )
+        return contentRepository.getSubSessions(TreatmentType.HTA, sessionId).getOrDefault(emptyList())
+            .map { subSessionContent ->
+                SubSessionItem(
+                    id = subSessionContent.id,
+                    title = subSessionContent.title,
+                    duration = subSessionContent.duration
+                )
+            }
     }
 
     override suspend fun getDiabetesSubSessions(sessionId: Long): List<SubSessionItem> {
-        delay(200)
-        return listOf(
-            SubSessionItem(1, "Sesion 1", "05:00"),
-            SubSessionItem(2, "Sesion 2", "07:00"),
-            SubSessionItem(3, "Sesion 3", "03:00"),
-        )
+        return contentRepository.getSubSessions(TreatmentType.DIABETES, sessionId).getOrDefault(emptyList())
+            .map { subSessionContent ->
+                SubSessionItem(
+                    id = subSessionContent.id,
+                    title = subSessionContent.title,
+                    duration = subSessionContent.duration
+                )
+            }
     }
 }

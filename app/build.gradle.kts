@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -62,6 +63,8 @@ dependencies {
 
     implementation ("com.google.android.exoplayer:exoplayer:2.19.0")
     implementation ("com.google.android.exoplayer:exoplayer-ui:2.19.0")
+
+    implementation(libs.kotlinx.serialization.json)
 
 
 }

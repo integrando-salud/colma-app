@@ -44,9 +44,7 @@ import com.colma.colmaApp.ui.theme.ColmaAppTheme
 class MultimediaSelectorUI : ComponentActivity() {
 
     private val viewModel: MultimediaSelectorViewModel by viewModels {
-        MultimediaSelectorViewModelFactory(
-            MultimediaRepositoryImpl()
-        )
+        MultimediaSelectorViewModelFactory(applicationContext)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

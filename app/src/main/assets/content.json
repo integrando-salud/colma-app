@@ -1,0 +1,1189 @@
+{
+  "treatments": [
+    {
+      "id": "HTA",
+      "name": "Hipertensión",
+      "sessions": [
+        {
+          "id": 1,
+          "title": "Semana 1 hipertensión",
+          "thumbnail": "missing_photo",
+          "duration": "10 min",
+          "subSessions": [
+            {
+              "id": 1,
+              "title": "Sesion 1",
+              "duration": "05:00",
+              "multimedia": [
+                {
+                  "type": "VIDEO",
+                  "title": "Video Introducción",
+                  "description": "Ver el vídeo de introducción a la sesión",
+                  "iconImageVector": "PlayArrow",
+                  "contentAsset": "hta_sesion_5_1"
+                }
+              ]
+            },
+            {
+              "id": 2,
+              "title": "Sesion 2",
+              "duration": "07:00",
+              "multimedia": [
+                {
+                  "type": "VIDEO",
+                  "title": "Video Explicativo",
+                  "description": "Ver el vídeo explicativo de la sesión",
+                  "iconImageVector": "PlayArrow",
+                  "contentAsset": "hta_sesion_5_2"
+                },
+                {
+                  "type": "QUIZ",
+                  "title": "Cuestionario Módulo 5",
+                  "description": "Responde las preguntas del módulo 5 de HTA",
+                  "iconResId": "outline_trophy_24",
+                  "quizId": "hta"
+                }
+              ]
+            },
+            {
+              "id": 3,
+              "title": "Sesion 3",
+              "duration": "03:00",
+              "multimedia": [
+                {
+                  "type": "VIDEO",
+                  "title": "Video Principal",
+                  "description": "Primer video de la sesión",
+                  "iconImageVector": "PlayArrow",
+                  "contentAsset": "hta_sesion_5_3"
+                },
+                {
+                  "type": "VIDEO",
+                  "title": "Video Complementario",
+                  "description": "Segundo video de la sesión",
+                  "iconImageVector": "PlayArrow",
+                  "contentAsset": "hta_sesion_5_3_experiencia"
+                },
+                {
+                  "type": "METAS",
+                  "title": "Metas",
+                  "description": "Configura tus metas para esta sesión",
+                  "iconResId": "outline_trophy_24",
+                  "metasId": "hta"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "title": "Semana 2 hipertensión",
+          "thumbnail": "missing_photo",
+          "duration": "10 min",
+          "subSessions": [
+            {
+              "id": 1,
+              "title": "Sesion 1",
+              "duration": "05:00",
+              "multimedia": [
+                {
+                  "type": "VIDEO",
+                  "title": "Video Genérico",
+                  "description": "Ver el vídeo genérico de la sesión",
+                  "iconImageVector": "PlayArrow",
+                  "contentAsset": "exercise"
+                },
+                {
+                  "type": "AUDIO",
+                  "title": "Audio Genérico",
+                  "description": "Escuchar el audio genérico de la sesión",
+                  "iconResId": "outline_headphones_24",
+                  "contentAsset": "audio_explicativo"
+                },
+                {
+                  "type": "METAS",
+                  "title": "Metas",
+                  "description": "Configura tus metas para esta sesión",
+                  "iconResId": "outline_trophy_24",
+                  "metasId": "hta"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": 3,
+          "title": "Semana 3 hipertensión",
+          "thumbnail": "missing_photo",
+          "duration": "10 min",
+          "subSessions": [
+            {
+              "id": 1,
+              "title": "Sesion 1",
+              "duration": "05:00",
+              "multimedia": [
+                {
+                  "type": "VIDEO",
+                  "title": "Video Genérico",
+                  "description": "Ver el vídeo genérico de la sesión",
+                  "iconImageVector": "PlayArrow",
+                  "contentAsset": "exercise"
+                },
+                {
+                  "type": "AUDIO",
+                  "title": "Audio Genérico",
+                  "description": "Escuchar el audio genérico de la sesión",
+                  "iconResId": "outline_headphones_24",
+                  "contentAsset": "audio_explicativo"
+                },
+                {
+                  "type": "METAS",
+                  "title": "Metas",
+                  "description": "Configura tus metas para esta sesión",
+                  "iconResId": "outline_trophy_24",
+                  "metasId": "hta"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": 4,
+          "title": "Semana 4 hipertensión",
+          "thumbnail": "missing_photo",
+          "duration": "10 min",
+          "subSessions": [
+            {
+              "id": 1,
+              "title": "Sesion 1",
+              "duration": "05:00",
+              "multimedia": [
+                {
+                  "type": "VIDEO",
+                  "title": "Video Genérico",
+                  "description": "Ver el vídeo genérico de la sesión",
+                  "iconImageVector": "PlayArrow",
+                  "contentAsset": "exercise"
+                },
+                {
+                  "type": "AUDIO",
+                  "title": "Audio Genérico",
+                  "description": "Escuchar el audio genérico de la sesión",
+                  "iconResId": "outline_headphones_24",
+                  "contentAsset": "audio_explicativo"
+                },
+                {
+                  "type": "METAS",
+                  "title": "Metas",
+                  "description": "Configura tus metas para esta sesión",
+                  "iconResId": "outline_trophy_24",
+                  "metasId": "hta"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": 5,
+          "title": "Semana 5 hipertensión",
+          "thumbnail": "missing_photo",
+          "duration": "10 min",
+          "subSessions": [
+            {
+              "id": 1,
+              "title": "Sesion 1",
+              "duration": "05:00",
+              "multimedia": [
+                {
+                  "type": "VIDEO",
+                  "title": "Video Genérico",
+                  "description": "Ver el vídeo genérico de la sesión",
+                  "iconImageVector": "PlayArrow",
+                  "contentAsset": "exercise"
+                },
+                {
+                  "type": "AUDIO",
+                  "title": "Audio Genérico",
+                  "description": "Escuchar el audio genérico de la sesión",
+                  "iconResId": "outline_headphones_24",
+                  "contentAsset": "audio_explicativo"
+                },
+                {
+                  "type": "METAS",
+                  "title": "Metas",
+                  "description": "Configura tus metas para esta sesión",
+                  "iconResId": "outline_trophy_24",
+                  "metasId": "hta"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": 6,
+          "title": "Semana 6 hipertensión",
+          "thumbnail": "missing_photo",
+          "duration": "10 min",
+          "subSessions": [
+            {
+              "id": 1,
+              "title": "Sesion 1",
+              "duration": "05:00",
+              "multimedia": [
+                {
+                  "type": "VIDEO",
+                  "title": "Video Genérico",
+                  "description": "Ver el vídeo genérico de la sesión",
+                  "iconImageVector": "PlayArrow",
+                  "contentAsset": "exercise"
+                },
+                {
+                  "type": "AUDIO",
+                  "title": "Audio Genérico",
+                  "description": "Escuchar el audio genérico de la sesión",
+                  "iconResId": "outline_headphones_24",
+                  "contentAsset": "audio_explicativo"
+                },
+                {
+                  "type": "METAS",
+                  "title": "Metas",
+                  "description": "Configura tus metas para esta sesión",
+                  "iconResId": "outline_trophy_24",
+                  "metasId": "hta"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": 7,
+          "title": "Semana 7 hipertensión",
+          "thumbnail": "missing_photo",
+          "duration": "10 min",
+          "subSessions": [
+            {
+              "id": 1,
+              "title": "Sesion 1",
+              "duration": "05:00",
+              "multimedia": [
+                {
+                  "type": "VIDEO",
+                  "title": "Video Genérico",
+                  "description": "Ver el vídeo genérico de la sesión",
+                  "iconImageVector": "PlayArrow",
+                  "contentAsset": "exercise"
+                },
+                {
+                  "type": "AUDIO",
+                  "title": "Audio Genérico",
+                  "description": "Escuchar el audio genérico de la sesión",
+                  "iconResId": "outline_headphones_24",
+                  "contentAsset": "audio_explicativo"
+                },
+                {
+                  "type": "METAS",
+                  "title": "Metas",
+                  "description": "Configura tus metas para esta sesión",
+                  "iconResId": "outline_trophy_24",
+                  "metasId": "hta"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": 8,
+          "title": "Semana 8 hipertensión",
+          "thumbnail": "missing_photo",
+          "duration": "10 min",
+          "subSessions": [
+            {
+              "id": 1,
+              "title": "Sesion 1",
+              "duration": "05:00",
+              "multimedia": [
+                {
+                  "type": "VIDEO",
+                  "title": "Video Genérico",
+                  "description": "Ver el vídeo genérico de la sesión",
+                  "iconImageVector": "PlayArrow",
+                  "contentAsset": "exercise"
+                },
+                {
+                  "type": "AUDIO",
+                  "title": "Audio Genérico",
+                  "description": "Escuchar el audio genérico de la sesión",
+                  "iconResId": "outline_headphones_24",
+                  "contentAsset": "audio_explicativo"
+                },
+                {
+                  "type": "METAS",
+                  "title": "Metas",
+                  "description": "Configura tus metas para esta sesión",
+                  "iconResId": "outline_trophy_24",
+                  "metasId": "hta"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": 9,
+          "title": "Semana 9 hipertensión",
+          "thumbnail": "missing_photo",
+          "duration": "10 min",
+          "subSessions": [
+            {
+              "id": 1,
+              "title": "Sesion 1",
+              "duration": "05:00",
+              "multimedia": [
+                {
+                  "type": "VIDEO",
+                  "title": "Video Genérico",
+                  "description": "Ver el vídeo genérico de la sesión",
+                  "iconImageVector": "PlayArrow",
+                  "contentAsset": "exercise"
+                },
+                {
+                  "type": "AUDIO",
+                  "title": "Audio Genérico",
+                  "description": "Escuchar el audio genérico de la sesión",
+                  "iconResId": "outline_headphones_24",
+                  "contentAsset": "audio_explicativo"
+                },
+                {
+                  "type": "METAS",
+                  "title": "Metas",
+                  "description": "Configura tus metas para esta sesión",
+                  "iconResId": "outline_trophy_24",
+                  "metasId": "hta"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": 10,
+          "title": "Semana 10 hipertensión",
+          "thumbnail": "missing_photo",
+          "duration": "10 min",
+          "subSessions": [
+            {
+              "id": 1,
+              "title": "Sesion 1",
+              "duration": "05:00",
+              "multimedia": [
+                {
+                  "type": "VIDEO",
+                  "title": "Video Genérico",
+                  "description": "Ver el vídeo genérico de la sesión",
+                  "iconImageVector": "PlayArrow",
+                  "contentAsset": "exercise"
+                },
+                {
+                  "type": "AUDIO",
+                  "title": "Audio Genérico",
+                  "description": "Escuchar el audio genérico de la sesión",
+                  "iconResId": "outline_headphones_24",
+                  "contentAsset": "audio_explicativo"
+                },
+                {
+                  "type": "METAS",
+                  "title": "Metas",
+                  "description": "Configura tus metas para esta sesión",
+                  "iconResId": "outline_trophy_24",
+                  "metasId": "hta"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": 11,
+          "title": "Semana 11 hipertensión",
+          "thumbnail": "missing_photo",
+          "duration": "10 min",
+          "subSessions": [
+            {
+              "id": 1,
+              "title": "Sesion 1",
+              "duration": "05:00",
+              "multimedia": [
+                {
+                  "type": "VIDEO",
+                  "title": "Video Genérico",
+                  "description": "Ver el vídeo genérico de la sesión",
+                  "iconImageVector": "PlayArrow",
+                  "contentAsset": "exercise"
+                },
+                {
+                  "type": "AUDIO",
+                  "title": "Audio Genérico",
+                  "description": "Escuchar el audio genérico de la sesión",
+                  "iconResId": "outline_headphones_24",
+                  "contentAsset": "audio_explicativo"
+                },
+                {
+                  "type": "METAS",
+                  "title": "Metas",
+                  "description": "Configura tus metas para esta sesión",
+                  "iconResId": "outline_trophy_24",
+                  "metasId": "hta"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": 12,
+          "title": "Semana 12 hipertensión",
+          "thumbnail": "missing_photo",
+          "duration": "10 min",
+          "subSessions": [
+            {
+              "id": 1,
+              "title": "Sesion 1",
+              "duration": "05:00",
+              "multimedia": [
+                {
+                  "type": "VIDEO",
+                  "title": "Video Genérico",
+                  "description": "Ver el vídeo genérico de la sesión",
+                  "iconImageVector": "PlayArrow",
+                  "contentAsset": "exercise"
+                },
+                {
+                  "type": "AUDIO",
+                  "title": "Audio Genérico",
+                  "description": "Escuchar el audio genérico de la sesión",
+                  "iconResId": "outline_headphones_24",
+                  "contentAsset": "audio_explicativo"
+                },
+                {
+                  "type": "METAS",
+                  "title": "Metas",
+                  "description": "Configura tus metas para esta sesión",
+                  "iconResId": "outline_trophy_24",
+                  "metasId": "hta"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": 13,
+          "title": "Semana 13 hipertensión",
+          "thumbnail": "missing_photo",
+          "duration": "10 min",
+          "subSessions": [
+            {
+              "id": 1,
+              "title": "Sesion 1",
+              "duration": "05:00",
+              "multimedia": [
+                {
+                  "type": "VIDEO",
+                  "title": "Video Genérico",
+                  "description": "Ver el vídeo genérico de la sesión",
+                  "iconImageVector": "PlayArrow",
+                  "contentAsset": "exercise"
+                },
+                {
+                  "type": "AUDIO",
+                  "title": "Audio Genérico",
+                  "description": "Escuchar el audio genérico de la sesión",
+                  "iconResId": "outline_headphones_24",
+                  "contentAsset": "audio_explicativo"
+                },
+                {
+                  "type": "METAS",
+                  "title": "Metas",
+                  "description": "Configura tus metas para esta sesión",
+                  "iconResId": "outline_trophy_24",
+                  "metasId": "hta"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": 14,
+          "title": "Semana 14 hipertensión",
+          "thumbnail": "missing_photo",
+          "duration": "10 min",
+          "subSessions": [
+            {
+              "id": 1,
+              "title": "Sesion 1",
+              "duration": "05:00",
+              "multimedia": [
+                {
+                  "type": "VIDEO",
+                  "title": "Video Genérico",
+                  "description": "Ver el vídeo genérico de la sesión",
+                  "iconImageVector": "PlayArrow",
+                  "contentAsset": "exercise"
+                },
+                {
+                  "type": "AUDIO",
+                  "title": "Audio Genérico",
+                  "description": "Escuchar el audio genérico de la sesión",
+                  "iconResId": "outline_headphones_24",
+                  "contentAsset": "audio_explicativo"
+                },
+                {
+                  "type": "METAS",
+                  "title": "Metas",
+                  "description": "Configura tus metas para esta sesión",
+                  "iconResId": "outline_trophy_24",
+                  "metasId": "hta"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": 15,
+          "title": "Semana 15 hipertensión",
+          "thumbnail": "missing_photo",
+          "duration": "10 min",
+          "subSessions": [
+            {
+              "id": 1,
+              "title": "Sesion 1",
+              "duration": "05:00",
+              "multimedia": [
+                {
+                  "type": "VIDEO",
+                  "title": "Video Genérico",
+                  "description": "Ver el vídeo genérico de la sesión",
+                  "iconImageVector": "PlayArrow",
+                  "contentAsset": "exercise"
+                },
+                {
+                  "type": "AUDIO",
+                  "title": "Audio Genérico",
+                  "description": "Escuchar el audio genérico de la sesión",
+                  "iconResId": "outline_headphones_24",
+                  "contentAsset": "audio_explicativo"
+                },
+                {
+                  "type": "METAS",
+                  "title": "Metas",
+                  "description": "Configura tus metas para esta sesión",
+                  "iconResId": "outline_trophy_24",
+                  "metasId": "hta"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": 16,
+          "title": "Semana 16 hipertensión",
+          "thumbnail": "missing_photo",
+          "duration": "10 min",
+          "subSessions": [
+            {
+              "id": 1,
+              "title": "Sesion 1",
+              "duration": "05:00",
+              "multimedia": [
+                {
+                  "type": "VIDEO",
+                  "title": "Video Genérico",
+                  "description": "Ver el vídeo genérico de la sesión",
+                  "iconImageVector": "PlayArrow",
+                  "contentAsset": "exercise"
+                },
+                {
+                  "type": "AUDIO",
+                  "title": "Audio Genérico",
+                  "description": "Escuchar el audio genérico de la sesión",
+                  "iconResId": "outline_headphones_24",
+                  "contentAsset": "audio_explicativo"
+                },
+                {
+                  "type": "METAS",
+                  "title": "Metas",
+                  "description": "Configura tus metas para esta sesión",
+                  "iconResId": "outline_trophy_24",
+                  "metasId": "hta"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "DIABETES",
+      "name": "Diabetes",
+      "sessions": [
+        {
+          "id": 17,
+          "title": "Semana 1 Diabetes",
+          "thumbnail": "missing_photo",
+          "duration": "10 min",
+          "subSessions": [
+            {
+              "id": 1,
+              "title": "Sesion 1",
+              "duration": "05:00",
+              "multimedia": [
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Descripción (Diabetes)",
+                  "description": "Conoce más sobre la diabetes.",
+                  "fullDescription": "¿Cómo puedes saber si tus niveles de glucosa están controlados o no?\nLa única forma confiable de medir tu glucosa es analizar tu sangre. Algunas aplicaciones de celular dicen que pueden hacerlo con la cámara, ¡pero eso no es cierto!\nSolo los glucómetros y los análisis de sangre realizados por profesionales pueden darte resultados reales.\nSi te haces la prueba en ayunas y tu glucosa sale 126 o más, significa que está alta.\n\nY si en cualquier momento del día el resultado sale 200 o más, también es una señal de que tu glucosa está elevada.\nAdemás, tu médico puede pedirte un análisis de sangre para revisar la hemoglobina glicosilada 👨🏻‍⚕️ Este resultado muestra cómo han estado tus niveles de glucosa durante los últimos dos o tres meses. Si el valor es de 6.5% o más, significa que tu glucosa ha estado elevada de forma constante 🚨\n\nEs muy importante que midas tu glucosa frecuentemente para ver si está controlada. Los médicos te pueden recomendar que te hagas una prueba de hemoglobina glicosilada cada tres meses.\n\nHoy aprendiste qué es la diabetes y cómo saber si tu glucosa está alta. Cuidar tu glucosa es cuidar de ti. Con hábitos y constancia, puedes mantenerte fuerte y saludable cada día ✨",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
+                  "type": "VIDEO",
+                  "title": "Video Introducción (Diabetes)",
+                  "description": "Ver el vídeo de introducción a la sesión de diabetes",
+                  "iconImageVector": "PlayArrow",
+                  "contentAsset": "diabetes_sesion_1_1"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": 18,
+          "title": "Semana 2 Diabetes",
+          "thumbnail": "missing_photo",
+          "duration": "10 min",
+          "subSessions": [
+            {
+              "id": 1,
+              "title": "Sesion 1",
+              "duration": "05:00",
+              "multimedia": [
+                {
+                  "type": "VIDEO",
+                  "title": "Video Explicativo (Diabetes)",
+                  "description": "Ver el vídeo explicativo de la sesión de diabetes",
+                  "iconImageVector": "PlayArrow",
+                  "contentAsset": "diabetes_sesion_2_1"
+                },
+                {
+                  "type": "QUIZ",
+                  "title": "Cuestionario Módulo 5",
+                  "description": "Responde las preguntas del módulo 5 de Diabetes",
+                  "iconResId": "outline_trophy_24",
+                  "quizId": "diabetes"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": 19,
+          "title": "Semana 3 Diabetes",
+          "thumbnail": "missing_photo",
+          "duration": "10 min",
+          "subSessions": [
+            {
+              "id": 1,
+              "title": "Sesion 1",
+              "duration": "05:00",
+              "multimedia": [
+                {
+                  "type": "VIDEO",
+                  "title": "Video Principal (Diabetes)",
+                  "description": "Primer video de la sesión de diabetes",
+                  "iconImageVector": "PlayArrow",
+                  "contentAsset": "diabetes_sesion_3_1"
+                },
+                {
+                  "type": "VIDEO",
+                  "title": "Video Complementario (Diabetes)",
+                  "description": "Segundo video de la sesión de diabetes",
+                  "iconImageVector": "PlayArrow",
+                  "contentAsset": "diabetes_sesion_3_3"
+                },
+                {
+                  "type": "METAS",
+                  "title": "Metas (Diabetes)",
+                  "description": "Configura tus metas para esta sesión de diabetes",
+                  "iconResId": "outline_trophy_24",
+                  "metasId": "diabetes"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": 20,
+          "title": "Semana 4 Diabetes",
+          "thumbnail": "missing_photo",
+          "duration": "10 min",
+          "subSessions": [
+            {
+              "id": 1,
+              "title": "Sesion 1",
+              "duration": "05:00",
+              "multimedia": [
+                {
+                  "type": "VIDEO",
+                  "title": "Video Genérico (Diabetes)",
+                  "description": "Ver el vídeo genérico de la sesión de diabetes",
+                  "iconImageVector": "PlayArrow",
+                  "contentAsset": "exercise"
+                },
+                {
+                  "type": "AUDIO",
+                  "title": "Audio Genérico (Diabetes)",
+                  "description": "Escuchar el audio genérico de la sesión de diabetes",
+                  "iconResId": "outline_headphones_24",
+                  "contentAsset": "audio_explicativo"
+                },
+                {
+                  "type": "METAS",
+                  "title": "Metas (Diabetes)",
+                  "description": "Configura tus metas para esta sesión de diabetes",
+                  "iconResId": "outline_trophy_24",
+                  "metasId": "diabetes"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": 21,
+          "title": "Semana 5 Diabetes",
+          "thumbnail": "missing_photo",
+          "duration": "10 min",
+          "subSessions": [
+            {
+              "id": 1,
+              "title": "Sesion 1",
+              "duration": "05:00",
+              "multimedia": [
+                {
+                  "type": "VIDEO",
+                  "title": "Video Genérico (Diabetes)",
+                  "description": "Ver el vídeo genérico de la sesión de diabetes",
+                  "iconImageVector": "PlayArrow",
+                  "contentAsset": "exercise"
+                },
+                {
+                  "type": "AUDIO",
+                  "title": "Audio Genérico (Diabetes)",
+                  "description": "Escuchar el audio genérico de la sesión de diabetes",
+                  "iconResId": "outline_headphones_24",
+                  "contentAsset": "audio_explicativo"
+                },
+                {
+                  "type": "METAS",
+                  "title": "Metas (Diabetes)",
+                  "description": "Configura tus metas para esta sesión de diabetes",
+                  "iconResId": "outline_trophy_24",
+                  "metasId": "diabetes"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": 22,
+          "title": "Semana 6 Diabetes",
+          "thumbnail": "missing_photo",
+          "duration": "10 min",
+          "subSessions": [
+            {
+              "id": 1,
+              "title": "Sesion 1",
+              "duration": "05:00",
+              "multimedia": [
+                {
+                  "type": "VIDEO",
+                  "title": "Video Genérico (Diabetes)",
+                  "description": "Ver el vídeo genérico de la sesión de diabetes",
+                  "iconImageVector": "PlayArrow",
+                  "contentAsset": "exercise"
+                },
+                {
+                  "type": "AUDIO",
+                  "title": "Audio Genérico (Diabetes)",
+                  "description": "Escuchar el audio genérico de la sesión de diabetes",
+                  "iconResId": "outline_headphones_24",
+                  "contentAsset": "audio_explicativo"
+                },
+                {
+                  "type": "METAS",
+                  "title": "Metas (Diabetes)",
+                  "description": "Configura tus metas para esta sesión de diabetes",
+                  "iconResId": "outline_trophy_24",
+                  "metasId": "diabetes"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": 23,
+          "title": "Semana 7 Diabetes",
+          "thumbnail": "missing_photo",
+          "duration": "10 min",
+          "subSessions": [
+            {
+              "id": 1,
+              "title": "Sesion 1",
+              "duration": "05:00",
+              "multimedia": [
+                {
+                  "type": "VIDEO",
+                  "title": "Video Genérico (Diabetes)",
+                  "description": "Ver el vídeo genérico de la sesión de diabetes",
+                  "iconImageVector": "PlayArrow",
+                  "contentAsset": "exercise"
+                },
+                {
+                  "type": "AUDIO",
+                  "title": "Audio Genérico (Diabetes)",
+                  "description": "Escuchar el audio genérico de la sesión de diabetes",
+                  "iconResId": "outline_headphones_24",
+                  "contentAsset": "audio_explicativo"
+                },
+                {
+                  "type": "METAS",
+                  "title": "Metas (Diabetes)",
+                  "description": "Configura tus metas para esta sesión de diabetes",
+                  "iconResId": "outline_trophy_24",
+                  "metasId": "diabetes"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": 24,
+          "title": "Semana 8 Diabetes",
+          "thumbnail": "missing_photo",
+          "duration": "10 min",
+          "subSessions": [
+            {
+              "id": 1,
+              "title": "Sesion 1",
+              "duration": "05:00",
+              "multimedia": [
+                {
+                  "type": "VIDEO",
+                  "title": "Video Genérico (Diabetes)",
+                  "description": "Ver el vídeo genérico de la sesión de diabetes",
+                  "iconImageVector": "PlayArrow",
+                  "contentAsset": "exercise"
+                },
+                {
+                  "type": "AUDIO",
+                  "title": "Audio Genérico (Diabetes)",
+                  "description": "Escuchar el audio genérico de la sesión de diabetes",
+                  "iconResId": "outline_headphones_24",
+                  "contentAsset": "audio_explicativo"
+                },
+                {
+                  "type": "METAS",
+                  "title": "Metas (Diabetes)",
+                  "description": "Configura tus metas para esta sesión de diabetes",
+                  "iconResId": "outline_trophy_24",
+                  "metasId": "diabetes"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": 25,
+          "title": "Semana 9 Diabetes",
+          "thumbnail": "missing_photo",
+          "duration": "10 min",
+          "subSessions": [
+            {
+              "id": 1,
+              "title": "Sesion 1",
+              "duration": "05:00",
+              "multimedia": [
+                {
+                  "type": "VIDEO",
+                  "title": "Video Genérico (Diabetes)",
+                  "description": "Ver el vídeo genérico de la sesión de diabetes",
+                  "iconImageVector": "PlayArrow",
+                  "contentAsset": "exercise"
+                },
+                {
+                  "type": "AUDIO",
+                  "title": "Audio Genérico (Diabetes)",
+                  "description": "Escuchar el audio genérico de la sesión de diabetes",
+                  "iconResId": "outline_headphones_24",
+                  "contentAsset": "audio_explicativo"
+                },
+                {
+                  "type": "METAS",
+                  "title": "Metas (Diabetes)",
+                  "description": "Configura tus metas para esta sesión de diabetes",
+                  "iconResId": "outline_trophy_24",
+                  "metasId": "diabetes"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": 26,
+          "title": "Semana 10 Diabetes",
+          "thumbnail": "missing_photo",
+          "duration": "10 min",
+          "subSessions": [
+            {
+              "id": 1,
+              "title": "Sesion 1",
+              "duration": "05:00",
+              "multimedia": [
+                {
+                  "type": "VIDEO",
+                  "title": "Video Genérico (Diabetes)",
+                  "description": "Ver el vídeo genérico de la sesión de diabetes",
+                  "iconImageVector": "PlayArrow",
+                  "contentAsset": "exercise"
+                },
+                {
+                  "type": "AUDIO",
+                  "title": "Audio Genérico (Diabetes)",
+                  "description": "Escuchar el audio genérico de la sesión de diabetes",
+                  "iconResId": "outline_headphones_24",
+                  "contentAsset": "audio_explicativo"
+                },
+                {
+                  "type": "METAS",
+                  "title": "Metas (Diabetes)",
+                  "description": "Configura tus metas para esta sesión de diabetes",
+                  "iconResId": "outline_trophy_24",
+                  "metasId": "diabetes"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": 27,
+          "title": "Semana 11 Diabetes",
+          "thumbnail": "missing_photo",
+          "duration": "10 min",
+          "subSessions": [
+            {
+              "id": 1,
+              "title": "Sesion 1",
+              "duration": "05:00",
+              "multimedia": [
+                {
+                  "type": "VIDEO",
+                  "title": "Video Genérico (Diabetes)",
+                  "description": "Ver el vídeo genérico de la sesión de diabetes",
+                  "iconImageVector": "PlayArrow",
+                  "contentAsset": "exercise"
+                },
+                {
+                  "type": "AUDIO",
+                  "title": "Audio Genérico (Diabetes)",
+                  "description": "Escuchar el audio genérico de la sesión de diabetes",
+                  "iconResId": "outline_headphones_24",
+                  "contentAsset": "audio_explicativo"
+                },
+                {
+                  "type": "METAS",
+                  "title": "Metas (Diabetes)",
+                  "description": "Configura tus metas para esta sesión de diabetes",
+                  "iconResId": "outline_trophy_24",
+                  "metasId": "diabetes"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": 28,
+          "title": "Semana 12 Diabetes",
+          "thumbnail": "missing_photo",
+          "duration": "10 min",
+          "subSessions": [
+            {
+              "id": 1,
+              "title": "Sesion 1",
+              "duration": "05:00",
+              "multimedia": [
+                {
+                  "type": "VIDEO",
+                  "title": "Video Genérico (Diabetes)",
+                  "description": "Ver el vídeo genérico de la sesión de diabetes",
+                  "iconImageVector": "PlayArrow",
+                  "contentAsset": "exercise"
+                },
+                {
+                  "type": "AUDIO",
+                  "title": "Audio Genérico (Diabetes)",
+                  "description": "Escuchar el audio genérico de la sesión de diabetes",
+                  "iconResId": "outline_headphones_24",
+                  "contentAsset": "audio_explicativo"
+                },
+                {
+                  "type": "METAS",
+                  "title": "Metas (Diabetes)",
+                  "description": "Configura tus metas para esta sesión de diabetes",
+                  "iconResId": "outline_trophy_24",
+                  "metasId": "diabetes"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": 29,
+          "title": "Semana 13 Diabetes",
+          "thumbnail": "missing_photo",
+          "duration": "10 min",
+          "subSessions": [
+            {
+              "id": 1,
+              "title": "Sesion 1",
+              "duration": "05:00",
+              "multimedia": [
+                {
+                  "type": "VIDEO",
+                  "title": "Video Genérico (Diabetes)",
+                  "description": "Ver el vídeo genérico de la sesión de diabetes",
+                  "iconImageVector": "PlayArrow",
+                  "contentAsset": "exercise"
+                },
+                {
+                  "type": "AUDIO",
+                  "title": "Audio Genérico (Diabetes)",
+                  "description": "Escuchar el audio genérico de la sesión de diabetes",
+                  "iconResId": "outline_headphones_24",
+                  "contentAsset": "audio_explicativo"
+                },
+                {
+                  "type": "METAS",
+                  "title": "Metas (Diabetes)",
+                  "description": "Configura tus metas para esta sesión de diabetes",
+                  "iconResId": "outline_trophy_24",
+                  "metasId": "diabetes"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": 30,
+          "title": "Semana 14 Diabetes",
+          "thumbnail": "missing_photo",
+          "duration": "10 min",
+          "subSessions": [
+            {
+              "id": 1,
+              "title": "Sesion 1",
+              "duration": "05:00",
+              "multimedia": [
+                {
+                  "type": "VIDEO",
+                  "title": "Video Genérico (Diabetes)",
+                  "description": "Ver el vídeo genérico de la sesión de diabetes",
+                  "iconImageVector": "PlayArrow",
+                  "contentAsset": "exercise"
+                },
+                {
+                  "type": "AUDIO",
+                  "title": "Audio Genérico (Diabetes)",
+                  "description": "Escuchar el audio genérico de la sesión de diabetes",
+                  "iconResId": "outline_headphones_24",
+                  "contentAsset": "audio_explicativo"
+                },
+                {
+                  "type": "METAS",
+                  "title": "Metas (Diabetes)",
+                  "description": "Configura tus metas para esta sesión de diabetes",
+                  "iconResId": "outline_trophy_24",
+                  "metasId": "diabetes"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": 31,
+          "title": "Semana 15 Diabetes",
+          "thumbnail": "missing_photo",
+          "duration": "10 min",
+          "subSessions": [
+            {
+              "id": 1,
+              "title": "Sesion 1",
+              "duration": "05:00",
+              "multimedia": [
+                {
+                  "type": "VIDEO",
+                  "title": "Video Genérico (Diabetes)",
+                  "description": "Ver el vídeo genérico de la sesión de diabetes",
+                  "iconImageVector": "PlayArrow",
+                  "contentAsset": "exercise"
+                },
+                {
+                  "type": "AUDIO",
+                  "title": "Audio Genérico (Diabetes)",
+                  "description": "Escuchar el audio genérico de la sesión de diabetes",
+                  "iconResId": "outline_headphones_24",
+                  "contentAsset": "audio_explicativo"
+                },
+                {
+                  "type": "METAS",
+                  "title": "Metas (Diabetes)",
+                  "description": "Configura tus metas para esta sesión de diabetes",
+                  "iconResId": "outline_trophy_24",
+                  "metasId": "diabetes"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": 32,
+          "title": "Semana 16 Diabetes",
+          "thumbnail": "missing_photo",
+          "duration": "10 min",
+          "subSessions": [
+            {
+              "id": 1,
+              "title": "Sesion 1",
+              "duration": "05:00",
+              "multimedia": [
+                {
+                  "type": "VIDEO",
+                  "title": "Video Genérico (Diabetes)",
+                  "description": "Ver el vídeo genérico de la sesión de diabetes",
+                  "iconImageVector": "PlayArrow",
+                  "contentAsset": "exercise"
+                },
+                {
+                  "type": "AUDIO",
+                  "title": "Audio Genérico (Diabetes)",
+                  "description": "Escuchar el audio genérico de la sesión de diabetes",
+                  "iconResId": "outline_headphones_24",
+                  "contentAsset": "audio_explicativo"
+                },
+                {
+                  "type": "METAS",
+                  "title": "Metas (Diabetes)",
+                  "description": "Configura tus metas para esta sesión de diabetes",
+                  "iconResId": "outline_trophy_24",
+                  "metasId": "diabetes"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

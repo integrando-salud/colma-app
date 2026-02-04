@@ -82,7 +82,7 @@ import com.colma.colmaApp.ui.theme.ColmaAppTheme
 class SesionesMenuUI : ComponentActivity() {
 
     private val viewModel: SesionesViewModel by viewModels {
-        SesionesViewModelFactory(SesionesRepositoryImpl())
+        SesionesViewModelFactory(applicationContext)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

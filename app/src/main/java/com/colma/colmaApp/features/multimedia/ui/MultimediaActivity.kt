@@ -39,7 +39,7 @@ import com.colma.colmaApp.ui.theme.ColmaAppTheme
 class MultimediaActivity : ComponentActivity() {
 
     private val viewModel: MultimediaViewModel by viewModels {
-        MultimediaViewModelFactory(MultimediaRepositoryImpl())
+        MultimediaViewModelFactory(applicationContext)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
