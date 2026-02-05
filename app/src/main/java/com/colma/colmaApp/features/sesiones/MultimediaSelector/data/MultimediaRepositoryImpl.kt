@@ -41,7 +41,7 @@ class MultimediaRepositoryImpl(
                         contentAssetId = multimediaContent.contentAsset?.let {
                             ResourceUtils.getResourceId(context, it, "raw")
                         },
-                        quizId = multimediaContent.quizId,
+                        questions = multimediaContent.questions,
                         metasId = multimediaContent.metasId
                     )
                 })

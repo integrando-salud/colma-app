@@ -39,9 +39,16 @@ data class MultimediaContent(
     val title: String,
     val description: String,
     val fullDescription: String? = null,
-    val iconResId: String? = null, // String representation of resource name (e.g., "outline_trophy_24")
-    val iconImageVector: String? = null, // String representation of ImageVector name (e.g., "PlayArrow")
-    val contentAsset: String? = null, // String representation of resource name (e.g., "hta_sesion_5_1")
-    val quizId: String? = null,
-    val metasId: String? = null
+    val iconResId: String? = null,
+    val iconImageVector: String? = null,
+    val contentAsset: String? = null,
+    val metasId: String? = null,
+    val questions: List<QuizQuestion>? = null
+)
+
+@Serializable
+data class QuizQuestion(
+    val questionText: String,
+    val options: List<String>,
+    val correctAnswerIndex: Int,
 )

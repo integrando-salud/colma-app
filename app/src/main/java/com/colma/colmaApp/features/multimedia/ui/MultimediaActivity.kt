@@ -153,9 +153,9 @@ fun MultimediaScreen(
                                 } ?: Text("Metas not found.")
                             }
                             MultimediaContentType.QUIZ -> {
-                                currentOption.quizId?.let {
-                                    QuizContent(quizId = it, onFinish = { onEvent(MultimediaEvent.GoToNext) })
-                                } ?: Text("Quiz not found.")
+                                currentOption.questions?.let { questions ->
+                                    QuizContent(quizQuestions = questions, onFinish = { onEvent(MultimediaEvent.GoToNext) })
+                                } ?: Text("Quiz not found or questions missing.")
                             }
                             else -> {
                                 Text("Content for ${currentOption.type.name}: ${currentOption.title}")

@@ -1,5 +1,7 @@
 package com.colma.colmaApp.features.multimedia.ui
 
+import com.colma.colmaApp.features.content.model.QuizQuestion
+
 import android.net.Uri
 import androidx.annotation.RawRes
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -457,21 +459,9 @@ fun VideoContent(@RawRes contentAssetId: Int) {
     }
 }
 
-data class QuizQuestion(
-    val questionText: String,
-    val options: List<String>,
-    val correctAnswerIndex: Int,
-)
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun QuizContent(quizId: String, onFinish: () -> Unit) {
-    val quizQuestions = remember(quizId) {
-        when (quizId) {
-            "diabetes" -> getDiabetesQuizQuestions()
-            else -> getHtaQuizQuestions()
-        }
-    }
+fun QuizContent(quizQuestions: List<QuizQuestion>, onFinish: () -> Unit) {
     val userAnswers = remember { mutableStateMapOf<Int, Int>() }
     var quizSubmitted by remember { mutableStateOf(false) }
     var showConfirmationDialog by remember { mutableStateOf(false) }
@@ -612,77 +602,6 @@ fun QuestionCard(
         }
     }
 }
-
-fun getHtaQuizQuestions(): List<QuizQuestion> {
-    return listOf(
-        QuizQuestion(
-            questionText = "Tomás se siente muy bien y por eso decide dar un paseo por el parque. Mientras camina, ve un puesto sanitario con personal de salud, quienes le ofrecen tomarle la presion arterial. Le informan que la medicion fue: 150/90 mmHG ¿Qué debe hacer Tomás?",
-            options = listOf(
-                "Nada, él se siente muy bien y sólo estaba paseando",
-                "Programar una cita y consultar con su médico para hablar su presion arterial"
-            ),
-            correctAnswerIndex = 1
-        ),
-        QuizQuestion(
-            questionText = "¿Qué quiere decir que la presión alta es 'silenciosa'?",
-            options = listOf(
-                "Que no se habla lo suficiente de ella en los medios de comunicacion.",
-                "Que los aparatos que la miden no hacen ruido",
-                "Que la presion puede estar alta y no generar síntomas."
-            ),
-            correctAnswerIndex = 2
-        ),
-        QuizQuestion(
-            questionText = "La hipertension es una condición crónica, y ¿esto que quiere decir?",
-            options = listOf(
-                "Que nos acompañará toda la vida y no hay nada que podamos hacer al respecto",
-                "Que nos acompañará toda la vida pero podemos hacer muchas cosas para controlarla"
-            ),
-            correctAnswerIndex = 1
-        ),
-        QuizQuestion(
-            questionText = "Tengo presión alta pero me siento muy bien. ¿Qué hago con la medicacion que me recetó el médico?",
-            options = listOf(
-                "No tomarla más porque me siento bien",
-                "Dejo de tomarlas hasta hablar de nuevo con mi médico",
-                "Necesito continuar tomandola todos los días"
-            ),
-            correctAnswerIndex = 2
-        )
-    )
-}
-
-fun getDiabetesQuizQuestions(): List<QuizQuestion> {
-    return listOf(
-        QuizQuestion(
-            questionText = "La insulina es como una llave que permite que la glucosa entre en las células y nos dé energía",
-            options = listOf(
-                "Verdadero",
-                "Falso"
-            ),
-            correctAnswerIndex = 0
-        ),
-        QuizQuestion(
-            questionText = "Tener mucha sed, orinar mucho y tener mucha hambre pueden ser señales de que...",
-            options = listOf(
-                "La glucosa está baja y necesitas comer algo",
-                "La glucosa está alta y necesita controlarse",
-                "La glucosa está equilibrada"
-            ),
-            correctAnswerIndex = 1
-        ),
-        QuizQuestion(
-            questionText = "La mejor forma de saber cómo está mi glucosa es...",
-            options = listOf(
-                "Midiéndola con un glucómetro o un análisis de sangre",
-                "Solo reconociendo las señales de mi cuerpo",
-                "No es necesario saberlo"
-            ),
-            correctAnswerIndex = 0
-        )
-    )
-}
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MetasContent(metasId: String, onFinish: () -> Unit) {

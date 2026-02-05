@@ -41,7 +41,42 @@
                   "title": "Cuestionario Módulo 5",
                   "description": "Responde las preguntas del módulo 5 de HTA",
                   "iconResId": "outline_trophy_24",
-                  "quizId": "hta"
+                  "questions": [
+                    {
+                      "questionText": "Tomás se siente muy bien y por eso decide dar un paseo por el parque. Mientras camina, ve un puesto sanitario con personal de salud, quienes le ofrecen tomarle la presion arterial. Le informan que la medicion fue: 150/90 mmHG ¿Qué debe hacer Tomás?",
+                      "options": [
+                        "Nada, él se siente muy bien y sólo estaba paseando",
+                        "Programar una cita y consultar con su médico para hablar su presion arterial"
+                      ],
+                      "correctAnswerIndex": 1
+                    },
+                    {
+                      "questionText": "¿Qué quiere decir que la presión alta es 'silenciosa'?",
+                      "options": [
+                        "Que no se habla lo suficiente de ella en los medios de comunicacion.",
+                        "Que los aparatos que la miden no hacen ruido",
+                        "Que la presion puede estar alta y no generar síntomas."
+                      ],
+                      "correctAnswerIndex": 2
+                    },
+                    {
+                      "questionText": "La hipertension es una condición crónica, y ¿esto que quiere decir?",
+                      "options": [
+                        "Que nos acompañará toda la vida y no hay nada que podamos hacer al respecto",
+                        "Que nos acompañará toda la vida pero podemos hacer muchas cosas para controlarla"
+                      ],
+                      "correctAnswerIndex": 1
+                    },
+                    {
+                      "questionText": "Tengo presión alta pero me siento muy bien. ¿Qué hago con la medicacion que me recetó el médico?",
+                      "options": [
+                        "No tomarla más porque me siento bien",
+                        "Dejo de tomarlas hasta hablar de nuevo con mi médico",
+                        "Necesito continuar tomandola todos los días"
+                      ],
+                      "correctAnswerIndex": 2
+                    }
+                  ]
                 }
               ]
             },
@@ -673,7 +708,34 @@
                   "title": "Cuestionario Módulo 5",
                   "description": "Responde las preguntas del módulo 5 de Diabetes",
                   "iconResId": "outline_trophy_24",
-                  "quizId": "diabetes"
+                  "questions": [
+                    {
+                      "questionText": "La insulina es como una llave que permite que la glucosa entre en las células y nos dé energía",
+                      "options": [
+                        "Verdadero",
+                        "Falso"
+                      ],
+                      "correctAnswerIndex": 0
+                    },
+                    {
+                      "questionText": "Tener mucha sed, orinar mucho y tener mucha hambre pueden ser señales de que...",
+                      "options": [
+                        "La glucosa está baja y necesitas comer algo",
+                        "La glucosa está alta y necesita controlarse",
+                        "La glucosa está equilibrada"
+                      ],
+                      "correctAnswerIndex": 1
+                    },
+                    {
+                      "questionText": "La mejor forma de saber cómo está mi glucosa es...",
+                      "options": [
+                        "Midiéndola con un glucómetro o un análisis de sangre",
+                        "Solo reconociendo las señales de mi cuerpo",
+                        "No es necesario saberlo"
+                      ],
+                      "correctAnswerIndex": 0
+                    }
+                  ]
                 }
               ]
             }

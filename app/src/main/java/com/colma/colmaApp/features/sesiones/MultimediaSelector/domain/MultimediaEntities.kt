@@ -2,6 +2,8 @@ package com.colma.colmaApp.features.sesiones.MultimediaSelector.domain
 
 import androidx.compose.ui.graphics.vector.ImageVector
 
+import com.colma.colmaApp.features.content.model.QuizQuestion // Import QuizQuestion
+
 enum class MultimediaContentType {
     DESCRIPTION,
     VIDEO,
@@ -20,6 +22,6 @@ data class MultimediaOption(
     val iconResId: Int? = null, // For drawable resources (e.g., R.drawable.xxx)
     val iconImageVector: ImageVector? = null, // For ImageVector icons (e.g., Icons.Default.PlayArrow)
     val contentAssetId: Int? = null, // For raw resource IDs (e.g., R.raw.xxx)
-    val quizId: String? = null, // New field for quiz identification
+    val questions: List<QuizQuestion>? = null, // New field for embedded quiz questions
     val metasId: String? = null // New field for metas identification
 )
