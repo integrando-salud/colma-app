@@ -24,7 +24,7 @@ class DBhelper(context: Context) :
 
     companion object {
         private const val DATABASE_NAME = "colmadb.db"
-        private const val DATABASE_VERSION = 4
+        private const val DATABASE_VERSION = 5
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
@@ -78,6 +78,24 @@ class DBhelper(context: Context) :
             } catch (e: Exception) {
                 e.printStackTrace()
             }
+        }
+        
+        try {
+            db.execSQL("""
+                CREATE TABLE IF NOT EXISTS multimedia_read_table (
+                    id_multimedia_read INTEGER PRIMARY KEY AUTOINCREMENT,
+                    id_usuario INTEGER,
+                    treatment_id TEXT,
+                    week_id INTEGER,
+                    session_id INTEGER,
+                    multimedia_type TEXT,
+                    multimedia_unique_key TEXT,
+                    fecha_registro TEXT,
+                    fecha_sincronizacion TEXT
+                );
+            """)
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 
@@ -151,6 +169,52 @@ class DBhelper(context: Context) :
         db.beginTransaction()
         try {
             rowId = db.insert("presion_table", null, values)
+            db.setTransactionSuccessful()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        } finally {
+            db.endTransaction()
+        }
+        return rowId
+    }
+    
+    /**
+     * Insert into multimedia_read_table
+     * - id_usuario required
+     * - treatment_id required
+     * - week_id required
+     * - session_id required
+     * - multimedia_type required
+     * - multimedia_unique_key required
+     * - fecha_registro optional (defaults to now as "yyyy-MM-dd HH:mm:ss")
+     * - fecha_sincronizacion optional (defaults to null)
+     */
+    fun insertMultimediaRead(
+        idUsuario: Int,
+        treatmentId: String,
+        weekId: Int,
+        sessionId: Int,
+        multimediaType: String,
+        multimediaUniqueKey: String,
+        fechaRegistro: String? = null,
+        fechaSincronizacion: String? = null
+    ): Long {
+        val db: SQLiteDatabase = writableDatabase
+        val values = ContentValues().apply {
+            put("id_usuario", idUsuario)
+            put("treatment_id", treatmentId)
+            put("week_id", weekId)
+            put("session_id", sessionId)
+            put("multimedia_type", multimediaType)
+            put("multimedia_unique_key", multimediaUniqueKey)
+            put("fecha_registro", fechaRegistro ?: defaultDateTimeFormat.format(Date()))
+            fechaSincronizacion?.let { put("fecha_sincronizacion", it) } ?: putNull("fecha_sincronizacion")
+        }
+
+        var rowId: Long = -1L
+        db.beginTransaction()
+        try {
+            rowId = db.insert("multimedia_read_table", null, values)
             db.setTransactionSuccessful()
         } catch (e: Exception) {
             e.printStackTrace()
@@ -859,6 +923,33 @@ class DBhelper(context: Context) :
         return results
     }
 
+    fun getAllMultimediaRead(idUsuario: Int? = 1): List<RegistrosSaludModelos.MultimediaReadRecord> {
+        val results = mutableListOf<RegistrosSaludModelos.MultimediaReadRecord>()
+        val db = readableDatabase
+
+        val selection = idUsuario?.let { "id_usuario = ?" }
+        val selectionArgs = idUsuario?.let { arrayOf(it.toString()) }
+
+        val cursor = db.query(
+            "multimedia_read_table",
+            null, // All columns
+            selection,
+            selectionArgs,
+            null,
+            null,
+            "id_multimedia_read DESC"
+        )
+
+        cursor.use { c ->
+            if (c.moveToFirst()) {
+                do {
+                    results.add(cursorToMultimediaReadRecord(c))
+                } while (c.moveToNext())
+            }
+        }
+        return results
+    }
+
     fun insertSincronizacion(fecha: String, estado: String, data: String?): Long {
         val db = writableDatabase
         var rowId: Long = -1L
@@ -1122,6 +1213,43 @@ class DBhelper(context: Context) :
         return results
     }
 
+    /**
+     * Return pending (unsent) multimedia_read rows for the given user.
+     * Pending rows are those with fecha_sincronizacion IS NULL or empty.
+     */
+    fun getPendingMultimediaRead(idUsuario: Int? = 1): List<RegistrosSaludModelos.MultimediaReadRecord> {
+        val results = mutableListOf<RegistrosSaludModelos.MultimediaReadRecord>()
+        val db = readableDatabase
+
+        val selectionParts = mutableListOf<String>("(fecha_sincronizacion IS NULL OR fecha_sincronizacion = '')")
+        val selectionArgsList = mutableListOf<String>()
+        if (idUsuario != null) {
+            selectionParts.add("id_usuario = ?")
+            selectionArgsList.add(idUsuario.toString())
+        }
+        val selection = selectionParts.joinToString(" AND ")
+        val selectionArgs = if (selectionArgsList.isNotEmpty()) selectionArgsList.toTypedArray() else null
+
+        val cursor = db.query(
+            "multimedia_read_table",
+            null, // All columns
+            selection,
+            selectionArgs,
+            null,
+            null,
+            "id_multimedia_read DESC"
+        )
+
+        cursor.use { c ->
+            if (c.moveToFirst()) {
+                do {
+                    results.add(cursorToMultimediaReadRecord(c))
+                } while (c.moveToNext())
+            }
+        }
+        return results
+    }
+
     fun markMetasSent(ids: List<Long>) {
         if (ids.isEmpty()) return
         val db = writableDatabase
@@ -1130,6 +1258,26 @@ class DBhelper(context: Context) :
             val now = defaultDateTimeFormat.format(Date())
             val args = ids.joinToString(",")
             val sql = "UPDATE metas_table SET fecha_sincronizacion = ? WHERE id_meta IN ($args)"
+            db.compileStatement(sql).apply {
+                bindString(1, now)
+                execute()
+            }
+            db.setTransactionSuccessful()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        } finally {
+            db.endTransaction()
+        }
+    }
+
+    fun markMultimediaReadSent(ids: List<Long>) {
+        if (ids.isEmpty()) return
+        val db = writableDatabase
+        db.beginTransaction()
+        try {
+            val now = defaultDateTimeFormat.format(Date())
+            val args = ids.joinToString(",")
+            val sql = "UPDATE multimedia_read_table SET fecha_sincronizacion = ? WHERE id_multimedia_read IN ($args)"
             db.compileStatement(sql).apply {
                 bindString(1, now)
                 execute()
@@ -1158,6 +1306,20 @@ class DBhelper(context: Context) :
             meta_cumplida = c.getIntOrNull("meta_cumplida"),
             fecha_objetivo = c.getStringOrNull("fecha_objetivo"),
             motivo_incumplimiento = c.getStringOrNull("motivo_incumplimiento")
+        )
+    }
+
+    private fun cursorToMultimediaReadRecord(c: Cursor): RegistrosSaludModelos.MultimediaReadRecord {
+        return RegistrosSaludModelos.MultimediaReadRecord(
+            id_multimedia_read = c.getLongOrNull("id_multimedia_read") ?: -1L,
+            id_usuario = c.getIntOrNull("id_usuario"),
+            treatment_id = c.getStringOrNull("treatment_id"),
+            week_id = c.getIntOrNull("week_id"),
+            session_id = c.getIntOrNull("session_id"),
+            multimedia_type = c.getStringOrNull("multimedia_type"),
+            multimedia_unique_key = c.getStringOrNull("multimedia_unique_key"),
+            fecha_registro = c.getStringOrNull("fecha_registro"),
+            fecha_sincronizacion = c.getStringOrNull("fecha_sincronizacion")
         )
     }
 }

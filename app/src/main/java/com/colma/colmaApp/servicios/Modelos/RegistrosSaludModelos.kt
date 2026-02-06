@@ -37,4 +37,16 @@ class RegistrosSaludModelos {
         val fecha_objetivo: String?,
         val motivo_incumplimiento: String? = null
     )
+
+    data class MultimediaReadRecord(
+        val id_multimedia_read: Long,
+        val id_usuario: Int?,
+        val treatment_id: String?,
+        val week_id: Int?,
+        val session_id: Int?,
+        val multimedia_type: String?,
+        val multimedia_unique_key: String?,
+        val fecha_registro: String?,
+        val fecha_sincronizacion: String?
+    )
 }

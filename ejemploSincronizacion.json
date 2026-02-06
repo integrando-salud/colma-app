@@ -253,5 +253,40 @@
       "fecha_objetivo": "2024-01-13 08:00:00",
       "motivo_incumplimiento": null
     }
+  ],
+  "multimedia_read": [
+    {
+      "id_multimedia_read": 1001,
+      "id_usuario": 1,
+      "treatment_id": "HTA",
+      "week_id": 1,
+      "session_id": 1,
+      "multimedia_type": "VIDEO",
+      "multimedia_unique_key": "hta_sesion_5_1",
+      "fecha_registro": "2024-02-06 10:00:00",
+      "fecha_sincronizacion": "2024-02-06 10:05:00"
+    },
+    {
+      "id_multimedia_read": 1002,
+      "id_usuario": 1,
+      "treatment_id": "HTA",
+      "week_id": 1,
+      "session_id": 2,
+      "multimedia_type": "QUIZ",
+      "multimedia_unique_key": "HTA_1_2_Cuestionario Módulo 5",
+      "fecha_registro": "2024-02-06 10:00:00",
+      "fecha_sincronizacion": "2024-02-06 10:05:00"
+    },
+    {
+      "id_multimedia_read": 1003,
+      "id_usuario": 1,
+      "treatment_id": "DIABETES",
+      "week_id": 17,
+      "session_id": 1,
+      "multimedia_type": "DESCRIPTION",
+      "multimedia_unique_key": "DIABETES_17_1_Descripción (Diabetes)",
+      "fecha_registro": "2024-02-06 10:00:00",
+      "fecha_sincronizacion": "2024-02-06 10:05:00"
+    }
   ]
 }
