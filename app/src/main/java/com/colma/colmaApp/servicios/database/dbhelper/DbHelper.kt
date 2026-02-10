@@ -223,6 +223,74 @@ class DBhelper(context: Context) :
         }
         return rowId
     }
+
+    /**
+     * Check if a MultimediaReadRecord already exists for the given unique identifiers.
+     */
+    fun getMultimediaReadRecordExists(
+        idUsuario: Int,
+        treatmentId: String,
+        weekId: Int,
+        sessionId: Int,
+        multimediaType: String,
+        multimediaUniqueKey: String
+    ): Boolean {
+        val db = readableDatabase
+        val selection = """
+            id_usuario = ? AND
+            treatment_id = ? AND
+            week_id = ? AND
+            session_id = ? AND
+            multimedia_type = ? AND
+            multimedia_unique_key = ?
+        """.trimIndent()
+        val selectionArgs = arrayOf(
+            idUsuario.toString(),
+            treatmentId,
+            weekId.toString(),
+            sessionId.toString(),
+            multimediaType,
+            multimediaUniqueKey
+        )
+
+        var exists = false
+        db.query(
+            "multimedia_read_table",
+            arrayOf("id_multimedia_read"),
+            selection,
+            selectionArgs,
+            null, null, null
+        ).use { cursor ->
+            exists = cursor.count > 0
+        }
+        return exists
+    }
+
+    /**
+     * Upsert a multimedia_read record. Inserts if not exists, otherwise does nothing.
+     * Returns the rowId if a new record was inserted, or -1L if it already existed.
+     */
+    fun upsertMultimediaRead(
+        idUsuario: Int,
+        treatmentId: String,
+        weekId: Int,
+        sessionId: Int,
+        multimediaType: String,
+        multimediaUniqueKey: String
+    ): Long {
+        if (getMultimediaReadRecordExists(idUsuario, treatmentId, weekId, sessionId, multimediaType, multimediaUniqueKey)) {
+            return -1L // Record already exists, do not insert
+        }
+        // Record does not exist, proceed with insertion
+        return insertMultimediaRead(
+            idUsuario,
+            treatmentId,
+            weekId,
+            sessionId,
+            multimediaType,
+            multimediaUniqueKey
+        )
+    }
     // -------------------------
     // Latest (single) getters
     // -------------------------
