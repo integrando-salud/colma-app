@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.colma.colmaApp.features.content.data.ContentRepositoryImpl
 import com.colma.colmaApp.features.sesiones.MultimediaSelector.data.MultimediaRepositoryImpl
 import com.colma.colmaApp.features.sesiones.MultimediaSelector.domain.MultimediaRepository
+import com.colma.colmaApp.servicios.database.dbhelper.DBhelper
 
 @Suppress("UNCHECKED_CAST")
 class MultimediaViewModelFactory(
@@ -14,7 +15,8 @@ class MultimediaViewModelFactory(
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(MultimediaViewModel::class.java)) {
             val contentRepository = ContentRepositoryImpl(context)
-            val repository = MultimediaRepositoryImpl(contentRepository, context)
+            val dbHelper = DBhelper(context)
+            val repository = MultimediaRepositoryImpl(contentRepository, context, dbHelper)
             return MultimediaViewModel(repository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")

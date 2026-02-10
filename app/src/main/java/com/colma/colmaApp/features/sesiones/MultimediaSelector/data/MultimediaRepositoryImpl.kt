@@ -11,10 +11,13 @@ import com.colma.colmaApp.features.sesiones.MultimediaSelector.domain.Multimedia
 import com.colma.colmaApp.features.sesiones.MultimediaSelector.domain.MultimediaRepository
 import com.colma.colmaApp.features.sesiones.MultimediaSelector.domain.TreatmentType
 import com.colma.colmaApp.utils.ResourceUtils
+import com.colma.colmaApp.servicios.Modelos.RegistrosSaludModelos
+import com.colma.colmaApp.servicios.database.dbhelper.DBhelper
 
 class MultimediaRepositoryImpl(
     private val contentRepository: ContentRepository,
-    private val context: Context
+    private val context: Context,
+    private val dbHelper: DBhelper
 ) : MultimediaRepository {
 
     override suspend fun getMultimediaOptions(
@@ -57,5 +60,17 @@ class MultimediaRepositoryImpl(
             // Add other ImageVector mappings as needed
             else -> null
         }
+    }
+
+    override suspend fun saveMultimediaRead(multimediaReadRecord: RegistrosSaludModelos.MultimediaReadRecord) {
+        // Assuming id_usuario is always 1 for now, or passed in as part of the record
+        dbHelper.insertMultimediaRead(
+            idUsuario = multimediaReadRecord.id_usuario ?: 1, // Default to 1 if null
+            treatmentId = multimediaReadRecord.treatment_id ?: "UNKNOWN", // Default if null
+            weekId = multimediaReadRecord.week_id ?: -1, // Default if null
+            sessionId = multimediaReadRecord.session_id ?: -1, // Default if null
+            multimediaType = multimediaReadRecord.multimedia_type ?: "UNKNOWN", // Default if null
+            multimediaUniqueKey = multimediaReadRecord.multimedia_unique_key ?: "UNKNOWN" // Default if null
+        )
     }
 }

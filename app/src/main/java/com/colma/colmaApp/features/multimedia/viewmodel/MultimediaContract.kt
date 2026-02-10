@@ -1,5 +1,7 @@
 package com.colma.colmaApp.features.multimedia.viewmodel
 
+import com.colma.colmaApp.features.sesiones.MultimediaSelector.domain.TreatmentType
+
 import com.colma.colmaApp.features.sesiones.MultimediaSelector.domain.MultimediaOption
 
 /**
@@ -12,6 +14,9 @@ data class MultimediaUiState(
     val error: String? = null,
     val sessionTitle: String = "",
     val subSessionTitle: String = "",
+    val sessionId: Long = -1L,
+    val subSessionId: Long = -1L,
+    val treatmentTypes: List<TreatmentType> = emptyList(),
 ) {
     val currentMultimediaOption: MultimediaOption?
         get() = multimediaOptions.getOrNull(currentMultimediaIndex)
