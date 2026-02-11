@@ -6,9 +6,12 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import androidx.core.database.getDoubleOrNull
 import androidx.core.database.getIntOrNull
+import androidx.core.database.getLongOrNull
 import androidx.core.database.getStringOrNull
 import com.colma.colmaApp.servicios.Modelos.EstadoAnimoModelo
 import com.colma.colmaApp.servicios.Modelos.RegistrosSaludModelos
+import com.colma.colmaApp.servicios.Modelos.QuestionResponseRecord
+import com.colma.colmaApp.servicios.Modelos.QuizResponseRecord
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper
 import java.io.File
 import java.io.FileOutputStream
@@ -24,7 +27,7 @@ class DBhelper(context: Context) :
 
     companion object {
         private const val DATABASE_NAME = "colmadb.db"
-        private const val DATABASE_VERSION = 5
+        private const val DATABASE_VERSION = 6
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
@@ -92,6 +95,46 @@ class DBhelper(context: Context) :
                     multimedia_unique_key TEXT,
                     fecha_registro TEXT,
                     fecha_sincronizacion TEXT
+                );
+            """)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+        try {
+            db.execSQL("""
+                CREATE TABLE IF NOT EXISTS quiz_response_table (
+                    id_quiz_response INTEGER PRIMARY KEY AUTOINCREMENT,
+                    id_usuario INTEGER,
+                    quiz_type TEXT,
+                    week_id INTEGER,
+                    session_id INTEGER,
+                    quiz_title TEXT,
+                    fecha_registro TEXT,
+                    fecha_sincronizacion TEXT,
+                    total_questions INTEGER,
+                    correct_answers INTEGER,
+                    percentage_correct REAL,
+                    multimedia_unique_key TEXT
+                );
+            """)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+        try {
+            db.execSQL("""
+                CREATE TABLE IF NOT EXISTS question_response_table (
+                    id_question_response INTEGER PRIMARY KEY AUTOINCREMENT,
+                    id_quiz_response INTEGER,
+                    question_index INTEGER,
+                    question_text TEXT,
+                    user_answer_index INTEGER,
+                    user_answer_text TEXT,
+                    correct_answer_index INTEGER,
+                    correct_answer_text TEXT,
+                    is_correct INTEGER,
+                    FOREIGN KEY (id_quiz_response) REFERENCES quiz_response_table(id_quiz_response) ON DELETE CASCADE
                 );
             """)
         } catch (e: Exception) {
@@ -291,6 +334,62 @@ class DBhelper(context: Context) :
             multimediaUniqueKey
         )
     }
+
+    /**
+     * Insert a new quiz response and its associated question responses.
+     * Returns the rowId of the inserted QuizResponseRecord, or -1L on failure.
+     */
+    fun insertQuizResponse(
+        quizResponse: QuizResponseRecord,
+        questionResponses: List<QuestionResponseRecord>
+    ): Long {
+        val db: SQLiteDatabase = writableDatabase
+        var quizResponseId: Long = -1L
+        db.beginTransaction()
+        try {
+            val quizValues = ContentValues().apply {
+                put("id_usuario", quizResponse.id_usuario)
+                put("quiz_type", quizResponse.quiz_type)
+                put("week_id", quizResponse.week_id)
+                put("session_id", quizResponse.session_id)
+                put("quiz_title", quizResponse.quiz_title)
+                put("fecha_registro", quizResponse.fecha_registro ?: defaultDateTimeFormat.format(Date()))
+                if (quizResponse.fecha_sincronizacion != null) {
+                    put("fecha_sincronizacion", quizResponse.fecha_sincronizacion)
+                } else {
+                    putNull("fecha_sincronizacion")
+                }
+                put("total_questions", quizResponse.total_questions)
+                put("correct_answers", quizResponse.correct_answers)
+                put("percentage_correct", quizResponse.percentage_correct)
+                put("multimedia_unique_key", quizResponse.multimedia_unique_key)
+            }
+            quizResponseId = db.insert("quiz_response_table", null, quizValues)
+
+            if (quizResponseId != -1L) {
+                for (question in questionResponses) {
+                    val questionValues = ContentValues().apply {
+                        put("id_quiz_response", quizResponseId)
+                        put("question_index", question.question_index)
+                        put("question_text", question.question_text)
+                        put("user_answer_index", question.user_answer_index)
+                        put("user_answer_text", question.user_answer_text)
+                        put("correct_answer_index", question.correct_answer_index)
+                        put("correct_answer_text", question.correct_answer_text)
+                        put("is_correct", question.is_correct)
+                    }
+                    db.insert("question_response_table", null, questionValues)
+                }
+            }
+            db.setTransactionSuccessful()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        } finally {
+            db.endTransaction()
+        }
+        return quizResponseId
+    }
+
     // -------------------------
     // Latest (single) getters
     // -------------------------
@@ -1318,6 +1417,44 @@ class DBhelper(context: Context) :
         return results
     }
 
+    /**
+     * Return pending (unsent) quiz responses for the given user.
+     * Pending rows are those with fecha_sincronizacion IS NULL or empty.
+     */
+    fun getPendingQuizResponses(idUsuario: Int? = 1): List<QuizResponseRecord> {
+        val results = mutableListOf<QuizResponseRecord>()
+        val db = readableDatabase
+
+        val selectionParts = mutableListOf<String>("(fecha_sincronizacion IS NULL OR fecha_sincronizacion = '')")
+        val selectionArgsList = mutableListOf<String>()
+        if (idUsuario != null) {
+            selectionParts.add("id_usuario = ?")
+            selectionArgsList.add(idUsuario.toString())
+        }
+        val selection = selectionParts.joinToString(" AND ")
+        val selectionArgs = if (selectionArgsList.isNotEmpty()) selectionArgsList.toTypedArray() else null
+
+        val cursor = db.query(
+            "quiz_response_table",
+            null, // All columns
+            selection,
+            selectionArgs,
+            null,
+            null,
+            "id_quiz_response DESC"
+        )
+
+        cursor.use { c ->
+            if (c.moveToFirst()) {
+                do {
+                    results.add(cursorToQuizResponseRecord(c))
+                } while (c.moveToNext())
+            }
+        }
+        return results
+    }
+
+
     fun markMetasSent(ids: List<Long>) {
         if (ids.isEmpty()) return
         val db = writableDatabase
@@ -1346,6 +1483,29 @@ class DBhelper(context: Context) :
             val now = defaultDateTimeFormat.format(Date())
             val args = ids.joinToString(",")
             val sql = "UPDATE multimedia_read_table SET fecha_sincronizacion = ? WHERE id_multimedia_read IN ($args)"
+            db.compileStatement(sql).apply {
+                bindString(1, now)
+                execute()
+            }
+            db.setTransactionSuccessful()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        } finally {
+            db.endTransaction()
+        }
+    }
+
+    /**
+     * Mark given quiz_response ids as sent by setting fecha_sincronizacion to current datetime.
+     */
+    fun markQuizResponsesSent(ids: List<Long>) {
+        if (ids.isEmpty()) return
+        val db = writableDatabase
+        db.beginTransaction()
+        try {
+            val now = defaultDateTimeFormat.format(Date())
+            val args = ids.joinToString(",")
+            val sql = "UPDATE quiz_response_table SET fecha_sincronizacion = ? WHERE id_quiz_response IN ($args)"
             db.compileStatement(sql).apply {
                 bindString(1, now)
                 execute()
@@ -1388,6 +1548,37 @@ class DBhelper(context: Context) :
             multimedia_unique_key = c.getStringOrNull("multimedia_unique_key"),
             fecha_registro = c.getStringOrNull("fecha_registro"),
             fecha_sincronizacion = c.getStringOrNull("fecha_sincronizacion")
+        )
+    }
+
+    private fun cursorToQuizResponseRecord(c: Cursor): QuizResponseRecord {
+        return QuizResponseRecord(
+            id_quiz_response = c.getLongOrNull("id_quiz_response") ?: -1L,
+            id_usuario = c.getIntOrNull("id_usuario"),
+            quiz_type = c.getStringOrNull("quiz_type"),
+            week_id = c.getIntOrNull("week_id"),
+            session_id = c.getIntOrNull("session_id"),
+            quiz_title = c.getStringOrNull("quiz_title"),
+            fecha_registro = c.getStringOrNull("fecha_registro"),
+            fecha_sincronizacion = c.getStringOrNull("fecha_sincronizacion"),
+            total_questions = c.getIntOrNull("total_questions"),
+            correct_answers = c.getIntOrNull("correct_answers"),
+            percentage_correct = c.getDoubleOrNull("percentage_correct"),
+            multimedia_unique_key = c.getStringOrNull("multimedia_unique_key")
+        )
+    }
+
+    private fun cursorToQuestionResponseRecord(c: Cursor): QuestionResponseRecord {
+        return QuestionResponseRecord(
+            id_question_response = c.getLongOrNull("id_question_response") ?: -1L,
+            id_quiz_response = c.getLongOrNull("id_quiz_response"),
+            question_index = c.getIntOrNull("question_index"),
+            question_text = c.getStringOrNull("question_text"),
+            user_answer_index = c.getIntOrNull("user_answer_index"),
+            user_answer_text = c.getStringOrNull("user_answer_text"),
+            correct_answer_index = c.getIntOrNull("correct_answer_index"),
+            correct_answer_text = c.getStringOrNull("correct_answer_text"),
+            is_correct = c.getIntOrNull("is_correct")
         )
     }
 }

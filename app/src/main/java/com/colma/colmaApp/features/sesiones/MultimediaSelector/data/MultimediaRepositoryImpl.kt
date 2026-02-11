@@ -12,6 +12,8 @@ import com.colma.colmaApp.features.sesiones.MultimediaSelector.domain.Multimedia
 import com.colma.colmaApp.features.sesiones.MultimediaSelector.domain.TreatmentType
 import com.colma.colmaApp.utils.ResourceUtils
 import com.colma.colmaApp.servicios.Modelos.RegistrosSaludModelos
+import com.colma.colmaApp.servicios.Modelos.QuizResponseRecord
+import com.colma.colmaApp.servicios.Modelos.QuestionResponseRecord
 import com.colma.colmaApp.servicios.database.dbhelper.DBhelper
 
 class MultimediaRepositoryImpl(
@@ -71,5 +73,9 @@ class MultimediaRepositoryImpl(
             multimediaType = multimediaReadRecord.multimedia_type ?: "UNKNOWN",
             multimediaUniqueKey = multimediaReadRecord.multimedia_unique_key ?: "UNKNOWN"
         )
+    }
+
+    override suspend fun saveQuizResponses(quizResponse: QuizResponseRecord, questionResponses: List<QuestionResponseRecord>) {
+        dbHelper.insertQuizResponse(quizResponse, questionResponses)
     }
 }

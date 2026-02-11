@@ -34,6 +34,8 @@ import com.colma.colmaApp.features.multimedia.viewmodel.MultimediaViewModel
 import com.colma.colmaApp.features.multimedia.viewmodel.MultimediaViewModelFactory
 import com.colma.colmaApp.features.sesiones.MultimediaSelector.data.MultimediaRepositoryImpl
 import com.colma.colmaApp.features.sesiones.MultimediaSelector.domain.MultimediaContentType
+import com.colma.colmaApp.features.sesiones.MultimediaSelector.domain.MultimediaOption // NEW
+import com.colma.colmaApp.features.sesiones.MultimediaSelector.domain.TreatmentType // NEW
 import com.colma.colmaApp.ui.theme.ColmaAppTheme
 
 class MultimediaActivity : ComponentActivity() {
@@ -95,6 +97,17 @@ class MultimediaActivity : ComponentActivity() {
     }
 }
 
+// Top-level helper function
+fun generateMultimediaUniqueKeyForQuiz(
+    option: MultimediaOption,
+    treatmentId: String,
+    weekId: Long,
+    sessionId: Long
+): String {
+    val sanitizedTitle = option.title.replace(" ", "_").replace("[^a-zA-Z0-9_]".toRegex(), "")
+    return "QUIZ_${treatmentId}_${weekId}_${sessionId}_${sanitizedTitle}"
+}
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MultimediaScreen(
@@ -154,7 +167,26 @@ fun MultimediaScreen(
                             }
                             MultimediaContentType.QUIZ -> {
                                 currentOption.questions?.let { questions ->
-                                    QuizContent(quizQuestions = questions, onFinish = { onEvent(MultimediaEvent.GoToNext) })
+                                    val quizTitle = currentOption.title
+                                    val quizTreatmentId = uiState.treatmentTypes.firstOrNull()?.name ?: "UNKNOWN"
+                                    val quizUniqueKey = generateMultimediaUniqueKeyForQuiz(
+                                        currentOption,
+                                        quizTreatmentId,
+                                        uiState.sessionId,
+                                        uiState.subSessionId
+                                    )
+                                    QuizContent(
+                                        quizQuestions = questions,
+                                        quizTitle = quizTitle,
+                                        sessionId = uiState.sessionId,
+                                        subSessionId = uiState.subSessionId,
+                                        treatmentTypes = uiState.treatmentTypes,
+                                        multimediaUniqueKey = quizUniqueKey,
+                                        onQuizSubmit = { quizResponse, questionResponses ->
+                                            onEvent(MultimediaEvent.QuizSubmitted(quizResponse, questionResponses))
+                                        },
+                                        onFinish = { onEvent(MultimediaEvent.GoToNext) }
+                                    )
                                 } ?: Text("Quiz not found or questions missing.")
                             }
                             else -> {

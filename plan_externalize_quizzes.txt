@@ -1,0 +1,18 @@
+Plan to Externalize Quiz Content to JSON:
+
+1.  **Update `content.json` Schema**:
+    *   Add a new top-level `quizzes` array to the `content.json` file.
+    *   Each object in the `quizzes` array will have a `quizId` (e.g., "hta", "diabetes"), a `title`, and a list of `questions`.
+    *   Each `question` object will contain `questionText`, a list of `options` (strings), and the `correctAnswerIndex` (integer).
+
+2.  **Update Data Models (`ContentModels.kt`)**:
+    *   Create `Quiz` and `Question` data classes (or similar names) to map to the new JSON structure for quizzes.
+    *   Add the `quizzes` list to the `ContentDictionary` data class.
+
+3.  **Refactor `ContentRepository`**:
+    *   Add a new method `getQuiz(quizId: String): Result<Quiz>` to the `ContentRepository` interface.
+    *   Implement this method in `ContentRepositoryImpl` to find and return the quiz with the matching `quizId` from the parsed `content.json`.
+
+4.  **Refactor `MultimediaComposables.kt` (`QuizContent` composable)**:
+    *   Modify the `QuizContent` composable. It will now fetch the quiz questions and details from the `ContentRepository` using the `quizId` passed to it.
+    *   Remove the hardcoded `getHtaQuizQuestions()` and `getDiabetesQuizQuestions()` functions from `MultimediaComposables.kt`.

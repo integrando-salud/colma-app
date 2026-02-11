@@ -7,13 +7,15 @@ import com.colma.colmaApp.features.sesiones.MultimediaSelector.domain.TreatmentT
 import com.colma.colmaApp.servicios.Modelos.RegistrosSaludModelos
 import com.colma.colmaApp.features.sesiones.MultimediaSelector.domain.MultimediaContentType
 import com.colma.colmaApp.features.sesiones.MultimediaSelector.domain.MultimediaOption
+import com.colma.colmaApp.servicios.Modelos.QuizResponseRecord
+import com.colma.colmaApp.servicios.Modelos.QuestionResponseRecord
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.Dispatchers // Added import for Dispatchers
+import kotlinx.coroutines.Dispatchers
 
 class MultimediaViewModel(private val repository: MultimediaRepository) : ViewModel() {
 
@@ -28,7 +30,8 @@ class MultimediaViewModel(private val repository: MultimediaRepository) : ViewMo
             is MultimediaEvent.LoadMultimedia -> loadMultimedia(event)
             MultimediaEvent.GoToNext -> goToNext()
             MultimediaEvent.GoToPrevious -> goToPrevious()
-            MultimediaEvent.Finish -> finish()
+            MultimediaEvent.Finish -> viewModelScope.launch { _navigationEvent.send(NavigationEvent.NavigateBack) }
+            is MultimediaEvent.QuizSubmitted -> saveQuizResponses(event.quizResponse, event.questionResponses)
         }
     }
 
@@ -108,7 +111,7 @@ class MultimediaViewModel(private val repository: MultimediaRepository) : ViewMo
                         isLoading = false
                     )
                 }
-                finish()
+                viewModelScope.launch { _navigationEvent.send(NavigationEvent.NavigateBack) } // Finish if no valid content
             }
         }
     }
@@ -149,7 +152,7 @@ class MultimediaViewModel(private val repository: MultimediaRepository) : ViewMo
                 }
             }
         } else {
-            finish()
+            // Do nothing, stay on the last item
         }
     }
 
@@ -191,9 +194,11 @@ class MultimediaViewModel(private val repository: MultimediaRepository) : ViewMo
         }
     }
 
-    private fun finish() {
-        viewModelScope.launch {
-            _navigationEvent.send(NavigationEvent.NavigateBack)
+    private fun saveQuizResponses(quizResponse: QuizResponseRecord, questionResponses: List<QuestionResponseRecord>) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.saveQuizResponses(quizResponse, questionResponses)
+            // After saving, move to the next item
+            goToNext()
         }
     }
 

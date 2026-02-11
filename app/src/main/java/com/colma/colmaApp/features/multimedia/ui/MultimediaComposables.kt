@@ -1,7 +1,5 @@
 package com.colma.colmaApp.features.multimedia.ui
 
-import com.colma.colmaApp.features.content.model.QuizQuestion
-
 import android.net.Uri
 import androidx.annotation.RawRes
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -29,6 +27,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.viewinterop.AndroidView
+
 import com.colma.colmaApp.R
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
@@ -36,27 +37,33 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import java.util.*
 import java.util.concurrent.TimeUnit
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.viewinterop.AndroidView
+
 import com.colma.colmaApp.utils.videoPlayer.FullscreenVideoActivity
 import com.google.android.exoplayer2.ui.AspectRatioFrameLayout
 import com.google.android.exoplayer2.ui.PlayerView
+
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.TextButton
+
 import com.colma.colmaApp.utils.varios.CardThatOpensSelectionDialog
 import com.colma.colmaApp.utils.varios.CardThatOpensEditDialog
 import com.colma.colmaApp.utils.varios.CustomAlertDialog
 import android.widget.Toast
+
 import com.colma.colmaApp.servicios.Modelos.RegistrosSaludModelos
 import com.colma.colmaApp.servicios.database.dbhelper.DBhelper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+
 import com.colma.colmaApp.utils.varios.CardThatOpensDateTimeDialog
 import java.text.SimpleDateFormat
+
 import com.colma.colmaApp.features.sesiones.MultimediaSelector.domain.TreatmentType
+import com.colma.colmaApp.features.content.model.QuizQuestion // Existing for QuizContent
+import com.colma.colmaApp.servicios.Modelos.QuizResponseRecord // New
+import com.colma.colmaApp.servicios.Modelos.QuestionResponseRecord // New
+import com.colma.colmaApp.features.sesiones.MultimediaSelector.domain.MultimediaContentType // New
 
 
 
@@ -461,9 +468,18 @@ fun VideoContent(@RawRes contentAssetId: Int) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun QuizContent(quizQuestions: List<QuizQuestion>, onFinish: () -> Unit) {
+fun QuizContent(
+    quizQuestions: List<QuizQuestion>,
+    quizTitle: String,
+    sessionId: Long,
+    subSessionId: Long,
+    treatmentTypes: List<TreatmentType>,
+    multimediaUniqueKey: String,
+    onQuizSubmit: (quizResponse: QuizResponseRecord, questionResponses: List<QuestionResponseRecord>) -> Unit,
+    onFinish: () -> Unit
+) {
     val userAnswers = remember { mutableStateMapOf<Int, Int>() }
-    var quizSubmitted by remember { mutableStateOf(false) }
+    var quizSubmitted by remember { mutableStateOf(false) } // Keep this for UI feedback
     var showConfirmationDialog by remember { mutableStateOf(false) }
 
     val allQuestionsAnswered = userAnswers.size == quizQuestions.size
@@ -501,7 +517,47 @@ fun QuizContent(quizQuestions: List<QuizQuestion>, onFinish: () -> Unit) {
                     Button(
                         onClick = {
                             showConfirmationDialog = false
-                            quizSubmitted = true
+                            quizSubmitted = true // Mark as submitted for UI feedback
+                            val totalQuestions = quizQuestions.size
+                            var correctAnswers = 0
+                            val questionResponses = mutableListOf<QuestionResponseRecord>()
+                            
+                            quizQuestions.forEachIndexed { index, question ->
+                                val userAnswerIndex = userAnswers[index]
+                                val isCorrect = userAnswerIndex == question.correctAnswerIndex
+                                if (isCorrect) {
+                                    correctAnswers++
+                                }
+                                questionResponses.add(
+                                    QuestionResponseRecord(
+                                        id_quiz_response = 0, // Will be filled by DB
+                                        question_index = index,
+                                        question_text = question.questionText,
+                                        user_answer_index = userAnswerIndex,
+                                        user_answer_text = userAnswerIndex?.let { question.options.getOrNull(it) },
+                                        correct_answer_index = question.correctAnswerIndex,
+                                        correct_answer_text = question.options.getOrNull(question.correctAnswerIndex),
+                                        is_correct = if (isCorrect) 1 else 0
+                                    )
+                                )
+                            }
+                            val percentageCorrect = if (totalQuestions > 0) (correctAnswers.toDouble() / totalQuestions.toDouble()) * 100 else 0.0
+
+                            val quizResponseRecord = QuizResponseRecord(
+                                id_quiz_response = 0, // Will be filled by DB
+                                id_usuario = 1, // Default user ID
+                                quiz_type = MultimediaContentType.QUIZ.name,
+                                week_id = sessionId.toInt(),
+                                session_id = subSessionId.toInt(),
+                                quiz_title = quizTitle,
+                                fecha_registro = null, // Will be set by DB
+                                fecha_sincronizacion = null,
+                                total_questions = totalQuestions,
+                                correct_answers = correctAnswers,
+                                percentage_correct = percentageCorrect,
+                                multimedia_unique_key = multimediaUniqueKey
+                            )
+                            onQuizSubmit(quizResponseRecord, questionResponses)
                         },
                         colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF008000), contentColor = Color.White)
                     ) {
@@ -528,7 +584,8 @@ fun QuizContent(quizQuestions: List<QuizQuestion>, onFinish: () -> Unit) {
             Button(
                 onClick = {
                     if (quizSubmitted) {
-                        onFinish()
+
+                         // Call onFinish after quiz data is processed and saved by ViewModel
                     } else {
                         showConfirmationDialog = true
                     }
