@@ -26,6 +26,10 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            buildConfigField("String", "API_HOST", "\"http://158.69.219.243/\"")
+        }
+        debug {
+            buildConfigField("String", "API_HOST", "\"http://158.69.219.243/\"")
         }
     }
     compileOptions {
@@ -37,6 +41,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 }
 
@@ -65,6 +70,8 @@ dependencies {
     implementation ("com.google.android.exoplayer:exoplayer-ui:2.19.0")
 
     implementation(libs.kotlinx.serialization.json)
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.converter.gson)
 
 
 }
