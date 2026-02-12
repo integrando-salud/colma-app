@@ -584,8 +584,7 @@ fun QuizContent(
             Button(
                 onClick = {
                     if (quizSubmitted) {
-
-                         // Call onFinish after quiz data is processed and saved by ViewModel
+                        onFinish()
                     } else {
                         showConfirmationDialog = true
                     }

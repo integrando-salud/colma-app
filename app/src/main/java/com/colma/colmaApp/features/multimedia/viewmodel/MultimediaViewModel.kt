@@ -152,7 +152,7 @@ class MultimediaViewModel(private val repository: MultimediaRepository) : ViewMo
                 }
             }
         } else {
-            // Do nothing, stay on the last item
+            viewModelScope.launch { _navigationEvent.send(NavigationEvent.NavigateBack) }
         }
     }
 
@@ -190,7 +190,7 @@ class MultimediaViewModel(private val repository: MultimediaRepository) : ViewMo
                 }
             }
         } else {
-            // Optionally handle navigation back from the first item, for now we just stay
+            viewModelScope.launch { _navigationEvent.send(NavigationEvent.NavigateBack) }
         }
     }
 
