@@ -19,13 +19,13 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
     val navigationEvent = _navigationEvent.receiveAsFlow()
 
     init {
-        // checkIfLoggedIn() // Disabled for now, as per user request
+        checkIfLoggedIn() // Disabled for now, as per user request
     }
 
     private fun checkIfLoggedIn() {
         viewModelScope.launch {
             if (loginRepository.isLoggedIn()) {
-                // _navigationEvent.send(NavigationEvent.NavigateToHome) // Disabled for now, as per user request
+                _navigationEvent.send(NavigationEvent.NavigateToHome) // Disabled for now, as per user request
             }
         }
     }

@@ -101,7 +101,7 @@ class MenuMainUI : ComponentActivity() {
 
     private val viewModel: MenuMainViewModel by viewModels {
         MenuMainViewModelFactory(
-            MenuMainRepositoryImpl(applicationContext, DBhelper(applicationContext))
+            MenuMainRepositoryImpl(DBhelper(applicationContext))
         )
     }
 
