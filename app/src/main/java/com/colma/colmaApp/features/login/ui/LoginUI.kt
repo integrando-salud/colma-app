@@ -33,7 +33,6 @@ import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import com.colma.colmaApp.R
 import com.colma.colmaApp.features.MenuMain.ui.MenuMainUI
-import com.colma.colmaApp.features.login.data.LoginRepositoryImpl
 import com.colma.colmaApp.features.login.viewmodel.LoginEvent
 import com.colma.colmaApp.features.login.viewmodel.LoginUiState
 import com.colma.colmaApp.features.login.viewmodel.LoginViewModel
@@ -43,7 +42,7 @@ import com.colma.colmaApp.ui.theme.ColmaAppTheme
 class LoginUI : ComponentActivity() {
 
     private val viewModel: LoginViewModel by viewModels {
-        LoginViewModelFactory(applicationContext)
+        LoginViewModelFactory()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

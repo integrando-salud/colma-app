@@ -1,9 +1,9 @@
 package com.colma.colmaApp.features.MenuMain.data
 
-import android.content.Context
 import com.colma.colmaApp.features.MenuMain.domain.MenuMainRepository
 import com.colma.colmaApp.servicios.Modelos.RegistrosSaludModelos
 import com.colma.colmaApp.servicios.database.dbhelper.DBhelper
+import com.colma.colmaApp.servicios.session.SessionManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.json.JSONArray
@@ -18,19 +18,20 @@ import java.util.Date
 import java.util.Locale
 
 class MenuMainRepositoryImpl(
-    private val context: Context,
     private val dbHelper: DBhelper
 ) : MenuMainRepository {
 
     private val webhookUrl = "https://webhook.site/12930f51-dcee-43ca-8b6a-84aec1e7164a" // TODO: Move to constants/config
 
-    override suspend fun getPendingPastMeta(userId: Int?): RegistrosSaludModelos.MetaRecord? {
+    override suspend fun getPendingPastMeta(): RegistrosSaludModelos.MetaRecord? {
+        val userId = SessionManager.getUserId()
         return withContext(Dispatchers.IO) {
             dbHelper.getPendingPastMeta(userId)
         }
     }
 
-    override suspend fun getPendingFutureMetasCount(userId: Int?): Int {
+    override suspend fun getPendingFutureMetasCount(): Int {
+        val userId = SessionManager.getUserId()
         return withContext(Dispatchers.IO) {
             dbHelper.getPendingFutureMetasCount(userId)
         }
@@ -42,15 +43,18 @@ class MenuMainRepositoryImpl(
         }
     }
 
-        override suspend fun synchronizeData(userId: Int?): Result<String> {
+        override suspend fun synchronizeData(): Result<String> {
+            val userId = SessionManager.getUserId()
 
             return withContext(Dispatchers.IO) {
 
                 try {
 
                     val syncTs = nowLocal()
-
-    
+                    val token = SessionManager.getAuthToken()
+                    if (token == null) {
+                        return@withContext Result.failure(Exception("User not authenticated"))
+                    }
 
                     val (glucosaList, presionList, estadoAnimoList) = withContext(Dispatchers.IO) {
 
@@ -75,6 +79,8 @@ class MenuMainRepositoryImpl(
                         put("app", "colmaApp")
 
                         put("clientSyncTimestamp", syncTs)
+                        
+                        put("token", token)
 
                     }
 
@@ -180,7 +186,7 @@ class MenuMainRepositoryImpl(
 
     
 
-                    val postResult = postJsonRaw(webhookUrl, jsonToSend)
+                    val postResult = postJsonRaw(webhookUrl, jsonToSend, token)
 
     
 
@@ -436,9 +442,16 @@ class MenuMainRepositoryImpl(
         }
     }
 
+    override suspend fun logout() {
+        withContext(Dispatchers.IO) {
+            SessionManager.clearSession()
+        }
+    }
+
     private suspend fun postJsonRaw(
         urlString: String,
         jsonBody: String,
+        token: String? = null,
         timeoutMs: Int = 15000
     ): Result<String> {
         return withContext(Dispatchers.IO) {
@@ -452,6 +465,9 @@ class MenuMainRepositoryImpl(
                     readTimeout = timeoutMs
                     setRequestProperty("Content-Type", "application/json; charset=utf-8")
                     setRequestProperty("Accept", "application/json")
+                    token?.let {
+                        setRequestProperty("Authorization", "Bearer $it")
+                    }
                 }
 
                 conn.outputStream.use { out ->

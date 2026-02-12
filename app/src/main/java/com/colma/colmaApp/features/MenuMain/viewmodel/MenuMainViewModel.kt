@@ -40,55 +40,54 @@ class MenuMainViewModel(private val repository: MenuMainRepository) : ViewModel(
         }
     }
 
-    private fun loadInitialData() {
-        viewModelScope.launch {
-            _uiState.update { it.copy(isLoading = true) }
-            val userId = 1 // TODO: Get actual user ID from session
-            val pendingPastMeta = repository.getPendingPastMeta(userId)
-            val pendingMetasCount = repository.getPendingFutureMetasCount(userId)
-
-            _uiState.update {
-                it.copy(
-                    pendingMetasCount = pendingMetasCount,
-                    todaysObjective = pendingPastMeta,
-                    showObjectiveDialog = pendingPastMeta != null,
-                    isLoading = false
-                )
+        private fun loadInitialData() {
+            viewModelScope.launch {
+                _uiState.update { it.copy(isLoading = true) }
+                val pendingPastMeta = repository.getPendingPastMeta()
+                val pendingMetasCount = repository.getPendingFutureMetasCount()
+    
+                _uiState.update {
+                    it.copy(
+                        pendingMetasCount = pendingMetasCount,
+                        todaysObjective = pendingPastMeta,
+                        showObjectiveDialog = pendingPastMeta != null,
+                        isLoading = false
+                    )
+                }
             }
         }
-    }
-
-    private fun navigateToSessions() {
-        viewModelScope.launch { _navigationEvent.send(NavigationEvent.NavigateToSessions) }
-    }
-
-    private fun navigateToHealthRegisters() {
-        viewModelScope.launch { _navigationEvent.send(NavigationEvent.NavigateToHealthRegisters) }
-    }
-
-    private fun navigateToMetasHistory() {
-        viewModelScope.launch { _navigationEvent.send(NavigationEvent.NavigateToMetasHistory) }
-    }
-
-    private fun navigateToLogin() {
-        viewModelScope.launch { _navigationEvent.send(NavigationEvent.NavigateToLogin) }
-    }
-
-    private fun synchronizeData() {
-        viewModelScope.launch {
-            _uiState.update { it.copy(isLoading = true, snackbarMessage = "Sincronizando datos...") }
-            val userId = 1 // TODO: Get actual user ID
-            val result = repository.synchronizeData(userId)
-            result.onSuccess {
-                _uiState.update { it.copy(snackbarMessage = "Sincronización exitosa!") }
-            }.onFailure { error ->
-                _uiState.update { it.copy(snackbarMessage = "Error de sincronización: ${error.message}") }
-            }
-            _uiState.update { it.copy(isLoading = false) }
-            loadInitialData() // Reload data after sync to update counts
+    
+        private fun navigateToSessions() {
+            viewModelScope.launch { _navigationEvent.send(NavigationEvent.NavigateToSessions) }
         }
-    }
-
+    
+        private fun navigateToHealthRegisters() {
+            viewModelScope.launch { _navigationEvent.send(NavigationEvent.NavigateToHealthRegisters) }
+        }
+    
+        private fun navigateToMetasHistory() {
+            viewModelScope.launch { _navigationEvent.send(NavigationEvent.NavigateToMetasHistory) }
+        }
+    
+            private fun navigateToLogin() {
+                viewModelScope.launch {
+                    repository.logout()
+                    _navigationEvent.send(NavigationEvent.NavigateToLogin)
+                }
+            }    
+        private fun synchronizeData() {
+            viewModelScope.launch {
+                _uiState.update { it.copy(isLoading = true, snackbarMessage = "Sincronizando datos...") }
+                val result = repository.synchronizeData()
+                result.onSuccess {
+                    _uiState.update { it.copy(snackbarMessage = "Sincronización exitosa!") }
+                }.onFailure { error ->
+                    _uiState.update { it.copy(snackbarMessage = "Error de sincronización: ${error.message}") }
+                }
+                _uiState.update { it.copy(isLoading = false) }
+                loadInitialData() // Reload data after sync to update counts
+            }
+        }
     private fun dismissObjectiveDialog() {
         _uiState.update { it.copy(showObjectiveDialog = false) }
     }
