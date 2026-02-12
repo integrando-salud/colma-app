@@ -43,9 +43,7 @@ import com.colma.colmaApp.ui.theme.ColmaAppTheme
 class LoginUI : ComponentActivity() {
 
     private val viewModel: LoginViewModel by viewModels {
-        LoginViewModelFactory(
-            LoginRepositoryImpl(applicationContext)
-        )
+        LoginViewModelFactory(applicationContext)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

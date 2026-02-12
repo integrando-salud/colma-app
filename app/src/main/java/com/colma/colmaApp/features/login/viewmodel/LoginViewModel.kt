@@ -19,13 +19,13 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
     val navigationEvent = _navigationEvent.receiveAsFlow()
 
     init {
-        checkIfLoggedIn()
+        // checkIfLoggedIn() // Disabled for now, as per user request
     }
 
     private fun checkIfLoggedIn() {
         viewModelScope.launch {
             if (loginRepository.isLoggedIn()) {
-                _navigationEvent.send(NavigationEvent.NavigateToHome)
+                // _navigationEvent.send(NavigationEvent.NavigateToHome) // Disabled for now, as per user request
             }
         }
     }
@@ -52,7 +52,7 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
 
             result.onSuccess {
                 loginRepository.saveSession()
-                _navigationEvent.send(NavigationEvent.NavigateToHome)
+                _navigationEvent.send(NavigationEvent.NavigateToHome) // Re-enabled navigation after manual login
             }.onFailure { error ->
                 _uiState.update { it.copy(error = error.message) }
             }

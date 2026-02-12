@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">158.69.219.243</domain>
+        <domain includeSubdomains="true">localhost</domain>
+        <domain includeSubdomains="true">10.0.2.2</domain> <!-- Emulator localhost -->
+        <domain includeSubdomains="true">10.0.3.2</domain> <!-- Genymotion emulator localhost -->
+    </domain-config>
+</network-security-config>
