@@ -53,7 +53,7 @@ class FullscreenVideoActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         // Force landscape orientation for fullscreen
-        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_SENSOR
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
         // Draw behind system bars
         WindowCompat.setDecorFitsSystemWindows(window, false)
