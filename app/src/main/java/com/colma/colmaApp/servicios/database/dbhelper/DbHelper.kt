@@ -12,6 +12,9 @@ import com.colma.colmaApp.servicios.Modelos.EstadoAnimoModelo
 import com.colma.colmaApp.servicios.Modelos.RegistrosSaludModelos
 import com.colma.colmaApp.servicios.Modelos.QuestionResponseRecord
 import com.colma.colmaApp.servicios.Modelos.QuizResponseRecord
+import com.colma.colmaApp.servicios.internetCommunication.model.CentroSalud
+import com.colma.colmaApp.servicios.internetCommunication.model.Pais
+import com.colma.colmaApp.servicios.internetCommunication.model.Usuario
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper
 import java.io.File
 import java.io.FileOutputStream
@@ -27,7 +30,7 @@ class DBhelper(context: Context) :
 
     companion object {
         private const val DATABASE_NAME = "colmadb.db"
-        private const val DATABASE_VERSION = 6
+        private const val DATABASE_VERSION = 7
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
@@ -139,6 +142,69 @@ class DBhelper(context: Context) :
             """)
         } catch (e: Exception) {
             e.printStackTrace()
+        }
+
+        try {
+            db.execSQL("""
+            CREATE TABLE IF NOT EXISTS paises (
+                id INTEGER PRIMARY KEY,
+                nombre TEXT
+            );
+        """)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+        try {
+            db.execSQL("""
+            CREATE TABLE IF NOT EXISTS centros_salud (
+                id INTEGER PRIMARY KEY,
+                nombre TEXT
+            );
+        """)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+        // Add new columns to 'usuarios' table
+        val usuariosColumns = mutableSetOf<String>()
+        try {
+            db.rawQuery("PRAGMA table_info(usuarios)", null)?.use { cursor ->
+                val nameIndex = cursor.getColumnIndex("name")
+                if (nameIndex != -1) {
+                    while (cursor.moveToNext()) {
+                        usuariosColumns.add(cursor.getString(nameIndex).lowercase(Locale.ROOT))
+                    }
+                }
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+        if (!usuariosColumns.contains("documento")) {
+            try {
+                db.execSQL("ALTER TABLE usuarios ADD COLUMN documento TEXT;")
+            } catch (e: Exception) { e.printStackTrace() }
+        }
+        if (!usuariosColumns.contains("email")) {
+            try {
+                db.execSQL("ALTER TABLE usuarios ADD COLUMN email TEXT;")
+            } catch (e: Exception) { e.printStackTrace() }
+        }
+        if (!usuariosColumns.contains("sexo")) {
+            try {
+                db.execSQL("ALTER TABLE usuarios ADD COLUMN sexo TEXT;")
+            } catch (e: Exception) { e.printStackTrace() }
+        }
+        if (!usuariosColumns.contains("id_pais")) {
+            try {
+                db.execSQL("ALTER TABLE usuarios ADD COLUMN id_pais INTEGER;")
+            } catch (e: Exception) { e.printStackTrace() }
+        }
+        if (!usuariosColumns.contains("id_centro_salud")) {
+            try {
+                db.execSQL("ALTER TABLE usuarios ADD COLUMN id_centro_salud INTEGER;")
+            } catch (e: Exception) { e.printStackTrace() }
         }
     }
 
@@ -1568,6 +1634,36 @@ class DBhelper(context: Context) :
         )
     }
 
+    /**
+     * Return all question responses for a given quiz response ID.
+     */
+    fun getQuestionResponsesForQuiz(quizResponseId: Long): List<QuestionResponseRecord> {
+        val results = mutableListOf<QuestionResponseRecord>()
+        val db = readableDatabase
+
+        val selection = "id_quiz_response = ?"
+        val selectionArgs = arrayOf(quizResponseId.toString())
+
+        val cursor = db.query(
+            "question_response_table",
+            null, // All columns
+            selection,
+            selectionArgs,
+            null,
+            null,
+            null
+        )
+
+        cursor.use { c ->
+            if (c.moveToFirst()) {
+                do {
+                    results.add(cursorToQuestionResponseRecord(c))
+                } while (c.moveToNext())
+            }
+        }
+        return results
+    }
+
     private fun cursorToQuestionResponseRecord(c: Cursor): QuestionResponseRecord {
         return QuestionResponseRecord(
             id_question_response = c.getLongOrNull("id_question_response") ?: -1L,
@@ -1579,16 +1675,92 @@ class DBhelper(context: Context) :
             correct_answer_index = c.getIntOrNull("correct_answer_index"),
             correct_answer_text = c.getStringOrNull("correct_answer_text"),
             is_correct = c.getIntOrNull("is_correct")
-        )
-    }
-}
-
-/* Cursor helper extension functions */
-private fun Cursor.getLongOrNull(columnName: String): Long? {
-    val idx = getColumnIndex(columnName)
-    if (idx == -1 || isNull(idx)) return null
-    return getLong(idx)
-}
+                )
+            }
+        
+            fun upsertPais(pais: Pais): Long {
+                val db = writableDatabase
+                val values = ContentValues().apply {
+                    put("id", pais.id)
+                    put("nombre", pais.nombre)
+                }
+                return db.insertWithOnConflict("paises", null, values, SQLiteDatabase.CONFLICT_REPLACE)
+            }
+        
+            fun upsertCentroSalud(centroSalud: CentroSalud): Long {
+                val db = writableDatabase
+                val values = ContentValues().apply {
+                    put("id", centroSalud.id)
+                    put("nombre", centroSalud.nombre)
+                }
+                return db.insertWithOnConflict("centros_salud", null, values, SQLiteDatabase.CONFLICT_REPLACE)
+            }
+        
+            fun upsertUsuario(usuario: Usuario) {
+                upsertPais(usuario.pais)
+                upsertCentroSalud(usuario.centroSalud)
+        
+                val db = writableDatabase
+                val values = ContentValues().apply {
+                    put("idUsuario", usuario.id)
+                    put("nombre", usuario.nombre)
+                    put("documento", usuario.documento)
+                    put("email", usuario.email)
+                    put("sexo", usuario.sexo)
+                    put("id_pais", usuario.pais.id)
+                    put("id_centro_salud", usuario.centroSalud.id)
+                }
+                db.insertWithOnConflict("usuarios", null, values, SQLiteDatabase.CONFLICT_REPLACE)
+            }
+        
+            fun getUsuario(id: Int): Usuario? {
+                val db = readableDatabase
+                val query = """
+                    SELECT
+                        u.idUsuario, u.documento, u.nombre, u.email, u.sexo,
+                        p.id as id_pais, p.nombre as nombre_pais,
+                        cs.id as id_centro_salud, cs.nombre as nombre_centro_salud
+                    FROM usuarios u
+                    LEFT JOIN paises p ON u.id_pais = p.id
+                    LEFT JOIN centros_salud cs ON u.id_centro_salud = cs.id
+                    WHERE u.idUsuario = ?
+                """.trimIndent()
+        
+                db.rawQuery(query, arrayOf(id.toString())).use { c ->
+                    if (c.moveToFirst()) {
+                        val paisId = c.getIntOrNull("id_pais")
+                        val paisNombre = c.getStringOrNull("nombre_pais")
+                        val centroId = c.getIntOrNull("id_centro_salud")
+                        val centroNombre = c.getStringOrNull("nombre_centro_salud")
+        
+                        if (paisId == null || paisNombre == null || centroId == null || centroNombre == null) {
+                            return null
+                        }
+        
+                        val pais = Pais(id = paisId, nombre = paisNombre)
+                        val centroSalud = CentroSalud(id = centroId, nombre = centroNombre)
+        
+                        return Usuario(
+                            id = c.getIntOrNull("idUsuario") ?: return null,
+                            documento = c.getStringOrNull("documento") ?: "",
+                            nombre = c.getStringOrNull("nombre") ?: "",
+                            email = c.getStringOrNull("email") ?: "",
+                            sexo = c.getStringOrNull("sexo") ?: "",
+                            pais = pais,
+                            centroSalud = centroSalud
+                        )
+                    }
+                }
+                return null
+            }
+        }
+        
+        /* Cursor helper extension functions */
+        private fun Cursor.getLongOrNull(columnName: String): Long? {
+            val idx = getColumnIndex(columnName)
+            if (idx == -1 || isNull(idx)) return null
+            return getLong(idx)
+        }
 
 private fun Cursor.getIntOrNull(columnName: String): Int? {
     val idx = getColumnIndex(columnName)

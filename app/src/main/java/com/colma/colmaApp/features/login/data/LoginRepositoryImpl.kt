@@ -2,6 +2,7 @@ package com.colma.colmaApp.features.login.data
 
 import android.util.Log // Import Log
 import com.colma.colmaApp.features.login.domain.LoginRepository
+import com.colma.colmaApp.servicios.database.dbhelper.DBhelper
 import com.colma.colmaApp.servicios.internetCommunication.LoginService
 import com.colma.colmaApp.servicios.internetCommunication.model.LoginResponse
 import com.colma.colmaApp.servicios.session.SessionManager
@@ -9,7 +10,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class LoginRepositoryImpl(
-    private val loginService: LoginService // Inject LoginService
+    private val loginService: LoginService, // Inject LoginService
+    private val dbHelper: DBhelper
 ) : LoginRepository {
 
     private val TAG = "LoginRepositoryImpl" // TAG for logging
@@ -26,7 +28,8 @@ class LoginRepositoryImpl(
                     val loginResponse: LoginResponse? = response.body()
                     if (loginResponse != null && loginResponse.token.isNotEmpty()) {
                         SessionManager.saveSession(loginResponse.token, loginResponse.usuario.id)
-                        Log.d(TAG, "Login successful. Token and user ID saved.")
+                        dbHelper.upsertUsuario(loginResponse.usuario) // Save the user data
+                        Log.d(TAG, "Login successful. Token, user ID, and user data saved.")
                         Result.success(true)
                     } else {
                         val errorMessage = "Respuesta de login inválida: token no encontrado o vacío."
