@@ -3,6 +3,7 @@ package com.colma.colmaApp.features.mood.data
 import android.content.Context
 import com.colma.colmaApp.features.mood.domain.MoodRepository
 import com.colma.colmaApp.servicios.database.dbhelper.DBhelper
+import com.colma.colmaApp.servicios.session.SessionManager
 import com.colma.colmaApp.utils.varios.HealthEntry
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -13,6 +14,12 @@ import java.util.Locale
 
 class MoodRepositoryImpl(private val context: Context) : MoodRepository {
     private val dbHelper = DBhelper(context)
+    private val userId: Int
+
+    init {
+        SessionManager.init(context.applicationContext)
+        userId = SessionManager.getUserId() ?: 1 // Default to 1 if not found
+    }
 
     override suspend fun getMoodHistory(): List<HealthEntry> = withContext(Dispatchers.IO) {
         fun parseDateTimeToMillis(datetime: String?): Long? {
@@ -47,7 +54,7 @@ class MoodRepositoryImpl(private val context: Context) : MoodRepository {
     override suspend fun createDraftMoodRecord(): Result<Long> = withContext(Dispatchers.IO) {
         try {
             val isoFormatter = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
-            val idPaciente = 1 // hardcoded user id
+            val idPaciente = userId
             val fechaEdicionIso = isoFormatter.format(Date(System.currentTimeMillis()))
             val newId = dbHelper.insertEstadoAnimo(idPaciente, emptyMap(), fechaRegistro = null, fechaEdicion = fechaEdicionIso)
             if (newId > 0L) {

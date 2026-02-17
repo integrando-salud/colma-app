@@ -2,6 +2,7 @@ package com.colma.colmaApp.features.glucosa.data
 
 import android.content.Context
 import com.colma.colmaApp.features.glucosa.domain.GlucosaRepository
+import com.colma.colmaApp.servicios.session.SessionManager
 import com.colma.colmaApp.servicios.database.dbhelper.DBhelper
 import com.colma.colmaApp.utils.varios.HealthEntry
 import com.colma.colmaApp.utils.varios.parseDateTimeToMillis
@@ -15,6 +16,12 @@ class GlucosaRepositoryImpl(context: Context) : GlucosaRepository {
 
     private val dbHelper = DBhelper(context.applicationContext)
     private val isoFormatter = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+    private val userId: Int
+
+    init {
+        SessionManager.init(context.applicationContext)
+        userId = SessionManager.getUserId() ?: 1 // Default to 1 if not found
+    }
 
     override suspend fun getHistory(): List<HealthEntry> = withContext(Dispatchers.IO) {
         try {
@@ -53,7 +60,7 @@ class GlucosaRepositoryImpl(context: Context) : GlucosaRepository {
 
             val rowId = dbHelper.insertGlucosa(
                 valorMgdl = value,
-                idUsuario = 1, // Assuming user ID 1 for now
+                idUsuario = userId,
                 ayuno = isFasting,
                 fechaRegistro = fechaRegistroIso,
                 fechaHoraEdicion = fechaEdicionIso
