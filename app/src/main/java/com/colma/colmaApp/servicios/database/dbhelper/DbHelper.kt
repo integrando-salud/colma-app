@@ -30,7 +30,7 @@ class DBhelper(context: Context) :
 
     companion object {
         private const val DATABASE_NAME = "colmadb.db"
-        private const val DATABASE_VERSION = 7
+        private const val DATABASE_VERSION = 9
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
@@ -85,7 +85,59 @@ class DBhelper(context: Context) :
                 e.printStackTrace()
             }
         }
-        
+
+        // Step 3: Ensure the 'advertencia' column exists in glucosa_table.
+        var advertenciaColumnExists = false
+        try {
+            db.rawQuery("PRAGMA table_info(glucosa_table)", null)?.use { cursor ->
+                val nameIndex = cursor.getColumnIndex("name")
+                if (nameIndex != -1) {
+                    while (cursor.moveToNext()) {
+                        if ("advertencia" == cursor.getString(nameIndex)) {
+                            advertenciaColumnExists = true
+                            break
+                        }
+                    }
+                }
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+        if (!advertenciaColumnExists) {
+            try {
+                db.execSQL("ALTER TABLE glucosa_table ADD COLUMN advertencia TEXT;")
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+
+        // Step 4: Ensure the 'advertencia' column exists in presion_table.
+        var advertenciaPresionColumnExists = false
+        try {
+            db.rawQuery("PRAGMA table_info(presion_table)", null)?.use { cursor ->
+                val nameIndex = cursor.getColumnIndex("name")
+                if (nameIndex != -1) {
+                    while (cursor.moveToNext()) {
+                        if ("advertencia" == cursor.getString(nameIndex)) {
+                            advertenciaPresionColumnExists = true
+                            break
+                        }
+                    }
+                }
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+        if (!advertenciaPresionColumnExists) {
+            try {
+                db.execSQL("ALTER TABLE presion_table ADD COLUMN advertencia TEXT;")
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+		
         try {
             db.execSQL("""
                 CREATE TABLE IF NOT EXISTS multimedia_read_table (
@@ -225,7 +277,8 @@ class DBhelper(context: Context) :
         idUsuario: Int? = null,
         ayuno: Boolean? = null,
         fechaRegistro: String? = null,
-        fechaHoraEdicion: String? = null // NEW: ISO string "yyyy-MM-dd HH:mm:ss"
+        fechaHoraEdicion: String? = null, // NEW: ISO string "yyyy-MM-dd HH:mm:ss"
+        advertencia: String? = null
     ): Long {
         val db: SQLiteDatabase = writableDatabase
         val values = ContentValues().apply {
@@ -235,6 +288,7 @@ class DBhelper(context: Context) :
             ayuno?.let { put("ayuno", if (it) 1 else 0) }
             // write edit datetime as ISO text
             put("fecha_hora_edicion", fechaHoraEdicion ?: defaultDateTimeFormat.format(Date()))
+            advertencia?.let { put("advertencia", it) }
         }
 
         var rowId: Long = -1L
@@ -262,7 +316,8 @@ class DBhelper(context: Context) :
         diastolica: Double,
         idUsuario: Int? = null,
         fechaRegistro: String? = null,
-        fechaHoraEdicionIso: String? = null // NEW: ISO string
+        fechaHoraEdicionIso: String? = null, // NEW: ISO string
+        advertencia: String? = null
     ): Long {
         val db = writableDatabase
         val values = ContentValues().apply {
@@ -272,6 +327,7 @@ class DBhelper(context: Context) :
             put("fecha_registro", fechaRegistro ?: defaultDateTimeFormat.format(Date()))
             // store the edit timestamp as ISO TEXT (matches glucosa behaviour)
             put("fecha_hora_edicion", fechaHoraEdicionIso ?: defaultDateTimeFormat.format(Date()))
+            advertencia?.let { put("advertencia", it) }
         }
 
         var rowId: Long = -1L
@@ -470,7 +526,7 @@ class DBhelper(context: Context) :
 
         val cursor = db.query(
             "glucosa_table",
-            arrayOf("id_glucosa", "id_usuario", "valor_mgdl", "fecha_registro", "ayuno", "fecha_sincronizacion", "fecha_hora_edicion"),
+            arrayOf("id_glucosa", "id_usuario", "valor_mgdl", "fecha_registro", "ayuno", "fecha_sincronizacion", "fecha_hora_edicion", "advertencia"),
             selection,
             selectionArgs,
             null,
@@ -488,6 +544,7 @@ class DBhelper(context: Context) :
                 val ayunoInt: Int? = c.getIntOrNull("ayuno")
                 val fechaSync = c.getStringOrNull("fecha_sincronizacion")
                 val fechaHoraEdicion = c.getStringOrNull("fecha_hora_edicion") // TEXT
+                val advertencia = c.getStringOrNull("advertencia")
 
                 return RegistrosSaludModelos.GlucosaRecord(
                     id = idLong,
@@ -496,7 +553,8 @@ class DBhelper(context: Context) :
                     ayuno = ayunoInt,
                     fecha_registro = fecha,
                     fecha_sincronizacion = fechaSync,
-                    fecha_hora_edicion = fechaHoraEdicion
+                    fecha_hora_edicion = fechaHoraEdicion,
+                    advertencia = advertencia
                 )
             }
         }
@@ -512,7 +570,7 @@ class DBhelper(context: Context) :
 
         val cursor = db.query(
             "presion_table",
-            arrayOf("id_presion", "id_usuario", "sistolica", "diastolica", "fecha_registro", "fecha_sincronizacion", "fecha_hora_edicion"),
+            arrayOf("id_presion", "id_usuario", "sistolica", "diastolica", "fecha_registro", "fecha_sincronizacion", "fecha_hora_edicion", "advertencia"),
             selection,
             selectionArgs,
             null,
@@ -530,6 +588,7 @@ class DBhelper(context: Context) :
                 val fecha = c.getStringOrNull("fecha_registro")
                 val fechaSync = c.getStringOrNull("fecha_sincronizacion")
                 val fechaHoraEdicionMillis = c.getStringOrNull("fecha_hora_edicion") // INTEGER -> Long?
+                val advertencia = c.getStringOrNull("advertencia")
 
                 return RegistrosSaludModelos.PresionRecord(
                     id = idLong,
@@ -538,7 +597,8 @@ class DBhelper(context: Context) :
                     diastolica = dias,
                     fecha_registro = fecha,
                     fecha_sincronizacion = fechaSync,
-                    fecha_hora_edicion = fechaHoraEdicionMillis
+                    fecha_hora_edicion = fechaHoraEdicionMillis,
+                    advertencia = advertencia
                 )
             }
         }
@@ -561,7 +621,7 @@ class DBhelper(context: Context) :
 
         val cursor = db.query(
             "glucosa_table",
-            arrayOf("id_glucosa", "id_usuario", "valor_mgdl", "ayuno", "fecha_registro", "fecha_sincronizacion", "fecha_hora_edicion"),
+            arrayOf("id_glucosa", "id_usuario", "valor_mgdl", "ayuno", "fecha_registro", "fecha_sincronizacion", "fecha_hora_edicion", "advertencia"),
             selection,
             selectionArgs,
             null,
@@ -579,6 +639,7 @@ class DBhelper(context: Context) :
                     val fecha = c.getStringOrNull("fecha_registro")
                     val fechaSync = c.getStringOrNull("fecha_sincronizacion")
                     val fechaHoraEdicion = c.getStringOrNull("fecha_hora_edicion")
+                    val advertencia = c.getStringOrNull("advertencia")
 
                     results.add(
                         RegistrosSaludModelos.GlucosaRecord(
@@ -588,7 +649,8 @@ class DBhelper(context: Context) :
                             ayuno = ayunoVal,
                             fecha_registro = fecha,
                             fecha_sincronizacion = fechaSync,
-                            fecha_hora_edicion = fechaHoraEdicion
+                            fecha_hora_edicion = fechaHoraEdicion,
+                            advertencia = advertencia
                         )
                     )
                 } while (c.moveToNext())
@@ -610,7 +672,7 @@ class DBhelper(context: Context) :
 
         val cursor = db.query(
             "presion_table",
-            arrayOf("id_presion", "id_usuario", "sistolica", "diastolica", "fecha_registro", "fecha_sincronizacion", "fecha_hora_edicion"),
+            arrayOf("id_presion", "id_usuario", "sistolica", "diastolica", "fecha_registro", "fecha_sincronizacion", "fecha_hora_edicion", "advertencia"),
             selection,
             selectionArgs,
             null,
@@ -628,6 +690,7 @@ class DBhelper(context: Context) :
                     val fecha = c.getStringOrNull("fecha_registro")
                     val fechaSync = c.getStringOrNull("fecha_sincronizacion")
                     val fechaHoraEdicionMillis = c.getStringOrNull("fecha_hora_edicion")
+                    val advertencia = c.getStringOrNull("advertencia")
 
                     results.add(
                         RegistrosSaludModelos.PresionRecord(
@@ -637,7 +700,8 @@ class DBhelper(context: Context) :
                             diastolica = dias,
                             fecha_registro = fecha,
                             fecha_sincronizacion = fechaSync,
-                            fecha_hora_edicion = fechaHoraEdicionMillis
+                            fecha_hora_edicion = fechaHoraEdicionMillis,
+                            advertencia = advertencia
                         )
                     )
                 } while (c.moveToNext())
@@ -670,7 +734,7 @@ class DBhelper(context: Context) :
 
         val cursor = db.query(
             "glucosa_table",
-            arrayOf("id_glucosa", "id_usuario", "valor_mgdl", "ayuno", "fecha_registro", "fecha_sincronizacion", "fecha_hora_edicion"),
+            arrayOf("id_glucosa", "id_usuario", "valor_mgdl", "ayuno", "fecha_registro", "fecha_sincronizacion", "fecha_hora_edicion", "advertencia"),
             selection,
             selectionArgs,
             null,
@@ -688,6 +752,7 @@ class DBhelper(context: Context) :
                     val fecha = c.getStringOrNull("fecha_registro")
                     val fechaSync = c.getStringOrNull("fecha_sincronizacion")
                     val fechaHoraEdicion = c.getStringOrNull("fecha_hora_edicion")
+                    val advertencia = c.getStringOrNull("advertencia")
 
                     results.add(
                         RegistrosSaludModelos.GlucosaRecord(
@@ -697,7 +762,8 @@ class DBhelper(context: Context) :
                             ayuno = ayunoVal,
                             fecha_registro = fecha,
                             fecha_sincronizacion = fechaSync,
-                            fecha_hora_edicion = fechaHoraEdicion
+                            fecha_hora_edicion = fechaHoraEdicion,
+                            advertencia = advertencia
                         )
                     )
                 } while (c.moveToNext())
@@ -724,7 +790,7 @@ class DBhelper(context: Context) :
 
         val cursor = db.query(
             "presion_table",
-            arrayOf("id_presion", "id_usuario", "sistolica", "diastolica", "fecha_registro", "fecha_sincronizacion", "fecha_hora_edicion"),
+            arrayOf("id_presion", "id_usuario", "sistolica", "diastolica", "fecha_registro", "fecha_sincronizacion", "fecha_hora_edicion", "advertencia"),
             selection,
             selectionArgs,
             null,
@@ -742,6 +808,7 @@ class DBhelper(context: Context) :
                     val fecha = c.getStringOrNull("fecha_registro")
                     val fechaSync = c.getStringOrNull("fecha_sincronizacion")
                     val fechaHoraEdicionMillis = c.getStringOrNull("fecha_hora_edicion")
+                    val advertencia = c.getStringOrNull("advertencia")
 
                     results.add(
                         RegistrosSaludModelos.PresionRecord(
@@ -751,7 +818,8 @@ class DBhelper(context: Context) :
                             diastolica = dias,
                             fecha_registro = fecha,
                             fecha_sincronizacion = fechaSync,
-                            fecha_hora_edicion = fechaHoraEdicionMillis
+                            fecha_hora_edicion = fechaHoraEdicionMillis,
+                            advertencia = advertencia
                         )
                     )
                 } while (c.moveToNext())

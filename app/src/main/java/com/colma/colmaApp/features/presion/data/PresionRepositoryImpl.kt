@@ -56,7 +56,8 @@ class PresionRepositoryImpl(context: Context) : PresionRepository {
     override suspend fun savePresion(
         sistolica: Double,
         diastolica: Double,
-        dateTime: Long
+        dateTime: Long,
+        advertencia: String?
     ): Result<HealthEntry> = withContext(Dispatchers.IO) {
         try {
             val fechaRegistroIso = isoFormatter.format(Date())
@@ -66,7 +67,8 @@ class PresionRepositoryImpl(context: Context) : PresionRepository {
                 diastolica = diastolica,
                 idUsuario = userId,
                 fechaRegistro = fechaRegistroIso,
-                fechaHoraEdicionIso = fechaEdicionIso
+                fechaHoraEdicionIso = fechaEdicionIso,
+                advertencia = advertencia
             )
 
             if (rowId > 0L) {

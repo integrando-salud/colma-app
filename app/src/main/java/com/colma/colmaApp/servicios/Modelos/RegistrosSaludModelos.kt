@@ -8,7 +8,8 @@ class RegistrosSaludModelos {
         val ayuno: Int?,
         val fecha_registro: String?,
         val fecha_sincronizacion: String?,
-        val fecha_hora_edicion: String? // ISO string
+        val fecha_hora_edicion: String?, // ISO string
+        val advertencia: String?
     )
 
     data class PresionRecord(
@@ -19,6 +20,7 @@ class RegistrosSaludModelos {
         val fecha_registro: String?,
         val fecha_sincronizacion: String?,
         val fecha_hora_edicion: String?, // epoch millis
+        val advertencia: String?
     )
 
     data class MetaRecord(

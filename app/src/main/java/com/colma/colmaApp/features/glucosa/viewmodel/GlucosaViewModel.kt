@@ -113,10 +113,20 @@ class GlucosaViewModel(private val repository: GlucosaRepository) : ViewModel() 
 
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true) }
+
+            val low = number <= 69
+            val high = if (state.isFasting) number >= 131 else number >= 181
+            val advertencia = when {
+                low -> "Baja"
+                high -> "Alta"
+                else -> "Normal"
+            }
+
             val result = repository.saveGlucosa(
                 value = number.toDouble(),
                 isFasting = state.isFasting,
-                dateTime = state.measurementTime
+                dateTime = state.measurementTime,
+                advertencia = advertencia
             )
 
             result.onSuccess { newEntry ->
@@ -131,11 +141,9 @@ class GlucosaViewModel(private val repository: GlucosaRepository) : ViewModel() 
                     )
                 }
 
-                val low = number <= 69
-                val high = if (state.isFasting) number >= 131 else number >= 181
-                when {
-                    low -> _uiState.update { it.copy(warningDialog = GlucosaUiState.WarningDialog(show = true, message = "Advertencia: Glucosa baja (hipoglucemia). Por favor consulte con un médico.")) }
-                    high -> _uiState.update { it.copy(warningDialog = GlucosaUiState.WarningDialog(show = true, message = "Advertencia: Glucosa alta (hiperglucemia). Por favor consulte con un médico.")) }
+                when (advertencia) {
+                    "Baja" -> _uiState.update { it.copy(warningDialog = GlucosaUiState.WarningDialog(show = true, message = "Advertencia: Glucosa baja (hipoglucemia). Por favor consulte con un médico.")) }
+                    "Alto" -> _uiState.update { it.copy(warningDialog = GlucosaUiState.WarningDialog(show = true, message = "Advertencia: Glucosa alta (hiperglucemia). Por favor consulte con un médico.")) }
                 }
 
             }.onFailure { error ->

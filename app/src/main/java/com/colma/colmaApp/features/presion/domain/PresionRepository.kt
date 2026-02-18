@@ -7,6 +7,7 @@ interface PresionRepository {
     suspend fun savePresion(
         sistolica: Double,
         diastolica: Double,
-        dateTime: Long
+        dateTime: Long,
+        advertencia: String?
     ): Result<HealthEntry>
 }

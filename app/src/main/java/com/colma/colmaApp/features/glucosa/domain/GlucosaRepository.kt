@@ -7,6 +7,7 @@ interface GlucosaRepository {
     suspend fun saveGlucosa(
         value: Double,
         isFasting: Boolean,
-        dateTime: Long
+        dateTime: Long,
+        advertencia: String?
     ): Result<HealthEntry>
 }

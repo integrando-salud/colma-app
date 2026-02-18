@@ -52,7 +52,8 @@ class GlucosaRepositoryImpl(context: Context) : GlucosaRepository {
     override suspend fun saveGlucosa(
         value: Double,
         isFasting: Boolean,
-        dateTime: Long
+        dateTime: Long,
+        advertencia: String?
     ): Result<HealthEntry> = withContext(Dispatchers.IO) {
         try {
             val fechaRegistroIso = isoFormatter.format(Date())
@@ -63,7 +64,8 @@ class GlucosaRepositoryImpl(context: Context) : GlucosaRepository {
                 idUsuario = userId,
                 ayuno = isFasting,
                 fechaRegistro = fechaRegistroIso,
-                fechaHoraEdicion = fechaEdicionIso
+                fechaHoraEdicion = fechaEdicionIso,
+                advertencia = advertencia
             )
 
             if (rowId > 0L) {
