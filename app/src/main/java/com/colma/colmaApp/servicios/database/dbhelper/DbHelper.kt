@@ -30,7 +30,7 @@ class DBhelper(context: Context) :
 
     companion object {
         private const val DATABASE_NAME = "colmadb.db"
-        private const val DATABASE_VERSION = 9
+        private const val DATABASE_VERSION = 10
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
@@ -133,6 +133,58 @@ class DBhelper(context: Context) :
         if (!advertenciaPresionColumnExists) {
             try {
                 db.execSQL("ALTER TABLE presion_table ADD COLUMN advertencia TEXT;")
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+
+        // Step 5: Ensure 'treatment_type' column exists in 'quiz_response_table'
+        var treatmentTypeColumnExists = false
+        try {
+            db.rawQuery("PRAGMA table_info(quiz_response_table)", null)?.use { cursor ->
+                val nameIndex = cursor.getColumnIndex("name")
+                if (nameIndex != -1) {
+                    while (cursor.moveToNext()) {
+                        if ("treatment_type" == cursor.getString(nameIndex)) {
+                            treatmentTypeColumnExists = true
+                            break
+                        }
+                    }
+                }
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+        if (!treatmentTypeColumnExists) {
+            try {
+                db.execSQL("ALTER TABLE quiz_response_table ADD COLUMN treatment_type TEXT;")
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+
+        // Step 6: Ensure 'posibles_respuestas' column exists in 'question_response_table'
+        var posiblesRespuestasColumnExists = false
+        try {
+            db.rawQuery("PRAGMA table_info(question_response_table)", null)?.use { cursor ->
+                val nameIndex = cursor.getColumnIndex("name")
+                if (nameIndex != -1) {
+                    while (cursor.moveToNext()) {
+                        if ("posibles_respuestas" == cursor.getString(nameIndex)) {
+                            posiblesRespuestasColumnExists = true
+                            break
+                        }
+                    }
+                }
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+        if (!posiblesRespuestasColumnExists) {
+            try {
+                db.execSQL("ALTER TABLE question_response_table ADD COLUMN posibles_respuestas TEXT;")
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -485,6 +537,7 @@ class DBhelper(context: Context) :
                 put("correct_answers", quizResponse.correct_answers)
                 put("percentage_correct", quizResponse.percentage_correct)
                 put("multimedia_unique_key", quizResponse.multimedia_unique_key)
+                put("treatment_type", quizResponse.treatment_type)
             }
             quizResponseId = db.insert("quiz_response_table", null, quizValues)
 
@@ -499,6 +552,7 @@ class DBhelper(context: Context) :
                         put("correct_answer_index", question.correct_answer_index)
                         put("correct_answer_text", question.correct_answer_text)
                         put("is_correct", question.is_correct)
+                        put("posibles_respuestas", question.posibles_respuestas)
                     }
                     db.insert("question_response_table", null, questionValues)
                 }
@@ -1698,7 +1752,8 @@ class DBhelper(context: Context) :
             total_questions = c.getIntOrNull("total_questions"),
             correct_answers = c.getIntOrNull("correct_answers"),
             percentage_correct = c.getDoubleOrNull("percentage_correct"),
-            multimedia_unique_key = c.getStringOrNull("multimedia_unique_key")
+            multimedia_unique_key = c.getStringOrNull("multimedia_unique_key"),
+            treatment_type = c.getStringOrNull("treatment_type")
         )
     }
 
@@ -1742,9 +1797,10 @@ class DBhelper(context: Context) :
             user_answer_text = c.getStringOrNull("user_answer_text"),
             correct_answer_index = c.getIntOrNull("correct_answer_index"),
             correct_answer_text = c.getStringOrNull("correct_answer_text"),
-            is_correct = c.getIntOrNull("is_correct")
-                )
-            }
+            is_correct = c.getIntOrNull("is_correct"),
+            posibles_respuestas = c.getStringOrNull("posibles_respuestas")
+        )
+    }
         
             fun upsertPais(pais: Pais): Long {
                 val db = writableDatabase

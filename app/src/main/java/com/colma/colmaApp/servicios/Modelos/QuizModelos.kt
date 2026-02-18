@@ -12,7 +12,8 @@ data class QuizResponseRecord(
     val total_questions: Int?,
     val correct_answers: Int?,
     val percentage_correct: Double?,
-    val multimedia_unique_key: String?
+    val multimedia_unique_key: String?,
+    val treatment_type: String? // Added for sync payload
 )
 
 data class QuestionResponseRecord(
@@ -24,5 +25,6 @@ data class QuestionResponseRecord(
     val user_answer_text: String?,
     val correct_answer_index: Int?,
     val correct_answer_text: String?,
-    val is_correct: Int?
+    val is_correct: Int?,
+    val posibles_respuestas: String? // JSON string of options
 )

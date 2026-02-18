@@ -99,6 +99,11 @@ class MenuMainRepositoryImpl(
         val quizData = pendingQuizzes.map { q ->
             val preguntas = dbHelper.getQuestionResponsesForQuiz(q.id_quiz_response)
             val preguntaData = preguntas.map { p ->
+                val posiblesRespuestas = try {
+                    Gson().fromJson(p.posibles_respuestas, Array<String>::class.java).toList()
+                } catch (e: Exception) {
+                    emptyList()
+                }
                 com.colma.colmaApp.servicios.internetCommunication.model.PreguntaData(
                     preguntaIndex = p.question_index ?: 0,
                     preguntaTexto = p.question_text ?: "",
@@ -107,13 +112,13 @@ class MenuMainRepositoryImpl(
                     respuestaCorrecta = p.correct_answer_index ?: -1,
                     respuestaCorrectaTexto = p.correct_answer_text ?: "",
                     esCorrecta = p.is_correct == 1,
-                    posiblesRespuestas = emptyList() // This is not stored in the DB
+                    posiblesRespuestas = posiblesRespuestas
                 )
             }
             com.colma.colmaApp.servicios.internetCommunication.model.QuizData(
                 idQuiz = q.id_quiz_response.toInt(),
                 idUsuario = q.id_usuario ?: userId,
-                quizType = q.quiz_type ?: "",
+                quizType = (q.treatment_type ?: q.quiz_type ?: "").lowercase(Locale.ROOT),
                 sessionId = q.session_id ?: 0,
                 subSessionId = null, // Not available in local DB model
                 fechaRegistro = q.fecha_registro ?: clientSyncTimestamp,
