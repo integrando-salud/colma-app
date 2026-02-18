@@ -15,12 +15,20 @@ import com.colma.colmaApp.servicios.Modelos.RegistrosSaludModelos
 import com.colma.colmaApp.servicios.Modelos.QuizResponseRecord
 import com.colma.colmaApp.servicios.Modelos.QuestionResponseRecord
 import com.colma.colmaApp.servicios.database.dbhelper.DBhelper
+import com.colma.colmaApp.servicios.session.SessionManager
 
 class MultimediaRepositoryImpl(
     private val contentRepository: ContentRepository,
     private val context: Context,
     private val dbHelper: DBhelper
 ) : MultimediaRepository {
+
+    private val userId: Int
+
+    init {
+        SessionManager.init(context.applicationContext)
+        userId = SessionManager.getUserId() ?: 1 // Default to 1 if not found
+    }
 
     override suspend fun getMultimediaOptions(
         treatmentTypes: List<TreatmentType>,
@@ -66,7 +74,7 @@ class MultimediaRepositoryImpl(
 
     override suspend fun saveMultimediaRead(multimediaReadRecord: RegistrosSaludModelos.MultimediaReadRecord) {
         dbHelper.upsertMultimediaRead(
-            idUsuario = multimediaReadRecord.id_usuario ?: 1,
+            idUsuario = userId,
             treatmentId = multimediaReadRecord.treatment_id ?: "UNKNOWN",
             weekId = multimediaReadRecord.week_id ?: -1,
             sessionId = multimediaReadRecord.session_id ?: -1,
@@ -76,6 +84,7 @@ class MultimediaRepositoryImpl(
     }
 
     override suspend fun saveQuizResponses(quizResponse: QuizResponseRecord, questionResponses: List<QuestionResponseRecord>) {
-        dbHelper.insertQuizResponse(quizResponse, questionResponses)
+        val updatedQuizResponse = quizResponse.copy(id_usuario = userId)
+        dbHelper.insertQuizResponse(updatedQuizResponse, questionResponses)
     }
 }
