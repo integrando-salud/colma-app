@@ -123,8 +123,8 @@ fun MultimediaScreen(
                 title = { Text(currentOption?.title ?: uiState.sessionTitle, fontSize = 18.sp, color = Color.White) },
                 colors = TopAppBarDefaults.topAppBarColors(containerColor = signatureColor),
                 navigationIcon = {
-                    IconButton(onClick = { onEvent(MultimediaEvent.GoToPrevious) }) {
-                        Icon(imageVector = Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Volver", tint = Color.White)
+                    TextButton(onClick = { onEvent(MultimediaEvent.Finish) }) {
+                        Text(text = "Cerrar", color = Color.White, fontWeight = FontWeight.SemiBold)
                     }
                 }
             )

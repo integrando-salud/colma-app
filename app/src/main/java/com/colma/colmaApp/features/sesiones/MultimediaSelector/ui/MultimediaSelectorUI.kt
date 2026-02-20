@@ -158,8 +158,8 @@ fun MultimediaSelectorScreen(
                 },
                 colors = TopAppBarDefaults.topAppBarColors(containerColor = signatureColor),
                 navigationIcon = {
-                    IconButton(onClick = { onEvent(MultimediaSelectorEvent.BackClicked) }) {
-                        Icon(imageVector = Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Volver", tint = Color.White)
+                    TextButton(onClick = { onEvent(MultimediaSelectorEvent.BackClicked) }) {
+                        Text(text = "Cerrar", color = Color.White, fontWeight = FontWeight.SemiBold)
                     }
                 }
             )

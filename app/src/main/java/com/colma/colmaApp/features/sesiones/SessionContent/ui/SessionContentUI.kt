@@ -137,8 +137,8 @@ fun SessionContentScreen(
                 },
                 colors = TopAppBarDefaults.topAppBarColors(containerColor = signatureColor),
                 navigationIcon = {
-                    IconButton(onClick = { onEvent(SessionContentEvent.BackClicked) }) {
-                        Icon(imageVector = Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Volver", tint = Color.White)
+                    TextButton(onClick = { onEvent(SessionContentEvent.BackClicked) }) {
+                        Text(text = "Cerrar", color = Color.White, fontWeight = FontWeight.SemiBold)
                     }
                 }
             )
