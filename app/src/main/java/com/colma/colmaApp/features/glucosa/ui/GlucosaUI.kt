@@ -27,6 +27,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -103,7 +104,11 @@ class GlucosaUI : ComponentActivity() {
                         title = { Text("Advertencia") },
                         text = { Text(uiState.warningDialog.message) },
                         confirmButton = {
-                            TextButton(onClick = { viewModel.onEvent(GlucosaEvent.DismissWarningDialog) }) {
+                            Button(
+                                onClick = { viewModel.onEvent(GlucosaEvent.DismissWarningDialog) },
+                                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF008000), contentColor = Color.White),
+                                elevation = ButtonDefaults.buttonElevation(defaultElevation = 2.dp)
+                            ) {
                                 Text("Ok")
                             }
                         }
@@ -116,7 +121,11 @@ class GlucosaUI : ComponentActivity() {
                         title = { Text("Éxito") },
                         text = { Text("Registro guardado con éxito.") },
                         confirmButton = {
-                            TextButton(onClick = { viewModel.onEvent(GlucosaEvent.DismissSuccessDialog) }) {
+                            Button(
+                                onClick = { viewModel.onEvent(GlucosaEvent.DismissSuccessDialog) },
+                                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF008000), contentColor = Color.White),
+                                elevation = ButtonDefaults.buttonElevation(defaultElevation = 2.dp)
+                            ) {
                                 Text("Aceptar")
                             }
                         }
@@ -158,20 +167,22 @@ fun GlucosaScreen(
             title = { Text("Confirmar Registro") },
             text = { Text("¿Está seguro de que desea guardar este registro de glucosa?") },
             confirmButton = {
-                TextButton(
+                Button(
                     onClick = {
                         onEvent(GlucosaEvent.SaveGlucosaClicked)
                         showConfirmationDialog = false
                     },
-                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF008000), contentColor = Color.White)
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF008000), contentColor = Color.White),
+                    elevation = ButtonDefaults.buttonElevation(defaultElevation = 2.dp)
                 ) {
                     Text("Confirmar")
                 }
             },
             dismissButton = {
-                TextButton(
+                Button(
                     onClick = { showConfirmationDialog = false },
-                    colors = ButtonDefaults.textButtonColors(containerColor = Color.Red, contentColor = Color.White)
+                    colors = ButtonDefaults.buttonColors(containerColor = Color.Red, contentColor = Color.White),
+                    elevation = ButtonDefaults.buttonElevation(defaultElevation = 2.dp)
                 ) {
                     Text("Cancelar")
                 }
@@ -263,7 +274,11 @@ fun GlucosaScreen(
                         }
                     },
                     confirmButton = {
-                        TextButton(onClick = { onEvent(GlucosaEvent.DismissDetailsDialog) }) {
+                        Button(
+                            onClick = { onEvent(GlucosaEvent.DismissDetailsDialog) },
+                            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF008000), contentColor = Color.White),
+                            elevation = ButtonDefaults.buttonElevation(defaultElevation = 2.dp)
+                        ) {
                             Text("Cerrar")
                         }
                     }
@@ -358,13 +373,18 @@ fun GlucosaScreen(
                         }
                     },
                     confirmButton = {
-                        TextButton(
+                        Button(
                             onClick = { showConfirmationDialog = true },
-                            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF008000), contentColor = Color.White)
+                            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF008000), contentColor = Color.White),
+                            elevation = ButtonDefaults.buttonElevation(defaultElevation = 2.dp)
                         ) { Text("Guardar") }
                     },
                     dismissButton = {
-                        TextButton(onClick = { onEvent(GlucosaEvent.DismissFormDialog) }, colors = ButtonDefaults.textButtonColors(containerColor = Color.Red, contentColor = Color.White)) {
+                        Button(
+                            onClick = { onEvent(GlucosaEvent.DismissFormDialog) },
+                            colors = ButtonDefaults.buttonColors(containerColor = Color.Red, contentColor = Color.White),
+                            elevation = ButtonDefaults.buttonElevation(defaultElevation = 2.dp)
+                        ) {
                             Text("Cancelar")
                         }
                     },
