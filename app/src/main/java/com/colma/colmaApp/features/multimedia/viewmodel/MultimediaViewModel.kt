@@ -197,8 +197,6 @@ class MultimediaViewModel(private val repository: MultimediaRepository) : ViewMo
     private fun saveQuizResponses(quizResponse: QuizResponseRecord, questionResponses: List<QuestionResponseRecord>) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.saveQuizResponses(quizResponse, questionResponses)
-            // After saving, move to the next item
-            goToNext()
         }
     }
 

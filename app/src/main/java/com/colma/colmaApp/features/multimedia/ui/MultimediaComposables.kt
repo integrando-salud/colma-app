@@ -581,19 +581,17 @@ fun QuizContent(
                 .padding(16.dp),
             contentAlignment = Alignment.BottomCenter
         ) {
-            Button(
-                onClick = {
-                    if (quizSubmitted) {
-                        onFinish()
-                    } else {
+            if (!quizSubmitted) {
+                Button(
+                    onClick = {
                         showConfirmationDialog = true
-                    }
-                },
-                enabled = if (quizSubmitted) true else allQuestionsAnswered,
-                modifier = Modifier.fillMaxWidth(),
-                colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.principal))
-            ) {
-                Text(if (quizSubmitted) "Finalizar" else "Confirmar")
+                    },
+                    enabled = allQuestionsAnswered,
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.principal))
+                ) {
+                    Text("Confirmar")
+                }
             }
         }
     }
