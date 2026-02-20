@@ -20,6 +20,5 @@ sealed class MoodQuizEvent {
     object DismissConfirmDialog : MoodQuizEvent()
     object ConfirmMoreQuestions : MoodQuizEvent()
     object DismissMoreQuestionsDialog : MoodQuizEvent()
-    object UnlockFirstTwoQuestions : MoodQuizEvent()
     object BackPressed : MoodQuizEvent()
 }

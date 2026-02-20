@@ -61,15 +61,14 @@ class MoodQuizViewModel(private val repository: MoodRepository) : ViewModel() {
             MoodQuizEvent.ConfirmSubmit -> confirmSubmit()
             MoodQuizEvent.DismissConfirmDialog -> _uiState.update { it.copy(showConfirmDialog = false) }
             MoodQuizEvent.ConfirmMoreQuestions -> {
-                _uiState.update { it.copy(showMoreQuestionsDialog = false, showRestOfQuestions = true) }
+                _uiState.update { it.copy(showMoreQuestionsDialog = false, showRestOfQuestions = true, firstTwoQuestionsLocked = true) }
                 viewModelScope.launch {
                     _sideEffects.send(SideEffect.ShowToast("Contesta las preguntas adicionales"))
                 }
             }
             MoodQuizEvent.DismissMoreQuestionsDialog -> {
-                _uiState.update { it.copy(showMoreQuestionsDialog = false, firstTwoQuestionsLocked = false) }
+                _uiState.update { it.copy(showMoreQuestionsDialog = false) }
             }
-            MoodQuizEvent.UnlockFirstTwoQuestions -> _uiState.update { it.copy(firstTwoQuestionsLocked = false) }
             MoodQuizEvent.BackPressed -> handleBack()
         }
     }
@@ -113,7 +112,6 @@ class MoodQuizViewModel(private val repository: MoodRepository) : ViewModel() {
                 return@launch
             }
 
-            _uiState.update { it.copy(firstTwoQuestionsLocked = true) }
             val firstTwoSum = state.answers[0] + state.answers[1]
 
             if (firstTwoSum < 3) {
@@ -136,7 +134,7 @@ class MoodQuizViewModel(private val repository: MoodRepository) : ViewModel() {
 
     private fun confirmSubmit() {
         viewModelScope.launch {
-            _uiState.update { it.copy(showConfirmDialog = false, isLoading = true) }
+            _uiState.update { it.copy(showConfirmDialog = false, isLoading = true, firstTwoQuestionsLocked = true) }
             val state = _uiState.value
             val firstTwoSum = state.answers.getOrElse(0) { 0 } + state.answers.getOrElse(1) { 0 }
 

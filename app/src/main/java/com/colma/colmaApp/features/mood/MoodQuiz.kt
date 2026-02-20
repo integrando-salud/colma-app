@@ -219,22 +219,18 @@ fun MoodQuizScreen(
                 if (uiState.showConfirmDialog) {
                     AlertDialog(
                         onDismissRequest = { onEvent(MoodQuizEvent.DismissConfirmDialog) },
-                        title = { Text("Confirmar envío") },
+                        title = { Text("Confirmar") },
                         text = {
-                            Column {
-                                Text("Vas a guardar tus respuestas.")
-                                Spacer(Modifier.height(8.dp))
-                                Text("¿Deseas confirmar el guardado?")
-                            }
+                            Text("¿Desea continuar?")
                         },
                         confirmButton = {
                             TextButton(onClick = { onEvent(MoodQuizEvent.ConfirmSubmit) }) {
-                                Text("Sí")
+                                Text("Continuar")
                             }
                         },
                         dismissButton = {
                             TextButton(onClick = { onEvent(MoodQuizEvent.DismissConfirmDialog) }) {
-                                Text("No")
+                                Text("Modificar")
                             }
                         }
                     )
@@ -260,15 +256,6 @@ fun MoodQuizScreen(
                     )
                 }
 
-                if (uiState.firstTwoQuestionsLocked) {
-                    Spacer(modifier = Modifier.height(8.dp))
-                    OutlinedButton(
-                        onClick = { onEvent(MoodQuizEvent.UnlockFirstTwoQuestions) },
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        Text("Modificar respuestas iniciales")
-                    }
-                }
                 Spacer(modifier = Modifier.height(40.dp))
             }
             if (scrollState.canScrollForward) {
