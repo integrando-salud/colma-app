@@ -753,8 +753,6 @@ fun MetasContent(metasId: String, onFinish: () -> Unit) {
                 onClick = {
                     val missing = buildList {
                         if (actividad.value.isNullOrBlank()) add("Actividad")
-                        if (conQuien.value.isNullOrBlank()) add("Con quién")
-                        if (donde.value.isNullOrBlank()) add("Dónde")
                         if (fecha.value.isNullOrBlank()) add("Fecha Objetivo")
                         if (fechaEdicion.value.isNullOrBlank()) add("Fecha de Creación")
                     }
@@ -767,8 +765,8 @@ fun MetasContent(metasId: String, onFinish: () -> Unit) {
                         summaryMessage = """
                             Resumen de registro:
                             • Actividad: ${actividad.value}
-                            • Con quién: ${conQuien.value}
-                            • Dónde: ${donde.value}
+                            • Con quién: ${conQuien.value ?: "No especificado"}
+                            • Dónde: ${donde.value ?: "No especificado"}
                             • Fecha Objetivo: $fechaObjetivoForDisplay
                             • Fecha de Creación: $fechaCreacionForDisplay
                         """.trimIndent()
