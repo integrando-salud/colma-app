@@ -107,6 +107,19 @@ class PresionUI : ComponentActivity() {
                     )
                 }
 
+                if (uiState.showSuccessDialog) {
+                    AlertDialog(
+                        onDismissRequest = { viewModel.onEvent(PresionEvent.DismissSuccessDialog) },
+                        title = { Text("Éxito") },
+                        text = { Text("Registro guardado con éxito.") },
+                        confirmButton = {
+                            TextButton(onClick = { viewModel.onEvent(PresionEvent.DismissSuccessDialog) }) {
+                                Text("Aceptar")
+                            }
+                        }
+                    )
+                }
+
                 PresionScreen(
                     uiState = uiState,
                     onEvent = viewModel::onEvent,

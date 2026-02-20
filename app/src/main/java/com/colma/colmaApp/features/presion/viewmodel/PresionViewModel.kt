@@ -48,6 +48,9 @@ class PresionViewModel(private val repository: PresionRepository) : ViewModel() 
             PresionEvent.DismissFormDialog -> {
                 _uiState.update { it.copy(isFormVisible = false) }
             }
+            PresionEvent.DismissSuccessDialog -> {
+                _uiState.update { it.copy(showSuccessDialog = false) }
+            }
             is PresionEvent.SistolicaChanged -> {
                 val value = event.value.filter { it.isDigit() }
                  if (value.length <= 3) {
@@ -128,15 +131,6 @@ class PresionViewModel(private val repository: PresionRepository) : ViewModel() 
 
             result.onSuccess { newEntry ->
                 val updatedHistory = listOf(newEntry) + state.history
-                _uiState.update {
-                    it.copy(
-                        isLoading = false,
-                        isFormVisible = false,
-                        history = updatedHistory,
-                        lastPresion = newEntry,
-                        error = null
-                    )
-                }
 
                 val highS = sys > 140
                 val lowS = sys < 90
@@ -145,6 +139,18 @@ class PresionViewModel(private val repository: PresionRepository) : ViewModel() 
                 val parts = mutableListOf<String>()
                 if (lowS || lowD) parts.add("presión baja")
                 if (highS || highD) parts.add("presión alta")
+
+                _uiState.update {
+                    it.copy(
+                        isLoading = false,
+                        isFormVisible = false,
+                        history = updatedHistory,
+                        lastPresion = newEntry,
+                        error = null,
+                        showSuccessDialog = parts.isEmpty()
+                    )
+                }
+
                 if (parts.isNotEmpty()) {
                     val warningText = "Advertencia: " + parts.joinToString(" y ") + ". Por favor consulte con un médico."
                     _uiState.update { it.copy(warningDialog = PresionUiState.WarningDialog(show = true, message = warningText)) }

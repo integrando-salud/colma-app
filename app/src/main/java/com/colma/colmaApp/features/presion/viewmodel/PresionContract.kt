@@ -7,6 +7,7 @@ data class PresionUiState(
     val isLoading: Boolean = false,
     val error: String? = null,
     val isFormVisible: Boolean = false,
+    val showSuccessDialog: Boolean = false,
     // Form fields
     val sistolica: String = "",
     val diastolica: String = "",
@@ -30,6 +31,7 @@ data class PresionUiState(
 sealed class PresionEvent {
     object AddPresionClicked : PresionEvent()
     object DismissFormDialog : PresionEvent()
+    object DismissSuccessDialog : PresionEvent()
     object SavePresionClicked : PresionEvent()
     data class SistolicaChanged(val value: String) : PresionEvent()
     data class DiastolicaChanged(val value: String) : PresionEvent()
