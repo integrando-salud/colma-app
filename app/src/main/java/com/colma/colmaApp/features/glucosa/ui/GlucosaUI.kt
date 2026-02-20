@@ -110,6 +110,19 @@ class GlucosaUI : ComponentActivity() {
                     )
                 }
 
+                if (uiState.showSuccessDialog) {
+                    AlertDialog(
+                        onDismissRequest = { viewModel.onEvent(GlucosaEvent.DismissSuccessDialog) },
+                        title = { Text("Éxito") },
+                        text = { Text("Registro guardado con éxito.") },
+                        confirmButton = {
+                            TextButton(onClick = { viewModel.onEvent(GlucosaEvent.DismissSuccessDialog) }) {
+                                Text("Aceptar")
+                            }
+                        }
+                    )
+                }
+
                 GlucosaScreen(
                     uiState = uiState,
                     onEvent = viewModel::onEvent,

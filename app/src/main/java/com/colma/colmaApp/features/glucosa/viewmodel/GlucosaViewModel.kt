@@ -51,6 +51,9 @@ class GlucosaViewModel(private val repository: GlucosaRepository) : ViewModel() 
             GlucosaEvent.DismissFormDialog -> {
                 _uiState.update { it.copy(isFormVisible = false) }
             }
+            GlucosaEvent.DismissSuccessDialog -> {
+                _uiState.update { it.copy(showSuccessDialog = false) }
+            }
             is GlucosaEvent.GlucosaValueChanged -> {
                 val value = event.value.filter { it.isDigit() }
                 if (value.length <= 3) {
@@ -128,18 +131,21 @@ class GlucosaViewModel(private val repository: GlucosaRepository) : ViewModel() 
 
             result.onSuccess { newEntry ->
                 val updatedHistory = listOf(newEntry) + state.history
+                
+                val low = number <= 69
+                val high = if (state.isFasting == true) number >= 131 else number >= 181
+                
                 _uiState.update {
                     it.copy(
                         isLoading = false,
                         isFormVisible = false,
                         history = updatedHistory,
                         lastGlucosa = newEntry,
-                        error = null
+                        error = null,
+                        showSuccessDialog = !low && !high
                     )
                 }
 
-                val low = number <= 69
-                val high = if (state.isFasting) number >= 131 else number >= 181
                 when {
                     low -> _uiState.update { it.copy(warningDialog = GlucosaUiState.WarningDialog(show = true, message = "Advertencia: Glucosa baja (hipoglucemia). Por favor consulte con un médico.")) }
                     high -> _uiState.update { it.copy(warningDialog = GlucosaUiState.WarningDialog(show = true, message = "Advertencia: Glucosa alta (hiperglucemia). Por favor consulte con un médico.")) }

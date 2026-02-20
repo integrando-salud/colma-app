@@ -7,6 +7,7 @@ data class GlucosaUiState(
     val isLoading: Boolean = false,
     val error: String? = null,
     val isFormVisible: Boolean = false,
+    val showSuccessDialog: Boolean = false,
     // Form fields
     val glucosaValue: String = "",
     val isFasting: Boolean? = null,
@@ -30,6 +31,7 @@ data class GlucosaUiState(
 sealed class GlucosaEvent {
     object AddGlucosaClicked : GlucosaEvent()
     object DismissFormDialog : GlucosaEvent()
+    object DismissSuccessDialog : GlucosaEvent()
     object SaveGlucosaClicked : GlucosaEvent()
     data class GlucosaValueChanged(val value: String) : GlucosaEvent()
     data class FastingChanged(val isFasting: Boolean) : GlucosaEvent()
