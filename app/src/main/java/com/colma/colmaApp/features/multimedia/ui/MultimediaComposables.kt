@@ -676,7 +676,6 @@ fun MetasContent(metasId: String, onFinish: () -> Unit) {
     val dbDateTimeFormat = remember { SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US) }
     val displayDateFormat = remember { SimpleDateFormat("dd/MM/yyyy", Locale.US) }
 
-    val tipoActividad = rememberSaveable { mutableStateOf<String?>(null) }
     val actividad = rememberSaveable { mutableStateOf<String?>(null) }
     val conQuien = rememberSaveable { mutableStateOf<String?>(null) }
     val donde = rememberSaveable { mutableStateOf<String?>(null) }
@@ -705,16 +704,6 @@ fun MetasContent(metasId: String, onFinish: () -> Unit) {
         ) {
             val (actividades, conQuienOptions) = getMetasOptions(treatmentType)
 
-            CardThatOpensSelectionDialog(
-                title = "Tipo de actividad",
-                description = "Seleccione el tipo de actividad para su meta.",
-                items = listOf("Actividad física"),
-                label = { it },
-                onItemSelected = { chosen ->
-                    tipoActividad.value = chosen
-                }
-            )
-            Spacer(modifier = Modifier.padding(8.dp))
             CardThatOpensSelectionDialog(
                 title = "Actividad",
                 description = "Seleccione la actividad concreta que desee realizar.",
@@ -763,7 +752,6 @@ fun MetasContent(metasId: String, onFinish: () -> Unit) {
             Button(
                 onClick = {
                     val missing = buildList {
-                        if (tipoActividad.value.isNullOrBlank()) add("Tipo de actividad")
                         if (actividad.value.isNullOrBlank()) add("Actividad")
                         if (conQuien.value.isNullOrBlank()) add("Con quién")
                         if (donde.value.isNullOrBlank()) add("Dónde")
@@ -778,7 +766,6 @@ fun MetasContent(metasId: String, onFinish: () -> Unit) {
                         val fechaCreacionForDisplay = dbDateTimeFormat.parse(fechaEdicion.value)?.let { displayDateFormat.format(it) } ?: fechaEdicion.value
                         summaryMessage = """
                             Resumen de registro:
-                            • Tipo de actividad: ${tipoActividad.value}
                             • Actividad: ${actividad.value}
                             • Con quién: ${conQuien.value}
                             • Dónde: ${donde.value}
@@ -812,7 +799,7 @@ fun MetasContent(metasId: String, onFinish: () -> Unit) {
                                     id_usuario = 1,
                                     semana = null,
                                     sesion = null,
-                                    tipo_actividad = tipoActividad.value,
+                                    tipo_actividad = null,
                                     actividad = actividad.value,
                                     lugar = donde.value,
                                     acompañante = conQuien.value,
