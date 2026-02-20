@@ -6,5 +6,6 @@ interface MoodRepository {
     suspend fun getMoodHistory(): List<HealthEntry>
     suspend fun createDraftMoodRecord(): Result<Long>
     suspend fun updateMoodRecord(recordId: Long, answers: Map<Int, Int?>, editDate: String)
+    suspend fun saveMoodRecord(answers: Map<Int, Int?>, editDate: String): Result<Long>
     suspend fun deleteMoodRecord(recordId: Long)
 }

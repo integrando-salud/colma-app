@@ -8,7 +8,6 @@ data class MoodQuizUiState(
     val firstTwoQuestionsLocked: Boolean = false,
     val showConfirmDialog: Boolean = false,
     val showMoreQuestionsDialog: Boolean = false,
-    val draftRecordId: Long? = null,
     val error: String? = null,
     val isLoading: Boolean = false,
 )

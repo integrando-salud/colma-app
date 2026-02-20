@@ -46,11 +46,6 @@ class MoodQuizViewModel(private val repository: MoodRepository) : ViewModel() {
                     answers = List(allQuestions.size) { -1 }
                 )
             }
-            repository.createDraftMoodRecord().onSuccess { id ->
-                _uiState.update { it.copy(draftRecordId = id) }
-            }.onFailure {
-                _sideEffects.send(SideEffect.ShowToast("Error creando el borrador", Toast.LENGTH_LONG))
-            }
         }
     }
 
@@ -75,10 +70,6 @@ class MoodQuizViewModel(private val repository: MoodRepository) : ViewModel() {
     
     private fun handleBack() {
         viewModelScope.launch {
-            val state = _uiState.value
-            if (state.answers.all { it == -1 } && state.draftRecordId != null) {
-                repository.deleteMoodRecord(state.draftRecordId)
-            }
             _sideEffects.send(SideEffect.NavigateBack)
         }
     }
@@ -87,19 +78,6 @@ class MoodQuizViewModel(private val repository: MoodRepository) : ViewModel() {
         val updatedAnswers = _uiState.value.answers.toMutableList()
         updatedAnswers[index] = answer
         _uiState.update { it.copy(answers = updatedAnswers) }
-
-        if (index <= 1) { // only update DB for first two questions for now
-            val state = _uiState.value
-            if (state.draftRecordId != null) {
-                viewModelScope.launch {
-                    val answersMap = state.answers.mapIndexedNotNull { i, ans ->
-                        if (ans != -1) (i + 1) to ans else null
-                    }.toMap()
-                    val isoFormatter = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
-                    repository.updateMoodRecord(state.draftRecordId, answersMap, isoFormatter.format(Date()))
-                }
-            }
-        }
     }
     
     private fun handleSave() {
@@ -144,15 +122,16 @@ class MoodQuizViewModel(private val repository: MoodRepository) : ViewModel() {
                 state.answers.mapIndexedNotNull { index, i -> if(i != -1) (index+1) to i else null }.toMap()
             }
             
-            if (state.draftRecordId != null) {
-                val isoFormatter = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
-                repository.updateMoodRecord(state.draftRecordId, answersToSave, isoFormatter.format(Date()))
+            val isoFormatter = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+            val result = repository.saveMoodRecord(answersToSave, isoFormatter.format(Date()))
+            
+            result.onSuccess {
                 _uiState.update { it.copy(isLoading = false) }
                 _sideEffects.send(SideEffect.ShowToast("Respuestas guardadas"))
                 _sideEffects.send(SideEffect.NavigateBackWithResult)
-            } else {
+            }.onFailure { error ->
                 _uiState.update { it.copy(isLoading = false) }
-                _sideEffects.send(SideEffect.ShowToast("Error: No se encontró el borrador"))
+                _sideEffects.send(SideEffect.ShowToast("Error guardando respuestas: ${error.message}"))
             }
         }
     }

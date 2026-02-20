@@ -64,6 +64,20 @@ class MoodRepositoryImpl(private val context: Context) : MoodRepository {
         dbHelper.updateEstadoAnimoRow(recordId, answers, fechaEdicion = editDate)
     }
 
+    override suspend fun saveMoodRecord(answers: Map<Int, Int?>, editDate: String): Result<Long> = withContext(Dispatchers.IO) {
+        try {
+            val idPaciente = 1 // hardcoded user id
+            val newId = dbHelper.insertEstadoAnimo(idPaciente, answers, fechaRegistro = null, fechaEdicion = editDate)
+            if (newId > 0L) {
+                Result.success(newId)
+            } else {
+                Result.failure(Exception("Failed to save mood record"))
+            }
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
     override suspend fun deleteMoodRecord(recordId: Long) = withContext(Dispatchers.IO) {
         dbHelper.deleteEstadoAnimoRow(recordId)
     }
