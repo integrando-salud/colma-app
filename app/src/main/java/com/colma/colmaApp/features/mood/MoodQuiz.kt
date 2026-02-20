@@ -240,6 +240,26 @@ fun MoodQuizScreen(
                     )
                 }
 
+                if (uiState.showMoreQuestionsDialog) {
+                    AlertDialog(
+                        onDismissRequest = { onEvent(MoodQuizEvent.DismissMoreQuestionsDialog) },
+                        title = { Text("Confirmar") },
+                        text = {
+                            Text("¿Desea continuar?")
+                        },
+                        confirmButton = {
+                            TextButton(onClick = { onEvent(MoodQuizEvent.ConfirmMoreQuestions) }) {
+                                Text("Continuar")
+                            }
+                        },
+                        dismissButton = {
+                            TextButton(onClick = { onEvent(MoodQuizEvent.DismissMoreQuestionsDialog) }) {
+                                Text("Modificar")
+                            }
+                        }
+                    )
+                }
+
                 if (uiState.firstTwoQuestionsLocked) {
                     Spacer(modifier = Modifier.height(8.dp))
                     OutlinedButton(

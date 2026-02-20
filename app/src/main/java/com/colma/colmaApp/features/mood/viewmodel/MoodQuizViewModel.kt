@@ -60,6 +60,15 @@ class MoodQuizViewModel(private val repository: MoodRepository) : ViewModel() {
             MoodQuizEvent.SaveClicked -> handleSave()
             MoodQuizEvent.ConfirmSubmit -> confirmSubmit()
             MoodQuizEvent.DismissConfirmDialog -> _uiState.update { it.copy(showConfirmDialog = false) }
+            MoodQuizEvent.ConfirmMoreQuestions -> {
+                _uiState.update { it.copy(showMoreQuestionsDialog = false, showRestOfQuestions = true) }
+                viewModelScope.launch {
+                    _sideEffects.send(SideEffect.ShowToast("Contesta las preguntas adicionales"))
+                }
+            }
+            MoodQuizEvent.DismissMoreQuestionsDialog -> {
+                _uiState.update { it.copy(showMoreQuestionsDialog = false, firstTwoQuestionsLocked = false) }
+            }
             MoodQuizEvent.UnlockFirstTwoQuestions -> _uiState.update { it.copy(firstTwoQuestionsLocked = false) }
             MoodQuizEvent.BackPressed -> handleBack()
         }
@@ -112,8 +121,7 @@ class MoodQuizViewModel(private val repository: MoodRepository) : ViewModel() {
                 _uiState.update { it.copy(showConfirmDialog = true) }
             } else {
                 if (!state.showRestOfQuestions) {
-                    _uiState.update { it.copy(showRestOfQuestions = true) }
-                    _sideEffects.send(SideEffect.ShowToast("Contesta las preguntas adicionales"))
+                    _uiState.update { it.copy(showMoreQuestionsDialog = true) }
                 } else {
                     // check if all are answered
                     if (state.answers.any { it == -1 }) {
