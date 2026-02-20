@@ -296,14 +296,18 @@ fun PresionScreen(
                                         val c = measurementCalendar
                                         android.app.DatePickerDialog(context, { _, y, m, d ->
                                             onEvent(PresionEvent.DateChanged(y,m,d))
-                                        }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH)).show()
+                                        }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH))
+                                            .apply { datePicker.maxDate = System.currentTimeMillis() }
+                                            .show()
                                     },
                                     trailingIcon = {
                                         IconButton(onClick = {
                                             val c = measurementCalendar
                                             android.app.DatePickerDialog(context, { _, y, m, d ->
                                                 onEvent(PresionEvent.DateChanged(y,m,d))
-                                            }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH)).show()
+                                            }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH))
+                                                .apply { datePicker.maxDate = System.currentTimeMillis() }
+                                                .show()
                                         }) { Icon(imageVector = Icons.Default.DateRange, contentDescription = "Fecha") }
                                     }
                                 )

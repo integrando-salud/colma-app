@@ -274,13 +274,29 @@ fun GlucosaScreen(
                             )
                             Spacer(modifier = Modifier.height(8.dp))
                             Row(verticalAlignment = Alignment.CenterVertically) {
-                                RadioButton(selected = uiState.isFasting == true, onClick = { onEvent(GlucosaEvent.FastingChanged(true)) })
-                                Spacer(modifier = Modifier.width(6.dp))
-                                Text(text = "Ayuno")
+                                Row(
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    modifier = Modifier.clickable { onEvent(GlucosaEvent.FastingChanged(true)) }
+                                ) {
+                                    RadioButton(
+                                        selected = uiState.isFasting == true,
+                                        onClick = null
+                                    )
+                                    Spacer(modifier = Modifier.width(6.dp))
+                                    Text(text = "Ayuno")
+                                }
                                 Spacer(modifier = Modifier.width(16.dp))
-                                RadioButton(selected = uiState.isFasting == false, onClick = { onEvent(GlucosaEvent.FastingChanged(false)) })
-                                Spacer(modifier = Modifier.width(6.dp))
-                                Text(text = "No ayuno")
+                                Row(
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    modifier = Modifier.clickable { onEvent(GlucosaEvent.FastingChanged(false)) }
+                                ) {
+                                    RadioButton(
+                                        selected = uiState.isFasting == false,
+                                        onClick = null
+                                    )
+                                    Spacer(modifier = Modifier.width(6.dp))
+                                    Text(text = "No ayuno")
+                                }
                             }
                             Spacer(modifier = Modifier.height(12.dp))
                             Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxWidth()) {
@@ -294,14 +310,18 @@ fun GlucosaScreen(
                                         val c = measurementCalendar
                                         android.app.DatePickerDialog(context, { _, y, m, d ->
                                             onEvent(GlucosaEvent.DateChanged(y, m, d))
-                                        }, c.get(java.util.Calendar.YEAR), c.get(java.util.Calendar.MONTH), c.get(java.util.Calendar.DAY_OF_MONTH)).show()
+                                        }, c.get(java.util.Calendar.YEAR), c.get(java.util.Calendar.MONTH), c.get(java.util.Calendar.DAY_OF_MONTH))
+                                            .apply { datePicker.maxDate = System.currentTimeMillis() }
+                                            .show()
                                     },
                                     trailingIcon = {
                                         IconButton(onClick = {
                                             val c = measurementCalendar
                                             android.app.DatePickerDialog(context, { _, y, m, d ->
                                                 onEvent(GlucosaEvent.DateChanged(y, m, d))
-                                            }, c.get(java.util.Calendar.YEAR), c.get(java.util.Calendar.MONTH), c.get(java.util.Calendar.DAY_OF_MONTH)).show()
+                                            }, c.get(java.util.Calendar.YEAR), c.get(java.util.Calendar.MONTH), c.get(java.util.Calendar.DAY_OF_MONTH))
+                                                .apply { datePicker.maxDate = System.currentTimeMillis() }
+                                                .show()
                                         }) {
                                             Icon(imageVector = Icons.Default.DateRange, contentDescription = "Fecha")
                                         }

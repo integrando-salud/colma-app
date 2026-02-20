@@ -65,13 +65,15 @@ class PresionViewModel(private val repository: PresionRepository) : ViewModel() 
                 calendar.set(Calendar.YEAR, event.year)
                 calendar.set(Calendar.MONTH, event.month)
                 calendar.set(Calendar.DAY_OF_MONTH, event.day)
-                _uiState.update { it.copy(measurementTime = calendar.timeInMillis) }
+                val newTime = if (calendar.timeInMillis > System.currentTimeMillis()) System.currentTimeMillis() else calendar.timeInMillis
+                _uiState.update { it.copy(measurementTime = newTime) }
             }
             is PresionEvent.TimeChanged -> {
                 val calendar = Calendar.getInstance().apply { timeInMillis = _uiState.value.measurementTime }
                 calendar.set(Calendar.HOUR_OF_DAY, event.hour)
                 calendar.set(Calendar.MINUTE, event.minute)
-                _uiState.update { it.copy(measurementTime = calendar.timeInMillis) }
+                val newTime = if (calendar.timeInMillis > System.currentTimeMillis()) System.currentTimeMillis() else calendar.timeInMillis
+                _uiState.update { it.copy(measurementTime = newTime) }
             }
             PresionEvent.SavePresionClicked -> {
                 savePresion()
