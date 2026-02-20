@@ -52,6 +52,7 @@ import android.widget.Toast
 
 import com.colma.colmaApp.servicios.Modelos.RegistrosSaludModelos
 import com.colma.colmaApp.servicios.database.dbhelper.DBhelper
+import com.colma.colmaApp.servicios.session.SessionManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -545,7 +546,7 @@ fun QuizContent(
 
                             val quizResponseRecord = QuizResponseRecord(
                                 id_quiz_response = 0, // Will be filled by DB
-                                id_usuario = 1, // Default user ID
+                                id_usuario = SessionManager.getUserId() ?: 1, // Default user ID
                                 quiz_type = MultimediaContentType.QUIZ.name,
                                 week_id = sessionId.toInt(),
                                 session_id = subSessionId.toInt(),
@@ -791,10 +792,11 @@ fun MetasContent(metasId: String, onFinish: () -> Unit) {
                     yesLabel = "OK",
                     onYes = {
                         if (shouldExecuteFinalAction) {
+                            val userId = SessionManager.getUserId() ?: 1
                             scope.launch {
                                 val newMeta = RegistrosSaludModelos.MetaRecord(
                                     id_meta = 0,
-                                    id_usuario = 1,
+                                    id_usuario = userId,
                                     semana = null,
                                     sesion = null,
                                     tipo_actividad = null,
