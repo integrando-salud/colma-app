@@ -39,14 +39,12 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.RadioButtonDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
@@ -224,13 +222,27 @@ fun MoodQuizScreen(
                             Text("¿Desea continuar?")
                         },
                         confirmButton = {
-                            TextButton(onClick = { onEvent(MoodQuizEvent.ConfirmSubmit) }) {
+                            Button(
+                                onClick = { onEvent(MoodQuizEvent.ConfirmSubmit) },
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = Color(0xFF4CAF50), // Green
+                                    contentColor = Color.White
+                                ),
+                                elevation = ButtonDefaults.buttonElevation(defaultElevation = 4.dp)
+                            ) {
                                 Text("Continuar")
                             }
                         },
                         dismissButton = {
-                            TextButton(onClick = { onEvent(MoodQuizEvent.DismissConfirmDialog) }) {
-                                Text("Modificar")
+                            Button(
+                                onClick = { onEvent(MoodQuizEvent.DismissConfirmDialog) },
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = Color(0xFFF44336), // Red
+                                    contentColor = Color.White
+                                ),
+                                elevation = ButtonDefaults.buttonElevation(defaultElevation = 4.dp)
+                            ) {
+                                Text("Cancelar")
                             }
                         }
                     )
@@ -244,13 +256,27 @@ fun MoodQuizScreen(
                             Text("¿Desea continuar?")
                         },
                         confirmButton = {
-                            TextButton(onClick = { onEvent(MoodQuizEvent.ConfirmMoreQuestions) }) {
+                            Button(
+                                onClick = { onEvent(MoodQuizEvent.ConfirmMoreQuestions) },
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = Color(0xFF4CAF50), // Green
+                                    contentColor = Color.White
+                                ),
+                                elevation = ButtonDefaults.buttonElevation(defaultElevation = 4.dp)
+                            ) {
                                 Text("Continuar")
                             }
                         },
                         dismissButton = {
-                            TextButton(onClick = { onEvent(MoodQuizEvent.DismissMoreQuestionsDialog) }) {
-                                Text("Modificar")
+                            Button(
+                                onClick = { onEvent(MoodQuizEvent.DismissMoreQuestionsDialog) },
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = Color(0xFFF44336), // Red
+                                    contentColor = Color.White
+                                ),
+                                elevation = ButtonDefaults.buttonElevation(defaultElevation = 4.dp)
+                            ) {
+                                Text("Cancelar")
                             }
                         }
                     )
