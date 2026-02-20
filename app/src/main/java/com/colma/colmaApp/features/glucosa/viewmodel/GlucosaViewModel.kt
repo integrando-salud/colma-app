@@ -92,10 +92,15 @@ class GlucosaViewModel(private val repository: GlucosaRepository) : ViewModel() 
 
     private fun saveGlucosa() {
         val state = _uiState.value
-        val number = state.glucosaValue.trim().toIntOrNull()
+        val glucosaStr = state.glucosaValue.trim()
+        val number = glucosaStr.toIntOrNull()
 
         if (number == null) {
             _uiState.update { it.copy(formError = "Ingrese un número válido") }
+            return
+        }
+        if (glucosaStr.length < 2) {
+            _uiState.update { it.copy(formError = "Ingrese al menos 2 caracteres") }
             return
         }
         if (state.isFasting == null) {

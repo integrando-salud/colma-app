@@ -99,6 +99,10 @@ class PresionViewModel(private val repository: PresionRepository) : ViewModel() 
             _uiState.update { it.copy(formError = "Ingrese números válidos") }
             return
         }
+        if (state.sistolica.length < 2 || state.diastolica.length < 2) {
+            _uiState.update { it.copy(formError = "El valor debe tener al menos 2 dígitos") }
+            return
+        }
         if (sys <= dia) {
             _uiState.update { it.copy(formError = "El valor mayor debe ser mayor que el menor") }
             return
