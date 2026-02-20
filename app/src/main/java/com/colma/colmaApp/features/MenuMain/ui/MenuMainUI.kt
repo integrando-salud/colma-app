@@ -287,7 +287,7 @@ fun MenuScreen(
                                 // Handle help technical click
                             }
 
-                            DrawerItem("Enlaces útiles", Icons.Default.Info) {
+                            DrawerItem("Información Adicional", Icons.Default.Info) {
                                 scope.launch { drawerState.close() }
                                 // Handle useful links click
                             }
@@ -312,7 +312,7 @@ fun MenuScreen(
                                     .fillMaxWidth(0.7f)
                                     .align(Alignment.CenterHorizontally)
                             ) {
-                                Text(text = "Salir")
+                                Text(text = "Cerrar sesión")
                             }
 
                             Spacer(Modifier.height(18.dp))
@@ -328,23 +328,6 @@ fun MenuScreen(
                     topBar = {
                         TopAppBar(
                             title = { Text(text = "Bienvenido ${uiState.userName}", fontWeight = FontWeight.Bold) },
-                            navigationIcon = {
-                                IconButton(onClick = { onEvent(MenuMainEvent.OnMetasHistoryClick) }) {
-                                    BadgedBox(
-                                        badge = {
-                                            if (uiState.pendingMetasCount > 0) {
-                                                Badge { Text("${uiState.pendingMetasCount}") }
-                                            }
-                                        }
-                                    ) {
-                                        Icon(
-                                            painter = painterResource(R.drawable.outline_trophy_24),
-                                            contentDescription = "Historial de Metas",
-                                            tint = Color.White
-                                        )
-                                    }
-                                }
-                            },
                             actions = {
                                 Surface(
                                     shape = RoundedCornerShape(12.dp),
@@ -474,6 +457,55 @@ fun MenuScreen(
 
                                     Text(
                                         text = "Mis Registros de Salud",
+                                        fontSize = 18.sp,
+                                        fontWeight = FontWeight.SemiBold,
+                                        modifier = Modifier.weight(1f),
+                                        textAlign = TextAlign.Start
+                                    )
+                                }
+                            }
+
+                            Spacer(modifier = Modifier.height(16.dp))
+
+                            Button(
+                                onClick = { onEvent(MenuMainEvent.OnMetasHistoryClick) },
+                                modifier = Modifier
+                                    .fillMaxWidth(0.85f)
+                                    .height(65.dp),
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = Color(0xFFF0F0F0),
+                                    contentColor = Color.Black
+                                ),
+                                shape = MaterialTheme.shapes.medium,
+                                elevation = ButtonDefaults.buttonElevation(
+                                    defaultElevation = 6.dp,
+                                    pressedElevation = 10.dp
+                                ),
+                            ) {
+                                Row(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    horizontalArrangement = Arrangement.Start
+                                ) {
+                                    BadgedBox(
+                                        badge = {
+                                            if (uiState.pendingMetasCount > 0) {
+                                                Badge { Text("${uiState.pendingMetasCount}") }
+                                            }
+                                        }
+                                    ) {
+                                        Icon(
+                                            painter = painterResource(R.drawable.outline_trophy_24),
+                                            contentDescription = "Metas",
+                                            tint = LocalContentColor.current,
+                                            modifier = Modifier.size(20.dp)
+                                        )
+                                    }
+
+                                    Spacer(modifier = Modifier.width(12.dp))
+
+                                    Text(
+                                        text = "Mis Metas",
                                         fontSize = 18.sp,
                                         fontWeight = FontWeight.SemiBold,
                                         modifier = Modifier.weight(1f),
