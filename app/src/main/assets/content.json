@@ -664,9 +664,16 @@
           "subSessions": [
             {
               "id": 1,
-              "title": "Sesion 1",
+              "title": "Sesión 1",
               "duration": "05:00",
               "multimedia": [
+                {
+                  "type": "VIDEO",
+                  "title": "Video Introducción (Diabetes)",
+                  "description": "Ver el vídeo de introducción a la sesión de diabetes",
+                  "iconImageVector": "PlayArrow",
+                  "contentAsset": "diabetes_sesion_1_1"
+                },
                 {
                   "type": "DESCRIPTION",
                   "title": "Descripción (Diabetes)",
@@ -675,26 +682,18 @@
                   "iconResId": "outline_unknown_document_24"
                 },
                 {
-                  "type": "VIDEO",
-                  "title": "Video Introducción (Diabetes)",
-                  "description": "Ver el vídeo de introducción a la sesión de diabetes",
-                  "iconImageVector": "PlayArrow",
-                  "contentAsset": "diabetes_sesion_1_1"
+                  "type": "AUDIO",
+                  "title": "Audio Explicativo",
+                  "description": "Escuchar el contenido de la sesión",
+                  "iconResId": "outline_headphones_24",
+                  "contentAsset": "audio_explicativo"
                 }
               ]
-            }
-          ]
-        },
-        {
-          "id": 18,
-          "title": "Semana 2 Diabetes",
-          "thumbnail": "missing_photo",
-          "duration": "10 min",
-          "subSessions": [
+            },
             {
-              "id": 1,
-              "title": "Sesion 1",
-              "duration": "05:00",
+              "id": 2,
+              "title": "Sesión 2",
+              "duration": "07:00",
               "multimedia": [
                 {
                   "type": "VIDEO",
@@ -738,12 +737,40 @@
                   ]
                 }
               ]
+            },
+            {
+              "id": 3,
+              "title": "Sesión 3",
+              "duration": "03:00",
+              "multimedia": [
+                {
+                  "type": "VIDEO",
+                  "title": "Video Principal (Diabetes)",
+                  "description": "Primer video de la sesión de diabetes",
+                  "iconImageVector": "PlayArrow",
+                  "contentAsset": "diabetes_sesion_3_1"
+                },
+                {
+                  "type": "METAS",
+                  "title": "Metas (Diabetes)",
+                  "description": "Configura tus metas para esta sesión de diabetes",
+                  "iconResId": "outline_trophy_24",
+                  "metasId": "diabetes"
+                },
+                {
+                  "type": "VIDEO",
+                  "title": "Video Complementario (Diabetes)",
+                  "description": "Segundo video de la sesión de diabetes",
+                  "iconImageVector": "PlayArrow",
+                  "contentAsset": "diabetes_sesion_3_3"
+                }
+              ]
             }
           ]
         },
         {
-          "id": 19,
-          "title": "Semana 3 Diabetes",
+          "id": 33,
+          "title": "Semana 2 Diabetes",
           "thumbnail": "missing_photo",
           "duration": "10 min",
           "subSessions": [
@@ -754,17 +781,17 @@
               "multimedia": [
                 {
                   "type": "VIDEO",
-                  "title": "Video Principal (Diabetes)",
-                  "description": "Primer video de la sesión de diabetes",
+                  "title": "Video Genérico (Diabetes)",
+                  "description": "Ver el vídeo genérico de la sesión de diabetes",
                   "iconImageVector": "PlayArrow",
-                  "contentAsset": "diabetes_sesion_3_1"
+                  "contentAsset": "exercise"
                 },
                 {
-                  "type": "VIDEO",
-                  "title": "Video Complementario (Diabetes)",
-                  "description": "Segundo video de la sesión de diabetes",
-                  "iconImageVector": "PlayArrow",
-                  "contentAsset": "diabetes_sesion_3_3"
+                  "type": "AUDIO",
+                  "title": "Audio Genérico (Diabetes)",
+                  "description": "Escuchar el audio genérico de la sesión de diabetes",
+                  "iconResId": "outline_headphones_24",
+                  "contentAsset": "audio_explicativo"
                 },
                 {
                   "type": "METAS",
@@ -778,7 +805,43 @@
           ]
         },
         {
-          "id": 20,
+          "id": 34,
+          "title": "Semana 3 Diabetes",
+          "thumbnail": "missing_photo",
+          "duration": "10 min",
+          "subSessions": [
+            {
+              "id": 1,
+              "title": "Sesion 1",
+              "duration": "05:00",
+              "multimedia": [
+                {
+                  "type": "VIDEO",
+                  "title": "Video Genérico (Diabetes)",
+                  "description": "Ver el vídeo genérico de la sesión de diabetes",
+                  "iconImageVector": "PlayArrow",
+                  "contentAsset": "exercise"
+                },
+                {
+                  "type": "AUDIO",
+                  "title": "Audio Genérico (Diabetes)",
+                  "description": "Escuchar el audio genérico de la sesión de diabetes",
+                  "iconResId": "outline_headphones_24",
+                  "contentAsset": "audio_explicativo"
+                },
+                {
+                  "type": "METAS",
+                  "title": "Metas (Diabetes)",
+                  "description": "Configura tus metas para esta sesión de diabetes",
+                  "iconResId": "outline_trophy_24",
+                  "metasId": "diabetes"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": 35,
           "title": "Semana 4 Diabetes",
           "thumbnail": "missing_photo",
           "duration": "10 min",

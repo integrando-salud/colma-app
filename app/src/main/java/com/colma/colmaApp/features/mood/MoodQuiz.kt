@@ -160,7 +160,7 @@ fun MoodQuizScreen(
                     .verticalScroll(scrollState)
             ) {
                 Text(
-                    text = "Contesta las siguientes preguntas seleccionando la opción que mejor te describe:",
+                    text = "Durante las dos últimas semanas, ¿con qué frecuencia se ha visto afectado por los siguientes problemas?",
                     style = MaterialTheme.typography.bodyMedium
                 )
 
