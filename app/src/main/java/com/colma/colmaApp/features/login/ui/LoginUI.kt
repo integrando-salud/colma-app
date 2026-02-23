@@ -150,7 +150,7 @@ fun LoginScreen(
                     OutlinedTextField(
                         value = uiState.dni,
                         onValueChange = { onEvent(LoginEvent.DniChanged(it)) },
-                        label = { Text("DNI") },
+                        label = { Text("Usuario") },
                         singleLine = true,
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                         colors = OutlinedTextFieldDefaults.colors(
