@@ -177,7 +177,7 @@ fun PresionScreen(
             dismissButton = {
                 Button(
                     onClick = { showConfirmationDialog = false },
-                    colors = ButtonDefaults.buttonColors(containerColor = Color.Red, contentColor = Color.White),
+                    colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.rojo_boton), contentColor = Color.White),
                     elevation = ButtonDefaults.buttonElevation(defaultElevation = 2.dp)
                 ) {
                     Text("Cancelar")
@@ -361,7 +361,7 @@ fun PresionScreen(
                     dismissButton = {
                         Button(
                             onClick = { onEvent(PresionEvent.DismissFormDialog) },
-                            colors = ButtonDefaults.buttonColors(containerColor = Color.Red, contentColor = Color.White),
+                            colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.rojo_boton), contentColor = Color.White),
                             elevation = ButtonDefaults.buttonElevation(defaultElevation = 2.dp)
                         ) {
                             Text("Cancelar")

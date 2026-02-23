@@ -568,7 +568,7 @@ fun QuizContent(
                 dismissButton = {
                     TextButton(
                         onClick = { showConfirmationDialog = false },
-                        colors = ButtonDefaults.textButtonColors(containerColor = Color.Red, contentColor = Color.White)
+                        colors = ButtonDefaults.textButtonColors(containerColor = colorResource(R.color.rojo_boton), contentColor = Color.White)
                     ) {
                         Text("Cancelar")
                     }
@@ -874,7 +874,7 @@ fun MetasContent(metasId: String, onFinish: () -> Unit) {
                     confirmButton = {
                         Button(
                             onClick = { showErrorDialog = false },
-                            colors = ButtonDefaults.buttonColors(containerColor = Color.Red, contentColor = Color.White),
+                            colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.rojo_boton), contentColor = Color.White),
                             elevation = ButtonDefaults.buttonElevation(defaultElevation = 2.dp)
                         ) {
                             Text("Aceptar")

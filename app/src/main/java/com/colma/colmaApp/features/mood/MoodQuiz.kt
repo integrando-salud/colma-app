@@ -242,7 +242,7 @@ fun MoodQuizScreen(
                             Button(
                                 onClick = { onEvent(MoodQuizEvent.DismissConfirmDialog) },
                                 colors = ButtonDefaults.buttonColors(
-                                    containerColor = Color(0xFFF44336), // Red
+                                    containerColor = colorResource(R.color.rojo_boton),
                                     contentColor = Color.White
                                 ),
                                 elevation = ButtonDefaults.buttonElevation(defaultElevation = 4.dp)
@@ -276,7 +276,7 @@ fun MoodQuizScreen(
                             Button(
                                 onClick = { onEvent(MoodQuizEvent.DismissMoreQuestionsDialog) },
                                 colors = ButtonDefaults.buttonColors(
-                                    containerColor = Color(0xFFF44336), // Red
+                                    containerColor = colorResource(R.color.rojo_boton),
                                     contentColor = Color.White
                                 ),
                                 elevation = ButtonDefaults.buttonElevation(defaultElevation = 4.dp)

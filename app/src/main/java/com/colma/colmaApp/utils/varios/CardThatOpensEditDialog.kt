@@ -13,9 +13,11 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.colma.colmaApp.R
 
 
 @Composable
@@ -124,7 +126,7 @@ fun CardThatOpensEditDialog(
             dismissButton = {
                 TextButton(
                     onClick = { showDialog = false },
-                    colors = ButtonDefaults.textButtonColors(containerColor = Color.Red, contentColor = Color.White)
+                    colors = ButtonDefaults.textButtonColors(containerColor = colorResource(id = R.color.rojo_boton), contentColor = Color.White)
                 ) { Text(cancelLabel) }
             }
         )

@@ -186,7 +186,7 @@ fun DateTimePickerDialogComposable(
         dismissButton = {
             TextButton(
                 onClick = onDismissRequest,
-                colors = ButtonDefaults.textButtonColors(containerColor = Color.Red, contentColor = Color.White)
+                colors = ButtonDefaults.textButtonColors(containerColor = colorResource(R.color.rojo_boton), contentColor = Color.White)
             ) { Text("Cancelar") }
         }
     )
