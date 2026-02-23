@@ -117,6 +117,7 @@ class MenuMainViewModel(private val repository: MenuMainRepository) : ViewModel(
                 it.copy(
                     showObjectiveDialog = false,
                     showFeedbackDialog = true,
+                    isSuccessFeedback = true,
                     feedbackMessage = "¡Excelente! ¡Elige otra actividad para esta semana y sigue para adelante!",
                     todaysObjective = null
                 )
@@ -131,7 +132,7 @@ class MenuMainViewModel(private val repository: MenuMainRepository) : ViewModel(
             _uiState.update { it.copy(showReasonDialog = false, showOtherReasonDialog = true, selectedReason = "otro") }
         } else {
             val message = reasonMessages[reason] ?: "¡No te rindas! ¡Sigue intentando!"
-            _uiState.update { it.copy(selectedReason = reason, feedbackMessage = message) }
+            _uiState.update { it.copy(selectedReason = reason, feedbackMessage = message, isSuccessFeedback = false) }
             confirmOtherReason()
         }
     }
@@ -168,6 +169,7 @@ class MenuMainViewModel(private val repository: MenuMainRepository) : ViewModel(
                     showReasonDialog = false,
                     showOtherReasonDialog = false,
                     showFeedbackDialog = true,
+                    isSuccessFeedback = false,
                     feedbackMessage = feedbackMsg,
                     todaysObjective = null,
                     selectedReason = "",

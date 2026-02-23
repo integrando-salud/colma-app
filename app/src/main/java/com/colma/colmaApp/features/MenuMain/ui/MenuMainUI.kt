@@ -81,6 +81,9 @@ import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.DialogProperties
+import androidx.compose.animation.core.*
+import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.draw.scale
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import com.colma.colmaApp.R
@@ -267,6 +270,11 @@ fun MenuScreen(
         AlertDialog(
             onDismissRequest = { onEvent(MenuMainEvent.DismissFeedbackDialog) },
             properties = DialogProperties(dismissOnBackPress = false, dismissOnClickOutside = false),
+            icon = {
+                if (uiState.isSuccessFeedback) {
+                    CongratulationAnimation()
+                }
+            },
             title = { Text("Mensaje") },
             text = { Text(uiState.feedbackMessage) },
             confirmButton = {
@@ -600,6 +608,46 @@ fun MenuScreen(
                 }
             }
         }
+    }
+}
+
+@Composable
+fun CongratulationAnimation() {
+    val infiniteTransition = rememberInfiniteTransition(label = "congratulation")
+
+    val scale by infiniteTransition.animateFloat(
+        initialValue = 1f,
+        targetValue = 1.2f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(600, easing = FastOutSlowInEasing),
+            repeatMode = RepeatMode.Reverse
+        ),
+        label = "scale"
+    )
+
+    val rotation by infiniteTransition.animateFloat(
+        initialValue = -10f,
+        targetValue = 10f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(800, easing = LinearEasing),
+            repeatMode = RepeatMode.Reverse
+        ),
+        label = "rotation"
+    )
+
+    Box(
+        modifier = Modifier
+            .size(80.dp)
+            .scale(scale)
+            .rotate(rotation),
+        contentAlignment = Alignment.Center
+    ) {
+        Icon(
+            painter = painterResource(id = R.drawable.outline_trophy_24),
+            contentDescription = null,
+            modifier = Modifier.size(60.dp),
+            tint = Color(0xFFFFA500) // Orange/Gold
+        )
     }
 }
 

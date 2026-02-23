@@ -13,6 +13,7 @@ data class MenuMainUiState(
     val showReasonDialog: Boolean = false,
     val showOtherReasonDialog: Boolean = false,
     val showFeedbackDialog: Boolean = false,
+    val isSuccessFeedback: Boolean = false,
     val feedbackMessage: String = "",
     val selectedReason: String = "",
     val otherReasonInput: String = "",
