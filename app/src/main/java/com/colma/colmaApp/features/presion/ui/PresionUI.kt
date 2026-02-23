@@ -266,7 +266,7 @@ fun PresionScreen(
                         Column {
                             Text("Tipo: ${entry.label}")
                             Text("Valor: ${entry.value}")
-                            Text("Fecha: ${SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault()).format(Date(entry.timestamp))}")
+                            Text("Fecha: ${SimpleDateFormat("dd/MM/yyyy hh:mm a", Locale.getDefault()).format(Date(entry.timestamp))}")
                             if (isDangerous && warningText != null) {
                                 Spacer(modifier = Modifier.height(8.dp))
                                 Text("Advertencia: $warningText. Por favor consulte con un médico.", color = Color.Red)
@@ -348,15 +348,6 @@ fun PresionScreen(
                             if (uiState.formError != null) {
                                 Spacer(modifier = Modifier.height(6.dp))
                                 Text(text = uiState.formError, color = Color.Red, fontSize = 12.sp)
-                            } else if (uiState.lastPresion != null) {
-                                Spacer(modifier = Modifier.height(8.dp))
-                                val lastValue = uiState.lastPresion.value.replace(" mmHg", "")
-                                val lastTime = formatTimestamp(uiState.lastPresion.timestamp)
-                                Text(
-                                    text = "Último: $lastValue mmHg · $lastTime",
-                                    color = Color.Gray,
-                                    fontSize = 12.sp
-                                )
                             }
                         }
                     },

@@ -57,7 +57,7 @@ fun CardThatOpensDateTimeDialog(
     var showDialog by rememberSaveable { mutableStateOf(false) }
     val ctx = LocalContext.current
 
-    val previewFormat = remember { SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault()) }
+    val previewFormat = remember { SimpleDateFormat("dd/MM/yyyy hh:mm a", Locale.getDefault()) }
     var previewMillis by rememberSaveable { mutableStateOf(initialMillis ?: System.currentTimeMillis()) }
 
     val previewText = remember(previewMillis) { previewFormat.format(Date(previewMillis)) }

@@ -266,7 +266,7 @@ fun GlucosaScreen(
                         Column {
                             Text("Tipo: ${entry.label}")
                             Text("Valor: ${entry.value}")
-                            Text("Fecha: ${SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault()).format(Date(entry.timestamp))}")
+                            Text("Fecha: ${SimpleDateFormat("dd/MM/yyyy hh:mm a", Locale.getDefault()).format(Date(entry.timestamp))}")
                             if (isDangerous && warningText != null) {
                                 Spacer(modifier = Modifier.height(8.dp))
                                 Text("Advertencia: $warningText Por favor consulte con un médico.", color = Color.Red)
@@ -364,11 +364,6 @@ fun GlucosaScreen(
                             if (uiState.formError != null) {
                                 Spacer(modifier = Modifier.height(6.dp))
                                 Text(text = uiState.formError, color = Color.Red, fontSize = 12.sp)
-                            } else if (uiState.lastGlucosa != null) {
-                                Spacer(modifier = Modifier.height(8.dp))
-                                val lastValue = uiState.lastGlucosa.value
-                                val lastTime = formatTimestamp(uiState.lastGlucosa.timestamp)
-                                Text(text = "Último: $lastValue · $lastTime", color = Color.Gray, fontSize = 12.sp)
                             }
                         }
                     },

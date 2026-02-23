@@ -105,7 +105,7 @@ fun HistoryCard(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HistoryRow(entry: HealthEntry, modifier: Modifier = Modifier, onClick: (() -> Unit)? = null) {
-    val formatter = remember { SimpleDateFormat("dd/MM HH:mm", Locale.getDefault()) }
+    val formatter = remember { SimpleDateFormat("dd/MM hh:mm a", Locale.getDefault()) }
 
     // Visual mapping per type
     val signaturePink = Color(0xFFE84589)
@@ -166,6 +166,36 @@ fun HistoryRow(entry: HealthEntry, modifier: Modifier = Modifier, onClick: (() -
 
     @Composable
     fun CardContent() {
+        val isDangerous = remember(entry) {
+            var dangerous = false
+            when (entry.label.lowercase(Locale.getDefault())) {
+                "glucosa" -> {
+                    entry.rawValue1?.let { v ->
+                        val low = v <= 69.0
+                        val high = if (entry.isFasting == true) v >= 131.0 else v >= 181.0
+                        if (low || high) {
+                            dangerous = true
+                        }
+                    }
+                }
+                "presion", "presión", "presion arterial" -> {
+                    val s = entry.rawValue1
+                    val d = entry.rawValue2
+                    if (s != null && d != null) {
+                        val highS = s > 140
+                        val lowS = s < 90
+                        val highD = d > 90
+                        val lowD = d < 60
+                        if (highS || lowS || highD || lowD) {
+                            dangerous = true
+                        }
+                    }
+                }
+            }
+            dangerous
+        }
+        val textColor = if (isDangerous) Color.Red else Color(0xFF008000)
+
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -177,65 +207,42 @@ fun HistoryRow(entry: HealthEntry, modifier: Modifier = Modifier, onClick: (() -
                 modifier = Modifier
                     .size(40.dp)
                     .clip(RoundedCornerShape(20.dp))
-                    .background(valueColor.copy(alpha = bgAlpha)),
+                    .background(valueColor.copy(alpha = 0.1f)),
                 contentAlignment = Alignment.Center
             ) {
-                Icon(painter = iconTint, contentDescription = entry.label, tint = valueColor, modifier = Modifier.size(20.dp))
+                Icon(painter = iconTint, contentDescription = entry.label, tint = valueColor, modifier = Modifier.size(24.dp))
             }
 
             Spacer(modifier = Modifier.width(12.dp))
 
             Column(modifier = Modifier.weight(1f)) {
-                Text(text = entry.label, fontWeight = FontWeight.SemiBold, fontSize = 14.sp, color = Color.Black)
-                Spacer(modifier = Modifier.height(4.dp))
-                Text(text = remember(entry.timestamp) { formatter.format(Date(entry.timestamp)) }, fontSize = 12.sp, color = Color.Gray)
-            }
-
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                val isDangerous = remember(entry) {
-                    var dangerous = false
-                    when (entry.label.lowercase(Locale.getDefault())) {
-                        "glucosa" -> {
-                            entry.rawValue1?.let { v ->
-                                val low = v <= 69.0
-                                val high = if (entry.isFasting == true) v >= 131.0 else v >= 181.0
-                                if (low || high) {
-                                    dangerous = true
-                                }
-                            }
-                        }
-                        "presion", "presión", "presion arterial" -> {
-                            val s = entry.rawValue1
-                            val d = entry.rawValue2
-                            if (s != null && d != null) {
-                                val highS = s > 140
-                                val lowS = s < 90
-                                val highD = d > 90
-                                val lowD = d < 60
-                                if (highS || lowS || highD || lowD) {
-                                    dangerous = true
-                                }
-                            }
-                        }
-                    }
-                    dangerous
-                }
-
-                if (isDangerous) {
-                    Icon(
-                        imageVector = Icons.Default.Warning,
-                        contentDescription = "Advertencia",
-                        tint = Color.Red,
-                        modifier = Modifier.size(16.dp)
-                    )
-                    Spacer(modifier = Modifier.width(4.dp))
-                }
-                val textColor = if (isDangerous) Color.Red else Color.Green
                 Text(
-                    text = displayValue,
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight.SemiBold,
-                    color = textColor
+                    text = entry.label,
+                    fontSize = 11.sp,
+                    color = Color.Gray,
+                    fontWeight = FontWeight.Bold
+                )
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    if (isDangerous) {
+                        Icon(
+                            imageVector = Icons.Default.Warning,
+                            contentDescription = "Advertencia",
+                            tint = Color.Red,
+                            modifier = Modifier.size(14.dp)
+                        )
+                        Spacer(modifier = Modifier.width(4.dp))
+                    }
+                    Text(
+                        text = displayValue,
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = textColor
+                    )
+                }
+                Text(
+                    text = remember(entry.timestamp) { formatter.format(Date(entry.timestamp)) },
+                    fontSize = 10.sp,
+                    color = Color.Gray
                 )
             }
         }
