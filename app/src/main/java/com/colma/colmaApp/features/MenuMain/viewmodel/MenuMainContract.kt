@@ -12,6 +12,8 @@ data class MenuMainUiState(
     val todaysObjective: RegistrosSaludModelos.MetaRecord? = null,
     val showReasonDialog: Boolean = false,
     val showOtherReasonDialog: Boolean = false,
+    val showFeedbackDialog: Boolean = false,
+    val feedbackMessage: String = "",
     val selectedReason: String = "",
     val otherReasonInput: String = "",
     val isLoading: Boolean = false,
@@ -30,6 +32,7 @@ sealed class MenuMainEvent {
     object OnSyncClick : MenuMainEvent()
     object ObjectiveDialogDismissed : MenuMainEvent()
     object ObjectiveCompleted : MenuMainEvent()
+    object DismissFeedbackDialog : MenuMainEvent()
     data class ObjectiveNotCompleted(val reason: String) : MenuMainEvent()
     data class OtherReasonChanged(val reason: String) : MenuMainEvent()
     object OtherReasonConfirmed : MenuMainEvent()

@@ -23,6 +23,15 @@ class MenuMainViewModel(private val repository: MenuMainRepository) : ViewModel(
         onEvent(MenuMainEvent.LoadInitialData)
     }
 
+    private val reasonMessages = mapOf(
+        "No tenía energía / ánimo para hacerlo" to "Cuando te sientas sin energía o con mucho cansancio, es importante que vayas a tu propio ritmo y planifiques tus actividades de tal manera que no tengas que hacer todo al mismo tiempo, sino poco a poco",
+        "Otras actividades me quitaron tiempo (trabajo, familia, etc.)" to "¡No te rindas! Si afrontas una situación así en el futuro, piensa en cómo puedes hacerlo más fácil para ti, planeando tu tiempo, no haciendo demasiadas cosas a la vez, etc.",
+        "Tuve dificultades para hacer la actividad" to "¡No te rindas! ¡Sigue intentando! Intenta dividir la actividad en pequeñitos pasos o intenta una actividad más fácil esta semana.",
+        "Tuve un problema de salud / estuve enfermo(a)" to "Esperamos que te sientas mejor. Intenta escoger otra actividad para esta semana. Si tu malestar se mantiene, acude a tu centro de salud",
+        "La persona con quien iba a hacer la actividad no pudo acompañarme" to "Coordinar con alguien puede ser complicado, pero no te rindas. Vale la pena intentar un par de veces más, ¡y seguro encuentras el momento perfecto para hacerlo juntos!",
+        "Me olvidé de hacer la actividad." to "¡A todos nos pasa! Para la próxima, puedes probar anotarlo o pedirle a alguien que te lo recuerde. ¡Verás que así será más fácil cumplir tu meta!"
+    )
+
     fun onEvent(event: MenuMainEvent) {
         when (event) {
             MenuMainEvent.LoadInitialData -> loadInitialData()
@@ -33,6 +42,7 @@ class MenuMainViewModel(private val repository: MenuMainRepository) : ViewModel(
             MenuMainEvent.OnSyncClick -> synchronizeData()
             MenuMainEvent.ObjectiveDialogDismissed -> dismissObjectiveDialog()
             MenuMainEvent.ObjectiveCompleted -> handleObjectiveCompleted()
+            MenuMainEvent.DismissFeedbackDialog -> dismissFeedbackDialog()
             is MenuMainEvent.ObjectiveNotCompleted -> handleObjectiveNotCompleted(event.reason)
             is MenuMainEvent.OtherReasonChanged -> updateOtherReason(event.reason)
             MenuMainEvent.OtherReasonConfirmed -> confirmOtherReason()
@@ -92,14 +102,25 @@ class MenuMainViewModel(private val repository: MenuMainRepository) : ViewModel(
         _uiState.update { it.copy(showObjectiveDialog = false, showReasonDialog = false, showOtherReasonDialog = false) }
     }
 
+    private fun dismissFeedbackDialog() {
+        _uiState.update { it.copy(showFeedbackDialog = false) }
+        loadInitialData()
+    }
+
     private fun handleObjectiveCompleted() {
         viewModelScope.launch {
             _uiState.value.todaysObjective?.let { currentMeta ->
                 val updatedMeta = currentMeta.copy(meta_cumplida = 2) // Assuming '2' means completed
                 repository.updateMeta(updatedMeta)
             }
-            _uiState.update { it.copy(showObjectiveDialog = false, todaysObjective = null) }
-            loadInitialData() // Update counts
+            _uiState.update {
+                it.copy(
+                    showObjectiveDialog = false,
+                    showFeedbackDialog = true,
+                    feedbackMessage = "¡Excelente! ¡Elige otra actividad para esta semana y sigue para adelante!",
+                    todaysObjective = null
+                )
+            }
         }
     }
 
@@ -109,7 +130,8 @@ class MenuMainViewModel(private val repository: MenuMainRepository) : ViewModel(
         } else if (reason == "otro") {
             _uiState.update { it.copy(showReasonDialog = false, showOtherReasonDialog = true, selectedReason = "otro") }
         } else {
-            _uiState.update { it.copy(selectedReason = reason) }
+            val message = reasonMessages[reason] ?: "¡No te rindas! ¡Sigue intentando!"
+            _uiState.update { it.copy(selectedReason = reason, feedbackMessage = message) }
             confirmOtherReason()
         }
     }
@@ -120,7 +142,8 @@ class MenuMainViewModel(private val repository: MenuMainRepository) : ViewModel(
 
     private fun confirmOtherReason() {
         viewModelScope.launch {
-            val reason = if (_uiState.value.selectedReason == "otro") {
+            val isOther = _uiState.value.selectedReason == "otro"
+            val reason = if (isOther) {
                 _uiState.value.otherReasonInput
             } else {
                 _uiState.value.selectedReason
@@ -133,16 +156,24 @@ class MenuMainViewModel(private val repository: MenuMainRepository) : ViewModel(
                 )
                 repository.updateMeta(updatedMeta)
             }
+
+            val feedbackMsg = if (isOther) {
+                "¡No te rindas! Sigue intentando y verás que poco a poco será más fácil cumplir tu meta."
+            } else {
+                _uiState.value.feedbackMessage
+            }
+
             _uiState.update {
                 it.copy(
                     showReasonDialog = false,
                     showOtherReasonDialog = false,
+                    showFeedbackDialog = true,
+                    feedbackMessage = feedbackMsg,
                     todaysObjective = null,
                     selectedReason = "",
                     otherReasonInput = ""
                 )
             }
-            loadInitialData() // Update counts
         }
     }
 

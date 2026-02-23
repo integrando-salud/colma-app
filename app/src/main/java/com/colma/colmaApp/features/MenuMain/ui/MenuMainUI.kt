@@ -189,7 +189,15 @@ fun MenuScreen(
     }
 
     if (uiState.showReasonDialog) {
-        val reasons = listOf("No tuve tiempo", "El clima no ayudo", "otro")
+        val reasons = listOf(
+            "No tenía energía / ánimo para hacerlo",
+            "Otras actividades me quitaron tiempo (trabajo, familia, etc.)",
+            "Tuve dificultades para hacer la actividad",
+            "Tuve un problema de salud / estuve enfermo(a)",
+            "La persona con quien iba a hacer la actividad no pudo acompañarme",
+            "Me olvidé de hacer la actividad.",
+            "otro"
+        )
         var selectedReason by remember { mutableStateOf(uiState.selectedReason) }
 
         AlertDialog(
@@ -214,14 +222,14 @@ fun MenuScreen(
                 }
             },
             confirmButton = {
-                TextButton(
+                Button(
                     onClick = {
-                        if (selectedReason == "otro") {
-                            onEvent(MenuMainEvent.ObjectiveNotCompleted(selectedReason)) // Pass "otro"
-                        } else {
+                        if (selectedReason.isNotBlank()) {
                             onEvent(MenuMainEvent.ObjectiveNotCompleted(selectedReason))
                         }
-                    }
+                    },
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF008000), contentColor = Color.White),
+                    elevation = ButtonDefaults.buttonElevation(defaultElevation = 2.dp)
                 ) {
                     Text("Aceptar")
                 }
@@ -241,8 +249,27 @@ fun MenuScreen(
                 )
             },
             confirmButton = {
-                TextButton(
-                    onClick = { onEvent(MenuMainEvent.OtherReasonConfirmed) }
+                Button(
+                    onClick = { onEvent(MenuMainEvent.OtherReasonConfirmed) },
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF008000), contentColor = Color.White),
+                    elevation = ButtonDefaults.buttonElevation(defaultElevation = 2.dp)
+                ) {
+                    Text("Aceptar")
+                }
+            }
+        )
+    }
+
+    if (uiState.showFeedbackDialog) {
+        AlertDialog(
+            onDismissRequest = { onEvent(MenuMainEvent.DismissFeedbackDialog) },
+            title = { Text("Mensaje") },
+            text = { Text(uiState.feedbackMessage) },
+            confirmButton = {
+                Button(
+                    onClick = { onEvent(MenuMainEvent.DismissFeedbackDialog) },
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF008000), contentColor = Color.White),
+                    elevation = ButtonDefaults.buttonElevation(defaultElevation = 2.dp)
                 ) {
                     Text("Aceptar")
                 }
