@@ -162,7 +162,7 @@ fun MultimediaScreen(
                             }
                             MultimediaContentType.METAS -> {
                                 currentOption.metasId?.let {
-                                    MetasContent(metasId = it, onFinish = { onEvent(MultimediaEvent.GoToNext) })
+                                    MetasContent(metasId = it, onFinish = { onEvent(MultimediaEvent.Finish) })
                                 } ?: Text("Metas not found.")
                             }
                             MultimediaContentType.QUIZ -> {

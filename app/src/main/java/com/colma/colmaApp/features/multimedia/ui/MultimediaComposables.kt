@@ -688,6 +688,7 @@ fun MetasContent(metasId: String, onFinish: () -> Unit) {
     val fechaEdicion = rememberSaveable { mutableStateOf(todayString) }
 
     var showSummaryDialog by rememberSaveable { mutableStateOf(false) }
+    var showSuccessDialog by rememberSaveable { mutableStateOf(false) }
     var summaryMessage by rememberSaveable { mutableStateOf("") }
     var shouldExecuteFinalAction by rememberSaveable { mutableStateOf(false) }
 
@@ -814,8 +815,7 @@ fun MetasContent(metasId: String, onFinish: () -> Unit) {
                                 }
                                 if (result != -1L) {
                                     withContext(Dispatchers.Main) {
-                                        Toast.makeText(context, "Meta guardada exitosamente", Toast.LENGTH_SHORT).show()
-                                        onFinish()
+                                        showSuccessDialog = true
                                     }
                                 } else {
                                     withContext(Dispatchers.Main) {
@@ -826,6 +826,31 @@ fun MetasContent(metasId: String, onFinish: () -> Unit) {
                         }
                         showSummaryDialog = false
                     }
+                )
+            }
+
+            if (showSuccessDialog) {
+                AlertDialog(
+                    onDismissRequest = {
+                        showSuccessDialog = false
+                        onFinish()
+                    },
+                    title = { Text("Éxito") },
+                    text = { Text("La meta se ha guardado exitosamente.") },
+                    confirmButton = {
+                        Button(
+                            onClick = {
+                                showSuccessDialog = false
+                                onFinish()
+                            },
+                            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF008000), contentColor = Color.White),
+                            elevation = ButtonDefaults.buttonElevation(defaultElevation = 2.dp)
+                        ) {
+                            Text("Aceptar")
+                        }
+                    },
+                    containerColor = Color.White,
+                    shape = RoundedCornerShape(12.dp)
                 )
             }
         }
