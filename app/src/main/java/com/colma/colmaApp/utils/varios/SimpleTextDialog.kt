@@ -8,6 +8,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.DialogProperties
 
 /**
  * Simple dialog that shows a title, a description and a single confirm button.
@@ -35,6 +36,7 @@ fun CustomAlertDialog(
     AlertDialog(
         onDismissRequest = onDismissRequest,
         containerColor = Color.White,
+        properties = DialogProperties(dismissOnBackPress = false, dismissOnClickOutside = false),
         title = { Text(text = title) },
         text = {
             Text(

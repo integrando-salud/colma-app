@@ -80,6 +80,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.DialogProperties
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import com.colma.colmaApp.R
@@ -202,6 +203,7 @@ fun MenuScreen(
 
         AlertDialog(
             onDismissRequest = { onEvent(MenuMainEvent.ObjectiveDialogDismissed) }, // Dismiss reason dialog
+            properties = DialogProperties(dismissOnBackPress = false, dismissOnClickOutside = false),
             title = { Text("¿Por qué no completaste el objetivo?") },
             text = {
                 LazyColumn {
@@ -240,6 +242,7 @@ fun MenuScreen(
     if (uiState.showOtherReasonDialog) {
         AlertDialog(
             onDismissRequest = { onEvent(MenuMainEvent.ObjectiveDialogDismissed) },
+            properties = DialogProperties(dismissOnBackPress = false, dismissOnClickOutside = false),
             title = { Text("Por favor, explica la razón") },
             text = {
                 OutlinedTextField(
@@ -263,6 +266,7 @@ fun MenuScreen(
     if (uiState.showFeedbackDialog) {
         AlertDialog(
             onDismissRequest = { onEvent(MenuMainEvent.DismissFeedbackDialog) },
+            properties = DialogProperties(dismissOnBackPress = false, dismissOnClickOutside = false),
             title = { Text("Mensaje") },
             text = { Text(uiState.feedbackMessage) },
             confirmButton = {
