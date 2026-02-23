@@ -689,6 +689,8 @@ fun MetasContent(metasId: String, onFinish: () -> Unit) {
 
     var showSummaryDialog by rememberSaveable { mutableStateOf(false) }
     var showSuccessDialog by rememberSaveable { mutableStateOf(false) }
+    var showErrorDialog by rememberSaveable { mutableStateOf(false) }
+    var errorMessage by rememberSaveable { mutableStateOf("") }
     var summaryMessage by rememberSaveable { mutableStateOf("") }
     var shouldExecuteFinalAction by rememberSaveable { mutableStateOf(false) }
 
@@ -811,15 +813,24 @@ fun MetasContent(metasId: String, onFinish: () -> Unit) {
                                     fecha_objetivo = fecha.value
                                 )
                                 val result = withContext(Dispatchers.IO) {
-                                    dbHelper.insertMeta(newMeta)
+                                    if (dbHelper.getPendingFutureMetasCount(userId) > 0) {
+                                        -2L // Specific code for active goal exists
+                                    } else {
+                                        dbHelper.insertMeta(newMeta)
+                                    }
                                 }
-                                if (result != -1L) {
+                                if (result > 0L) {
                                     withContext(Dispatchers.Main) {
                                         showSuccessDialog = true
                                     }
                                 } else {
                                     withContext(Dispatchers.Main) {
-                                        Toast.makeText(context, "Error al guardar la meta", Toast.LENGTH_SHORT).show()
+                                        errorMessage = if (result == -2L) {
+                                            "Ya tienes una meta activa. Debes completarla antes de crear una nueva."
+                                        } else {
+                                            "Error al guardar la meta"
+                                        }
+                                        showErrorDialog = true
                                     }
                                 }
                             }
@@ -844,6 +855,25 @@ fun MetasContent(metasId: String, onFinish: () -> Unit) {
                                 onFinish()
                             },
                             colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF008000), contentColor = Color.White),
+                            elevation = ButtonDefaults.buttonElevation(defaultElevation = 2.dp)
+                        ) {
+                            Text("Aceptar")
+                        }
+                    },
+                    containerColor = Color.White,
+                    shape = RoundedCornerShape(12.dp)
+                )
+            }
+
+            if (showErrorDialog) {
+                AlertDialog(
+                    onDismissRequest = { showErrorDialog = false },
+                    title = { Text("Error") },
+                    text = { Text(errorMessage) },
+                    confirmButton = {
+                        Button(
+                            onClick = { showErrorDialog = false },
+                            colors = ButtonDefaults.buttonColors(containerColor = Color.Red, contentColor = Color.White),
                             elevation = ButtonDefaults.buttonElevation(defaultElevation = 2.dp)
                         ) {
                             Text("Aceptar")

@@ -1141,6 +1141,16 @@ class DBhelper(context: Context) :
 
     fun insertMeta(meta: RegistrosSaludModelos.MetaRecord): Long {
         val db = writableDatabase
+
+        // Check if there is already an active goal (meta_cumplida = 0) for this user
+        val idUser = meta.id_usuario ?: 1
+        val cursor = db.rawQuery(
+            "SELECT 1 FROM metas_table WHERE id_usuario = ? AND meta_cumplida = 0 LIMIT 1",
+            arrayOf(idUser.toString())
+        )
+        val hasActive = cursor.use { it.moveToFirst() }
+        if (hasActive) return -1L
+
         val values = ContentValues().apply {
             put("id_usuario", meta.id_usuario)
             put("semana", meta.semana)
