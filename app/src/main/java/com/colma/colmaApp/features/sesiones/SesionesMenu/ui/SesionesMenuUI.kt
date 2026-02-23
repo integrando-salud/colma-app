@@ -91,7 +91,7 @@ class SesionesMenuUI : ComponentActivity() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
         window.statusBarColor = ContextCompat.getColor(this, R.color.principal)
-        window.navigationBarColor = android.graphics.Color.WHITE
+        window.navigationBarColor = ContextCompat.getColor(this, R.color.background)
 
         WindowInsetsControllerCompat(window, window.decorView).apply {
             isAppearanceLightStatusBars = false

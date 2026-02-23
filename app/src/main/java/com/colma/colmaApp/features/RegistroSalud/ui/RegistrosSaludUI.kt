@@ -68,7 +68,7 @@ class RegistrosSaludUI : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         window.statusBarColor = ContextCompat.getColor(this, R.color.principal)
-        window.navigationBarColor = AndroidColor.WHITE
+        window.navigationBarColor = ContextCompat.getColor(this, R.color.background)
 
         WindowInsetsControllerCompat(window, window.decorView).apply {
             isAppearanceLightStatusBars = false
