@@ -836,7 +836,8 @@ fun MetasContent(metasId: String, onFinish: () -> Unit) {
                             }
                         }
                         showSummaryDialog = false
-                    }
+                    },
+                    onNo = { showSummaryDialog = false }
                 )
             }
 

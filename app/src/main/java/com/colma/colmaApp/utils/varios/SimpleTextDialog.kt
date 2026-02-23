@@ -7,6 +7,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 
 /**
  * Simple dialog that shows a title, a description and a single confirm button.
@@ -43,23 +44,23 @@ fun CustomAlertDialog(
             )
         },
         confirmButton = {
-            TextButton(
+            Button(
                 onClick = {
-                onYes()
-                onDismissRequest()
-            },
-                colors = ButtonDefaults.textButtonColors(containerColor = Color(0xFF008000), contentColor = Color.White)
+                    onYes()
+                },
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF008000), contentColor = Color.White),
+                elevation = ButtonDefaults.buttonElevation(defaultElevation = 2.dp)
             ) {
                 Text(yesLabel)
             }
         },
         dismissButton = {
-            TextButton(
+            Button(
                 onClick = {
-                onNo()
-                onDismissRequest()
-            },
-                colors = ButtonDefaults.textButtonColors(containerColor = Color.Red, contentColor = Color.White)
+                    onNo()
+                },
+                colors = ButtonDefaults.buttonColors(containerColor = Color.Red, contentColor = Color.White),
+                elevation = ButtonDefaults.buttonElevation(defaultElevation = 2.dp)
             ) {
                 Text(noLabel)
             }

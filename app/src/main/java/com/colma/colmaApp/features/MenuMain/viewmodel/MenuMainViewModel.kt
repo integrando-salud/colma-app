@@ -89,7 +89,7 @@ class MenuMainViewModel(private val repository: MenuMainRepository) : ViewModel(
             }
         }
     private fun dismissObjectiveDialog() {
-        _uiState.update { it.copy(showObjectiveDialog = false) }
+        _uiState.update { it.copy(showObjectiveDialog = false, showReasonDialog = false, showOtherReasonDialog = false) }
     }
 
     private fun handleObjectiveCompleted() {
@@ -104,7 +104,14 @@ class MenuMainViewModel(private val repository: MenuMainRepository) : ViewModel(
     }
 
     private fun handleObjectiveNotCompleted(reason: String) {
-        _uiState.update { it.copy(showObjectiveDialog = false, showReasonDialog = true, selectedReason = reason) }
+        if (reason.isEmpty()) {
+            _uiState.update { it.copy(showObjectiveDialog = false, showReasonDialog = true) }
+        } else if (reason == "otro") {
+            _uiState.update { it.copy(showReasonDialog = false, showOtherReasonDialog = true, selectedReason = "otro") }
+        } else {
+            _uiState.update { it.copy(selectedReason = reason) }
+            confirmOtherReason()
+        }
     }
 
     private fun updateOtherReason(reason: String) {
