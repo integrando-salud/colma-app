@@ -1,0 +1,28 @@
+Resumen de cambios - Sesión de Actualización (23/02/2026):
+
+* Animación de Celebración: Se integró un trofeo animado (pulso y rotación) en el diálogo de éxito al completar objetivos en el Menú Principal.
+* Rediseño de Historial de Salud: Se refactorizó el diseño de los elementos en las listas de historial (Glucosa y Presión). Ahora cuentan con un ícono a la izquierda, el valor destacado en el centro y la fecha/hora en una posición más legible para evitar que el texto se corte.
+* Formato de Hora AM/PM: Se actualizó la visualización del tiempo en todo el historial y los detalles de mediciones para utilizar el formato de 12 horas (AM/PM).
+* Consistencia de Colores y Estilo:
+    - Se aplicó el color de fondo oficial del proyecto (@color/background) a todas las pantallas principales y a la barra de navegación del sistema.
+    - Se actualizaron todos los botones de "Cancelar" o "Cerrar" en los diálogos para usar el nuevo color oficial rojo_boton.
+    - Se agregó sombra de elevación (6.dp) a los botones de la pantalla de selección de Registros de Salud.
+* Marca de Agua de Versión: Se implementó una marca de agua muy sutil en la esquina inferior derecha de todas las pantallas que muestra la versión actual de la aplicación (VERSION_NAME), facilitando el seguimiento en capturas de pantalla de prueba.
+* Pantalla de Login: Se cambió la etiqueta del campo de entrada de "DNI" a "Usuario", manteniendo el teclado numérico por compatibilidad.
+* Integración de Sesión: Se vinculó el SessionManager en el historial de metas para asegurar que los datos mostrados correspondan al usuario autenticado.
+
+---
+
+Cambios Anteriores
+
+* Gestión de Usuarios: Integración de SessionManager para recuperar el ID de usuario real en la creación de metas y respuestas de cuestionarios.
+* Optimización de Metas: Se eliminó el campo "Tipo de actividad" y se hicieron opcionales los campos "Con quién" y "Dónde".
+* Validación Robusta: Implementación de validaciones para asegurar un mínimo de 2 dígitos en los registros de salud.
+* Mejora en Retroalimentación: Reemplazo de mensajes Toast por diálogos persistentes (AlertDialog) en Glucosa, Presión y Metas para asegurar que el usuario vea la confirmación.
+* Ajustes de Navegación: Se reemplazaron iconos de retroceso por botones de "Cerrar" en el contenido multimedia y se movió el acceso a "Mis Metas" directamente al menú principal.
+* Contenido: Actualización de la programación de sesiones para el módulo de Diabetes.
+
+* Refactorización de Estado de Ánimo: Se eliminó el sistema de borradores intermedios; ahora el registro se guarda únicamente tras la confirmación final del usuario.
+* Dinámica de Cuestionarios: Se permitió la edición fluida de las preguntas iniciales de ánimo y se añadió un diálogo de confirmación antes de extender el cuestionario.
+* Integridad de Datos: Bloqueo de la selección de fechas y horas futuras en todos los registros de salud.
+* Estética de Diálogos: Inicio de la estandarización de botones en diálogos (verde para acciones positivas, rojo para negativas).
