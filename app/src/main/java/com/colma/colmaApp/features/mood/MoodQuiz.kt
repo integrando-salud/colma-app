@@ -151,7 +151,12 @@ fun MoodQuizScreen(
         snackbarHost = { SnackbarHost(snackbarHostState) }
     ) { innerPadding ->
         BackHandler(onBack = { onEvent(MoodQuizEvent.BackPressed) })
-        Box(modifier = Modifier.fillMaxSize().padding(innerPadding)) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding)
+                .background(colorResource(id = R.color.background))
+        ) {
             val scrollState = rememberScrollState()
             Column(
                 modifier = Modifier

@@ -401,7 +401,7 @@ fun MenuScreen(
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()
-                            .background(Color.White)
+                            .background(colorResource(id = R.color.background))
                     ) {
                         Column(
                             modifier = Modifier

@@ -3,6 +3,7 @@ package com.colma.colmaApp.features.MetasHistory.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.colma.colmaApp.features.MetasHistory.domain.MetasHistoryRepository
+import com.colma.colmaApp.servicios.session.SessionManager
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -24,8 +25,8 @@ class MetasHistoryViewModel(private val repository: MetasHistoryRepository) : Vi
     private fun loadMetas() {
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true, error = null) }
-            // Assuming user id is 1 for now, as in the original code.
-            val result = repository.getAllMetas(1)
+            val userId = SessionManager.getUserId() ?: 1
+            val result = repository.getAllMetas(userId)
             result.onSuccess { metas ->
                 _uiState.update { it.copy(isLoading = false, metas = metas) }
             }.onFailure { error ->

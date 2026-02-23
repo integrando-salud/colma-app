@@ -117,7 +117,7 @@ fun MultimediaScreen(
     val signatureColor = colorResource(R.color.principal)
     val currentOption = uiState.currentMultimediaOption
 
-    Surface(color = Color.White, modifier = Modifier.fillMaxSize().systemBarsPadding()) {
+    Surface(color = colorResource(id = R.color.background), modifier = Modifier.fillMaxSize().systemBarsPadding()) {
         Column(modifier = Modifier.fillMaxSize()) {
             TopAppBar(
                 title = { Text(currentOption?.title ?: uiState.sessionTitle, fontSize = 18.sp, color = Color.White) },

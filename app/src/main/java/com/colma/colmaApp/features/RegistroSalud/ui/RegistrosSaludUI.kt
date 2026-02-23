@@ -130,7 +130,7 @@ fun RegistrosSaludScreen(
             modifier = Modifier
                 .padding(innerPadding)
                 .fillMaxSize()
-                .background(Color.White)
+                .background(colorResource(id = R.color.background))
         ) {
             Column(
                 modifier = Modifier
@@ -159,7 +159,11 @@ fun RegistrosSaludScreen(
                         containerColor = Color(0xFFF0F0F0),
                         contentColor = Color.Black
                     ),
-                    shape = MaterialTheme.shapes.medium
+                    shape = MaterialTheme.shapes.medium,
+                    elevation = ButtonDefaults.buttonElevation(
+                        defaultElevation = 6.dp,
+                        pressedElevation = 10.dp
+                    )
                 ) {
                     Row(
                         modifier = Modifier.fillMaxWidth(),
@@ -195,7 +199,11 @@ fun RegistrosSaludScreen(
                         containerColor = Color(0xFFF0F0F0),
                         contentColor = Color.Black
                     ),
-                    shape = MaterialTheme.shapes.medium
+                    shape = MaterialTheme.shapes.medium,
+                    elevation = ButtonDefaults.buttonElevation(
+                        defaultElevation = 6.dp,
+                        pressedElevation = 10.dp
+                    )
                 ) {
                     Row(
                         modifier = Modifier.fillMaxWidth(),
@@ -231,7 +239,11 @@ fun RegistrosSaludScreen(
                         containerColor = Color(0xFFF7F7F8),
                         contentColor = Color.Black
                     ),
-                    shape = MaterialTheme.shapes.medium
+                    shape = MaterialTheme.shapes.medium,
+                    elevation = ButtonDefaults.buttonElevation(
+                        defaultElevation = 6.dp,
+                        pressedElevation = 10.dp
+                    )
                 ) {
                     Row(
                         modifier = Modifier.fillMaxWidth(),
