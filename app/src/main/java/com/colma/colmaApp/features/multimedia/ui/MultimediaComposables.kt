@@ -29,6 +29,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.viewinterop.AndroidView
+import android.speech.tts.TextToSpeech
+import android.speech.tts.UtteranceProgressListener
+import android.os.Handler
+import android.os.Looper
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material.icons.filled.Close
 
 import com.colma.colmaApp.R
 import com.google.android.exoplayer2.ExoPlayer
@@ -109,6 +116,37 @@ fun InformationDisplayContent(displayContent: String) {
 
 @Composable
 fun InformationCard(displayContent: String) {
+    val context = LocalContext.current
+    var tts by remember { mutableStateOf<TextToSpeech?>(null) }
+    var isTtsReady by remember { mutableStateOf(false) }
+    var isSpeaking by remember { mutableStateOf(false) }
+    val mainHandler = remember { Handler(Looper.getMainLooper()) }
+
+    DisposableEffect(displayContent) {
+        val speech = TextToSpeech(context) { status ->
+            if (status == TextToSpeech.SUCCESS) {
+                isTtsReady = true
+            }
+        }
+        speech.language = Locale("es", "ES")
+        speech.setOnUtteranceProgressListener(object : UtteranceProgressListener() {
+            override fun onStart(utteranceId: String?) {
+                mainHandler.post { isSpeaking = true }
+            }
+            override fun onDone(utteranceId: String?) {
+                mainHandler.post { isSpeaking = false }
+            }
+            override fun onError(utteranceId: String?) {
+                mainHandler.post { isSpeaking = false }
+            }
+        })
+        tts = speech
+        onDispose {
+            tts?.stop()
+            tts?.shutdown()
+        }
+    }
+
     Card(
         shape = RoundedCornerShape(16.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
@@ -125,11 +163,35 @@ fun InformationCard(displayContent: String) {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top
         ) {
-            Text(
-                "Información importante",
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold
-            )
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(
+                    "Información importante",
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.weight(1f),
+                    textAlign = TextAlign.Center
+                )
+                if (isTtsReady) {
+                    IconButton(onClick = {
+                        if (isSpeaking) {
+                            tts?.stop()
+                            isSpeaking = false
+                        } else {
+                            tts?.speak(displayContent, TextToSpeech.QUEUE_FLUSH, null, "utteranceId")
+                        }
+                    }) {
+                        Icon(
+                            imageVector = if (isSpeaking) Icons.Default.Close else Icons.Default.PlayArrow,
+                            contentDescription = if (isSpeaking) "Detener lectura" else "Escuchar contenido",
+                            tint = Color(0xFFE84589)
+                        )
+                    }
+                }
+            }
             Spacer(Modifier.height(16.dp))
             Icon(
                 painter = painterResource(R.drawable.outline_unknown_document_24),
