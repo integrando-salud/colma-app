@@ -456,7 +456,8 @@ fun VideoContent(@RawRes contentAssetId: Int) {
             VideoPlayerWithFullscreen(
                 resId = contentAssetId, // Use the dynamically provided contentAssetId
                 modifier = Modifier
-                    .size(width = 320.dp, height = 200.dp)
+                    .fillMaxWidth()
+                    .height(400.dp)
                     .clip(RoundedCornerShape(8.dp))
             )
 
@@ -514,7 +515,6 @@ fun VideoContent(@RawRes contentAssetId: Int) {
 
     Box(
         modifier = modifier
-            .size(width = playerWidth, height = playerHeight)
             .background(Color.Black, shape = RoundedCornerShape(8.dp))
             .clickable {
                 val intent = Intent(context, FullscreenVideoActivity::class.java).apply {
@@ -530,7 +530,7 @@ fun VideoContent(@RawRes contentAssetId: Int) {
                 PlayerView(ctx).apply {
                     player = exoPlayer
                     useController = false // Disable standard controllers
-                    resizeMode = AspectRatioFrameLayout.RESIZE_MODE_FIT
+                    resizeMode = AspectRatioFrameLayout.RESIZE_MODE_ZOOM
                 }
             },
             modifier = Modifier.fillMaxSize()
