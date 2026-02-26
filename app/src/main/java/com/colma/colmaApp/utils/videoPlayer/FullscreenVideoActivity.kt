@@ -24,8 +24,8 @@ import com.google.android.exoplayer2.ui.PlayerView
 class FullscreenVideoActivity : ComponentActivity() {
 
     companion object {
-        private const val EXTRA_URI = "extra_video_uri"
-        private const val EXTRA_POSITION = "extra_position_ms"
+        const val EXTRA_URI = "extra_video_uri"
+        const val EXTRA_POSITION = "extra_position_ms"
         const val RESULT_POSITION = "result_position_ms"
         private const val STATE_POSITION = "state_position"
         private const val STATE_PLAY_WHEN_READY = "state_play_when_ready"
@@ -52,8 +52,8 @@ class FullscreenVideoActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Force landscape orientation for fullscreen
-        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+        // Force portrait orientation for fullscreen (handled in manifest, but kept here for clarity if needed later)
+        // requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
         // Draw behind system bars
         WindowCompat.setDecorFitsSystemWindows(window, false)
@@ -71,6 +71,7 @@ class FullscreenVideoActivity : ComponentActivity() {
             playWhenReady = savedInstanceState.getBoolean(STATE_PLAY_WHEN_READY)
         } else {
             playbackPosition = intent.getLongExtra(EXTRA_POSITION, 0L)
+            playWhenReady = true // Force play when starting
         }
 
 

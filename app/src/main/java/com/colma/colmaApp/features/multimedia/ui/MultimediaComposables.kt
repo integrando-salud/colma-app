@@ -1,9 +1,14 @@
 package com.colma.colmaApp.features.multimedia.ui
 
 import android.net.Uri
+import android.app.Activity
+import android.content.Intent
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RawRes
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
@@ -476,54 +481,74 @@ fun VideoContent(@RawRes contentAssetId: Int) {
     playerHeight: Dp = 200.dp
 ) {
     val context = LocalContext.current
-    var playbackPosition by rememberSaveable(resId) { mutableStateOf(0L) }
-    var playWhenReady by rememberSaveable(resId) { mutableStateOf(true) }
+    val uriString = "android.resource://${context.packageName}/$resId"
+
+    // Track the last known playback position
+    var lastPosition by rememberSaveable(resId) { mutableStateOf(0L) }
+
+    // Local player just to show the frame/preview at current position
     val exoPlayer = remember(resId) {
-        ExoPlayer.Builder(context).build()
+        ExoPlayer.Builder(context).build().apply {
+            setMediaItem(MediaItem.fromUri(Uri.parse(uriString)))
+            prepare()
+            seekTo(lastPosition)
+            playWhenReady = false
+        }
     }
+
+    val launcher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val pos = result.data?.getLongExtra(FullscreenVideoActivity.RESULT_POSITION, lastPosition) ?: lastPosition
+            lastPosition = pos
+            exoPlayer.seekTo(pos)
+        }
+    }
+
     DisposableEffect(key1 = resId) {
-        val uri = Uri.parse("android.resource://${context.packageName}/$resId")
-        exoPlayer.setMediaItem(MediaItem.fromUri(uri))
-        exoPlayer.prepare()
-        exoPlayer.seekTo(playbackPosition)
-        exoPlayer.playWhenReady = playWhenReady
         onDispose {
-            playbackPosition = exoPlayer.currentPosition
-            playWhenReady = exoPlayer.playWhenReady
             exoPlayer.release()
         }
     }
-    Box(modifier = modifier) {
+
+    Box(
+        modifier = modifier
+            .size(width = playerWidth, height = playerHeight)
+            .background(Color.Black, shape = RoundedCornerShape(8.dp))
+            .clickable {
+                val intent = Intent(context, FullscreenVideoActivity::class.java).apply {
+                    putExtra(FullscreenVideoActivity.EXTRA_URI, uriString)
+                    putExtra(FullscreenVideoActivity.EXTRA_POSITION, lastPosition)
+                }
+                launcher.launch(intent)
+            },
+        contentAlignment = Alignment.Center
+    ) {
         AndroidView(
             factory = { ctx ->
                 PlayerView(ctx).apply {
                     player = exoPlayer
-                    useController = true
+                    useController = false // Disable standard controllers
                     resizeMode = AspectRatioFrameLayout.RESIZE_MODE_FIT
                 }
             },
-            modifier = Modifier
-                .size(width = playerWidth, height = playerHeight)
-                .clip(RoundedCornerShape(8.dp))
-                .align(Alignment.Center)
+            modifier = Modifier.fillMaxSize()
         )
-        IconButton(
-            onClick = {
-                val uriString = "android.resource://${context.packageName}/$resId"
-                val positionMs = exoPlayer.currentPosition
-                exoPlayer.playWhenReady = false
-                FullscreenVideoActivity.start(context, uriString, positionMs)
-            },
-            modifier = Modifier
-                .align(Alignment.TopEnd)
-                .padding(6.dp)
-                .size(36.dp)
-                .background(Color.Black.copy(alpha = 0.35f), shape = RoundedCornerShape(6.dp))
+
+        // Centered play arrow overlay
+        Surface(
+            shape = CircleShape,
+            color = Color.Black.copy(alpha = 0.5f),
+            modifier = Modifier.size(64.dp)
         ) {
             Icon(
-                painter = painterResource(R.drawable.outline_fullscreen_24),
-                contentDescription = "Fullscreen",
-                tint = Color.White
+                painter = painterResource(id = R.drawable.baseline_play_arrow_24),
+                contentDescription = "Reproducir en pantalla completa",
+                tint = Color.White,
+                modifier = Modifier
+                    .padding(8.dp)
+                    .fillMaxSize()
             )
         }
     }

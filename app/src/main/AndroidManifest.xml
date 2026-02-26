@@ -94,7 +94,7 @@
             android:screenOrientation="portrait"/>
 
         <activity android:name=".utils.videoPlayer.FullscreenVideoActivity"
-            android:screenOrientation="landscape" />
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
