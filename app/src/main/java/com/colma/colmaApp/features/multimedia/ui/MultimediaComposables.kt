@@ -77,6 +77,7 @@ import com.colma.colmaApp.features.content.model.QuizQuestion // Existing for Qu
 import com.colma.colmaApp.servicios.Modelos.QuizResponseRecord // New
 import com.colma.colmaApp.servicios.Modelos.QuestionResponseRecord // New
 import com.colma.colmaApp.features.sesiones.MultimediaSelector.domain.MultimediaContentType // New
+import com.google.gson.Gson
 
 
 
@@ -625,12 +626,14 @@ fun QuizContent(
                                         user_answer_text = userAnswerIndex?.let { question.options.getOrNull(it) },
                                         correct_answer_index = question.correctAnswerIndex,
                                         correct_answer_text = question.options.getOrNull(question.correctAnswerIndex),
-                                        is_correct = if (isCorrect) 1 else 0
+                                        is_correct = if (isCorrect) 1 else 0,
+                                        posibles_respuestas = Gson().toJson(question.options)
                                     )
                                 )
                             }
                             val percentageCorrect = if (totalQuestions > 0) (correctAnswers.toDouble() / totalQuestions.toDouble()) * 100 else 0.0
 
+                            val quizTreatmentId = treatmentTypes.firstOrNull()?.name ?: "UNKNOWN"
                             val quizResponseRecord = QuizResponseRecord(
                                 id_quiz_response = 0, // Will be filled by DB
                                 id_usuario = SessionManager.getUserId() ?: 1, // Default user ID
@@ -643,7 +646,8 @@ fun QuizContent(
                                 total_questions = totalQuestions,
                                 correct_answers = correctAnswers,
                                 percentage_correct = percentageCorrect,
-                                multimedia_unique_key = multimediaUniqueKey
+                                multimedia_unique_key = multimediaUniqueKey,
+                                treatment_type = quizTreatmentId
                             )
                             onQuizSubmit(quizResponseRecord, questionResponses)
                         },

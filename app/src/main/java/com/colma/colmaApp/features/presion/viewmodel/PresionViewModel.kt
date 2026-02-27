@@ -123,19 +123,28 @@ class PresionViewModel(private val repository: PresionRepository) : ViewModel() 
 
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true) }
+
+            val highS = sys > 140
+            val lowS = sys < 90
+            val highD = dia > 90
+            val lowD = dia < 60
+
+            val advertencia = when {
+                highS || highD -> "Alta"
+                lowS || lowD -> "Baja"
+                else -> "Normal"
+            }
+
             val result = repository.savePresion(
                 sistolica = sys.toDouble(),
                 diastolica = dia.toDouble(),
-                dateTime = state.measurementTime
+                dateTime = state.measurementTime,
+                advertencia = advertencia
             )
 
             result.onSuccess { newEntry ->
                 val updatedHistory = listOf(newEntry) + state.history
 
-                val highS = sys > 140
-                val lowS = sys < 90
-                val highD = dia > 90
-                val lowD = dia < 60
                 val parts = mutableListOf<String>()
                 if (lowS || lowD) parts.add("presión baja")
                 if (highS || highD) parts.add("presión alta")

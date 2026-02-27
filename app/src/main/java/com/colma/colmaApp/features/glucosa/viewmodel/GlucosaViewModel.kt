@@ -123,17 +123,24 @@ class GlucosaViewModel(private val repository: GlucosaRepository) : ViewModel() 
 
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true) }
+
+            val low = number <= 69
+            val high = if (state.isFasting == true) number >= 131 else number >= 181
+            val advertencia = when {
+                low -> "Baja"
+                high -> "Alta"
+                else -> "Normal"
+            }
+
             val result = repository.saveGlucosa(
                 value = number.toDouble(),
                 isFasting = state.isFasting,
-                dateTime = state.measurementTime
+                dateTime = state.measurementTime,
+                advertencia = advertencia
             )
 
             result.onSuccess { newEntry ->
                 val updatedHistory = listOf(newEntry) + state.history
-                
-                val low = number <= 69
-                val high = if (state.isFasting == true) number >= 131 else number >= 181
                 
                 _uiState.update {
                     it.copy(

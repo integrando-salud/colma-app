@@ -12,6 +12,9 @@ import com.colma.colmaApp.servicios.Modelos.EstadoAnimoModelo
 import com.colma.colmaApp.servicios.Modelos.RegistrosSaludModelos
 import com.colma.colmaApp.servicios.Modelos.QuestionResponseRecord
 import com.colma.colmaApp.servicios.Modelos.QuizResponseRecord
+import com.colma.colmaApp.servicios.internetCommunication.model.CentroSalud
+import com.colma.colmaApp.servicios.internetCommunication.model.Pais
+import com.colma.colmaApp.servicios.internetCommunication.model.Usuario
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper
 import java.io.File
 import java.io.FileOutputStream
@@ -27,7 +30,7 @@ class DBhelper(context: Context) :
 
     companion object {
         private const val DATABASE_NAME = "colmadb.db"
-        private const val DATABASE_VERSION = 6
+        private const val DATABASE_VERSION = 10
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
@@ -82,7 +85,111 @@ class DBhelper(context: Context) :
                 e.printStackTrace()
             }
         }
-        
+
+        // Step 3: Ensure the 'advertencia' column exists in glucosa_table.
+        var advertenciaColumnExists = false
+        try {
+            db.rawQuery("PRAGMA table_info(glucosa_table)", null)?.use { cursor ->
+                val nameIndex = cursor.getColumnIndex("name")
+                if (nameIndex != -1) {
+                    while (cursor.moveToNext()) {
+                        if ("advertencia" == cursor.getString(nameIndex)) {
+                            advertenciaColumnExists = true
+                            break
+                        }
+                    }
+                }
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+        if (!advertenciaColumnExists) {
+            try {
+                db.execSQL("ALTER TABLE glucosa_table ADD COLUMN advertencia TEXT;")
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+
+        // Step 4: Ensure the 'advertencia' column exists in presion_table.
+        var advertenciaPresionColumnExists = false
+        try {
+            db.rawQuery("PRAGMA table_info(presion_table)", null)?.use { cursor ->
+                val nameIndex = cursor.getColumnIndex("name")
+                if (nameIndex != -1) {
+                    while (cursor.moveToNext()) {
+                        if ("advertencia" == cursor.getString(nameIndex)) {
+                            advertenciaPresionColumnExists = true
+                            break
+                        }
+                    }
+                }
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+        if (!advertenciaPresionColumnExists) {
+            try {
+                db.execSQL("ALTER TABLE presion_table ADD COLUMN advertencia TEXT;")
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+
+        // Step 5: Ensure 'treatment_type' column exists in 'quiz_response_table'
+        var treatmentTypeColumnExists = false
+        try {
+            db.rawQuery("PRAGMA table_info(quiz_response_table)", null)?.use { cursor ->
+                val nameIndex = cursor.getColumnIndex("name")
+                if (nameIndex != -1) {
+                    while (cursor.moveToNext()) {
+                        if ("treatment_type" == cursor.getString(nameIndex)) {
+                            treatmentTypeColumnExists = true
+                            break
+                        }
+                    }
+                }
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+        if (!treatmentTypeColumnExists) {
+            try {
+                db.execSQL("ALTER TABLE quiz_response_table ADD COLUMN treatment_type TEXT;")
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+
+        // Step 6: Ensure 'posibles_respuestas' column exists in 'question_response_table'
+        var posiblesRespuestasColumnExists = false
+        try {
+            db.rawQuery("PRAGMA table_info(question_response_table)", null)?.use { cursor ->
+                val nameIndex = cursor.getColumnIndex("name")
+                if (nameIndex != -1) {
+                    while (cursor.moveToNext()) {
+                        if ("posibles_respuestas" == cursor.getString(nameIndex)) {
+                            posiblesRespuestasColumnExists = true
+                            break
+                        }
+                    }
+                }
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+        if (!posiblesRespuestasColumnExists) {
+            try {
+                db.execSQL("ALTER TABLE question_response_table ADD COLUMN posibles_respuestas TEXT;")
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+		
         try {
             db.execSQL("""
                 CREATE TABLE IF NOT EXISTS multimedia_read_table (
@@ -140,6 +247,69 @@ class DBhelper(context: Context) :
         } catch (e: Exception) {
             e.printStackTrace()
         }
+
+        try {
+            db.execSQL("""
+            CREATE TABLE IF NOT EXISTS paises (
+                id INTEGER PRIMARY KEY,
+                nombre TEXT
+            );
+        """)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+        try {
+            db.execSQL("""
+            CREATE TABLE IF NOT EXISTS centros_salud (
+                id INTEGER PRIMARY KEY,
+                nombre TEXT
+            );
+        """)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+        // Add new columns to 'usuarios' table
+        val usuariosColumns = mutableSetOf<String>()
+        try {
+            db.rawQuery("PRAGMA table_info(usuarios)", null)?.use { cursor ->
+                val nameIndex = cursor.getColumnIndex("name")
+                if (nameIndex != -1) {
+                    while (cursor.moveToNext()) {
+                        usuariosColumns.add(cursor.getString(nameIndex).lowercase(Locale.ROOT))
+                    }
+                }
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+        if (!usuariosColumns.contains("documento")) {
+            try {
+                db.execSQL("ALTER TABLE usuarios ADD COLUMN documento TEXT;")
+            } catch (e: Exception) { e.printStackTrace() }
+        }
+        if (!usuariosColumns.contains("email")) {
+            try {
+                db.execSQL("ALTER TABLE usuarios ADD COLUMN email TEXT;")
+            } catch (e: Exception) { e.printStackTrace() }
+        }
+        if (!usuariosColumns.contains("sexo")) {
+            try {
+                db.execSQL("ALTER TABLE usuarios ADD COLUMN sexo TEXT;")
+            } catch (e: Exception) { e.printStackTrace() }
+        }
+        if (!usuariosColumns.contains("id_pais")) {
+            try {
+                db.execSQL("ALTER TABLE usuarios ADD COLUMN id_pais INTEGER;")
+            } catch (e: Exception) { e.printStackTrace() }
+        }
+        if (!usuariosColumns.contains("id_centro_salud")) {
+            try {
+                db.execSQL("ALTER TABLE usuarios ADD COLUMN id_centro_salud INTEGER;")
+            } catch (e: Exception) { e.printStackTrace() }
+        }
     }
 
     // -------------------------
@@ -159,7 +329,8 @@ class DBhelper(context: Context) :
         idUsuario: Int? = null,
         ayuno: Boolean? = null,
         fechaRegistro: String? = null,
-        fechaHoraEdicion: String? = null // NEW: ISO string "yyyy-MM-dd HH:mm:ss"
+        fechaHoraEdicion: String? = null, // NEW: ISO string "yyyy-MM-dd HH:mm:ss"
+        advertencia: String? = null
     ): Long {
         val db: SQLiteDatabase = writableDatabase
         val values = ContentValues().apply {
@@ -169,6 +340,7 @@ class DBhelper(context: Context) :
             ayuno?.let { put("ayuno", if (it) 1 else 0) }
             // write edit datetime as ISO text
             put("fecha_hora_edicion", fechaHoraEdicion ?: defaultDateTimeFormat.format(Date()))
+            advertencia?.let { put("advertencia", it) }
         }
 
         var rowId: Long = -1L
@@ -196,7 +368,8 @@ class DBhelper(context: Context) :
         diastolica: Double,
         idUsuario: Int? = null,
         fechaRegistro: String? = null,
-        fechaHoraEdicionIso: String? = null // NEW: ISO string
+        fechaHoraEdicionIso: String? = null, // NEW: ISO string
+        advertencia: String? = null
     ): Long {
         val db = writableDatabase
         val values = ContentValues().apply {
@@ -206,6 +379,7 @@ class DBhelper(context: Context) :
             put("fecha_registro", fechaRegistro ?: defaultDateTimeFormat.format(Date()))
             // store the edit timestamp as ISO TEXT (matches glucosa behaviour)
             put("fecha_hora_edicion", fechaHoraEdicionIso ?: defaultDateTimeFormat.format(Date()))
+            advertencia?.let { put("advertencia", it) }
         }
 
         var rowId: Long = -1L
@@ -363,6 +537,7 @@ class DBhelper(context: Context) :
                 put("correct_answers", quizResponse.correct_answers)
                 put("percentage_correct", quizResponse.percentage_correct)
                 put("multimedia_unique_key", quizResponse.multimedia_unique_key)
+                put("treatment_type", quizResponse.treatment_type)
             }
             quizResponseId = db.insert("quiz_response_table", null, quizValues)
 
@@ -377,6 +552,7 @@ class DBhelper(context: Context) :
                         put("correct_answer_index", question.correct_answer_index)
                         put("correct_answer_text", question.correct_answer_text)
                         put("is_correct", question.is_correct)
+                        put("posibles_respuestas", question.posibles_respuestas)
                     }
                     db.insert("question_response_table", null, questionValues)
                 }
@@ -404,7 +580,7 @@ class DBhelper(context: Context) :
 
         val cursor = db.query(
             "glucosa_table",
-            arrayOf("id_glucosa", "id_usuario", "valor_mgdl", "fecha_registro", "ayuno", "fecha_sincronizacion", "fecha_hora_edicion"),
+            arrayOf("id_glucosa", "id_usuario", "valor_mgdl", "fecha_registro", "ayuno", "fecha_sincronizacion", "fecha_hora_edicion", "advertencia"),
             selection,
             selectionArgs,
             null,
@@ -422,6 +598,7 @@ class DBhelper(context: Context) :
                 val ayunoInt: Int? = c.getIntOrNull("ayuno")
                 val fechaSync = c.getStringOrNull("fecha_sincronizacion")
                 val fechaHoraEdicion = c.getStringOrNull("fecha_hora_edicion") // TEXT
+                val advertencia = c.getStringOrNull("advertencia")
 
                 return RegistrosSaludModelos.GlucosaRecord(
                     id = idLong,
@@ -430,7 +607,8 @@ class DBhelper(context: Context) :
                     ayuno = ayunoInt,
                     fecha_registro = fecha,
                     fecha_sincronizacion = fechaSync,
-                    fecha_hora_edicion = fechaHoraEdicion
+                    fecha_hora_edicion = fechaHoraEdicion,
+                    advertencia = advertencia
                 )
             }
         }
@@ -446,7 +624,7 @@ class DBhelper(context: Context) :
 
         val cursor = db.query(
             "presion_table",
-            arrayOf("id_presion", "id_usuario", "sistolica", "diastolica", "fecha_registro", "fecha_sincronizacion", "fecha_hora_edicion"),
+            arrayOf("id_presion", "id_usuario", "sistolica", "diastolica", "fecha_registro", "fecha_sincronizacion", "fecha_hora_edicion", "advertencia"),
             selection,
             selectionArgs,
             null,
@@ -464,6 +642,7 @@ class DBhelper(context: Context) :
                 val fecha = c.getStringOrNull("fecha_registro")
                 val fechaSync = c.getStringOrNull("fecha_sincronizacion")
                 val fechaHoraEdicionMillis = c.getStringOrNull("fecha_hora_edicion") // INTEGER -> Long?
+                val advertencia = c.getStringOrNull("advertencia")
 
                 return RegistrosSaludModelos.PresionRecord(
                     id = idLong,
@@ -472,7 +651,8 @@ class DBhelper(context: Context) :
                     diastolica = dias,
                     fecha_registro = fecha,
                     fecha_sincronizacion = fechaSync,
-                    fecha_hora_edicion = fechaHoraEdicionMillis
+                    fecha_hora_edicion = fechaHoraEdicionMillis,
+                    advertencia = advertencia
                 )
             }
         }
@@ -495,7 +675,7 @@ class DBhelper(context: Context) :
 
         val cursor = db.query(
             "glucosa_table",
-            arrayOf("id_glucosa", "id_usuario", "valor_mgdl", "ayuno", "fecha_registro", "fecha_sincronizacion", "fecha_hora_edicion"),
+            arrayOf("id_glucosa", "id_usuario", "valor_mgdl", "ayuno", "fecha_registro", "fecha_sincronizacion", "fecha_hora_edicion", "advertencia"),
             selection,
             selectionArgs,
             null,
@@ -513,6 +693,7 @@ class DBhelper(context: Context) :
                     val fecha = c.getStringOrNull("fecha_registro")
                     val fechaSync = c.getStringOrNull("fecha_sincronizacion")
                     val fechaHoraEdicion = c.getStringOrNull("fecha_hora_edicion")
+                    val advertencia = c.getStringOrNull("advertencia")
 
                     results.add(
                         RegistrosSaludModelos.GlucosaRecord(
@@ -522,7 +703,8 @@ class DBhelper(context: Context) :
                             ayuno = ayunoVal,
                             fecha_registro = fecha,
                             fecha_sincronizacion = fechaSync,
-                            fecha_hora_edicion = fechaHoraEdicion
+                            fecha_hora_edicion = fechaHoraEdicion,
+                            advertencia = advertencia
                         )
                     )
                 } while (c.moveToNext())
@@ -544,7 +726,7 @@ class DBhelper(context: Context) :
 
         val cursor = db.query(
             "presion_table",
-            arrayOf("id_presion", "id_usuario", "sistolica", "diastolica", "fecha_registro", "fecha_sincronizacion", "fecha_hora_edicion"),
+            arrayOf("id_presion", "id_usuario", "sistolica", "diastolica", "fecha_registro", "fecha_sincronizacion", "fecha_hora_edicion", "advertencia"),
             selection,
             selectionArgs,
             null,
@@ -562,6 +744,7 @@ class DBhelper(context: Context) :
                     val fecha = c.getStringOrNull("fecha_registro")
                     val fechaSync = c.getStringOrNull("fecha_sincronizacion")
                     val fechaHoraEdicionMillis = c.getStringOrNull("fecha_hora_edicion")
+                    val advertencia = c.getStringOrNull("advertencia")
 
                     results.add(
                         RegistrosSaludModelos.PresionRecord(
@@ -571,7 +754,8 @@ class DBhelper(context: Context) :
                             diastolica = dias,
                             fecha_registro = fecha,
                             fecha_sincronizacion = fechaSync,
-                            fecha_hora_edicion = fechaHoraEdicionMillis
+                            fecha_hora_edicion = fechaHoraEdicionMillis,
+                            advertencia = advertencia
                         )
                     )
                 } while (c.moveToNext())
@@ -604,7 +788,7 @@ class DBhelper(context: Context) :
 
         val cursor = db.query(
             "glucosa_table",
-            arrayOf("id_glucosa", "id_usuario", "valor_mgdl", "ayuno", "fecha_registro", "fecha_sincronizacion", "fecha_hora_edicion"),
+            arrayOf("id_glucosa", "id_usuario", "valor_mgdl", "ayuno", "fecha_registro", "fecha_sincronizacion", "fecha_hora_edicion", "advertencia"),
             selection,
             selectionArgs,
             null,
@@ -622,6 +806,7 @@ class DBhelper(context: Context) :
                     val fecha = c.getStringOrNull("fecha_registro")
                     val fechaSync = c.getStringOrNull("fecha_sincronizacion")
                     val fechaHoraEdicion = c.getStringOrNull("fecha_hora_edicion")
+                    val advertencia = c.getStringOrNull("advertencia")
 
                     results.add(
                         RegistrosSaludModelos.GlucosaRecord(
@@ -631,7 +816,8 @@ class DBhelper(context: Context) :
                             ayuno = ayunoVal,
                             fecha_registro = fecha,
                             fecha_sincronizacion = fechaSync,
-                            fecha_hora_edicion = fechaHoraEdicion
+                            fecha_hora_edicion = fechaHoraEdicion,
+                            advertencia = advertencia
                         )
                     )
                 } while (c.moveToNext())
@@ -658,7 +844,7 @@ class DBhelper(context: Context) :
 
         val cursor = db.query(
             "presion_table",
-            arrayOf("id_presion", "id_usuario", "sistolica", "diastolica", "fecha_registro", "fecha_sincronizacion", "fecha_hora_edicion"),
+            arrayOf("id_presion", "id_usuario", "sistolica", "diastolica", "fecha_registro", "fecha_sincronizacion", "fecha_hora_edicion", "advertencia"),
             selection,
             selectionArgs,
             null,
@@ -676,6 +862,7 @@ class DBhelper(context: Context) :
                     val fecha = c.getStringOrNull("fecha_registro")
                     val fechaSync = c.getStringOrNull("fecha_sincronizacion")
                     val fechaHoraEdicionMillis = c.getStringOrNull("fecha_hora_edicion")
+                    val advertencia = c.getStringOrNull("advertencia")
 
                     results.add(
                         RegistrosSaludModelos.PresionRecord(
@@ -685,7 +872,8 @@ class DBhelper(context: Context) :
                             diastolica = dias,
                             fecha_registro = fecha,
                             fecha_sincronizacion = fechaSync,
-                            fecha_hora_edicion = fechaHoraEdicionMillis
+                            fecha_hora_edicion = fechaHoraEdicionMillis,
+                            advertencia = advertencia
                         )
                     )
                 } while (c.moveToNext())
@@ -1574,8 +1762,39 @@ class DBhelper(context: Context) :
             total_questions = c.getIntOrNull("total_questions"),
             correct_answers = c.getIntOrNull("correct_answers"),
             percentage_correct = c.getDoubleOrNull("percentage_correct"),
-            multimedia_unique_key = c.getStringOrNull("multimedia_unique_key")
+            multimedia_unique_key = c.getStringOrNull("multimedia_unique_key"),
+            treatment_type = c.getStringOrNull("treatment_type")
         )
+    }
+
+    /**
+     * Return all question responses for a given quiz response ID.
+     */
+    fun getQuestionResponsesForQuiz(quizResponseId: Long): List<QuestionResponseRecord> {
+        val results = mutableListOf<QuestionResponseRecord>()
+        val db = readableDatabase
+
+        val selection = "id_quiz_response = ?"
+        val selectionArgs = arrayOf(quizResponseId.toString())
+
+        val cursor = db.query(
+            "question_response_table",
+            null, // All columns
+            selection,
+            selectionArgs,
+            null,
+            null,
+            null
+        )
+
+        cursor.use { c ->
+            if (c.moveToFirst()) {
+                do {
+                    results.add(cursorToQuestionResponseRecord(c))
+                } while (c.moveToNext())
+            }
+        }
+        return results
     }
 
     private fun cursorToQuestionResponseRecord(c: Cursor): QuestionResponseRecord {
@@ -1588,17 +1807,94 @@ class DBhelper(context: Context) :
             user_answer_text = c.getStringOrNull("user_answer_text"),
             correct_answer_index = c.getIntOrNull("correct_answer_index"),
             correct_answer_text = c.getStringOrNull("correct_answer_text"),
-            is_correct = c.getIntOrNull("is_correct")
+            is_correct = c.getIntOrNull("is_correct"),
+            posibles_respuestas = c.getStringOrNull("posibles_respuestas")
         )
     }
-}
-
-/* Cursor helper extension functions */
-private fun Cursor.getLongOrNull(columnName: String): Long? {
-    val idx = getColumnIndex(columnName)
-    if (idx == -1 || isNull(idx)) return null
-    return getLong(idx)
-}
+        
+            fun upsertPais(pais: Pais): Long {
+                val db = writableDatabase
+                val values = ContentValues().apply {
+                    put("id", pais.id)
+                    put("nombre", pais.nombre)
+                }
+                return db.insertWithOnConflict("paises", null, values, SQLiteDatabase.CONFLICT_REPLACE)
+            }
+        
+            fun upsertCentroSalud(centroSalud: CentroSalud): Long {
+                val db = writableDatabase
+                val values = ContentValues().apply {
+                    put("id", centroSalud.id)
+                    put("nombre", centroSalud.nombre)
+                }
+                return db.insertWithOnConflict("centros_salud", null, values, SQLiteDatabase.CONFLICT_REPLACE)
+            }
+        
+            fun upsertUsuario(usuario: Usuario) {
+                upsertPais(usuario.pais)
+                upsertCentroSalud(usuario.centroSalud)
+        
+                val db = writableDatabase
+                val values = ContentValues().apply {
+                    put("idUsuario", usuario.id)
+                    put("nombre", usuario.nombre)
+                    put("documento", usuario.documento)
+                    put("email", usuario.email)
+                    put("sexo", usuario.sexo)
+                    put("id_pais", usuario.pais.id)
+                    put("id_centro_salud", usuario.centroSalud.id)
+                }
+                db.insertWithOnConflict("usuarios", null, values, SQLiteDatabase.CONFLICT_REPLACE)
+            }
+        
+            fun getUsuario(id: Int): Usuario? {
+                val db = readableDatabase
+                val query = """
+                    SELECT
+                        u.idUsuario, u.documento, u.nombre, u.email, u.sexo,
+                        p.id as id_pais, p.nombre as nombre_pais,
+                        cs.id as id_centro_salud, cs.nombre as nombre_centro_salud
+                    FROM usuarios u
+                    LEFT JOIN paises p ON u.id_pais = p.id
+                    LEFT JOIN centros_salud cs ON u.id_centro_salud = cs.id
+                    WHERE u.idUsuario = ?
+                """.trimIndent()
+        
+                db.rawQuery(query, arrayOf(id.toString())).use { c ->
+                    if (c.moveToFirst()) {
+                        val paisId = c.getIntOrNull("id_pais")
+                        val paisNombre = c.getStringOrNull("nombre_pais")
+                        val centroId = c.getIntOrNull("id_centro_salud")
+                        val centroNombre = c.getStringOrNull("nombre_centro_salud")
+        
+                        if (paisId == null || paisNombre == null || centroId == null || centroNombre == null) {
+                            return null
+                        }
+        
+                        val pais = Pais(id = paisId, nombre = paisNombre)
+                        val centroSalud = CentroSalud(id = centroId, nombre = centroNombre)
+        
+                        return Usuario(
+                            id = c.getIntOrNull("idUsuario") ?: return null,
+                            documento = c.getStringOrNull("documento") ?: "",
+                            nombre = c.getStringOrNull("nombre") ?: "",
+                            email = c.getStringOrNull("email") ?: "",
+                            sexo = c.getStringOrNull("sexo") ?: "",
+                            pais = pais,
+                            centroSalud = centroSalud
+                        )
+                    }
+                }
+                return null
+            }
+        }
+        
+        /* Cursor helper extension functions */
+        private fun Cursor.getLongOrNull(columnName: String): Long? {
+            val idx = getColumnIndex(columnName)
+            if (idx == -1 || isNull(idx)) return null
+            return getLong(idx)
+        }
 
 private fun Cursor.getIntOrNull(columnName: String): Int? {
     val idx = getColumnIndex(columnName)

@@ -1,6 +1,7 @@
 package com.colma.colmaApp.features.presion.data
 
 import android.content.Context
+import com.colma.colmaApp.servicios.session.SessionManager
 import com.colma.colmaApp.features.presion.domain.PresionRepository
 import com.colma.colmaApp.servicios.database.dbhelper.DBhelper
 import com.colma.colmaApp.utils.varios.HealthEntry
@@ -15,6 +16,12 @@ class PresionRepositoryImpl(context: Context) : PresionRepository {
 
     private val dbHelper = DBhelper(context.applicationContext)
     private val isoFormatter = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+    private val userId: Int
+
+    init {
+        SessionManager.init(context.applicationContext)
+        userId = SessionManager.getUserId() ?: 1 // Default to 1 if not found
+    }
 
     override suspend fun getHistory(): List<HealthEntry> = withContext(Dispatchers.IO) {
         try {
@@ -49,7 +56,8 @@ class PresionRepositoryImpl(context: Context) : PresionRepository {
     override suspend fun savePresion(
         sistolica: Double,
         diastolica: Double,
-        dateTime: Long
+        dateTime: Long,
+        advertencia: String?
     ): Result<HealthEntry> = withContext(Dispatchers.IO) {
         try {
             val fechaRegistroIso = isoFormatter.format(Date())
@@ -57,9 +65,10 @@ class PresionRepositoryImpl(context: Context) : PresionRepository {
             val rowId = dbHelper.insertPresion(
                 sistolica = sistolica,
                 diastolica = diastolica,
-                idUsuario = 1,
+                idUsuario = userId,
                 fechaRegistro = fechaRegistroIso,
-                fechaHoraEdicionIso = fechaEdicionIso
+                fechaHoraEdicionIso = fechaEdicionIso,
+                advertencia = advertencia
             )
 
             if (rowId > 0L) {
