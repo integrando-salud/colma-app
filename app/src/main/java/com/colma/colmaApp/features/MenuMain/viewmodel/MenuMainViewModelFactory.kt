@@ -3,7 +3,7 @@ package com.colma.colmaApp.features.MenuMain.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.colma.colmaApp.features.MenuMain.data.MenuMainRepositoryImpl
-import com.colma.colmaApp.servicios.database.dbhelper.DBhelper
+import com.colma.colmaApp.servicios.database.dbhelper.DbHelper
 
 @Suppress("UNCHECKED_CAST")
 class MenuMainViewModelFactory(

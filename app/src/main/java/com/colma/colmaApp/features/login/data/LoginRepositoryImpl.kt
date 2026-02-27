@@ -2,7 +2,7 @@ package com.colma.colmaApp.features.login.data
 
 import android.util.Log // Import Log
 import com.colma.colmaApp.features.login.domain.LoginRepository
-import com.colma.colmaApp.servicios.database.dbhelper.DBhelper
+import com.colma.colmaApp.servicios.database.dbhelper.DbHelper
 import com.colma.colmaApp.servicios.internetCommunication.LoginService
 import com.colma.colmaApp.servicios.internetCommunication.model.LoginResponse
 import com.colma.colmaApp.servicios.session.SessionManager
@@ -11,7 +11,7 @@ import kotlinx.coroutines.withContext
 
 class LoginRepositoryImpl(
     private val loginService: LoginService, // Inject LoginService
-    private val dbHelper: DBhelper
+    private val dbHelper: DbHelper
 ) : LoginRepository {
 
     private val TAG = "LoginRepositoryImpl" // TAG for logging

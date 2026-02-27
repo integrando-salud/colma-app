@@ -14,13 +14,13 @@ import com.colma.colmaApp.utils.ResourceUtils
 import com.colma.colmaApp.servicios.Modelos.RegistrosSaludModelos
 import com.colma.colmaApp.servicios.Modelos.QuizResponseRecord
 import com.colma.colmaApp.servicios.Modelos.QuestionResponseRecord
-import com.colma.colmaApp.servicios.database.dbhelper.DBhelper
+import com.colma.colmaApp.servicios.database.dbhelper.DbHelper
 import com.colma.colmaApp.servicios.session.SessionManager
 
 class MultimediaRepositoryImpl(
     private val contentRepository: ContentRepository,
     private val context: Context,
-    private val dbHelper: DBhelper
+    private val dbHelper: DbHelper
 ) : MultimediaRepository {
 
     private val userId: Int

@@ -2,7 +2,7 @@ package com.colma.colmaApp.features.MenuMain.data
 
 import com.colma.colmaApp.features.MenuMain.domain.MenuMainRepository
 import com.colma.colmaApp.servicios.Modelos.RegistrosSaludModelos
-import com.colma.colmaApp.servicios.database.dbhelper.DBhelper
+import com.colma.colmaApp.servicios.database.dbhelper.DbHelper
 import com.colma.colmaApp.servicios.internetCommunication.SyncService
 import com.colma.colmaApp.servicios.session.SessionManager
 import com.google.gson.Gson
@@ -13,7 +13,7 @@ import java.util.*
 import android.util.Log
 
 class MenuMainRepositoryImpl(
-    private val dbHelper: DBhelper
+    private val dbHelper: DbHelper
 ) : MenuMainRepository {
 
     private val TAG = "MenuMainRepositoryImpl"

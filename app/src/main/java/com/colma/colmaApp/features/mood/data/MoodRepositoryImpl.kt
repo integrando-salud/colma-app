@@ -2,7 +2,7 @@ package com.colma.colmaApp.features.mood.data
 
 import android.content.Context
 import com.colma.colmaApp.features.mood.domain.MoodRepository
-import com.colma.colmaApp.servicios.database.dbhelper.DBhelper
+import com.colma.colmaApp.servicios.database.dbhelper.DbHelper
 import com.colma.colmaApp.servicios.session.SessionManager
 import com.colma.colmaApp.utils.varios.HealthEntry
 import kotlinx.coroutines.Dispatchers
@@ -13,7 +13,7 @@ import java.util.Date
 import java.util.Locale
 
 class MoodRepositoryImpl(private val context: Context) : MoodRepository {
-    private val dbHelper = DBhelper(context)
+    private val dbHelper = DbHelper(context)
     private val userId: Int
 
     init {
@@ -37,7 +37,7 @@ class MoodRepositoryImpl(private val context: Context) : MoodRepository {
         }
 
         try {
-            val all = dbHelper.getAllEstadoAnimo(null)
+            val all = dbHelper.getAllEstadoAnimo(userId)
             all.mapNotNull { e ->
                 val datetime = e.fechaEdicion ?: e.fechaRegistro
                 val millis = parseDateTimeToMillis(datetime) ?: System.currentTimeMillis()
@@ -73,7 +73,7 @@ class MoodRepositoryImpl(private val context: Context) : MoodRepository {
 
     override suspend fun saveMoodRecord(answers: Map<Int, Int?>, editDate: String): Result<Long> = withContext(Dispatchers.IO) {
         try {
-            val idPaciente = 1 // hardcoded user id
+            val idPaciente = userId
             val newId = dbHelper.insertEstadoAnimo(idPaciente, answers, fechaRegistro = null, fechaEdicion = editDate)
             if (newId > 0L) {
                 Result.success(newId)

@@ -3,7 +3,7 @@ package com.colma.colmaApp.features.presion.data
 import android.content.Context
 import com.colma.colmaApp.servicios.session.SessionManager
 import com.colma.colmaApp.features.presion.domain.PresionRepository
-import com.colma.colmaApp.servicios.database.dbhelper.DBhelper
+import com.colma.colmaApp.servicios.database.dbhelper.DbHelper
 import com.colma.colmaApp.utils.varios.HealthEntry
 import com.colma.colmaApp.utils.varios.parseDateTimeToMillis
 import kotlinx.coroutines.Dispatchers
@@ -14,7 +14,7 @@ import java.util.Locale
 
 class PresionRepositoryImpl(context: Context) : PresionRepository {
 
-    private val dbHelper = DBhelper(context.applicationContext)
+    private val dbHelper = DbHelper(context.applicationContext)
     private val isoFormatter = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
     private val userId: Int
 
@@ -25,7 +25,7 @@ class PresionRepositoryImpl(context: Context) : PresionRepository {
 
     override suspend fun getHistory(): List<HealthEntry> = withContext(Dispatchers.IO) {
         try {
-            val all = dbHelper.getAllPresion(null)
+            val all = dbHelper.getAllPresion(userId)
 
             fun fmt(v: Double?) = when {
                 v == null -> ""

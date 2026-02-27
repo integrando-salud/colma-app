@@ -96,7 +96,7 @@ import com.colma.colmaApp.features.MetasHistory.ui.MetasHistoryUI
 import com.colma.colmaApp.features.RegistroSalud.ui.RegistrosSaludUI
 import com.colma.colmaApp.features.login.ui.LoginUI
 import com.colma.colmaApp.features.sesiones.SesionesMenu.ui.SesionesMenuUI
-import com.colma.colmaApp.servicios.database.dbhelper.DBhelper
+import com.colma.colmaApp.servicios.database.dbhelper.DbHelper
 import com.colma.colmaApp.ui.theme.ColmaAppTheme
 import com.colma.colmaApp.utils.varios.CustomAlertDialog
 import kotlinx.coroutines.launch
@@ -105,7 +105,7 @@ class MenuMainUI : ComponentActivity() {
 
     private val viewModel: MenuMainViewModel by viewModels {
         MenuMainViewModelFactory(
-            MenuMainRepositoryImpl(DBhelper(applicationContext))
+            MenuMainRepositoryImpl(DbHelper(applicationContext))
         )
     }
 

@@ -200,7 +200,7 @@ result.onSuccess {
 
 ### SQLite Usage
 - Database bundled as asset in `app/src/main/assets/databases/colmadb.db`
-- Use `DBhelper` class for database operations
+- Use `DbHelper` class for database operations
 - Follow repository pattern for data access
 
 ## Testing Guidelines

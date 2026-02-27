@@ -63,7 +63,7 @@ import com.colma.colmaApp.utils.varios.CustomAlertDialog
 import android.widget.Toast
 
 import com.colma.colmaApp.servicios.Modelos.RegistrosSaludModelos
-import com.colma.colmaApp.servicios.database.dbhelper.DBhelper
+import com.colma.colmaApp.servicios.database.dbhelper.DbHelper
 import com.colma.colmaApp.servicios.session.SessionManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -762,7 +762,7 @@ fun MetasContent(metasId: String, onFinish: () -> Unit) {
     }
 
     val context = LocalContext.current
-    val dbHelper = remember { DBhelper(context) }
+    val dbHelper = remember { DbHelper(context) }
     val scope = rememberCoroutineScope()
 
     val dbDateTimeFormat = remember { SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US) }

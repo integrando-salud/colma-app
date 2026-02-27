@@ -69,7 +69,7 @@ class MultimediaViewModel(private val repository: MultimediaRepository) : ViewMo
                         // Save multimedia read record
                         val currentOption = _uiState.value.currentMultimediaOption
                         if (currentOption != null) {
-                            val userId = 1 // Assuming a default user ID for now
+                            val userId = com.colma.colmaApp.servicios.session.SessionManager.getUserId() ?: 1
                             val treatmentId = treatmentTypes.firstOrNull()?.name ?: "UNKNOWN"
                             val weekId = event.sessionId
                             val sessionId = event.subSessionId
@@ -125,7 +125,7 @@ class MultimediaViewModel(private val repository: MultimediaRepository) : ViewMo
             // Save multimedia read record for the new current item
             val currentOption = _uiState.value.currentMultimediaOption
             if (currentOption != null) {
-                val userId = 1 // Assuming a default user ID for now
+                val userId = com.colma.colmaApp.servicios.session.SessionManager.getUserId() ?: 1
                 val treatmentId = _uiState.value.treatmentTypes.firstOrNull()?.name ?: "UNKNOWN"
                 val weekId = _uiState.value.sessionId
                 val sessionId = _uiState.value.subSessionId
@@ -163,7 +163,7 @@ class MultimediaViewModel(private val repository: MultimediaRepository) : ViewMo
             // Save multimedia read record for the new current item
             val currentOption = _uiState.value.currentMultimediaOption
             if (currentOption != null) {
-                val userId = 1 // Assuming a default user ID for now
+                val userId = com.colma.colmaApp.servicios.session.SessionManager.getUserId() ?: 1
                 val treatmentId = _uiState.value.treatmentTypes.firstOrNull()?.name ?: "UNKNOWN"
                 val weekId = _uiState.value.sessionId
                 val sessionId = _uiState.value.subSessionId
