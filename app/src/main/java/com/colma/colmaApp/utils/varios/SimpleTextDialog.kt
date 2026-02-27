@@ -59,14 +59,16 @@ fun CustomAlertDialog(
             }
         },
         dismissButton = {
-            Button(
-                onClick = {
-                    onNo()
-                },
-                colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.rojo_boton), contentColor = Color.White),
-                elevation = ButtonDefaults.buttonElevation(defaultElevation = 2.dp)
-            ) {
-                Text(noLabel)
+            if (noLabel.isNotEmpty()) {
+                Button(
+                    onClick = {
+                        onNo()
+                    },
+                    colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.rojo_boton), contentColor = Color.White),
+                    elevation = ButtonDefaults.buttonElevation(defaultElevation = 2.dp)
+                ) {
+                    Text(noLabel)
+                }
             }
         }
     )

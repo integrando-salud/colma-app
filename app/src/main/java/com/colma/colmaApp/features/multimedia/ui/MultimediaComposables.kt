@@ -881,9 +881,10 @@ fun MetasContent(metasId: String, onFinish: () -> Unit) {
                 CustomAlertDialog(
                     show = showSummaryDialog,
                     onDismissRequest = { showSummaryDialog = false },
-                    title = "Resultado",
+                    title = if (shouldExecuteFinalAction) "Confirmar registro" else "Faltan datos",
                     description = summaryMessage,
-                    yesLabel = "OK",
+                    yesLabel = if (shouldExecuteFinalAction) "Guardar" else "Entendido",
+                    noLabel = if (shouldExecuteFinalAction) "Cancelar" else "",
                     onYes = {
                         if (shouldExecuteFinalAction) {
                             val userId = SessionManager.getUserId() ?: 1
