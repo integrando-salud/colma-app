@@ -832,6 +832,7 @@ fun MetasContent(metasId: String, onFinish: () -> Unit) {
                 title = "Fecha Objetivo",
                 description = "Selecciona la fecha límite para tu meta.",
                 initialMillis = today.timeInMillis,
+                showTime = false,
                 onDateTimeSelected = { selectedCal ->
                     selectedCal.set(Calendar.SECOND, 0)
                     fecha.value = dbDateTimeFormat.format(selectedCal.time)
@@ -863,7 +864,6 @@ fun MetasContent(metasId: String, onFinish: () -> Unit) {
                             • Con quién: ${conQuien.value ?: "No especificado"}
                             • Dónde: ${donde.value ?: "No especificado"}
                             • Fecha Objetivo: $fechaObjetivoForDisplay
-                            • Fecha de Creación: $fechaCreacionForDisplay
                         """.trimIndent()
                     }
                     showSummaryDialog = true

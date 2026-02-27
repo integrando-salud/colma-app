@@ -45,19 +45,22 @@ import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CardThatOpensDateTimeDialog(
     title: String = "Seleccionar fecha y hora",
     description: String? = null,
     initialMillis: Long? = null,
+    showTime: Boolean = true,
     modifier: Modifier = Modifier,
     onDateTimeSelected: (Calendar) -> Unit = {}
 ) {
     var showDialog by rememberSaveable { mutableStateOf(false) }
     val ctx = LocalContext.current
 
-    val previewFormat = remember { SimpleDateFormat("dd/MM/yyyy hh:mm a", Locale.getDefault()) }
+    val previewFormat = remember(showTime) {
+        if (showTime) SimpleDateFormat("dd/MM/yyyy hh:mm a", Locale.getDefault())
+        else SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+    }
     var previewMillis by rememberSaveable { mutableStateOf(initialMillis ?: System.currentTimeMillis()) }
 
     val previewText = remember(previewMillis) { previewFormat.format(Date(previewMillis)) }
@@ -90,7 +93,7 @@ fun CardThatOpensDateTimeDialog(
 
             Icon(
                 painter = painterResource(id = R.drawable.outline_more_time_24),
-                contentDescription = "Fecha y Hora",
+                contentDescription = if (showTime) "Fecha y Hora" else "Fecha",
                 tint = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
                 modifier = Modifier.size(24.dp)
             )
@@ -101,6 +104,7 @@ fun CardThatOpensDateTimeDialog(
         DateTimePickerDialogComposable(
             context = ctx,
             initialMillis = previewMillis,
+            showTime = showTime,
             onDismissRequest = { showDialog = false },
             onConfirm = { selectedCal ->
                 previewMillis = selectedCal.timeInMillis
@@ -116,6 +120,7 @@ fun CardThatOpensDateTimeDialog(
 fun DateTimePickerDialogComposable(
     context: Context,
     initialMillis: Long,
+    showTime: Boolean = true,
     onDismissRequest: () -> Unit,
     onConfirm: (Calendar) -> Unit
 ) {
@@ -155,7 +160,7 @@ fun DateTimePickerDialogComposable(
     AlertDialog(
         onDismissRequest = onDismissRequest,
         containerColor = Color.White,
-        title = { Text(text = "Seleccionar fecha y hora") },
+        title = { Text(text = if (showTime) "Seleccionar fecha y hora" else "Seleccionar fecha") },
         text = {
             Column(modifier = Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(12.dp)) {
                 val currentCal = calFromMillis(selectedMillis)
