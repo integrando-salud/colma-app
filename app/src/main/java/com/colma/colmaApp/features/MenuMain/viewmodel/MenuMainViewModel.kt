@@ -87,13 +87,8 @@ class MenuMainViewModel(private val repository: MenuMainRepository) : ViewModel(
             }    
         private fun synchronizeData() {
             viewModelScope.launch {
-                _uiState.update { it.copy(isLoading = true, snackbarMessage = "Sincronizando datos...") }
-                val result = repository.synchronizeData()
-                result.onSuccess {
-                    _uiState.update { it.copy(snackbarMessage = "Sincronización exitosa!") }
-                }.onFailure { error ->
-                    _uiState.update { it.copy(snackbarMessage = "Error de sincronización: ${error.message}") }
-                }
+                _uiState.update { it.copy(isLoading = true) }
+                repository.synchronizeData()
                 _uiState.update { it.copy(isLoading = false) }
                 loadInitialData() // Reload data after sync to update counts
             }
