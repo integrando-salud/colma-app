@@ -370,7 +370,7 @@ fun MenuScreen(
                             actions = {
                                 Surface(
                                     shape = RoundedCornerShape(12.dp),
-                                    color = Color.White.copy(alpha = 0.20f),
+                                    color = colorResource(R.color.contraste),
                                     modifier = Modifier
                                         .padding(end = 8.dp)
                                         .height(36.dp)
@@ -383,7 +383,7 @@ fun MenuScreen(
                                     ) {
                                         Text(
                                             text = "Menu",
-                                            color = Color.White,
+                                            color = colorResource(R.color.white),
                                             fontWeight = FontWeight.SemiBold,
                                             fontSize = 14.sp
                                         )
