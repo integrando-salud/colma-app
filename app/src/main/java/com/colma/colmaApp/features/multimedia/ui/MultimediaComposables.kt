@@ -676,9 +676,9 @@ fun QuizContent(
                     },
                     enabled = allQuestionsAnswered,
                     modifier = Modifier.fillMaxWidth(),
-                    colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.principal))
+                    colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.contraste))
                 ) {
-                    Text("Confirmar")
+                    Text("Guardar")
                 }
             }
         }
@@ -866,12 +866,12 @@ fun MetasContent(metasId: String, onFinish: () -> Unit) {
                 },
                 modifier = Modifier.fillMaxWidth().height(52.dp),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = colorResource(R.color.principal),
+                    containerColor = colorResource(R.color.contraste),
                     contentColor = Color.White
                 ),
                 shape = RoundedCornerShape(8.dp)
             ) {
-                Text(text = "Terminar", fontWeight = FontWeight.SemiBold)
+                Text(text = "Guardar", fontWeight = FontWeight.SemiBold)
             }
             if (showSummaryDialog) {
                 CustomAlertDialog(
