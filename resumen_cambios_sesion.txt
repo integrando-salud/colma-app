@@ -1,4 +1,4 @@
-Resumen de cambios - Sesión de Actualización (23/02/2026):
+Resumen de cambios - Sesión de Actualización (23/02/2026 - 24/02/2026):
 
 * Animación de Celebración: Se integró un trofeo animado (pulso y rotación) en el diálogo de éxito al completar objetivos en el Menú Principal.
 * Rediseño de Historial de Salud: Se refactorizó el diseño de los elementos en las listas de historial (Glucosa y Presión). Ahora cuentan con un ícono a la izquierda, el valor destacado en el centro y la fecha/hora en una posición más legible para evitar que el texto se corte.
@@ -10,6 +10,8 @@ Resumen de cambios - Sesión de Actualización (23/02/2026):
 * Marca de Agua de Versión: Se implementó una marca de agua muy sutil en la esquina inferior derecha de todas las pantallas que muestra la versión actual de la aplicación (VERSION_NAME), facilitando el seguimiento en capturas de pantalla de prueba.
 * Pantalla de Login: Se cambió la etiqueta del campo de entrada de "DNI" a "Usuario", manteniendo el teclado numérico por compatibilidad.
 * Integración de Sesión: Se vinculó el SessionManager en el historial de metas para asegurar que los datos mostrados correspondan al usuario autenticado.
+* Lector de Contenido (TTS): Se añadió un botón "Escuchar" en las tarjetas de descripción multimedia para leer el texto en voz alta, mejorando la accesibilidad.
+* Flujo de Revisión de Metas: Se implementó un flujo de revisión de metas personalizadas con mensajes y feedback adaptados, además de prevenir el cierre accidental de los diálogos.
 
 ---
 
