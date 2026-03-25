@@ -235,9 +235,16 @@ fun GlucosaScreen(
             ) {
                 HealthRecordCard(label = "Glucosa", onClick = { onEvent(GlucosaEvent.AddGlucosaClicked) }, modifier = Modifier.fillMaxWidth())
                 Spacer(modifier = Modifier.height(28.dp))
-                HistoryCard(history = uiState.history, onClear = { /* TODO */ }, onEntryClick = {
-                    onEvent(GlucosaEvent.ShowDetails(it))
-                }, modifier = Modifier.fillMaxWidth().weight(1f).padding(bottom = 16.dp))
+                HistoryCard(
+                    history = uiState.history,
+                    onClear = { /* TODO */ },
+                    onEntryClick = {
+                        onEvent(GlucosaEvent.ShowDetails(it))
+                    },
+                    modifier = Modifier.fillMaxWidth().weight(1f).padding(bottom = 16.dp),
+                    showLabel = false,
+                    showTitle = false
+                )
             }
 
             if (uiState.isDetailsDialogVisible) {

@@ -57,7 +57,9 @@ fun HistoryCard(
     history: List<HealthEntry>,
     onClear: () -> Unit,
     modifier: Modifier = Modifier,
-    onEntryClick: ((HealthEntry) -> Unit)? = null
+    onEntryClick: ((HealthEntry) -> Unit)? = null,
+    showTitle: Boolean = true,
+    showLabel: Boolean = true
 ) {
     Card(
         modifier = modifier
@@ -71,15 +73,22 @@ fun HistoryCard(
                 .fillMaxWidth()
                 .padding(12.dp)
         ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(text = "Historial", fontWeight = FontWeight.SemiBold, fontSize = 16.sp, color = Color.hsl(0f, 0f, 0.10f))
-                Spacer(modifier = Modifier.weight(1f))
-            }
+            if (showTitle) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = "Historial",
+                        fontWeight = FontWeight.SemiBold,
+                        fontSize = 16.sp,
+                        color = Color.hsl(0f, 0f, 0.10f)
+                    )
+                    Spacer(modifier = Modifier.weight(1f))
+                }
 
-            Spacer(modifier = Modifier.height(6.dp))
+                Spacer(modifier = Modifier.height(6.dp))
+            }
 
             if (history.isEmpty()) {
                 Text(
@@ -94,7 +103,11 @@ fun HistoryCard(
             } else {
                 LazyColumn(modifier = Modifier.fillMaxWidth()) {
                     items(history) { entry ->
-                        HistoryRow(entry, onClick = onEntryClick?.let { { it(entry) } })
+                        HistoryRow(
+                            entry,
+                            onClick = onEntryClick?.let { { it(entry) } },
+                            showLabel = showLabel
+                        )
                     }
                 }
             }
@@ -104,8 +117,13 @@ fun HistoryCard(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HistoryRow(entry: HealthEntry, modifier: Modifier = Modifier, onClick: (() -> Unit)? = null) {
-    val formatter = remember { SimpleDateFormat("dd/MM hh:mm a", Locale.getDefault()) }
+fun HistoryRow(
+    entry: HealthEntry,
+    modifier: Modifier = Modifier,
+    onClick: (() -> Unit)? = null,
+    showLabel: Boolean = true
+) {
+    val formatter = remember { SimpleDateFormat("dd/MM/yyyy hh:mm a", Locale.getDefault()) }
 
     // Visual mapping per type
     val signaturePink = Color(0xFFE84589)
@@ -216,12 +234,14 @@ fun HistoryRow(entry: HealthEntry, modifier: Modifier = Modifier, onClick: (() -
             Spacer(modifier = Modifier.width(12.dp))
 
             Column(modifier = Modifier.weight(1f)) {
-                Text(
-                    text = entry.label,
-                    fontSize = 11.sp,
-                    color = Color.Gray,
-                    fontWeight = FontWeight.Bold
-                )
+                if (showLabel) {
+                    Text(
+                        text = entry.label,
+                        fontSize = 11.sp,
+                        color = Color.Gray,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     if (isDangerous) {
                         Icon(
