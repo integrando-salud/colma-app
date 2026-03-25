@@ -653,7 +653,7 @@ fun QuizContent(
                         },
                         colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF008000), contentColor = Color.White)
                     ) {
-                        Text("Confirmar")
+                        Text("Guardar")
                     }
                 },
                 dismissButton = {
@@ -965,7 +965,7 @@ fun MetasContent(metasId: String, onFinish: () -> Unit) {
                             colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF008000), contentColor = Color.White),
                             elevation = ButtonDefaults.buttonElevation(defaultElevation = 2.dp)
                         ) {
-                            Text("Aceptar")
+                            Text("Guardar")
                         }
                     },
                     containerColor = Color.White,
@@ -984,7 +984,7 @@ fun MetasContent(metasId: String, onFinish: () -> Unit) {
                             colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.rojo_boton), contentColor = Color.White),
                             elevation = ButtonDefaults.buttonElevation(defaultElevation = 2.dp)
                         ) {
-                            Text("Aceptar")
+                            Text("Guardar")
                         }
                     },
                     containerColor = Color.White,

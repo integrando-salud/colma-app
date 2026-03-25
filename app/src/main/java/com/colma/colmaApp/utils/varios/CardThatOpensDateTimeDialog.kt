@@ -179,7 +179,7 @@ fun DateTimePickerDialogComposable(
                     onConfirm(cal)
                 },
                 colors = ButtonDefaults.textButtonColors(containerColor = Color(0xFF008000), contentColor = Color.White)
-            ) { Text("Confirmar") }
+            ) { Text("Guardar") }
         },
         dismissButton = {
             TextButton(

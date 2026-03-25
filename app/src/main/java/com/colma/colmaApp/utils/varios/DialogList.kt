@@ -172,7 +172,7 @@ fun <T> CardThatOpensSelectionDialog(
                     enabled = selectedIndex != null,
                     colors = ButtonDefaults.textButtonColors(containerColor = Color(0xFF008000), contentColor = Color.White)
                 ) {
-                    Text("Aceptar")
+                    Text("Guardar")
                 }
             },
             dismissButton = {
