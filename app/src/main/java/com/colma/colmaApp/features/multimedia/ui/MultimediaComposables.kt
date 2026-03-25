@@ -736,14 +736,29 @@ fun QuestionCard(
                     Text("Respuesta correcta: $correctAnswerText", color = Color(0xFF008000))
                 }
             } else {
-                CardThatOpensSelectionDialog(
-                    title = "Selecciona tu respuesta",
-                    description = selectedAnswerIndex?.let { question.options.getOrNull(it) } ?: "Toca para responder",
-                    items = question.options,
-                    onItemSelected = { selectedOption ->
-                        onAnswerSelected(question.options.indexOf(selectedOption))
+                question.options.forEachIndexed { index, option ->
+                    val isSelected = selectedAnswerIndex == index
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clickable { onAnswerSelected(index) }
+                            .padding(vertical = 4.dp)
+                    ) {
+                        RadioButton(
+                            selected = isSelected,
+                            onClick = { onAnswerSelected(index) },
+                            colors = RadioButtonDefaults.colors(
+                                selectedColor = colorResource(R.color.principal)
+                            )
+                        )
+                        Text(
+                            text = option,
+                            modifier = Modifier.padding(start = 8.dp),
+                            fontSize = 16.sp
+                        )
                     }
-                )
+                }
             }
         }
     }
