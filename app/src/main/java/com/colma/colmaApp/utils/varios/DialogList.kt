@@ -80,7 +80,6 @@ fun <T> CardThatOpensSelectionDialog(
             Column(
                 modifier = Modifier
                     .weight(1f)
-                    .padding(end = 8.dp)
             ) {
                 Text(
                     text = title,
@@ -111,13 +110,6 @@ fun <T> CardThatOpensSelectionDialog(
                     )
                 }
             }
-
-            Icon(
-                painter = painterResource(id = android.R.drawable.ic_dialog_info),
-                contentDescription = "Info",
-                tint = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
-                modifier = Modifier.size(24.dp)
-            )
         }
     }
 

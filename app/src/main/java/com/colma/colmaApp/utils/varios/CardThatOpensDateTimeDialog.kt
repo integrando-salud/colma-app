@@ -90,13 +90,6 @@ fun CardThatOpensDateTimeDialog(
                 Spacer(modifier = Modifier.height(6.dp))
                 Text(text = previewText, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f))
             }
-
-            Icon(
-                painter = painterResource(id = R.drawable.outline_more_time_24),
-                contentDescription = if (showTime) "Fecha y Hora" else "Fecha",
-                tint = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
-                modifier = Modifier.size(24.dp)
-            )
         }
     }
 
