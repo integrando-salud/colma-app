@@ -348,7 +348,6 @@ fun SecondarySessionList(
             .fillMaxWidth()
             .padding(vertical = 8.dp, horizontal = 12.dp)
         ) {
-            Text(text = "Contenidos de ${parentSession.title}", fontWeight = FontWeight.Medium, fontSize = 14.sp, color = Color.DarkGray)
             Spacer(modifier = Modifier.height(8.dp))
             HorizontalDivider()
 

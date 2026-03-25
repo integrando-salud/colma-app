@@ -224,7 +224,7 @@ fun LoginScreen(
             Spacer(modifier = Modifier.height(10.dp))
 
             Text(
-                text = "Recordar contraseña",
+                text = "Recuperar contraseña",
                 textAlign = TextAlign.Center,
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold,

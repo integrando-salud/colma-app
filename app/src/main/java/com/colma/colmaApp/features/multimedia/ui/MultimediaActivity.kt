@@ -120,7 +120,14 @@ fun MultimediaScreen(
     Surface(color = colorResource(id = R.color.background), modifier = Modifier.fillMaxSize().systemBarsPadding()) {
         Column(modifier = Modifier.fillMaxSize()) {
             TopAppBar(
-                title = { Text(currentOption?.title ?: uiState.sessionTitle, fontSize = 18.sp, color = Color.White) },
+                title = {
+                    val titleText = if (currentOption?.type == MultimediaContentType.QUIZ) {
+                        "Pregunta del día"
+                    } else {
+                        currentOption?.title ?: uiState.sessionTitle
+                    }
+                    Text(titleText, fontSize = 18.sp, color = Color.White)
+                },
                 colors = TopAppBarDefaults.topAppBarColors(containerColor = signatureColor),
                 navigationIcon = {
                     TextButton(onClick = { onEvent(MultimediaEvent.Finish) }) {
