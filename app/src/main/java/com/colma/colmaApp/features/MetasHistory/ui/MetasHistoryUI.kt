@@ -4,9 +4,11 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.*
@@ -134,10 +136,10 @@ fun MetaItemCard(meta: RegistrosSaludModelos.MetaRecord) {
         0 -> { // Pendiente
             if (isPast) {
                 statusText = "Pendiente (Vencida)"
-                statusColor = Color.Red
+                statusColor = Color(0xFFFF9800) // Orange
             } else {
                 statusText = "Pendiente"
-                statusColor = Color(0xFFFFA500) // Orange
+                statusColor = Color(0xFFFBC02D) // Yellow (Darker for readability)
             }
         }
         1 -> { // No Cumplida
@@ -168,9 +170,12 @@ fun MetaItemCard(meta: RegistrosSaludModelos.MetaRecord) {
                 )
                 Text(
                     text = statusText,
-                    color = statusColor,
+                    color = Color.White,
                     fontWeight = FontWeight.Bold,
-                    fontSize = 14.sp
+                    fontSize = 12.sp,
+                    modifier = Modifier
+                        .background(statusColor, shape = RoundedCornerShape(4.dp))
+                        .padding(horizontal = 8.dp, vertical = 4.dp)
                 )
             }
             Spacer(modifier = Modifier.height(12.dp))
