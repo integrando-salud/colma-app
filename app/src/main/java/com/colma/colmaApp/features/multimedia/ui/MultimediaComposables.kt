@@ -944,8 +944,7 @@ fun MetasContent(metasId: String, onFinish: () -> Unit) {
                         showSuccessDialog = false
                         onFinish()
                     },
-                    title = { Text("Éxito") },
-                    text = { Text("La meta se ha guardado exitosamente.") },
+                    title = { Text("La meta se ha guardado exitosamente") },
                     confirmButton = {
                         Button(
                             onClick = {
