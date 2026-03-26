@@ -98,10 +98,10 @@ fun LoginScreen(
                 .fillMaxWidth()
                 .systemBarsPadding()
                 .padding(horizontal = 24.dp)
+
                 .verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-
             Image(
                 painter = painterResource(R.drawable.colma_logo),
                 contentDescription = "Logo",

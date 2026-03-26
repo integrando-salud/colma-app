@@ -231,9 +231,16 @@ fun PresionScreen(
             ) {
                 HealthRecordCard(label = "Presión", onClick = { onEvent(PresionEvent.AddPresionClicked) }, modifier = Modifier.fillMaxWidth())
                 Spacer(modifier = Modifier.height(18.dp))
-                HistoryCard(history = uiState.history, onClear = { /* TODO */ }, onEntryClick = {
-                    onEvent(PresionEvent.ShowDetails(it))
-                }, modifier = Modifier.fillMaxWidth().weight(1f).padding(bottom = 16.dp))
+                HistoryCard(
+                    history = uiState.history,
+                    onClear = { /* TODO */ },
+                    onEntryClick = {
+                        onEvent(PresionEvent.ShowDetails(it))
+                    },
+                    modifier = Modifier.fillMaxWidth().weight(1f).padding(bottom = 16.dp),
+                    showTitle = false,
+                    showLabel = false
+                )
             }
 
             if (uiState.isDetailsDialogVisible) {
