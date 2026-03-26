@@ -461,16 +461,6 @@ fun VideoContent(@RawRes contentAssetId: Int) {
                     .height(400.dp)
                     .clip(RoundedCornerShape(8.dp))
             )
-
-            Spacer(Modifier.height(16.dp))
-
-            Text(
-                "A continuación puedes ver un video explicativo para entender mejor los ejercicios de esta sesión.",
-                fontSize = 16.sp,
-                color = Color.Black,
-                modifier = Modifier.padding(horizontal = 4.dp),
-                // center text within card
-            )
         }
     }
 }
