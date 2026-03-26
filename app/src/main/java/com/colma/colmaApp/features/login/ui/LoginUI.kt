@@ -154,7 +154,12 @@ fun LoginScreen(
 
                     OutlinedTextField(
                         value = uiState.dni,
-                        onValueChange = { onEvent(LoginEvent.DniChanged(it)) },
+                        onValueChange = { newValue ->
+                            val truncatedValue = newValue.take(8)
+                            if (truncatedValue != uiState.dni) {
+                                onEvent(LoginEvent.DniChanged(truncatedValue))
+                            }
+                        },
                         label = { Text("Usuario") },
                         singleLine = true,
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
