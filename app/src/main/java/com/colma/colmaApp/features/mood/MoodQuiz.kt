@@ -211,7 +211,7 @@ fun MoodQuizScreen(
                         onDismissRequest = { onEvent(MoodQuizEvent.DismissConfirmDialog) },
                         title = { Text("Confirmar") },
                         text = {
-                            Text("¿Desea continuar?")
+                            Text("¿Está seguro/a que desea guardar este registro de estado de ánimo?")
                         },
                         confirmButton = {
                             Button(
@@ -222,7 +222,7 @@ fun MoodQuizScreen(
                                 ),
                                 elevation = ButtonDefaults.buttonElevation(defaultElevation = 4.dp)
                             ) {
-                                Text("Continuar")
+                                Text("Guardar")
                             }
                         },
                         dismissButton = {
@@ -245,7 +245,7 @@ fun MoodQuizScreen(
                         onDismissRequest = { onEvent(MoodQuizEvent.DismissMoreQuestionsDialog) },
                         title = { Text("Confirmar") },
                         text = {
-                            Text("¿Desea continuar?")
+                            Text("¿Está seguro/a que desea guardar este registro de estado de ánimo?")
                         },
                         confirmButton = {
                             Button(
@@ -256,7 +256,7 @@ fun MoodQuizScreen(
                                 ),
                                 elevation = ButtonDefaults.buttonElevation(defaultElevation = 4.dp)
                             ) {
-                                Text("Continuar")
+                                Text("Guardar")
                             }
                         },
                         dismissButton = {
