@@ -8,6 +8,11 @@ data class MoodQuizUiState(
     val firstTwoQuestionsLocked: Boolean = false,
     val showConfirmDialog: Boolean = false,
     val showMoreQuestionsDialog: Boolean = false,
+    val showWarningDialog: Boolean = false,
+    val warningDialogMessage: String = "",
+    val showCompletionDialog: Boolean = false,
+    val completionDialogMessage: String = "",
+    val shouldNavigateAfterCompletion: Boolean = false,
     val error: String? = null,
     val isLoading: Boolean = false,
 )
@@ -19,5 +24,8 @@ sealed class MoodQuizEvent {
     object DismissConfirmDialog : MoodQuizEvent()
     object ConfirmMoreQuestions : MoodQuizEvent()
     object DismissMoreQuestionsDialog : MoodQuizEvent()
+    object DismissWarningDialog : MoodQuizEvent()
+    object AcceptCompletionDialog : MoodQuizEvent()
+    object DismissCompletionDialog : MoodQuizEvent()
     object BackPressed : MoodQuizEvent()
 }

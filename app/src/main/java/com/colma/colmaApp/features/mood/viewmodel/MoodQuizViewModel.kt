@@ -1,6 +1,5 @@
 package com.colma.colmaApp.features.mood.viewmodel
 
-import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.colma.colmaApp.features.mood.domain.MoodRepository
@@ -21,7 +20,7 @@ class MoodQuizViewModel(private val repository: MoodRepository) : ViewModel() {
 
     private val _sideEffects = Channel<SideEffect>()
     val sideEffects = _sideEffects.receiveAsFlow()
-    
+
     private val allQuestions = listOf(
         "Poco interés o placer en hacer las cosas",
         "Sentirse deprimido, abatido o sin esperanza",
@@ -56,21 +55,40 @@ class MoodQuizViewModel(private val repository: MoodRepository) : ViewModel() {
             MoodQuizEvent.ConfirmSubmit -> confirmSubmit()
             MoodQuizEvent.DismissConfirmDialog -> _uiState.update { it.copy(showConfirmDialog = false) }
             MoodQuizEvent.ConfirmMoreQuestions -> {
-                _uiState.update { it.copy(showMoreQuestionsDialog = false, showRestOfQuestions = true, firstTwoQuestionsLocked = true) }
-                viewModelScope.launch {
-                    _sideEffects.send(SideEffect.ShowToast("Contesta las preguntas adicionales"))
+                _uiState.update { 
+                    it.copy(
+                        showMoreQuestionsDialog = false, 
+                        showRestOfQuestions = true, 
+                        firstTwoQuestionsLocked = true,
+                        showCompletionDialog = true,
+                        completionDialogMessage = "Continúe respondiendo las preguntas adicionales",
+                        shouldNavigateAfterCompletion = false
+                    )
                 }
             }
             MoodQuizEvent.DismissMoreQuestionsDialog -> {
                 _uiState.update { it.copy(showMoreQuestionsDialog = false) }
             }
+            MoodQuizEvent.DismissWarningDialog -> _uiState.update { it.copy(showWarningDialog = false) }
+            MoodQuizEvent.AcceptCompletionDialog -> handleAcceptCompletionDialog()
+            MoodQuizEvent.DismissCompletionDialog -> _uiState.update { it.copy(showCompletionDialog = false) }
             MoodQuizEvent.BackPressed -> handleBack()
         }
     }
-    
+
     private fun handleBack() {
         viewModelScope.launch {
             _sideEffects.send(SideEffect.NavigateBack)
+        }
+    }
+
+    private fun handleAcceptCompletionDialog() {
+        viewModelScope.launch {
+            val shouldNavigate = _uiState.value.shouldNavigateAfterCompletion
+            _uiState.update { it.copy(showCompletionDialog = false, shouldNavigateAfterCompletion = false) }
+            if (shouldNavigate) {
+                _sideEffects.send(SideEffect.NavigateBackWithResult)
+            }
         }
     }
 
@@ -79,14 +97,19 @@ class MoodQuizViewModel(private val repository: MoodRepository) : ViewModel() {
         updatedAnswers[index] = answer
         _uiState.update { it.copy(answers = updatedAnswers) }
     }
-    
+
     private fun handleSave() {
         viewModelScope.launch {
             val state = _uiState.value
             val firstTwoAnswered = state.answers[0] != -1 && state.answers[1] != -1
 
             if (!firstTwoAnswered) {
-                _sideEffects.send(SideEffect.ShowToast("Por favor responda las dos primeras preguntas"))
+                _uiState.update { 
+                    it.copy(
+                        showWarningDialog = true,
+                        warningDialogMessage = "Por favor responda las dos primeras preguntas"
+                    )
+                }
                 return@launch
             }
 
@@ -101,7 +124,12 @@ class MoodQuizViewModel(private val repository: MoodRepository) : ViewModel() {
                 } else {
                     // check if all are answered
                     if (state.answers.any { it == -1 }) {
-                        _sideEffects.send(SideEffect.ShowToast("Por favor responda todas las preguntas"))
+                        _uiState.update { 
+                            it.copy(
+                                showWarningDialog = true,
+                                warningDialogMessage = "Por favor responda todas las preguntas"
+                            )
+                        }
                     } else {
                         _uiState.update { it.copy(showConfirmDialog = true) }
                     }
@@ -121,23 +149,32 @@ class MoodQuizViewModel(private val repository: MoodRepository) : ViewModel() {
             } else {
                 state.answers.mapIndexedNotNull { index, i -> if(i != -1) (index+1) to i else null }.toMap()
             }
-            
+
             val isoFormatter = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
             val result = repository.saveMoodRecord(answersToSave, isoFormatter.format(Date()))
-            
+
             result.onSuccess {
                 _uiState.update { it.copy(isLoading = false) }
-                _sideEffects.send(SideEffect.ShowToast("Respuestas guardadas"))
-                _sideEffects.send(SideEffect.NavigateBackWithResult)
+                _uiState.update { 
+                    it.copy(
+                        showCompletionDialog = true,
+                        completionDialogMessage = "Registro guardado exitosamente",
+                        shouldNavigateAfterCompletion = true
+                    )
+                }
             }.onFailure { error ->
                 _uiState.update { it.copy(isLoading = false) }
-                _sideEffects.send(SideEffect.ShowToast("Error guardando respuestas: ${error.message}"))
+                _uiState.update { 
+                    it.copy(
+                        showWarningDialog = true,
+                        warningDialogMessage = "Error guardando respuestas: ${error.message}"
+                    )
+                }
             }
         }
     }
 
     sealed class SideEffect {
-        data class ShowToast(val message: String, val duration: Int = Toast.LENGTH_SHORT) : SideEffect()
         object NavigateBack : SideEffect()
         object NavigateBackWithResult : SideEffect()
     }

@@ -3,7 +3,6 @@ package com.colma.colmaApp.features.mood
 import android.app.Activity
 import android.graphics.Color as AndroidColor
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
@@ -42,8 +41,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.RadioButtonDefaults
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SnackbarHost
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
@@ -51,13 +48,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.semantics.selected
 import androidx.compose.ui.semantics.semantics
@@ -96,15 +91,10 @@ class MoodQuizActivity : ComponentActivity() {
         setContent {
             ColmaAppTheme {
                 val uiState by viewModel.uiState.collectAsState()
-                val context = LocalContext.current
-                val snackbarHostState = remember { SnackbarHostState() }
 
                 LaunchedEffect(Unit) {
                     viewModel.sideEffects.collect { effect ->
                         when (effect) {
-                            is MoodQuizViewModel.SideEffect.ShowToast -> {
-                                snackbarHostState.showSnackbar(effect.message)
-                            }
                             MoodQuizViewModel.SideEffect.NavigateBack -> finish()
                             MoodQuizViewModel.SideEffect.NavigateBackWithResult -> {
                                 setResult(Activity.RESULT_OK)
@@ -113,11 +103,10 @@ class MoodQuizActivity : ComponentActivity() {
                         }
                     }
                 }
-                
+
                 MoodQuizScreen(
                     uiState = uiState,
-                    onEvent = viewModel::onEvent,
-                    snackbarHostState = snackbarHostState
+                    onEvent = viewModel::onEvent
                 )
             }
         }
@@ -128,8 +117,7 @@ class MoodQuizActivity : ComponentActivity() {
 @Composable
 fun MoodQuizScreen(
     uiState: MoodQuizUiState,
-    onEvent: (MoodQuizEvent) -> Unit,
-    snackbarHostState: SnackbarHostState
+    onEvent: (MoodQuizEvent) -> Unit
 ) {
     Scaffold(
         modifier = Modifier.systemBarsPadding(),
@@ -147,8 +135,7 @@ fun MoodQuizScreen(
                     navigationIconContentColor = MaterialTheme.colorScheme.onPrimary
                 )
             )
-        },
-        snackbarHost = { SnackbarHost(snackbarHostState) }
+        }
     ) { innerPadding ->
         BackHandler(onBack = { onEvent(MoodQuizEvent.BackPressed) })
         Box(
@@ -282,6 +269,50 @@ fun MoodQuizScreen(
                                 elevation = ButtonDefaults.buttonElevation(defaultElevation = 4.dp)
                             ) {
                                 Text("Cancelar")
+                            }
+                        }
+                    )
+                }
+
+                if (uiState.showWarningDialog) {
+                    AlertDialog(
+                        onDismissRequest = { onEvent(MoodQuizEvent.DismissWarningDialog) },
+                        title = { Text("Advertencia") },
+                        text = {
+                            Text(uiState.warningDialogMessage)
+                        },
+                        confirmButton = {
+                            Button(
+                                onClick = { onEvent(MoodQuizEvent.DismissWarningDialog) },
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = Color(0xFF008000),
+                                    contentColor = Color.White
+                                ),
+                                elevation = ButtonDefaults.buttonElevation(defaultElevation = 2.dp)
+                            ) {
+                                Text("Aceptar")
+                            }
+                        }
+                    )
+                }
+
+                if (uiState.showCompletionDialog) {
+                    AlertDialog(
+                        onDismissRequest = { onEvent(MoodQuizEvent.DismissCompletionDialog) },
+                        title = { Text("Información") },
+                        text = {
+                            Text(uiState.completionDialogMessage)
+                        },
+                        confirmButton = {
+                            Button(
+                                onClick = { onEvent(MoodQuizEvent.AcceptCompletionDialog) },
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = Color(0xFF008000),
+                                    contentColor = Color.White
+                                ),
+                                elevation = ButtonDefaults.buttonElevation(defaultElevation = 2.dp)
+                            ) {
+                                Text("Aceptar")
                             }
                         }
                     )
