@@ -133,29 +133,7 @@ fun MultimediaSelectorScreen(
     Surface(modifier = Modifier.fillMaxSize().systemBarsPadding(), color = colorResource(R.color.background)) {
         Column(modifier = Modifier.fillMaxSize()) {
             TopAppBar(
-                title = {
-                    Column {
-                        Text(text = uiState.sessionTitle, fontSize = 16.sp, color = Color.White, fontWeight = FontWeight.SemiBold)
-                        val secondLinePrefix = when {
-                            uiState.subSessionTitle.isNotBlank() -> uiState.subSessionTitle
-                            uiState.subSessionId != -1L && uiState.sessionId >= 0L -> friendlySubLabel(uiState.subSessionId, uiState.sessionId)
-                            else -> ""
-                        }
-                        val treatmentDisplay = uiState.treatmentTypes.firstOrNull()?.let {
-                            when (it) {
-                                TreatmentType.HTA -> "Hipertension"
-                                TreatmentType.DIABETES -> "Diabetes"
-                            }
-                        } ?: ""
-
-                        val secondLine = if (secondLinePrefix.isNotBlank() && treatmentDisplay.isNotBlank()) {
-                            "$secondLinePrefix: $treatmentDisplay"
-                        } else {
-                            secondLinePrefix
-                        }
-                        Text(text = secondLine, fontSize = 12.sp, color = Color.White.copy(alpha = 0.9f))
-                    }
-                },
+                title = { },
                 colors = TopAppBarDefaults.topAppBarColors(containerColor = signatureColor),
                 navigationIcon = {
                     Surface(

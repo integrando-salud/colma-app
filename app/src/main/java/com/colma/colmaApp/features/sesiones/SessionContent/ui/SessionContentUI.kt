@@ -123,19 +123,7 @@ fun SessionContentScreen(
         modifier = Modifier.systemBarsPadding(),
         topBar = {
             TopAppBar(
-                title = {
-                    Column {
-                        Text(text = uiState.sessionTitle, fontSize = 16.sp, color = Color.White, fontWeight = FontWeight.SemiBold)
-                        val secondLine = when {
-                            !uiState.subSessionTitle.isNullOrBlank() -> uiState.subSessionTitle
-                            uiState.subSessionId != null && uiState.sessionId >= 0L -> friendlySubLabel(uiState.subSessionId, uiState.sessionId)
-                            else -> null
-                        }
-                        if (secondLine != null) {
-                            Text(text = secondLine, fontSize = 12.sp, color = Color.White.copy(alpha = 0.9f))
-                        }
-                    }
-                },
+                title = { },
                 colors = TopAppBarDefaults.topAppBarColors(containerColor = signatureColor),
                 navigationIcon = {
                     Surface(
