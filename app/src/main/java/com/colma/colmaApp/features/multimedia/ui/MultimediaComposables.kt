@@ -126,12 +126,19 @@ fun InformationCard(displayContent: String) {
     var tts by remember { mutableStateOf<TextToSpeech?>(null) }
     var isTtsReady by remember { mutableStateOf(false) }
     var isSpeaking by remember { mutableStateOf(false) }
+    var isInitializing by remember { mutableStateOf(false) }
     val mainHandler = remember { Handler(Looper.getMainLooper()) }
 
     DisposableEffect(displayContent) {
+        isInitializing = true
         val speech = TextToSpeech(context) { status ->
             if (status == TextToSpeech.SUCCESS) {
-                isTtsReady = true
+                mainHandler.post { 
+                    isTtsReady = true
+                    isInitializing = false
+                }
+            } else {
+                mainHandler.post { isInitializing = false }
             }
         }
         speech.language = Locale("es", "ES")
@@ -181,7 +188,13 @@ fun InformationCard(displayContent: String) {
                     modifier = Modifier.weight(1f),
                     textAlign = TextAlign.Center
                 )
-                if (isTtsReady) {
+                if (isInitializing) {
+                    CircularProgressIndicator(
+                        modifier = Modifier.size(24.dp),
+                        color = Color(0xFFE84589),
+                        strokeWidth = 2.dp
+                    )
+                } else if (isTtsReady) {
                     IconButton(onClick = {
                         if (isSpeaking) {
                             tts?.stop()
@@ -191,7 +204,7 @@ fun InformationCard(displayContent: String) {
                         }
                     }) {
                         Icon(
-                            imageVector = if (isSpeaking) Icons.Default.Close else Icons.Default.PlayArrow,
+                            painter = painterResource(R.drawable.tts_icon),
                             contentDescription = if (isSpeaking) "Detener lectura" else "Escuchar contenido",
                             tint = Color(0xFFE84589)
                         )
