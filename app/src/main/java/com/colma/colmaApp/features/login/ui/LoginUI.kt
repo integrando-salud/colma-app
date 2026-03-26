@@ -12,6 +12,9 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -25,6 +28,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -86,6 +90,7 @@ fun LoginScreen(
     onEvent: (LoginEvent) -> Unit
 ) {
     val isFormValid = uiState.dni.trim().isNotEmpty() && uiState.password.isNotEmpty()
+    var passwordVisible by remember { mutableStateOf(false) }
 
     Box(
         modifier = Modifier
@@ -173,7 +178,7 @@ fun LoginScreen(
                         onValueChange = { onEvent(LoginEvent.PasswordChanged(it)) },
                         label = { Text("Contraseña") },
                         singleLine = true,
-                        visualTransformation = PasswordVisualTransformation(),
+                        visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                         colors = OutlinedTextFieldDefaults.colors(
                             Color(0xFF333333),
@@ -184,7 +189,21 @@ fun LoginScreen(
                             unfocusedLabelColor = Color(0xFF666666)
                         ),
                         modifier = Modifier.fillMaxWidth(),
-                        textStyle = TextStyle(color = colorResource(R.color.black))
+                        textStyle = TextStyle(color = colorResource(R.color.black)),
+                        trailingIcon = {
+                            val image = if (passwordVisible)
+                                Icons.Filled.Visibility
+                            else
+                                Icons.Filled.VisibilityOff
+
+                            IconButton(onClick = { passwordVisible = !passwordVisible }) {
+                                Icon(
+                                    imageVector = image,
+                                    contentDescription = if (passwordVisible) "Ocultar contraseña" else "Mostrar contraseña",
+                                    tint = Color.Gray
+                                )
+                            }
+                        }
                     )
 
                     Spacer(Modifier.height(40.dp))
