@@ -158,8 +158,26 @@ fun MultimediaSelectorScreen(
                 },
                 colors = TopAppBarDefaults.topAppBarColors(containerColor = signatureColor),
                 navigationIcon = {
-                    TextButton(onClick = { onEvent(MultimediaSelectorEvent.BackClicked) }) {
-                        Text(text = "Cerrar", color = Color.White, fontWeight = FontWeight.SemiBold)
+                    Surface(
+                        shape = RoundedCornerShape(12.dp),
+                        color = colorResource(R.color.contraste),
+                        modifier = Modifier
+                            .padding(start = 8.dp)
+                            .height(36.dp)
+                            .clickable { onEvent(MultimediaSelectorEvent.BackClicked) }
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .padding(horizontal = 12.dp),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                text = "Cerrar",
+                                color = colorResource(R.color.white),
+                                fontWeight = FontWeight.SemiBold,
+                                fontSize = 14.sp
+                            )
+                        }
                     }
                 }
             )

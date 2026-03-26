@@ -163,8 +163,26 @@ fun SesionesMenuScreen(
         Column(modifier = Modifier.fillMaxSize()) {
             TopAppBar(
                 navigationIcon = {
-                    TextButton(onClick = { onEvent(SesionesEvent.BackClicked) }) {
-                        Text(text = "Cerrar", color = Color.White, fontWeight = FontWeight.Bold)
+                    Surface(
+                        shape = RoundedCornerShape(12.dp),
+                        color = colorResource(R.color.contraste),
+                        modifier = Modifier
+                            .padding(start = 8.dp)
+                            .height(36.dp)
+                            .clickable { onEvent(SesionesEvent.BackClicked) }
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .padding(horizontal = 12.dp),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                text = "Cerrar",
+                                color = colorResource(R.color.white),
+                                fontWeight = FontWeight.SemiBold,
+                                fontSize = 14.sp
+                            )
+                        }
                     }
                 },
                 title = { Text(topBarTitle, color = colorResource(R.color.white), fontWeight = FontWeight.Bold)},

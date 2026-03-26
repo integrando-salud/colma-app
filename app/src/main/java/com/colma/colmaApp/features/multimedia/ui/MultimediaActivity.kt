@@ -4,12 +4,15 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.*
@@ -130,8 +133,26 @@ fun MultimediaScreen(
                 },
                 colors = TopAppBarDefaults.topAppBarColors(containerColor = signatureColor),
                 navigationIcon = {
-                    TextButton(onClick = { onEvent(MultimediaEvent.Finish) }) {
-                        Text(text = "Cerrar", color = Color.White, fontWeight = FontWeight.SemiBold)
+                    Surface(
+                        shape = RoundedCornerShape(12.dp),
+                        color = colorResource(R.color.contraste),
+                        modifier = Modifier
+                            .padding(start = 8.dp)
+                            .height(36.dp)
+                            .clickable { onEvent(MultimediaEvent.Finish) }
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .padding(horizontal = 12.dp),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                text = "Cerrar",
+                                color = colorResource(R.color.white),
+                                fontWeight = FontWeight.SemiBold,
+                                fontSize = 14.sp
+                            )
+                        }
                     }
                 }
             )

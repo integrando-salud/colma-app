@@ -7,6 +7,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.annotation.RawRes
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -137,8 +138,26 @@ fun SessionContentScreen(
                 },
                 colors = TopAppBarDefaults.topAppBarColors(containerColor = signatureColor),
                 navigationIcon = {
-                    TextButton(onClick = { onEvent(SessionContentEvent.BackClicked) }) {
-                        Text(text = "Cerrar", color = Color.White, fontWeight = FontWeight.SemiBold)
+                    Surface(
+                        shape = RoundedCornerShape(12.dp),
+                        color = colorResource(R.color.contraste),
+                        modifier = Modifier
+                            .padding(start = 8.dp)
+                            .height(36.dp)
+                            .clickable { onEvent(SessionContentEvent.BackClicked) }
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .padding(horizontal = 12.dp),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                text = "Cerrar",
+                                color = colorResource(R.color.white),
+                                fontWeight = FontWeight.SemiBold,
+                                fontSize = 14.sp
+                            )
+                        }
                     }
                 }
             )
