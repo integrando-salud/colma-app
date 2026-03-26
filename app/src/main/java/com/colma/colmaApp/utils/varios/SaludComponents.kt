@@ -261,7 +261,7 @@ fun HistoryRow(
                 }
                 Text(
                     text = remember(entry.timestamp) { formatter.format(Date(entry.timestamp)) },
-                    fontSize = 10.sp,
+                    fontSize = 15.sp,
                     color = Color.Gray
                 )
             }
