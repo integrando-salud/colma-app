@@ -295,7 +295,7 @@ fun GlucosaScreen(
             if (uiState.isFormVisible) {
                 AlertDialog(
                     onDismissRequest = { onEvent(GlucosaEvent.DismissFormDialog) },
-                    title = { Text(text = "Ingresar Glucosa", color = Color.Black) },
+                    title = { Text(text = "Registrar glucosa", color = Color.Black) },
                     text = {
                         Column {
                             OutlinedTextField(
@@ -335,7 +335,7 @@ fun GlucosaScreen(
                             }
                             Spacer(modifier = Modifier.height(12.dp))
                             Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxWidth()) {
-                                Text(text = "Fecha registro", fontSize = 15.sp, color = Color.Black)
+                                Text(text = "Fecha de registro", fontSize = 15.sp, color = Color.Black)
                                 OutlinedTextField(
                                     value = dateFormatter.format(Date(uiState.measurementTime)),
                                     onValueChange = {},

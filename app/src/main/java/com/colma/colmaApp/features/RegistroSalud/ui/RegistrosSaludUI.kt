@@ -112,7 +112,7 @@ fun RegistrosSaludScreen(
         modifier = Modifier.systemBarsPadding(),
         topBar = {
             TopAppBar(
-                title = { Text(text = "Registro de Salud", fontWeight = FontWeight.Bold) },
+                title = { Text(text = "Mis registros de salud", fontWeight = FontWeight.Bold) },
                 navigationIcon = {
                     IconButton(onClick = { onEvent(RegistroSaludEvent.OnBackClicked) }) {
                         Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "Volver")
@@ -178,7 +178,7 @@ fun RegistrosSaludScreen(
                         )
                         Spacer(modifier = Modifier.width(12.dp))
                         Text(
-                            text = "Medicion de Glucosa",
+                            text = "Medición de glucosa",
                             fontSize = 18.sp,
                             fontWeight = FontWeight.SemiBold,
                             modifier = Modifier.weight(1f),
@@ -218,7 +218,7 @@ fun RegistrosSaludScreen(
                         )
                         Spacer(modifier = Modifier.width(12.dp))
                         Text(
-                            text = "Medicion de Presion",
+                            text = "Medición de presión",
                             fontSize = 18.sp,
                             fontWeight = FontWeight.SemiBold,
                             modifier = Modifier.weight(1f),
@@ -258,7 +258,7 @@ fun RegistrosSaludScreen(
                         )
                         Spacer(modifier = Modifier.width(12.dp))
                         Text(
-                            text = "Estado de animo",
+                            text = "Estado de ánimo",
                             fontSize = 18.sp,
                             fontWeight = FontWeight.SemiBold,
                             modifier = Modifier.weight(1f),

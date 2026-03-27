@@ -295,7 +295,7 @@ fun PresionScreen(
             if (uiState.isFormVisible) {
                 AlertDialog(
                     onDismissRequest = { onEvent(PresionEvent.DismissFormDialog) },
-                    title = { Text(text = "Ingresar Presión", color = Color.Black) },
+                    title = { Text(text = "Registrar presión", color = Color.Black) },
                     text = {
                         Column {
                             Text(text = "Ingresar valor mayor", fontSize = 15.sp, color = Color.Black)
@@ -321,7 +321,7 @@ fun PresionScreen(
                             )
                             Spacer(modifier = Modifier.height(12.dp))
                             Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxWidth()) {
-                                Text(text = "Fecha registro", fontSize = 15.sp, color = Color.Black)
+                                Text(text = "Fecha de registro", fontSize = 15.sp, color = Color.Black)
                                 OutlinedTextField(
                                     value = dateFormatter.format(Date(uiState.measurementTime)),
                                     onValueChange = {},

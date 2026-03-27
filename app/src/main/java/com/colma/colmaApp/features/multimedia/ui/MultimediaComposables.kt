@@ -818,8 +818,7 @@ fun MetasContent(metasId: String, onFinish: () -> Unit) {
             val (actividades, conQuienOptions) = getMetasOptions(treatmentType)
 
             CardThatOpensSelectionDialog(
-                title = "Actividad",
-                description = "Seleccione la actividad concreta que desee realizar.",
+                title = "¿Qué actividad deseas hacer?",
                 items = actividades,
                 label = { it },
                 onItemSelected = { chosen ->
@@ -828,8 +827,7 @@ fun MetasContent(metasId: String, onFinish: () -> Unit) {
             )
             Spacer(modifier = Modifier.padding(8.dp))
             CardThatOpensSelectionDialog(
-                title = "Con quien",
-                description = "Quien te acompañará en esta actividad?",
+                title = "¿Con quién la harás? (Opcional)\n",
                 items = conQuienOptions,
                 label = { it },
                 onItemSelected = { chosen ->
@@ -838,8 +836,7 @@ fun MetasContent(metasId: String, onFinish: () -> Unit) {
             )
             Spacer(modifier = Modifier.padding(8.dp))
             CardThatOpensEditDialog(
-                title = "Donde?",
-                description = "Describe brevemente en donde lo harás",
+                title = "¿Dónde la harás? (Opcional)",
                 placeholder = "Escribe el lugar...",
                 onSave = { newDesc ->
                     donde.value = newDesc
@@ -847,8 +844,7 @@ fun MetasContent(metasId: String, onFinish: () -> Unit) {
             )
             Spacer(modifier = Modifier.padding(8.dp))
             CardThatOpensDateTimeDialog(
-                title = "Fecha Objetivo",
-                description = "Selecciona la fecha límite para tu meta.",
+                title = "Fecha límite",
                 initialMillis = today.timeInMillis,
                 showTime = false,
                 onDateTimeSelected = { selectedCal ->
@@ -879,9 +875,9 @@ fun MetasContent(metasId: String, onFinish: () -> Unit) {
                         summaryMessage = """
                             Resumen de registro:
                             • Actividad: ${actividad.value}
-                            • Con quién: ${conQuien.value ?: "No especificado"}
-                            • Dónde: ${donde.value ?: "No especificado"}
-                            • Fecha Objetivo: $fechaObjetivoForDisplay
+                            • ¿Con quién?: ${conQuien.value ?: "No especificado"}
+                            • ¿Dónde?: ${donde.value ?: "No especificado"}
+                            • Fecha límite: $fechaObjetivoForDisplay
                         """.trimIndent()
                     }
                     showSummaryDialog = true
@@ -899,7 +895,7 @@ fun MetasContent(metasId: String, onFinish: () -> Unit) {
                 CustomAlertDialog(
                     show = showSummaryDialog,
                     onDismissRequest = { showSummaryDialog = false },
-                    title = if (shouldExecuteFinalAction) "Confirmar registro" else "Faltan datos",
+                    title = if (shouldExecuteFinalAction) "Confirmar meta" else "Faltan datos",
                     description = summaryMessage,
                     yesLabel = if (shouldExecuteFinalAction) "Guardar" else "Entendido",
                     noLabel = if (shouldExecuteFinalAction) "Cancelar" else "",

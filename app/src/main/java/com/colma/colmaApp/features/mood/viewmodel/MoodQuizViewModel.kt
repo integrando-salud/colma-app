@@ -33,7 +33,7 @@ class MoodQuizViewModel(private val repository: MoodRepository) : ViewModel() {
     )
 
     private val optionLabels = listOf(
-        "Nada", "Varios dias", "la mayoria de dias", "Casi todos los dias"
+        "Nada", "Varios días", "La mayoría de días", "Casi todos los días"
     )
 
     init {
