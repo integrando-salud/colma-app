@@ -211,8 +211,8 @@ fun RegistrosSaludScreen(
                         horizontalArrangement = Arrangement.Start
                     ) {
                         Icon(
-                            painter = painterResource(R.drawable.outline_blood_pressure_24),
-                            contentDescription = "Registros",
+                            painter = painterResource(R.drawable.presion_logo),
+                            contentDescription = "Presión",
                             tint = LocalContentColor.current,
                             modifier = Modifier.size(20.dp)
                         )
