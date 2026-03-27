@@ -143,7 +143,7 @@ class PresionViewModel(private val repository: PresionRepository) : ViewModel() 
             )
 
             result.onSuccess { newEntry ->
-                val updatedHistory = listOf(newEntry) + state.history
+                val updatedHistory = (listOf(newEntry) + state.history).sortedByDescending { it.timestamp }
 
                 val parts = mutableListOf<String>()
                 if (lowS || lowD) parts.add("presión baja")
@@ -154,7 +154,7 @@ class PresionViewModel(private val repository: PresionRepository) : ViewModel() 
                         isLoading = false,
                         isFormVisible = false,
                         history = updatedHistory,
-                        lastPresion = newEntry,
+                        lastPresion = updatedHistory.firstOrNull(),
                         error = null,
                         showSuccessDialog = parts.isEmpty()
                     )

@@ -140,14 +140,14 @@ class GlucosaViewModel(private val repository: GlucosaRepository) : ViewModel() 
             )
 
             result.onSuccess { newEntry ->
-                val updatedHistory = listOf(newEntry) + state.history
-                
+                val updatedHistory = (listOf(newEntry) + state.history).sortedByDescending { it.timestamp }
+
                 _uiState.update {
                     it.copy(
                         isLoading = false,
                         isFormVisible = false,
                         history = updatedHistory,
-                        lastGlucosa = newEntry,
+                        lastGlucosa = updatedHistory.firstOrNull(),
                         error = null,
                         showSuccessDialog = !low && !high
                     )
