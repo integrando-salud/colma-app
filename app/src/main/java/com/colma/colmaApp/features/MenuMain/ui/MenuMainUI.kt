@@ -319,19 +319,19 @@ fun MenuScreen(
                             }
 
                             DrawerItem(
-                                "Ayuda técnica del promotor de salud",
+                                "Ayuda técnica de la promotora de salud",
                                 Icons.Default.Call
                             ) {
                                 scope.launch { drawerState.close() }
                                 // Handle help technical click
                             }
 
-                            DrawerItem("Información Adicional", Icons.Default.Info) {
+                            DrawerItem("Información adicional", Icons.Default.Info) {
                                 scope.launch { drawerState.close() }
                                 // Handle useful links click
                             }
 
-                            DrawerItem("Tutorial de Usuario", Icons.Default.Face) {
+                            DrawerItem("Tutorial", Icons.Default.Face) {
                                 scope.launch { drawerState.close() }
                                 // Handle user tutorial click
                             }
