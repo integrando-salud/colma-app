@@ -5,8 +5,10 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -20,6 +22,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -157,84 +160,110 @@ fun MultimediaScreen(
                     .padding(16.dp),
                 contentAlignment = Alignment.Center
             ) {
-                when {
-                    uiState.isLoading -> {
-                        CircularProgressIndicator()
-                    }
-                    uiState.error != null -> {
-                        Text(text = "Error: ${uiState.error}", color = Color.Red)
-                    }
-                    currentOption != null -> {
-                        when (currentOption.type) {
-                            MultimediaContentType.DESCRIPTION -> {
-                                InformationDisplayContent(
-                                    displayContent = currentOption.fullDescription ?: currentOption.description
-                                )
-                            }
-                            MultimediaContentType.VIDEO -> {
-                                currentOption.contentAssetId?.let {
-                                    VideoContent(contentAssetId = it)
-                                } ?: Text("Video resource not found.")
-                            }
-                            MultimediaContentType.AUDIO -> {
-                                currentOption.contentAssetId?.let {
-                                    AudioContent(audioResId = it)
-                                } ?: Text("Audio resource not found.")
-                            }
-                            MultimediaContentType.METAS -> {
-                                currentOption.metasId?.let {
-                                    MetasContent(metasId = it, onFinish = { onEvent(MultimediaEvent.Finish) })
-                                } ?: Text("Metas not found.")
-                            }
-                            MultimediaContentType.QUIZ -> {
-                                currentOption.questions?.let { questions ->
-                                    val quizTitle = currentOption.title
-                                    val quizTreatmentId = uiState.treatmentTypes.firstOrNull()?.name ?: "UNKNOWN"
-                                    val quizUniqueKey = generateMultimediaUniqueKeyForQuiz(
-                                        currentOption,
-                                        quizTreatmentId,
-                                        uiState.sessionId,
-                                        uiState.subSessionId
+                // Use key to force recomposition when index changes
+                key(uiState.currentMultimediaIndex) {
+                    when {
+                        uiState.isLoading -> {
+                            CircularProgressIndicator()
+                        }
+                        uiState.error != null -> {
+                            Text(text = "Error: ${uiState.error}", color = Color.Red)
+                        }
+                        currentOption != null -> {
+                            when (currentOption.type) {
+                                MultimediaContentType.DESCRIPTION -> {
+                                    InformationDisplayContent(
+                                        displayContent = currentOption.fullDescription ?: currentOption.description
                                     )
-                                    QuizContent(
-                                        quizQuestions = questions,
-                                        quizTitle = quizTitle,
-                                        sessionId = uiState.sessionId,
-                                        subSessionId = uiState.subSessionId,
-                                        treatmentTypes = uiState.treatmentTypes,
-                                        multimediaUniqueKey = quizUniqueKey,
-                                        onQuizSubmit = { quizResponse, questionResponses ->
-                                            onEvent(MultimediaEvent.QuizSubmitted(quizResponse, questionResponses))
-                                        },
-                                        onFinish = { onEvent(MultimediaEvent.GoToNext) }
-                                    )
-                                } ?: Text("Quiz not found or questions missing.")
-                            }
-                            else -> {
-                                Text("Content for ${currentOption.type.name}: ${currentOption.title}")
+                                }
+                                MultimediaContentType.VIDEO -> {
+                                    currentOption.contentAssetId?.let {
+                                        VideoContent(contentAssetId = it)
+                                    } ?: Text("Video resource not found.")
+                                }
+                                MultimediaContentType.AUDIO -> {
+                                    currentOption.contentAssetId?.let {
+                                        AudioContent(audioResId = it)
+                                    } ?: Text("Audio resource not found.")
+                                }
+                                MultimediaContentType.METAS -> {
+                                    currentOption.metasId?.let {
+                                        MetasContent(metasId = it, onFinish = { onEvent(MultimediaEvent.Finish) })
+                                    } ?: Text("Metas not found.")
+                                }
+                                MultimediaContentType.QUIZ -> {
+                                    currentOption.questions?.let { questions ->
+                                        val quizTitle = currentOption.title
+                                        val quizTreatmentId = uiState.treatmentTypes.firstOrNull()?.name ?: "UNKNOWN"
+                                        val quizUniqueKey = generateMultimediaUniqueKeyForQuiz(
+                                            currentOption,
+                                            quizTreatmentId,
+                                            uiState.sessionId,
+                                            uiState.subSessionId
+                                        )
+                                        QuizContent(
+                                            quizQuestions = questions,
+                                            quizTitle = quizTitle,
+                                            sessionId = uiState.sessionId,
+                                            subSessionId = uiState.subSessionId,
+                                            treatmentTypes = uiState.treatmentTypes,
+                                            multimediaUniqueKey = quizUniqueKey,
+                                            onQuizSubmit = { quizResponse, questionResponses ->
+                                                onEvent(MultimediaEvent.QuizSubmitted(quizResponse, questionResponses))
+                                            },
+                                            onFinish = { onEvent(MultimediaEvent.GoToNext) }
+                                        )
+                                    } ?: Text("Quiz not found or questions missing.")
+                                }
+                                else -> {
+                                    Text("Content for ${currentOption.type.name}: ${currentOption.title}")
+                                }
                             }
                         }
-                    }
-                    else -> {
-                        Text("No content available.")
+                        else -> {
+                            Text("No content available.")
+                        }
                     }
                 }
             }
 
-            // Bottom button
+            // Bottom buttons
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Button(
-                    onClick = { onEvent(MultimediaEvent.GoToNext) },
+                Row(
                     modifier = Modifier.fillMaxWidth(),
-                    colors = ButtonDefaults.buttonColors(containerColor = signatureColor, contentColor = Color.White),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    val isLast = uiState.currentMultimediaIndex == uiState.multimediaOptions.lastIndex
-                    Text(text = if (isLast) "Finalizar" else "Siguiente", fontWeight = FontWeight.SemiBold)
+                    // Back button - only show if not on first item
+                    if (uiState.currentMultimediaIndex > 0) {
+                        Button(
+                            onClick = { onEvent(MultimediaEvent.GoToPrevious) },
+                            modifier = Modifier.weight(1f),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = colorResource(R.color.principal),
+                                contentColor = Color.White
+                            ),
+                        ) {
+                            Text(text = "Anterior", fontWeight = FontWeight.SemiBold)
+                        }
+                    }
+                    
+                    // Next/Finish button
+                    Button(
+                        onClick = { onEvent(MultimediaEvent.GoToNext) },
+                        modifier = Modifier.weight(1f),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = signatureColor,
+                            contentColor = Color.White
+                        ),
+                    ) {
+                        val isLast = uiState.currentMultimediaIndex == uiState.multimediaOptions.lastIndex
+                        Text(text = if (isLast) "Finalizar" else "Siguiente", fontWeight = FontWeight.SemiBold)
+                    }
                 }
             }
         }
