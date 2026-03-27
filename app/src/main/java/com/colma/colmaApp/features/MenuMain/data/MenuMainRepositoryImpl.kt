@@ -238,6 +238,13 @@ class MenuMainRepositoryImpl(
         }
     }
 
+    override suspend fun getUserName(): String? {
+        val userId = SessionManager.getUserId()
+        return withContext(Dispatchers.IO) {
+            userId?.let { dbHelper.getUsuario(it)?.nombre }
+        }
+    }
+
     private fun nowLocal(): String {
         val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
         sdf.timeZone = java.util.TimeZone.getDefault()

@@ -55,12 +55,14 @@ class MenuMainViewModel(private val repository: MenuMainRepository) : ViewModel(
                 _uiState.update { it.copy(isLoading = true) }
                 val pendingPastMeta = repository.getPendingPastMeta()
                 val pendingMetasCount = repository.getPendingFutureMetasCount()
-    
+                val userName = repository.getUserName() ?: "Usuario"
+
                 _uiState.update {
                     it.copy(
                         pendingMetasCount = pendingMetasCount,
                         todaysObjective = pendingPastMeta,
                         showObjectiveDialog = pendingPastMeta != null,
+                        userName = userName,
                         isLoading = false
                     )
                 }

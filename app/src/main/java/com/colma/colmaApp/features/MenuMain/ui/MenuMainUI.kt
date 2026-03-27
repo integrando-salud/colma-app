@@ -366,7 +366,7 @@ fun MenuScreen(
                     snackbarHost = { SnackbarHost(snackbarHostState) },
                     topBar = {
                         TopAppBar(
-                            title = { Text(text = "Bienvenido ${uiState.userName}", fontWeight = FontWeight.Bold) },
+                            title = { Text(text = "Bienvenido/a ${uiState.userName}", fontWeight = FontWeight.Bold) },
                             actions = {
                                 Surface(
                                     shape = RoundedCornerShape(12.dp),
@@ -382,7 +382,7 @@ fun MenuScreen(
                                         contentAlignment = Alignment.Center
                                     ) {
                                         Text(
-                                            text = "Menu",
+                                            text = "Menú",
                                             color = colorResource(R.color.white),
                                             fontWeight = FontWeight.SemiBold,
                                             fontSize = 14.sp
@@ -413,7 +413,7 @@ fun MenuScreen(
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
                             Text(
-                                text = "Elige una opcion",
+                                text = "Elige una opción",
                                 fontSize = 25.sp,
                                 color = signatureColor,
                                 textAlign = TextAlign.Center,
@@ -495,7 +495,7 @@ fun MenuScreen(
                                     Spacer(modifier = Modifier.width(12.dp))
 
                                     Text(
-                                        text = "Mis Registros de Salud",
+                                        text = "Mis registros de salud",
                                         fontSize = 18.sp,
                                         fontWeight = FontWeight.SemiBold,
                                         modifier = Modifier.weight(1f),
@@ -544,7 +544,7 @@ fun MenuScreen(
                                     Spacer(modifier = Modifier.width(12.dp))
 
                                     Text(
-                                        text = "Mis Metas",
+                                        text = "Mis metas",
                                         fontSize = 18.sp,
                                         fontWeight = FontWeight.SemiBold,
                                         modifier = Modifier.weight(1f),
