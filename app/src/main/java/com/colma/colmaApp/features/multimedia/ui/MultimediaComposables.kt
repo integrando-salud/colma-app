@@ -33,6 +33,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.viewinterop.AndroidView
 import android.speech.tts.TextToSpeech
 import android.speech.tts.UtteranceProgressListener
@@ -128,6 +129,7 @@ fun InformationCard(displayContent: String) {
     var isSpeaking by remember { mutableStateOf(false) }
     var isInitializing by remember { mutableStateOf(false) }
     val mainHandler = remember { Handler(Looper.getMainLooper()) }
+    val scrollState = rememberScrollState()
 
     DisposableEffect(displayContent) {
         isInitializing = true
@@ -172,7 +174,8 @@ fun InformationCard(displayContent: String) {
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(24.dp)
-                .verticalScroll(rememberScrollState()),
+                .scrollbar(scrollState)
+                .verticalScroll(scrollState),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top
         ) {
@@ -331,6 +334,7 @@ fun FinishPage(
     onPlayPauseToggle: () -> Unit = {},
     onSeek: (Long) -> Unit = {}
 ) {
+    val scrollState = rememberScrollState()
     Card(
         shape = RoundedCornerShape(16.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
@@ -343,7 +347,8 @@ fun FinishPage(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(24.dp)
-                .verticalScroll(rememberScrollState()),
+                .scrollbar(scrollState)
+                .verticalScroll(scrollState),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Row(
@@ -430,6 +435,7 @@ private fun formatTime(ms: Long): String {
 
 @Composable
 fun VideoContent(@RawRes contentAssetId: Int) {
+    val scrollState = rememberScrollState()
     Card(
         shape = RoundedCornerShape(16.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
@@ -442,7 +448,8 @@ fun VideoContent(@RawRes contentAssetId: Int) {
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(24.dp)
-                .verticalScroll(rememberScrollState()),
+                .scrollbar(scrollState)
+                .verticalScroll(scrollState),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             // Title + icon row
@@ -802,6 +809,7 @@ fun MetasContent(metasId: String, onFinish: () -> Unit) {
     var errorMessage by rememberSaveable { mutableStateOf("") }
     var summaryMessage by rememberSaveable { mutableStateOf("") }
     var shouldExecuteFinalAction by rememberSaveable { mutableStateOf(false) }
+    val scrollState = rememberScrollState()
 
     Box(
         modifier = Modifier
@@ -811,7 +819,8 @@ fun MetasContent(metasId: String, onFinish: () -> Unit) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .verticalScroll(rememberScrollState())
+                .scrollbar(scrollState)
+                .verticalScroll(scrollState)
                 .padding(bottom = 84.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -1021,6 +1030,27 @@ fun getMetasOptions(treatmentType: TreatmentType): Pair<List<String>, List<Strin
                 "Jugar algún deporte recreativo (fútbol, voley,etc.)."
             ),
             conQuienOptions
+        )
+    }
+}
+
+fun Modifier.scrollbar(
+    state: androidx.compose.foundation.ScrollState,
+    width: androidx.compose.ui.unit.Dp = 4.dp,
+    color: androidx.compose.ui.graphics.Color = androidx.compose.ui.graphics.Color.Gray.copy(alpha = 0.5f),
+): Modifier = this.drawWithContent {
+    drawContent()
+    if (state.maxValue > 0) {
+        val viewPortHeight = size.height
+        val thumbHeight = (viewPortHeight / (state.maxValue + viewPortHeight)) * viewPortHeight
+        val scrollOffset = state.value.toFloat()
+        val scrollPercent = scrollOffset / state.maxValue
+        val thumbOffset = scrollPercent * (viewPortHeight - thumbHeight)
+
+        drawRect(
+            color = color,
+            topLeft = androidx.compose.ui.geometry.Offset(size.width - width.toPx(), thumbOffset),
+            size = androidx.compose.ui.geometry.Size(width.toPx(), thumbHeight)
         )
     }
 }

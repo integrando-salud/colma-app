@@ -1,3 +1,47 @@
+Resumen de cambios - Sesión de Actualización (31/03/2026):
+
+* Interfaz y Navegación (TopBars):
+    - Simplificación extrema: Se eliminaron los títulos de semana, sesión y tratamiento en las pantallas de contenido y selector multimedia, dejando únicamente el botón "Cerrar".
+    - Unificación de estilo: El botón "Cerrar" ahora utiliza un fondo de color contraste con texto blanco para mayor visibilidad.
+    - El botón "Anterior" en multimedia ahora utiliza el color principal del proyecto.
+
+* Rediseño de Cuestionarios (Quizzes):
+    - Eliminación de diálogos: Las opciones de respuesta ya no requieren abrir un selector; se muestran todas directamente en la pantalla usando RadioButtons.
+    - Flujo más ágil: Reducción de clics necesarios para completar una evaluación.
+
+* Optimización de Historiales de Salud (Glucosa y Presión):
+    - Vista Limpia: Se ocultó el título interno "Historial" y las etiquetas redundantes de tipo ("Glucosa"/"Presión") en cada tarjeta.
+    - Precisión Temporal: Se añadió el año al formato de fecha (dd/MM/yyyy) y se aumentó el tamaño de la fuente para fecha y hora.
+    - Ordenamiento: El historial ahora se ordena de forma descendente basándose en la fecha ingresada por el usuario (más reciente primero).
+    - Actualización visual: Se cambió el ícono representativo de la medición de presión.
+
+* Gestión de Metas:
+    - Sistema de Semáforo: Implementación de fondos de color con texto blanco para los estados en el historial:
+        - Amarillo (FBC02D): Pendiente.
+        - Naranja (FF9800): Pendiente (Vencida).
+        - Rojo: No cumplida.
+        - Verde: Completada.
+    - Limpieza de Tarjetas: Se removieron los iconos de las tarjetas de selección (Actividad, Fecha, Lugar) para un diseño más minimalista.
+    - Mejora en Diálogos: Actualización de los mensajes de confirmación y éxito al guardar metas.
+
+* Pantalla de Login y Seguridad:
+    - Validación: El campo de Usuario (DNI) ahora está limitado a un máximo de 8 caracteres.
+    - Privacidad: Se agregó un botón para mostrar u ocultar la contraseña.
+    - Corrección de Texto: Se cambió "Recordar contraseña" por "Recuperar contraseña".
+
+* Experiencia de Usuario (UX) y Accesibilidad:
+    - Personalización: Ahora el saludo en el menú principal muestra el nombre real del usuario.
+    - Estandarización de Diálogos: Se cambió el texto de los botones de "Aceptar" o "Confirmar" a "Guardar" en toda la aplicación.
+    - Feedback: Se reemplazaron los mensajes Toast por diálogos de alerta en el registro de estado de ánimo.
+    - Mejoras en TTS: Se incorporó un ícono personalizado para la función de lectura en voz alta.
+    - Calidad: Revisión general de ortografía, acentos y redacción en todos los menús y etiquetas.
+
+* General:
+    - Limpieza: Se eliminaron textos descriptivos innecesarios debajo del reproductor de video.
+    - Versión: Incremento de la versión de la aplicación a 0.2.
+
+---
+
 Resumen de cambios - Sesión de Actualización (23/02/2026 - 24/02/2026):
 
 * Animación de Celebración: Se integró un trofeo animado (pulso y rotación) en el diálogo de éxito al completar objetivos en el Menú Principal.
