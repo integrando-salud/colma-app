@@ -56,6 +56,7 @@ import com.google.android.exoplayer2.ui.AspectRatioFrameLayout
 import com.google.android.exoplayer2.ui.PlayerView
 
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.itemsIndexed
 
 import com.colma.colmaApp.utils.varios.CardThatOpensSelectionDialog
@@ -1036,7 +1037,7 @@ fun getMetasOptions(treatmentType: TreatmentType): Pair<List<String>, List<Strin
 
 fun Modifier.scrollbar(
     state: androidx.compose.foundation.ScrollState,
-    width: androidx.compose.ui.unit.Dp = 4.dp,
+    width: androidx.compose.ui.unit.Dp = 6.dp,
     color: androidx.compose.ui.graphics.Color = androidx.compose.ui.graphics.Color.Gray.copy(alpha = 0.5f),
 ): Modifier = this.drawWithContent {
     drawContent()
@@ -1054,6 +1055,40 @@ fun Modifier.scrollbar(
         )
     }
 }
+
+fun Modifier.scrollbar(
+    state: androidx.compose.foundation.lazy.LazyListState,
+    width: androidx.compose.ui.unit.Dp = 6.dp,
+    color: androidx.compose.ui.graphics.Color = androidx.compose.ui.graphics.Color.Gray.copy(alpha = 0.8f),
+): Modifier = this.drawWithContent {
+    drawContent()
+    val layoutInfo = state.layoutInfo
+    val visibleItemsInfo = layoutInfo.visibleItemsInfo
+    if (visibleItemsInfo.isNotEmpty()) {
+        val totalItemsCount = layoutInfo.totalItemsCount
+        val visibleItemsCount = visibleItemsInfo.size
+        
+        if (visibleItemsCount < totalItemsCount) {
+            val viewPortHeight = size.height
+            val thumbHeight = (visibleItemsCount.toFloat() / totalItemsCount) * viewPortHeight
+            
+            val firstVisibleItem = visibleItemsInfo.first()
+            val firstVisibleIndex = firstVisibleItem.index
+            val firstVisibleOffset = firstVisibleItem.offset.toFloat()
+            val itemSize = firstVisibleItem.size.toFloat()
+            
+            val scrollPercent = (firstVisibleIndex.toFloat() - (firstVisibleOffset / itemSize)) / totalItemsCount.toFloat()
+            val thumbOffset = (scrollPercent * viewPortHeight).coerceIn(0f, viewPortHeight - thumbHeight)
+
+            drawRect(
+                color = color,
+                topLeft = androidx.compose.ui.geometry.Offset(size.width - width.toPx(), thumbOffset),
+                size = androidx.compose.ui.geometry.Size(width.toPx(), thumbHeight)
+            )
+        }
+    }
+}
+
 
 
 

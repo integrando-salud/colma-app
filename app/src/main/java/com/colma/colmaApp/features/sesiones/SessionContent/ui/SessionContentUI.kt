@@ -37,6 +37,7 @@ import com.colma.colmaApp.features.sesiones.SessionContent.viewmodel.SessionCont
 import com.colma.colmaApp.features.sesiones.SessionContent.viewmodel.SessionContentUiState
 import com.colma.colmaApp.features.sesiones.SessionContent.viewmodel.SessionContentViewModel
 import com.colma.colmaApp.features.sesiones.SessionContent.viewmodel.SessionContentViewModelFactory
+import com.colma.colmaApp.features.multimedia.ui.scrollbar
 import com.colma.colmaApp.ui.theme.ColmaAppTheme
 import com.google.android.exoplayer2.C
 import com.google.android.exoplayer2.ExoPlayer
@@ -178,12 +179,14 @@ fun SessionContentScreen(
         },
         containerColor = colorResource(R.color.background)
     ) { inner ->
+        val scrollState = rememberScrollState()
         Column(
             modifier = Modifier
                 .padding(inner)
                 .fillMaxSize()
                 .padding(horizontal = 16.dp)
-                .verticalScroll(rememberScrollState()),
+                .scrollbar(scrollState)
+                .verticalScroll(scrollState),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             if (uiState.isLoading) {

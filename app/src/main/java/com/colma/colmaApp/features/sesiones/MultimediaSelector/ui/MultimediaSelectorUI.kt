@@ -39,6 +39,7 @@ import com.colma.colmaApp.features.sesiones.MultimediaSelector.viewmodel.Multime
 import com.colma.colmaApp.features.sesiones.MultimediaSelector.viewmodel.MultimediaSelectorUiState
 import com.colma.colmaApp.features.sesiones.MultimediaSelector.viewmodel.MultimediaSelectorViewModel
 import com.colma.colmaApp.features.sesiones.MultimediaSelector.viewmodel.MultimediaSelectorViewModelFactory
+import com.colma.colmaApp.features.multimedia.ui.scrollbar
 import com.colma.colmaApp.ui.theme.ColmaAppTheme
 
 class MultimediaSelectorUI : ComponentActivity() {
@@ -169,11 +170,13 @@ fun MultimediaSelectorScreen(
                     Text(text = "Error: ${uiState.error}", color = Color.Red)
                 }
             } else {
+                val scrollState = rememberScrollState()
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(16.dp)
-                        .verticalScroll(rememberScrollState()),
+                        .scrollbar(scrollState)
+                        .verticalScroll(scrollState),
                     verticalArrangement = Arrangement.spacedBy(12.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {

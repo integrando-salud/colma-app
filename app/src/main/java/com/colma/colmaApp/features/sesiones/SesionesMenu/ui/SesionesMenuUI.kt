@@ -33,6 +33,7 @@ import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -78,6 +79,7 @@ import com.colma.colmaApp.features.sesiones.SesionesMenu.viewmodel.SesionesEvent
 import com.colma.colmaApp.features.sesiones.SesionesMenu.viewmodel.SesionesUiState
 import com.colma.colmaApp.features.sesiones.SesionesMenu.viewmodel.SesionesViewModel
 import com.colma.colmaApp.features.sesiones.SesionesMenu.viewmodel.SesionesViewModelFactory
+import com.colma.colmaApp.features.multimedia.ui.scrollbar
 import com.colma.colmaApp.ui.theme.ColmaAppTheme
 
 class SesionesMenuUI : ComponentActivity() {
@@ -194,10 +196,13 @@ fun SesionesMenuScreen(
                     CircularProgressIndicator()
                 }
             } else {
+                val lazyListState = rememberLazyListState()
                 LazyColumn(
+                    state = lazyListState,
                     modifier = Modifier
                         .fillMaxWidth()
                         .weight(1f)
+                        .scrollbar(lazyListState)
                         .padding(horizontal = 16.dp),
                     verticalArrangement = Arrangement.spacedBy(8.dp),
                     contentPadding = PaddingValues(vertical = 12.dp)
