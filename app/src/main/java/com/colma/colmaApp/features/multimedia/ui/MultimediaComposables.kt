@@ -1037,13 +1037,13 @@ fun getMetasOptions(treatmentType: TreatmentType): Pair<List<String>, List<Strin
 
 fun Modifier.scrollbar(
     state: androidx.compose.foundation.ScrollState,
-    width: androidx.compose.ui.unit.Dp = 6.dp,
+    width: androidx.compose.ui.unit.Dp = 4.dp,
     color: androidx.compose.ui.graphics.Color = androidx.compose.ui.graphics.Color.Gray.copy(alpha = 0.5f),
 ): Modifier = this.drawWithContent {
     drawContent()
     if (state.maxValue > 0) {
         val viewPortHeight = size.height
-        val thumbHeight = (viewPortHeight / (state.maxValue + viewPortHeight)) * viewPortHeight
+        val thumbHeight = (viewPortHeight / (state.maxValue + viewPortHeight)) * viewPortHeight * 0.5f
         val scrollOffset = state.value.toFloat()
         val scrollPercent = scrollOffset / state.maxValue
         val thumbOffset = scrollPercent * (viewPortHeight - thumbHeight)
