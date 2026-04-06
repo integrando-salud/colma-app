@@ -10,4 +10,5 @@ interface GlucosaRepository {
         dateTime: Long,
         advertencia: String?
     ): Result<HealthEntry>
+    suspend fun getUserPaisId(): Int?
 }

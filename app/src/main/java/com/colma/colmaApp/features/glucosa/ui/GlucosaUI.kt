@@ -249,7 +249,7 @@ fun GlucosaScreen(
 
             if (uiState.isDetailsDialogVisible) {
                 val entry = uiState.selectedEntry!!
-                val (isDangerous, warningText) = remember(entry) {
+                val (isDangerous, warningText) = remember(entry, uiState.userPaisId) {
                     var dangerous = false
                     var text: String? = null
                     entry.rawValue1?.let { v ->
@@ -257,7 +257,7 @@ fun GlucosaScreen(
                         val high = if (entry.isFasting == true) v >= 126.0 else v >= 180.0
                         if (low) {
                             dangerous = true
-                            text = "Glucosa baja (hipoglucemia)."
+                            text = getLowGlucosaWarningText(entry.isFasting == true, uiState.userPaisId)
                         } else if (high) {
                             dangerous = true
                             text = "Glucosa alta (hiperglucemia)."
@@ -276,7 +276,7 @@ fun GlucosaScreen(
                             Text("Fecha: ${SimpleDateFormat("dd/MM/yyyy hh:mm a", Locale.getDefault()).format(Date(entry.timestamp))}")
                             if (isDangerous && warningText != null) {
                                 Spacer(modifier = Modifier.height(8.dp))
-                                Text("Advertencia: $warningText Por favor consulte con un médico.", color = Color.Red)
+                                Text(warningText, color = Color.Red)
                             }
                         }
                     },
@@ -395,6 +395,30 @@ fun GlucosaScreen(
                     tonalElevation = 8.dp
                 )
             }
+        }
+    }
+}
+
+/**
+ * Helper function to generate nationality-based low glucose warning text.
+ * Used in both the warning dialog and the details dialog.
+ */
+private fun getLowGlucosaWarningText(isFasting: Boolean, paisId: Int?): String {
+    return when (paisId) {
+        1 -> {
+            "Tu nivel de azúcar está bajo.\n" +
+                    "Si tenés temblores, sudor frío, mareo o debilidad, segui el consejo del equipo medico: comé un caramelo o tomá un vaso de jugo o gaseosa común.\n" +
+                    "Si te seguís sintiendo mal o el valor sigue bajo, consultá con tu médico o andá a una guardia. También podés llamar al 107."
+        }
+        2 -> {
+            if (isFasting) {
+                "La medición de azúcar que registraste es baja, vuelve medirte en otro dedo. Si la medición sigue siendo baja, sigue las indicaciones de tu médico para estos casos y saca una cita en tu centro de salud para que te evalúen."
+            } else {
+                "La medición de azúcar que registraste es baja, vuelve medirte en otro dedo. Si la medición sigue siendo baja, saca una cita con tu médico para que te evalúe."
+            }
+        }
+        else -> {
+            "Advertencia: Glucosa baja (hipoglucemia). Por favor consulte con un médico."
         }
     }
 }

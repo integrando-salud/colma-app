@@ -20,7 +20,10 @@ data class GlucosaUiState(
 
     val lastGlucosa: HealthEntry? = null,
 
-    val warningDialog: WarningDialog = WarningDialog()
+    val warningDialog: WarningDialog = WarningDialog(),
+    
+    // User nationality for localized warnings
+    val userPaisId: Int? = null
 ) {
     data class WarningDialog(
         val show: Boolean = false,

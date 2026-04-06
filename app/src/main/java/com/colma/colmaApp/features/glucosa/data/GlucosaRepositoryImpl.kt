@@ -73,10 +73,10 @@ class GlucosaRepositoryImpl(context: Context) : GlucosaRepository {
                     value.toInt().toString()
                 else
                     String.format(Locale.getDefault(), "%.1f", value)
-                
+
                 val suffix = if (isFasting) " · Ayuno" else " · Sin Ayuno"
                 val display = "$valueText mg/dl$suffix"
-                
+
                 val newEntry = HealthEntry(
                     label = "Glucosa",
                     value = display,
@@ -91,6 +91,15 @@ class GlucosaRepositoryImpl(context: Context) : GlucosaRepository {
         } catch (e: Exception) {
             e.printStackTrace()
             Result.failure(e)
+        }
+    }
+
+    override suspend fun getUserPaisId(): Int? = withContext(Dispatchers.IO) {
+        try {
+            dbHelper.getUsuarioPaisId(userId)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
         }
     }
 }

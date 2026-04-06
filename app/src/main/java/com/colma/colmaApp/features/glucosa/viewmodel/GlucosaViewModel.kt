@@ -19,6 +19,7 @@ class GlucosaViewModel(private val repository: GlucosaRepository) : ViewModel() 
 
     init {
         loadHistory()
+        loadUserPaisId()
     }
 
     private fun loadHistory() {
@@ -32,6 +33,13 @@ class GlucosaViewModel(private val repository: GlucosaRepository) : ViewModel() 
                     lastGlucosa = history.firstOrNull()
                 )
             }
+        }
+    }
+
+    private fun loadUserPaisId() {
+        viewModelScope.launch {
+            val paisId = repository.getUserPaisId()
+            _uiState.update { it.copy(userPaisId = paisId) }
         }
     }
 
@@ -154,7 +162,10 @@ class GlucosaViewModel(private val repository: GlucosaRepository) : ViewModel() 
                 }
 
                 when {
-                    low -> _uiState.update { it.copy(warningDialog = GlucosaUiState.WarningDialog(show = true, message = "Advertencia: Glucosa baja (hipoglucemia). Por favor consulte con un médico.")) }
+                    low -> {
+                        val warningMessage = getLowGlucosaWarning(state.isFasting == true, _uiState.value.userPaisId)
+                        _uiState.update { it.copy(warningDialog = GlucosaUiState.WarningDialog(show = true, message = warningMessage)) }
+                    }
                     high -> _uiState.update { it.copy(warningDialog = GlucosaUiState.WarningDialog(show = true, message = "Advertencia: Glucosa alta (hiperglucemia). Por favor consulte con un médico.")) }
                 }
 
@@ -165,6 +176,26 @@ class GlucosaViewModel(private val repository: GlucosaRepository) : ViewModel() 
                         error = error.message
                     )
                 }
+            }
+        }
+    }
+
+    private fun getLowGlucosaWarning(isFasting: Boolean, paisId: Int?): String {
+        return when (paisId) {
+            1 -> {
+                "Tu nivel de azúcar está bajo.\n" +
+                        "Si tenés temblores, sudor frío, mareo o debilidad, segui el consejo del equipo medico: comé un caramelo o tomá un vaso de jugo o gaseosa común.\n" +
+                        "Si te seguís sintiendo mal o el valor sigue bajo, consultá con tu médico o andá a una guardia. También podés llamar al 107."
+            }
+            2 -> {
+                if (isFasting) {
+                    "La medición de azúcar que registraste es baja, vuelve medirte en otro dedo. Si la medición sigue siendo baja, sigue las indicaciones de tu médico para estos casos y saca una cita en tu centro de salud para que te evalúen."
+                } else {
+                    "La medición de azúcar que registraste es baja, vuelve medirte en otro dedo. Si la medición sigue siendo baja, saca una cita con tu médico para que te evalúe."
+                }
+            }
+            else -> {
+                "Advertencia: Glucosa baja (hipoglucemia). Por favor consulte con un médico."
             }
         }
     }

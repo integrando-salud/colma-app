@@ -1859,21 +1859,21 @@ class DbHelper(context: Context) :
                     LEFT JOIN centros_salud cs ON u.id_centro_salud = cs.id
                     WHERE u.idUsuario = ?
                 """.trimIndent()
-        
+
                 db.rawQuery(query, arrayOf(id.toString())).use { c ->
                     if (c.moveToFirst()) {
                         val paisId = c.getIntOrNull("id_pais")
                         val paisNombre = c.getStringOrNull("nombre_pais")
                         val centroId = c.getIntOrNull("id_centro_salud")
                         val centroNombre = c.getStringOrNull("nombre_centro_salud")
-        
+
                         if (paisId == null || paisNombre == null || centroId == null || centroNombre == null) {
                             return null
                         }
-        
+
                         val pais = Pais(id = paisId, nombre = paisNombre)
                         val centroSalud = CentroSalud(id = centroId, nombre = centroNombre)
-        
+
                         return Usuario(
                             id = c.getIntOrNull("idUsuario") ?: return null,
                             documento = c.getStringOrNull("documento") ?: "",
@@ -1883,6 +1883,21 @@ class DbHelper(context: Context) :
                             pais = pais,
                             centroSalud = centroSalud
                         )
+                    }
+                }
+                return null
+            }
+
+            /**
+             * Get the user's country ID (id_pais)
+             * Returns null if user not found or country not set
+             */
+            fun getUsuarioPaisId(idUsuario: Int): Int? {
+                val db = readableDatabase
+                val query = "SELECT id_pais FROM usuarios WHERE idUsuario = ?"
+                db.rawQuery(query, arrayOf(idUsuario.toString())).use { c ->
+                    if (c.moveToFirst()) {
+                        return c.getIntOrNull("id_pais")
                     }
                 }
                 return null
