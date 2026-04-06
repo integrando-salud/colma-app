@@ -123,10 +123,28 @@ fun MultimediaScreen(
     val signatureColor = colorResource(R.color.principal)
     val currentOption = uiState.currentMultimediaOption
 
+    val topBarTitle = currentOption?.type?.let { type ->
+        when (type) {
+            MultimediaContentType.DESCRIPTION -> "Descripción"
+            MultimediaContentType.VIDEO -> "Video"
+            MultimediaContentType.AUDIO -> "Audio"
+            MultimediaContentType.METAS -> "Metas"
+            MultimediaContentType.QUIZ -> "Pregunta del Día"
+            else -> type.name
+        }
+    } ?: ""
+
     Surface(color = colorResource(id = R.color.background), modifier = Modifier.fillMaxSize().systemBarsPadding()) {
         Column(modifier = Modifier.fillMaxSize()) {
             TopAppBar(
-                title = { },
+                title = {
+                    Text(
+                        text = topBarTitle,
+                        fontWeight = FontWeight.SemiBold,
+                        fontSize = 18.sp,
+                        color = colorResource(R.color.white)
+                    )
+                },
                 colors = TopAppBarDefaults.topAppBarColors(containerColor = signatureColor),
                 navigationIcon = {
                     Surface(
