@@ -274,6 +274,8 @@ fun StepProgressBar(
 
     val lightSignatureColor = signatureColor.copy(alpha = 0.5f)
     val incompleteColor = Color(0xFFD0D5DD)
+    val dotSize = 22.dp
+    val connectorWidth = 24.dp
 
     Card(
         modifier = modifier,
@@ -284,7 +286,7 @@ fun StepProgressBar(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 24.dp, vertical = 16.dp),
+                .padding(horizontal = 16.dp, vertical = 12.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center
         ) {
@@ -294,7 +296,7 @@ fun StepProgressBar(
                     val lineColor = if (i <= currentStep) lightSignatureColor else incompleteColor
                     Canvas(
                         modifier = Modifier
-                            .weight(1f)
+                            .width(connectorWidth)
                             .height(2.dp)
                     ) {
                         drawLine(
@@ -304,51 +306,57 @@ fun StepProgressBar(
                             strokeWidth = 2.dp.toPx()
                         )
                     }
-                } else {
-                    Spacer(modifier = Modifier.weight(1f))
                 }
 
-                // Step indicator dot
-                val dotSize = if (i == currentStep) 24.dp else 20.dp
-                Box(
-                    modifier = Modifier.size(dotSize),
-                    contentAlignment = Alignment.Center
+                // Step item: dot + optional label
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    when {
-                        i < currentStep -> {
-                            // Completed step: filled circle with checkmark
-                            Icon(
-                                imageVector = Icons.Default.CheckCircle,
-                                contentDescription = "Semana $i completada",
-                                tint = lightSignatureColor,
-                                modifier = Modifier.fillMaxSize()
-                            )
-                        }
-                        i == currentStep -> {
-                            // Current step: outlined circle, larger
-                            Box(
-                                modifier = Modifier
-                                    .fillMaxSize()
-                                    .border(3.dp, signatureColor, CircleShape)
-                                    .background(Color.White, CircleShape),
-                                contentAlignment = Alignment.Center
-                            ) {
+                    Box(
+                        modifier = Modifier.size(dotSize),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        when {
+                            i < currentStep -> {
+                                Icon(
+                                    imageVector = Icons.Default.CheckCircle,
+                                    contentDescription = "Sesión $i completada",
+                                    tint = lightSignatureColor,
+                                    modifier = Modifier.fillMaxSize()
+                                )
+                            }
+                            i == currentStep -> {
                                 Box(
                                     modifier = Modifier
-                                        .size(8.dp)
-                                        .background(signatureColor, CircleShape)
+                                        .fillMaxSize()
+                                        .border(3.dp, signatureColor, CircleShape)
+                                        .background(Color.White, CircleShape),
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    Box(
+                                        modifier = Modifier
+                                            .size(8.dp)
+                                            .background(signatureColor, CircleShape)
+                                    )
+                                }
+                            }
+                            else -> {
+                                Box(
+                                    modifier = Modifier
+                                        .fillMaxSize()
+                                        .background(incompleteColor, CircleShape)
                                 )
                             }
                         }
-                        else -> {
-                            // Upcoming step: gray circle
-                            Box(
-                                modifier = Modifier
-                                    .fillMaxSize()
-                                    .background(incompleteColor, CircleShape)
-                            )
-                        }
                     }
+                    Text(
+                        text = if (i == currentStep) "Sesión $i" else "",
+                        fontSize = 10.sp,
+                        fontWeight = FontWeight.SemiBold,
+                        color = if (i == currentStep) signatureColor else Color.Transparent,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.padding(top = 2.dp)
+                    )
                 }
 
                 // Connector line after each step (except the last)
@@ -356,7 +364,7 @@ fun StepProgressBar(
                     val lineColor = if (i < currentStep) lightSignatureColor else incompleteColor
                     Canvas(
                         modifier = Modifier
-                            .weight(1f)
+                            .width(connectorWidth)
                             .height(2.dp)
                     ) {
                         drawLine(
@@ -366,8 +374,6 @@ fun StepProgressBar(
                             strokeWidth = 2.dp.toPx()
                         )
                     }
-                } else {
-                    Spacer(modifier = Modifier.weight(1f))
                 }
             }
         }
