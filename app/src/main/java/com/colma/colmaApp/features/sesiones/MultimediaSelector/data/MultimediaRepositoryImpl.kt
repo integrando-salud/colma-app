@@ -6,6 +6,7 @@ import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.colma.colmaApp.R
 import com.colma.colmaApp.features.content.domain.ContentRepository
+import com.colma.colmaApp.features.content.domain.SubSessionProgress
 import com.colma.colmaApp.features.sesiones.MultimediaSelector.domain.MultimediaContentType
 import com.colma.colmaApp.features.sesiones.MultimediaSelector.domain.MultimediaOption
 import com.colma.colmaApp.features.sesiones.MultimediaSelector.domain.MultimediaRepository
@@ -81,6 +82,15 @@ class MultimediaRepositoryImpl(
             multimediaType = multimediaReadRecord.multimedia_type ?: "UNKNOWN",
             multimediaUniqueKey = multimediaReadRecord.multimedia_unique_key ?: "UNKNOWN"
         )
+    }
+
+    override suspend fun getSubSessionProgress(
+        treatmentTypes: List<TreatmentType>,
+        sessionId: Long,
+        subSessionId: Long
+    ): Result<SubSessionProgress> {
+        val treatmentType = treatmentTypes.firstOrNull() ?: return Result.failure(Exception("No treatment type provided"))
+        return contentRepository.getSubSessionProgress(treatmentType, sessionId, subSessionId)
     }
 
     override suspend fun saveQuizResponses(quizResponse: QuizResponseRecord, questionResponses: List<QuestionResponseRecord>) {

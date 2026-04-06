@@ -43,13 +43,34 @@ class MultimediaSelectorViewModel(private val repository: MultimediaRepository) 
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true, error = null) }
             val state = _uiState.value
-            repository.getMultimediaOptions(state.treatmentTypes, state.subSessionId)
-                .onSuccess { options ->
-                    _uiState.update { it.copy(multimediaOptions = options, isLoading = false) }
+
+            val optionsResult = repository.getMultimediaOptions(state.treatmentTypes, state.subSessionId)
+            val progressResult = repository.getSubSessionProgress(state.treatmentTypes, state.sessionId, state.subSessionId)
+
+            when {
+                optionsResult.isSuccess && progressResult.isSuccess -> {
+                    _uiState.update {
+                        it.copy(
+                            multimediaOptions = optionsResult.getOrThrow(),
+                            currentStepIndex = progressResult.getOrThrow().currentIndex,
+                            totalSteps = progressResult.getOrThrow().totalCount,
+                            isLoading = false
+                        )
+                    }
                 }
-                .onFailure { error ->
-                    _uiState.update { it.copy(error = error.message, isLoading = false) }
+                optionsResult.isSuccess -> {
+                    _uiState.update {
+                        it.copy(
+                            multimediaOptions = optionsResult.getOrThrow(),
+                            isLoading = false
+                        )
+                    }
                 }
+                else -> {
+                    val error = optionsResult.exceptionOrNull()?.message ?: progressResult.exceptionOrNull()?.message
+                    _uiState.update { it.copy(error = error, isLoading = false) }
+                }
+            }
         }
     }
 

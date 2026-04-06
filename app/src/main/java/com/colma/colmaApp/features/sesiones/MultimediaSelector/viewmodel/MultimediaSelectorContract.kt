@@ -10,6 +10,8 @@ data class MultimediaSelectorUiState(
     val subSessionTitle: String = "",
     val treatmentTypes: List<TreatmentType> = emptyList(),
     val multimediaOptions: List<MultimediaOption> = emptyList(),
+    val currentStepIndex: Int = 0,
+    val totalSteps: Int = 0,
     val isLoading: Boolean = true,
     val error: String? = null
 )

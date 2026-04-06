@@ -2,6 +2,7 @@ package com.colma.colmaApp.features.content.data
 
 import android.content.Context
 import com.colma.colmaApp.features.content.domain.ContentRepository
+import com.colma.colmaApp.features.content.domain.SubSessionProgress
 import com.colma.colmaApp.features.content.model.ContentDictionary
 import com.colma.colmaApp.features.content.model.MultimediaContent
 import com.colma.colmaApp.features.content.model.SessionContent
@@ -55,6 +56,28 @@ class ContentRepositoryImpl(private val context: Context) : ContentRepository {
             val subSessions = sessions.flatMap { it.subSessions }
             val multimediaOptions = subSessions.find { it.id == subSessionId }?.multimedia ?: emptyList()
             Result.success(multimediaOptions)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
+    override suspend fun getSubSessionProgress(
+        treatmentType: TreatmentType,
+        sessionId: Long,
+        subSessionId: Long
+    ): Result<SubSessionProgress> {
+        return try {
+            val dictionary = loadContent()
+            val treatment = dictionary.treatments.find { it.id == treatmentType }
+            val session = treatment?.sessions?.find { it.id == sessionId }
+            val subSessions = session?.subSessions ?: emptyList()
+            val currentIndex = subSessions.indexOfFirst { it.id == subSessionId }
+            val totalCount = subSessions.size
+            if (currentIndex >= 0 && totalCount > 0) {
+                Result.success(SubSessionProgress(currentIndex = currentIndex + 1, totalCount = totalCount))
+            } else {
+                Result.failure(Exception("Sub-session not found in session"))
+            }
         } catch (e: Exception) {
             Result.failure(e)
         }

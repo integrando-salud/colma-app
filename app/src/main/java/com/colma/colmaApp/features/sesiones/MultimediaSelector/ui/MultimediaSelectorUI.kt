@@ -5,13 +5,18 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -20,10 +25,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
@@ -173,19 +180,35 @@ fun MultimediaSelectorScreen(
                 val scrollState = rememberScrollState()
                 Column(
                     modifier = Modifier
-                        .fillMaxSize()
-                        .padding(16.dp)
-                        .scrollbar(scrollState)
-                        .verticalScroll(scrollState),
+                        .fillMaxSize(),
                     verticalArrangement = Arrangement.spacedBy(12.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    uiState.multimediaOptions.forEachIndexed { index, option ->
-                        MultimediaOptionCard(option = option, signatureColor = signatureColor) {
-                            onEvent(MultimediaSelectorEvent.MultimediaOptionClicked(option, index))
+                    Column(
+                        modifier = Modifier
+                            .weight(1f)
+                            .padding(16.dp)
+                            .scrollbar(scrollState)
+                            .verticalScroll(scrollState),
+                        verticalArrangement = Arrangement.spacedBy(12.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        uiState.multimediaOptions.forEachIndexed { index, option ->
+                            MultimediaOptionCard(option = option, signatureColor = signatureColor) {
+                                onEvent(MultimediaSelectorEvent.MultimediaOptionClicked(option, index))
+                            }
                         }
                     }
-                    Spacer(modifier = Modifier.weight(1f))
+                    if (uiState.totalSteps > 0) {
+                        StepProgressBar(
+                            currentStep = uiState.currentStepIndex,
+                            totalSteps = uiState.totalSteps,
+                            signatureColor = signatureColor,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 16.dp, vertical = 12.dp)
+                        )
+                    }
                 }
             }
         }
@@ -235,6 +258,117 @@ fun MultimediaOptionCard(
                 Text(option.title, fontSize = 18.sp, fontWeight = FontWeight.SemiBold)
                 Spacer(modifier = Modifier.height(6.dp))
                 Text(option.description, fontSize = 13.sp, color = Color.Gray)
+            }
+        }
+    }
+}
+
+@Composable
+fun StepProgressBar(
+    currentStep: Int,
+    totalSteps: Int,
+    signatureColor: Color,
+    modifier: Modifier = Modifier
+) {
+    if (totalSteps <= 0) return
+
+    val lightSignatureColor = signatureColor.copy(alpha = 0.5f)
+    val incompleteColor = Color(0xFFD0D5DD)
+
+    Card(
+        modifier = modifier,
+        shape = RoundedCornerShape(12.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+        colors = CardDefaults.cardColors(containerColor = Color.White)
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 24.dp, vertical = 16.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center
+        ) {
+            for (i in 1..totalSteps) {
+                // Connector line before each step (except the first)
+                if (i > 1) {
+                    val lineColor = if (i <= currentStep) lightSignatureColor else incompleteColor
+                    Canvas(
+                        modifier = Modifier
+                            .weight(1f)
+                            .height(2.dp)
+                    ) {
+                        drawLine(
+                            color = lineColor,
+                            start = Offset(0f, center.y),
+                            end = Offset(size.width, center.y),
+                            strokeWidth = 2.dp.toPx()
+                        )
+                    }
+                } else {
+                    Spacer(modifier = Modifier.weight(1f))
+                }
+
+                // Step indicator dot
+                val dotSize = if (i == currentStep) 24.dp else 20.dp
+                Box(
+                    modifier = Modifier.size(dotSize),
+                    contentAlignment = Alignment.Center
+                ) {
+                    when {
+                        i < currentStep -> {
+                            // Completed step: filled circle with checkmark
+                            Icon(
+                                imageVector = Icons.Default.CheckCircle,
+                                contentDescription = "Semana $i completada",
+                                tint = lightSignatureColor,
+                                modifier = Modifier.fillMaxSize()
+                            )
+                        }
+                        i == currentStep -> {
+                            // Current step: outlined circle, larger
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .border(3.dp, signatureColor, CircleShape)
+                                    .background(Color.White, CircleShape),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Box(
+                                    modifier = Modifier
+                                        .size(8.dp)
+                                        .background(signatureColor, CircleShape)
+                                )
+                            }
+                        }
+                        else -> {
+                            // Upcoming step: gray circle
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .background(incompleteColor, CircleShape)
+                            )
+                        }
+                    }
+                }
+
+                // Connector line after each step (except the last)
+                if (i < totalSteps) {
+                    val lineColor = if (i < currentStep) lightSignatureColor else incompleteColor
+                    Canvas(
+                        modifier = Modifier
+                            .weight(1f)
+                            .height(2.dp)
+                    ) {
+                        drawLine(
+                            color = lineColor,
+                            start = Offset(0f, center.y),
+                            end = Offset(size.width, center.y),
+                            strokeWidth = 2.dp.toPx()
+                        )
+                    }
+                } else {
+                    Spacer(modifier = Modifier.weight(1f))
+                }
             }
         }
     }
