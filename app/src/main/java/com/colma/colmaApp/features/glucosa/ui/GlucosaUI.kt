@@ -8,6 +8,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,7 +17,9 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
@@ -26,9 +29,12 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.DateRange
+import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -40,6 +46,9 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.ui.unit.IntOffset
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -51,12 +60,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import com.colma.colmaApp.R
@@ -74,6 +82,10 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
+
+// Date and time formatters for the details dialog
+private val detailsDateFormatter = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+private val detailsTimeFormatter = SimpleDateFormat("hh:mm a", Locale("es"))
 
 class GlucosaUI : ComponentActivity() {
 
@@ -264,7 +276,7 @@ fun GlucosaScreen(
                             text = getHighGlucosaWarningText(entry.isFasting == true, uiState.userPaisId)
                         } else if (high) {
                             dangerous = true
-                            text = "Glucosa alta (hiperglucemia)."
+                            text = "Glucosa alta (hiperglucemia). Por favor, consulte con un médico."
                         }
                     }
                     Pair(dangerous, text)
@@ -272,19 +284,136 @@ fun GlucosaScreen(
 
                 AlertDialog(
                     onDismissRequest = { onEvent(GlucosaEvent.DismissDetailsDialog) },
-                    title = { Text("Detalle del Registro") },
+                    title = {
+                        Text("Detalle del registro:", fontWeight = FontWeight.Bold, fontSize = 18.sp)
+                    },
                     text = {
-                        Column {
-                            Text("Tipo: ${entry.label}")
-                            Text("Valor: ${entry.value}")
-                            Text("Fecha: ${SimpleDateFormat("dd/MM/yyyy hh:mm a", Locale.getDefault()).format(Date(entry.timestamp))}")
+                        val detailsScrollState = rememberScrollState()
+                        val density = LocalDensity.current
+                        val containerHeightPx = with(density) { 280.dp.toPx() }
+                        val thumbHeightPx = with(density) { 30.dp.toPx() }
+                        
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(280.dp)
+                        ) {
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(end = 12.dp)
+                                    .verticalScroll(detailsScrollState)
+                            ) {
+                            // Valor
+                            Row(
+                                modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp),
+                                verticalAlignment = Alignment.Top
+                            ) {
+                                Text("•", fontSize = 18.sp, modifier = Modifier.padding(end = 8.dp))
+                                Column {
+                                    Text("Valor:", fontWeight = FontWeight.Bold, fontSize = 16.sp)
+                                    Text(
+                                        text = entry.value,
+                                        fontSize = 16.sp,
+                                        modifier = Modifier.padding(top = 2.dp)
+                                    )
+                                }
+                            }
+
+                            // Fecha
+                            Row(
+                                modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp),
+                                verticalAlignment = Alignment.Top
+                            ) {
+                                Text("•", fontSize = 18.sp, modifier = Modifier.padding(end = 8.dp))
+                                Column {
+                                    Text("Fecha:", fontWeight = FontWeight.Bold, fontSize = 16.sp)
+                                    Text(
+                                        text = detailsDateFormatter.format(Date(entry.timestamp)),
+                                        fontSize = 16.sp,
+                                        modifier = Modifier.padding(top = 2.dp)
+                                    )
+                                }
+                            }
+
+                            // Hora
+                            Row(
+                                modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp),
+                                verticalAlignment = Alignment.Top
+                            ) {
+                                Text("•", fontSize = 18.sp, modifier = Modifier.padding(end = 8.dp))
+                                Column {
+                                    Text("Hora:", fontWeight = FontWeight.Bold, fontSize = 16.sp)
+                                    Text(
+                                        text = detailsTimeFormatter.format(Date(entry.timestamp)).lowercase(),
+                                        fontSize = 16.sp,
+                                        modifier = Modifier.padding(top = 2.dp)
+                                    )
+                                }
+                            }
+
+                            // Advertencia (if exists)
                             if (isDangerous && warningText != null) {
-                                Spacer(modifier = Modifier.height(8.dp))
-                                Text(warningText, color = Color.Red)
+                                Spacer(modifier = Modifier.height(12.dp))
+                                Row(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .background(Color(0xFFFFEBEE), RoundedCornerShape(8.dp))
+                                        .padding(12.dp),
+                                    verticalAlignment = Alignment.Top
+                                ) {
+                                    Icon(
+                                        imageVector = Icons.Default.Warning,
+                                        contentDescription = "Advertencia",
+                                        tint = Color(0xFFE53935),
+                                        modifier = Modifier
+                                            .size(24.dp)
+                                            .padding(end = 8.dp)
+                                    )
+                                    Column {
+                                        Text(
+                                            text = "Advertencia:",
+                                            fontWeight = FontWeight.Bold,
+                                            fontSize = 16.sp,
+                                            color = Color(0xFFE53935)
+                                        )
+                                        Text(
+                                            text = warningText,
+                                            fontSize = 14.sp,
+                                            color = Color(0xFF212121),
+                                            modifier = Modifier.padding(top = 4.dp)
+                                        )
+                                    }
+                                }
+                            }
+                        } // Close Column
+
+                        // Thin scrollbar indicator - constrained to container height
+                        if (detailsScrollState.maxValue > 0) {
+                            val scrollableRange = containerHeightPx - thumbHeightPx
+                            val scrollFraction = detailsScrollState.value.toFloat() / detailsScrollState.maxValue
+                            val thumbOffsetY = scrollFraction * scrollableRange
+                            
+                            Box(
+                                modifier = Modifier
+                                    .align(Alignment.TopEnd)
+                                    .height(280.dp)
+                                    .width(4.dp)
+                            ) {
+                                Box(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .height(30.dp)
+                                        .offset {
+                                            IntOffset(0, thumbOffsetY.toInt())
+                                        }
+                                        .background(Color(0xFFBDBDBD), RoundedCornerShape(2.dp))
+                                )
                             }
                         }
-                    },
-                    confirmButton = {
+                    } // Close Box
+                },
+                confirmButton = {
                         Button(
                             onClick = { onEvent(GlucosaEvent.DismissDetailsDialog) },
                             colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF008000), contentColor = Color.White),
@@ -292,7 +421,9 @@ fun GlucosaScreen(
                         ) {
                             Text("Cerrar")
                         }
-                    }
+                    },
+                    containerColor = Color.White,
+                    shape = RoundedCornerShape(12.dp)
                 )
             }
 
