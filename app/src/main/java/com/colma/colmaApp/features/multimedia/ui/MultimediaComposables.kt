@@ -644,11 +644,11 @@ fun QuizContent(
                             }
                             val percentageCorrect = if (totalQuestions > 0) (correctAnswers.toDouble() / totalQuestions.toDouble()) * 100 else 0.0
 
-                            val quizTreatmentId = treatmentTypes.firstOrNull()?.name ?: "UNKNOWN"
+                            val quizTreatmentId = treatmentTypes.firstOrNull()?.name?.lowercase() ?: "unknown"
                             val quizResponseRecord = QuizResponseRecord(
                                 id_quiz_response = 0, // Will be filled by DB
                                 id_usuario = SessionManager.getUserId() ?: 1, // Default user ID
-                                quiz_type = MultimediaContentType.QUIZ.name,
+                                quiz_type = quizTreatmentId, // Use treatment type (hta/diabetes)
                                 week_id = sessionId.toInt(),
                                 session_id = subSessionId.toInt(),
                                 quiz_title = quizTitle,
@@ -657,8 +657,8 @@ fun QuizContent(
                                 total_questions = totalQuestions,
                                 correct_answers = correctAnswers,
                                 percentage_correct = percentageCorrect,
-                                multimedia_unique_key = multimediaUniqueKey,
-                                treatment_type = quizTreatmentId
+                                multimedia_unique_key = multimediaUniqueKey
+                                // treatment_type removed - quiz_type already indicates hta/diabetes
                             )
                             onQuizSubmit(quizResponseRecord, questionResponses)
                         },

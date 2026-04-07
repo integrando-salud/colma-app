@@ -30,7 +30,7 @@ class DbHelper(context: Context) :
 
     companion object {
         private const val DATABASE_NAME = "colmadb.db"
-        private const val DATABASE_VERSION = 10
+        private const val DATABASE_VERSION = 11
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
@@ -537,7 +537,7 @@ class DbHelper(context: Context) :
                 put("correct_answers", quizResponse.correct_answers)
                 put("percentage_correct", quizResponse.percentage_correct)
                 put("multimedia_unique_key", quizResponse.multimedia_unique_key)
-                put("treatment_type", quizResponse.treatment_type)
+                // treatment_type removed - quiz_type already contains hta/diabetes
             }
             quizResponseId = db.insert("quiz_response_table", null, quizValues)
 

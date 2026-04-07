@@ -13,7 +13,7 @@ data class QuizResponseRecord(
     val correct_answers: Int?,
     val percentage_correct: Double?,
     val multimedia_unique_key: String?,
-    val treatment_type: String? // Added for sync payload
+    val treatment_type: String? = null // Optional - quiz_type already indicates hta/diabetes
 )
 
 data class QuestionResponseRecord(

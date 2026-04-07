@@ -118,7 +118,7 @@ class MenuMainRepositoryImpl(
             com.colma.colmaApp.servicios.internetCommunication.model.QuizData(
                 idQuiz = q.id_quiz_response.toInt(),
                 idUsuario = q.id_usuario ?: userId,
-                quizType = (q.treatment_type ?: q.quiz_type ?: "").lowercase(Locale.ROOT),
+                quizType = (q.quiz_type ?: "").lowercase(Locale.ROOT),
                 sessionId = q.session_id ?: 0,
                 subSessionId = null, // Not available in local DB model
                 fechaRegistro = q.fecha_registro ?: clientSyncTimestamp,
