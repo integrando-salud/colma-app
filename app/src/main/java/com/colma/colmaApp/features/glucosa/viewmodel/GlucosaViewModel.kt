@@ -134,6 +134,7 @@ class GlucosaViewModel(private val repository: GlucosaRepository) : ViewModel() 
 
             val low = number <= 69
             val high = if (state.isFasting == true) number >= 131 else number >= 181
+            val severeHigh = number > 300
             val advertencia = when {
                 low -> "Baja"
                 high -> "Alta"
@@ -166,7 +167,13 @@ class GlucosaViewModel(private val repository: GlucosaRepository) : ViewModel() 
                         val warningMessage = getLowGlucosaWarning(state.isFasting == true, _uiState.value.userPaisId)
                         _uiState.update { it.copy(warningDialog = GlucosaUiState.WarningDialog(show = true, message = warningMessage)) }
                     }
-                    high -> _uiState.update { it.copy(warningDialog = GlucosaUiState.WarningDialog(show = true, message = "Advertencia: Glucosa alta (hiperglucemia). Por favor consulte con un médico.")) }
+                    severeHigh -> {
+                        val warningMessage = getHighGlucosaWarning(state.isFasting == true, _uiState.value.userPaisId)
+                        _uiState.update { it.copy(warningDialog = GlucosaUiState.WarningDialog(show = true, message = warningMessage)) }
+                    }
+                    high -> {
+                        _uiState.update { it.copy(warningDialog = GlucosaUiState.WarningDialog(show = true, message = "Advertencia: Glucosa alta (hiperglucemia). Por favor consulte con un médico.")) }
+                    }
                 }
 
             }.onFailure { error ->
@@ -196,6 +203,21 @@ class GlucosaViewModel(private val repository: GlucosaRepository) : ViewModel() 
             }
             else -> {
                 "Advertencia: Glucosa baja (hipoglucemia). Por favor consulte con un médico."
+            }
+        }
+    }
+
+    private fun getHighGlucosaWarning(isFasting: Boolean, paisId: Int?): String {
+        return when (paisId) {
+            1 -> {
+                "Tu azúcar está muy alta. Si sentís náuseas, vómitos, dolor abdominal, orinas muy seguido o te sientes muy mal es necesario que consultes a una guardia/ Urgencias.\n" +
+                        "También podés llamar al 107."
+            }
+            2 -> {
+                "La medición de azúcar que registraste es alta. Si sientes náuseas, vómitos, dolor abdominal, orinas muy seguido o te sientes muy mal es necesario que acudas a tu centro de salud o a emergencia para que recibas atención médica."
+            }
+            else -> {
+                "Advertencia: Glucosa alta (hiperglucemia). Por favor consulte con un médico."
             }
         }
     }

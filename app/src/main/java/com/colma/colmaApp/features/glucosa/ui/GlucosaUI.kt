@@ -255,9 +255,13 @@ fun GlucosaScreen(
                     entry.rawValue1?.let { v ->
                         val low = v < 70.0
                         val high = if (entry.isFasting == true) v >= 126.0 else v >= 180.0
+                        val severeHigh = v > 300.0
                         if (low) {
                             dangerous = true
                             text = getLowGlucosaWarningText(entry.isFasting == true, uiState.userPaisId)
+                        } else if (severeHigh) {
+                            dangerous = true
+                            text = getHighGlucosaWarningText(entry.isFasting == true, uiState.userPaisId)
                         } else if (high) {
                             dangerous = true
                             text = "Glucosa alta (hiperglucemia)."
@@ -419,6 +423,25 @@ private fun getLowGlucosaWarningText(isFasting: Boolean, paisId: Int?): String {
         }
         else -> {
             "Advertencia: Glucosa baja (hipoglucemia). Por favor consulte con un médico."
+        }
+    }
+}
+
+/**
+ * Helper function to generate nationality-based high glucose warning text.
+ * Used in both the warning dialog and the details dialog.
+ */
+private fun getHighGlucosaWarningText(isFasting: Boolean, paisId: Int?): String {
+    return when (paisId) {
+        1 -> {
+            "Tu azúcar está muy alta. Si sentís náuseas, vómitos, dolor abdominal, orinas muy seguido o te sientes muy mal es necesario que consultes a una guardia/ Urgencias.\n" +
+                    "También podés llamar al 107."
+        }
+        2 -> {
+            "La medición de azúcar que registraste es alta. Si sientes náuseas, vómitos, dolor abdominal, orinas muy seguido o te sientes muy mal es necesario que acudas a tu centro de salud o a emergencia para que recibas atención médica."
+        }
+        else -> {
+            "Advertencia: Glucosa alta (hiperglucemia). Por favor consulte con un médico."
         }
     }
 }
