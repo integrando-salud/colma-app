@@ -1,5 +1,6 @@
 package com.colma.colmaApp.features.MenuMain.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.colma.colmaApp.features.MenuMain.domain.MenuMainRepository
@@ -13,6 +14,8 @@ import kotlinx.coroutines.launch
 
 class MenuMainViewModel(private val repository: MenuMainRepository) : ViewModel() {
 
+    private val TAG = "MenuMainViewModel"
+
     private val _uiState = MutableStateFlow(MenuMainUiState())
     val uiState = _uiState.asStateFlow()
 
@@ -21,6 +24,7 @@ class MenuMainViewModel(private val repository: MenuMainRepository) : ViewModel(
 
     init {
         onEvent(MenuMainEvent.LoadInitialData)
+        autoSyncOnStartup()
     }
 
     private val reasonMessages = mapOf(
@@ -93,6 +97,21 @@ class MenuMainViewModel(private val repository: MenuMainRepository) : ViewModel(
                 repository.synchronizeData()
                 _uiState.update { it.copy(isLoading = false) }
                 loadInitialData() // Reload data after sync to update counts
+            }
+        }
+
+        private fun autoSyncOnStartup() {
+            viewModelScope.launch {
+                Log.d(TAG, "Auto-sync triggered on app startup")
+                repository.synchronizeData()
+                    .onSuccess { message ->
+                        Log.d(TAG, "Auto-sync successful: $message")
+                        // Reload data after successful sync
+                        loadInitialData()
+                    }
+                    .onFailure { error ->
+                        Log.w(TAG, "Auto-sync failed (non-critical): ${error.message}")
+                    }
             }
         }
     private fun dismissObjectiveDialog() {
