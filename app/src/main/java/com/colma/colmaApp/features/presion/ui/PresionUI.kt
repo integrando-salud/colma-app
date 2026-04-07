@@ -245,22 +245,30 @@ fun PresionScreen(
 
             if (uiState.isDetailsDialogVisible) {
                 val entry = uiState.selectedEntry!!
-                val (isDangerous, warningText) = remember(entry) {
+                val (isDangerous, warningText) = remember(entry, uiState.userPaisId) {
                     var dangerous = false
                     var text: String? = null
                     val s = entry.rawValue1
                     val d = entry.rawValue2
                     if (s != null && d != null) {
+                        val severeHigh = s >= 180 || d >= 120
+                        val severeLow = s <= 90
                         val highS = s > 140
                         val lowS = s < 90
                         val highD = d > 90
                         val lowD = d < 60
-                        if (highS || lowS || highD || lowD) {
+                        if (severeHigh) {
+                            dangerous = true
+                            text = getSevereHighPressureText(uiState.userPaisId)
+                        } else if (severeLow) {
+                            dangerous = true
+                            text = getSevereLowPressureText(uiState.userPaisId)
+                        } else if (highS || lowS || highD || lowD) {
                             dangerous = true
                             val parts = mutableListOf<String>()
                             if (lowS || lowD) parts.add("presión baja")
                             if (highS || highD) parts.add("presión alta")
-                            text = parts.joinToString(" y ")
+                            text = "Advertencia: " + parts.joinToString(" y ") + ". Por favor consulte con un médico."
                         }
                     }
                     Pair(dangerous, text)
@@ -276,7 +284,7 @@ fun PresionScreen(
                             Text("Fecha: ${SimpleDateFormat("dd/MM/yyyy hh:mm a", Locale.getDefault()).format(Date(entry.timestamp))}")
                             if (isDangerous && warningText != null) {
                                 Spacer(modifier = Modifier.height(8.dp))
-                                Text("Advertencia: $warningText. Por favor consulte con un médico.", color = Color.Red)
+                                Text(warningText, color = Color.Red)
                             }
                         }
                     },
@@ -379,6 +387,44 @@ fun PresionScreen(
                     tonalElevation = 8.dp
                 )
             }
+        }
+    }
+}
+
+/**
+ * Helper function to generate nationality-based severe high pressure warning text.
+ * Used in both the warning dialog and the details dialog.
+ */
+private fun getSevereHighPressureText(paisId: Int?): String {
+    return when (paisId) {
+        1 -> {
+            "Los valores de presión que ingresaste son altos, es necesario que consultes a una guardia/ Urgencias para recibir atención médica.\n" +
+                    "También podés llamar al 107."
+        }
+        2 -> {
+            "La medición de presión que registraste es alta, es importante que acudas a emergencia para recibir atención médica."
+        }
+        else -> {
+            "Advertencia: Presión arterial severamente alta. Por favor consulte con un médico urgentemente."
+        }
+    }
+}
+
+/**
+ * Helper function to generate nationality-based severe low pressure warning text.
+ * Used in both the warning dialog and the details dialog.
+ */
+private fun getSevereLowPressureText(paisId: Int?): String {
+    return when (paisId) {
+        1 -> {
+            "Los valores de presión que ingresaste son bajos, si tenés algún síntoma de malestar o desmayo es importante que consultes a una guardia para recibir atención médica.\n" +
+                    "También podés llamar al 107."
+        }
+        2 -> {
+            "La medición de presión que registraste es baja, si sientes malestar físico o has tenido un desmayo, es importante que vayas a tu centro de salud o a emergencia para recibir atención médica."
+        }
+        else -> {
+            "Advertencia: Presión arterial severamente baja. Por favor consulte con un médico urgentemente."
         }
     }
 }

@@ -94,4 +94,13 @@ class PresionRepositoryImpl(context: Context) : PresionRepository {
             Result.failure(e)
         }
     }
+
+    override suspend fun getUserPaisId(): Int? = withContext(Dispatchers.IO) {
+        try {
+            dbHelper.getUsuarioPaisId(userId)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
+    }
 }
