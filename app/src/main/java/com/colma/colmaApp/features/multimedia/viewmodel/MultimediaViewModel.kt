@@ -1,5 +1,6 @@
 package com.colma.colmaApp.features.multimedia.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.colma.colmaApp.features.sesiones.MultimediaSelector.domain.MultimediaRepository
@@ -18,6 +19,8 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.Dispatchers
 
 class MultimediaViewModel(private val repository: MultimediaRepository) : ViewModel() {
+
+    private val TAG = "MultimediaViewModel"
 
     private val _uiState = MutableStateFlow(MultimediaUiState())
     val uiState = _uiState.asStateFlow()
@@ -197,6 +200,22 @@ class MultimediaViewModel(private val repository: MultimediaRepository) : ViewMo
     private fun saveQuizResponses(quizResponse: QuizResponseRecord, questionResponses: List<QuestionResponseRecord>) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.saveQuizResponses(quizResponse, questionResponses)
+                .onSuccess { quizResponseId ->
+                    Log.d(TAG, "Quiz responses saved successfully with ID: $quizResponseId")
+                    // Attempt to sync with server
+                    viewModelScope.launch {
+                        repository.syncQuizResponse(quizResponse, questionResponses)
+                            .onSuccess { message ->
+                                Log.d(TAG, "Quiz sync successful: $message")
+                            }
+                            .onFailure { error ->
+                                Log.w(TAG, "Quiz sync failed (will retry later): ${error.message}")
+                            }
+                    }
+                }
+                .onFailure { error ->
+                    Log.e(TAG, "Error saving quiz responses: ${error.message}")
+                }
         }
     }
 

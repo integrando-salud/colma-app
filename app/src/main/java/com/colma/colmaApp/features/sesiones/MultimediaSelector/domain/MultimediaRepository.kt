@@ -9,5 +9,6 @@ interface MultimediaRepository {
     suspend fun getMultimediaOptions(treatmentTypes: List<TreatmentType>, subSessionId: Long): Result<List<MultimediaOption>>
     suspend fun getSubSessionProgress(treatmentTypes: List<TreatmentType>, sessionId: Long, subSessionId: Long): Result<SubSessionProgress>
     suspend fun saveMultimediaRead(multimediaReadRecord: RegistrosSaludModelos.MultimediaReadRecord)
-    suspend fun saveQuizResponses(quizResponse: QuizResponseRecord, questionResponses: List<QuestionResponseRecord>)
+    suspend fun saveQuizResponses(quizResponse: QuizResponseRecord, questionResponses: List<QuestionResponseRecord>): Result<Long>
+    suspend fun syncQuizResponse(quizResponse: QuizResponseRecord, questionResponses: List<QuestionResponseRecord>): Result<String>
 }
