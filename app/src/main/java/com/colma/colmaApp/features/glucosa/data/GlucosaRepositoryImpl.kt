@@ -113,7 +113,7 @@ class GlucosaRepositoryImpl(private val context: Context) : GlucosaRepository {
         }
     }
 
-    override suspend fun syncGlucosa(entry: HealthEntry): Result<String> = withContext(Dispatchers.IO) {
+    override suspend fun syncGlucosa(entry: HealthEntry, advertencia: String): Result<String> = withContext(Dispatchers.IO) {
         if (!NetworkUtils.isInternetAvailable(context)) {
             Log.w(TAG, "Sync skipped: No internet connection.")
             return@withContext Result.failure(Exception("No hay conexión a internet"))
@@ -138,7 +138,7 @@ class GlucosaRepositoryImpl(private val context: Context) : GlucosaRepository {
                 fechaRegistro = now, // Simplified
                 fechaUsuario = isoFormatter.format(Date(entry.timestamp)),
                 fechaSincronizacion = now,
-                advertencia = "" 
+                advertencia = advertencia 
             )
 
             val syncRequest = SyncDataRequest(

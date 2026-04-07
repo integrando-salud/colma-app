@@ -11,4 +11,5 @@ interface PresionRepository {
         advertencia: String?
     ): Result<HealthEntry>
     suspend fun getUserPaisId(): Int?
+    suspend fun syncPresion(entry: HealthEntry, advertencia: String): Result<String>
 }

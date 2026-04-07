@@ -1,20 +1,28 @@
 package com.colma.colmaApp.features.presion.data
 
 import android.content.Context
+import android.util.Log
 import com.colma.colmaApp.servicios.session.SessionManager
 import com.colma.colmaApp.features.presion.domain.PresionRepository
 import com.colma.colmaApp.servicios.database.dbhelper.DbHelper
+import com.colma.colmaApp.servicios.internetCommunication.SyncService
+import com.colma.colmaApp.servicios.internetCommunication.model.PresionData
+import com.colma.colmaApp.servicios.internetCommunication.model.SyncDataRequest
+import com.colma.colmaApp.utils.NetworkUtils
 import com.colma.colmaApp.utils.varios.HealthEntry
 import com.colma.colmaApp.utils.varios.parseDateTimeToMillis
+import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-class PresionRepositoryImpl(context: Context) : PresionRepository {
+class PresionRepositoryImpl(private val context: Context) : PresionRepository {
 
+    private val TAG = "PresionRepo"
     private val dbHelper = DbHelper(context.applicationContext)
+    private val syncService = SyncService()
     private val isoFormatter = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
     private val userId: Int
 
@@ -103,6 +111,67 @@ class PresionRepositoryImpl(context: Context) : PresionRepository {
         } catch (e: Exception) {
             e.printStackTrace()
             null
+        }
+    }
+
+    override suspend fun syncPresion(entry: HealthEntry, advertencia: String): Result<String> = withContext(Dispatchers.IO) {
+        if (!NetworkUtils.isInternetAvailable(context)) {
+            Log.w(TAG, "Sync skipped: No internet connection.")
+            return@withContext Result.failure(Exception("No hay conexión a internet"))
+        }
+
+        val token = SessionManager.getAuthToken() ?: run {
+            Log.e(TAG, "Sync failed: No auth token found.")
+            return@withContext Result.failure(Exception("No autenticado"))
+        }
+        val userId = SessionManager.getUserId() ?: run {
+            Log.e(TAG, "Sync failed: No user ID found.")
+            return@withContext Result.failure(Exception("Usuario no identificado"))
+        }
+
+        try {
+            val now = isoFormatter.format(Date())
+            val presionData = PresionData(
+                idPresion = entry.id?.toInt() ?: 0,
+                idUsuario = userId,
+                sistolica = entry.rawValue1?.toFloat() ?: 0f,
+                diastolica = entry.rawValue2?.toFloat() ?: 0f,
+                fechaRegistro = now,
+                fechaUsuario = isoFormatter.format(Date(entry.timestamp)),
+                fechaSincronizacion = now,
+                advertencia = advertencia
+            )
+
+            val syncRequest = SyncDataRequest(
+                deviceTimestamp = System.currentTimeMillis(),
+                userId = userId,
+                app = "colmaApp",
+                clientSyncTimestamp = now,
+                glucosa = emptyList(),
+                presion = listOf(presionData),
+                estadoAnimo = emptyList(),
+                quiz = emptyList(),
+                metas = emptyList(),
+                multimediaRead = emptyList()
+            )
+
+            val requestBodyJson = Gson().toJson(syncRequest)
+            Log.d(TAG, "Sync Request Body: $requestBodyJson")
+
+            Log.d(TAG, "Attempting to sync pressure entry: ${entry.id}")
+            val response = syncService.syncData(token, syncRequest)
+            if (response.isSuccessful) {
+                entry.id?.let { dbHelper.markPresionSent(listOf(it)) }
+                Log.d(TAG, "Sync successful for entry ${entry.id}: ${response.body()?.message}")
+                Result.success(response.body()?.message ?: "Sincronización exitosa")
+            } else {
+                val errorMsg = response.errorBody()?.string() ?: "Unknown error"
+                Log.e(TAG, "Sync failed for entry ${entry.id}. Code: ${response.code()}, Error: $errorMsg")
+                Result.failure(Exception("Error en sincronización: ${response.code()}"))
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Exception during sync for entry ${entry.id}: ${e.message}", e)
+            Result.failure(e)
         }
     }
 }

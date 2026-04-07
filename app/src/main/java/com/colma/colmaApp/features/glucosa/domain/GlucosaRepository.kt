@@ -11,5 +11,5 @@ interface GlucosaRepository {
         advertencia: String?
     ): Result<HealthEntry>
     suspend fun getUserPaisId(): Int?
-    suspend fun syncGlucosa(entry: HealthEntry): Result<String>
+    suspend fun syncGlucosa(entry: HealthEntry, advertencia: String): Result<String>
 }

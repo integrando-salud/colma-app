@@ -164,7 +164,7 @@ class GlucosaViewModel(private val repository: GlucosaRepository) : ViewModel() 
 
                 // Attempt to sync
                 viewModelScope.launch {
-                    repository.syncGlucosa(newEntry)
+                    repository.syncGlucosa(newEntry, advertencia)
                 }
 
                 when {

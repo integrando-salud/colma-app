@@ -171,6 +171,11 @@ class PresionViewModel(private val repository: PresionRepository) : ViewModel() 
                     )
                 }
 
+                // Attempt to sync
+                viewModelScope.launch {
+                    repository.syncPresion(newEntry, advertencia)
+                }
+
                 when {
                     severeHigh -> {
                         val warningMessage = getSevereHighPressureWarning(_uiState.value.userPaisId)
