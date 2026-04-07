@@ -153,8 +153,14 @@ class MoodQuizViewModel(private val repository: MoodRepository) : ViewModel() {
             val isoFormatter = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
             val result = repository.saveMoodRecord(answersToSave, isoFormatter.format(Date()))
 
-            result.onSuccess {
+            result.onSuccess { recordId ->
                 _uiState.update { it.copy(isLoading = false) }
+                
+                // Attempt to sync individually
+                viewModelScope.launch {
+                    repository.syncMoodRecord(recordId)
+                }
+
                 _uiState.update { 
                     it.copy(
                         showCompletionDialog = true,

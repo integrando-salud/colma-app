@@ -969,6 +969,46 @@ class DbHelper(context: Context) :
         }
     }
 
+    fun getEstadoAnimoByRowId(rowid: Long): EstadoAnimoModelo.EstadoAnimoRecord? {
+        val db = readableDatabase
+        val cols = arrayOf(
+            "rowid",
+            "id_paciente",
+            "fecha_registro",
+            "fecha_edicion",
+            "pregunta_1","pregunta_2","pregunta_3","pregunta_4","pregunta_5",
+            "pregunta_6","pregunta_7","pregunta_8","pregunta_9",
+            "fecha_sincronizacion"
+        )
+
+        val cursor = db.query(
+            "estado_animo_table",
+            cols,
+            "rowid = ?",
+            arrayOf(rowid.toString()),
+            null, null, null
+        )
+
+        cursor.use { c ->
+            if (c.moveToFirst()) {
+                val idPac = c.getIntOrNull("id_paciente")
+                val fechaReg = c.getStringOrNull("fecha_registro")
+                val fechaEd = c.getStringOrNull("fecha_edicion")
+                val preguntas = (1..9).map { idx -> c.getIntOrNull("pregunta_$idx") }
+                val fechaSync = c.getStringOrNull("fecha_sincronizacion")
+                return EstadoAnimoModelo.EstadoAnimoRecord(
+                    rowid,
+                    idPac,
+                    fechaReg,
+                    fechaEd,
+                    preguntas,
+                    fechaSync
+                )
+            }
+        }
+        return null
+    }
+
     fun getPendingEstadoAnimo(idPaciente: Int? = 1): EstadoAnimoModelo.EstadoAnimoRecord? {
         val db = readableDatabase
         val selectionParts = mutableListOf<String>("(fecha_sincronizacion IS NULL OR fecha_sincronizacion = '')")
