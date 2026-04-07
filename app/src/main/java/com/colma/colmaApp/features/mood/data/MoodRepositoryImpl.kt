@@ -43,7 +43,7 @@ class MoodRepositoryImpl(private val context: Context) : MoodRepository {
                 val millis = parseDateTimeToMillis(datetime) ?: System.currentTimeMillis()
                 val totalScore = e.preguntas.filterNotNull().sum()
                 val display = "Puntuación: $totalScore"
-                HealthEntry("Estado de ánimo", display, millis)
+                HealthEntry(id = e.rowid, label = "Estado de ánimo", value = display, timestamp = millis)
             }.sortedByDescending { it.timestamp }
         } catch (e: Exception) {
             e.printStackTrace()

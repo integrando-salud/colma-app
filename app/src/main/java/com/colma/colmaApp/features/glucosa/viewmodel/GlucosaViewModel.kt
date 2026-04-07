@@ -162,6 +162,11 @@ class GlucosaViewModel(private val repository: GlucosaRepository) : ViewModel() 
                     )
                 }
 
+                // Attempt to sync
+                viewModelScope.launch {
+                    repository.syncGlucosa(newEntry)
+                }
+
                 when {
                     low -> {
                         val warningMessage = getLowGlucosaWarning(state.isFasting == true, _uiState.value.userPaisId)

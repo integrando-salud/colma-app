@@ -42,6 +42,7 @@ import java.util.Locale
 
 /** Simple data class for history items */
 data class HealthEntry(
+    val id: Long? = null,
     val label: String,
     val value: String,
     val timestamp: Long,

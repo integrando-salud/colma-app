@@ -39,6 +39,7 @@ class PresionRepositoryImpl(context: Context) : PresionRepository {
                 val dia = fmt(p.diastolica)
                 val valueText = if (syst.isNotBlank() && dia.isNotBlank()) "$syst/$dia mmHg" else ""
                 HealthEntry(
+                    id = p.id,
                     label = "Presion",
                     value = valueText,
                     timestamp = millis,
@@ -79,6 +80,7 @@ class PresionRepositoryImpl(context: Context) : PresionRepository {
                 }
 
                 val newEntry = HealthEntry(
+                    id = rowId,
                     label = "Presion",
                     value = "$lastPresionValue mmHg",
                     timestamp = dateTime,

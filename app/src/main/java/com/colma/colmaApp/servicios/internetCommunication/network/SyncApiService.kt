@@ -1,7 +1,7 @@
 package com.colma.colmaApp.servicios.internetCommunication.network
 
 import com.colma.colmaApp.servicios.internetCommunication.model.SyncDataRequest
-import com.colma.colmaApp.servicios.internetCommunication.model.SyncDataResponse
+import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.Header
@@ -12,5 +12,5 @@ interface SyncApiService {
     suspend fun syncData(
         @Header("Authorization") token: String,
         @Body syncDataRequest: SyncDataRequest
-    ): Response<SyncDataResponse>
+    ): Response<ResponseBody>
 }
