@@ -148,7 +148,7 @@ fun MetaItemCard(meta: RegistrosSaludModelos.MetaRecord) {
         }
         2 -> { // Cumplida
             statusText = "Completada"
-            statusColor = Color(0xFF008000) // Green
+            statusColor = Color(0xFF4CAF50) // Green
         }
         else -> {
             statusText = "Desconocido"
@@ -158,55 +158,98 @@ fun MetaItemCard(meta: RegistrosSaludModelos.MetaRecord) {
 
     Card(
         modifier = Modifier.fillMaxWidth(),
-        elevation = CardDefaults.cardElevation(4.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.White)
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+        colors = CardDefaults.cardColors(containerColor = Color.White),
+        shape = RoundedCornerShape(12.dp)
     ) {
-        Column(modifier = Modifier.padding(16.dp)) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(20.dp)
+        ) {
+            // Header row with title and status badge
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
                 Text(
                     text = meta.actividad ?: "Actividad no especificada",
-                    style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold),
-                    modifier = Modifier.weight(1f)
+                    style = MaterialTheme.typography.titleLarge.copy(
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 18.sp
+                    ),
+                    color = Color(0xFF212121),
+                    modifier = Modifier.weight(1f).padding(end = 12.dp)
                 )
                 Text(
                     text = statusText,
                     color = Color.White,
                     fontWeight = FontWeight.Bold,
-                    fontSize = 12.sp,
+                    fontSize = 11.sp,
                     modifier = Modifier
-                        .background(statusColor, shape = RoundedCornerShape(4.dp))
-                        .padding(horizontal = 8.dp, vertical = 4.dp)
+                        .background(statusColor, shape = RoundedCornerShape(12.dp))
+                        .padding(horizontal = 12.dp, vertical = 6.dp)
                 )
             }
-            Spacer(modifier = Modifier.height(12.dp))
 
-            MetaInfoRow(label = "Objetivo para el", value = fechaObjetivoDate?.let { friendlyDateFormatter.format(it) } ?: "N/A")
-            MetaInfoRow(label = "Lugar", value = meta.lugar)
-            MetaInfoRow(label = "Acompañante", value = meta.acompañante)
+            // Divider line
+            HorizontalDivider(
+                modifier = Modifier.padding(vertical = 12.dp),
+                color = Color(0xFFE0E0E0),
+                thickness = 1.dp
+            )
 
-            if (meta.meta_cumplida == 1 && !meta.motivo_incumplimiento.isNullOrBlank()) {
-                Spacer(modifier = Modifier.height(8.dp))
-                MetaInfoRow(label = "Motivo", value = meta.motivo_incumplimiento)
+            // Info rows with better spacing
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                verticalArrangement = Arrangement.spacedBy(10.dp)
+            ) {
+                fechaObjetivoDate?.let { date ->
+                    MetaInfoRowImproved(
+                        label = "Objetivo para el",
+                        value = friendlyDateFormatter.format(date)
+                    )
+                }
+
+                meta.lugar?.takeIf { it.isNotBlank() }?.let { lugar ->
+                    MetaInfoRowImproved(label = "Lugar", value = lugar)
+                }
+
+                meta.acompañante?.takeIf { it.isNotBlank() }?.let { companion ->
+                    MetaInfoRowImproved(label = "Acompañante", value = companion)
+                }
+
+                if (meta.meta_cumplida == 1 && !meta.motivo_incumplimiento.isNullOrBlank()) {
+                    Spacer(modifier = Modifier.height(4.dp))
+                    MetaInfoRowImproved(
+                        label = "Motivo de incumplimiento",
+                        value = meta.motivo_incumplimiento
+                    )
+                }
             }
         }
     }
 }
 
 @Composable
-fun MetaInfoRow(label: String, value: String?) {
-    if (!value.isNullOrBlank()) {
-        Row(modifier = Modifier.padding(vertical = 2.dp)) {
-            Text(
-                text = "$label: ",
-                fontWeight = FontWeight.SemiBold,
-                fontSize = 14.sp,
-                color = Color.DarkGray
-            )
-            Text(
-                text = value,
-                fontSize = 14.sp,
-                color = Color.Gray
-            )
-        }
+fun MetaInfoRowImproved(label: String, value: String) {
+    Column(
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        Text(
+            text = label,
+            fontWeight = FontWeight.SemiBold,
+            fontSize = 13.sp,
+            color = Color(0xFF757575),
+            letterSpacing = 0.3.sp
+        )
+        Spacer(modifier = Modifier.height(2.dp))
+        Text(
+            text = value,
+            fontSize = 15.sp,
+            color = Color(0xFF424242),
+            lineHeight = 20.sp
+        )
     }
 }
