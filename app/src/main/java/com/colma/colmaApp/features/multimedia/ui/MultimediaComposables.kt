@@ -855,7 +855,7 @@ fun MetasContent(metasId: String, onFinish: () -> Unit) {
             Spacer(modifier = Modifier.padding(8.dp))
             CardThatOpensDateTimeDialog(
                 title = "Fecha límite",
-                initialMillis = today.timeInMillis,
+                initialMillis = tomorrow.timeInMillis,
                 showTime = false,
                 onDateTimeSelected = { selectedCal ->
                     selectedCal.set(Calendar.SECOND, 0)
