@@ -34,6 +34,9 @@ import com.colma.colmaApp.ui.theme.ColmaAppTheme
 import java.text.SimpleDateFormat
 import java.util.*
 
+import androidx.compose.foundation.lazy.rememberLazyListState
+import com.colma.colmaApp.features.multimedia.ui.scrollbar
+
 class MetasHistoryUI : ComponentActivity() {
 
     private val viewModel: MetasHistoryViewModel by viewModels {
@@ -100,8 +103,10 @@ fun MetasHistoryScreen(uiState: MetasHistoryUiState, onBack: () -> Unit) {
                     textAlign = TextAlign.Center
                 )
             } else {
+                val lazyListState = rememberLazyListState()
                 LazyColumn(
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier.fillMaxSize().scrollbar(lazyListState),
+                    state = lazyListState,
                     contentPadding = PaddingValues(16.dp),
                     verticalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
