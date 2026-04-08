@@ -147,6 +147,14 @@ fun DateTimePickerDialogComposable(
         today.set(Calendar.MILLISECOND, 0)
         dialog.datePicker.minDate = today.timeInMillis
 
+        val maxDate = Calendar.getInstance()
+        maxDate.set(Calendar.HOUR_OF_DAY, 0)
+        maxDate.set(Calendar.MINUTE, 0)
+        maxDate.set(Calendar.SECOND, 0)
+        maxDate.set(Calendar.MILLISECOND, 0)
+        maxDate.add(Calendar.DATE, 7) // Maximum 7 days from today
+        dialog.datePicker.maxDate = maxDate.timeInMillis
+
         dialog.show()
     }
 
