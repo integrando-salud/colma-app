@@ -1318,6 +1318,34 @@ class DbHelper(context: Context) :
         return results
     }
 
+    /**
+     * Get the date of the most recent mood record for a user.
+     * Returns the fecha_edicion date as a String in "yyyy-MM-dd HH:mm:ss" format, or null if no records exist.
+     */
+    fun getLatestEstadoAnimoDate(idPaciente: Int): String? {
+        val db = readableDatabase
+        val selection = "id_paciente = ?"
+        val selectionArgs = arrayOf(idPaciente.toString())
+
+        val cursor = db.query(
+            "estado_animo_table",
+            arrayOf("fecha_edicion"),
+            selection,
+            selectionArgs,
+            null,
+            null,
+            "rowid DESC",
+            "1"
+        )
+
+        cursor.use { c ->
+            if (c.moveToFirst()) {
+                return c.getStringOrNull("fecha_edicion")
+            }
+        }
+        return null
+    }
+
     fun getAllMultimediaRead(idUsuario: Int? = 1): List<RegistrosSaludModelos.MultimediaReadRecord> {
         val results = mutableListOf<RegistrosSaludModelos.MultimediaReadRecord>()
         val db = readableDatabase

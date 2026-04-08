@@ -300,15 +300,18 @@ fun HistoryRow(
 fun HealthRecordCard(
     label: String,
     onClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true
 ) {
     Card(
-        onClick = onClick,
+        onClick = { if (enabled) onClick() },
         modifier = modifier
             .fillMaxWidth()
             .height(72.dp),
         shape = RoundedCornerShape(12.dp),
-        colors = CardDefaults.cardColors(containerColor = Color(0xFFF7F7F8)),
+        colors = CardDefaults.cardColors(
+            containerColor = if (enabled) Color(0xFFF7F7F8) else Color(0xFFE0E0E0)
+        ),
         elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
     ) {
         Row(
@@ -318,8 +321,20 @@ fun HealthRecordCard(
                 .padding(horizontal = 16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(text = label, fontSize = 18.sp, fontWeight = FontWeight.SemiBold, color = Color.Black, modifier = Modifier.weight(1f))
-            Icon(imageVector = Icons.Default.Add, contentDescription = "Ingresar $label", tint = Color.Gray)
+            val textColor = if (enabled) Color.Black else Color.Gray
+            Text(
+                text = label,
+                fontSize = 18.sp,
+                fontWeight = FontWeight.SemiBold,
+                color = textColor,
+                modifier = Modifier.weight(1f)
+            )
+            val iconTint = if (enabled) Color.Gray else Color.LightGray
+            Icon(
+                imageVector = Icons.Default.Add,
+                contentDescription = "Ingresar $label",
+                tint = iconTint
+            )
         }
     }
 }

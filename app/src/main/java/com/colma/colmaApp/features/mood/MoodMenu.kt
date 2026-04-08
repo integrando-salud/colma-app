@@ -37,9 +37,12 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import com.colma.colmaApp.R
@@ -146,8 +149,19 @@ fun MoodMenuScreen(
                     onClick = {
                         onEvent(MoodMenuEvent.AddMoodClicked)
                     },
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
+                    enabled = uiState.canAccessQuiz
                 )
+
+                if (!uiState.canAccessQuiz && uiState.restrictionMessage.isNotEmpty()) {
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Text(
+                        text = uiState.restrictionMessage,
+                        color = Color.Gray,
+                        fontSize = 14.sp,
+                        modifier = Modifier.padding(horizontal = 8.dp)
+                    )
+                }
 
                 Spacer(modifier = Modifier.height(28.dp))
 

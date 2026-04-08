@@ -59,6 +59,15 @@ class MoodRepositoryImpl(private val context: Context) : MoodRepository {
         }
     }
 
+    override suspend fun getLastMoodDate(): String? = withContext(Dispatchers.IO) {
+        try {
+            dbHelper.getLatestEstadoAnimoDate(userId)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
+    }
+
     override suspend fun createDraftMoodRecord(): Result<Long> = withContext(Dispatchers.IO) {
         try {
             val idPaciente = userId

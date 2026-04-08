@@ -4,7 +4,9 @@ import com.colma.colmaApp.utils.varios.HealthEntry
 
 data class MoodMenuUiState(
     val history: List<HealthEntry> = emptyList(),
-    val isLoading: Boolean = false
+    val isLoading: Boolean = false,
+    val canAccessQuiz: Boolean = true,
+    val restrictionMessage: String = ""
 )
 
 sealed class MoodMenuEvent {
