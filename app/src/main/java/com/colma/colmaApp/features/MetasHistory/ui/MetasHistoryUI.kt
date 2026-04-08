@@ -167,31 +167,15 @@ fun MetaItemCard(meta: RegistrosSaludModelos.MetaRecord) {
                 .fillMaxWidth()
                 .padding(20.dp)
         ) {
-            // Header row with title and status badge
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    text = meta.actividad ?: "Actividad no especificada",
-                    style = MaterialTheme.typography.titleLarge.copy(
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 18.sp
-                    ),
-                    color = Color(0xFF212121),
-                    modifier = Modifier.weight(1f).padding(end = 12.dp)
-                )
-                Text(
-                    text = statusText,
-                    color = Color.White,
+            // Header with title at top
+            Text(
+                text = meta.actividad ?: "Actividad no especificada",
+                style = MaterialTheme.typography.titleLarge.copy(
                     fontWeight = FontWeight.Bold,
-                    fontSize = 11.sp,
-                    modifier = Modifier
-                        .background(statusColor, shape = RoundedCornerShape(12.dp))
-                        .padding(horizontal = 12.dp, vertical = 6.dp)
-                )
-            }
+                    fontSize = 18.sp
+                ),
+                color = Color(0xFF212121)
+            )
 
             // Divider line
             HorizontalDivider(
@@ -227,6 +211,23 @@ fun MetaItemCard(meta: RegistrosSaludModelos.MetaRecord) {
                         value = meta.motivo_incumplimiento
                     )
                 }
+            }
+
+            // Status badge at bottom right
+            Spacer(modifier = Modifier.height(12.dp))
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.End
+            ) {
+                Text(
+                    text = statusText,
+                    color = Color.White,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 11.sp,
+                    modifier = Modifier
+                        .background(statusColor, shape = RoundedCornerShape(12.dp))
+                        .padding(horizontal = 12.dp, vertical = 6.dp)
+                )
             }
         }
     }
