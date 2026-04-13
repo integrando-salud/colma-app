@@ -14,6 +14,6 @@ data class SubSessionProgress(
 interface ContentRepository {
     suspend fun getAllTreatments(): Result<List<TreatmentContent>>
     suspend fun getSubSessions(treatmentType: TreatmentType, sessionId: Long): Result<List<SubSessionContent>>
-    suspend fun getMultimediaOptions(treatmentType: TreatmentType, subSessionId: Long): Result<List<MultimediaContent>>
+    suspend fun getMultimediaOptions(treatmentType: TreatmentType, sessionId: Long, subSessionId: Long): Result<List<MultimediaContent>>
     suspend fun getSubSessionProgress(treatmentType: TreatmentType, sessionId: Long, subSessionId: Long): Result<SubSessionProgress>
 }

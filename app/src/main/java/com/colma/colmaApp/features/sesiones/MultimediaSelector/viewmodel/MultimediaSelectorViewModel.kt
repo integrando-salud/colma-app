@@ -44,7 +44,7 @@ class MultimediaSelectorViewModel(private val repository: MultimediaRepository) 
             _uiState.update { it.copy(isLoading = true, error = null) }
             val state = _uiState.value
 
-            val optionsResult = repository.getMultimediaOptions(state.treatmentTypes, state.subSessionId)
+            val optionsResult = repository.getMultimediaOptions(state.treatmentTypes, state.sessionId, state.subSessionId)
             val progressResult = repository.getSubSessionProgress(state.treatmentTypes, state.sessionId, state.subSessionId)
 
             when {

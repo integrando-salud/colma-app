@@ -46,12 +46,13 @@ class MultimediaRepositoryImpl(
 
     override suspend fun getMultimediaOptions(
         treatmentTypes: List<TreatmentType>,
+        sessionId: Long,
         subSessionId: Long
     ): Result<List<MultimediaOption>> {
         // Assuming we only care about the first treatment type for now based on previous logic
         val treatmentType = treatmentTypes.firstOrNull() ?: return Result.failure(Exception("No treatment type provided"))
 
-        return contentRepository.getMultimediaOptions(treatmentType, subSessionId).fold(
+        return contentRepository.getMultimediaOptions(treatmentType, sessionId, subSessionId).fold(
             onSuccess = { multimediaContents ->
                 Result.success(multimediaContents.map { multimediaContent ->
                     MultimediaOption(

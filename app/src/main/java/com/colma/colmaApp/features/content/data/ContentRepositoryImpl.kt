@@ -49,12 +49,16 @@ class ContentRepositoryImpl(private val context: Context) : ContentRepository {
         }
     }
 
-    override suspend fun getMultimediaOptions(treatmentType: TreatmentType, subSessionId: Long): Result<List<MultimediaContent>> {
+    override suspend fun getMultimediaOptions(treatmentType: TreatmentType, sessionId: Long, subSessionId: Long): Result<List<MultimediaContent>> {
         return try {
             val dictionary = loadContent()
-            val sessions = dictionary.treatments.find { it.id == treatmentType }?.sessions ?: emptyList()
-            val subSessions = sessions.flatMap { it.subSessions }
-            val multimediaOptions = subSessions.find { it.id == subSessionId }?.multimedia ?: emptyList()
+            val treatment = dictionary.treatments.find { it.id == treatmentType }
+            
+            // First find the specific session (week), then find the subSession within it
+            val session = treatment?.sessions?.find { it.id == sessionId }
+            val subSession = session?.subSessions?.find { it.id == subSessionId }
+            val multimediaOptions = subSession?.multimedia ?: emptyList()
+            
             Result.success(multimediaOptions)
         } catch (e: Exception) {
             Result.failure(e)
