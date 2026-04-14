@@ -61,6 +61,10 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
         }
     }
 
+    fun clearError() {
+        _uiState.update { it.copy(error = null) }
+    }
+
     sealed class NavigationEvent {
         object NavigateToHome : NavigationEvent()
     }

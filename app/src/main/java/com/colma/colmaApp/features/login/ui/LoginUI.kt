@@ -2,6 +2,7 @@ package com.colma.colmaApp.features.login.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -22,6 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -64,6 +66,15 @@ class LoginUI : ComponentActivity() {
         setContent {
             ColmaAppTheme {
                 val uiState by viewModel.uiState.collectAsState()
+                val context = LocalContext.current
+
+                // Show toast when there's an error and clear it
+                LaunchedEffect(uiState.error) {
+                    uiState.error?.let { error ->
+                        Toast.makeText(context, "Credenciales incorrectas. Intente nuevamente.", Toast.LENGTH_LONG).show()
+                        viewModel.clearError()
+                    }
+                }
 
                 LaunchedEffect(Unit) {
                     viewModel.navigationEvent.collect { event ->
