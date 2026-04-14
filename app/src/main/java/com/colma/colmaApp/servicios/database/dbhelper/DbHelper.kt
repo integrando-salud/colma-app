@@ -1581,6 +1581,27 @@ class DbHelper(context: Context) :
         return 0
     }
 
+    /**
+     * Returns the highest week number for which the user has created a goal,
+     * filtered by treatment type (hta/diabetes).
+     * Returns -1 if no goals exist for this user and treatment type.
+     */
+    fun getHighestWeekWithGoal(idUsuario: Int, treatmentType: String): Int {
+        val db = readableDatabase
+        val cursor = db.rawQuery(
+            "SELECT MAX(semana) FROM metas_table WHERE id_usuario = ? AND tipo_actividad = ?",
+            arrayOf(idUsuario.toString(), treatmentType)
+        )
+        
+        cursor.use { c ->
+            if (c.moveToFirst()) {
+                val week = c.getInt(0)
+                return if (week > 0) week else -1
+            }
+        }
+        return -1
+    }
+
     fun getPendingPastMeta(idUsuario: Int? = 1): RegistrosSaludModelos.MetaRecord? {
         val db = readableDatabase
         val selectionParts = mutableListOf<String>("meta_cumplida = 0", "date(fecha_objetivo) <= date('now', 'localtime')")

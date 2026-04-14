@@ -60,7 +60,7 @@ class MultimediaViewModel(private val repository: MultimediaRepository) : ViewMo
             }
 
             if (treatmentTypes.isNotEmpty()) {
-                repository.getMultimediaOptions(treatmentTypes, event.subSessionId)
+                repository.getMultimediaOptions(treatmentTypes, event.sessionId, event.subSessionId)
                     .onSuccess { options ->
                         _uiState.update {
                             it.copy(

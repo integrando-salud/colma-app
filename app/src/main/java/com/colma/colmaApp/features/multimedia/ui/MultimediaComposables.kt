@@ -776,7 +776,7 @@ fun QuestionCard(
 }
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MetasContent(metasId: String, onFinish: () -> Unit) {
+fun MetasContent(metasId: String, currentWeekId: Int, currentSessionId: Int, onFinish: () -> Unit) {
     val treatmentType = if (metasId != null) {
         try {
             TreatmentType.valueOf(metasId.uppercase(Locale.ROOT))
@@ -811,6 +811,52 @@ fun MetasContent(metasId: String, onFinish: () -> Unit) {
     var summaryMessage by rememberSaveable { mutableStateOf("") }
     var shouldExecuteFinalAction by rememberSaveable { mutableStateOf(false) }
     val scrollState = rememberScrollState()
+    
+    // State for blocking dialog when user has a goal for a future week
+    var isBlockedByFutureGoal by rememberSaveable { mutableStateOf(false) }
+    var blockedWeekNumber by rememberSaveable { mutableIntStateOf(-1) }
+    
+    // Check on load if user should be blocked
+    LaunchedEffect(Unit) {
+        withContext(Dispatchers.IO) {
+            val userId = SessionManager.getUserId() ?: 1
+            val highestWeek = dbHelper.getHighestWeekWithGoal(userId, treatmentType.name.lowercase())
+            if (highestWeek != -1 && currentWeekId < highestWeek) {
+                withContext(Dispatchers.Main) {
+                    isBlockedByFutureGoal = true
+                    blockedWeekNumber = highestWeek
+                }
+            }
+        }
+    }
+
+    // Show blocking dialog if user has a future week goal
+    if (isBlockedByFutureGoal) {
+        AlertDialog(
+            onDismissRequest = { },
+            containerColor = Color.White,
+            title = { Text("No puedes crear metas para esta semana") },
+            text = {
+                Column {
+                    Text("Ya creaste una meta para la **Semana $blockedWeekNumber**.")
+                    Spacer(Modifier.height(8.dp))
+                    Text("Por favor crea metas posteriores a esta semana.")
+                }
+            },
+            confirmButton = {
+                Button(
+                    onClick = { onFinish() },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = colorResource(R.color.principal),
+                        contentColor = Color.White
+                    )
+                ) {
+                    Text("Volver")
+                }
+            }
+        )
+        return // Don't render the rest of the UI
+    }
 
     Box(
         modifier = Modifier
@@ -916,9 +962,9 @@ fun MetasContent(metasId: String, onFinish: () -> Unit) {
                                 val newMeta = RegistrosSaludModelos.MetaRecord(
                                     id_meta = 0,
                                     id_usuario = userId,
-                                    semana = null,
-                                    sesion = null,
-                                    tipo_actividad = null,
+                                    semana = currentWeekId,
+                                    sesion = currentSessionId,
+                                    tipo_actividad = treatmentType.name.lowercase(),
                                     actividad = actividad.value,
                                     lugar = donde.value,
                                     acompañante = conQuien.value,
@@ -929,7 +975,15 @@ fun MetasContent(metasId: String, onFinish: () -> Unit) {
                                     fecha_objetivo = fecha.value
                                 )
                                 val result = withContext(Dispatchers.IO) {
-                                    if (dbHelper.getPendingFutureMetasCount(userId) > 0) {
+                                    // Check if user has a goal for a higher week (treatment-specific)
+                                    val highestWeekWithGoal = dbHelper.getHighestWeekWithGoal(
+                                        userId,
+                                        treatmentType.name.lowercase()
+                                    )
+                                    
+                                    if (highestWeekWithGoal != -1 && currentWeekId < highestWeekWithGoal) {
+                                        -3L // Specific code for earlier week blocked
+                                    } else if (dbHelper.getPendingFutureMetasCount(userId) > 0) {
                                         -2L // Specific code for active goal exists
                                     } else {
                                         dbHelper.insertMeta(newMeta)
@@ -941,7 +995,15 @@ fun MetasContent(metasId: String, onFinish: () -> Unit) {
                                     }
                                 } else {
                                     withContext(Dispatchers.Main) {
-                                        errorMessage = if (result == -2L) {
+                                        errorMessage = if (result == -3L) {
+                                            val highestWeekWithGoal = dbHelper.getHighestWeekWithGoal(
+                                                userId,
+                                                treatmentType.name.lowercase()
+                                            )
+                                            "Ya tienes una meta creada para la Semana $highestWeekWithGoal. " +
+                                                "No puedes crear metas para semanas anteriores. " +
+                                                "Completa tu meta actual antes de continuar."
+                                        } else if (result == -2L) {
                                             "Ya tienes una meta activa. Debes completarla antes de crear una nueva."
                                         } else {
                                             "Error al guardar la meta"
