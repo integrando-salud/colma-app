@@ -87,7 +87,10 @@ import com.google.gson.Gson
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun InformationDisplayContent(displayContent: String) {
+fun InformationDisplayContent(
+    displayContent: String,
+    descriptionAudios: List<Int>? = null
+) {
     val signatureColor = colorResource(R.color.principal)
     val paragraphs = remember(displayContent) {
         displayContent.split("\n\n").filter { it.isNotBlank() }
@@ -105,7 +108,10 @@ fun InformationDisplayContent(displayContent: String) {
                     .fillMaxWidth()
                     .weight(1f)
             ) { page ->
-                InformationCard(displayContent = paragraphs[page])
+                InformationCard(
+                    displayContent = paragraphs[page],
+                    audioResId = descriptionAudios?.getOrNull(page)
+                )
             }
             Spacer(Modifier.height(16.dp))
             HorizontalPagerIndicator(
@@ -117,13 +123,19 @@ fun InformationDisplayContent(displayContent: String) {
                     .padding(top = 8.dp)
             )
         } else {
-            InformationCard(displayContent = "No content provided.")
+            InformationCard(
+                displayContent = "No content provided.",
+                audioResId = descriptionAudios?.getOrNull(0)
+            )
         }
     }
 }
 
 @Composable
-fun InformationCard(displayContent: String) {
+fun InformationCard(
+    displayContent: String,
+    audioResId: Int? = null
+) {
     val context = LocalContext.current
     var tts by remember { mutableStateOf<TextToSpeech?>(null) }
     var isTtsReady by remember { mutableStateOf(false) }
@@ -132,34 +144,78 @@ fun InformationCard(displayContent: String) {
     val mainHandler = remember { Handler(Looper.getMainLooper()) }
     val scrollState = rememberScrollState()
 
-    DisposableEffect(displayContent) {
-        isInitializing = true
-        val speech = TextToSpeech(context) { status ->
-            if (status == TextToSpeech.SUCCESS) {
-                mainHandler.post { 
-                    isTtsReady = true
-                    isInitializing = false
-                }
-            } else {
-                mainHandler.post { isInitializing = false }
+    // Audio playback state
+    var exoPlayer by remember { mutableStateOf<ExoPlayer?>(null) }
+    var isPlayingAudio by remember { mutableStateOf(false) }
+
+    // Initialize ExoPlayer if audio is available
+    DisposableEffect(audioResId) {
+        if (audioResId != null) {
+            val player = ExoPlayer.Builder(context).build().apply {
+                val uri = Uri.parse("android.resource://${context.packageName}/$audioResId")
+                setMediaItem(MediaItem.fromUri(uri))
+                prepare()
+                playWhenReady = false
             }
+            exoPlayer = player
+
+            onDispose {
+                try {
+                    player.stop()
+                } catch (_: Exception) {}
+                player.release()
+                exoPlayer = null
+            }
+        } else {
+            onDispose { }
         }
-        speech.language = Locale("es", "ES")
-        speech.setOnUtteranceProgressListener(object : UtteranceProgressListener() {
-            override fun onStart(utteranceId: String?) {
-                mainHandler.post { isSpeaking = true }
+    }
+
+    // Initialize TTS only if no custom audio is available
+    DisposableEffect(Unit) {
+        if (audioResId == null) {
+            isInitializing = true
+            val speech = TextToSpeech(context) { status ->
+                if (status == TextToSpeech.SUCCESS) {
+                    mainHandler.post {
+                        isTtsReady = true
+                        isInitializing = false
+                    }
+                } else {
+                    mainHandler.post { isInitializing = false }
+                }
             }
-            override fun onDone(utteranceId: String?) {
-                mainHandler.post { isSpeaking = false }
-            }
-            override fun onError(utteranceId: String?) {
-                mainHandler.post { isSpeaking = false }
-            }
-        })
-        tts = speech
+            speech.language = Locale("es", "ES")
+            speech.setOnUtteranceProgressListener(object : UtteranceProgressListener() {
+                override fun onStart(utteranceId: String?) {
+                    mainHandler.post { isSpeaking = true }
+                }
+                override fun onDone(utteranceId: String?) {
+                    mainHandler.post { isSpeaking = false }
+                }
+                override fun onError(utteranceId: String?) {
+                    mainHandler.post { isSpeaking = false }
+                }
+            })
+            tts = speech
+        }
         onDispose {
             tts?.stop()
             tts?.shutdown()
+        }
+    }
+
+    // Auto-stop when audio finishes
+    LaunchedEffect(exoPlayer, isPlayingAudio) {
+        if (exoPlayer != null && isPlayingAudio) {
+            while (this.isActive && isPlayingAudio) {
+                // Check if audio finished
+                if (exoPlayer!!.currentPosition >= exoPlayer!!.duration) {
+                    isPlayingAudio = false
+                    break
+                }
+                delay(250L)
+            }
         }
     }
 
@@ -192,13 +248,37 @@ fun InformationCard(displayContent: String) {
                     modifier = Modifier.weight(1f),
                     textAlign = TextAlign.Center
                 )
+                
+                // Show play/pause button for both custom audio and TTS
                 if (isInitializing) {
                     CircularProgressIndicator(
                         modifier = Modifier.size(24.dp),
                         color = Color(0xFFE84589),
                         strokeWidth = 2.dp
                     )
+                } else if (audioResId != null && exoPlayer != null) {
+                    // Custom audio available - show play/pause button
+                    IconButton(onClick = {
+                        exoPlayer?.let { player ->
+                            if (isPlayingAudio) {
+                                player.stop()
+                                player.seekTo(0)
+                                isPlayingAudio = false
+                            } else {
+                                player.seekTo(0)
+                                player.playWhenReady = true
+                                isPlayingAudio = true
+                            }
+                        }
+                    }) {
+                        Icon(
+                            painter = painterResource(R.drawable.tts_icon),
+                            contentDescription = if (isPlayingAudio) "Detener audio" else "Reproducir audio",
+                            tint = Color(0xFFE84589)
+                        )
+                    }
                 } else if (isTtsReady) {
+                    // No custom audio - show TTS button
                     IconButton(onClick = {
                         if (isSpeaking) {
                             tts?.stop()

@@ -43,7 +43,9 @@ data class MultimediaContent(
     val iconImageVector: String? = null,
     val contentAsset: String? = null,
     val metasId: String? = null,
-    val questions: List<QuizQuestion>? = null
+    val questions: List<QuizQuestion>? = null,
+    @kotlinx.serialization.SerialName("DescriptionAudio")
+    val descriptionAudios: List<String>? = null
 )
 
 @Serializable

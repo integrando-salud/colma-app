@@ -14,4 +14,6 @@
 .cxx
 local.properties
 *.mp4
+*.m4a
 app/src/main/res/raw/Tabacaleros/
+commit_message_*.txt

@@ -70,7 +70,10 @@ class MultimediaRepositoryImpl(
                             ResourceUtils.getResourceId(context, it, "raw")
                         },
                         questions = multimediaContent.questions,
-                        metasId = multimediaContent.metasId
+                        metasId = multimediaContent.metasId,
+                        descriptionAudios = multimediaContent.descriptionAudios?.map { audioName ->
+                            ResourceUtils.getResourceId(context, audioName, "raw")
+                        }
                     )
                 })
             },

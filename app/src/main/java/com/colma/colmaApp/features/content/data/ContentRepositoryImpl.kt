@@ -1,6 +1,7 @@
 package com.colma.colmaApp.features.content.data
 
 import android.content.Context
+import android.util.Log
 import com.colma.colmaApp.features.content.domain.ContentRepository
 import com.colma.colmaApp.features.content.domain.SubSessionProgress
 import com.colma.colmaApp.features.content.model.ContentDictionary
@@ -15,14 +16,20 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class ContentRepositoryImpl(private val context: Context) : ContentRepository {
+    private val TAG = "ContentRepository"
 
     private var content: ContentDictionary? = null
 
     private suspend fun loadContent(): ContentDictionary {
         if (content == null) {
             content = withContext(Dispatchers.IO) {
-                context.assets.open("content.json").bufferedReader().use {
-                    Json.decodeFromString(it.readText())
+                try {
+                    val jsonText = context.assets.open("content.json").bufferedReader().use { it.readText() }
+                    Log.d(TAG, "Successfully read content.json (${jsonText.length} characters)")
+                    Json.decodeFromString(jsonText)
+                } catch (e: Exception) {
+                    Log.e(TAG, "Error loading content.json: ${e.message}", e)
+                    throw e
                 }
             }
         }
@@ -32,8 +39,10 @@ class ContentRepositoryImpl(private val context: Context) : ContentRepository {
     override suspend fun getAllTreatments(): Result<List<TreatmentContent>> {
         return try {
             val dictionary = loadContent()
+            Log.d(TAG, "Successfully loaded ${dictionary.treatments.size} treatments")
             Result.success(dictionary.treatments)
         } catch (e: Exception) {
+            Log.e(TAG, "Error in getAllTreatments: ${e.message}", e)
             Result.failure(e)
         }
     }

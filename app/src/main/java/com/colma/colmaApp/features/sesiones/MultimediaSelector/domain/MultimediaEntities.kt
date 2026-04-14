@@ -23,5 +23,6 @@ data class MultimediaOption(
     val iconImageVector: ImageVector? = null, // For ImageVector icons (e.g., Icons.Default.PlayArrow)
     val contentAssetId: Int? = null, // For raw resource IDs (e.g., R.raw.xxx)
     val questions: List<QuizQuestion>? = null, // New field for embedded quiz questions
-    val metasId: String? = null // New field for metas identification
+    val metasId: String? = null, // New field for metas identification
+    val descriptionAudios: List<Int>? = null // Audio resource IDs for description paragraphs
 )

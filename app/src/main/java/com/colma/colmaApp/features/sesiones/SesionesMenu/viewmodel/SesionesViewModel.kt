@@ -1,5 +1,6 @@
 package com.colma.colmaApp.features.sesiones.SesionesMenu.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.colma.colmaApp.features.sesiones.MultimediaSelector.domain.TreatmentType
@@ -12,6 +13,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class SesionesViewModel(private val repository: SesionesRepository) : ViewModel() {
+    private val TAG = "SesionesViewModel"
 
     private val _uiState = MutableStateFlow(SesionesUiState())
     val uiState = _uiState.asStateFlow()
@@ -67,13 +69,18 @@ class SesionesViewModel(private val repository: SesionesRepository) : ViewModel(
 
     private fun loadSessions() {
         viewModelScope.launch {
+            Log.d(TAG, "Loading sessions for treatment types: ${_uiState.value.treatmentTypes}")
             _uiState.update { it.copy(isLoading = true) }
             try {
                 val hasHta = _uiState.value.treatmentTypes.contains(TreatmentType.HTA)
                 val hasDiabetes = _uiState.value.treatmentTypes.contains(TreatmentType.DIABETES)
 
+                Log.d(TAG, "Has HTA: $hasHta, Has Diabetes: $hasDiabetes")
+
                 val htaSessions = if (hasHta) repository.getHtaSessions() else emptyList()
                 val diabetesSessions = if (hasDiabetes) repository.getDiabetesSessions() else emptyList()
+
+                Log.d(TAG, "Loaded ${htaSessions.size} HTA sessions and ${diabetesSessions.size} Diabetes sessions")
 
                 _uiState.update {
                     it.copy(
@@ -83,6 +90,7 @@ class SesionesViewModel(private val repository: SesionesRepository) : ViewModel(
                     )
                 }
             } catch (e: Exception) {
+                Log.e(TAG, "Error loading sessions: ${e.message}", e)
                 _uiState.update { it.copy(isLoading = false, error = e.message) }
             }
         }
