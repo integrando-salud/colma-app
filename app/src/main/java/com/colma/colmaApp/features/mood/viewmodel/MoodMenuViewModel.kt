@@ -35,7 +35,10 @@ class MoodMenuViewModel(private val repository: MoodRepository) : ViewModel() {
 
     fun onEvent(event: MoodMenuEvent) {
         when (event) {
-            MoodMenuEvent.RefreshHistory -> loadHistory()
+            MoodMenuEvent.RefreshHistory -> {
+                loadHistory()
+                checkQuizAccess()
+            }
             MoodMenuEvent.AddMoodClicked -> {
                 if (uiState.value.canAccessQuiz) {
                     viewModelScope.launch{

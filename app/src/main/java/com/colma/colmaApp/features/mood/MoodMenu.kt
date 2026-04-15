@@ -43,6 +43,9 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import com.colma.colmaApp.R
@@ -112,6 +115,16 @@ fun MoodMenuScreen(
     onEvent: (MoodMenuEvent) -> Unit,
     onBack: () -> Unit = {}
 ) {
+    val lifecycleOwner = LocalLifecycleOwner.current
+    LaunchedEffect(lifecycleOwner) {
+        val observer = LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_START) {
+                onEvent(MoodMenuEvent.RefreshHistory)
+            }
+        }
+        lifecycleOwner.lifecycle.addObserver(observer)
+    }
+
     Scaffold(
         modifier = Modifier.systemBarsPadding(),
         topBar = {
