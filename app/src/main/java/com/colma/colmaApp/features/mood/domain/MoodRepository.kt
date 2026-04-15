@@ -10,4 +10,5 @@ interface MoodRepository {
     suspend fun saveMoodRecord(answers: Map<Int, Int?>, editDate: String): Result<Long>
     suspend fun deleteMoodRecord(recordId: Long)
     suspend fun syncMoodRecord(recordId: Long): Result<String>
+    suspend fun getUserPaisId(): Int?
 }

@@ -161,10 +161,31 @@ class MoodQuizViewModel(private val repository: MoodRepository) : ViewModel() {
                     repository.syncMoodRecord(recordId)
                 }
 
+                val totalScore = answersToSave.values.filterNotNull().sum()
+                val paisId = repository.getUserPaisId()
+                
+                val completionMessage = when {
+                    totalScore >= 15 -> {
+                        when (paisId) {
+                            1 -> "Gracias por responder este cuestionario. Tus respuestas sugieren que podrías estar atravesando un momento difícil y que sería útil recibir apoyo.\n\nTe recomendamos pedir una cita de evaluación en tu centro de salud o servicio de salud mental lo antes posible.\n\nEn los próximos días, tu promotora de salud se va a comunicar con vos para hacer seguimiento: te va a preguntar si pudiste pedir la cita y, si hubo barreras, va a intentar ayudarte a resolverlas.\n\nEn caso que te estés sintiendo mal, podés acudir a una guardia o podés llamar al 107."
+                            2 -> "Gracias por responder este cuestionario. Tus respuestas sugieren que podrías estar pasando por un momento difícil y que sería útil recibir apoyo.\n\nTe recomendamos sacar una cita con el servicio de psicología de tu centro de salud a la brevedad.\n\nEn los próximos días, tu promotora de salud se comunicará contigo para hacer seguimiento: te preguntará si pudiste solicitar la cita y, si hubo barreras, intentará ayudarte a resolverlas."
+                            else -> "Registro guardado exitosamente"
+                        }
+                    }
+                    totalScore in 10..14 -> {
+                        when (paisId) {
+                            1 -> "Tus respuestas sugieren que podés estar sintiendo un malestar emocional que podría afectar tu vida diaria. \n\nTe recomendamos consultar en tu centro de salud. \n\nMientras tanto, recordá que dormir bien, hacer actividad física y pasar tiempo con personas queridas puede ayudarte."
+                            2 -> "Tus respuestas sugieren que puedes estar sintiendo un malestar emocional que podría afectar tu vida diaria. \n\nTe recomendamos consultar en tu centro de salud. \n\nMientras tanto, recuerda que dormir bien, hacer actividad física y pasar tiempo con personas queridas puede ayudarte."
+                            else -> "Registro guardado exitosamente"
+                        }
+                    }
+                    else -> "Registro guardado exitosamente"
+                }
+
                 _uiState.update { 
                     it.copy(
                         showCompletionDialog = true,
-                        completionDialogMessage = "Registro guardado exitosamente",
+                        completionDialogMessage = completionMessage,
                         shouldNavigateAfterCompletion = true
                     )
                 }
