@@ -201,11 +201,9 @@ fun HistoryRow(
                     val s = entry.rawValue1
                     val d = entry.rawValue2
                     if (s != null && d != null) {
-                        val highS = s > 140
-                        val lowS = s < 90
-                        val highD = d > 90
-                        val lowD = d < 60
-                        if (highS || lowS || highD || lowD) {
+                        val severeHigh = s >= 180 || d >= 120
+                        val severeLow = s <= 90
+                        if (severeHigh || severeLow) {
                             dangerous = true
                         }
                     }

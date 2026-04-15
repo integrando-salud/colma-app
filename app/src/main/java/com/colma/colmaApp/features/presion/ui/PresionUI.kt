@@ -263,22 +263,12 @@ fun PresionScreen(
                     if (s != null && d != null) {
                         val severeHigh = s >= 180 || d >= 120
                         val severeLow = s <= 90
-                        val highS = s > 140
-                        val lowS = s < 90
-                        val highD = d > 90
-                        val lowD = d < 60
                         if (severeHigh) {
                             dangerous = true
                             text = getSevereHighPressureText(uiState.userPaisId)
                         } else if (severeLow) {
                             dangerous = true
                             text = getSevereLowPressureText(uiState.userPaisId)
-                        } else if (highS || lowS || highD || lowD) {
-                            dangerous = true
-                            val parts = mutableListOf<String>()
-                            if (lowS || lowD) parts.add("presión baja")
-                            if (highS || highD) parts.add("presión alta")
-                            text = "Advertencia: " + parts.joinToString(" y ") + ". Por favor consulte con un médico."
                         }
                     }
                     Pair(dangerous, text)

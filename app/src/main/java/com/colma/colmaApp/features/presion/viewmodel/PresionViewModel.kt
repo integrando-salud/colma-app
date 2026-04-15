@@ -132,14 +132,12 @@ class PresionViewModel(private val repository: PresionRepository) : ViewModel() 
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true) }
 
-            val highS = sys > 140
-            val lowS = sys < 90
-            val highD = dia > 90
-            val lowD = dia < 60
+            val severeHigh = sys >= 180 || dia >= 120
+            val severeLow = sys <= 90
 
             val advertencia = when {
-                highS || highD -> "Alta"
-                lowS || lowD -> "Baja"
+                severeHigh -> "Alta"
+                severeLow -> "Baja"
                 else -> "Normal"
             }
 
@@ -153,13 +151,6 @@ class PresionViewModel(private val repository: PresionRepository) : ViewModel() 
             result.onSuccess { newEntry ->
                 val updatedHistory = (listOf(newEntry) + state.history).sortedByDescending { it.timestamp }
 
-                val severeHigh = sys >= 180 || dia >= 120
-                val severeLow = sys <= 90
-                val highS = sys > 140
-                val lowS = sys < 90
-                val highD = dia > 90
-                val lowD = dia < 60
-
                 _uiState.update {
                     it.copy(
                         isLoading = false,
@@ -167,7 +158,7 @@ class PresionViewModel(private val repository: PresionRepository) : ViewModel() 
                         history = updatedHistory,
                         lastPresion = updatedHistory.firstOrNull(),
                         error = null,
-                        showSuccessDialog = !severeHigh && !severeLow && !highS && !lowS && !highD && !lowD
+                        showSuccessDialog = !severeHigh && !severeLow
                     )
                 }
 
@@ -184,13 +175,6 @@ class PresionViewModel(private val repository: PresionRepository) : ViewModel() 
                     severeLow -> {
                         val warningMessage = getSevereLowPressureWarning(_uiState.value.userPaisId)
                         _uiState.update { it.copy(warningDialog = PresionUiState.WarningDialog(show = true, message = warningMessage)) }
-                    }
-                    highS || highD || lowS || lowD -> {
-                        val parts = mutableListOf<String>()
-                        if (lowS || lowD) parts.add("presión baja")
-                        if (highS || highD) parts.add("presión alta")
-                        val warningText = "Advertencia: " + parts.joinToString(" y ") + ". Por favor consulte con un médico."
-                        _uiState.update { it.copy(warningDialog = PresionUiState.WarningDialog(show = true, message = warningText)) }
                     }
                 }
             }.onFailure { error ->
