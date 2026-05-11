@@ -113,7 +113,6 @@ fun LoginScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .systemBarsPadding()
-                .padding(horizontal = 16.dp)
                 .verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -130,7 +129,8 @@ fun LoginScreen(
 
             Card(
                 modifier = Modifier
-                    .fillMaxWidth(),
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp),
                 shape = RoundedCornerShape(16.dp),
                 elevation = CardDefaults.cardElevation(defaultElevation = 18.dp),
                 colors = CardDefaults.cardColors(containerColor = Color.White)
