@@ -113,27 +113,24 @@ fun LoginScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .systemBarsPadding()
-                .padding(horizontal = 24.dp)
-
+                .padding(horizontal = 16.dp)
                 .verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Image(
-                painter = painterResource(R.drawable.colma_logo),
+                painter = painterResource(R.drawable.logo_login),
                 contentDescription = "Logo",
                 contentScale = ContentScale.Fit,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 16.dp)
-                    .fillMaxHeight(0.40f)
+                    .height(200.dp)
             )
 
-            Spacer(modifier = Modifier.height(50.dp))
+            Spacer(modifier = Modifier.height(24.dp))
 
             Card(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp),
+                    .fillMaxWidth(),
                 shape = RoundedCornerShape(16.dp),
                 elevation = CardDefaults.cardElevation(defaultElevation = 18.dp),
                 colors = CardDefaults.cardColors(containerColor = Color.White)
