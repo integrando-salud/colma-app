@@ -143,8 +143,8 @@ fun LoginScreen(
 
             AnimatedVisibility(
                 visible = !isKeyboardVisible,
-                enter = fadeIn(),
-                exit = fadeOut()
+                enter = fadeIn() + expandVertically(),
+                exit = fadeOut() + shrinkVertically ()
             ) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Image(
