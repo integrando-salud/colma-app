@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -103,6 +104,19 @@ fun LoginScreen(
     val isFormValid = uiState.dni.trim().isNotEmpty() && uiState.password.isNotEmpty()
     var passwordVisible by remember { mutableStateOf(false) }
 
+    // Detect if keyboard is visible
+    val isKeyboardVisible = WindowInsets.ime.asPaddingValues().calculateBottomPadding() > 0.dp
+
+    // Animate values based on keyboard visibility
+    val logoHeight by animateDpAsState(
+        targetValue = if (isKeyboardVisible) 80.dp else 200.dp,
+        label = "logoHeight"
+    )
+    val spacerHeight by animateDpAsState(
+        targetValue = if (isKeyboardVisible) 4.dp else 24.dp,
+        label = "spacerHeight"
+    )
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -113,6 +127,7 @@ fun LoginScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .systemBarsPadding()
+                .imePadding()
                 .verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -122,10 +137,10 @@ fun LoginScreen(
                 contentScale = ContentScale.Fit,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(200.dp)
+                    .height(logoHeight)
             )
 
-            Spacer(modifier = Modifier.height(24.dp))
+            Spacer(modifier = Modifier.height(spacerHeight))
 
             Card(
                 modifier = Modifier
@@ -264,6 +279,9 @@ fun LoginScreen(
                 modifier = Modifier
                     .padding(16.dp)
             )
+            if (isKeyboardVisible) {
+                Spacer(modifier = Modifier.height(32.dp))
+            }
         }
     }
 }
