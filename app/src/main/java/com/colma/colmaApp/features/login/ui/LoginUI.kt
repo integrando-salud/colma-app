@@ -6,10 +6,13 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.compose.animation.*
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.relocation.BringIntoViewRequester
+import androidx.compose.foundation.relocation.bringIntoViewRequester
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -22,6 +25,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.focus.onFocusEvent
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -45,6 +49,7 @@ import com.colma.colmaApp.features.login.viewmodel.LoginUiState
 import com.colma.colmaApp.features.login.viewmodel.LoginViewModel
 import com.colma.colmaApp.features.login.viewmodel.LoginViewModelFactory
 import com.colma.colmaApp.ui.theme.ColmaAppTheme
+import kotlinx.coroutines.launch
 
 class LoginUI : ComponentActivity() {
 
@@ -96,6 +101,7 @@ class LoginUI : ComponentActivity() {
     }
 }
 
+@OptIn(ExperimentalLayoutApi::class, androidx.compose.foundation.ExperimentalFoundationApi::class)
 @Composable
 fun LoginScreen(
     uiState: LoginUiState,
@@ -104,43 +110,55 @@ fun LoginScreen(
     val isFormValid = uiState.dni.trim().isNotEmpty() && uiState.password.isNotEmpty()
     var passwordVisible by remember { mutableStateOf(false) }
 
+    val coroutineScope = rememberCoroutineScope()
+    val bringIntoViewRequester = remember { BringIntoViewRequester() }
+
     // Detect if keyboard is visible
     val isKeyboardVisible = WindowInsets.ime.asPaddingValues().calculateBottomPadding() > 0.dp
 
-    // Animate values based on keyboard visibility
-    val logoHeight by animateDpAsState(
-        targetValue = if (isKeyboardVisible) 80.dp else 200.dp,
-        label = "logoHeight"
+    // Animate spacers based on keyboard visibility
+    val topSpacerHeight by animateDpAsState(
+        targetValue = if (isKeyboardVisible) 16.dp else 40.dp,
+        label = "topSpacerHeight"
     )
-    val spacerHeight by animateDpAsState(
-        targetValue = if (isKeyboardVisible) 4.dp else 24.dp,
-        label = "spacerHeight"
+    val cardSpacerHeight by animateDpAsState(
+        targetValue = if (isKeyboardVisible) 8.dp else 24.dp,
+        label = "cardSpacerHeight"
     )
 
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(colorResource(R.color.background)),
-        contentAlignment = Alignment.Center
+            .background(colorResource(R.color.background))
+            .systemBarsPadding(),
+        contentAlignment = Alignment.TopCenter
     ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .systemBarsPadding()
-                .imePadding()
                 .verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Image(
-                painter = painterResource(R.drawable.logo_login),
-                contentDescription = "Logo",
-                contentScale = ContentScale.Fit,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(logoHeight)
-            )
+            Spacer(modifier = Modifier.height(topSpacerHeight))
 
-            Spacer(modifier = Modifier.height(spacerHeight))
+            AnimatedVisibility(
+                visible = !isKeyboardVisible,
+                enter = fadeIn(),
+                exit = fadeOut()
+            ) {
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Image(
+                        painter = painterResource(R.drawable.logo_login),
+                        contentDescription = "Logo",
+                        contentScale = ContentScale.Fit,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(200.dp)
+                    )
+                }
+            }
+
+            Spacer(modifier = Modifier.height(cardSpacerHeight))
 
             Card(
                 modifier = Modifier
@@ -197,6 +215,14 @@ fun LoginScreen(
                         textStyle = TextStyle(color = colorResource(R.color.black)),
                         modifier = Modifier
                             .fillMaxWidth()
+                            .bringIntoViewRequester(bringIntoViewRequester)
+                            .onFocusEvent {
+                                if (it.isFocused) {
+                                    coroutineScope.launch {
+                                        bringIntoViewRequester.bringIntoView()
+                                    }
+                                }
+                            }
                     )
 
                     Spacer(Modifier.height(16.dp))
@@ -216,7 +242,16 @@ fun LoginScreen(
                             focusedLabelColor = colorResource(R.color.principal),
                             unfocusedLabelColor = Color(0xFF666666)
                         ),
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .bringIntoViewRequester(bringIntoViewRequester)
+                            .onFocusEvent {
+                                if (it.isFocused) {
+                                    coroutineScope.launch {
+                                        bringIntoViewRequester.bringIntoView()
+                                    }
+                                }
+                            },
                         textStyle = TextStyle(color = colorResource(R.color.black)),
                         trailingIcon = {
                             val image = if (passwordVisible)
@@ -279,11 +314,8 @@ fun LoginScreen(
                 modifier = Modifier
                     .padding(16.dp)
             )
-            if (isKeyboardVisible) {
-                Spacer(modifier = Modifier.height(32.dp))
-            }
+            
+            Spacer(modifier = Modifier.height(32.dp))
         }
     }
 }
-
-
