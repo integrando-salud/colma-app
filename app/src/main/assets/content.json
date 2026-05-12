@@ -38,7 +38,7 @@
                 },
                 {
                   "type": "QUIZ",
-                  "title": "Cuestionario Módulo 5",
+                  "title": "Pregunta del día Módulo 5",
                   "description": "Responde las preguntas del módulo 5 de HTA",
                   "iconResId": "outline_trophy_24",
                   "questions": [
@@ -705,7 +705,7 @@
                 },
                 {
                   "type": "QUIZ",
-                  "title": "Cuestionario Módulo 5",
+                  "title": "Pregunta del día Módulo 5",
                   "description": "Responde las preguntas del módulo 5 de Diabetes",
                   "iconResId": "outline_trophy_24",
                   "questions": [

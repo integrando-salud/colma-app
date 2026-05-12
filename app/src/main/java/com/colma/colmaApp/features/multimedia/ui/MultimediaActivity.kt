@@ -129,7 +129,7 @@ fun MultimediaScreen(
             MultimediaContentType.VIDEO -> "Video"
             MultimediaContentType.AUDIO -> "Audio"
             MultimediaContentType.METAS -> "Metas"
-            MultimediaContentType.QUIZ -> "Pregunta del Día"
+            MultimediaContentType.QUIZ -> "Pregunta del día"
             else -> type.name
         }
     } ?: ""

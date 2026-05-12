@@ -149,9 +149,9 @@ class MoodMenuViewModel(private val repository: MoodRepository) : ViewModel() {
             val seconds = TimeUnit.MILLISECONDS.toSeconds(remainingMillis).toInt() % 60
             
             val message = if (days > 0) {
-                "Podrás acceder al cuestionario en $days días y ${String.format("%02d:%02d:%02d", hours, minutes, seconds)} horas"
+                "Podrás acceder a la Pregunta del día en $days días y ${String.format("%02d:%02d:%02d", hours, minutes, seconds)} horas"
             } else {
-                "Podrás acceder al cuestionario en ${String.format("%02d:%02d:%02d", hours, minutes, seconds)} horas"
+                "Podrás acceder a la Pregunta del día en ${String.format("%02d:%02d:%02d", hours, minutes, seconds)} horas"
             }
             _uiState.update { 
                 it.copy(
