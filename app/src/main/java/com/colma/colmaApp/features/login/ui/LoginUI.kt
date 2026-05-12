@@ -2,7 +2,6 @@ package com.colma.colmaApp.features.login.ui
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -39,6 +38,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsControllerCompat
@@ -74,11 +74,71 @@ class LoginUI : ComponentActivity() {
                 val uiState by viewModel.uiState.collectAsState()
                 val context = LocalContext.current
 
-                // Show toast when there's an error and clear it
-                LaunchedEffect(uiState.error) {
-                    uiState.error?.let { error ->
-                        Toast.makeText(context, "Credenciales incorrectas. Intente nuevamente.", Toast.LENGTH_LONG).show()
-                        viewModel.clearError()
+                // Show dialog when there's an error
+                if (uiState.error != null) {
+                    Dialog(onDismissRequest = { viewModel.clearError() }) {
+                        var isVisible by remember { mutableStateOf(false) }
+                        
+                        // Trigger entrance animation
+                        LaunchedEffect(Unit) {
+                            isVisible = true
+                        }
+
+                        AnimatedVisibility(
+                            visible = isVisible,
+                            enter = fadeIn() + scaleIn(initialScale = 0.8f),
+                            exit = fadeOut() + scaleOut(targetScale = 0.8f)
+                        ) {
+                            Surface(
+                                shape = RoundedCornerShape(28.dp),
+                                color = Color.White,
+                                tonalElevation = 6.dp,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(16.dp)
+                                    .shadow(elevation = 24.dp, shape = RoundedCornerShape(28.dp))
+                            ) {
+                                Column(
+                                    modifier = Modifier.padding(24.dp),
+                                    horizontalAlignment = Alignment.Start
+                                ) {
+                                    Text(
+                                        text = "Error de ingreso",
+                                        fontSize = 20.sp,
+                                        fontWeight = FontWeight.Bold,
+                                        color = Color.Black
+                                    )
+                                    
+                                    Spacer(modifier = Modifier.height(16.dp))
+                                    
+                                    Text(
+                                        text = "Credenciales incorrectas. Intente nuevamente.",
+                                        fontSize = 16.sp,
+                                        color = Color.Gray
+                                    )
+                                    
+                                    Spacer(modifier = Modifier.height(24.dp))
+                                    
+                                    Row(
+                                        modifier = Modifier.fillMaxWidth(),
+                                        horizontalArrangement = Arrangement.End
+                                    ) {
+                                        TextButton(
+                                            onClick = {
+                                                isVisible = false
+                                                viewModel.clearError()
+                                            }
+                                        ) {
+                                            Text(
+                                                "Aceptar",
+                                                color = colorResource(R.color.principal),
+                                                fontWeight = FontWeight.Bold
+                                            )
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
 
