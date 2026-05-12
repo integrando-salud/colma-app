@@ -169,6 +169,8 @@ class PresionViewModel(private val repository: PresionRepository) : ViewModel() 
                     repository.syncPresion(newEntry, advertencia)
                 }
 
+                val hasTrend = repository.checkHighPressureTrend()
+
                 when {
                     severeHigh -> {
                         val warningMessage = getSevereHighPressureWarning(_uiState.value.userPaisId)
@@ -176,6 +178,10 @@ class PresionViewModel(private val repository: PresionRepository) : ViewModel() 
                     }
                     severeLow -> {
                         val warningMessage = getSevereLowPressureWarning(_uiState.value.userPaisId)
+                        _uiState.update { it.copy(warningDialog = PresionUiState.WarningDialog(show = true, message = warningMessage)) }
+                    }
+                    hasTrend -> {
+                        val warningMessage = getTrendWarning(_uiState.value.userPaisId)
                         _uiState.update { it.copy(warningDialog = PresionUiState.WarningDialog(show = true, message = warningMessage)) }
                     }
                 }
@@ -216,6 +222,22 @@ class PresionViewModel(private val repository: PresionRepository) : ViewModel() 
             }
             else -> {
                 "Advertencia: Presión arterial severamente baja. Por favor consulte con un médico urgentemente."
+            }
+        }
+    }
+
+    private fun getTrendWarning(paisId: Int?): String {
+        return when (paisId) {
+            1 -> {
+                "Últimamente ingresaste valores de presión altos, es importante que pidas un turno con tu médico para controlar tu presión.\n" +
+                        "Si te sentís mal ahora, buscá atención médica. Podés ir a la guardia o llamar al 107."
+            }
+            2 -> {
+                "Últimamente registraste mediciones de presión altas, es importante que saques una cita con tu médico y contarle esta situación.\n" +
+                        "Si sientes malestar en este momento, busca atención médica."
+            }
+            else -> {
+                "Últimamente ingresaste valores de presión altos, es importante que pidas un turno con tu médico para controlar tu presión."
             }
         }
     }

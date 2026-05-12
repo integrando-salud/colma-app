@@ -174,4 +174,8 @@ class PresionRepositoryImpl(private val context: Context) : PresionRepository {
             Result.failure(e)
         }
     }
+
+    override suspend fun checkHighPressureTrend(): Boolean = withContext(Dispatchers.IO) {
+        dbHelper.hasHighPressureTrend(userId)
+    }
 }

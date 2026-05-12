@@ -1991,6 +1991,45 @@ class DbHelper(context: Context) :
                 }
                 return null
             }
+
+            /**
+             * Check if the user has recorded high blood pressure (>= 140/90) for 4 consecutive days.
+             */
+            fun hasHighPressureTrend(idUsuario: Int): Boolean {
+                val db = readableDatabase
+                // Get the latest 4 unique days with high pressure readings
+                val query = """
+                    SELECT DISTINCT date(fecha_hora_edicion) as day_date 
+                    FROM presion_table 
+                    WHERE id_usuario = ? 
+                    AND (sistolica >= 140 OR diastolica >= 90) 
+                    ORDER BY day_date DESC 
+                    LIMIT 4
+                """.trimIndent()
+                
+                val dates = mutableListOf<String>()
+                db.rawQuery(query, arrayOf(idUsuario.toString())).use { cursor ->
+                    while (cursor.moveToNext()) {
+                        dates.add(cursor.getString(0))
+                    }
+                }
+                
+                if (dates.size < 4) return false
+                
+                // Check if they are consecutive
+                val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+                return try {
+                    for (i in 0 until dates.size - 1) {
+                        val d1 = sdf.parse(dates[i]) ?: return false
+                        val d2 = sdf.parse(dates[i+1]) ?: return false
+                        val diff = (d1.time - d2.time) / (1000 * 60 * 60 * 24)
+                        if (diff != 1L) return false
+                    }
+                    true
+                } catch (e: Exception) {
+                    false
+                }
+            }
         }
         
         /* Cursor helper extension functions */
