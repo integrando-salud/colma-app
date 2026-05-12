@@ -170,7 +170,7 @@ fun <T> CardThatOpensSelectionDialog(
                         showDialog = false
                     },
                     enabled = selectedIndex != null,
-                    colors = ButtonDefaults.textButtonColors(containerColor = Color(0xFF008000), contentColor = Color.White)
+                    colors = ButtonDefaults.textButtonColors(containerColor = colorResource(R.color.principal_boton), contentColor = Color.White)
                 ) {
                     Text("Guardar")
                 }

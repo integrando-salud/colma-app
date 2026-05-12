@@ -111,7 +111,7 @@ fun CardThatOpensEditDialog(
                         onSave(trimmed)
                         showDialog = false
                     },
-                    colors = ButtonDefaults.textButtonColors(containerColor = Color(0xFF008000), contentColor = Color.White)
+                    colors = ButtonDefaults.textButtonColors(containerColor = colorResource(R.color.principal_boton), contentColor = Color.White)
                 ) {
                     Text(confirmLabel)
                 }

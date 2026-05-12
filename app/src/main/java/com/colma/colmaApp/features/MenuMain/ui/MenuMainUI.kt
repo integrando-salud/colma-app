@@ -233,7 +233,7 @@ fun MenuScreen(
                             onEvent(MenuMainEvent.ObjectiveNotCompleted(selectedReason))
                         }
                     },
-                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF008000), contentColor = Color.White),
+                    colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.principal_boton), contentColor = Color.White),
                     elevation = ButtonDefaults.buttonElevation(defaultElevation = 2.dp)
                 ) {
                     Text("Aceptar")
@@ -257,7 +257,7 @@ fun MenuScreen(
             confirmButton = {
                 Button(
                     onClick = { onEvent(MenuMainEvent.OtherReasonConfirmed) },
-                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF008000), contentColor = Color.White),
+                    colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.principal_boton), contentColor = Color.White),
                     elevation = ButtonDefaults.buttonElevation(defaultElevation = 2.dp)
                 ) {
                     Text("Aceptar")
@@ -280,7 +280,7 @@ fun MenuScreen(
             confirmButton = {
                 Button(
                     onClick = { onEvent(MenuMainEvent.DismissFeedbackDialog) },
-                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF008000), contentColor = Color.White),
+                    colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.principal_boton), contentColor = Color.White),
                     elevation = ButtonDefaults.buttonElevation(defaultElevation = 2.dp)
                 ) {
                     Text("Aceptar")

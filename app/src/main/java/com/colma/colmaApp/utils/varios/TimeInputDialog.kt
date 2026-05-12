@@ -52,7 +52,7 @@ fun TimeInputDialog(
                         onTimeSelected(timePickerState.hour, timePickerState.minute)
                         onDismiss()
                     },
-                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF008000), contentColor = Color.White)
+                    colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.principal_boton), contentColor = Color.White)
                 ) {
                     Text("OK")
                 }

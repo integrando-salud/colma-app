@@ -113,7 +113,7 @@ class PresionUI : ComponentActivity() {
                         confirmButton = {
                             Button(
                                 onClick = { viewModel.onEvent(PresionEvent.DismissWarningDialog) },
-                                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF008000), contentColor = Color.White),
+                                colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.principal_boton), contentColor = Color.White),
                                 elevation = ButtonDefaults.buttonElevation(defaultElevation = 2.dp)
                             ) {
                                 Text("Ok")
@@ -130,7 +130,7 @@ class PresionUI : ComponentActivity() {
                         confirmButton = {
                             Button(
                                 onClick = { viewModel.onEvent(PresionEvent.DismissSuccessDialog) },
-                                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF008000), contentColor = Color.White),
+                                colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.principal_boton), contentColor = Color.White),
                                 elevation = ButtonDefaults.buttonElevation(defaultElevation = 2.dp)
                             ) {
                                 Text("Aceptar")
@@ -178,7 +178,7 @@ fun PresionScreen(
                         onEvent(PresionEvent.SavePresionClicked)
                         showConfirmationDialog = false
                     },
-                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF008000), contentColor = Color.White),
+                    colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.principal_boton), contentColor = Color.White),
                     elevation = ButtonDefaults.buttonElevation(defaultElevation = 2.dp)
                 ) {
                     Text("Confirmar")
@@ -417,7 +417,7 @@ fun PresionScreen(
                 confirmButton = {
                         Button(
                             onClick = { onEvent(PresionEvent.DismissDetailsDialog) },
-                            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF008000), contentColor = Color.White),
+                            colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.principal_boton), contentColor = Color.White),
                             elevation = ButtonDefaults.buttonElevation(defaultElevation = 2.dp)
                         ) {
                             Text("Cerrar")
@@ -497,7 +497,7 @@ fun PresionScreen(
                     confirmButton = {
                         Button(
                             onClick = { showConfirmationDialog = true },
-                            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF008000), contentColor = Color.White),
+                            colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.principal_boton), contentColor = Color.White),
                             elevation = ButtonDefaults.buttonElevation(defaultElevation = 2.dp)
                         ) { Text("Guardar") }
                     },

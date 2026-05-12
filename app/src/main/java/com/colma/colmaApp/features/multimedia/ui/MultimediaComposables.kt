@@ -742,7 +742,7 @@ fun QuizContent(
                             )
                             onQuizSubmit(quizResponseRecord, questionResponses)
                         },
-                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF008000), contentColor = Color.White)
+                        colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.principal_boton), contentColor = Color.White)
                     ) {
                         Text("Guardar")
                     }
@@ -1112,7 +1112,7 @@ fun MetasContent(metasId: String, currentWeekId: Int, currentSessionId: Int, onF
                                 showSuccessDialog = false
                                 onFinish()
                             },
-                            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF008000), contentColor = Color.White),
+                            colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.principal_boton), contentColor = Color.White),
                             elevation = ButtonDefaults.buttonElevation(defaultElevation = 2.dp)
                         ) {
                             Text("Guardar")
