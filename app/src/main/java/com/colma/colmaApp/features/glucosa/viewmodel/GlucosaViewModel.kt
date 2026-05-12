@@ -133,7 +133,7 @@ class GlucosaViewModel(private val repository: GlucosaRepository) : ViewModel() 
             _uiState.update { it.copy(isLoading = true) }
 
             val low = number <= 69
-            val high = if (state.isFasting == true) number >= 131 else number >= 181
+            val high = if (state.isFasting == true) number >= 126 else number >= 180
             val severeHigh = number > 300
             val advertencia = when {
                 low -> "Baja"

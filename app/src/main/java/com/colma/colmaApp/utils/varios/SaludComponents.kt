@@ -191,7 +191,7 @@ fun HistoryRow(
                 "glucosa" -> {
                     entry.rawValue1?.let { v ->
                         val low = v <= 69.0
-                        val high = if (entry.isFasting == true) v >= 131.0 else v >= 181.0
+                        val high = if (entry.isFasting == true) v >= 126.0 else v >= 180.0
                         if (low || high) {
                             dangerous = true
                         }
