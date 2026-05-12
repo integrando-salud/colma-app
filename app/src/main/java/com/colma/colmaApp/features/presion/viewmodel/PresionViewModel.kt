@@ -134,9 +134,11 @@ class PresionViewModel(private val repository: PresionRepository) : ViewModel() 
 
             val severeHigh = sys >= 180 || dia >= 120
             val severeLow = sys <= 90
+            val isHigh = sys >= 140 || dia >= 90
 
             val advertencia = when {
                 severeHigh -> "Alta"
+                isHigh -> "Alta"
                 severeLow -> "Baja"
                 else -> "Normal"
             }

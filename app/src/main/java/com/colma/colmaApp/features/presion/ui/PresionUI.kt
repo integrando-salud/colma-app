@@ -255,24 +255,32 @@ fun PresionScreen(
 
             if (uiState.isDetailsDialogVisible) {
                 val entry = uiState.selectedEntry!!
-                val (isDangerous, warningText) = remember(entry, uiState.userPaisId) {
-                    var dangerous = false
+                val (isDangerous, showWarningBlock, warningText) = remember(entry, uiState.userPaisId) {
+                    var high = false
+                    var severeHigh = false
+                    var severeLow = false
                     var text: String? = null
                     val s = entry.rawValue1
                     val d = entry.rawValue2
                     if (s != null && d != null) {
-                        val severeHigh = s >= 180 || d >= 120
-                        val severeLow = s <= 90
+                        severeHigh = s >= 180 || d >= 120
+                        severeLow = s <= 90
+                        high = s >= 140 || d >= 90
+                        
                         if (severeHigh) {
-                            dangerous = true
                             text = getSevereHighPressureText(uiState.userPaisId)
                         } else if (severeLow) {
-                            dangerous = true
                             text = getSevereLowPressureText(uiState.userPaisId)
+                        } else if (high) {
+                            text = getHighPressureText(uiState.userPaisId)
                         }
                     }
-                    Pair(dangerous, text)
+                    val dangerous = high || severeLow
+                    val showWarning = (severeHigh || severeLow || high) && text != null
+                    Triple(dangerous, showWarning, text)
                 }
+                
+                val valueTextColor = if (isDangerous) Color.Red else Color(0xFF008000)
 
                 AlertDialog(
                     onDismissRequest = { onEvent(PresionEvent.DismissDetailsDialog) },
@@ -307,6 +315,7 @@ fun PresionScreen(
                                     Text(
                                         text = entry.value,
                                         fontSize = 16.sp,
+                                        color = valueTextColor,
                                         modifier = Modifier.padding(top = 2.dp)
                                     )
                                 }
@@ -345,7 +354,7 @@ fun PresionScreen(
                             }
 
                             // Advertencia (if exists)
-                            if (isDangerous && warningText != null) {
+                            if (showWarningBlock && warningText != null) {
                                 Spacer(modifier = Modifier.height(12.dp))
                                 Row(
                                     modifier = Modifier
@@ -506,6 +515,18 @@ fun PresionScreen(
                     tonalElevation = 8.dp
                 )
             }
+        }
+    }
+}
+
+/**
+ * Helper function to generate nationality-based high pressure warning text.
+ * Used in the details dialog for values between 140-179 / 90-119.
+ */
+private fun getHighPressureText(paisId: Int?): String {
+    return when (paisId) {
+        else -> {
+            "La medición de presión que registraste es alta."
         }
     }
 }
