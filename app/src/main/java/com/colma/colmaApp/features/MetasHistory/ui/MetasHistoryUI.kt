@@ -63,7 +63,7 @@ fun MetasHistoryScreen(uiState: MetasHistoryUiState, onBack: () -> Unit) {
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Historial de Metas", color = Color.White) },
+                title = { /* Title removed as per request */ },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
                         Icon(
@@ -104,14 +104,60 @@ fun MetasHistoryScreen(uiState: MetasHistoryUiState, onBack: () -> Unit) {
                 )
             } else {
                 val lazyListState = rememberLazyListState()
+                
+                // Separate meta de la semana (active pending) from history
+                val metaDeLaSemana = uiState.metas.filter { it.meta_cumplida == 0 }.take(1)
+                val historialDeMetas = uiState.metas.filter { it.meta_cumplida != 0 || (it.meta_cumplida == 0 && !metaDeLaSemana.contains(it)) }
+
                 LazyColumn(
                     modifier = Modifier.fillMaxSize().scrollbar(lazyListState),
                     state = lazyListState,
                     contentPadding = PaddingValues(16.dp),
                     verticalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
-                    items(uiState.metas, key = { it.id_meta }) { meta ->
-                        MetaItemCard(meta = meta)
+                    if (metaDeLaSemana.isNotEmpty()) {
+                        item {
+                            Text(
+                                text = "Meta de la semana",
+                                style = MaterialTheme.typography.titleLarge.copy(
+                                    fontWeight = FontWeight.Bold,
+                                    fontSize = 19.sp
+                                ),
+                                color = Color(0xFF212121),
+                                modifier = Modifier.padding(bottom = 4.dp)
+                            )
+                            HorizontalDivider(
+                                modifier = Modifier.padding(bottom = 12.dp),
+                                color = Color(0xFFBDBDBD),
+                                thickness = 1.dp
+                            )
+                        }
+                        items(metaDeLaSemana, key = { "active_${it.id_meta}" }) { meta ->
+                            MetaItemCard(meta = meta)
+                        }
+                    }
+
+                    if (historialDeMetas.isNotEmpty()) {
+                        item {
+                            Spacer(modifier = Modifier.height(16.dp))
+                            Text(
+                                text = "Historial de metas",
+                                style = MaterialTheme.typography.titleLarge.copy(
+                                    fontWeight = FontWeight.Bold,
+                                    fontSize = 19.sp
+                                ),
+                                color = Color(0xFF212121),
+                                modifier = Modifier.padding(bottom = 4.dp)
+                            )
+                            HorizontalDivider(
+                                modifier = Modifier.padding(bottom = 12.dp),
+                                color = Color(0xFFBDBDBD),
+                                thickness = 1.dp
+                            )
+                        }
+                        items(historialDeMetas, key = { "history_${it.id_meta}" }) { meta ->
+                            MetaItemCard(meta = meta)
+                        }
                     }
                 }
             }
@@ -139,19 +185,14 @@ fun MetaItemCard(meta: RegistrosSaludModelos.MetaRecord) {
 
     when (meta.meta_cumplida) {
         0 -> { // Pendiente
-            if (isPast) {
-                statusText = "Pendiente (Vencida)"
-                statusColor = Color(0xFFFF9800) // Orange
-            } else {
-                statusText = "Pendiente"
-                statusColor = Color(0xFFFBC02D) // Yellow (Darker for readability)
-            }
+            statusText = "PENDIENTE"
+            statusColor = Color(0xFFFBC02D)
         }
         1 -> { // No Cumplida
-            statusText = "No Cumplida"
+            statusText = "No completada"
             statusColor = Color.Red
         }
-        2 -> { // Cumplida
+        2 -> { // Completada
             statusText = "Completada"
             statusColor = Color(0xFF4CAF50) // Green
         }
@@ -172,7 +213,7 @@ fun MetaItemCard(meta: RegistrosSaludModelos.MetaRecord) {
                 .fillMaxWidth()
                 .padding(20.dp)
         ) {
-            // Header with title at top
+            // Activity is always shown
             Text(
                 text = meta.actividad ?: "Actividad no especificada",
                 style = MaterialTheme.typography.titleLarge.copy(
@@ -182,39 +223,28 @@ fun MetaItemCard(meta: RegistrosSaludModelos.MetaRecord) {
                 color = Color(0xFF212121)
             )
 
-            // Divider line
-            HorizontalDivider(
-                modifier = Modifier.padding(vertical = 12.dp),
-                color = Color(0xFFE0E0E0),
-                thickness = 1.dp
-            )
-
-            // Info rows with better spacing
-            Column(
-                modifier = Modifier.fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(10.dp)
-            ) {
-                fechaObjetivoDate?.let { date ->
-                    MetaInfoRowImproved(
-                        label = "Objetivo para el",
-                        value = friendlyDateFormatter.format(date)
-                    )
+            // Info conditional based on status
+            when (meta.meta_cumplida) {
+                0 -> { // Pendiente
+                    Spacer(modifier = Modifier.height(12.dp))
+                    fechaObjetivoDate?.let { date ->
+                        MetaInfoRowImproved(
+                            label = "Objetivo para el",
+                            value = friendlyDateFormatter.format(date)
+                        )
+                    }
                 }
-
-                meta.lugar?.takeIf { it.isNotBlank() }?.let { lugar ->
-                    MetaInfoRowImproved(label = "Lugar", value = lugar)
+                1 -> { // No Completada
+                    if (!meta.motivo_incumplimiento.isNullOrBlank()) {
+                        Spacer(modifier = Modifier.height(12.dp))
+                        MetaInfoRowImproved(
+                            label = "Motivo de incumplimiento",
+                            value = meta.motivo_incumplimiento
+                        )
+                    }
                 }
-
-                meta.acompañante?.takeIf { it.isNotBlank() }?.let { companion ->
-                    MetaInfoRowImproved(label = "Acompañante", value = companion)
-                }
-
-                if (meta.meta_cumplida == 1 && !meta.motivo_incumplimiento.isNullOrBlank()) {
-                    Spacer(modifier = Modifier.height(4.dp))
-                    MetaInfoRowImproved(
-                        label = "Motivo de incumplimiento",
-                        value = meta.motivo_incumplimiento
-                    )
+                2 -> { // Completada
+                    // Only show the meta and the label (already handled)
                 }
             }
 
