@@ -742,7 +742,7 @@ fun QuizContent(
                             )
                             onQuizSubmit(quizResponseRecord, questionResponses)
                         },
-                        colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.principal_boton), contentColor = Color.White)
+                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF008000), contentColor = Color.White)
                     ) {
                         Text("Guardar")
                     }
@@ -1009,7 +1009,6 @@ fun MetasContent(metasId: String, currentWeekId: Int, currentSessionId: Int, onF
                         val fechaObjetivoForDisplay = dbDateTimeFormat.parse(fecha.value)?.let { displayDateFormat.format(it) } ?: fecha.value
                         val fechaCreacionForDisplay = dbDateTimeFormat.parse(fechaEdicion.value)?.let { displayDateFormat.format(it) } ?: fechaEdicion.value
                         summaryMessage = """
-                            Resumen de registro:
                             • Actividad: ${actividad.value}
                             • ¿Con quién?: ${conQuien.value ?: "No especificado"}
                             • ¿Dónde?: ${donde.value ?: "No especificado"}
