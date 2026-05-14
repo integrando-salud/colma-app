@@ -473,7 +473,7 @@ fun GlucosaScreen(
                                 }
                             }
                             Spacer(modifier = Modifier.height(12.dp))
-                            Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxWidth()) {
+                            Column(horizontalAlignment = Alignment.Start, modifier = Modifier.fillMaxWidth()) {
                                 Text(text = "Fecha de registro", fontSize = 15.sp, color = Color.Black)
                                 OutlinedTextField(
                                     value = dateFormatter.format(Date(uiState.measurementTime)),
@@ -502,7 +502,7 @@ fun GlucosaScreen(
                                     }
                                 )
                                 Spacer(modifier = Modifier.height(8.dp))
-                                Text(text = "Hora", fontSize = 15.sp, color = Color.Black)
+                                Text(text = "Hora de registro", fontSize = 15.sp, color = Color.Black)
                                 OutlinedButton(onClick = { showGlucosaTimePicker = true }, modifier = Modifier.fillMaxWidth()) {
                                     Text(text = timeFormatterOnly.format(Date(uiState.measurementTime)), fontSize = 18.sp)
                                 }
