@@ -84,9 +84,7 @@ fun <T> CardThatOpensSelectionDialog(
                 Text(
                     text = title,
                     fontWeight = FontWeight.SemiBold,
-                    color = MaterialTheme.colorScheme.onSurface,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
+                    color = MaterialTheme.colorScheme.onSurface
                 )
 
                 if (selectedLabel.isNotBlank()) {
@@ -170,7 +168,7 @@ fun <T> CardThatOpensSelectionDialog(
                         showDialog = false
                     },
                     enabled = selectedIndex != null,
-                    colors = ButtonDefaults.textButtonColors(containerColor = colorResource(R.color.principal_boton), contentColor = Color.White)
+                    colors = ButtonDefaults.textButtonColors(containerColor = Color(0xFF008000), contentColor = Color.White)
                 ) {
                     Text("Guardar")
                 }
