@@ -51,6 +51,7 @@ class MenuMainViewModel(private val repository: MenuMainRepository) : ViewModel(
             is MenuMainEvent.OtherReasonChanged -> updateOtherReason(event.reason)
             MenuMainEvent.OtherReasonConfirmed -> confirmOtherReason()
             MenuMainEvent.SnackbarDismissed -> dismissSnackbar()
+            MenuMainEvent.DismissNoInternetDialog -> dismissNoInternetDialog()
         }
     }
 
@@ -95,8 +96,16 @@ class MenuMainViewModel(private val repository: MenuMainRepository) : ViewModel(
             viewModelScope.launch {
                 _uiState.update { it.copy(isLoading = true) }
                 repository.synchronizeData()
-                _uiState.update { it.copy(isLoading = false) }
-                loadInitialData() // Reload data after sync to update counts
+                    .onSuccess {
+                        _uiState.update { it.copy(isLoading = false, syncSuccessful = true) }
+                        kotlinx.coroutines.delay(3000)
+                        _uiState.update { it.copy(syncSuccessful = false) }
+                        loadInitialData() // Reload data after sync to update counts
+                    }
+                    .onFailure { error ->
+                        _uiState.update { it.copy(isLoading = false, showNoInternetDialog = true) }
+                        Log.e(TAG, "Sync failed: ${error.message}")
+                    }
             }
         }
 
@@ -197,6 +206,10 @@ class MenuMainViewModel(private val repository: MenuMainRepository) : ViewModel(
 
     private fun dismissSnackbar() {
         _uiState.update { it.copy(snackbarMessage = null) }
+    }
+
+    private fun dismissNoInternetDialog() {
+        _uiState.update { it.copy(showNoInternetDialog = false) }
     }
 
     sealed class NavigationEvent {

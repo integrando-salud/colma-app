@@ -105,7 +105,7 @@ class MenuMainUI : ComponentActivity() {
 
     private val viewModel: MenuMainViewModel by viewModels {
         MenuMainViewModelFactory(
-            MenuMainRepositoryImpl(DbHelper(applicationContext))
+            MenuMainRepositoryImpl(applicationContext, DbHelper(applicationContext))
         )
     }
 
@@ -282,6 +282,22 @@ fun MenuScreen(
                     onClick = { onEvent(MenuMainEvent.DismissFeedbackDialog) },
                     colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.principal_boton), contentColor = Color.White),
                     elevation = ButtonDefaults.buttonElevation(defaultElevation = 2.dp)
+                ) {
+                    Text("Aceptar")
+                }
+            }
+        )
+    }
+
+    if (uiState.showNoInternetDialog) {
+        AlertDialog(
+            onDismissRequest = { onEvent(MenuMainEvent.DismissNoInternetDialog) },
+            title = { Text("Sin conexión") },
+            text = { Text("Los datos se actualizarán cuando tenga acceso a internet.") },
+            confirmButton = {
+                Button(
+                    onClick = { onEvent(MenuMainEvent.DismissNoInternetDialog) },
+                    colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.principal_boton), contentColor = Color.White)
                 ) {
                     Text("Aceptar")
                 }
@@ -561,8 +577,8 @@ fun MenuScreen(
                                     .fillMaxWidth(0.85f)
                                     .height(65.dp),
                                 colors = ButtonDefaults.buttonColors(
-                                    containerColor = Color(0xFFF0F0F0),
-                                    contentColor = Color.Black
+                                    containerColor = if (uiState.syncSuccessful) Color(0xFF4CAF50) else Color(0xFFF0F0F0),
+                                    contentColor = if (uiState.syncSuccessful) Color.White else Color.Black
                                 ),
                                 shape = MaterialTheme.shapes.medium,
                                 elevation = ButtonDefaults.buttonElevation(
@@ -584,16 +600,16 @@ fun MenuScreen(
                                         horizontalArrangement = Arrangement.Start
                                     ) {
                                         Icon(
-                                            painter = painterResource(R.drawable.baseline_sync_24),
+                                            painter = painterResource(if (uiState.syncSuccessful) R.drawable.baseline_sync_24 else R.drawable.baseline_sync_24), // Keep same icon or change if needed
                                             contentDescription = "Sincronizar",
-                                            tint = LocalContentColor.current,
+                                            tint = if (uiState.syncSuccessful) Color.White else LocalContentColor.current,
                                             modifier = Modifier.size(20.dp)
                                         )
 
                                         Spacer(modifier = Modifier.width(12.dp))
 
                                         Text(
-                                            text = "Actualizar datos",
+                                            text = if (uiState.syncSuccessful) "Datos actualizados" else "Actualizar datos",
                                             fontSize = 16.sp,
                                             fontWeight = FontWeight.SemiBold,
                                             modifier = Modifier.weight(1f),

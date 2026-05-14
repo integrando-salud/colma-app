@@ -11,8 +11,12 @@ import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 import java.util.*
 import android.util.Log
+import android.content.Context
+import com.colma.colmaApp.utils.NetworkUtils
+import java.io.IOException
 
 class MenuMainRepositoryImpl(
+    private val context: Context,
     private val dbHelper: DbHelper
 ) : MenuMainRepository {
 
@@ -182,6 +186,10 @@ class MenuMainRepositoryImpl(
     override suspend fun synchronizeData(): Result<String> {
         val userId = SessionManager.getUserId() ?: return Result.failure(Exception("User not logged in"))
         val token = SessionManager.getAuthToken() ?: return Result.failure(Exception("User not authenticated"))
+
+        if (!NetworkUtils.isInternetAvailable(context)) {
+            return Result.failure(IOException("No internet connection"))
+        }
 
         return try {
             val syncRequest = createSyncDataPayload(userId)

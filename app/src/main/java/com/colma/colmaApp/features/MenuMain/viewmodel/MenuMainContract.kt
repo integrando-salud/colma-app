@@ -18,7 +18,9 @@ data class MenuMainUiState(
     val selectedReason: String = "",
     val otherReasonInput: String = "",
     val isLoading: Boolean = false,
-    val snackbarMessage: String? = null
+    val snackbarMessage: String? = null,
+    val syncSuccessful: Boolean = false,
+    val showNoInternetDialog: Boolean = false
 )
 
 /**
@@ -38,4 +40,5 @@ sealed class MenuMainEvent {
     data class OtherReasonChanged(val reason: String) : MenuMainEvent()
     object OtherReasonConfirmed : MenuMainEvent()
     object SnackbarDismissed : MenuMainEvent()
+    object DismissNoInternetDialog : MenuMainEvent()
 }
