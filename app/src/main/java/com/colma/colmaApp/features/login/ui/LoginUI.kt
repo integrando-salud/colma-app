@@ -152,11 +152,39 @@ class LoginUI : ComponentActivity() {
                         }
                     }
                 }
-                LoginScreen(
-                    uiState = uiState,
-                    onEvent = viewModel::onEvent
-                )
+
+                if (uiState.isCheckingSession) {
+                    LoadingScreen()
+                } else {
+                    LoginScreen(
+                        uiState = uiState,
+                        onEvent = viewModel::onEvent
+                    )
+                }
             }
+        }
+    }
+}
+
+@Composable
+fun LoadingScreen() {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(colorResource(R.color.background)),
+        contentAlignment = Alignment.Center
+    ) {
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            Image(
+                painter = painterResource(R.drawable.logo_login),
+                contentDescription = "Logo",
+                modifier = Modifier
+                    .size(200.dp)
+                    .padding(bottom = 32.dp)
+            )
+            CircularProgressIndicator(
+                color = colorResource(R.color.principal)
+            )
         }
     }
 }

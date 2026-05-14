@@ -7,6 +7,7 @@ data class LoginUiState(
     val dni: String = "",
     val password: String = "",
     val isLoading: Boolean = false,
+    val isCheckingSession: Boolean = true,
     val error: String? = null
 )
 

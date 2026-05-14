@@ -19,13 +19,16 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
     val navigationEvent = _navigationEvent.receiveAsFlow()
 
     init {
-        checkIfLoggedIn() // Disabled for now, as per user request
+        checkIfLoggedIn()
     }
 
     private fun checkIfLoggedIn() {
         viewModelScope.launch {
+            kotlinx.coroutines.delay(2500) // Artificial delay for smoother transition
             if (loginRepository.isLoggedIn()) {
-                _navigationEvent.send(NavigationEvent.NavigateToHome) // Disabled for now, as per user request
+                _navigationEvent.send(NavigationEvent.NavigateToHome)
+            } else {
+                _uiState.update { it.copy(isCheckingSession = false) }
             }
         }
     }
