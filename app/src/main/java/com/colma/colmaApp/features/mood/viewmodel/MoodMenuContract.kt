@@ -6,7 +6,8 @@ data class MoodMenuUiState(
     val history: List<HealthEntry> = emptyList(),
     val isLoading: Boolean = false,
     val canAccessQuiz: Boolean = true,
-    val restrictionMessage: String = ""
+    val restrictionMessage: String = "",
+    val restrictionDate: String = ""
 )
 
 sealed class MoodMenuEvent {

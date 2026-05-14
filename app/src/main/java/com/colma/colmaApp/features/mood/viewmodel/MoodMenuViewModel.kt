@@ -24,9 +24,6 @@ class MoodMenuViewModel(private val repository: MoodRepository) : ViewModel() {
     val navigationEvent = _navigationEvent.receiveAsFlow()
 
     private val dateTimeFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
-    private var lastMoodDate: Date? = null
-    private var countdownJob: Job? = null
-
 
     init {
         loadHistory()
@@ -62,15 +59,11 @@ class MoodMenuViewModel(private val repository: MoodRepository) : ViewModel() {
     }
 
     private fun checkQuizAccess() {
-        // Cancel any existing countdown
-        countdownJob?.cancel()
-        
         viewModelScope.launch {
             val lastDateStr = repository.getLastMoodDate()
             
             if (lastDateStr == null) {
                 // No previous mood records, allow access
-                lastMoodDate = null
                 _uiState.update { 
                     it.copy(
                         canAccessQuiz = true,
@@ -82,7 +75,6 @@ class MoodMenuViewModel(private val repository: MoodRepository) : ViewModel() {
 
             try {
                 val lastDate = dateTimeFormat.parse(lastDateStr) ?: run {
-                    lastMoodDate = null
                     _uiState.update { 
                         it.copy(
                             canAccessQuiz = true,
@@ -92,14 +84,12 @@ class MoodMenuViewModel(private val repository: MoodRepository) : ViewModel() {
                     return@launch
                 }
                 
-                lastMoodDate = lastDate
                 val now = Date()
                 val diffMillis = now.time - lastDate.time
                 val daysDiff = TimeUnit.MILLISECONDS.toDays(diffMillis).toInt()
 
                 if (daysDiff >= 28) {
                     // 28 or more days have passed, allow access
-                    lastMoodDate = null
                     _uiState.update { 
                         it.copy(
                             canAccessQuiz = true,
@@ -107,26 +97,11 @@ class MoodMenuViewModel(private val repository: MoodRepository) : ViewModel() {
                         ) 
                     }
                 } else {
-                    // Less than 28 days, restrict access and start countdown
+                    // Less than 28 days, restrict access
                     updateRestrictionMessage(lastDate)
-                    
-                    // Start countdown timer to update every second
-                    countdownJob = viewModelScope.launch {
-                        while (true) {
-                            delay(1000) // Update every second
-                            updateRestrictionMessage(lastDate)
-                            
-                            // Check if access should now be allowed
-                            val currentState = _uiState.value
-                            if (currentState.canAccessQuiz) {
-                                break
-                            }
-                        }
-                    }
                 }
             } catch (e: Exception) {
                 // If parsing fails, allow access by default
-                lastMoodDate = null
                 _uiState.update { 
                     it.copy(
                         canAccessQuiz = true,
@@ -137,35 +112,29 @@ class MoodMenuViewModel(private val repository: MoodRepository) : ViewModel() {
         }
     }
     
-    private suspend fun updateRestrictionMessage(lastDate: Date) {
+    private fun updateRestrictionMessage(lastDate: Date) {
+        val nextAvailableMillis = lastDate.time + TimeUnit.DAYS.toMillis(28)
         val now = Date()
-        val exactDiffMillis = now.time - lastDate.time
-        val remainingMillis = TimeUnit.DAYS.toMillis(28) - exactDiffMillis
         
-        if (remainingMillis > 0) {
-            val days = TimeUnit.MILLISECONDS.toDays(remainingMillis).toInt()
-            val hours = TimeUnit.MILLISECONDS.toHours(remainingMillis).toInt() % 24
-            val minutes = TimeUnit.MILLISECONDS.toMinutes(remainingMillis).toInt() % 60
-            val seconds = TimeUnit.MILLISECONDS.toSeconds(remainingMillis).toInt() % 60
+        if (now.time < nextAvailableMillis) {
+            val nextAvailableDate = Date(nextAvailableMillis)
+            val dateFormat = SimpleDateFormat("d 'de' MMMM 'de' yyyy", Locale.getDefault())
+            val formattedDate = dateFormat.format(nextAvailableDate)
             
-            val message = if (days > 0) {
-                "Podrás acceder a la Pregunta del día en $days días y ${String.format("%02d:%02d:%02d", hours, minutes, seconds)} horas"
-            } else {
-                "Podrás acceder a la Pregunta del día en ${String.format("%02d:%02d:%02d", hours, minutes, seconds)} horas"
-            }
             _uiState.update { 
                 it.copy(
                     canAccessQuiz = false,
-                    restrictionMessage = message
+                    restrictionMessage = "Podrás completar el cuestionario nuevamente el ",
+                    restrictionDate = formattedDate
                 ) 
             }
         } else {
             // Time's up, allow access
-            lastMoodDate = null
             _uiState.update { 
                 it.copy(
                     canAccessQuiz = true,
-                    restrictionMessage = ""
+                    restrictionMessage = "",
+                    restrictionDate = ""
                 ) 
             }
         }

@@ -46,6 +46,9 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.withStyle
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import com.colma.colmaApp.R
@@ -169,8 +172,14 @@ fun MoodMenuScreen(
                 if (!uiState.canAccessQuiz && uiState.restrictionMessage.isNotEmpty()) {
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
-                        text = uiState.restrictionMessage,
-                        color = Color.Gray,
+                        text = buildAnnotatedString {
+                            append(uiState.restrictionMessage)
+                            withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
+                                append(uiState.restrictionDate)
+                            }
+                            append(".")
+                        },
+                        color = Color.Black,
                         fontSize = 14.sp,
                         modifier = Modifier.padding(horizontal = 8.dp)
                     )

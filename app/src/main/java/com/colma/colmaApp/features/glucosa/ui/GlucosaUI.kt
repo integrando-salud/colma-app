@@ -114,14 +114,18 @@ class GlucosaUI : ComponentActivity() {
                     AlertDialog(
                         onDismissRequest = { viewModel.onEvent(GlucosaEvent.DismissWarningDialog) },
                         title = { Text("Advertencia") },
-                        text = { Text(uiState.warningDialog.message) },
+                        text = {
+                            Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
+                                Text(uiState.warningDialog.message)
+                            }
+                        },
                         confirmButton = {
                             Button(
                                 onClick = { viewModel.onEvent(GlucosaEvent.DismissWarningDialog) },
                                 colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.principal_boton), contentColor = Color.White),
                                 elevation = ButtonDefaults.buttonElevation(defaultElevation = 2.dp)
                             ) {
-                                Text("Ok")
+                                Text("Cerrar")
                             }
                         }
                     )
@@ -138,7 +142,7 @@ class GlucosaUI : ComponentActivity() {
                                 colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.principal_boton), contentColor = Color.White),
                                 elevation = ButtonDefaults.buttonElevation(defaultElevation = 2.dp)
                             ) {
-                                Text("Aceptar")
+                                Text("Cerrar")
                             }
                         }
                     )
@@ -184,7 +188,7 @@ fun GlucosaScreen(
                         onEvent(GlucosaEvent.SaveGlucosaClicked)
                         showConfirmationDialog = false
                     },
-                    colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.principal_boton), contentColor = Color.White),
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF008000), contentColor = Color.White),
                     elevation = ButtonDefaults.buttonElevation(defaultElevation = 2.dp)
                 ) {
                     Text("Confirmar")
@@ -512,7 +516,7 @@ fun GlucosaScreen(
                     confirmButton = {
                         Button(
                             onClick = { showConfirmationDialog = true },
-                            colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.principal_boton), contentColor = Color.White),
+                            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF008000), contentColor = Color.White),
                             elevation = ButtonDefaults.buttonElevation(defaultElevation = 2.dp)
                         ) { Text("Guardar") }
                     },

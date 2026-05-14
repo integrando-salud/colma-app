@@ -15,4 +15,5 @@
     <color name="background">#e5e5e5</color>
     <color name="contraste">#E6E52A79</color>
     <color name="rojo_boton">#EE0418</color>
+    <color name="principal_boton">#1380A6</color>
 </resources>
