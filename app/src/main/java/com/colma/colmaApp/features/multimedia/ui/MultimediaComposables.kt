@@ -896,15 +896,23 @@ fun MetasContent(metasId: String, currentWeekId: Int, currentSessionId: Int, onF
     var isBlockedByFutureGoal by rememberSaveable { mutableStateOf(false) }
     var blockedWeekNumber by rememberSaveable { mutableIntStateOf(-1) }
     
+    // State for blocking dialog when user has completed a goal for this week
+    var isBlockedByCompletedGoalThisWeek by rememberSaveable { mutableStateOf(false) }
+    
     // Check on load if user should be blocked
     LaunchedEffect(Unit) {
         withContext(Dispatchers.IO) {
             val userId = SessionManager.getUserId() ?: 1
             val highestWeek = dbHelper.getHighestWeekWithGoal(userId, treatmentType.name.lowercase())
+            val hasCompletedThisWeek = dbHelper.hasCompletedGoalForWeek(userId, currentWeekId, treatmentType.name.lowercase())
             if (highestWeek != -1 && currentWeekId < highestWeek) {
                 withContext(Dispatchers.Main) {
                     isBlockedByFutureGoal = true
                     blockedWeekNumber = highestWeek
+                }
+            } else if (hasCompletedThisWeek) {
+                withContext(Dispatchers.Main) {
+                    isBlockedByCompletedGoalThisWeek = true
                 }
             }
         }
@@ -921,6 +929,34 @@ fun MetasContent(metasId: String, currentWeekId: Int, currentSessionId: Int, onF
                     Text("Ya creaste una meta para la **Semana $blockedWeekNumber**.")
                     Spacer(Modifier.height(8.dp))
                     Text("Por favor crea metas posteriores a esta semana.")
+                }
+            },
+            confirmButton = {
+                Button(
+                    onClick = { onFinish() },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = colorResource(R.color.principal),
+                        contentColor = Color.White
+                    )
+                ) {
+                    Text("Volver")
+                }
+            }
+        )
+        return // Don't render the rest of the UI
+    }
+
+    // Show blocking dialog if user has completed a goal for this week
+    if (isBlockedByCompletedGoalThisWeek) {
+        AlertDialog(
+            onDismissRequest = { },
+            containerColor = Color.White,
+            title = { Text("Meta ya completada") },
+            text = {
+                Column {
+                    Text("Ya completaste una meta para esta semana.")
+                    Spacer(Modifier.height(8.dp))
+                    Text("Por favor avanza a la siguiente semana para crear una nueva meta.")
                 }
             },
             confirmButton = {

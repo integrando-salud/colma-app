@@ -1602,6 +1602,18 @@ class DbHelper(context: Context) :
         return -1
     }
 
+    /**
+     * Returns true if the user has already completed a goal for the specified week and treatment type.
+     */
+    fun hasCompletedGoalForWeek(idUsuario: Int, semana: Int, treatmentType: String): Boolean {
+        val db = readableDatabase
+        val cursor = db.rawQuery(
+            "SELECT 1 FROM metas_table WHERE id_usuario = ? AND semana = ? AND tipo_actividad = ? AND meta_cumplida = 2 LIMIT 1",
+            arrayOf(idUsuario.toString(), semana.toString(), treatmentType)
+        )
+        return cursor.use { c -> c.moveToFirst() }
+    }
+
     fun getPendingPastMeta(idUsuario: Int? = 1): RegistrosSaludModelos.MetaRecord? {
         val db = readableDatabase
         val selectionParts = mutableListOf<String>("meta_cumplida = 0", "date(fecha_objetivo) <= date('now', 'localtime')")
