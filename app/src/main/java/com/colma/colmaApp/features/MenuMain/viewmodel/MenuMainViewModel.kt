@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.io.IOException
 
 class MenuMainViewModel(private val repository: MenuMainRepository) : ViewModel() {
 
@@ -103,7 +104,11 @@ class MenuMainViewModel(private val repository: MenuMainRepository) : ViewModel(
                         loadInitialData() // Reload data after sync to update counts
                     }
                     .onFailure { error ->
-                        _uiState.update { it.copy(isLoading = false, showNoInternetDialog = true) }
+                        if (error is IOException && error.message == "No internet connection") {
+                            _uiState.update { it.copy(isLoading = false, showNoInternetDialog = true) }
+                        } else {
+                            _uiState.update { it.copy(isLoading = false, snackbarMessage = error.message ?: "Error de sincronización") }
+                        }
                         Log.e(TAG, "Sync failed: ${error.message}")
                     }
             }
