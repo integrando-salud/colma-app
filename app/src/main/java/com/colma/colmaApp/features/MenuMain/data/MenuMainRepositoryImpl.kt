@@ -4,6 +4,7 @@ import com.colma.colmaApp.features.MenuMain.domain.MenuMainRepository
 import com.colma.colmaApp.servicios.Modelos.RegistrosSaludModelos
 import com.colma.colmaApp.servicios.database.dbhelper.DbHelper
 import com.colma.colmaApp.servicios.internetCommunication.SyncService
+import com.colma.colmaApp.servicios.internetCommunication.HelpRequestService
 import com.colma.colmaApp.servicios.session.SessionManager
 import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
@@ -22,6 +23,7 @@ class MenuMainRepositoryImpl(
 
     private val TAG = "MenuMainRepositoryImpl"
     private val syncService = SyncService()
+    private val helpRequestService = HelpRequestService()
 
     override suspend fun getPendingPastMeta(): RegistrosSaludModelos.MetaRecord? {
         val userId = SessionManager.getUserId()
@@ -250,6 +252,26 @@ class MenuMainRepositoryImpl(
         val userId = SessionManager.getUserId()
         return withContext(Dispatchers.IO) {
             userId?.let { dbHelper.getUsuario(it)?.nombre }
+        }
+    }
+
+    override suspend fun requestHelp(): Result<String> {
+        val token = SessionManager.getAuthToken() ?: return Result.failure(Exception("User not authenticated"))
+
+        return withContext(Dispatchers.IO) {
+            try {
+                val response = helpRequestService.requestHelp(token)
+                if (response.isSuccessful) {
+                    Result.success(response.body()?.message ?: "Pedido de ayuda registrado con éxito.")
+                } else {
+                    val errorBody = response.errorBody()?.string() ?: "Error desconocido"
+                    Log.e(TAG, "Help Request Error: ${response.code()} - $errorBody")
+                    Result.failure(Exception("Error al registrar el pedido de ayuda: $errorBody"))
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, "Exception during requestHelp: ${e.message}")
+                Result.failure(e)
+            }
         }
     }
 

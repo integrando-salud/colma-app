@@ -13,4 +13,5 @@ interface MenuMainRepository {
     suspend fun saveSynchronizationRecord(timestamp: String, status: String, data: String?)
     suspend fun logout()
     suspend fun getUserName(): String?
+    suspend fun requestHelp(): Result<String>
 }

@@ -33,6 +33,7 @@ sealed class MenuMainEvent {
     object OnMetasHistoryClick : MenuMainEvent()
     object OnSalirClick : MenuMainEvent()
     object OnSyncClick : MenuMainEvent()
+    object OnRequestHelpClick : MenuMainEvent()
     object ObjectiveDialogDismissed : MenuMainEvent()
     object ObjectiveCompleted : MenuMainEvent()
     object DismissFeedbackDialog : MenuMainEvent()

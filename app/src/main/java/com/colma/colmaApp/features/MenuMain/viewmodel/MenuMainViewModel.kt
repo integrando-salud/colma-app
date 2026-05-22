@@ -45,6 +45,7 @@ class MenuMainViewModel(private val repository: MenuMainRepository) : ViewModel(
             MenuMainEvent.OnMetasHistoryClick -> navigateToMetasHistory()
             MenuMainEvent.OnSalirClick -> navigateToLogin()
             MenuMainEvent.OnSyncClick -> synchronizeData()
+            MenuMainEvent.OnRequestHelpClick -> requestHelp()
             MenuMainEvent.ObjectiveDialogDismissed -> dismissObjectiveDialog()
             MenuMainEvent.ObjectiveCompleted -> handleObjectiveCompleted()
             MenuMainEvent.DismissFeedbackDialog -> dismissFeedbackDialog()
@@ -110,6 +111,20 @@ class MenuMainViewModel(private val repository: MenuMainRepository) : ViewModel(
                             _uiState.update { it.copy(isLoading = false, snackbarMessage = error.message ?: "Error de sincronización") }
                         }
                         Log.e(TAG, "Sync failed: ${error.message}")
+                    }
+            }
+        }
+
+        private fun requestHelp() {
+            viewModelScope.launch {
+                _uiState.update { it.copy(isLoading = true) }
+                repository.requestHelp()
+                    .onSuccess { message ->
+                        _uiState.update { it.copy(isLoading = false, snackbarMessage = message) }
+                    }
+                    .onFailure { error ->
+                        _uiState.update { it.copy(isLoading = false, snackbarMessage = error.message ?: "Error al solicitar ayuda") }
+                        Log.e(TAG, "Request help failed: ${error.message}")
                     }
             }
         }

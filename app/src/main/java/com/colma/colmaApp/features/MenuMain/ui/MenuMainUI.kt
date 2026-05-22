@@ -339,7 +339,7 @@ fun MenuScreen(
                                 Icons.Default.Call
                             ) {
                                 scope.launch { drawerState.close() }
-                                // Handle help technical click
+                                onEvent(MenuMainEvent.OnRequestHelpClick)
                             }
 
                             DrawerItem("Información adicional", Icons.Default.Info) {
