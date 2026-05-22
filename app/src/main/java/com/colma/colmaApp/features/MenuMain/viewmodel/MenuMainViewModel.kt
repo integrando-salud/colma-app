@@ -45,7 +45,9 @@ class MenuMainViewModel(private val repository: MenuMainRepository) : ViewModel(
             MenuMainEvent.OnMetasHistoryClick -> navigateToMetasHistory()
             MenuMainEvent.OnSalirClick -> navigateToLogin()
             MenuMainEvent.OnSyncClick -> synchronizeData()
-            MenuMainEvent.OnRequestHelpClick -> requestHelp()
+            MenuMainEvent.OnRequestHelpClick -> showHelpRequestDialog()
+            MenuMainEvent.ConfirmHelpRequest -> confirmHelpRequest()
+            MenuMainEvent.DismissHelpRequestDialog -> dismissHelpRequestDialog()
             MenuMainEvent.ObjectiveDialogDismissed -> dismissObjectiveDialog()
             MenuMainEvent.ObjectiveCompleted -> handleObjectiveCompleted()
             MenuMainEvent.DismissFeedbackDialog -> dismissFeedbackDialog()
@@ -115,16 +117,48 @@ class MenuMainViewModel(private val repository: MenuMainRepository) : ViewModel(
             }
         }
 
+        private fun showHelpRequestDialog() {
+            _uiState.update { it.copy(showHelpRequestDialog = true) }
+        }
+
+        private fun dismissHelpRequestDialog() {
+            _uiState.update { it.copy(showHelpRequestDialog = false) }
+        }
+
+        private fun confirmHelpRequest() {
+            _uiState.update { it.copy(showHelpRequestDialog = false) }
+            requestHelp()
+        }
+
         private fun requestHelp() {
             viewModelScope.launch {
                 _uiState.update { it.copy(isLoading = true) }
                 repository.requestHelp()
-                    .onSuccess { message ->
-                        _uiState.update { it.copy(isLoading = false, snackbarMessage = message) }
+                    .onSuccess { _ ->
+                        _uiState.update {
+                            it.copy(
+                                isLoading = false,
+                                showFeedbackDialog = true,
+                                isSuccessFeedback = true,
+                                showTrophyInFeedback = false,
+                                isHelpRequestFeedback = true,
+                                feedbackMessage = "Enviado con éxito. Pronto te contactará tu promotora ."
+                            )
+                        }
                     }
                     .onFailure { error ->
-                        _uiState.update { it.copy(isLoading = false, snackbarMessage = error.message ?: "Error al solicitar ayuda") }
-                        Log.e(TAG, "Request help failed: ${error.message}")
+                        val errorMessage = error.message ?: "Error al solicitar ayuda"
+                        _uiState.update {
+                            it.copy(
+                                isLoading = false,
+                                showFeedbackDialog = true,
+                                isSuccessFeedback = false,
+                                showTrophyInFeedback = false,
+                                isHelpRequestFeedback = true,
+                                feedbackMessage = errorMessage
+                            )
+                        }
+                        Log.e(TAG, "Request help failed: $errorMessage")
                     }
             }
         }
@@ -148,7 +182,7 @@ class MenuMainViewModel(private val repository: MenuMainRepository) : ViewModel(
     }
 
     private fun dismissFeedbackDialog() {
-        _uiState.update { it.copy(showFeedbackDialog = false) }
+        _uiState.update { it.copy(showFeedbackDialog = false, isHelpRequestFeedback = false) }
         loadInitialData()
     }
 
@@ -163,6 +197,8 @@ class MenuMainViewModel(private val repository: MenuMainRepository) : ViewModel(
                     showObjectiveDialog = false,
                     showFeedbackDialog = true,
                     isSuccessFeedback = true,
+                    showTrophyInFeedback = true,
+                    isHelpRequestFeedback = false,
                     feedbackMessage = "¡Excelente! ¡Elige otra actividad para esta semana y sigue para adelante!",
                     todaysObjective = null
                 )
@@ -215,13 +251,14 @@ class MenuMainViewModel(private val repository: MenuMainRepository) : ViewModel(
                     showOtherReasonDialog = false,
                     showFeedbackDialog = true,
                     isSuccessFeedback = false,
+                    showTrophyInFeedback = false,
+                    isHelpRequestFeedback = false,
                     feedbackMessage = feedbackMsg,
                     todaysObjective = null,
                     selectedReason = "",
                     otherReasonInput = ""
                 )
-            }
-        }
+            }        }
     }
 
     private fun dismissSnackbar() {

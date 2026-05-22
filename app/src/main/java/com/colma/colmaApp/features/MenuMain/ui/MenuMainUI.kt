@@ -29,6 +29,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Call
+import androidx.compose.material.icons.filled.Done
 import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Info
@@ -271,12 +272,27 @@ fun MenuScreen(
             onDismissRequest = { onEvent(MenuMainEvent.DismissFeedbackDialog) },
             properties = DialogProperties(dismissOnBackPress = false, dismissOnClickOutside = false),
             icon = {
-                if (uiState.isSuccessFeedback) {
+                if (uiState.showTrophyInFeedback) {
                     CongratulationAnimation()
+                } else if (uiState.isHelpRequestFeedback && uiState.isSuccessFeedback) {
+                    Icon(
+                        imageVector = Icons.Default.Done,
+                        contentDescription = null,
+                        modifier = Modifier.size(60.dp),
+                        tint = Color(0xFF4CAF50)
+                    )
                 }
             },
-            title = { Text("Mensaje") },
-            text = { Text(uiState.feedbackMessage) },
+            title = if (uiState.isHelpRequestFeedback) null else { { Text("Mensaje") } },
+            text = {
+                Text(
+                    text = uiState.feedbackMessage,
+                    fontSize = if (uiState.isHelpRequestFeedback) 20.sp else 16.sp,
+                    fontWeight = if (uiState.isHelpRequestFeedback) FontWeight.SemiBold else FontWeight.Normal,
+                    textAlign = if (uiState.isHelpRequestFeedback) TextAlign.Center else TextAlign.Start,
+                    modifier = Modifier.fillMaxWidth()
+                )
+            },
             confirmButton = {
                 Button(
                     onClick = { onEvent(MenuMainEvent.DismissFeedbackDialog) },
@@ -302,6 +318,17 @@ fun MenuScreen(
                     Text("Aceptar")
                 }
             }
+        )
+    }
+
+    if (uiState.showHelpRequestDialog) {
+        CustomAlertDialog(
+            show = true,
+            onDismissRequest = { onEvent(MenuMainEvent.DismissHelpRequestDialog) },
+            title = "Confirmar pedido de ayuda",
+            description = "¿Está seguro/a que quieres pedir ayuda técnica a tu promotora de salud?",
+            onYes = { onEvent(MenuMainEvent.ConfirmHelpRequest) },
+            onNo = { onEvent(MenuMainEvent.DismissHelpRequestDialog) }
         )
     }
 

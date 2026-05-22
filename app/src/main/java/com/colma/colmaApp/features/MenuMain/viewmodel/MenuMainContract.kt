@@ -14,13 +14,16 @@ data class MenuMainUiState(
     val showOtherReasonDialog: Boolean = false,
     val showFeedbackDialog: Boolean = false,
     val isSuccessFeedback: Boolean = false,
+    val showTrophyInFeedback: Boolean = false,
+    val isHelpRequestFeedback: Boolean = false,
     val feedbackMessage: String = "",
     val selectedReason: String = "",
     val otherReasonInput: String = "",
     val isLoading: Boolean = false,
     val snackbarMessage: String? = null,
     val syncSuccessful: Boolean = false,
-    val showNoInternetDialog: Boolean = false
+    val showNoInternetDialog: Boolean = false,
+    val showHelpRequestDialog: Boolean = false
 )
 
 /**
@@ -34,6 +37,8 @@ sealed class MenuMainEvent {
     object OnSalirClick : MenuMainEvent()
     object OnSyncClick : MenuMainEvent()
     object OnRequestHelpClick : MenuMainEvent()
+    object ConfirmHelpRequest : MenuMainEvent()
+    object DismissHelpRequestDialog : MenuMainEvent()
     object ObjectiveDialogDismissed : MenuMainEvent()
     object ObjectiveCompleted : MenuMainEvent()
     object DismissFeedbackDialog : MenuMainEvent()
