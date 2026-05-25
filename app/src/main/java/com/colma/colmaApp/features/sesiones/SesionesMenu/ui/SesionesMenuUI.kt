@@ -37,6 +37,7 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -410,6 +411,18 @@ fun SubSessionRow(sub: SubSessionItem, onClick: () -> Unit) {
 
         Spacer(modifier = Modifier.width(8.dp))
 
-        Icon(imageVector = Icons.Default.PlayArrow, contentDescription = "Play", tint = colorResource(R.color.principal))
+        if (sub.isCompleted) {
+            Icon(
+                imageVector = Icons.Default.CheckCircle,
+                contentDescription = "Completada",
+                tint = Color(0xFF4CAF50)
+            )
+        } else {
+            Icon(
+                imageVector = Icons.Default.PlayArrow,
+                contentDescription = "Play",
+                tint = colorResource(R.color.principal)
+            )
+        }
     }
 }

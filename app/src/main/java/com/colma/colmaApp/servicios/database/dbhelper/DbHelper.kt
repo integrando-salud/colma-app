@@ -1373,6 +1373,23 @@ class DbHelper(context: Context) :
         return results
     }
 
+    /**
+     * Get the count of unique multimedia items read for a specific user, treatment, week, and subsession.
+     */
+    fun getReadMultimediaCount(idUsuario: Int, treatmentId: String, weekId: Int, sessionId: Int): Int {
+        val db = readableDatabase
+        val selection = "id_usuario = ? AND treatment_id = ? AND week_id = ? AND session_id = ?"
+        val selectionArgs = arrayOf(idUsuario.toString(), treatmentId, weekId.toString(), sessionId.toString())
+
+        var count = 0
+        db.rawQuery("SELECT COUNT(*) FROM multimedia_read_table WHERE $selection", selectionArgs).use { cursor ->
+            if (cursor.moveToFirst()) {
+                count = cursor.getInt(0)
+            }
+        }
+        return count
+    }
+
     fun insertSincronizacion(fecha: String, estado: String, data: String?): Long {
         val db = writableDatabase
         var rowId: Long = -1L

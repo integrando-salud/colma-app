@@ -14,7 +14,8 @@ data class SessionItem(
 data class SubSessionItem(
     val id: Long,
     val title: String,
-    val duration: String = "5 min"
+    val duration: String = "5 min",
+    val isCompleted: Boolean = false
 )
 
 interface SesionesRepository {

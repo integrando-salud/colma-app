@@ -8,9 +8,21 @@ import com.colma.colmaApp.features.sesiones.SesionesMenu.domain.SesionesReposito
 import com.colma.colmaApp.features.sesiones.SesionesMenu.domain.SessionItem
 import com.colma.colmaApp.features.sesiones.SesionesMenu.domain.SubSessionItem
 import com.colma.colmaApp.utils.ResourceUtils
+import com.colma.colmaApp.servicios.database.dbhelper.DbHelper
+import com.colma.colmaApp.servicios.session.SessionManager
 
-class SesionesRepositoryImpl(private val contentRepository: ContentRepository, private val context: Context) : SesionesRepository {
+class SesionesRepositoryImpl(
+    private val contentRepository: ContentRepository,
+    private val context: Context,
+    private val dbHelper: DbHelper
+) : SesionesRepository {
     private val TAG = "SesionesRepository"
+    private val userId: Int
+
+    init {
+        SessionManager.init(context.applicationContext)
+        userId = SessionManager.getUserId() ?: 1
+    }
 
     override suspend fun getHtaSessions(): List<SessionItem> {
         return contentRepository.getAllTreatments().fold(
@@ -63,10 +75,13 @@ class SesionesRepositoryImpl(private val contentRepository: ContentRepository, p
     override suspend fun getHtaSubSessions(sessionId: Long): List<SubSessionItem> {
         return contentRepository.getSubSessions(TreatmentType.HTA, sessionId).getOrDefault(emptyList())
             .map { subSessionContent ->
+                val totalContent = subSessionContent.multimedia.size
+                val readCount = dbHelper.getReadMultimediaCount(userId, TreatmentType.HTA.name, sessionId.toInt(), subSessionContent.id.toInt())
                 SubSessionItem(
                     id = subSessionContent.id,
                     title = subSessionContent.title,
-                    duration = subSessionContent.duration
+                    duration = subSessionContent.duration,
+                    isCompleted = totalContent > 0 && readCount >= totalContent
                 )
             }
     }
@@ -74,10 +89,13 @@ class SesionesRepositoryImpl(private val contentRepository: ContentRepository, p
     override suspend fun getDiabetesSubSessions(sessionId: Long): List<SubSessionItem> {
         return contentRepository.getSubSessions(TreatmentType.DIABETES, sessionId).getOrDefault(emptyList())
             .map { subSessionContent ->
+                val totalContent = subSessionContent.multimedia.size
+                val readCount = dbHelper.getReadMultimediaCount(userId, TreatmentType.DIABETES.name, sessionId.toInt(), subSessionContent.id.toInt())
                 SubSessionItem(
                     id = subSessionContent.id,
                     title = subSessionContent.title,
-                    duration = subSessionContent.duration
+                    duration = subSessionContent.duration,
+                    isCompleted = totalContent > 0 && readCount >= totalContent
                 )
             }
     }
