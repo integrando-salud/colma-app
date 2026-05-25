@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.colma.colmaApp.features.sesiones.MultimediaSelector.domain.TreatmentType
 import com.colma.colmaApp.features.sesiones.SesionesMenu.domain.SesionesRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -43,10 +44,7 @@ class SesionesViewModel(private val repository: SesionesRepository) : ViewModel(
                         ?: _uiState.value.diabetesSessions.find { it.id == event.parentSessionId }
 
                     session?.let {
-                        val weekNumber = when(it.treatmentType) {
-                            TreatmentType.HTA -> it.id
-                            TreatmentType.DIABETES -> it.id - 16
-                        }
+                        val weekNumber = session.title.replace(Regex("[^0-9]"), "")
                         val sessionTitle = "Semana $weekNumber"
 
                         _navigationEvent.send(NavigationEvent.NavigateToMultimediaSelector(
@@ -62,6 +60,12 @@ class SesionesViewModel(private val repository: SesionesRepository) : ViewModel(
             SesionesEvent.BackClicked -> {
                  viewModelScope.launch {
                     _navigationEvent.send(NavigationEvent.NavigateBack)
+                }
+            }
+            SesionesEvent.DebugAdvanceWeek -> {
+                viewModelScope.launch(Dispatchers.IO) {
+                    repository.debugAdvanceOneWeek()
+                    loadSessions()
                 }
             }
         }

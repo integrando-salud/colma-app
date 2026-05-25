@@ -30,7 +30,7 @@ class DbHelper(context: Context) :
 
     companion object {
         private const val DATABASE_NAME = "colmadb.db"
-        private const val DATABASE_VERSION = 11
+        private const val DATABASE_VERSION = 12
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
@@ -308,6 +308,11 @@ class DbHelper(context: Context) :
         if (!usuariosColumns.contains("id_centro_salud")) {
             try {
                 db.execSQL("ALTER TABLE usuarios ADD COLUMN id_centro_salud INTEGER;")
+            } catch (e: Exception) { e.printStackTrace() }
+        }
+        if (!usuariosColumns.contains("fecha_registro")) {
+            try {
+                db.execSQL("ALTER TABLE usuarios ADD COLUMN fecha_registro TEXT;")
             } catch (e: Exception) { e.printStackTrace() }
         }
     }
@@ -1952,6 +1957,9 @@ class DbHelper(context: Context) :
                 upsertPais(usuario.pais)
                 upsertCentroSalud(usuario.centroSalud)
         
+                val existingFecha = getUsuarioFechaRegistro(usuario.id)
+                val fechaRegistro = existingFecha ?: defaultDateTimeFormat.format(Date())
+
                 val db = writableDatabase
                 val values = ContentValues().apply {
                     put("idUsuario", usuario.id)
@@ -1961,10 +1969,57 @@ class DbHelper(context: Context) :
                     put("sexo", usuario.sexo)
                     put("id_pais", usuario.pais.id)
                     put("id_centro_salud", usuario.centroSalud.id)
+                    put("fecha_registro", fechaRegistro)
                 }
                 db.insertWithOnConflict("usuarios", null, values, SQLiteDatabase.CONFLICT_REPLACE)
             }
         
+            fun getUsuarioFechaRegistro(idUsuario: Int): String? {
+                return try {
+                    val db = readableDatabase
+                    val query = "SELECT fecha_registro FROM usuarios WHERE idUsuario = ?"
+                    db.rawQuery(query, arrayOf(idUsuario.toString())).use { c ->
+                        if (c.moveToFirst()) {
+                            c.getStringOrNull("fecha_registro")
+                        } else {
+                            null
+                        }
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    null
+                }
+            }
+
+            fun debugSubtractWeekFromRegistrationDate(idUsuario: Int) {
+                val db = writableDatabase
+                val query = "SELECT fecha_registro FROM usuarios WHERE idUsuario = ?"
+                var currentFecha: String? = null
+                db.rawQuery(query, arrayOf(idUsuario.toString())).use { c ->
+                    if (c.moveToFirst()) {
+                        currentFecha = c.getStringOrNull("fecha_registro")
+                    }
+                }
+
+                if (currentFecha != null) {
+                    val formatter = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+                    try {
+                        val date = formatter.parse(currentFecha)
+                        if (date != null) {
+                            // Subtract 7 days (7 * 24 * 60 * 60 * 1000)
+                            val newDate = Date(date.time - 604800000L)
+                            val newFechaString = formatter.format(newDate)
+                            val cv = ContentValues().apply {
+                                put("fecha_registro", newFechaString)
+                            }
+                            db.update("usuarios", cv, "idUsuario = ?", arrayOf(idUsuario.toString()))
+                        }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                }
+            }
+
             fun getUsuario(id: Int): Usuario? {
                 val db = readableDatabase
                 val query = """

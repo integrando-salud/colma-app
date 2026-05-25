@@ -24,4 +24,5 @@ sealed class SesionesEvent {
         val treatmentType: TreatmentType
     ) : SesionesEvent()
     object BackClicked : SesionesEvent()
+    object DebugAdvanceWeek : SesionesEvent()
 }

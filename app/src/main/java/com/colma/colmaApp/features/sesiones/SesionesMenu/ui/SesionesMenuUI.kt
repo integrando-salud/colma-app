@@ -188,7 +188,14 @@ fun SesionesMenuScreen(
                         }
                     }
                 },
-                title = { Text(topBarTitle, color = colorResource(R.color.white), fontWeight = FontWeight.Bold)},
+                title = { 
+                    Text(
+                        text = topBarTitle, 
+                        color = colorResource(R.color.white), 
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier.clickable { onEvent(SesionesEvent.DebugAdvanceWeek) }
+                    )
+                },
                 colors = TopAppBarDefaults.topAppBarColors(containerColor = signatureColor)
             )
 

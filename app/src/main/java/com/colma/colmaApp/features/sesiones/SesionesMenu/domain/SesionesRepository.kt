@@ -23,4 +23,5 @@ interface SesionesRepository {
     suspend fun getDiabetesSessions(): List<SessionItem>
     suspend fun getHtaSubSessions(sessionId: Long): List<SubSessionItem>
     suspend fun getDiabetesSubSessions(sessionId: Long): List<SubSessionItem>
+    suspend fun debugAdvanceOneWeek()
 }

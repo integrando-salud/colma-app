@@ -10,6 +10,9 @@ import com.colma.colmaApp.features.sesiones.SesionesMenu.domain.SubSessionItem
 import com.colma.colmaApp.utils.ResourceUtils
 import com.colma.colmaApp.servicios.database.dbhelper.DbHelper
 import com.colma.colmaApp.servicios.session.SessionManager
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class SesionesRepositoryImpl(
     private val contentRepository: ContentRepository,
@@ -24,13 +27,30 @@ class SesionesRepositoryImpl(
         userId = SessionManager.getUserId() ?: 1
     }
 
+    private fun getElapsedWeeks(fechaRegistro: String?): Int {
+        if (fechaRegistro == null) return 0
+        val formatter = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+        return try {
+            val regDate = formatter.parse(fechaRegistro)
+            val diff = Date().time - (regDate?.time ?: Date().time)
+            val days = diff / (1000 * 60 * 60 * 24)
+            (days / 7).toInt()
+        } catch (e: Exception) {
+            0
+        }
+    }
+
     override suspend fun getHtaSessions(): List<SessionItem> {
+        val fechaRegistro = dbHelper.getUsuarioFechaRegistro(userId)
+        val elapsedWeeks = getElapsedWeeks(fechaRegistro)
+
         return contentRepository.getAllTreatments().fold(
             onSuccess = { treatmentContents ->
                 Log.d(TAG, "Successfully loaded ${treatmentContents.size} treatments")
                 treatmentContents
                     .filter { it.id == TreatmentType.HTA }
                     .flatMap { it.sessions }
+                    .filterIndexed { index, _ -> index <= elapsedWeeks }
                     .map { sessionContent ->
                         SessionItem(
                             id = sessionContent.id,
@@ -49,12 +69,16 @@ class SesionesRepositoryImpl(
     }
 
     override suspend fun getDiabetesSessions(): List<SessionItem> {
+        val fechaRegistro = dbHelper.getUsuarioFechaRegistro(userId)
+        val elapsedWeeks = getElapsedWeeks(fechaRegistro)
+
         return contentRepository.getAllTreatments().fold(
             onSuccess = { treatmentContents ->
                 Log.d(TAG, "Successfully loaded ${treatmentContents.size} treatments")
                 treatmentContents
                     .filter { it.id == TreatmentType.DIABETES }
                     .flatMap { it.sessions }
+                    .filterIndexed { index, _ -> index <= elapsedWeeks }
                     .map { sessionContent ->
                         SessionItem(
                             id = sessionContent.id,
@@ -70,6 +94,10 @@ class SesionesRepositoryImpl(
                 emptyList()
             }
         )
+    }
+
+    override suspend fun debugAdvanceOneWeek() {
+        dbHelper.debugSubtractWeekFromRegistrationDate(userId)
     }
 
     override suspend fun getHtaSubSessions(sessionId: Long): List<SubSessionItem> {
