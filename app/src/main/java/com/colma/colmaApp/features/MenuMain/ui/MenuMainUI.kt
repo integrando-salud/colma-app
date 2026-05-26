@@ -9,6 +9,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -18,8 +19,10 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
@@ -285,21 +288,24 @@ fun MenuScreen(
             },
             title = if (uiState.isHelpRequestFeedback) null else { { Text("Mensaje") } },
             text = {
-                Text(
-                    text = uiState.feedbackMessage,
-                    fontSize = if (uiState.isHelpRequestFeedback) 20.sp else 16.sp,
-                    fontWeight = if (uiState.isHelpRequestFeedback) FontWeight.SemiBold else FontWeight.Normal,
-                    textAlign = if (uiState.isHelpRequestFeedback) TextAlign.Center else TextAlign.Start,
-                    modifier = Modifier.fillMaxWidth()
-                )
+                Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
+                    Text(
+                        text = uiState.feedbackMessage,
+                        fontSize = if (uiState.isHelpRequestFeedback) 20.sp else 18.sp,
+                        fontWeight = if (uiState.isHelpRequestFeedback) FontWeight.SemiBold else FontWeight.Normal,
+                        textAlign = if (uiState.isHelpRequestFeedback) TextAlign.Center else TextAlign.Start,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                }
             },
             confirmButton = {
                 Button(
                     onClick = { onEvent(MenuMainEvent.DismissFeedbackDialog) },
+                    modifier = Modifier.heightIn(min = 48.dp),
                     colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.principal_boton), contentColor = Color.White),
                     elevation = ButtonDefaults.buttonElevation(defaultElevation = 2.dp)
                 ) {
-                    Text("Aceptar")
+                    Text("Aceptar", fontSize = 16.sp)
                 }
             }
         )
@@ -309,13 +315,18 @@ fun MenuScreen(
         AlertDialog(
             onDismissRequest = { onEvent(MenuMainEvent.DismissNoInternetDialog) },
             title = { Text("Sin conexión") },
-            text = { Text("Los datos se actualizarán cuando tenga acceso a internet.") },
+            text = { 
+                Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
+                    Text("Los datos se actualizarán cuando tenga acceso a internet.", fontSize = 16.sp) 
+                }
+            },
             confirmButton = {
                 Button(
                     onClick = { onEvent(MenuMainEvent.DismissNoInternetDialog) },
+                    modifier = Modifier.heightIn(min = 48.dp),
                     colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.principal_boton), contentColor = Color.White)
                 ) {
-                    Text("Aceptar")
+                    Text("Aceptar", fontSize = 16.sp)
                 }
             }
         )
@@ -344,11 +355,11 @@ fun MenuScreen(
                         ) {
                             Image(
                                 painter = painterResource(id = R.drawable.colma_logo),
-                                contentDescription = "App Logo",
+                                contentDescription = "Logo de la aplicación",
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .padding(vertical = 24.dp)
-                                    .size(200.dp)
+                                    .sizeIn(maxWidth = 200.dp, maxHeight = 200.dp)
                                     .align(Alignment.CenterHorizontally)
                             )
 
@@ -409,19 +420,30 @@ fun MenuScreen(
                     snackbarHost = { SnackbarHost(snackbarHostState) },
                     topBar = {
                         TopAppBar(
-                            title = { Text(text = "Bienvenido/a ${uiState.userName}", fontWeight = FontWeight.Bold) },
+                            title = { 
+                                Text(
+                                    text = "Bienvenido/a ${uiState.userName}", 
+                                    fontWeight = FontWeight.Bold,
+                                    maxLines = 1,
+                                    modifier = Modifier.basicMarquee(
+                                        iterations = Int.MAX_VALUE,
+                                        initialDelayMillis = 2000,
+                                        repeatDelayMillis = 1500
+                                    )
+                                ) 
+                            },
                             actions = {
                                 Surface(
                                     shape = RoundedCornerShape(12.dp),
                                     color = colorResource(R.color.contraste),
                                     modifier = Modifier
                                         .padding(end = 8.dp)
-                                        .height(36.dp)
+                                        .heightIn(min = 36.dp)
                                         .clickable { scope.launch { drawerState.open() } }
                                 ) {
                                     Box(
                                         modifier = Modifier
-                                            .padding(horizontal = 12.dp),
+                                            .padding(horizontal = 12.dp, vertical = 6.dp),
                                         contentAlignment = Alignment.Center
                                     ) {
                                         Text(
@@ -440,7 +462,7 @@ fun MenuScreen(
                         )
                     }
                 ) { innerPadding ->
-                    Box(
+                    Column(
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()
@@ -448,30 +470,32 @@ fun MenuScreen(
                     ) {
                         Column(
                             modifier = Modifier
-                                .fillMaxSize()
+                                .weight(1f)
+                                .fillMaxWidth()
                                 .padding(horizontal = 24.dp)
-                                .padding(top = 50.dp)
                                 .verticalScroll(rememberScrollState()),
                             verticalArrangement = Arrangement.Top,
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
+                            Spacer(modifier = Modifier.height(32.dp))
+
                             Text(
                                 text = "Elige una opción",
-                                fontSize = 25.sp,
+                                fontSize = 24.sp,
                                 color = signatureColor,
                                 textAlign = TextAlign.Center,
                                 fontWeight = FontWeight.Bold,
                             )
 
-                            Spacer(modifier = Modifier.height(55.dp))
+                            Spacer(modifier = Modifier.height(32.dp))
 
                             Button(
                                 onClick = { onEvent(MenuMainEvent.OnSessionsClick) },
                                 colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent),
                                 shape = RoundedCornerShape(8.dp),
                                 modifier = Modifier
-                                    .fillMaxWidth(0.85f)
-                                    .height(65.dp)
+                                    .fillMaxWidth(0.95f)
+                                    .heightIn(min = 64.dp)
                                     .shadow(
                                         elevation = 6.dp,
                                         shape = RoundedCornerShape(8.dp),
@@ -490,7 +514,7 @@ fun MenuScreen(
                                     Image(
                                         painter = painterResource(id = R.drawable.sesion_logo),
                                         contentDescription = "Sesiones",
-                                        modifier = Modifier.size(24.dp)
+                                        modifier = Modifier.size(32.dp)
                                     )
 
                                     Spacer(modifier = Modifier.width(12.dp))
@@ -511,8 +535,8 @@ fun MenuScreen(
                             Button(
                                 onClick = { onEvent(MenuMainEvent.OnHealthRegistersClick) },
                                 modifier = Modifier
-                                    .fillMaxWidth(0.85f)
-                                    .height(65.dp),
+                                    .fillMaxWidth(0.95f)
+                                    .heightIn(min = 64.dp),
                                 colors = ButtonDefaults.buttonColors(
                                     containerColor = Color(0xFFF0F0F0),
                                     contentColor = Color.Black
@@ -532,7 +556,7 @@ fun MenuScreen(
                                         painter = painterResource(R.drawable.outline_unknown_document_24),
                                         contentDescription = "Registros",
                                         tint = LocalContentColor.current,
-                                        modifier = Modifier.size(20.dp)
+                                        modifier = Modifier.size(28.dp)
                                     )
 
                                     Spacer(modifier = Modifier.width(12.dp))
@@ -552,8 +576,8 @@ fun MenuScreen(
                             Button(
                                 onClick = { onEvent(MenuMainEvent.OnMetasHistoryClick) },
                                 modifier = Modifier
-                                    .fillMaxWidth(0.85f)
-                                    .height(65.dp),
+                                    .fillMaxWidth(0.95f)
+                                    .heightIn(min = 64.dp),
                                 colors = ButtonDefaults.buttonColors(
                                     containerColor = Color(0xFFF0F0F0),
                                     contentColor = Color.Black
@@ -580,7 +604,7 @@ fun MenuScreen(
                                             painter = painterResource(R.drawable.outline_trophy_24),
                                             contentDescription = "Metas",
                                             tint = LocalContentColor.current,
-                                            modifier = Modifier.size(20.dp)
+                                            modifier = Modifier.size(28.dp)
                                         )
                                     }
 
@@ -595,14 +619,20 @@ fun MenuScreen(
                                     )
                                 }
                             }
+                            Spacer(modifier = Modifier.height(32.dp))
+                        }
 
-                            Spacer(modifier = Modifier.weight(1f))
-
+                        // Fixed Footer
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(24.dp)
+                        ) {
                             Button(
                                 onClick = { onEvent(MenuMainEvent.OnSyncClick) },
                                 modifier = Modifier
-                                    .fillMaxWidth(0.85f)
-                                    .height(65.dp),
+                                    .fillMaxWidth()
+                                    .heightIn(min = 64.dp),
                                 colors = ButtonDefaults.buttonColors(
                                     containerColor = if (uiState.syncSuccessful) Color(0xFF4CAF50) else Color(0xFFF0F0F0),
                                     contentColor = if (uiState.syncSuccessful) Color.White else Color.Black
@@ -612,7 +642,7 @@ fun MenuScreen(
                                     defaultElevation = 6.dp,
                                     pressedElevation = 10.dp
                                 ),
-                                enabled = !uiState.isLoading // Disable button while loading
+                                enabled = !uiState.isLoading
                             ) {
                                 if (uiState.isLoading) {
                                     CircularProgressIndicator(
@@ -624,28 +654,25 @@ fun MenuScreen(
                                     Row(
                                         modifier = Modifier.fillMaxWidth(),
                                         verticalAlignment = Alignment.CenterVertically,
-                                        horizontalArrangement = Arrangement.Start
+                                        horizontalArrangement = Arrangement.Center
                                     ) {
                                         Icon(
-                                            painter = painterResource(if (uiState.syncSuccessful) R.drawable.baseline_sync_24 else R.drawable.baseline_sync_24), // Keep same icon or change if needed
+                                            painter = painterResource(R.drawable.baseline_sync_24),
                                             contentDescription = "Sincronizar",
                                             tint = if (uiState.syncSuccessful) Color.White else LocalContentColor.current,
-                                            modifier = Modifier.size(20.dp)
+                                            modifier = Modifier.size(28.dp)
                                         )
 
                                         Spacer(modifier = Modifier.width(12.dp))
 
                                         Text(
                                             text = if (uiState.syncSuccessful) "Datos actualizados" else "Actualizar datos",
-                                            fontSize = 16.sp,
-                                            fontWeight = FontWeight.SemiBold,
-                                            modifier = Modifier.weight(1f),
-                                            textAlign = TextAlign.Start
+                                            fontSize = 18.sp,
+                                            fontWeight = FontWeight.SemiBold
                                         )
                                     }
                                 }
                             }
-                            Spacer(modifier = Modifier.height(28.dp))
                         }
                     }
                 }
@@ -700,19 +727,20 @@ fun DrawerItem(label: String, icon: ImageVector, onClick: () -> Unit) {
         modifier = Modifier
             .fillMaxWidth()
             .clickable { onClick() }
-            .padding(horizontal = 16.dp, vertical = 12.dp),
+            .padding(horizontal = 16.dp, vertical = 16.dp)
+            .heightIn(min = 48.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
             imageVector = icon,
             contentDescription = label,
             tint = Color(0xFF333333),
-            modifier = Modifier.size(24.dp)
+            modifier = Modifier.size(28.dp)
         )
-        Spacer(modifier = Modifier.size(12.dp))
+        Spacer(modifier = Modifier.size(16.dp))
         Text(
             text = label,
-            fontSize = 16.sp,
+            fontSize = 18.sp,
             color = Color.Black,
             fontWeight = FontWeight.Medium
         )
