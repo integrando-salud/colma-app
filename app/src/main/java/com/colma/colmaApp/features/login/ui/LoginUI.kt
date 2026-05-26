@@ -25,6 +25,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.focus.onFocusEvent
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -200,6 +201,7 @@ fun LoginScreen(
 
     val coroutineScope = rememberCoroutineScope()
     val bringIntoViewRequester = remember { BringIntoViewRequester() }
+    val scrollState = rememberScrollState()
 
     // Detect if keyboard is visible
     val isKeyboardVisible = WindowInsets.ime.asPaddingValues().calculateBottomPadding() > 0.dp
@@ -224,7 +226,7 @@ fun LoginScreen(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .verticalScroll(rememberScrollState()),
+                .verticalScroll(scrollState),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Spacer(modifier = Modifier.height(topSpacerHeight))
@@ -293,7 +295,8 @@ fun LoginScreen(
                         singleLine = true,
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                         colors = OutlinedTextFieldDefaults.colors(
-                            Color(0xFF333333),
+                            focusedTextColor = Color(0xFF333333),
+                            unfocusedTextColor = Color(0xFF333333),
                             cursorColor = colorResource(R.color.principal),
                             focusedBorderColor = colorResource(R.color.principal),
                             unfocusedBorderColor = Color(0xFFCCCCCC),
@@ -323,7 +326,8 @@ fun LoginScreen(
                         visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                         colors = OutlinedTextFieldDefaults.colors(
-                            Color(0xFF333333),
+                            focusedTextColor = Color(0xFF333333),
+                            unfocusedTextColor = Color(0xFF333333),
                             cursorColor = colorResource(R.color.principal),
                             focusedBorderColor = colorResource(R.color.principal),
                             unfocusedBorderColor = Color(0xFFCCCCCC),
@@ -404,6 +408,34 @@ fun LoginScreen(
             )
             
             Spacer(modifier = Modifier.height(32.dp))
+        }
+
+        // Subtle glow at the bottom when there is more to scroll
+        val showBottomGlow by remember {
+            derivedStateOf {
+                scrollState.value < scrollState.maxValue && scrollState.maxValue > 0
+            }
+        }
+
+        AnimatedVisibility(
+            visible = showBottomGlow,
+            enter = fadeIn(),
+            exit = fadeOut(),
+            modifier = Modifier.align(Alignment.BottomCenter)
+        ) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(60.dp)
+                    .background(
+                        brush = Brush.verticalGradient(
+                            colors = listOf(
+                                Color.Transparent,
+                                colorResource(R.color.principal).copy(alpha = 0.15f)
+                            )
+                        )
+                    )
+            )
         }
     }
 }
