@@ -132,12 +132,12 @@ fun SessionContentScreen(
                         color = colorResource(R.color.contraste),
                         modifier = Modifier
                             .padding(start = 8.dp)
-                            .height(36.dp)
+                            .heightIn(min = 36.dp)
                             .clickable { onEvent(SessionContentEvent.BackClicked) }
                     ) {
                         Box(
                             modifier = Modifier
-                                .padding(horizontal = 12.dp),
+                                .padding(horizontal = 12.dp, vertical = 6.dp),
                             contentAlignment = Alignment.Center
                         ) {
                             Text(
@@ -158,21 +158,21 @@ fun SessionContentScreen(
             ) {
                 Box(modifier = Modifier
                     .fillMaxWidth()
-                    .padding(12.dp),
+                    .padding(horizontal = 16.dp, vertical = 12.dp),
                     contentAlignment = Alignment.Center
                 ) {
                     Button(
                         onClick = { onEvent(SessionContentEvent.TerminarClicked) },
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(48.dp),
+                            .heightIn(min = 56.dp),
                         colors = ButtonDefaults.buttonColors(
                             containerColor = signatureColor,
                             contentColor = Color.White
                         ),
                         shape = RoundedCornerShape(8.dp)
                     ) {
-                        Text(text = "Terminar", fontWeight = FontWeight.SemiBold)
+                        Text(text = "Terminar", fontWeight = FontWeight.SemiBold, fontSize = 18.sp)
                     }
                 }
             }

@@ -16,6 +16,7 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -29,6 +30,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
@@ -171,12 +173,12 @@ fun SesionesMenuScreen(
                         color = colorResource(R.color.contraste),
                         modifier = Modifier
                             .padding(start = 8.dp)
-                            .height(36.dp)
+                            .heightIn(min = 36.dp)
                             .clickable { onEvent(SesionesEvent.BackClicked) }
                     ) {
                         Box(
                             modifier = Modifier
-                                .padding(horizontal = 12.dp),
+                                .padding(horizontal = 12.dp, vertical = 6.dp),
                             contentAlignment = Alignment.Center
                         ) {
                             Text(
@@ -193,7 +195,10 @@ fun SesionesMenuScreen(
                         text = topBarTitle, 
                         color = colorResource(R.color.white), 
                         fontWeight = FontWeight.Bold,
-                        modifier = Modifier.clickable { onEvent(SesionesEvent.DebugAdvanceWeek) }
+                        maxLines = 1,
+                        modifier = Modifier
+                            .basicMarquee()
+                            .clickable { onEvent(SesionesEvent.DebugAdvanceWeek) }
                     )
                 },
                 colors = TopAppBarDefaults.topAppBarColors(containerColor = signatureColor)
@@ -341,7 +346,7 @@ fun SessionCard(session: SessionItem, selected: Boolean = false, onClick: () -> 
                 painter = painterResource(id = session.thumbnailRes),
                 contentDescription = "Miniatura ${session.title}",
                 modifier = Modifier
-                    .size(72.dp)
+                    .sizeIn(maxWidth = 72.dp, maxHeight = 72.dp)
                     .clip(RoundedCornerShape(8.dp)),
                 contentScale = ContentScale.Crop
             )
@@ -401,7 +406,8 @@ fun SubSessionRow(sub: SubSessionItem, onClick: () -> Unit) {
         modifier = Modifier
             .fillMaxWidth()
             .clickable { onClick() }
-            .padding(vertical = 10.dp, horizontal = 6.dp),
+            .padding(vertical = 10.dp, horizontal = 6.dp)
+            .heightIn(min = 48.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Box(

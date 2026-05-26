@@ -9,6 +9,7 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
@@ -149,12 +150,12 @@ fun MultimediaSelectorScreen(
                         color = colorResource(R.color.contraste),
                         modifier = Modifier
                             .padding(start = 8.dp)
-                            .height(36.dp)
+                            .heightIn(min = 36.dp)
                             .clickable { onEvent(MultimediaSelectorEvent.BackClicked) }
                     ) {
                         Box(
                             modifier = Modifier
-                                .padding(horizontal = 12.dp),
+                                .padding(horizontal = 12.dp, vertical = 6.dp),
                             contentAlignment = Alignment.Center
                         ) {
                             Text(
@@ -233,6 +234,7 @@ fun MultimediaOptionCard(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
+                .heightIn(min = 80.dp)
                 .padding(20.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -241,23 +243,23 @@ fun MultimediaOptionCard(
                     imageVector = option.iconImageVector,
                     contentDescription = option.title,
                     tint = signatureColor,
-                    modifier = Modifier.size(36.dp)
+                    modifier = Modifier.size(40.dp)
                 )
             } else if (option.iconResId != null) {
                 Icon(
                     painter = painterResource(id = option.iconResId),
                     contentDescription = option.title,
                     tint = signatureColor,
-                    modifier = Modifier.size(36.dp)
+                    modifier = Modifier.size(40.dp)
                 )
             }
 
             Spacer(modifier = Modifier.width(16.dp))
 
             Column(modifier = Modifier.weight(1f)) {
-                Text(option.title, fontSize = 18.sp, fontWeight = FontWeight.SemiBold)
+                Text(option.title, fontSize = 20.sp, fontWeight = FontWeight.SemiBold)
                 Spacer(modifier = Modifier.height(6.dp))
-                Text(option.description, fontSize = 13.sp, color = Color.Gray)
+                Text(option.description, fontSize = 14.sp, color = Color.Gray)
             }
         }
     }
@@ -286,11 +288,11 @@ fun StepProgressBar(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 12.dp),
+                .padding(horizontal = 16.dp, vertical = 12.dp)
+                .horizontalScroll(rememberScrollState()),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center
-        ) {
-            for (i in 1..totalSteps) {
+        ) {            for (i in 1..totalSteps) {
                 // Connector line before each step (except the first)
                 if (i > 1) {
                     val lineColor = if (i <= currentStep) lightSignatureColor else incompleteColor
