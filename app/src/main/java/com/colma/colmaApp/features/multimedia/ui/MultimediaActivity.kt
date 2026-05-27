@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -145,7 +146,13 @@ fun MultimediaScreen(
                         text = topBarTitle,
                         fontWeight = FontWeight.SemiBold,
                         fontSize = 18.sp,
-                        color = colorResource(R.color.white)
+                        color = colorResource(R.color.white),
+                        maxLines = 1,
+                        modifier = Modifier.basicMarquee(
+                            iterations = Int.MAX_VALUE,
+                            initialDelayMillis = 2000,
+                            repeatDelayMillis = 1500
+                        )
                     )
                 },
                 colors = TopAppBarDefaults.topAppBarColors(containerColor = signatureColor),
