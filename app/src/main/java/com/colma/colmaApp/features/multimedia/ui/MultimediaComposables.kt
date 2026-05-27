@@ -146,9 +146,12 @@ fun InformationDisplayContent(
         displayContent.split("\n\n").filter { it.isNotBlank() }
     }
     val pagerState = rememberPagerState(pageCount = { paragraphs.size })
+    val scrollState = rememberScrollState()
 
-    Column(modifier = Modifier
-        .fillMaxWidth(),
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .verticalScroll(scrollState),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         if (paragraphs.isNotEmpty()) {
@@ -156,12 +159,11 @@ fun InformationDisplayContent(
                 state = pagerState,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .weight(1f)
+                    .heightIn(max = 500.dp)
             ) { page ->
                 InformationCard(
                     displayContent = paragraphs[page],
-                    audioResId = descriptionAudios?.getOrNull(page),
-                    navigationButtons = navigationButtons
+                    audioResId = descriptionAudios?.getOrNull(page)
                 )
             }
             Spacer(Modifier.height(16.dp))
@@ -176,18 +178,20 @@ fun InformationDisplayContent(
         } else {
             InformationCard(
                 displayContent = "No content provided.",
-                audioResId = descriptionAudios?.getOrNull(0),
-                navigationButtons = navigationButtons
+                audioResId = descriptionAudios?.getOrNull(0)
             )
         }
+
+        Spacer(Modifier.height(24.dp))
+        navigationButtons()
+        Spacer(Modifier.height(32.dp))
     }
 }
 
 @Composable
 fun InformationCard(
     displayContent: String,
-    audioResId: Int? = null,
-    navigationButtons: @Composable () -> Unit = {}
+    audioResId: Int? = null
 ) {
     val context = LocalContext.current
     var tts by remember { mutableStateOf<TextToSpeech?>(null) }
@@ -361,9 +365,6 @@ fun InformationCard(
                 fontSize = 16.sp,
                 textAlign = TextAlign.Left
             )
-
-            Spacer(Modifier.height(16.dp))
-            navigationButtons()
         }
     }
 }
@@ -475,90 +476,96 @@ fun FinishPage(
     navigationButtons: @Composable () -> Unit = {}
 ) {
     val scrollState = rememberScrollState()
-    Card(
-        shape = RoundedCornerShape(16.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.White),
+    Column(
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(8.dp)
+            .fillMaxSize()
+            .verticalScroll(scrollState),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Column(
+        Card(
+            shape = RoundedCornerShape(16.dp),
+            elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
+            colors = CardDefaults.cardColors(containerColor = Color.White),
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(24.dp)
-                .scrollbar(scrollState)
-                .verticalScroll(scrollState),
-            horizontalAlignment = Alignment.CenterHorizontally
+                .padding(8.dp)
         ) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(24.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text(
-                    "Audio Explicativo",
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Medium
-                )
-                Spacer(Modifier.width(8.dp))
-                Icon(
-                    painter = painterResource(R.drawable.outline_headphones_24),
-                    contentDescription = null,
-                    modifier = Modifier.size(20.dp),
-                    tint = Color(0xFFE84589)
-                )
-            }
-
-            Spacer(Modifier.height(16.dp))
-
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                IconButton(onClick = onPlayPauseToggle) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    Text(
+                        "Audio Explicativo",
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Medium
+                    )
+                    Spacer(Modifier.width(8.dp))
                     Icon(
-                        painter = if (isPlaying) painterResource(R.drawable.baseline_pause_24) else painterResource(R.drawable.baseline_play_arrow_24),
-                        contentDescription = if (isPlaying) "Pausar" else "Reproducir",
-                        modifier = Modifier.size(36.dp),
+                        painter = painterResource(R.drawable.outline_headphones_24),
+                        contentDescription = null,
+                        modifier = Modifier.size(20.dp),
                         tint = Color(0xFFE84589)
                     )
                 }
 
-                val duration = (audioDurationMs.coerceAtLeast(1L)).toFloat()
-                val position = (playbackPositionMs.coerceIn(0L, audioDurationMs)).toFloat()
-                Slider(
-                    value = if (duration > 0f) (position / duration) else 0f,
-                    onValueChange = { frac ->
-                        val newPos = (frac * duration).toLong()
-                        onSeek(newPos)
-                    },
-                    modifier = Modifier
-                        .weight(1f)
-                        .padding(horizontal = 8.dp)
+                Spacer(Modifier.height(16.dp))
+
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    IconButton(onClick = onPlayPauseToggle) {
+                        Icon(
+                            painter = if (isPlaying) painterResource(R.drawable.baseline_pause_24) else painterResource(R.drawable.baseline_play_arrow_24),
+                            contentDescription = if (isPlaying) "Pausar" else "Reproducir",
+                            modifier = Modifier.size(36.dp),
+                            tint = Color(0xFFE84589)
+                        )
+                    }
+
+                    val duration = (audioDurationMs.coerceAtLeast(1L)).toFloat()
+                    val position = (playbackPositionMs.coerceIn(0L, audioDurationMs)).toFloat()
+                    Slider(
+                        value = if (duration > 0f) (position / duration) else 0f,
+                        onValueChange = { frac ->
+                            val newPos = (frac * duration).toLong()
+                            onSeek(newPos)
+                        },
+                        modifier = Modifier
+                            .weight(1f)
+                            .padding(horizontal = 8.dp)
+                    )
+                }
+
+                Spacer(Modifier.height(8.dp))
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(formatTime(playbackPositionMs), fontSize = 12.sp, color = Color.Gray)
+                    Text(formatTime(audioDurationMs), fontSize = 12.sp, color = Color.Gray)
+                }
+
+                Spacer(Modifier.height(16.dp))
+
+                Text(
+                    "Pulsa el botón de play para escuchar el audio explicativo.",
+                    fontSize = 16.sp,
+                    textAlign = TextAlign.Center
                 )
             }
-
-            Spacer(Modifier.height(8.dp))
-
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Text(formatTime(playbackPositionMs), fontSize = 12.sp, color = Color.Gray)
-                Text(formatTime(audioDurationMs), fontSize = 12.sp, color = Color.Gray)
-            }
-
-            Spacer(Modifier.height(16.dp))
-
-            Text(
-                "Pulsa el botón de play para escuchar el audio explicativo.",
-                fontSize = 16.sp,
-                textAlign = TextAlign.Center
-            )
-
-            Spacer(Modifier.height(16.dp))
-            navigationButtons()
         }
+
+        Spacer(Modifier.height(24.dp))
+        navigationButtons()
+        Spacer(Modifier.height(32.dp))
     }
 }
 
@@ -579,55 +586,61 @@ private fun formatTime(ms: Long): String {
 @Composable
 fun VideoContent(@RawRes contentAssetId: Int, navigationButtons: @Composable () -> Unit = {}) {
     val scrollState = rememberScrollState()
-    Card(
-        shape = RoundedCornerShape(16.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.White),
+    Column(
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(8.dp)
+            .fillMaxSize()
+            .verticalScroll(scrollState),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Column(
+        Card(
+            shape = RoundedCornerShape(16.dp),
+            elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
+            colors = CardDefaults.cardColors(containerColor = Color.White),
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(24.dp)
-                .scrollbar(scrollState)
-                .verticalScroll(scrollState),
-            horizontalAlignment = Alignment.CenterHorizontally
+                .padding(8.dp)
         ) {
-            // Title + icon row
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center
-            ) {
-                Text(
-                    "Video Explicativo",
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold
-                )
-                Spacer(Modifier.width(8.dp))
-                Icon(
-                    painter = painterResource(R.drawable.outline_videocam_24),
-                    contentDescription = "Ver video",
-                    modifier = Modifier.size(32.dp),
-                    tint = Color(0xFFE84589)
-                )
-            }
-
-            Spacer(Modifier.height(16.dp))
-
-            // Video player - replace missing_photo thumbnail with actual player
-            VideoPlayerWithFullscreen(
-                resId = contentAssetId, // Use the dynamically provided contentAssetId
+            Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(400.dp)
-                    .clip(RoundedCornerShape(8.dp))
-            )
+                    .padding(24.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                // Title + icon row
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    Text(
+                        "Video Explicativo",
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                    Spacer(Modifier.width(8.dp))
+                    Icon(
+                        painter = painterResource(R.drawable.outline_videocam_24),
+                        contentDescription = "Ver video",
+                        modifier = Modifier.size(32.dp),
+                        tint = Color(0xFFE84589)
+                    )
+                }
 
-            Spacer(Modifier.height(16.dp))
-            navigationButtons()
+                Spacer(Modifier.height(16.dp))
+
+                // Video player
+                VideoPlayerWithFullscreen(
+                    resId = contentAssetId,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(400.dp)
+                        .clip(RoundedCornerShape(8.dp))
+                )
+            }
         }
+
+        Spacer(Modifier.height(24.dp))
+        navigationButtons()
+        Spacer(Modifier.height(32.dp))
     }
 }
 
