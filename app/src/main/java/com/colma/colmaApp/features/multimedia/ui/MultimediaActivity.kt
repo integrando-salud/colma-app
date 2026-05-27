@@ -8,10 +8,13 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -176,33 +179,44 @@ fun MultimediaScreen(
                     .fillMaxWidth()
                     .weight(1f)
                     .padding(16.dp),
-                contentAlignment = Alignment.Center
+                contentAlignment = Alignment.TopCenter // Changed to TopCenter for better scroll start
             ) {
+                val navButtons = @Composable {
+                    NavigationButtons(
+                        currentIndex = uiState.currentMultimediaIndex,
+                        maxIndex = uiState.multimediaOptions.lastIndex,
+                        onPrevious = { onEvent(MultimediaEvent.GoToPrevious) },
+                        onNext = { onEvent(MultimediaEvent.GoToNext) },
+                        signatureColor = signatureColor
+                    )
+                }
+
                 // Use key to force recomposition when index changes
                 key(uiState.currentMultimediaIndex) {
                     when {
                         uiState.isLoading -> {
-                            CircularProgressIndicator()
+                            CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
                         }
                         uiState.error != null -> {
-                            Text(text = "Error: ${uiState.error}", color = Color.Red)
+                            Text(text = "Error: ${uiState.error}", color = Color.Red, modifier = Modifier.align(Alignment.Center))
                         }
                         currentOption != null -> {
                             when (currentOption.type) {
                                 MultimediaContentType.DESCRIPTION -> {
                                     InformationDisplayContent(
                                         displayContent = currentOption.fullDescription ?: currentOption.description,
-                                        descriptionAudios = currentOption.descriptionAudios
+                                        descriptionAudios = currentOption.descriptionAudios,
+                                        navigationButtons = navButtons
                                     )
                                 }
                                 MultimediaContentType.VIDEO -> {
                                     currentOption.contentAssetId?.let {
-                                        VideoContent(contentAssetId = it)
+                                        VideoContent(contentAssetId = it, navigationButtons = navButtons)
                                     } ?: Text("Video resource not found.")
                                 }
                                 MultimediaContentType.AUDIO -> {
                                     currentOption.contentAssetId?.let {
-                                        AudioContent(audioResId = it)
+                                        AudioContent(audioResId = it, navigationButtons = navButtons)
                                     } ?: Text("Audio resource not found.")
                                 }
                                 MultimediaContentType.METAS -> {
@@ -211,7 +225,8 @@ fun MultimediaScreen(
                                             metasId = it,
                                             currentWeekId = uiState.sessionId.toInt(),
                                             currentSessionId = uiState.subSessionId.toInt(),
-                                            onFinish = { onEvent(MultimediaEvent.Finish) }
+                                            onFinish = { onEvent(MultimediaEvent.Finish) },
+                                            navigationButtons = navButtons
                                         )
                                     } ?: Text("Metas not found.")
                                 }
@@ -235,7 +250,8 @@ fun MultimediaScreen(
                                             onQuizSubmit = { quizResponse, questionResponses ->
                                                 onEvent(MultimediaEvent.QuizSubmitted(quizResponse, questionResponses))
                                             },
-                                            onFinish = { onEvent(MultimediaEvent.GoToNext) }
+                                            onFinish = { onEvent(MultimediaEvent.GoToNext) },
+                                            navigationButtons = navButtons
                                         )
                                     } ?: Text("Quiz not found or questions missing.")
                                 }
@@ -247,46 +263,6 @@ fun MultimediaScreen(
                         else -> {
                             Text("No content available.")
                         }
-                    }
-                }
-            }
-
-            // Bottom buttons
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    // Back button - only show if not on first item
-                    if (uiState.currentMultimediaIndex > 0) {
-                        Button(
-                            onClick = { onEvent(MultimediaEvent.GoToPrevious) },
-                            modifier = Modifier.weight(1f),
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = colorResource(R.color.principal),
-                                contentColor = Color.White
-                            ),
-                        ) {
-                            Text(text = "Anterior", fontWeight = FontWeight.SemiBold)
-                        }
-                    }
-                    
-                    // Next/Finish button
-                    Button(
-                        onClick = { onEvent(MultimediaEvent.GoToNext) },
-                        modifier = Modifier.weight(1f),
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = signatureColor,
-                            contentColor = Color.White
-                        ),
-                    ) {
-                        val isLast = uiState.currentMultimediaIndex == uiState.multimediaOptions.lastIndex
-                        Text(text = if (isLast) "Finalizar" else "Siguiente", fontWeight = FontWeight.SemiBold)
                     }
                 }
             }

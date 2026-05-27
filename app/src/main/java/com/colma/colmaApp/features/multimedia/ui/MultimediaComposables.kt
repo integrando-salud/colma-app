@@ -85,11 +85,61 @@ import com.google.gson.Gson
 
 
 
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
+
+@Composable
+fun NavigationButtons(
+    currentIndex: Int,
+    maxIndex: Int,
+    onPrevious: () -> Unit,
+    onNext: () -> Unit,
+    signatureColor: Color
+) {
+    @OptIn(ExperimentalLayoutApi::class)
+    FlowRow(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 24.dp),
+        horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally),
+        verticalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        if (currentIndex > 0) {
+            Button(
+                onClick = onPrevious,
+                modifier = Modifier
+                    .weight(1f, fill = false)
+                    .heightIn(min = 56.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = colorResource(R.color.principal),
+                    contentColor = Color.White
+                ),
+            ) {
+                Text(text = "Anterior", fontWeight = FontWeight.SemiBold, fontSize = 16.sp)
+            }
+        }
+        Button(
+            onClick = onNext,
+            modifier = Modifier
+                .weight(1f, fill = false)
+                .heightIn(min = 56.dp),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = signatureColor,
+                contentColor = Color.White
+            ),
+        ) {
+            val isLast = currentIndex == maxIndex
+            Text(text = if (isLast) "Finalizar" else "Siguiente", fontWeight = FontWeight.SemiBold, fontSize = 16.sp)
+        }
+    }
+}
+
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun InformationDisplayContent(
     displayContent: String,
-    descriptionAudios: List<Int>? = null
+    descriptionAudios: List<Int>? = null,
+    navigationButtons: @Composable () -> Unit = {}
 ) {
     val signatureColor = colorResource(R.color.principal)
     val paragraphs = remember(displayContent) {
@@ -110,7 +160,8 @@ fun InformationDisplayContent(
             ) { page ->
                 InformationCard(
                     displayContent = paragraphs[page],
-                    audioResId = descriptionAudios?.getOrNull(page)
+                    audioResId = descriptionAudios?.getOrNull(page),
+                    navigationButtons = navigationButtons
                 )
             }
             Spacer(Modifier.height(16.dp))
@@ -125,7 +176,8 @@ fun InformationDisplayContent(
         } else {
             InformationCard(
                 displayContent = "No content provided.",
-                audioResId = descriptionAudios?.getOrNull(0)
+                audioResId = descriptionAudios?.getOrNull(0),
+                navigationButtons = navigationButtons
             )
         }
     }
@@ -134,7 +186,8 @@ fun InformationDisplayContent(
 @Composable
 fun InformationCard(
     displayContent: String,
-    audioResId: Int? = null
+    audioResId: Int? = null,
+    navigationButtons: @Composable () -> Unit = {}
 ) {
     val context = LocalContext.current
     var tts by remember { mutableStateOf<TextToSpeech?>(null) }
@@ -308,6 +361,9 @@ fun InformationCard(
                 fontSize = 16.sp,
                 textAlign = TextAlign.Left
             )
+
+            Spacer(Modifier.height(16.dp))
+            navigationButtons()
         }
     }
 }
@@ -345,6 +401,7 @@ fun HorizontalPagerIndicator(
 @Composable
 fun AudioContent(
     @RawRes audioResId: Int,
+    navigationButtons: @Composable () -> Unit = {}
 ) {
     val context = LocalContext.current
 
@@ -403,7 +460,8 @@ fun AudioContent(
             val pos = newPos.coerceIn(0L, (exoPlayer.duration.coerceAtLeast(0L)))
             exoPlayer.seekTo(pos)
             playbackPositionMs = pos
-        }
+        },
+        navigationButtons = navigationButtons
     )
 }
 
@@ -413,7 +471,8 @@ fun FinishPage(
     playbackPositionMs: Long = 0L,
     isPlaying: Boolean = false,
     onPlayPauseToggle: () -> Unit = {},
-    onSeek: (Long) -> Unit = {}
+    onSeek: (Long) -> Unit = {},
+    navigationButtons: @Composable () -> Unit = {}
 ) {
     val scrollState = rememberScrollState()
     Card(
@@ -496,6 +555,9 @@ fun FinishPage(
                 fontSize = 16.sp,
                 textAlign = TextAlign.Center
             )
+
+            Spacer(Modifier.height(16.dp))
+            navigationButtons()
         }
     }
 }
@@ -515,7 +577,7 @@ private fun formatTime(ms: Long): String {
 }
 
 @Composable
-fun VideoContent(@RawRes contentAssetId: Int) {
+fun VideoContent(@RawRes contentAssetId: Int, navigationButtons: @Composable () -> Unit = {}) {
     val scrollState = rememberScrollState()
     Card(
         shape = RoundedCornerShape(16.dp),
@@ -562,6 +624,9 @@ fun VideoContent(@RawRes contentAssetId: Int) {
                     .height(400.dp)
                     .clip(RoundedCornerShape(8.dp))
             )
+
+            Spacer(Modifier.height(16.dp))
+            navigationButtons()
         }
     }
 }
@@ -656,7 +721,8 @@ fun QuizContent(
     treatmentTypes: List<TreatmentType>,
     multimediaUniqueKey: String,
     onQuizSubmit: (quizResponse: QuizResponseRecord, questionResponses: List<QuestionResponseRecord>) -> Unit,
-    onFinish: () -> Unit
+    onFinish: () -> Unit,
+    navigationButtons: @Composable () -> Unit = {}
 ) {
     val userAnswers = remember { mutableStateMapOf<Int, Int>() }
     var quizSubmitted by remember { mutableStateOf(false) } // Keep this for UI feedback
@@ -664,30 +730,48 @@ fun QuizContent(
 
     val allQuestionsAnswered = userAnswers.size == quizQuestions.size
 
-    Box(modifier = Modifier.fillMaxSize()) {
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(bottom = 80.dp), // Space for the button
-            contentPadding = PaddingValues(16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
-        ) {
-            itemsIndexed(quizQuestions) { index, question ->
-                QuestionCard(
-                    questionIndex = index,
-                    question = question,
-                    selectedAnswerIndex = userAnswers[index],
-                    isSubmitted = quizSubmitted,
-                    onAnswerSelected = { answerIndex ->
-                        if (!quizSubmitted) {
-                            userAnswers[index] = answerIndex
-                        }
+    val scrollState = rememberScrollState()
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .verticalScroll(scrollState)
+            .padding(16.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp)
+    ) {
+        quizQuestions.forEachIndexed { index, question ->
+            QuestionCard(
+                questionIndex = index,
+                question = question,
+                selectedAnswerIndex = userAnswers[index],
+                isSubmitted = quizSubmitted,
+                onAnswerSelected = { answerIndex ->
+                    if (!quizSubmitted) {
+                        userAnswers[index] = answerIndex
                     }
-                )
+                }
+            )
+        }
+
+        if (!quizSubmitted) {
+            Button(
+                onClick = {
+                    showConfirmationDialog = true
+                },
+                enabled = allQuestionsAnswered,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .heightIn(min = 56.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.contraste))
+            ) {
+                Text("Guardar", fontWeight = FontWeight.SemiBold, fontSize = 18.sp)
             }
         }
 
-        if (showConfirmationDialog) {
+        Spacer(Modifier.height(16.dp))
+        navigationButtons()
+    }
+
+    if (showConfirmationDialog) {
             AlertDialog(
                 onDismissRequest = { showConfirmationDialog = false },
                 containerColor = Color.White,
@@ -757,27 +841,6 @@ fun QuizContent(
                 }
             )
         }
-
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(16.dp),
-            contentAlignment = Alignment.BottomCenter
-        ) {
-            if (!quizSubmitted) {
-                Button(
-                    onClick = {
-                        showConfirmationDialog = true
-                    },
-                    enabled = allQuestionsAnswered,
-                    modifier = Modifier.fillMaxWidth(),
-                    colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.contraste))
-                ) {
-                    Text("Guardar")
-                }
-            }
-        }
-    }
 }
 
 @Composable
@@ -856,7 +919,13 @@ fun QuestionCard(
 }
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MetasContent(metasId: String, currentWeekId: Int, currentSessionId: Int, onFinish: () -> Unit) {
+fun MetasContent(
+    metasId: String, 
+    currentWeekId: Int, 
+    currentSessionId: Int, 
+    onFinish: () -> Unit,
+    navigationButtons: @Composable () -> Unit = {}
+) {
     val treatmentType = if (metasId != null) {
         try {
             TreatmentType.valueOf(metasId.uppercase(Locale.ROOT))
@@ -977,14 +1046,13 @@ fun MetasContent(metasId: String, currentWeekId: Int, currentSessionId: Int, onF
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp)
     ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .scrollbar(scrollState)
                 .verticalScroll(scrollState)
-                .padding(bottom = 84.dp),
+                .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             val (actividades, conQuienOptions) = getMetasOptions(treatmentType)
@@ -1024,13 +1092,9 @@ fun MetasContent(metasId: String, currentWeekId: Int, currentSessionId: Int, onF
                     fecha.value = dbDateTimeFormat.format(selectedCal.time)
                 }
             )
-        }
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .align(Alignment.BottomCenter),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
+
+            Spacer(Modifier.height(24.dp))
+
             Button(
                 onClick = {
                     val missing = buildList {
@@ -1053,16 +1117,23 @@ fun MetasContent(metasId: String, currentWeekId: Int, currentSessionId: Int, onF
                     }
                     showSummaryDialog = true
                 },
-                modifier = Modifier.fillMaxWidth().height(52.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .heightIn(min = 56.dp),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = colorResource(R.color.contraste),
                     contentColor = Color.White
                 ),
                 shape = RoundedCornerShape(8.dp)
             ) {
-                Text(text = "Guardar", fontWeight = FontWeight.SemiBold)
+                Text(text = "Guardar", fontWeight = FontWeight.SemiBold, fontSize = 18.sp)
             }
-            if (showSummaryDialog) {
+
+            Spacer(Modifier.height(16.dp))
+            navigationButtons()
+        }
+
+        if (showSummaryDialog) {
                 CustomAlertDialog(
                     show = showSummaryDialog,
                     onDismissRequest = { showSummaryDialog = false },
@@ -1176,7 +1247,6 @@ fun MetasContent(metasId: String, currentWeekId: Int, currentSessionId: Int, onF
                     shape = RoundedCornerShape(12.dp)
                 )
             }
-        }
     }
 }
 
