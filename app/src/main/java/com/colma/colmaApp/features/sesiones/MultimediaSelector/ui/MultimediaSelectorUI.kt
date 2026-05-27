@@ -56,6 +56,14 @@ class MultimediaSelectorUI : ComponentActivity() {
         MultimediaSelectorViewModelFactory(applicationContext)
     }
 
+    override fun onResume() {
+        super.onResume()
+        // Reload options to update completion status (ticks)
+        if (viewModel.uiState.value.sessionId != -1L) {
+            viewModel.loadMultimediaOptions()
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
@@ -260,6 +268,15 @@ fun MultimediaOptionCard(
                 Text(option.title, fontSize = 20.sp, fontWeight = FontWeight.SemiBold)
                 Spacer(modifier = Modifier.height(6.dp))
                 Text(option.description, fontSize = 14.sp, color = Color.Gray)
+            }
+
+            if (option.isCompleted) {
+                Icon(
+                    imageVector = Icons.Default.CheckCircle,
+                    contentDescription = "Completado",
+                    tint = Color(0xFF4CAF50),
+                    modifier = Modifier.size(24.dp).padding(start = 8.dp)
+                )
             }
         }
     }

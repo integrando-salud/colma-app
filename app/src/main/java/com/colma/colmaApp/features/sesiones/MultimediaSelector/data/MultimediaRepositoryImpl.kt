@@ -55,6 +55,29 @@ class MultimediaRepositoryImpl(
         return contentRepository.getMultimediaOptions(treatmentType, sessionId, subSessionId).fold(
             onSuccess = { multimediaContents ->
                 Result.success(multimediaContents.map { multimediaContent ->
+                    val contentAssetId = multimediaContent.contentAsset?.let {
+                        ResourceUtils.getResourceId(context, it, "raw")
+                    }
+                    
+                    val uniqueKey = generateMultimediaUniqueKey(
+                        multimediaContent.type,
+                        multimediaContent.title,
+                        contentAssetId,
+                        multimediaContent.metasId,
+                        treatmentType.name,
+                        sessionId,
+                        subSessionId
+                    )
+                    
+                    val isCompleted = dbHelper.getMultimediaReadRecordExists(
+                        idUsuario = userId,
+                        treatmentId = treatmentType.name,
+                        weekId = sessionId.toInt(),
+                        sessionId = subSessionId.toInt(),
+                        multimediaType = multimediaContent.type.name,
+                        multimediaUniqueKey = uniqueKey
+                    )
+
                     MultimediaOption(
                         type = multimediaContent.type,
                         title = multimediaContent.title,
@@ -66,19 +89,37 @@ class MultimediaRepositoryImpl(
                         iconImageVector = multimediaContent.iconImageVector?.let {
                             mapImageVector(it)
                         },
-                        contentAssetId = multimediaContent.contentAsset?.let {
-                            ResourceUtils.getResourceId(context, it, "raw")
-                        },
+                        contentAssetId = contentAssetId,
                         questions = multimediaContent.questions,
                         metasId = multimediaContent.metasId,
                         descriptionAudios = multimediaContent.descriptionAudios?.map { audioName ->
                             ResourceUtils.getResourceId(context, audioName, "raw")
-                        }
+                        },
+                        isCompleted = isCompleted
                     )
                 })
             },
             onFailure = { Result.failure(it) }
         )
+    }
+
+    private fun generateMultimediaUniqueKey(
+        type: MultimediaContentType,
+        title: String,
+        contentAssetId: Int?,
+        metasId: String?,
+        treatmentId: String,
+        weekId: Long,
+        sessionId: Long
+    ): String {
+        val sanitizedTitle = title.replace(" ", "_").replace("[^a-zA-Z0-9_]".toRegex(), "")
+        return when (type) {
+            MultimediaContentType.VIDEO, MultimediaContentType.AUDIO -> "ASSET_$contentAssetId"
+            MultimediaContentType.QUIZ -> "QUIZ_${treatmentId}_${weekId}_${sessionId}_${sanitizedTitle}"
+            MultimediaContentType.METAS -> "METAS_$metasId"
+            MultimediaContentType.DESCRIPTION -> "DESCRIPTION_${treatmentId}_${weekId}_${sessionId}_${sanitizedTitle}"
+            else -> "${type.name}_UNKNOWN"
+        }
     }
 
     private fun mapImageVector(name: String): ImageVector? {

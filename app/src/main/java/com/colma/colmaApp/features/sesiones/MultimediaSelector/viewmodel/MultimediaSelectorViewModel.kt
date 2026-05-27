@@ -39,7 +39,7 @@ class MultimediaSelectorViewModel(private val repository: MultimediaRepository) 
         loadMultimediaOptions()
     }
 
-    private fun loadMultimediaOptions() {
+    fun loadMultimediaOptions() {
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true, error = null) }
             val state = _uiState.value
