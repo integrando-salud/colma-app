@@ -224,7 +224,14 @@ fun PresionScreen(
         modifier = Modifier.systemBarsPadding(),
         topBar = {
             TopAppBar(
-                title = { Text(text = "Medición de Presión", fontWeight = FontWeight.Bold) },
+                title = { 
+                    Text(
+                        text = "Medición de Presión", 
+                        fontWeight = FontWeight.Bold,
+                        maxLines = 1,
+                        modifier = Modifier.basicMarquee()
+                    ) 
+                },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
                         Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "Volver")
@@ -446,7 +453,7 @@ fun PresionScreen(
                     onDismissRequest = { onEvent(PresionEvent.DismissFormDialog) },
                     title = { Text(text = "Registrar presión", color = Color.Black) },
                     text = {
-                        Column {
+                        Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
                             Text(text = "Ingresar valor mayor", fontSize = 15.sp, color = Color.Black)
                             OutlinedTextField(
                                 value = uiState.sistolica,

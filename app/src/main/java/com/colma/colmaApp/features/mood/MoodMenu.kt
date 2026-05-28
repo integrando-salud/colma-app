@@ -11,6 +11,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.compose.foundation.background
+import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -132,7 +133,18 @@ fun MoodMenuScreen(
         modifier = Modifier.systemBarsPadding(),
         topBar = {
             TopAppBar(
-                title = { Text(text = "Estado de ánimo", fontWeight = androidx.compose.ui.text.font.FontWeight.Bold) },
+                title = {
+                    Text(
+                        text = "Estado de ánimo",
+                        fontWeight = FontWeight.Bold,
+                        maxLines = 1,
+                        modifier = Modifier.basicMarquee(
+                            iterations = Int.MAX_VALUE,
+                            initialDelayMillis = 2000,
+                            repeatDelayMillis = 1500
+                        )
+                    )
+                },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
                         Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "Volver")
@@ -140,8 +152,8 @@ fun MoodMenuScreen(
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = colorResource(R.color.principal),
-                    titleContentColor = MaterialTheme.colorScheme.onPrimary,
-                    navigationIconContentColor = MaterialTheme.colorScheme.onPrimary
+                    titleContentColor = Color.White,
+                    navigationIconContentColor = Color.White
                 )
             )
         }
