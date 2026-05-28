@@ -8,14 +8,17 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.compose.foundation.background
+import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -108,19 +111,20 @@ class PresionUI : ComponentActivity() {
                 if (uiState.warningDialog.show) {
                     AlertDialog(
                         onDismissRequest = { viewModel.onEvent(PresionEvent.DismissWarningDialog) },
-                        title = { Text("Advertencia") },
+                        title = { Text("Advertencia", fontWeight = FontWeight.Bold) },
                         text = {
                             Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
-                                Text(uiState.warningDialog.message)
+                                Text(uiState.warningDialog.message, fontSize = 16.sp)
                             }
                         },
                         confirmButton = {
                             Button(
                                 onClick = { viewModel.onEvent(PresionEvent.DismissWarningDialog) },
+                                modifier = Modifier.heightIn(min = 48.dp),
                                 colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.principal_boton), contentColor = Color.White),
                                 elevation = ButtonDefaults.buttonElevation(defaultElevation = 2.dp)
                             ) {
-                                Text("Cerrar")
+                                Text("Cerrar", fontSize = 16.sp)
                             }
                         }
                     )
@@ -129,15 +133,20 @@ class PresionUI : ComponentActivity() {
                 if (uiState.showSuccessDialog) {
                     AlertDialog(
                         onDismissRequest = { viewModel.onEvent(PresionEvent.DismissSuccessDialog) },
-                        title = { Text("Éxito") },
-                        text = { Text("Registro guardado con éxito.") },
+                        title = { Text("Éxito", fontWeight = FontWeight.Bold) },
+                        text = { 
+                            Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
+                                Text("Registro guardado con éxito.", fontSize = 16.sp) 
+                            }
+                        },
                         confirmButton = {
                             Button(
                                 onClick = { viewModel.onEvent(PresionEvent.DismissSuccessDialog) },
+                                modifier = Modifier.heightIn(min = 48.dp),
                                 colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.principal_boton), contentColor = Color.White),
                                 elevation = ButtonDefaults.buttonElevation(defaultElevation = 2.dp)
                             ) {
-                                Text("Cerrar")
+                                Text("Cerrar", fontSize = 16.sp)
                             }
                         }
                     )
