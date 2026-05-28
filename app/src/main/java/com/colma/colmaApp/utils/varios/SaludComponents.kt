@@ -1,13 +1,16 @@
 package com.colma.colmaApp.utils.varios
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -82,28 +85,32 @@ fun HistoryCard(
                     Text(
                         text = "Historial",
                         fontWeight = FontWeight.SemiBold,
-                        fontSize = 16.sp,
+                        fontSize = 18.sp,
                         color = Color.hsl(0f, 0f, 0.10f)
                     )
                     Spacer(modifier = Modifier.weight(1f))
                 }
 
-                Spacer(modifier = Modifier.height(6.dp))
+                Spacer(modifier = Modifier.height(8.dp))
             }
 
             if (history.isEmpty()) {
                 Text(
                     text = "No hay registros aún",
                     color = Color.Gray,
-                    fontSize = 13.sp,
+                    fontSize = 14.sp,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = 12.dp),
+                        .padding(vertical = 24.dp),
                     textAlign = TextAlign.Center
                 )
             } else {
-                LazyColumn(modifier = Modifier.fillMaxWidth()) {
-                    items(history) { entry ->
+                // Use a Column instead of LazyColumn to avoid nested scroll issues
+                Column(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    history.forEach { entry ->
                         HistoryRow(
                             entry,
                             onClick = onEntryClick?.let { { it(entry) } },
@@ -305,7 +312,7 @@ fun HealthRecordCard(
         onClick = { if (enabled) onClick() },
         modifier = modifier
             .fillMaxWidth()
-            .height(72.dp),
+            .heightIn(min = 72.dp),
         shape = RoundedCornerShape(12.dp),
         colors = CardDefaults.cardColors(
             containerColor = if (enabled) Color(0xFFF7F7F8) else Color(0xFFE0E0E0)
@@ -315,13 +322,12 @@ fun HealthRecordCard(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .fillMaxHeight()
-                .padding(horizontal = 16.dp),
+                .padding(horizontal = 20.dp, vertical = 12.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             val textColor = if (enabled) Color.Black else Color.Gray
             Text(
-                text = label,
+                text = "Registrar $label",
                 fontSize = 18.sp,
                 fontWeight = FontWeight.SemiBold,
                 color = textColor,
@@ -331,7 +337,8 @@ fun HealthRecordCard(
             Icon(
                 imageVector = Icons.Default.Add,
                 contentDescription = "Ingresar $label",
-                tint = iconTint
+                tint = iconTint,
+                modifier = Modifier.size(28.dp)
             )
         }
     }

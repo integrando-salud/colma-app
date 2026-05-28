@@ -8,20 +8,10 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.compose.foundation.background
+import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.systemBarsPadding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -30,32 +20,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Warning
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.RadioButton
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.ui.unit.IntOffset
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -65,9 +31,17 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.unit.IntOffset
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import com.colma.colmaApp.R
+import com.colma.colmaApp.features.mood.MoodMenuActivity
+import com.colma.colmaApp.features.RegistroSalud.data.RegistroSaludRepositoryImpl
+import com.colma.colmaApp.features.RegistroSalud.viewmodel.RegistroSaludEvent
+import com.colma.colmaApp.features.RegistroSalud.viewmodel.RegistroSaludViewModel
+import com.colma.colmaApp.features.RegistroSalud.viewmodel.RegistroSaludViewModelFactory
 import com.colma.colmaApp.features.glucosa.data.GlucosaRepositoryImpl
 import com.colma.colmaApp.features.glucosa.viewmodel.GlucosaEvent
 import com.colma.colmaApp.features.glucosa.viewmodel.GlucosaUiState
@@ -108,20 +82,20 @@ class GlucosaUI : ComponentActivity() {
         setContent {
             ColmaAppTheme {
                 val uiState by viewModel.uiState.collectAsState()
-                val context = LocalContext.current
 
                 if (uiState.warningDialog.show) {
                     AlertDialog(
                         onDismissRequest = { viewModel.onEvent(GlucosaEvent.DismissWarningDialog) },
-                        title = { Text("Advertencia") },
+                        title = { Text("Advertencia", fontWeight = FontWeight.Bold) },
                         text = {
                             Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
-                                Text(uiState.warningDialog.message)
+                                Text(uiState.warningDialog.message, fontSize = 16.sp)
                             }
                         },
                         confirmButton = {
                             Button(
                                 onClick = { viewModel.onEvent(GlucosaEvent.DismissWarningDialog) },
+                                modifier = Modifier.heightIn(min = 48.dp),
                                 colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.principal_boton), contentColor = Color.White),
                                 elevation = ButtonDefaults.buttonElevation(defaultElevation = 2.dp)
                             ) {
@@ -134,11 +108,16 @@ class GlucosaUI : ComponentActivity() {
                 if (uiState.showSuccessDialog) {
                     AlertDialog(
                         onDismissRequest = { viewModel.onEvent(GlucosaEvent.DismissSuccessDialog) },
-                        title = { Text("Éxito") },
-                        text = { Text("Registro guardado con éxito.") },
+                        title = { Text("Éxito", fontWeight = FontWeight.Bold) },
+                        text = {
+                            Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
+                                Text("Registro guardado con éxito.", fontSize = 16.sp)
+                            }
+                        },
                         confirmButton = {
                             Button(
                                 onClick = { viewModel.onEvent(GlucosaEvent.DismissSuccessDialog) },
+                                modifier = Modifier.heightIn(min = 48.dp),
                                 colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.principal_boton), contentColor = Color.White),
                                 elevation = ButtonDefaults.buttonElevation(defaultElevation = 2.dp)
                             ) {
@@ -180,14 +159,19 @@ fun GlucosaScreen(
     if (showConfirmationDialog) {
         AlertDialog(
             onDismissRequest = { showConfirmationDialog = false },
-            title = { Text("Confirmar Registro") },
-            text = { Text("¿Está seguro de que desea guardar este registro de glucosa?") },
+            title = { Text("Confirmar Registro", fontWeight = FontWeight.Bold) },
+            text = {
+                Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
+                    Text("¿Está seguro de que desea guardar este registro de glucosa?", fontSize = 16.sp)
+                }
+            },
             confirmButton = {
                 Button(
                     onClick = {
                         onEvent(GlucosaEvent.SaveGlucosaClicked)
                         showConfirmationDialog = false
                     },
+                    modifier = Modifier.heightIn(min = 48.dp),
                     colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF008000), contentColor = Color.White),
                     elevation = ButtonDefaults.buttonElevation(defaultElevation = 2.dp)
                 ) {
@@ -197,6 +181,7 @@ fun GlucosaScreen(
             dismissButton = {
                 Button(
                     onClick = { showConfirmationDialog = false },
+                    modifier = Modifier.heightIn(min = 48.dp),
                     colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.rojo_boton), contentColor = Color.White),
                     elevation = ButtonDefaults.buttonElevation(defaultElevation = 2.dp)
                 ) {
@@ -221,7 +206,14 @@ fun GlucosaScreen(
         modifier = Modifier.systemBarsPadding(),
         topBar = {
             TopAppBar(
-                title = { Text(text = "Medición de Glucosa", fontWeight = FontWeight.Bold) },
+                title = { 
+                    Text(
+                        text = "Medición de Glucosa", 
+                        fontWeight = FontWeight.Bold,
+                        maxLines = 1,
+                        modifier = Modifier.basicMarquee()
+                    ) 
+                },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
                         Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "Volver")
@@ -257,7 +249,9 @@ fun GlucosaScreen(
                     onEntryClick = {
                         onEvent(GlucosaEvent.ShowDetails(it))
                     },
-                    modifier = Modifier.fillMaxWidth().weight(1f).padding(bottom = 16.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 32.dp),
                     showLabel = false,
                     showTitle = false
                 )
@@ -289,18 +283,18 @@ fun GlucosaScreen(
                 AlertDialog(
                     onDismissRequest = { onEvent(GlucosaEvent.DismissDetailsDialog) },
                     title = {
-                        Text("Detalle del registro:", fontWeight = FontWeight.Bold, fontSize = 18.sp)
+                        Text("Detalle del registro:", fontWeight = FontWeight.Bold, fontSize = 20.sp)
                     },
                     text = {
                         val detailsScrollState = rememberScrollState()
                         val density = LocalDensity.current
-                        val containerHeightPx = with(density) { 280.dp.toPx() }
+                        val containerHeightPx = with(density) { 320.dp.toPx() }
                         val thumbHeightPx = with(density) { 30.dp.toPx() }
                         
                         Box(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .height(280.dp)
+                                .heightIn(max = 400.dp)
                         ) {
                             Column(
                                 modifier = Modifier
@@ -390,36 +384,33 @@ fun GlucosaScreen(
                                     }
                                 }
                             }
-                        } // Close Column
+                        }
 
-                        // Thin scrollbar indicator - constrained to container height
                         if (detailsScrollState.maxValue > 0) {
-                            val scrollableRange = containerHeightPx - thumbHeightPx
-                            val scrollFraction = detailsScrollState.value.toFloat() / detailsScrollState.maxValue
-                            val thumbOffsetY = scrollFraction * scrollableRange
-                            
                             Box(
                                 modifier = Modifier
                                     .align(Alignment.TopEnd)
-                                    .height(280.dp)
+                                    .fillMaxHeight()
                                     .width(4.dp)
                             ) {
+                                val scrollFraction = detailsScrollState.value.toFloat() / detailsScrollState.maxValue
+                                val scrollableRange = containerHeightPx - thumbHeightPx
+                                val thumbOffsetY = scrollFraction * scrollableRange
                                 Box(
                                     modifier = Modifier
                                         .fillMaxWidth()
                                         .height(30.dp)
-                                        .offset {
-                                            IntOffset(0, thumbOffsetY.toInt())
-                                        }
+                                        .offset { IntOffset(0, thumbOffsetY.toInt()) }
                                         .background(Color(0xFFBDBDBD), RoundedCornerShape(2.dp))
                                 )
                             }
                         }
-                    } // Close Box
+                    }
                 },
                 confirmButton = {
                         Button(
                             onClick = { onEvent(GlucosaEvent.DismissDetailsDialog) },
+                            modifier = Modifier.heightIn(min = 48.dp),
                             colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.principal_boton), contentColor = Color.White),
                             elevation = ButtonDefaults.buttonElevation(defaultElevation = 2.dp)
                         ) {
@@ -434,47 +425,45 @@ fun GlucosaScreen(
             if (uiState.isFormVisible) {
                 AlertDialog(
                     onDismissRequest = { onEvent(GlucosaEvent.DismissFormDialog) },
-                    title = { Text(text = "Registrar glucosa", color = Color.Black) },
+                    title = { Text(text = "Registrar glucosa", color = Color.Black, fontWeight = FontWeight.Bold) },
                     text = {
-                        Column {
+                        Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
                             OutlinedTextField(
                                 value = uiState.glucosaValue,
                                 onValueChange = { onEvent(GlucosaEvent.GlucosaValueChanged(it)) },
                                 singleLine = true,
                                 keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
                                 modifier = Modifier.fillMaxWidth(),
-                                placeholder = { Text(text = "") },
-                                textStyle = TextStyle(color = Color.Black)
+                                placeholder = { Text(text = "Ingrese valor") },
+                                textStyle = TextStyle(color = Color.Black, fontSize = 18.sp)
                             )
-                            Spacer(modifier = Modifier.height(8.dp))
-                            Row(verticalAlignment = Alignment.CenterVertically) {
+                            Spacer(modifier = Modifier.height(16.dp))
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceAround
+                            ) {
                                 Row(
                                     verticalAlignment = Alignment.CenterVertically,
-                                    modifier = Modifier.clickable { onEvent(GlucosaEvent.FastingChanged(true)) }
+                                    modifier = Modifier.heightIn(min = 48.dp).clickable { onEvent(GlucosaEvent.FastingChanged(true)) }
                                 ) {
-                                    RadioButton(
-                                        selected = uiState.isFasting == true,
-                                        onClick = null
-                                    )
+                                    RadioButton(selected = uiState.isFasting == true, onClick = null)
                                     Spacer(modifier = Modifier.width(6.dp))
-                                    Text(text = "Ayuno")
+                                    Text(text = "Ayuno", fontSize = 16.sp)
                                 }
-                                Spacer(modifier = Modifier.width(16.dp))
                                 Row(
                                     verticalAlignment = Alignment.CenterVertically,
-                                    modifier = Modifier.clickable { onEvent(GlucosaEvent.FastingChanged(false)) }
+                                    modifier = Modifier.heightIn(min = 48.dp).clickable { onEvent(GlucosaEvent.FastingChanged(false)) }
                                 ) {
-                                    RadioButton(
-                                        selected = uiState.isFasting == false,
-                                        onClick = null
-                                    )
+                                    RadioButton(selected = uiState.isFasting == false, onClick = null)
                                     Spacer(modifier = Modifier.width(6.dp))
-                                    Text(text = "No ayuno")
+                                    Text(text = "No ayuno", fontSize = 16.sp)
                                 }
                             }
-                            Spacer(modifier = Modifier.height(12.dp))
+                            Spacer(modifier = Modifier.height(16.dp))
                             Column(horizontalAlignment = Alignment.Start, modifier = Modifier.fillMaxWidth()) {
-                                Text(text = "Fecha de registro", fontSize = 15.sp, color = Color.Black)
+                                Text(text = "Fecha de registro", fontSize = 16.sp, color = Color.Black, fontWeight = FontWeight.Medium)
+                                Spacer(modifier = Modifier.height(4.dp))
                                 OutlinedTextField(
                                     value = dateFormatter.format(Date(uiState.measurementTime)),
                                     onValueChange = {},
@@ -496,37 +485,44 @@ fun GlucosaScreen(
                                             }, c.get(java.util.Calendar.YEAR), c.get(java.util.Calendar.MONTH), c.get(java.util.Calendar.DAY_OF_MONTH))
                                                 .apply { datePicker.maxDate = System.currentTimeMillis() }
                                                 .show()
-                                        }) {
+                                        }, modifier = Modifier.size(48.dp)) {
                                             Icon(imageVector = Icons.Default.DateRange, contentDescription = "Fecha")
                                         }
                                     }
                                 )
-                                Spacer(modifier = Modifier.height(8.dp))
-                                Text(text = "Hora de registro", fontSize = 15.sp, color = Color.Black)
-                                OutlinedButton(onClick = { showGlucosaTimePicker = true }, modifier = Modifier.fillMaxWidth()) {
+                                Spacer(modifier = Modifier.height(16.dp))
+                                Text(text = "Hora de registro", fontSize = 16.sp, color = Color.Black, fontWeight = FontWeight.Medium)
+                                Spacer(modifier = Modifier.height(4.dp))
+                                OutlinedButton(
+                                    onClick = { showGlucosaTimePicker = true }, 
+                                    modifier = Modifier.fillMaxWidth().heightIn(min = 56.dp),
+                                    shape = RoundedCornerShape(8.dp)
+                                ) {
                                     Text(text = timeFormatterOnly.format(Date(uiState.measurementTime)), fontSize = 18.sp)
                                 }
                             }
                             if (uiState.formError != null) {
-                                Spacer(modifier = Modifier.height(6.dp))
-                                Text(text = uiState.formError, color = Color.Red, fontSize = 12.sp)
+                                Spacer(modifier = Modifier.height(8.dp))
+                                Text(text = uiState.formError, color = Color.Red, fontSize = 14.sp, fontWeight = FontWeight.Medium)
                             }
                         }
                     },
                     confirmButton = {
                         Button(
                             onClick = { showConfirmationDialog = true },
+                            modifier = Modifier.heightIn(min = 48.dp),
                             colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF008000), contentColor = Color.White),
                             elevation = ButtonDefaults.buttonElevation(defaultElevation = 2.dp)
-                        ) { Text("Guardar") }
+                        ) { Text("Guardar", fontSize = 16.sp) }
                     },
                     dismissButton = {
                         Button(
                             onClick = { onEvent(GlucosaEvent.DismissFormDialog) },
+                            modifier = Modifier.heightIn(min = 48.dp),
                             colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.rojo_boton), contentColor = Color.White),
                             elevation = ButtonDefaults.buttonElevation(defaultElevation = 2.dp)
                         ) {
-                            Text("Cancelar")
+                            Text("Cancelar", fontSize = 16.sp)
                         }
                     },
                     containerColor = Color.White,
