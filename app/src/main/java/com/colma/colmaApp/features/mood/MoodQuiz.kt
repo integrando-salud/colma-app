@@ -9,6 +9,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.compose.foundation.background
+import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -123,7 +124,18 @@ fun MoodQuizScreen(
         modifier = Modifier.systemBarsPadding(),
         topBar = {
             TopAppBar(
-                title = { Text(text = "Estado de ánimo", fontWeight = FontWeight.Bold) },
+                title = {
+                    Text(
+                        text = "Estado de ánimo",
+                        fontWeight = FontWeight.Bold,
+                        maxLines = 1,
+                        modifier = Modifier.basicMarquee(
+                            iterations = Int.MAX_VALUE,
+                            initialDelayMillis = 2000,
+                            repeatDelayMillis = 1500
+                        )
+                    )
+                },
                 navigationIcon = {
                     IconButton(onClick = { onEvent(MoodQuizEvent.BackPressed) }) {
                         Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "Volver")
@@ -131,8 +143,8 @@ fun MoodQuizScreen(
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = colorResource(R.color.principal),
-                    titleContentColor = MaterialTheme.colorScheme.onPrimary,
-                    navigationIconContentColor = MaterialTheme.colorScheme.onPrimary
+                    titleContentColor = Color.White,
+                    navigationIconContentColor = Color.White
                 )
             )
         }
