@@ -6,6 +6,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.background
+import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,6 +15,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBarsPadding
@@ -112,7 +114,14 @@ fun RegistrosSaludScreen(
         modifier = Modifier.systemBarsPadding(),
         topBar = {
             TopAppBar(
-                title = { Text(text = "Mis registros de salud", fontWeight = FontWeight.Bold) },
+                title = { 
+                    Text(
+                        text = "Mis registros de salud", 
+                        fontWeight = FontWeight.Bold,
+                        maxLines = 1,
+                        modifier = Modifier.basicMarquee()
+                    ) 
+                },
                 navigationIcon = {
                     IconButton(onClick = { onEvent(RegistroSaludEvent.OnBackClicked) }) {
                         Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "Volver")
@@ -142,19 +151,19 @@ fun RegistrosSaludScreen(
             ) {
                 Text(
                     text = "¿Qué te gustaría hacer?",
-                    fontSize = 25.sp,
+                    fontSize = 24.sp,
                     color = signatureColor,
                     textAlign = TextAlign.Center,
                     fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(bottom = 18.dp)
+                    modifier = Modifier.padding(bottom = 32.dp)
                 )
 
                 // Glucosa button
                 Button(
                     onClick = { onEvent(RegistroSaludEvent.OnGlucosaClicked) },
                     modifier = Modifier
-                        .fillMaxWidth(0.85f)
-                        .height(65.dp),
+                        .fillMaxWidth(0.95f)
+                        .heightIn(min = 64.dp),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Color(0xFFF0F0F0),
                         contentColor = Color.Black
@@ -174,7 +183,7 @@ fun RegistrosSaludScreen(
                             painter = painterResource(R.drawable.outline_glucose_24),
                             contentDescription = "Registros",
                             tint = LocalContentColor.current,
-                            modifier = Modifier.size(20.dp)
+                            modifier = Modifier.size(28.dp)
                         )
                         Spacer(modifier = Modifier.width(12.dp))
                         Text(
@@ -193,8 +202,8 @@ fun RegistrosSaludScreen(
                 Button(
                     onClick = { onEvent(RegistroSaludEvent.OnPresionClicked) },
                     modifier = Modifier
-                        .fillMaxWidth(0.85f)
-                        .height(65.dp),
+                        .fillMaxWidth(0.95f)
+                        .heightIn(min = 64.dp),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Color(0xFFF0F0F0),
                         contentColor = Color.Black
@@ -214,7 +223,7 @@ fun RegistrosSaludScreen(
                             painter = painterResource(R.drawable.presion_logo),
                             contentDescription = "Presión",
                             tint = LocalContentColor.current,
-                            modifier = Modifier.size(20.dp)
+                            modifier = Modifier.size(28.dp)
                         )
                         Spacer(modifier = Modifier.width(12.dp))
                         Text(
@@ -233,8 +242,8 @@ fun RegistrosSaludScreen(
                 Button(
                     onClick = { onEvent(RegistroSaludEvent.OnEstadoAnimoClicked) },
                     modifier = Modifier
-                        .fillMaxWidth(0.85f)
-                        .height(65.dp),
+                        .fillMaxWidth(0.95f)
+                        .heightIn(min = 64.dp),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Color(0xFFF7F7F8),
                         contentColor = Color.Black
@@ -254,7 +263,7 @@ fun RegistrosSaludScreen(
                             imageVector = Icons.Default.Face,
                             contentDescription = "Registros",
                             tint = LocalContentColor.current,
-                            modifier = Modifier.size(20.dp)
+                            modifier = Modifier.size(28.dp)
                         )
                         Spacer(modifier = Modifier.width(12.dp))
                         Text(
