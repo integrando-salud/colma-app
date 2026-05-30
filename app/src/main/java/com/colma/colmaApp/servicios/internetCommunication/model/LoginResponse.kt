@@ -14,7 +14,8 @@ data class Usuario(
     val email: String,
     val sexo: String,
     val pais: Pais,
-    @SerializedName("centro_salud") val centroSalud: CentroSalud
+    @SerializedName("centro_salud") val centroSalud: CentroSalud,
+    @SerializedName("primer_login") val primerLogin: String? = null
 )
 
 data class Pais(

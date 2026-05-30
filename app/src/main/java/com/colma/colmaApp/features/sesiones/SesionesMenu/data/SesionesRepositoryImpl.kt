@@ -41,7 +41,7 @@ class SesionesRepositoryImpl(
     }
 
     override suspend fun getHtaSessions(): List<SessionItem> {
-        val fechaRegistro = dbHelper.getUsuarioFechaRegistro(userId)
+        val fechaRegistro = dbHelper.getUsuarioPrimerLogin(userId)
         val elapsedWeeks = getElapsedWeeks(fechaRegistro)
 
         return contentRepository.getAllTreatments().fold(
@@ -69,7 +69,7 @@ class SesionesRepositoryImpl(
     }
 
     override suspend fun getDiabetesSessions(): List<SessionItem> {
-        val fechaRegistro = dbHelper.getUsuarioFechaRegistro(userId)
+        val fechaRegistro = dbHelper.getUsuarioPrimerLogin(userId)
         val elapsedWeeks = getElapsedWeeks(fechaRegistro)
 
         return contentRepository.getAllTreatments().fold(
