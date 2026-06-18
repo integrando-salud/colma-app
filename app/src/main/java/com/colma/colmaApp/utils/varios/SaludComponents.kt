@@ -192,15 +192,16 @@ fun HistoryRow(
 
     @Composable
     fun CardContent() {
-        val isDangerous = remember(entry) {
-            var dangerous = false
+        val status = remember(entry) {
+            var isCrit = false
+            var isWarn = false
             when (entry.label.lowercase(Locale.getDefault())) {
                 "glucosa" -> {
                     entry.rawValue1?.let { v ->
                         val low = v <= 69.0
                         val high = if (entry.isFasting == true) v >= 126.0 else v >= 180.0
                         if (low || high) {
-                            dangerous = true
+                            isCrit = true
                         }
                     }
                 }
@@ -208,17 +209,22 @@ fun HistoryRow(
                     val s = entry.rawValue1
                     val d = entry.rawValue2
                     if (s != null && d != null) {
-                        val severeHigh = s >= 140 || d >= 90
-                        val severeLow = s <= 90
-                        if (severeHigh || severeLow) {
-                            dangerous = true
-                        }
+                        val severeHigh = s >= 180.0 || d >= 120.0
+                        val severeLow = s <= 90.0
+                        isCrit = severeHigh || severeLow
+                        isWarn = !isCrit && (s >= 140.0 || d >= 90.0)
                     }
                 }
             }
-            dangerous
+            Pair(isCrit, isWarn)
         }
-        val textColor = if (isDangerous) Color.Red else Color(0xFF008000)
+        val isCritical = status.first
+        val isWarning = status.second
+        val textColor = when {
+            isCritical -> Color.Red
+            isWarning -> Color(0xFFE67E22)
+            else -> Color(0xFF008000)
+        }
 
         Row(
             modifier = Modifier
@@ -249,11 +255,11 @@ fun HistoryRow(
                     )
                 }
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    if (isDangerous) {
+                    if (isCritical || isWarning) {
                         Icon(
                             imageVector = Icons.Default.Warning,
                             contentDescription = "Advertencia",
-                            tint = Color.Red,
+                            tint = textColor,
                             modifier = Modifier.size(14.dp)
                         )
                         Spacer(modifier = Modifier.width(4.dp))

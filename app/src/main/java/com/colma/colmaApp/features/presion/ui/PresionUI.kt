@@ -275,17 +275,27 @@ fun PresionScreen(
 
             if (uiState.isDetailsDialogVisible) {
                 val entry = uiState.selectedEntry!!
-                val (isDangerous, showWarningBlock, warningText) = remember(entry, uiState.userPaisId) {
-                    var high = false
-                    var severeHigh = false
-                    var severeLow = false
+                
+                class PressureDetailsStatus(
+                    val isCritical: Boolean,
+                    val isWarning: Boolean,
+                    val showWarningBlock: Boolean,
+                    val warningText: String?
+                )
+
+                val status = remember(entry, uiState.userPaisId) {
+                    var isCrit = false
+                    var isWarn = false
                     var text: String? = null
                     val s = entry.rawValue1
                     val d = entry.rawValue2
                     if (s != null && d != null) {
-                        severeHigh = s >= 180 || d >= 120
-                        severeLow = s <= 90
-                        high = s >= 140 || d >= 90
+                        val severeHigh = s >= 180 || d >= 120
+                        val severeLow = s <= 90
+                        val high = s >= 140 || d >= 90
+                        
+                        isCrit = severeHigh || severeLow
+                        isWarn = !isCrit && high
                         
                         if (severeHigh) {
                             text = getSevereHighPressureText(uiState.userPaisId)
@@ -295,12 +305,15 @@ fun PresionScreen(
                             text = getHighPressureText(uiState.userPaisId)
                         }
                     }
-                    val dangerous = high || severeLow
-                    val showWarning = (severeHigh || severeLow || high) && text != null
-                    Triple(dangerous, showWarning, text)
+                    val showWarning = (isCrit || isWarn) && text != null
+                    PressureDetailsStatus(isCrit, isWarn, showWarning, text)
                 }
                 
-                val valueTextColor = if (isDangerous) Color.Red else Color(0xFF008000)
+                val valueTextColor = when {
+                    status.isCritical -> Color.Red
+                    status.isWarning -> Color(0xFFE67E22)
+                    else -> Color(0xFF008000)
+                }
 
                 AlertDialog(
                     onDismissRequest = { onEvent(PresionEvent.DismissDetailsDialog) },
@@ -374,19 +387,22 @@ fun PresionScreen(
                             }
 
                             // Advertencia (if exists)
-                            if (showWarningBlock && warningText != null) {
+                            if (status.showWarningBlock && status.warningText != null) {
+                                val warningBgColor = if (status.isCritical) Color(0xFFFFEBEE) else Color(0xFFFFF3E0)
+                                val warningTextColor = if (status.isCritical) Color(0xFFE53935) else Color(0xFFE67E22)
+
                                 Spacer(modifier = Modifier.height(12.dp))
                                 Row(
                                     modifier = Modifier
                                         .fillMaxWidth()
-                                        .background(Color(0xFFFFEBEE), RoundedCornerShape(8.dp))
+                                        .background(warningBgColor, RoundedCornerShape(8.dp))
                                         .padding(12.dp),
                                     verticalAlignment = Alignment.Top
                                 ) {
                                     Icon(
                                         imageVector = Icons.Default.Warning,
                                         contentDescription = "Advertencia",
-                                        tint = Color(0xFFE53935),
+                                        tint = warningTextColor,
                                         modifier = Modifier
                                             .size(24.dp)
                                             .padding(end = 8.dp)
@@ -396,10 +412,10 @@ fun PresionScreen(
                                             text = "Advertencia:",
                                             fontWeight = FontWeight.Bold,
                                             fontSize = 16.sp,
-                                            color = Color(0xFFE53935)
+                                            color = warningTextColor
                                         )
                                         Text(
-                                            text = warningText,
+                                            text = status.warningText,
                                             fontSize = 14.sp,
                                             color = Color(0xFF212121),
                                             modifier = Modifier.padding(top = 4.dp)
