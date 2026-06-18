@@ -267,7 +267,7 @@ fun PresionScreen(
                     onEntryClick = {
                         onEvent(PresionEvent.ShowDetails(it))
                     },
-                    modifier = Modifier.fillMaxWidth().weight(1f).padding(bottom = 16.dp),
+                    modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp),
                     showTitle = false,
                     showLabel = false
                 )

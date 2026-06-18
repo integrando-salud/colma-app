@@ -204,7 +204,6 @@ fun MoodMenuScreen(
                     onClear = { /*TODO*/ },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .weight(1f)
                         .padding(bottom = 16.dp)
                 )
             }

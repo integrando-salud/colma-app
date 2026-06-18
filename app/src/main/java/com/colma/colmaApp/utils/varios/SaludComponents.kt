@@ -254,22 +254,24 @@ fun HistoryRow(
                         fontWeight = FontWeight.Bold
                     )
                 }
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    if (isCritical || isWarning) {
-                        Icon(
-                            imageVector = Icons.Default.Warning,
-                            contentDescription = "Advertencia",
-                            tint = textColor,
-                            modifier = Modifier.size(14.dp)
+                if (displayValue.isNotBlank()) {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        if (isCritical || isWarning) {
+                            Icon(
+                                imageVector = Icons.Default.Warning,
+                                contentDescription = "Advertencia",
+                                tint = textColor,
+                                modifier = Modifier.size(14.dp)
+                            )
+                            Spacer(modifier = Modifier.width(4.dp))
+                        }
+                        Text(
+                            text = displayValue,
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = textColor
                         )
-                        Spacer(modifier = Modifier.width(4.dp))
                     }
-                    Text(
-                        text = displayValue,
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = textColor
-                    )
                 }
                 Text(
                     text = remember(entry.timestamp) { formatter.format(Date(entry.timestamp)) },
