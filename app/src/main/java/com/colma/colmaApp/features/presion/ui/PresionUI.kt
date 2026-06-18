@@ -305,7 +305,7 @@ fun PresionScreen(
                             text = getHighPressureText(uiState.userPaisId)
                         }
                     }
-                    val showWarning = (isCrit || isWarn) && text != null
+                    val showWarning = isCrit && text != null
                     PressureDetailsStatus(isCrit, isWarn, showWarning, text)
                 }
                 

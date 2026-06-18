@@ -169,8 +169,6 @@ class PresionViewModel(private val repository: PresionRepository) : ViewModel() 
                     repository.syncPresion(newEntry, advertencia)
                 }
 
-                val hasTrend = repository.checkHighPressureTrend()
-
                 when {
                     severeHigh -> {
                         val warningMessage = getSevereHighPressureWarning(_uiState.value.userPaisId)
@@ -178,10 +176,6 @@ class PresionViewModel(private val repository: PresionRepository) : ViewModel() 
                     }
                     severeLow -> {
                         val warningMessage = getSevereLowPressureWarning(_uiState.value.userPaisId)
-                        _uiState.update { it.copy(warningDialog = PresionUiState.WarningDialog(show = true, message = warningMessage)) }
-                    }
-                    hasTrend -> {
-                        val warningMessage = getTrendWarning(_uiState.value.userPaisId)
                         _uiState.update { it.copy(warningDialog = PresionUiState.WarningDialog(show = true, message = warningMessage)) }
                     }
                 }
