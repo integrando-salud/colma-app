@@ -158,7 +158,7 @@ class GlucosaViewModel(private val repository: GlucosaRepository) : ViewModel() 
                         history = updatedHistory,
                         lastGlucosa = updatedHistory.firstOrNull(),
                         error = null,
-                        showSuccessDialog = !low && !high
+                        showSuccessDialog = !low && !severeHigh
                     )
                 }
 
@@ -175,9 +175,6 @@ class GlucosaViewModel(private val repository: GlucosaRepository) : ViewModel() 
                     severeHigh -> {
                         val warningMessage = getHighGlucosaWarning(state.isFasting == true, _uiState.value.userPaisId)
                         _uiState.update { it.copy(warningDialog = GlucosaUiState.WarningDialog(show = true, message = warningMessage)) }
-                    }
-                    high -> {
-                        _uiState.update { it.copy(warningDialog = GlucosaUiState.WarningDialog(show = true, message = "Advertencia: Glucosa alta (hiperglucemia). Por favor consulte con un médico.")) }
                     }
                 }
 

@@ -259,25 +259,42 @@ fun GlucosaScreen(
 
             if (uiState.isDetailsDialogVisible) {
                 val entry = uiState.selectedEntry!!
-                val (isDangerous, warningText) = remember(entry, uiState.userPaisId) {
-                    var dangerous = false
+                
+                class GlucoseDetailsStatus(
+                    val isCritical: Boolean,
+                    val isWarning: Boolean,
+                    val showWarningBlock: Boolean,
+                    val warningText: String?
+                )
+
+                val status = remember(entry, uiState.userPaisId) {
+                    var isCrit = false
+                    var isWarn = false
                     var text: String? = null
                     entry.rawValue1?.let { v ->
-                        val low = v < 70.0
-                        val high = if (entry.isFasting == true) v >= 126.0 else v >= 180.0
+                        val low = v <= 69.0
                         val severeHigh = v > 300.0
+                        val high = if (entry.isFasting == true) v >= 126.0 else v >= 180.0
+                        
+                        isCrit = low || severeHigh
+                        isWarn = !isCrit && high
+                        
                         if (low) {
-                            dangerous = true
                             text = getLowGlucosaWarningText(entry.isFasting == true, uiState.userPaisId)
                         } else if (severeHigh) {
-                            dangerous = true
                             text = getHighGlucosaWarningText(entry.isFasting == true, uiState.userPaisId)
                         } else if (high) {
-                            dangerous = true
                             text = "Glucosa alta (hiperglucemia). Por favor, consulte con un médico."
                         }
                     }
-                    Pair(dangerous, text)
+                    val showWarning = isCrit && text != null
+                    GlucoseDetailsStatus(isCrit, isWarn, showWarning, text)
+                }
+
+                val valueTextColor = when {
+                    status.isCritical -> Color.Red
+                    status.isWarning -> Color(0xFFE67E22)
+                    else -> Color(0xFF008000)
                 }
 
                 AlertDialog(
@@ -311,10 +328,11 @@ fun GlucosaScreen(
                                 Column {
                                     Text("Valor:", fontWeight = FontWeight.Bold, fontSize = 16.sp)
                                     Text(
-                                        text = entry.value,
-                                        fontSize = 16.sp,
-                                        modifier = Modifier.padding(top = 2.dp)
-                                    )
+                                         text = entry.value,
+                                         fontSize = 16.sp,
+                                         color = valueTextColor,
+                                         modifier = Modifier.padding(top = 2.dp)
+                                     )
                                 }
                             }
 
@@ -351,7 +369,7 @@ fun GlucosaScreen(
                             }
 
                             // Advertencia (if exists)
-                            if (isDangerous && warningText != null) {
+                            if (status.showWarningBlock && status.warningText != null) {
                                 Spacer(modifier = Modifier.height(12.dp))
                                 Row(
                                     modifier = Modifier
@@ -376,7 +394,7 @@ fun GlucosaScreen(
                                             color = Color(0xFFE53935)
                                         )
                                         Text(
-                                            text = warningText,
+                                            text = status.warningText,
                                             fontSize = 14.sp,
                                             color = Color(0xFF212121),
                                             modifier = Modifier.padding(top = 4.dp)
