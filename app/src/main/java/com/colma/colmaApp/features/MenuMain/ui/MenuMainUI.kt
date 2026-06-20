@@ -286,17 +286,14 @@ fun MenuScreen(
                     )
                 }
             },
-            title = if (uiState.isHelpRequestFeedback) null else { { Text("Mensaje") } },
-            text = {
-                Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
-                    Text(
-                        text = uiState.feedbackMessage,
-                        fontSize = if (uiState.isHelpRequestFeedback) 20.sp else 18.sp,
-                        fontWeight = if (uiState.isHelpRequestFeedback) FontWeight.SemiBold else FontWeight.Normal,
-                        textAlign = if (uiState.isHelpRequestFeedback) TextAlign.Center else TextAlign.Start,
-                        modifier = Modifier.fillMaxWidth()
-                    )
-                }
+            title = {
+                Text(
+                    text = uiState.feedbackMessage,
+                    fontSize = if (uiState.isHelpRequestFeedback) 20.sp else 18.sp,
+                    fontWeight = FontWeight.SemiBold,
+                    textAlign = if (uiState.isHelpRequestFeedback) TextAlign.Center else TextAlign.Start,
+                    modifier = Modifier.fillMaxWidth()
+                )
             },
             confirmButton = {
                 Button(
@@ -336,8 +333,10 @@ fun MenuScreen(
         CustomAlertDialog(
             show = true,
             onDismissRequest = { onEvent(MenuMainEvent.DismissHelpRequestDialog) },
-            title = "Confirmar pedido de ayuda",
-            description = "¿Está seguro/a que quieres pedir ayuda técnica a tu promotora de salud?",
+            title = "¿Está seguro/a que quieres pedir ayuda técnica a tu promotora de salud?",
+            description = "",
+            yesLabel = "Confirmar",
+            noLabel = "Cancelar",
             onYes = { onEvent(MenuMainEvent.ConfirmHelpRequest) },
             onNo = { onEvent(MenuMainEvent.DismissHelpRequestDialog) }
         )

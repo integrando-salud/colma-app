@@ -86,11 +86,12 @@ class GlucosaUI : ComponentActivity() {
                 if (uiState.warningDialog.show) {
                     AlertDialog(
                         onDismissRequest = { viewModel.onEvent(GlucosaEvent.DismissWarningDialog) },
-                        title = { Text("Advertencia", fontWeight = FontWeight.Bold) },
-                        text = {
-                            Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
-                                Text(uiState.warningDialog.message, fontSize = 16.sp)
-                            }
+                        title = {
+                            Text(
+                                text = uiState.warningDialog.message,
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 18.sp
+                            )
                         },
                         confirmButton = {
                             Button(
@@ -159,11 +160,12 @@ fun GlucosaScreen(
     if (showConfirmationDialog) {
         AlertDialog(
             onDismissRequest = { showConfirmationDialog = false },
-            title = { Text("Confirmar Registro", fontWeight = FontWeight.Bold) },
-            text = {
-                Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
-                    Text("¿Está seguro de que desea guardar este registro de glucosa?", fontSize = 16.sp)
-                }
+            title = {
+                Text(
+                    text = "¿Está seguro de que desea guardar este registro de glucosa?",
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 18.sp
+                )
             },
             confirmButton = {
                 Button(

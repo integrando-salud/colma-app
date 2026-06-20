@@ -22,14 +22,14 @@ class MoodQuizViewModel(private val repository: MoodRepository) : ViewModel() {
     val sideEffects = _sideEffects.receiveAsFlow()
 
     private val allQuestions = listOf(
-        "Poco interés o placer en hacer las cosas",
-        "Sentirse deprimido, abatido o sin esperanza",
-        "Problemas para quedarse o permanecer dormido",
-        "Sentirse cansado o con poca energía",
-        "Poco apetito o comer mucho?",
-        "Te sientes mal sobre ti mismo -- o que eres un fracaso o has decepcionado a ti mismo o tu familia",
-        "Problemas para concentrarte en cosas, como leer el periodico o ver la television",
-        "¿Se mueve o habla tan despacio que otras personas podrían haberlo notado? ¿O está tan inquieto que se ha estado moviendo mucho más de lo habitual?"
+        "Poco interés o placer en hacer las cosas.",
+        "Sentirse deprimido, abatido o sin esperanza.",
+        "Problemas para quedarse o permanecer dormido.",
+        "Sentirse cansado o con poca energía.",
+        "Tiene poco apetito o come mucho.",
+        "Te sientes mal contigo mismo/a, o que eres un fracaso o que te has decepcionado a ti mismo/a o con tu familia.",
+        "Problemas para concentrarte en actividades como leer el periódico o ver la televisión.",
+        "¿Se mueve o habla tan despacio que otras personas podrían haberlo notado? ¿O está tan inquieto/a que se ha estado moviendo mucho más de lo habitual?"
     )
 
     private val optionLabels = listOf(
@@ -167,8 +167,8 @@ class MoodQuizViewModel(private val repository: MoodRepository) : ViewModel() {
                 val completionMessage = when {
                     totalScore >= 15 -> {
                         when (paisId) {
-                            1 -> "Gracias por responder esta Pregunta del día. Tus respuestas sugieren que podrías estar atravesando un momento difícil y que sería útil recibir apoyo.\n\nTe recomendamos pedir una cita de evaluación en tu centro de salud o servicio de salud mental lo antes posible.\n\nEn los próximos días, tu promotora de salud se va a comunicar con vos para hacer seguimiento: te va a preguntar si pudiste pedir la cita y, si hubo barreras, va a intentar ayudarte a resolverlas.\n\nEn caso que te estés sintiendo mal, podés acudir a una guardia o podés llamar al 107."
-                            2 -> "Gracias por responder esta Pregunta del día. Tus respuestas sugieren que podrías estar pasando por un momento difícil y que sería útil recibir apoyo.\n\nTe recomendamos sacar una cita con el servicio de psicología de tu centro de salud a la brevedad.\n\nEn los próximos días, tu promotora de salud se comunicará contigo para hacer seguimiento: te preguntará si pudiste solicitar la cita y, si hubo barreras, intentará ayudarte a resolverlas."
+                            1 -> "Gracias por responder este cuestionario. Tus respuestas sugieren que podrías estar atravesando un momento difícil y que sería útil recibir apoyo.\n\nTe recomendamos pedir una cita de evaluación en tu centro de salud o servicio de salud mental lo antes posible.\n\nEn los próximos días, tu promotora de salud se va a comunicar con vos para hacer seguimiento: te va a preguntar si pudiste pedir la cita y, si hubo barreras, va a intentar ayudarte a resolverlas.\n\nEn caso que te estés sintiendo mal, podés acudir a una guardia o podés llamar al 107."
+                            2 -> "Gracias por responder este cuestionario. Tus respuestas sugieren que podrías estar pasando por un momento difícil y que sería útil recibir apoyo.\n\nTe recomendamos sacar una cita con el servicio de psicología de tu centro de salud a la brevedad.\n\nEn los próximos días, tu promotora de salud se comunicará contigo para hacer seguimiento: te preguntará si pudiste solicitar la cita y, si hubo barreras, intentará ayudarte a resolverlas."
                             else -> "Registro guardado exitosamente"
                         }
                     }

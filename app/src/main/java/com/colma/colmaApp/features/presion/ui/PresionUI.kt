@@ -111,11 +111,12 @@ class PresionUI : ComponentActivity() {
                 if (uiState.warningDialog.show) {
                     AlertDialog(
                         onDismissRequest = { viewModel.onEvent(PresionEvent.DismissWarningDialog) },
-                        title = { Text("Advertencia", fontWeight = FontWeight.Bold) },
-                        text = {
-                            Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
-                                Text(uiState.warningDialog.message, fontSize = 16.sp)
-                            }
+                        title = {
+                            Text(
+                                text = uiState.warningDialog.message,
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 18.sp
+                            )
                         },
                         confirmButton = {
                             Button(
@@ -183,8 +184,13 @@ fun PresionScreen(
     if (showConfirmationDialog) {
         AlertDialog(
             onDismissRequest = { showConfirmationDialog = false },
-            title = { Text("Confirmar Registro") },
-            text = { Text("¿Está seguro de que desea guardar este registro de presión?") },
+            title = {
+                Text(
+                    text = "¿Está seguro de que desea guardar este registro de presión?",
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 18.sp
+                )
+            },
             confirmButton = {
                 Button(
                     onClick = {

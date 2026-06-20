@@ -142,7 +142,7 @@ class MenuMainViewModel(private val repository: MenuMainRepository) : ViewModel(
                                 isSuccessFeedback = true,
                                 showTrophyInFeedback = false,
                                 isHelpRequestFeedback = true,
-                                feedbackMessage = "Enviado con éxito. Pronto te contactará tu promotora ."
+                                feedbackMessage = "Enviado con éxito.\nTu promotora te contactará pronto."
                             )
                         }
                     }
