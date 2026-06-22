@@ -208,10 +208,9 @@ fun MultimediaSelectorScreen(
                             }
                         }
                     }
-                    if (uiState.totalSteps > 0) {
+                    if (uiState.multimediaOptions.isNotEmpty()) {
                         StepProgressBar(
-                            currentStep = uiState.currentStepIndex,
-                            totalSteps = uiState.totalSteps,
+                            options = uiState.multimediaOptions,
                             signatureColor = signatureColor,
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -281,15 +280,18 @@ fun MultimediaOptionCard(
         }
     }
 }
-
 @Composable
 fun StepProgressBar(
-    currentStep: Int,
-    totalSteps: Int,
+    options: List<MultimediaOption>,
     signatureColor: Color,
     modifier: Modifier = Modifier
 ) {
+    val totalSteps = options.size
     if (totalSteps <= 0) return
+
+    val activeIndex = options.indexOfFirst { !it.isCompleted }.let {
+        if (it == -1) totalSteps - 1 else it
+    }
 
     val lightSignatureColor = signatureColor.copy(alpha = 0.5f)
     val incompleteColor = Color(0xFFD0D5DD)
@@ -309,10 +311,13 @@ fun StepProgressBar(
                 .horizontalScroll(rememberScrollState()),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center
-        ) {            for (i in 1..totalSteps) {
+        ) {
+            for (i in 0 until totalSteps) {
+                val option = options[i]
+
                 // Connector line before each step (except the first)
-                if (i > 1) {
-                    val lineColor = if (i <= currentStep) lightSignatureColor else incompleteColor
+                if (i > 0) {
+                    val lineColor = if (i <= activeIndex) lightSignatureColor else incompleteColor
                     Canvas(
                         modifier = Modifier
                             .width(connectorWidth)
@@ -327,7 +332,7 @@ fun StepProgressBar(
                     }
                 }
 
-                // Step item: dot + optional label
+                // Step item: dot
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
@@ -336,15 +341,15 @@ fun StepProgressBar(
                         contentAlignment = Alignment.Center
                     ) {
                         when {
-                            i < currentStep -> {
+                            option.isCompleted -> {
                                 Icon(
                                     imageVector = Icons.Default.CheckCircle,
-                                    contentDescription = "Sesión $i completada",
+                                    contentDescription = "Contenido ${i + 1} completado",
                                     tint = lightSignatureColor,
                                     modifier = Modifier.fillMaxSize()
                                 )
                             }
-                            i == currentStep -> {
+                            i == activeIndex -> {
                                 Box(
                                     modifier = Modifier
                                         .fillMaxSize()
@@ -368,19 +373,11 @@ fun StepProgressBar(
                             }
                         }
                     }
-                    Text(
-                        text = if (i == currentStep) "Sesión $i" else "",
-                        fontSize = 10.sp,
-                        fontWeight = FontWeight.SemiBold,
-                        color = if (i == currentStep) signatureColor else Color.Transparent,
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier.padding(top = 2.dp)
-                    )
                 }
 
                 // Connector line after each step (except the last)
-                if (i < totalSteps) {
-                    val lineColor = if (i < currentStep) lightSignatureColor else incompleteColor
+                if (i < totalSteps - 1) {
+                    val lineColor = if (i < activeIndex) lightSignatureColor else incompleteColor
                     Canvas(
                         modifier = Modifier
                             .width(connectorWidth)
