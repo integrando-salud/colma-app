@@ -8,11 +8,40 @@ object SessionManager {
     private const val PREF_NAME = "ColmaAppSession"
     private const val KEY_AUTH_TOKEN = "auth_token"
     private const val KEY_USER_ID = "user_id"
+    private const val KEY_LAST_APP_VERSION = "last_app_version"
 
     private var preferences: SharedPreferences? = null
 
     fun init(context: Context) {
         preferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+        checkAppUpdate(context)
+    }
+
+    private fun checkAppUpdate(context: Context) {
+        val lastVersion = preferences?.getLong(KEY_LAST_APP_VERSION, -1) ?: -1
+        try {
+            val packageInfo = context.packageManager.getPackageInfo(context.packageName, 0)
+            val currentVersionCode = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P) {
+                packageInfo.longVersionCode
+            } else {
+                @Suppress("DEPRECATION")
+                packageInfo.versionCode.toLong()
+            }
+
+            if (lastVersion != -1L) {
+                if (currentVersionCode != lastVersion) {
+                    clearSession()
+                }
+            } else {
+                if (getAuthToken() != null) {
+                    clearSession()
+                }
+            }
+
+            preferences?.edit()?.putLong(KEY_LAST_APP_VERSION, currentVersionCode)?.apply()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     fun saveSession(token: String, userId: Int) {
