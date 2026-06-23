@@ -68,13 +68,21 @@ class SesionesViewModel(private val repository: SesionesRepository) : ViewModel(
                     loadSessions()
                 }
             }
+            SesionesEvent.Refresh -> {
+                loadSessions(showLoading = false)
+                _uiState.value.expandedSessionId?.let {
+                    loadSubSessions(it)
+                }
+            }
         }
     }
 
-    private fun loadSessions() {
+    private fun loadSessions(showLoading: Boolean = true) {
         viewModelScope.launch {
             Log.d(TAG, "Loading sessions for treatment types: ${_uiState.value.treatmentTypes}")
-            _uiState.update { it.copy(isLoading = true) }
+            if (showLoading) {
+                _uiState.update { it.copy(isLoading = true) }
+            }
             try {
                 val hasHta = _uiState.value.treatmentTypes.contains(TreatmentType.HTA)
                 val hasDiabetes = _uiState.value.treatmentTypes.contains(TreatmentType.DIABETES)

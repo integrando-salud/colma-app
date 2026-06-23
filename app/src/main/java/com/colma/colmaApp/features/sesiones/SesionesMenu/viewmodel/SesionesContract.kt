@@ -25,4 +25,5 @@ sealed class SesionesEvent {
     ) : SesionesEvent()
     object BackClicked : SesionesEvent()
     object DebugAdvanceWeek : SesionesEvent()
+    object Refresh : SesionesEvent()
 }

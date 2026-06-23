@@ -146,6 +146,17 @@ class SesionesMenuUI : ComponentActivity() {
             }
         }
     }
+
+    private var isFirstResume = true
+
+    override fun onResume() {
+        super.onResume()
+        if (isFirstResume) {
+            isFirstResume = false
+        } else {
+            viewModel.onEvent(SesionesEvent.Refresh)
+        }
+    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
