@@ -1,12 +1,12 @@
-package com.colma.colmaApp.features.sesiones.SesionesMenu.data
+package com.colma.colmaApp.features.sesiones.SessionList.data
 
 import android.content.Context
 import android.util.Log
 import com.colma.colmaApp.features.content.domain.ContentRepository
-import com.colma.colmaApp.features.sesiones.MultimediaSelector.domain.TreatmentType
-import com.colma.colmaApp.features.sesiones.SesionesMenu.domain.SesionesRepository
-import com.colma.colmaApp.features.sesiones.SesionesMenu.domain.SessionItem
-import com.colma.colmaApp.features.sesiones.SesionesMenu.domain.SubSessionItem
+import com.colma.colmaApp.features.sesiones.SessionSteps.domain.TreatmentType
+import com.colma.colmaApp.features.sesiones.SessionList.domain.SessionListRepository
+import com.colma.colmaApp.features.sesiones.SessionList.domain.SessionItem
+import com.colma.colmaApp.features.sesiones.SessionList.domain.SubSessionItem
 import com.colma.colmaApp.utils.ResourceUtils
 import com.colma.colmaApp.servicios.database.dbhelper.DbHelper
 import com.colma.colmaApp.servicios.session.SessionManager
@@ -14,12 +14,12 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-class SesionesRepositoryImpl(
+class SessionListRepositoryImpl(
     private val contentRepository: ContentRepository,
     private val context: Context,
     private val dbHelper: DbHelper
-) : SesionesRepository {
-    private val TAG = "SesionesRepository"
+) : SessionListRepository {
+    private val TAG = "SessionListRepository"
     private val userId: Int
 
     init {

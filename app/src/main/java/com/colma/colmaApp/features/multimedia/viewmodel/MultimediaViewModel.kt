@@ -3,11 +3,11 @@ package com.colma.colmaApp.features.multimedia.viewmodel
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.colma.colmaApp.features.sesiones.MultimediaSelector.domain.MultimediaRepository
-import com.colma.colmaApp.features.sesiones.MultimediaSelector.domain.TreatmentType
+import com.colma.colmaApp.features.sesiones.SessionSteps.domain.SessionStepsRepository
+import com.colma.colmaApp.features.sesiones.SessionSteps.domain.TreatmentType
 import com.colma.colmaApp.servicios.Modelos.RegistrosSaludModelos
-import com.colma.colmaApp.features.sesiones.MultimediaSelector.domain.MultimediaContentType
-import com.colma.colmaApp.features.sesiones.MultimediaSelector.domain.MultimediaOption
+import com.colma.colmaApp.features.sesiones.SessionSteps.domain.MultimediaContentType
+import com.colma.colmaApp.features.sesiones.SessionSteps.domain.MultimediaOption
 import com.colma.colmaApp.servicios.Modelos.QuizResponseRecord
 import com.colma.colmaApp.servicios.Modelos.QuestionResponseRecord
 import kotlinx.coroutines.channels.Channel
@@ -18,7 +18,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.Dispatchers
 
-class MultimediaViewModel(private val repository: MultimediaRepository) : ViewModel() {
+class MultimediaViewModel(private val repository: SessionStepsRepository) : ViewModel() {
 
     private val TAG = "MultimediaViewModel"
 

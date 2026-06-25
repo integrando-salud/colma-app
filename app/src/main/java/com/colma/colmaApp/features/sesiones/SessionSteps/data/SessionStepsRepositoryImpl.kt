@@ -1,4 +1,4 @@
-package com.colma.colmaApp.features.sesiones.MultimediaSelector.data
+package com.colma.colmaApp.features.sesiones.SessionSteps.data
 
 import android.content.Context
 import android.util.Log
@@ -8,10 +8,10 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import com.colma.colmaApp.R
 import com.colma.colmaApp.features.content.domain.ContentRepository
 import com.colma.colmaApp.features.content.domain.SubSessionProgress
-import com.colma.colmaApp.features.sesiones.MultimediaSelector.domain.MultimediaContentType
-import com.colma.colmaApp.features.sesiones.MultimediaSelector.domain.MultimediaOption
-import com.colma.colmaApp.features.sesiones.MultimediaSelector.domain.MultimediaRepository
-import com.colma.colmaApp.features.sesiones.MultimediaSelector.domain.TreatmentType
+import com.colma.colmaApp.features.sesiones.SessionSteps.domain.MultimediaContentType
+import com.colma.colmaApp.features.sesiones.SessionSteps.domain.MultimediaOption
+import com.colma.colmaApp.features.sesiones.SessionSteps.domain.SessionStepsRepository
+import com.colma.colmaApp.features.sesiones.SessionSteps.domain.TreatmentType
 import com.colma.colmaApp.utils.NetworkUtils
 import com.colma.colmaApp.utils.ResourceUtils
 import com.colma.colmaApp.servicios.Modelos.RegistrosSaludModelos
@@ -28,13 +28,13 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-class MultimediaRepositoryImpl(
+class SessionStepsRepositoryImpl(
     private val contentRepository: ContentRepository,
     private val context: Context,
     private val dbHelper: DbHelper
-) : MultimediaRepository {
+) : SessionStepsRepository {
 
-    private val TAG = "MultimediaRepo"
+    private val TAG = "SessionStepsRepo"
     private val isoFormatter = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
     private val syncService = SyncService()
     private val userId: Int

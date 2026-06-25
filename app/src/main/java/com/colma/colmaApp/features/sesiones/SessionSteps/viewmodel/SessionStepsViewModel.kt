@@ -1,10 +1,10 @@
-package com.colma.colmaApp.features.sesiones.MultimediaSelector.viewmodel
+package com.colma.colmaApp.features.sesiones.SessionSteps.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.colma.colmaApp.features.sesiones.MultimediaSelector.domain.MultimediaOption
-import com.colma.colmaApp.features.sesiones.MultimediaSelector.domain.MultimediaRepository
-import com.colma.colmaApp.features.sesiones.MultimediaSelector.domain.TreatmentType
+import com.colma.colmaApp.features.sesiones.SessionSteps.domain.MultimediaOption
+import com.colma.colmaApp.features.sesiones.SessionSteps.domain.SessionStepsRepository
+import com.colma.colmaApp.features.sesiones.SessionSteps.domain.TreatmentType
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -12,9 +12,9 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class MultimediaSelectorViewModel(private val repository: MultimediaRepository) : ViewModel() {
+class SessionStepsViewModel(private val repository: SessionStepsRepository) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(MultimediaSelectorUiState())
+    private val _uiState = MutableStateFlow(SessionStepsUiState())
     val uiState = _uiState.asStateFlow()
 
     private val _navigationEvent = Channel<NavigationEvent>()
@@ -74,14 +74,14 @@ class MultimediaSelectorViewModel(private val repository: MultimediaRepository) 
         }
     }
 
-    fun onEvent(event: MultimediaSelectorEvent) {
+    fun onEvent(event: SessionStepsEvent) {
         when (event) {
-            is MultimediaSelectorEvent.MultimediaOptionClicked -> {
+            is SessionStepsEvent.SessionStepClicked -> {
                 viewModelScope.launch {
                     _navigationEvent.send(NavigationEvent.NavigateToMultimedia(event.option, event.index))
                 }
             }
-            MultimediaSelectorEvent.BackClicked -> {
+            SessionStepsEvent.BackClicked -> {
                 viewModelScope.launch {
                     _navigationEvent.send(NavigationEvent.NavigateBack)
                 }

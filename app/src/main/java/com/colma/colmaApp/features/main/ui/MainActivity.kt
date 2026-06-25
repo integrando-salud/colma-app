@@ -63,21 +63,21 @@ import com.colma.colmaApp.features.MenuMain.viewmodel.MenuMainViewModelFactory
 import com.colma.colmaApp.features.MenuMain.ui.MenuScreen
 import com.colma.colmaApp.features.MenuMain.ui.CongratulationAnimation
 import com.colma.colmaApp.features.MenuMain.ui.DrawerItem
-import com.colma.colmaApp.features.sesiones.SesionesMenu.ui.SesionesMenuScreen
-import com.colma.colmaApp.features.sesiones.SesionesMenu.viewmodel.SesionesEvent
-import com.colma.colmaApp.features.sesiones.SesionesMenu.viewmodel.SesionesViewModel
-import com.colma.colmaApp.features.sesiones.SesionesMenu.viewmodel.SesionesViewModelFactory
-import com.colma.colmaApp.features.sesiones.SesionesMenu.domain.SesionesRepository
-import com.colma.colmaApp.features.sesiones.MultimediaSelector.ui.MultimediaSelectorScreen
-import com.colma.colmaApp.features.sesiones.MultimediaSelector.viewmodel.MultimediaSelectorEvent
-import com.colma.colmaApp.features.sesiones.MultimediaSelector.viewmodel.MultimediaSelectorViewModel
-import com.colma.colmaApp.features.sesiones.MultimediaSelector.viewmodel.MultimediaSelectorViewModelFactory
-import com.colma.colmaApp.features.sesiones.MultimediaSelector.domain.TreatmentType
+import com.colma.colmaApp.features.sesiones.SessionList.ui.SessionListScreen
+import com.colma.colmaApp.features.sesiones.SessionList.viewmodel.SessionListEvent
+import com.colma.colmaApp.features.sesiones.SessionList.viewmodel.SessionListViewModel
+import com.colma.colmaApp.features.sesiones.SessionList.viewmodel.SessionListViewModelFactory
+import com.colma.colmaApp.features.sesiones.SessionList.domain.SessionListRepository
+import com.colma.colmaApp.features.sesiones.SessionSteps.ui.SessionStepsScreen
+import com.colma.colmaApp.features.sesiones.SessionSteps.viewmodel.SessionStepsEvent
+import com.colma.colmaApp.features.sesiones.SessionSteps.viewmodel.SessionStepsViewModel
+import com.colma.colmaApp.features.sesiones.SessionSteps.viewmodel.SessionStepsViewModelFactory
+import com.colma.colmaApp.features.sesiones.SessionSteps.domain.TreatmentType
+import com.colma.colmaApp.features.sesiones.SessionSteps.domain.MultimediaContentType
 import com.colma.colmaApp.features.multimedia.ui.MultimediaScreen
 import com.colma.colmaApp.features.multimedia.viewmodel.MultimediaEvent
 import com.colma.colmaApp.features.multimedia.viewmodel.MultimediaViewModel
 import com.colma.colmaApp.features.multimedia.viewmodel.MultimediaViewModelFactory
-import com.colma.colmaApp.features.sesiones.MultimediaSelector.domain.MultimediaContentType
 import com.colma.colmaApp.features.RegistroSalud.ui.RegistrosSaludScreen
 import com.colma.colmaApp.features.RegistroSalud.data.RegistroSaludRepositoryImpl
 import com.colma.colmaApp.features.RegistroSalud.viewmodel.RegistroSaludEvent
@@ -106,11 +106,7 @@ import com.colma.colmaApp.features.MetasHistory.ui.MetasHistoryScreen
 import com.colma.colmaApp.features.MetasHistory.viewmodel.MetasHistoryViewModel
 import com.colma.colmaApp.features.MetasHistory.viewmodel.MetasHistoryViewModelFactory
 import com.colma.colmaApp.features.MetasHistory.data.MetasHistoryRepositoryImpl
-import com.colma.colmaApp.features.sesiones.SessionContent.ui.SessionContentScreen
-import com.colma.colmaApp.features.sesiones.SessionContent.viewmodel.SessionContentEvent
-import com.colma.colmaApp.features.sesiones.SessionContent.viewmodel.SessionContentViewModel
-import com.colma.colmaApp.features.sesiones.SessionContent.viewmodel.SessionContentViewModelFactory
-import com.colma.colmaApp.features.sesiones.SessionContent.data.SessionContentRepositoryImpl
+
 import com.colma.colmaApp.features.instructions.ui.InstructionsScreen
 import com.colma.colmaApp.servicios.database.dbhelper.DbHelper
 import com.colma.colmaApp.ui.theme.ColmaAppTheme
@@ -556,14 +552,14 @@ fun MainAppContainer() {
                                 }.ifEmpty { listOf(TreatmentType.HTA) }
                             }
 
-                            val sesionesViewModel = entryViewModel<SesionesViewModel>(
+                            val sessionListViewModel = entryViewModel<SessionListViewModel>(
                                 storeOwner = backStackEntry,
-                                factory = SesionesViewModelFactory(context.applicationContext)
+                                factory = SessionListViewModelFactory(context.applicationContext)
                             )
-                            val uiState by sesionesViewModel.uiState.collectAsState()
+                            val uiState by sessionListViewModel.uiState.collectAsState()
 
                             LaunchedEffect(treatmentTypes) {
-                                sesionesViewModel.onEvent(SesionesEvent.SetTreatmentTypes(treatmentTypes))
+                                sessionListViewModel.onEvent(SessionListEvent.SetTreatmentTypes(treatmentTypes))
                             }
 
                             val topBarTitle = remember(uiState.treatmentTypes) {
@@ -579,18 +575,18 @@ fun MainAppContainer() {
                                 topBarConfig = TopBarConfig(
                                     title = topBarTitle,
                                     showBackButton = true,
-                                    onBackClick = { sesionesViewModel.onEvent(SesionesEvent.BackClicked) },
+                                    onBackClick = { sessionListViewModel.onEvent(SessionListEvent.BackClicked) },
                                     showTopBar = true
                                 )
                             }
 
                             LaunchedEffect(Unit) {
-                                sesionesViewModel.navigationEvent.collect { event ->
+                                sessionListViewModel.navigationEvent.collect { event ->
                                     when (event) {
-                                        is SesionesViewModel.NavigationEvent.NavigateToMultimediaSelector -> {
+                                        is SessionListViewModel.NavigationEvent.NavigateToSessionSteps -> {
                                             navController.navigate("multimedia_selector/${event.parentSessionId}/${event.sessionTitle}/${event.subSessionId}/${event.subSessionTitle}/${event.treatmentType}")
                                         }
-                                        SesionesViewModel.NavigationEvent.NavigateBack -> {
+                                        SessionListViewModel.NavigationEvent.NavigateBack -> {
                                             navController.popBackStack()
                                         }
                                     }
@@ -601,7 +597,7 @@ fun MainAppContainer() {
                             DisposableEffect(lifecycleOwner) {
                                 val observer = LifecycleEventObserver { _, event ->
                                     if (event == Lifecycle.Event.ON_RESUME) {
-                                        sesionesViewModel.onEvent(SesionesEvent.Refresh)
+                                        sessionListViewModel.onEvent(SessionListEvent.Refresh)
                                     }
                                 }
                                 lifecycleOwner.lifecycle.addObserver(observer)
@@ -610,9 +606,9 @@ fun MainAppContainer() {
                                 }
                             }
 
-                            SesionesMenuScreen(
+                            SessionListScreen(
                                 uiState = uiState,
-                                onEvent = sesionesViewModel::onEvent
+                                onEvent = sessionListViewModel::onEvent
                             )
                         }
 
@@ -641,32 +637,32 @@ fun MainAppContainer() {
                                 }.ifEmpty { listOf(TreatmentType.HTA) }
                             }
 
-                            val multimediaSelectorViewModel = entryViewModel<MultimediaSelectorViewModel>(
+                            val sessionStepsViewModel = entryViewModel<SessionStepsViewModel>(
                                 storeOwner = backStackEntry,
-                                factory = MultimediaSelectorViewModelFactory(context.applicationContext)
+                                factory = SessionStepsViewModelFactory(context.applicationContext)
                             )
-                            val uiState by multimediaSelectorViewModel.uiState.collectAsState()
+                            val uiState by sessionStepsViewModel.uiState.collectAsState()
 
                             LaunchedEffect(sessionId, sessionTitle, subSessionId, subSessionTitle, treatmentTypes) {
-                                multimediaSelectorViewModel.initialize(sessionId, sessionTitle, subSessionId, subSessionTitle, treatmentTypes)
+                                sessionStepsViewModel.initialize(sessionId, sessionTitle, subSessionId, subSessionTitle, treatmentTypes)
                             }
 
                             LaunchedEffect(Unit) {
                                 topBarConfig = TopBarConfig(
                                     title = "",
                                     showBackButton = true,
-                                    onBackClick = { multimediaSelectorViewModel.onEvent(MultimediaSelectorEvent.BackClicked) },
+                                    onBackClick = { sessionStepsViewModel.onEvent(SessionStepsEvent.BackClicked) },
                                     showTopBar = true
                                 )
                             }
 
                             LaunchedEffect(Unit) {
-                                multimediaSelectorViewModel.navigationEvent.collect { event ->
+                                sessionStepsViewModel.navigationEvent.collect { event ->
                                     when (event) {
-                                        is MultimediaSelectorViewModel.NavigationEvent.NavigateToMultimedia -> {
+                                        is SessionStepsViewModel.NavigationEvent.NavigateToMultimedia -> {
                                             navController.navigate("multimedia/${uiState.sessionId}/${uiState.sessionTitle}/${uiState.subSessionId}/${uiState.subSessionTitle}/${uiState.treatmentTypes.joinToString(",") { it.name }}/${event.index}")
                                         }
-                                        MultimediaSelectorViewModel.NavigationEvent.NavigateBack -> {
+                                        SessionStepsViewModel.NavigationEvent.NavigateBack -> {
                                             navController.popBackStack()
                                         }
                                     }
@@ -677,8 +673,8 @@ fun MainAppContainer() {
                             DisposableEffect(lifecycleOwner) {
                                 val observer = LifecycleEventObserver { _, event ->
                                     if (event == Lifecycle.Event.ON_RESUME) {
-                                        if (multimediaSelectorViewModel.uiState.value.sessionId != -1L) {
-                                            multimediaSelectorViewModel.loadMultimediaOptions()
+                                        if (sessionStepsViewModel.uiState.value.sessionId != -1L) {
+                                            sessionStepsViewModel.loadMultimediaOptions()
                                         }
                                     }
                                 }
@@ -688,9 +684,9 @@ fun MainAppContainer() {
                                 }
                             }
 
-                            MultimediaSelectorScreen(
+                            SessionStepsScreen(
                                 uiState = uiState,
-                                onEvent = multimediaSelectorViewModel::onEvent
+                                onEvent = sessionStepsViewModel::onEvent
                             )
                         }
 
@@ -947,62 +943,7 @@ fun MainAppContainer() {
                             )
                         }
 
-                        composable(
-                            route = "session_content/{sessionId}/{sessionTitle}/{subSessionId}/{subSessionTitle}",
-                            arguments = listOf(
-                                navArgument("sessionId") { type = NavType.LongType },
-                                navArgument("sessionTitle") { type = NavType.StringType },
-                                navArgument("subSessionId") { type = NavType.LongType },
-                                navArgument("subSessionTitle") { type = NavType.StringType }
-                            )
-                        ) { backStackEntry ->
-                            val sessionId = backStackEntry.arguments?.getLong("sessionId") ?: -1L
-                            val sessionTitle = backStackEntry.arguments?.getString("sessionTitle") ?: "Sesión"
-                            val subSessionId = backStackEntry.arguments?.getLong("subSessionId") ?: -1L
-                            val subSessionTitle = backStackEntry.arguments?.getString("subSessionTitle") ?: ""
 
-                            val sessionContentViewModel = entryViewModel<SessionContentViewModel>(
-                                storeOwner = backStackEntry,
-                                factory = SessionContentViewModelFactory(SessionContentRepositoryImpl())
-                            )
-                            val uiState by sessionContentViewModel.uiState.collectAsState()
-
-                            LaunchedEffect(sessionId, sessionTitle, subSessionId, subSessionTitle) {
-                                sessionContentViewModel.onEvent(
-                                    SessionContentEvent.LoadSession(
-                                        sessionId = sessionId,
-                                        sessionTitle = sessionTitle,
-                                        subSessionId = subSessionId.takeIf { it != -1L },
-                                        subSessionTitle = subSessionTitle
-                                    )
-                                )
-                            }
-
-                            LaunchedEffect(Unit) {
-                                topBarConfig = TopBarConfig(
-                                    title = "Tema de hoy",
-                                    showBackButton = true,
-                                    onBackClick = { navController.popBackStack() },
-                                    showTopBar = true
-                                )
-                            }
-
-                            LaunchedEffect(Unit) {
-                                sessionContentViewModel.navigationEvent.collect { event ->
-                                    when (event) {
-                                        is SessionContentViewModel.NavigationEvent.NavigateBack -> {
-                                            navController.popBackStack()
-                                        }
-                                    }
-                                }
-                            }
-
-                            SessionContentScreen(
-                                uiState = uiState,
-                                onEvent = sessionContentViewModel::onEvent,
-                                viewModel = sessionContentViewModel
-                            )
-                        }
 
                         composable("instructions") {
                             LaunchedEffect(Unit) {

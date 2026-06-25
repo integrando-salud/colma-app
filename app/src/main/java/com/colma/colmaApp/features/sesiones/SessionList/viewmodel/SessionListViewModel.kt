@@ -1,10 +1,10 @@
-package com.colma.colmaApp.features.sesiones.SesionesMenu.viewmodel
+package com.colma.colmaApp.features.sesiones.SessionList.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.colma.colmaApp.features.sesiones.MultimediaSelector.domain.TreatmentType
-import com.colma.colmaApp.features.sesiones.SesionesMenu.domain.SesionesRepository
+import com.colma.colmaApp.features.sesiones.SessionSteps.domain.TreatmentType
+import com.colma.colmaApp.features.sesiones.SessionList.domain.SessionListRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -13,22 +13,22 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class SesionesViewModel(private val repository: SesionesRepository) : ViewModel() {
-    private val TAG = "SesionesViewModel"
+class SessionListViewModel(private val repository: SessionListRepository) : ViewModel() {
+    private val TAG = "SessionListViewModel"
 
-    private val _uiState = MutableStateFlow(SesionesUiState())
+    private val _uiState = MutableStateFlow(SessionListUiState())
     val uiState = _uiState.asStateFlow()
 
     private val _navigationEvent = Channel<NavigationEvent>()
     val navigationEvent = _navigationEvent.receiveAsFlow()
 
-    fun onEvent(event: SesionesEvent) {
+    fun onEvent(event: SessionListEvent) {
         when (event) {
-            is SesionesEvent.SetTreatmentTypes -> {
+            is SessionListEvent.SetTreatmentTypes -> {
                 _uiState.update { it.copy(treatmentTypes = event.treatmentTypes) }
                 loadSessions()
             }
-            is SesionesEvent.ExpandSession -> {
+            is SessionListEvent.ExpandSession -> {
                 val currentExpandedId = _uiState.value.expandedSessionId
                 val newExpandedId = if (currentExpandedId == event.sessionId) null else event.sessionId
                 _uiState.update { it.copy(expandedSessionId = newExpandedId) }
@@ -38,7 +38,7 @@ class SesionesViewModel(private val repository: SesionesRepository) : ViewModel(
                     }
                 }
             }
-            is SesionesEvent.SubSessionClick -> {
+            is SessionListEvent.SubSessionClick -> {
                 viewModelScope.launch {
                     val session = _uiState.value.htaSessions.find { it.id == event.parentSessionId }
                         ?: _uiState.value.diabetesSessions.find { it.id == event.parentSessionId }
@@ -47,7 +47,7 @@ class SesionesViewModel(private val repository: SesionesRepository) : ViewModel(
                         val weekNumber = session.title.replace(Regex("[^0-9]"), "")
                         val sessionTitle = "Semana $weekNumber"
 
-                        _navigationEvent.send(NavigationEvent.NavigateToMultimediaSelector(
+                        _navigationEvent.send(NavigationEvent.NavigateToSessionSteps(
                             event.parentSessionId,
                             sessionTitle,
                             event.subSessionId,
@@ -57,18 +57,18 @@ class SesionesViewModel(private val repository: SesionesRepository) : ViewModel(
                     }
                 }
             }
-            SesionesEvent.BackClicked -> {
+            SessionListEvent.BackClicked -> {
                  viewModelScope.launch {
                     _navigationEvent.send(NavigationEvent.NavigateBack)
                 }
             }
-            SesionesEvent.DebugAdvanceWeek -> {
+            SessionListEvent.DebugAdvanceWeek -> {
                 viewModelScope.launch(Dispatchers.IO) {
                     repository.debugAdvanceOneWeek()
                     loadSessions()
                 }
             }
-            SesionesEvent.Refresh -> {
+            SessionListEvent.Refresh -> {
                 loadSessions(showLoading = false)
                 _uiState.value.expandedSessionId?.let {
                     loadSubSessions(it)
@@ -133,7 +133,7 @@ class SesionesViewModel(private val repository: SesionesRepository) : ViewModel(
 
     sealed class NavigationEvent {
         object NavigateBack : NavigationEvent()
-        data class NavigateToMultimediaSelector(
+        data class NavigateToSessionSteps(
             val parentSessionId: Long,
             val sessionTitle: String,
             val subSessionId: Long,

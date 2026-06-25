@@ -1,7 +1,7 @@
-package com.colma.colmaApp.features.sesiones.SesionesMenu.domain
+package com.colma.colmaApp.features.sesiones.SessionList.domain
 
 import com.colma.colmaApp.R
-import com.colma.colmaApp.features.sesiones.MultimediaSelector.domain.TreatmentType
+import com.colma.colmaApp.features.sesiones.SessionSteps.domain.TreatmentType
 
 data class SessionItem(
     val id: Long,
@@ -18,7 +18,7 @@ data class SubSessionItem(
     val isCompleted: Boolean = false
 )
 
-interface SesionesRepository {
+interface SessionListRepository {
     suspend fun getHtaSessions(): List<SessionItem>
     suspend fun getDiabetesSessions(): List<SessionItem>
     suspend fun getHtaSubSessions(sessionId: Long): List<SubSessionItem>

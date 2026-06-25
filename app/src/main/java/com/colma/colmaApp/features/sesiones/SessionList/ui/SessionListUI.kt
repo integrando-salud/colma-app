@@ -1,4 +1,4 @@
-package com.colma.colmaApp.features.sesiones.SesionesMenu.ui
+package com.colma.colmaApp.features.sesiones.SessionList.ui
 
 import android.content.Intent
 import android.os.Bundle
@@ -73,24 +73,21 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import com.colma.colmaApp.R
-import com.colma.colmaApp.features.sesiones.MultimediaSelector.domain.TreatmentType
-import com.colma.colmaApp.features.sesiones.SesionesMenu.data.SesionesRepositoryImpl
-import com.colma.colmaApp.features.sesiones.SesionesMenu.domain.SessionItem
-import com.colma.colmaApp.features.sesiones.SesionesMenu.domain.SubSessionItem
-import com.colma.colmaApp.features.sesiones.SesionesMenu.viewmodel.SesionesEvent
-import com.colma.colmaApp.features.sesiones.SesionesMenu.viewmodel.SesionesUiState
-import com.colma.colmaApp.features.sesiones.SesionesMenu.viewmodel.SesionesViewModel
-import com.colma.colmaApp.features.sesiones.SesionesMenu.viewmodel.SesionesViewModelFactory
+import com.colma.colmaApp.features.sesiones.SessionSteps.domain.TreatmentType
+import com.colma.colmaApp.features.sesiones.SessionList.domain.SessionItem
+import com.colma.colmaApp.features.sesiones.SessionList.domain.SubSessionItem
+import com.colma.colmaApp.features.sesiones.SessionList.viewmodel.SessionListEvent
+import com.colma.colmaApp.features.sesiones.SessionList.viewmodel.SessionListUiState
 import com.colma.colmaApp.features.multimedia.ui.scrollbar
 import com.colma.colmaApp.ui.theme.ColmaAppTheme
 
-// SesionesMenuUI activity has been migrated to MainActivity.kt as a NavHost route.
+// SessionListUI activity has been migrated to MainActivity.kt as a NavHost route.
 // The Composable functions and helper classes are retained here for routing.
 
 @Composable
-fun SesionesMenuScreen(
-    uiState: SesionesUiState,
-    onEvent: (SesionesEvent) -> Unit
+fun SessionListScreen(
+    uiState: SessionListUiState,
+    onEvent: (SessionListEvent) -> Unit
 ) {
     if (uiState.isLoading) {
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
@@ -168,7 +165,7 @@ fun SessionItemView(
     session: SessionItem,
     subSessions: List<SubSessionItem>,
     expanded: Boolean,
-    onEvent: (SesionesEvent) -> Unit
+    onEvent: (SessionListEvent) -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -180,7 +177,7 @@ fun SessionItemView(
         SessionCard(
             session = session,
             selected = expanded,
-            onClick = { onEvent(SesionesEvent.ExpandSession(session.id)) }
+            onClick = { onEvent(SessionListEvent.ExpandSession(session.id)) }
         )
 
         AnimatedVisibility(
@@ -199,7 +196,7 @@ fun SessionItemView(
                 parentSession = session,
                 items = subSessions,
                 onSubClick = { sub ->
-                    onEvent(SesionesEvent.SubSessionClick(session.id, sub.id, sub.title, session.treatmentType))
+                    onEvent(SessionListEvent.SubSessionClick(session.id, sub.id, sub.title, session.treatmentType))
                 }
             )
         }

@@ -1,4 +1,4 @@
-package com.colma.colmaApp.features.sesiones.MultimediaSelector.ui
+package com.colma.colmaApp.features.sesiones.SessionSteps.ui
 
 import android.content.Intent
 import android.os.Bundle
@@ -18,6 +18,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -38,25 +39,24 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import com.colma.colmaApp.R
-import com.colma.colmaApp.features.sesiones.MultimediaSelector.data.MultimediaRepositoryImpl
-import com.colma.colmaApp.features.sesiones.MultimediaSelector.domain.MultimediaContentType
-
-import com.colma.colmaApp.features.sesiones.MultimediaSelector.domain.MultimediaOption
-import com.colma.colmaApp.features.sesiones.MultimediaSelector.domain.TreatmentType
-import com.colma.colmaApp.features.sesiones.MultimediaSelector.viewmodel.MultimediaSelectorEvent
-import com.colma.colmaApp.features.sesiones.MultimediaSelector.viewmodel.MultimediaSelectorUiState
-import com.colma.colmaApp.features.sesiones.MultimediaSelector.viewmodel.MultimediaSelectorViewModel
-import com.colma.colmaApp.features.sesiones.MultimediaSelector.viewmodel.MultimediaSelectorViewModelFactory
+import com.colma.colmaApp.features.sesiones.SessionSteps.data.SessionStepsRepositoryImpl
+import com.colma.colmaApp.features.sesiones.SessionSteps.domain.MultimediaContentType
+import com.colma.colmaApp.features.sesiones.SessionSteps.domain.MultimediaOption
+import com.colma.colmaApp.features.sesiones.SessionSteps.domain.TreatmentType
+import com.colma.colmaApp.features.sesiones.SessionSteps.viewmodel.SessionStepsEvent
+import com.colma.colmaApp.features.sesiones.SessionSteps.viewmodel.SessionStepsUiState
+import com.colma.colmaApp.features.sesiones.SessionSteps.viewmodel.SessionStepsViewModel
+import com.colma.colmaApp.features.sesiones.SessionSteps.viewmodel.SessionStepsViewModelFactory
 import com.colma.colmaApp.features.multimedia.ui.scrollbar
 import com.colma.colmaApp.ui.theme.ColmaAppTheme
 
-// MultimediaSelectorUI activity has been migrated to MainActivity.kt as a NavHost route.
+// SessionStepsUI activity has been migrated to MainActivity.kt as a NavHost route.
 // The Composable functions and helper classes are retained here for routing.
 
 @Composable
-fun MultimediaSelectorScreen(
-    uiState: MultimediaSelectorUiState,
-    onEvent: (MultimediaSelectorEvent) -> Unit
+fun SessionStepsScreen(
+    uiState: SessionStepsUiState,
+    onEvent: (SessionStepsEvent) -> Unit
 ) {
     val signatureColor = colorResource(R.color.principal)
 
@@ -86,8 +86,8 @@ fun MultimediaSelectorScreen(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     uiState.multimediaOptions.forEachIndexed { index, option ->
-                        MultimediaOptionCard(option = option, signatureColor = signatureColor) {
-                            onEvent(MultimediaSelectorEvent.MultimediaOptionClicked(option, index))
+                        SessionStepCard(option = option, signatureColor = signatureColor) {
+                            onEvent(SessionStepsEvent.SessionStepClicked(option, index))
                         }
                     }
                 }
@@ -106,7 +106,7 @@ fun MultimediaSelectorScreen(
 }
 
 @Composable
-fun MultimediaOptionCard(
+fun SessionStepCard(
     option: MultimediaOption,
     signatureColor: Color,
     onClick: () -> Unit

@@ -16,7 +16,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.colma.colmaApp.R
-import com.colma.colmaApp.features.sesiones.MultimediaSelector.domain.TreatmentType
+import com.colma.colmaApp.features.sesiones.SessionSteps.domain.TreatmentType
 import com.colma.colmaApp.servicios.Modelos.RegistrosSaludModelos
 import com.colma.colmaApp.servicios.database.dbhelper.DbHelper
 import com.colma.colmaApp.servicios.session.SessionManager

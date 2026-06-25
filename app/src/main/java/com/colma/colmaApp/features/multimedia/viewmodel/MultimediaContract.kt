@@ -1,7 +1,7 @@
 package com.colma.colmaApp.features.multimedia.viewmodel
 
-import com.colma.colmaApp.features.sesiones.MultimediaSelector.domain.TreatmentType
-import com.colma.colmaApp.features.sesiones.MultimediaSelector.domain.MultimediaOption
+import com.colma.colmaApp.features.sesiones.SessionSteps.domain.TreatmentType
+import com.colma.colmaApp.features.sesiones.SessionSteps.domain.MultimediaOption
 import com.colma.colmaApp.servicios.Modelos.QuizResponseRecord
 import com.colma.colmaApp.servicios.Modelos.QuestionResponseRecord
 

@@ -9,7 +9,7 @@ import com.colma.colmaApp.features.content.model.MultimediaContent
 import com.colma.colmaApp.features.content.model.SessionContent
 import com.colma.colmaApp.features.content.model.SubSessionContent
 import com.colma.colmaApp.features.content.model.TreatmentContent
-import com.colma.colmaApp.features.sesiones.MultimediaSelector.domain.TreatmentType
+import com.colma.colmaApp.features.sesiones.SessionSteps.domain.TreatmentType
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.decodeFromString
 import kotlinx.coroutines.Dispatchers

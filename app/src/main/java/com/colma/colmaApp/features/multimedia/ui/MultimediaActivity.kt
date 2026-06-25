@@ -43,10 +43,10 @@ import com.colma.colmaApp.features.multimedia.viewmodel.MultimediaEvent
 import com.colma.colmaApp.features.multimedia.viewmodel.MultimediaUiState
 import com.colma.colmaApp.features.multimedia.viewmodel.MultimediaViewModel
 import com.colma.colmaApp.features.multimedia.viewmodel.MultimediaViewModelFactory
-import com.colma.colmaApp.features.sesiones.MultimediaSelector.data.MultimediaRepositoryImpl
-import com.colma.colmaApp.features.sesiones.MultimediaSelector.domain.MultimediaContentType
-import com.colma.colmaApp.features.sesiones.MultimediaSelector.domain.MultimediaOption // NEW
-import com.colma.colmaApp.features.sesiones.MultimediaSelector.domain.TreatmentType // NEW
+import com.colma.colmaApp.features.sesiones.SessionSteps.data.SessionStepsRepositoryImpl
+import com.colma.colmaApp.features.sesiones.SessionSteps.domain.MultimediaContentType
+import com.colma.colmaApp.features.sesiones.SessionSteps.domain.MultimediaOption // NEW
+import com.colma.colmaApp.features.sesiones.SessionSteps.domain.TreatmentType // NEW
 import com.colma.colmaApp.ui.theme.ColmaAppTheme
 
 // MultimediaActivity activity has been migrated to MainActivity.kt as a NavHost route.

@@ -1,4 +1,4 @@
-package com.colma.colmaApp.features.sesiones.MultimediaSelector.domain
+package com.colma.colmaApp.features.sesiones.SessionSteps.domain
 
 import androidx.compose.ui.graphics.vector.ImageVector
 

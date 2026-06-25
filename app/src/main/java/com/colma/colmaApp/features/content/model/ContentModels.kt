@@ -1,8 +1,8 @@
 package com.colma.colmaApp.features.content.model
 
 import kotlinx.serialization.Serializable
-import com.colma.colmaApp.features.sesiones.MultimediaSelector.domain.TreatmentType
-import com.colma.colmaApp.features.sesiones.MultimediaSelector.domain.MultimediaContentType
+import com.colma.colmaApp.features.sesiones.SessionSteps.domain.TreatmentType
+import com.colma.colmaApp.features.sesiones.SessionSteps.domain.MultimediaContentType
 
 @Serializable
 data class ContentDictionary(
