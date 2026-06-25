@@ -41,7 +41,10 @@ class SessionStepsViewModel(private val repository: SessionStepsRepository) : Vi
 
     fun loadMultimediaOptions() {
         viewModelScope.launch {
-            _uiState.update { it.copy(isLoading = true, error = null) }
+            val showLoading = _uiState.value.multimediaOptions.isEmpty()
+            if (showLoading) {
+                _uiState.update { it.copy(isLoading = true, error = null) }
+            }
             val state = _uiState.value
 
             val optionsResult = repository.getMultimediaOptions(state.treatmentTypes, state.sessionId, state.subSessionId)
