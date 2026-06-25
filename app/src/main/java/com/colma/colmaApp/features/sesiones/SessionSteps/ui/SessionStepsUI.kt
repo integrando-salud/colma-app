@@ -77,9 +77,7 @@ fun SessionStepsScreen(
             .fillMaxSize()
             .background(colorResource(id = R.color.background))
     ) {
-        if (uiState.isLoading) {
-            CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
-        } else if (uiState.error != null) {
+        if (uiState.error != null) {
             Text(text = "Error: ${uiState.error}", color = Color.Red, modifier = Modifier.align(Alignment.Center))
         } else {
             val scrollState = rememberScrollState()

@@ -47,7 +47,6 @@ import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -97,72 +96,66 @@ fun SessionListScreen(
     onEvent: (SessionListEvent) -> Unit
 ) {
     Box(modifier = Modifier.fillMaxSize()) {
-        if (uiState.isLoading) {
-            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                CircularProgressIndicator()
+        val lazyListState = rememberLazyListState()
+        LazyColumn(
+            state = lazyListState,
+            modifier = Modifier
+                .fillMaxSize()
+                .background(colorResource(id = R.color.background))
+                .scrollbar(lazyListState)
+                .padding(horizontal = 16.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+            contentPadding = PaddingValues(vertical = 12.dp)
+        ) {
+            val hasHta = uiState.treatmentTypes.contains(TreatmentType.HTA)
+            val hasDiabetes = uiState.treatmentTypes.contains(TreatmentType.DIABETES)
+
+            if (hasHta) {
+                item {
+                    StaggeredItemWrapper(index = 0) {
+                        TreatmentHeader(title = "Hipertensión Arterial")
+                    }
+                }
+                itemsIndexed(uiState.htaSessions, key = { _, it -> "hta-${it.id}" }) { index, session ->
+                    StaggeredItemWrapper(index = index + 1) {
+                        SessionItemView(
+                            session = session,
+                            subSessions = uiState.subSessions[session.id] ?: emptyList(),
+                            expanded = uiState.expandedSessionId == session.id,
+                            onEvent = onEvent
+                        )
+                    }
+                }
             }
-        } else {
-            val lazyListState = rememberLazyListState()
-            LazyColumn(
-                state = lazyListState,
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(colorResource(id = R.color.background))
-                    .scrollbar(lazyListState)
-                    .padding(horizontal = 16.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp),
-                contentPadding = PaddingValues(vertical = 12.dp)
-            ) {
-                val hasHta = uiState.treatmentTypes.contains(TreatmentType.HTA)
-                val hasDiabetes = uiState.treatmentTypes.contains(TreatmentType.DIABETES)
 
-                if (hasHta) {
-                    item {
-                        StaggeredItemWrapper(index = 0) {
-                            TreatmentHeader(title = "Hipertensión Arterial")
-                        }
-                    }
-                    itemsIndexed(uiState.htaSessions, key = { _, it -> "hta-${it.id}" }) { index, session ->
-                        StaggeredItemWrapper(index = index + 1) {
-                            SessionItemView(
-                                session = session,
-                                subSessions = uiState.subSessions[session.id] ?: emptyList(),
-                                expanded = uiState.expandedSessionId == session.id,
-                                onEvent = onEvent
-                            )
-                        }
+            if (hasHta && hasDiabetes) {
+                item {
+                    val dividerIndex = uiState.htaSessions.size + 1
+                    StaggeredItemWrapper(index = dividerIndex) {
+                        HorizontalDivider(
+                            modifier = Modifier.padding(vertical = 16.dp, horizontal = 8.dp),
+                            thickness = 1.dp,
+                            color = Color.LightGray
+                        )
                     }
                 }
+            }
 
-                if (hasHta && hasDiabetes) {
-                    item {
-                        val dividerIndex = uiState.htaSessions.size + 1
-                        StaggeredItemWrapper(index = dividerIndex) {
-                            HorizontalDivider(
-                                modifier = Modifier.padding(vertical = 16.dp, horizontal = 8.dp),
-                                thickness = 1.dp,
-                                color = Color.LightGray
-                            )
-                        }
+            if (hasDiabetes) {
+                val startIndex = if (hasHta) uiState.htaSessions.size + 2 else 0
+                item {
+                    StaggeredItemWrapper(index = startIndex) {
+                        TreatmentHeader(title = "Diabetes")
                     }
                 }
-
-                if (hasDiabetes) {
-                    val startIndex = if (hasHta) uiState.htaSessions.size + 2 else 0
-                    item {
-                        StaggeredItemWrapper(index = startIndex) {
-                            TreatmentHeader(title = "Diabetes")
-                        }
-                    }
-                    itemsIndexed(uiState.diabetesSessions, key = { _, it -> "diabetes-${it.id}" }) { index, session ->
-                        StaggeredItemWrapper(index = startIndex + index + 1) {
-                            SessionItemView(
-                                session = session,
-                                subSessions = uiState.subSessions[session.id] ?: emptyList(),
-                                expanded = uiState.expandedSessionId == session.id,
-                                onEvent = onEvent
-                            )
-                        }
+                itemsIndexed(uiState.diabetesSessions, key = { _, it -> "diabetes-${it.id}" }) { index, session ->
+                    StaggeredItemWrapper(index = startIndex + index + 1) {
+                        SessionItemView(
+                            session = session,
+                            subSessions = uiState.subSessions[session.id] ?: emptyList(),
+                            expanded = uiState.expandedSessionId == session.id,
+                            onEvent = onEvent
+                        )
                     }
                 }
             }
