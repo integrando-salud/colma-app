@@ -507,7 +507,7 @@ fun MainAppContainer() {
                             LaunchedEffect(uiState.userName) {
                                 topBarConfig = TopBarConfig(
                                     title = "Bienvenido/a ${uiState.userName}",
-                                    showMenuButton = true,
+                                    showMenuButton = false,
                                     showBackButton = false,
                                     showTopBar = true
                                 )
