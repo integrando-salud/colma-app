@@ -9,11 +9,14 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
+import androidx.compose.animation.slideInVertically
+import kotlinx.coroutines.delay
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.basicMarquee
@@ -35,6 +38,7 @@ import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -58,10 +62,13 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
@@ -89,63 +96,107 @@ fun SessionListScreen(
     uiState: SessionListUiState,
     onEvent: (SessionListEvent) -> Unit
 ) {
-    if (uiState.isLoading) {
-        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-            CircularProgressIndicator()
+    Box(modifier = Modifier.fillMaxSize()) {
+        if (uiState.isLoading) {
+            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                CircularProgressIndicator()
+            }
+        } else {
+            val lazyListState = rememberLazyListState()
+            LazyColumn(
+                state = lazyListState,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(colorResource(id = R.color.background))
+                    .scrollbar(lazyListState)
+                    .padding(horizontal = 16.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+                contentPadding = PaddingValues(vertical = 12.dp)
+            ) {
+                val hasHta = uiState.treatmentTypes.contains(TreatmentType.HTA)
+                val hasDiabetes = uiState.treatmentTypes.contains(TreatmentType.DIABETES)
+
+                if (hasHta) {
+                    item {
+                        StaggeredItemWrapper(index = 0) {
+                            TreatmentHeader(title = "Hipertensión Arterial")
+                        }
+                    }
+                    itemsIndexed(uiState.htaSessions, key = { _, it -> "hta-${it.id}" }) { index, session ->
+                        StaggeredItemWrapper(index = index + 1) {
+                            SessionItemView(
+                                session = session,
+                                subSessions = uiState.subSessions[session.id] ?: emptyList(),
+                                expanded = uiState.expandedSessionId == session.id,
+                                onEvent = onEvent
+                            )
+                        }
+                    }
+                }
+
+                if (hasHta && hasDiabetes) {
+                    item {
+                        val dividerIndex = uiState.htaSessions.size + 1
+                        StaggeredItemWrapper(index = dividerIndex) {
+                            HorizontalDivider(
+                                modifier = Modifier.padding(vertical = 16.dp, horizontal = 8.dp),
+                                thickness = 1.dp,
+                                color = Color.LightGray
+                            )
+                        }
+                    }
+                }
+
+                if (hasDiabetes) {
+                    val startIndex = if (hasHta) uiState.htaSessions.size + 2 else 0
+                    item {
+                        StaggeredItemWrapper(index = startIndex) {
+                            TreatmentHeader(title = "Diabetes")
+                        }
+                    }
+                    itemsIndexed(uiState.diabetesSessions, key = { _, it -> "diabetes-${it.id}" }) { index, session ->
+                        StaggeredItemWrapper(index = startIndex + index + 1) {
+                            SessionItemView(
+                                session = session,
+                                subSessions = uiState.subSessions[session.id] ?: emptyList(),
+                                expanded = uiState.expandedSessionId == session.id,
+                                onEvent = onEvent
+                            )
+                        }
+                    }
+                }
+            }
         }
-    } else {
-        val lazyListState = rememberLazyListState()
-        LazyColumn(
-            state = lazyListState,
-            modifier = Modifier
-                .fillMaxSize()
-                .background(colorResource(id = R.color.background))
-                .scrollbar(lazyListState)
-                .padding(horizontal = 16.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-            contentPadding = PaddingValues(vertical = 12.dp)
-        ) {
-            val hasHta = uiState.treatmentTypes.contains(TreatmentType.HTA)
-            val hasDiabetes = uiState.treatmentTypes.contains(TreatmentType.DIABETES)
+    }
+}
 
-            if (hasHta) {
-                item {
-                    TreatmentHeader(title = "Hipertensión Arterial")
-                }
-                items(uiState.htaSessions, key = { "hta-${it.id}" }) { session ->
-                    SessionItemView(
-                        session = session,
-                        subSessions = uiState.subSessions[session.id] ?: emptyList(),
-                        expanded = uiState.expandedSessionId == session.id,
-                        onEvent = onEvent
-                    )
-                }
-            }
-
-            if (hasHta && hasDiabetes) {
-                item {
-                    HorizontalDivider(
-                        modifier = Modifier.padding(vertical = 16.dp, horizontal = 8.dp),
-                        thickness = 1.dp,
-                        color = Color.LightGray
-                    )
-                }
-            }
-
-            if (hasDiabetes) {
-                item {
-                    TreatmentHeader(title = "Diabetes")
-                }
-                items(uiState.diabetesSessions, key = { "diabetes-${it.id}" }) { session ->
-                    SessionItemView(
-                        session = session,
-                        subSessions = uiState.subSessions[session.id] ?: emptyList(),
-                        expanded = uiState.expandedSessionId == session.id,
-                        onEvent = onEvent
-                    )
-                }
-            }
-        }
+@Composable
+fun StaggeredItemWrapper(
+    index: Int,
+    content: @Composable () -> Unit
+) {
+    var isVisible by remember { mutableStateOf(false) }
+    LaunchedEffect(Unit) {
+        delay(index * 40L) // slightly faster (40ms) stagger for snappier loading
+        isVisible = true
+    }
+    val alpha by animateFloatAsState(
+        targetValue = if (isVisible) 1f else 0f,
+        animationSpec = tween(durationMillis = 300, easing = FastOutSlowInEasing),
+        label = "alpha"
+    )
+    val translationY by animateFloatAsState(
+        targetValue = if (isVisible) 0f else 30f, // 30px offset
+        animationSpec = tween(durationMillis = 300, easing = FastOutSlowInEasing),
+        label = "translationY"
+    )
+    Box(
+        modifier = Modifier.graphicsLayer(
+            alpha = alpha,
+            translationY = translationY
+        )
+    ) {
+        content()
     }
 }
 

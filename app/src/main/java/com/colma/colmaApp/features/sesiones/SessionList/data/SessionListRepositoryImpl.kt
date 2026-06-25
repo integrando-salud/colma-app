@@ -13,6 +13,8 @@ import com.colma.colmaApp.servicios.session.SessionManager
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 class SessionListRepositoryImpl(
     private val contentRepository: ContentRepository,
@@ -40,11 +42,11 @@ class SessionListRepositoryImpl(
         }
     }
 
-    override suspend fun getHtaSessions(): List<SessionItem> {
+    override suspend fun getHtaSessions(): List<SessionItem> = withContext(Dispatchers.IO) {
         val fechaRegistro = dbHelper.getUsuarioPrimerLogin(userId)
         val elapsedWeeks = getElapsedWeeks(fechaRegistro)
 
-        return contentRepository.getAllTreatments().fold(
+        contentRepository.getAllTreatments().fold(
             onSuccess = { treatmentContents ->
                 Log.d(TAG, "Successfully loaded ${treatmentContents.size} treatments")
                 treatmentContents
@@ -68,11 +70,11 @@ class SessionListRepositoryImpl(
         )
     }
 
-    override suspend fun getDiabetesSessions(): List<SessionItem> {
+    override suspend fun getDiabetesSessions(): List<SessionItem> = withContext(Dispatchers.IO) {
         val fechaRegistro = dbHelper.getUsuarioPrimerLogin(userId)
         val elapsedWeeks = getElapsedWeeks(fechaRegistro)
 
-        return contentRepository.getAllTreatments().fold(
+        contentRepository.getAllTreatments().fold(
             onSuccess = { treatmentContents ->
                 Log.d(TAG, "Successfully loaded ${treatmentContents.size} treatments")
                 treatmentContents
@@ -100,8 +102,8 @@ class SessionListRepositoryImpl(
         dbHelper.debugSubtractWeekFromRegistrationDate(userId)
     }
 
-    override suspend fun getHtaSubSessions(sessionId: Long): List<SubSessionItem> {
-        return contentRepository.getSubSessions(TreatmentType.HTA, sessionId).getOrDefault(emptyList())
+    override suspend fun getHtaSubSessions(sessionId: Long): List<SubSessionItem> = withContext(Dispatchers.IO) {
+        contentRepository.getSubSessions(TreatmentType.HTA, sessionId).getOrDefault(emptyList())
             .map { subSessionContent ->
                 val totalContent = subSessionContent.multimedia.size
                 val readCount = dbHelper.getReadMultimediaCount(userId, TreatmentType.HTA.name, sessionId.toInt(), subSessionContent.id.toInt())
@@ -114,8 +116,8 @@ class SessionListRepositoryImpl(
             }
     }
 
-    override suspend fun getDiabetesSubSessions(sessionId: Long): List<SubSessionItem> {
-        return contentRepository.getSubSessions(TreatmentType.DIABETES, sessionId).getOrDefault(emptyList())
+    override suspend fun getDiabetesSubSessions(sessionId: Long): List<SubSessionItem> = withContext(Dispatchers.IO) {
+        contentRepository.getSubSessions(TreatmentType.DIABETES, sessionId).getOrDefault(emptyList())
             .map { subSessionContent ->
                 val totalContent = subSessionContent.multimedia.size
                 val readCount = dbHelper.getReadMultimediaCount(userId, TreatmentType.DIABETES.name, sessionId.toInt(), subSessionContent.id.toInt())

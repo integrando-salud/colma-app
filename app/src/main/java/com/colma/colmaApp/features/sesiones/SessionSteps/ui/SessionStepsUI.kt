@@ -20,15 +20,27 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.*
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.animateFloatAsState
+import kotlinx.coroutines.delay
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -86,22 +98,56 @@ fun SessionStepsScreen(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     uiState.multimediaOptions.forEachIndexed { index, option ->
-                        SessionStepCard(option = option, signatureColor = signatureColor) {
-                            onEvent(SessionStepsEvent.SessionStepClicked(option, index))
+                        StaggeredItemWrapper(index = index) {
+                            SessionStepCard(option = option, signatureColor = signatureColor) {
+                                onEvent(SessionStepsEvent.SessionStepClicked(option, index))
+                            }
                         }
                     }
                 }
                 if (uiState.multimediaOptions.isNotEmpty()) {
-                    StepProgressBar(
-                        options = uiState.multimediaOptions,
-                        signatureColor = signatureColor,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 16.dp, vertical = 12.dp)
-                    )
+                    StaggeredItemWrapper(index = uiState.multimediaOptions.size) {
+                        StepProgressBar(
+                            options = uiState.multimediaOptions,
+                            signatureColor = signatureColor,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 16.dp, vertical = 12.dp)
+                        )
+                    }
                 }
             }
         }
+    }
+}
+
+@Composable
+fun StaggeredItemWrapper(
+    index: Int,
+    content: @Composable () -> Unit
+) {
+    var isVisible by remember { mutableStateOf(false) }
+    LaunchedEffect(Unit) {
+        delay(index * 40L) // slightly faster (40ms) stagger for snappier loading
+        isVisible = true
+    }
+    val alpha by animateFloatAsState(
+        targetValue = if (isVisible) 1f else 0f,
+        animationSpec = tween(durationMillis = 300, easing = FastOutSlowInEasing),
+        label = "alpha"
+    )
+    val translationY by animateFloatAsState(
+        targetValue = if (isVisible) 0f else 30f, // 30px offset
+        animationSpec = tween(durationMillis = 300, easing = FastOutSlowInEasing),
+        label = "translationY"
+    )
+    Box(
+        modifier = Modifier.graphicsLayer(
+            alpha = alpha,
+            translationY = translationY
+        )
+    ) {
+        content()
     }
 }
 

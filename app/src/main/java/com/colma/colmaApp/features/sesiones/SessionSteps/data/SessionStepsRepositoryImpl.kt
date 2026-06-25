@@ -27,6 +27,8 @@ import com.google.gson.Gson
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 class SessionStepsRepositoryImpl(
     private val contentRepository: ContentRepository,
@@ -48,11 +50,11 @@ class SessionStepsRepositoryImpl(
         treatmentTypes: List<TreatmentType>,
         sessionId: Long,
         subSessionId: Long
-    ): Result<List<MultimediaOption>> {
+    ): Result<List<MultimediaOption>> = withContext(Dispatchers.IO) {
         // Assuming we only care about the first treatment type for now based on previous logic
-        val treatmentType = treatmentTypes.firstOrNull() ?: return Result.failure(Exception("No treatment type provided"))
+        val treatmentType = treatmentTypes.firstOrNull() ?: return@withContext Result.failure(Exception("No treatment type provided"))
 
-        return contentRepository.getMultimediaOptions(treatmentType, sessionId, subSessionId).fold(
+        contentRepository.getMultimediaOptions(treatmentType, sessionId, subSessionId).fold(
             onSuccess = { multimediaContents ->
                 Result.success(multimediaContents.map { multimediaContent ->
                     val contentAssetId = multimediaContent.contentAsset?.let {
@@ -146,9 +148,9 @@ class SessionStepsRepositoryImpl(
         treatmentTypes: List<TreatmentType>,
         sessionId: Long,
         subSessionId: Long
-    ): Result<SubSessionProgress> {
-        val treatmentType = treatmentTypes.firstOrNull() ?: return Result.failure(Exception("No treatment type provided"))
-        return contentRepository.getSubSessionProgress(treatmentType, sessionId, subSessionId)
+    ): Result<SubSessionProgress> = withContext(Dispatchers.IO) {
+        val treatmentType = treatmentTypes.firstOrNull() ?: return@withContext Result.failure(Exception("No treatment type provided"))
+        contentRepository.getSubSessionProgress(treatmentType, sessionId, subSessionId)
     }
 
     override suspend fun saveQuizResponses(quizResponse: QuizResponseRecord, questionResponses: List<QuestionResponseRecord>): Result<Long> {
