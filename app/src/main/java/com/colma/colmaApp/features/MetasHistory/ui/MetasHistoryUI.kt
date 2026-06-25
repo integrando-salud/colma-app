@@ -37,127 +37,85 @@ import java.util.*
 import androidx.compose.foundation.lazy.rememberLazyListState
 import com.colma.colmaApp.features.multimedia.ui.scrollbar
 
-class MetasHistoryUI : ComponentActivity() {
-
-    private val viewModel: MetasHistoryViewModel by viewModels {
-        MetasHistoryViewModelFactory(MetasHistoryRepositoryImpl(applicationContext))
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            ColmaAppTheme {
-                val uiState by viewModel.uiState.collectAsState()
-                MetasHistoryScreen(
-                    uiState = uiState,
-                    onBack = { finish() }
-                )
-            }
-        }
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MetasHistoryScreen(uiState: MetasHistoryUiState, onBack: () -> Unit) {
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { /* Title removed as per request */ },
-                navigationIcon = {
-                    IconButton(onClick = onBack) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Volver",
-                            tint = Color.White
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(colorResource(id = R.color.background))
+    ) {
+        if (uiState.isLoading) {
+            CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+        } else if (uiState.error != null) {
+            Text(
+                text = "Error: ${uiState.error}",
+                color = Color.Red,
+                textAlign = TextAlign.Center,
+                modifier = Modifier
+                    .align(Alignment.Center)
+                    .padding(16.dp)
+            )
+        } else if (uiState.metas.isEmpty()) {
+            Text(
+                text = "Aún no has creado ninguna meta.",
+                modifier = Modifier.fillMaxWidth().padding(32.dp).align(Alignment.Center),
+                textAlign = TextAlign.Center
+            )
+        } else {
+            val lazyListState = rememberLazyListState()
+            
+            // Separate meta de la semana (active pending) from history
+            val metaDeLaSemana = uiState.metas.filter { it.meta_cumplida == 0 }.take(1)
+            val historialDeMetas = uiState.metas.filter { it.meta_cumplida != 0 || (it.meta_cumplida == 0 && !metaDeLaSemana.contains(it)) }
+
+            LazyColumn(
+                modifier = Modifier.fillMaxSize().scrollbar(lazyListState),
+                state = lazyListState,
+                contentPadding = PaddingValues(16.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                if (metaDeLaSemana.isNotEmpty()) {
+                    item {
+                        Text(
+                            text = "Meta de la semana",
+                            style = MaterialTheme.typography.titleLarge.copy(
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 19.sp
+                            ),
+                            color = Color(0xFF212121),
+                            modifier = Modifier.padding(bottom = 4.dp)
+                        )
+                        HorizontalDivider(
+                            modifier = Modifier.padding(bottom = 12.dp),
+                            color = Color(0xFFBDBDBD),
+                            thickness = 1.dp
                         )
                     }
-                },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = colorResource(id = R.color.principal)
-                )
-            )
-        },
-        containerColor = colorResource(id = R.color.background)
-    ) { paddingValues ->
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues)
-        ) {
-            if (uiState.isLoading) {
-                CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
-            } else if (uiState.error != null) {
-                Text(
-                    text = "Error: ${uiState.error}",
-                    color = Color.Red,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier
-                        .align(Alignment.Center)
-                        .padding(16.dp)
-                )
-            } else if (uiState.metas.isEmpty()) {
-                Text(
-                    text = "Aún no has creado ninguna meta.",
-                    modifier = Modifier.fillMaxWidth().padding(32.dp).align(Alignment.Center),
-                    textAlign = TextAlign.Center
-                )
-            } else {
-                val lazyListState = rememberLazyListState()
-                
-                // Separate meta de la semana (active pending) from history
-                val metaDeLaSemana = uiState.metas.filter { it.meta_cumplida == 0 }.take(1)
-                val historialDeMetas = uiState.metas.filter { it.meta_cumplida != 0 || (it.meta_cumplida == 0 && !metaDeLaSemana.contains(it)) }
-
-                LazyColumn(
-                    modifier = Modifier.fillMaxSize().scrollbar(lazyListState),
-                    state = lazyListState,
-                    contentPadding = PaddingValues(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(16.dp)
-                ) {
-                    if (metaDeLaSemana.isNotEmpty()) {
-                        item {
-                            Text(
-                                text = "Meta de la semana",
-                                style = MaterialTheme.typography.titleLarge.copy(
-                                    fontWeight = FontWeight.Bold,
-                                    fontSize = 19.sp
-                                ),
-                                color = Color(0xFF212121),
-                                modifier = Modifier.padding(bottom = 4.dp)
-                            )
-                            HorizontalDivider(
-                                modifier = Modifier.padding(bottom = 12.dp),
-                                color = Color(0xFFBDBDBD),
-                                thickness = 1.dp
-                            )
-                        }
-                        items(metaDeLaSemana, key = { "active_${it.id_meta}" }) { meta ->
-                            MetaItemCard(meta = meta)
-                        }
+                    items(metaDeLaSemana, key = { "active_${it.id_meta}" }) { meta ->
+                        MetaItemCard(meta = meta)
                     }
+                }
 
-                    if (historialDeMetas.isNotEmpty()) {
-                        item {
-                            Spacer(modifier = Modifier.height(16.dp))
-                            Text(
-                                text = "Historial de metas",
-                                style = MaterialTheme.typography.titleLarge.copy(
-                                    fontWeight = FontWeight.Bold,
-                                    fontSize = 19.sp
-                                ),
-                                color = Color(0xFF212121),
-                                modifier = Modifier.padding(bottom = 4.dp)
-                            )
-                            HorizontalDivider(
-                                modifier = Modifier.padding(bottom = 12.dp),
-                                color = Color(0xFFBDBDBD),
-                                thickness = 1.dp
-                            )
-                        }
-                        items(historialDeMetas, key = { "history_${it.id_meta}" }) { meta ->
-                            MetaItemCard(meta = meta)
-                        }
+                if (historialDeMetas.isNotEmpty()) {
+                    item {
+                        Spacer(modifier = Modifier.height(16.dp))
+                        Text(
+                            text = "Historial de metas",
+                            style = MaterialTheme.typography.titleLarge.copy(
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 19.sp
+                            ),
+                            color = Color(0xFF212121),
+                            modifier = Modifier.padding(bottom = 4.dp)
+                        )
+                        HorizontalDivider(
+                            modifier = Modifier.padding(bottom = 12.dp),
+                            color = Color(0xFFBDBDBD),
+                            thickness = 1.dp
+                        )
+                    }
+                    items(historialDeMetas, key = { "history_${it.id_meta}" }) { meta ->
+                        MetaItemCard(meta = meta)
                     }
                 }
             }

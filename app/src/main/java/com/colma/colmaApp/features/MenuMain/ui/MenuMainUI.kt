@@ -96,84 +96,14 @@ import com.colma.colmaApp.features.MenuMain.viewmodel.MenuMainEvent
 import com.colma.colmaApp.features.MenuMain.viewmodel.MenuMainUiState
 import com.colma.colmaApp.features.MenuMain.viewmodel.MenuMainViewModel
 import com.colma.colmaApp.features.MenuMain.viewmodel.MenuMainViewModelFactory
-import com.colma.colmaApp.features.MetasHistory.ui.MetasHistoryUI
-import com.colma.colmaApp.features.RegistroSalud.ui.RegistrosSaludUI
-import com.colma.colmaApp.features.login.ui.LoginUI
-import com.colma.colmaApp.features.sesiones.SesionesMenu.ui.SesionesMenuUI
 import com.colma.colmaApp.servicios.database.dbhelper.DbHelper
 import com.colma.colmaApp.ui.theme.ColmaAppTheme
 import com.colma.colmaApp.utils.varios.CustomAlertDialog
 import kotlinx.coroutines.launch
 
-class MenuMainUI : ComponentActivity() {
+// MenuMainUI activity has been migrated to MainActivity.kt as a NavHost route.
+// The Composable functions and helper classes are retained here for routing.
 
-    private val viewModel: MenuMainViewModel by viewModels {
-        MenuMainViewModelFactory(
-            MenuMainRepositoryImpl(applicationContext, DbHelper(applicationContext))
-        )
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-
-        window.statusBarColor = ContextCompat.getColor(this, R.color.principal)
-        window.navigationBarColor = ContextCompat.getColor(this, R.color.background)
-
-        WindowInsetsControllerCompat(window, window.decorView).apply {
-            isAppearanceLightStatusBars = false // Dark status bar (principal color), so light icons
-            isAppearanceLightNavigationBars = true // White navigation bar, so dark icons
-        }
-
-        setContent {
-            ColmaAppTheme {
-                val uiState by viewModel.uiState.collectAsState()
-                val snackbarHostState = remember { SnackbarHostState() }
-
-                LaunchedEffect(Unit) {
-                    viewModel.navigationEvent.collect { event ->
-                        when (event) {
-                            is MenuMainViewModel.NavigationEvent.NavigateToSessions -> {
-                                val intent = Intent(this@MenuMainUI, SesionesMenuUI::class.java).apply {
-                                    putExtra("treatmentTypes", "HTA,DIABETES") // TODO: Move to constants/config
-                                }
-                                startActivity(intent)
-                            }
-                            is MenuMainViewModel.NavigationEvent.NavigateToHealthRegisters -> {
-                                val intent = Intent(this@MenuMainUI, RegistrosSaludUI::class.java)
-                                startActivity(intent)
-                            }
-                            is MenuMainViewModel.NavigationEvent.NavigateToMetasHistory -> {
-                                val intent = Intent(this@MenuMainUI, MetasHistoryUI::class.java)
-                                startActivity(intent)
-                            }
-                            is MenuMainViewModel.NavigationEvent.NavigateToLogin -> {
-                                val intent = Intent(this@MenuMainUI, LoginUI::class.java)
-                                startActivity(intent)
-                                finish()
-                            }
-                        }
-                    }
-                }
-
-                LaunchedEffect(uiState.snackbarMessage) {
-                    uiState.snackbarMessage?.let { message ->
-                        snackbarHostState.showSnackbar(message)
-                        viewModel.onEvent(MenuMainEvent.SnackbarDismissed)
-                    }
-                }
-
-                MenuScreen(
-                    uiState = uiState,
-                    onEvent = viewModel::onEvent,
-                    snackbarHostState = snackbarHostState
-                )
-            }
-        }
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MenuScreen(
     uiState: MenuMainUiState,
@@ -182,497 +112,214 @@ fun MenuScreen(
     modifier: Modifier = Modifier
 ) {
     val signatureColor = colorResource(R.color.principal)
-    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
-    val scope = rememberCoroutineScope() // For drawer actions
 
-    if (uiState.showObjectiveDialog && uiState.todaysObjective != null) {
-        CustomAlertDialog(
-            show = true,
-            onDismissRequest = { onEvent(MenuMainEvent.ObjectiveDialogDismissed) },
-            title = "Objetivo para Hoy",
-            description = "¿Completaste este objetivo?: ${uiState.todaysObjective.actividad ?: "No hay detalles."}",
-            onYes = { onEvent(MenuMainEvent.ObjectiveCompleted) },
-            onNo = { onEvent(MenuMainEvent.ObjectiveNotCompleted("")) } // Empty string initially for reason
-        )
-    }
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .background(colorResource(id = R.color.background))
+    ) {
+        Column(
+            modifier = Modifier
+                .weight(1f)
+                .fillMaxWidth()
+                .padding(horizontal = 24.dp)
+                .verticalScroll(rememberScrollState()),
+            verticalArrangement = Arrangement.Top,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Spacer(modifier = Modifier.height(32.dp))
 
-    if (uiState.showReasonDialog) {
-        val reasons = listOf(
-            "No tenía energía / ánimo para hacerlo",
-            "Otras actividades me quitaron tiempo (trabajo, familia, etc.)",
-            "Tuve dificultades para hacer la actividad",
-            "Tuve un problema de salud / estuve enfermo(a)",
-            "La persona con quien iba a hacer la actividad no pudo acompañarme",
-            "Me olvidé de hacer la actividad.",
-            "otro"
-        )
-        var selectedReason by remember { mutableStateOf(uiState.selectedReason) }
+            Text(
+                text = "Elige una opción",
+                fontSize = 24.sp,
+                color = signatureColor,
+                textAlign = TextAlign.Center,
+                fontWeight = FontWeight.Bold,
+            )
 
-        AlertDialog(
-            onDismissRequest = { onEvent(MenuMainEvent.ObjectiveDialogDismissed) }, // Dismiss reason dialog
-            properties = DialogProperties(dismissOnBackPress = false, dismissOnClickOutside = false),
-            title = { Text("¿Por qué no completaste el objetivo?") },
-            text = {
-                LazyColumn {
-                    items(reasons) { reason ->
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .clickable { selectedReason = reason },
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            RadioButton(
-                                selected = (reason == selectedReason),
-                                onClick = { selectedReason = reason }
-                            )
-                            Text(text = reason, modifier = Modifier.padding(start = 8.dp))
-                        }
-                    }
-                }
-            },
-            confirmButton = {
-                Button(
-                    onClick = {
-                        if (selectedReason.isNotBlank()) {
-                            onEvent(MenuMainEvent.ObjectiveNotCompleted(selectedReason))
-                        }
-                    },
-                    colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.principal_boton), contentColor = Color.White),
-                    elevation = ButtonDefaults.buttonElevation(defaultElevation = 2.dp)
+            Spacer(modifier = Modifier.height(32.dp))
+
+            Button(
+                onClick = { onEvent(MenuMainEvent.OnSessionsClick) },
+                colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent),
+                shape = RoundedCornerShape(8.dp),
+                modifier = Modifier
+                    .fillMaxWidth(0.95f)
+                    .heightIn(min = 64.dp)
+                    .shadow(
+                        elevation = 6.dp,
+                        shape = RoundedCornerShape(8.dp),
+                        clip = false
+                    )
+                    .background(
+                        color = colorResource(R.color.principal),
+                        shape = RoundedCornerShape(8.dp)
+                    )
+            ) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Start
                 ) {
-                    Text("Aceptar")
-                }
-            }
-        )
-    }
+                    Image(
+                        painter = painterResource(id = R.drawable.sesion_logo),
+                        contentDescription = "Sesiones",
+                        modifier = Modifier.size(32.dp)
+                    )
 
-    if (uiState.showOtherReasonDialog) {
-        AlertDialog(
-            onDismissRequest = { onEvent(MenuMainEvent.ObjectiveDialogDismissed) },
-            properties = DialogProperties(dismissOnBackPress = false, dismissOnClickOutside = false),
-            title = { Text("Por favor, explica la razón") },
-            text = {
-                OutlinedTextField(
-                    value = uiState.otherReasonInput,
-                    onValueChange = { onEvent(MenuMainEvent.OtherReasonChanged(it)) },
-                    label = { Text("Razón") }
-                )
-            },
-            confirmButton = {
-                Button(
-                    onClick = { onEvent(MenuMainEvent.OtherReasonConfirmed) },
-                    colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.principal_boton), contentColor = Color.White),
-                    elevation = ButtonDefaults.buttonElevation(defaultElevation = 2.dp)
-                ) {
-                    Text("Aceptar")
-                }
-            }
-        )
-    }
+                    Spacer(modifier = Modifier.width(12.dp))
 
-    if (uiState.showFeedbackDialog) {
-        AlertDialog(
-            onDismissRequest = { onEvent(MenuMainEvent.DismissFeedbackDialog) },
-            properties = DialogProperties(dismissOnBackPress = false, dismissOnClickOutside = false),
-            icon = {
-                if (uiState.showTrophyInFeedback) {
-                    CongratulationAnimation()
-                } else if (uiState.isHelpRequestFeedback && uiState.isSuccessFeedback) {
-                    Icon(
-                        imageVector = Icons.Default.Done,
-                        contentDescription = null,
-                        modifier = Modifier.size(60.dp),
-                        tint = Color(0xFF4CAF50)
+                    Text(
+                        text = "Tema de hoy",
+                        fontSize = 18.sp,
+                        color = Color.White,
+                        fontWeight = FontWeight.SemiBold,
+                        modifier = Modifier.weight(1f),
+                        textAlign = TextAlign.Start
                     )
                 }
-            },
-            title = {
-                Text(
-                    text = uiState.feedbackMessage,
-                    fontSize = if (uiState.isHelpRequestFeedback) 20.sp else 18.sp,
-                    fontWeight = FontWeight.SemiBold,
-                    textAlign = if (uiState.isHelpRequestFeedback) TextAlign.Center else TextAlign.Start,
-                    modifier = Modifier.fillMaxWidth()
-                )
-            },
-            confirmButton = {
-                Button(
-                    onClick = { onEvent(MenuMainEvent.DismissFeedbackDialog) },
-                    modifier = Modifier.heightIn(min = 48.dp),
-                    colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.principal_boton), contentColor = Color.White),
-                    elevation = ButtonDefaults.buttonElevation(defaultElevation = 2.dp)
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Button(
+                onClick = { onEvent(MenuMainEvent.OnHealthRegistersClick) },
+                modifier = Modifier
+                    .fillMaxWidth(0.95f)
+                    .heightIn(min = 64.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0xFFF0F0F0),
+                    contentColor = Color.Black
+                ),
+                shape = MaterialTheme.shapes.medium,
+                elevation = ButtonDefaults.buttonElevation(
+                    defaultElevation = 6.dp,
+                    pressedElevation = 10.dp
+                ),
+            ) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Start
                 ) {
-                    Text("Aceptar", fontSize = 16.sp)
+                    Icon(
+                        painter = painterResource(R.drawable.outline_unknown_document_24),
+                        contentDescription = "Registros",
+                        tint = LocalContentColor.current,
+                        modifier = Modifier.size(28.dp)
+                    )
+
+                    Spacer(modifier = Modifier.width(12.dp))
+
+                    Text(
+                        text = "Mis registros de salud",
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.SemiBold,
+                        modifier = Modifier.weight(1f),
+                        textAlign = TextAlign.Start
+                    )
                 }
             }
-        )
-    }
 
-    if (uiState.showNoInternetDialog) {
-        AlertDialog(
-            onDismissRequest = { onEvent(MenuMainEvent.DismissNoInternetDialog) },
-            title = { Text("Sin conexión") },
-            text = { 
-                Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
-                    Text("Los datos se actualizarán cuando tenga acceso a internet.", fontSize = 16.sp) 
-                }
-            },
-            confirmButton = {
-                Button(
-                    onClick = { onEvent(MenuMainEvent.DismissNoInternetDialog) },
-                    modifier = Modifier.heightIn(min = 48.dp),
-                    colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.principal_boton), contentColor = Color.White)
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Button(
+                onClick = { onEvent(MenuMainEvent.OnMetasHistoryClick) },
+                modifier = Modifier
+                    .fillMaxWidth(0.95f)
+                    .heightIn(min = 64.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0xFFF0F0F0),
+                    contentColor = Color.Black
+                ),
+                shape = MaterialTheme.shapes.medium,
+                elevation = ButtonDefaults.buttonElevation(
+                    defaultElevation = 6.dp,
+                    pressedElevation = 10.dp
+                ),
+            ) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Start
                 ) {
-                    Text("Aceptar", fontSize = 16.sp)
-                }
-            }
-        )
-    }
-
-    if (uiState.showHelpRequestDialog) {
-        CustomAlertDialog(
-            show = true,
-            onDismissRequest = { onEvent(MenuMainEvent.DismissHelpRequestDialog) },
-            title = "¿Está seguro/a que quieres pedir ayuda técnica a tu promotora de salud?",
-            description = "",
-            yesLabel = "Confirmar",
-            noLabel = "Cancelar",
-            onYes = { onEvent(MenuMainEvent.ConfirmHelpRequest) },
-            onNo = { onEvent(MenuMainEvent.DismissHelpRequestDialog) }
-        )
-    }
-
-    CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
-        ModalNavigationDrawer(
-            drawerState = drawerState,
-            modifier = Modifier.systemBarsPadding(),
-            drawerContent = {
-                CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
-                    ModalDrawerSheet(drawerContainerColor = Color.White) {
-                        Column(
-                            modifier = Modifier.verticalScroll(rememberScrollState())
-                        ) {
-                            Image(
-                                painter = painterResource(id = R.drawable.colma_logo),
-                                contentDescription = "Logo de la aplicación",
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(vertical = 24.dp)
-                                    .sizeIn(maxWidth = 200.dp, maxHeight = 200.dp)
-                                    .align(Alignment.CenterHorizontally)
-                            )
-
-                            Spacer(Modifier.height(12.dp))
-
-                            val context = LocalContext.current
-
-                            DrawerItem("Inicio", Icons.Default.Home) {
-                                scope.launch { drawerState.close() }
-                                // No specific action needed for "Inicio" as it's the current screen
+                    BadgedBox(
+                        badge = {
+                            if (uiState.pendingMetasCount > 0) {
+                                Badge { Text("${uiState.pendingMetasCount}") }
                             }
-
-                            DrawerItem(
-                                "Ayuda técnica de la promotora de salud",
-                                Icons.Default.Call
-                            ) {
-                                scope.launch { drawerState.close() }
-                                onEvent(MenuMainEvent.OnRequestHelpClick)
-                            }
-
-                            DrawerItem("Información adicional", Icons.Default.Info) {
-                                scope.launch { drawerState.close() }
-                                // Handle useful links click
-                            }
-
-                            DrawerItem("Tutorial", Icons.Default.Face) {
-                                scope.launch { drawerState.close() }
-                                // Handle user tutorial click
-                            }
-
-                            Spacer(Modifier.height(28.dp))
-
-                            Button(
-                                onClick = {
-                                    scope.launch { drawerState.close() }
-                                    onEvent(MenuMainEvent.OnSalirClick)
-                                },
-                                colors = ButtonDefaults.buttonColors(
-                                    containerColor = colorResource(R.color.principal),
-                                    contentColor = Color.White
-                                ),
-                                modifier = Modifier
-                                    .fillMaxWidth(0.7f)
-                                    .align(Alignment.CenterHorizontally)
-                            ) {
-                                Text(text = "Cerrar sesión")
-                            }
-
-                            Spacer(Modifier.height(18.dp))
                         }
-                    }
-                }
-            }
-        ) {
-            CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
-                Scaffold(
-                    modifier = modifier.fillMaxSize(),
-                    snackbarHost = { SnackbarHost(snackbarHostState) },
-                    topBar = {
-                        TopAppBar(
-                            title = { 
-                                Text(
-                                    text = "Bienvenido/a ${uiState.userName}", 
-                                    fontWeight = FontWeight.Bold,
-                                    maxLines = 1,
-                                    modifier = Modifier.basicMarquee(
-                                        iterations = Int.MAX_VALUE,
-                                        initialDelayMillis = 2000,
-                                        repeatDelayMillis = 1500
-                                    )
-                                ) 
-                            },
-                            actions = {
-                                Surface(
-                                    shape = RoundedCornerShape(12.dp),
-                                    color = colorResource(R.color.contraste),
-                                    modifier = Modifier
-                                        .padding(end = 8.dp)
-                                        .heightIn(min = 36.dp)
-                                        .clickable { scope.launch { drawerState.open() } }
-                                ) {
-                                    Box(
-                                        modifier = Modifier
-                                            .padding(horizontal = 12.dp, vertical = 6.dp),
-                                        contentAlignment = Alignment.Center
-                                    ) {
-                                        Text(
-                                            text = "Menú",
-                                            color = colorResource(R.color.white),
-                                            fontWeight = FontWeight.SemiBold,
-                                            fontSize = 14.sp
-                                        )
-                                    }
-                                }
-                            }, colors = TopAppBarDefaults.topAppBarColors(
-                                containerColor = signatureColor,
-                                titleContentColor = Color.White,
-                                navigationIconContentColor = Color.White
-                            )
+                    ) {
+                        Icon(
+                            painter = painterResource(R.drawable.outline_trophy_24),
+                            contentDescription = "Metas",
+                            tint = LocalContentColor.current,
+                            modifier = Modifier.size(28.dp)
                         )
                     }
-                ) { innerPadding ->
-                    Column(
-                        modifier = Modifier
-                            .padding(innerPadding)
-                            .fillMaxSize()
-                            .background(colorResource(id = R.color.background))
+
+                    Spacer(modifier = Modifier.width(12.dp))
+
+                    Text(
+                        text = "Mis metas",
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.SemiBold,
+                        modifier = Modifier.weight(1f),
+                        textAlign = TextAlign.Start
+                    )
+                }
+            }
+            Spacer(modifier = Modifier.height(32.dp))
+        }
+
+        // Fixed Footer
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(24.dp)
+        ) {
+            Button(
+                onClick = { onEvent(MenuMainEvent.OnSyncClick) },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .heightIn(min = 64.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = if (uiState.syncSuccessful) Color(0xFF4CAF50) else Color(0xFFF0F0F0),
+                    contentColor = if (uiState.syncSuccessful) Color.White else Color.Black
+                ),
+                shape = MaterialTheme.shapes.medium,
+                elevation = ButtonDefaults.buttonElevation(
+                    defaultElevation = 6.dp,
+                    pressedElevation = 10.dp
+                ),
+                enabled = !uiState.isLoading
+            ) {
+                if (uiState.isLoading) {
+                    CircularProgressIndicator(
+                        modifier = Modifier.size(24.dp),
+                        color = colorResource(R.color.principal),
+                        strokeWidth = 2.dp
+                    )
+                } else {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Center
                     ) {
-                        Column(
-                            modifier = Modifier
-                                .weight(1f)
-                                .fillMaxWidth()
-                                .padding(horizontal = 24.dp)
-                                .verticalScroll(rememberScrollState()),
-                            verticalArrangement = Arrangement.Top,
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-                            Spacer(modifier = Modifier.height(32.dp))
+                        Icon(
+                            painter = painterResource(R.drawable.baseline_sync_24),
+                            contentDescription = "Sincronizar",
+                            tint = if (uiState.syncSuccessful) Color.White else LocalContentColor.current,
+                            modifier = Modifier.size(28.dp)
+                        )
 
-                            Text(
-                                text = "Elige una opción",
-                                fontSize = 24.sp,
-                                color = signatureColor,
-                                textAlign = TextAlign.Center,
-                                fontWeight = FontWeight.Bold,
-                            )
+                        Spacer(modifier = Modifier.width(12.dp))
 
-                            Spacer(modifier = Modifier.height(32.dp))
-
-                            Button(
-                                onClick = { onEvent(MenuMainEvent.OnSessionsClick) },
-                                colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent),
-                                shape = RoundedCornerShape(8.dp),
-                                modifier = Modifier
-                                    .fillMaxWidth(0.95f)
-                                    .heightIn(min = 64.dp)
-                                    .shadow(
-                                        elevation = 6.dp,
-                                        shape = RoundedCornerShape(8.dp),
-                                        clip = false
-                                    )
-                                    .background(
-                                        color = colorResource(R.color.principal),
-                                        shape = RoundedCornerShape(8.dp)
-                                    )
-                            ) {
-                                Row(
-                                    modifier = Modifier.fillMaxWidth(),
-                                    verticalAlignment = Alignment.CenterVertically,
-                                    horizontalArrangement = Arrangement.Start
-                                ) {
-                                    Image(
-                                        painter = painterResource(id = R.drawable.sesion_logo),
-                                        contentDescription = "Sesiones",
-                                        modifier = Modifier.size(32.dp)
-                                    )
-
-                                    Spacer(modifier = Modifier.width(12.dp))
-
-                                    Text(
-                                        text = "Tema de hoy",
-                                        fontSize = 18.sp,
-                                        color = Color.White,
-                                        fontWeight = FontWeight.SemiBold,
-                                        modifier = Modifier.weight(1f),
-                                        textAlign = TextAlign.Start
-                                    )
-                                }
-                            }
-
-                            Spacer(modifier = Modifier.height(16.dp))
-
-                            Button(
-                                onClick = { onEvent(MenuMainEvent.OnHealthRegistersClick) },
-                                modifier = Modifier
-                                    .fillMaxWidth(0.95f)
-                                    .heightIn(min = 64.dp),
-                                colors = ButtonDefaults.buttonColors(
-                                    containerColor = Color(0xFFF0F0F0),
-                                    contentColor = Color.Black
-                                ),
-                                shape = MaterialTheme.shapes.medium,
-                                elevation = ButtonDefaults.buttonElevation(
-                                    defaultElevation = 6.dp,
-                                    pressedElevation = 10.dp
-                                ),
-                            ) {
-                                Row(
-                                    modifier = Modifier.fillMaxWidth(),
-                                    verticalAlignment = Alignment.CenterVertically,
-                                    horizontalArrangement = Arrangement.Start
-                                ) {
-                                    Icon(
-                                        painter = painterResource(R.drawable.outline_unknown_document_24),
-                                        contentDescription = "Registros",
-                                        tint = LocalContentColor.current,
-                                        modifier = Modifier.size(28.dp)
-                                    )
-
-                                    Spacer(modifier = Modifier.width(12.dp))
-
-                                    Text(
-                                        text = "Mis registros de salud",
-                                        fontSize = 18.sp,
-                                        fontWeight = FontWeight.SemiBold,
-                                        modifier = Modifier.weight(1f),
-                                        textAlign = TextAlign.Start
-                                    )
-                                }
-                            }
-
-                            Spacer(modifier = Modifier.height(16.dp))
-
-                            Button(
-                                onClick = { onEvent(MenuMainEvent.OnMetasHistoryClick) },
-                                modifier = Modifier
-                                    .fillMaxWidth(0.95f)
-                                    .heightIn(min = 64.dp),
-                                colors = ButtonDefaults.buttonColors(
-                                    containerColor = Color(0xFFF0F0F0),
-                                    contentColor = Color.Black
-                                ),
-                                shape = MaterialTheme.shapes.medium,
-                                elevation = ButtonDefaults.buttonElevation(
-                                    defaultElevation = 6.dp,
-                                    pressedElevation = 10.dp
-                                ),
-                            ) {
-                                Row(
-                                    modifier = Modifier.fillMaxWidth(),
-                                    verticalAlignment = Alignment.CenterVertically,
-                                    horizontalArrangement = Arrangement.Start
-                                ) {
-                                    BadgedBox(
-                                        badge = {
-                                            if (uiState.pendingMetasCount > 0) {
-                                                Badge { Text("${uiState.pendingMetasCount}") }
-                                            }
-                                        }
-                                    ) {
-                                        Icon(
-                                            painter = painterResource(R.drawable.outline_trophy_24),
-                                            contentDescription = "Metas",
-                                            tint = LocalContentColor.current,
-                                            modifier = Modifier.size(28.dp)
-                                        )
-                                    }
-
-                                    Spacer(modifier = Modifier.width(12.dp))
-
-                                    Text(
-                                        text = "Mis metas",
-                                        fontSize = 18.sp,
-                                        fontWeight = FontWeight.SemiBold,
-                                        modifier = Modifier.weight(1f),
-                                        textAlign = TextAlign.Start
-                                    )
-                                }
-                            }
-                            Spacer(modifier = Modifier.height(32.dp))
-                        }
-
-                        // Fixed Footer
-                        Box(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(24.dp)
-                        ) {
-                            Button(
-                                onClick = { onEvent(MenuMainEvent.OnSyncClick) },
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .heightIn(min = 64.dp),
-                                colors = ButtonDefaults.buttonColors(
-                                    containerColor = if (uiState.syncSuccessful) Color(0xFF4CAF50) else Color(0xFFF0F0F0),
-                                    contentColor = if (uiState.syncSuccessful) Color.White else Color.Black
-                                ),
-                                shape = MaterialTheme.shapes.medium,
-                                elevation = ButtonDefaults.buttonElevation(
-                                    defaultElevation = 6.dp,
-                                    pressedElevation = 10.dp
-                                ),
-                                enabled = !uiState.isLoading
-                            ) {
-                                if (uiState.isLoading) {
-                                    CircularProgressIndicator(
-                                        modifier = Modifier.size(24.dp),
-                                        color = colorResource(R.color.principal),
-                                        strokeWidth = 2.dp
-                                    )
-                                } else {
-                                    Row(
-                                        modifier = Modifier.fillMaxWidth(),
-                                        verticalAlignment = Alignment.CenterVertically,
-                                        horizontalArrangement = Arrangement.Center
-                                    ) {
-                                        Icon(
-                                            painter = painterResource(R.drawable.baseline_sync_24),
-                                            contentDescription = "Sincronizar",
-                                            tint = if (uiState.syncSuccessful) Color.White else LocalContentColor.current,
-                                            modifier = Modifier.size(28.dp)
-                                        )
-
-                                        Spacer(modifier = Modifier.width(12.dp))
-
-                                        Text(
-                                            text = if (uiState.syncSuccessful) "Datos actualizados" else "Actualizar datos",
-                                            fontSize = 18.sp,
-                                            fontWeight = FontWeight.SemiBold
-                                        )
-                                    }
-                                }
-                            }
-                        }
+                        Text(
+                            text = if (uiState.syncSuccessful) "Datos actualizados" else "Actualizar datos",
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.SemiBold
+                        )
                     }
                 }
             }

@@ -73,7 +73,6 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import com.colma.colmaApp.R
-import com.colma.colmaApp.features.sesiones.MultimediaSelector.ui.MultimediaSelectorUI
 import com.colma.colmaApp.features.sesiones.MultimediaSelector.domain.TreatmentType
 import com.colma.colmaApp.features.sesiones.SesionesMenu.data.SesionesRepositoryImpl
 import com.colma.colmaApp.features.sesiones.SesionesMenu.domain.SessionItem
@@ -85,192 +84,68 @@ import com.colma.colmaApp.features.sesiones.SesionesMenu.viewmodel.SesionesViewM
 import com.colma.colmaApp.features.multimedia.ui.scrollbar
 import com.colma.colmaApp.ui.theme.ColmaAppTheme
 
-class SesionesMenuUI : ComponentActivity() {
+// SesionesMenuUI activity has been migrated to MainActivity.kt as a NavHost route.
+// The Composable functions and helper classes are retained here for routing.
 
-    private val viewModel: SesionesViewModel by viewModels {
-        SesionesViewModelFactory(applicationContext)
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        WindowCompat.setDecorFitsSystemWindows(window, false)
-
-        window.statusBarColor = ContextCompat.getColor(this, R.color.principal)
-        window.navigationBarColor = ContextCompat.getColor(this, R.color.background)
-
-        WindowInsetsControllerCompat(window, window.decorView).apply {
-            isAppearanceLightStatusBars = false
-            isAppearanceLightNavigationBars = true
-        }
-
-        val treatmentTypesString = intent?.getStringExtra("treatmentTypes") ?: "HTA"
-        val treatmentTypes = treatmentTypesString.split(',').mapNotNull {
-            try {
-                TreatmentType.valueOf(it.trim().uppercase())
-            } catch (e: IllegalArgumentException) {
-                null
-            }
-        }.ifEmpty { listOf(TreatmentType.HTA) }
-
-        viewModel.onEvent(SesionesEvent.SetTreatmentTypes(treatmentTypes))
-
-        setContent {
-            ColmaAppTheme {
-                val uiState by viewModel.uiState.collectAsState()
-                val context = LocalContext.current
-
-                LaunchedEffect(Unit) {
-                    viewModel.navigationEvent.collect { event ->
-                        when (event) {
-                            is SesionesViewModel.NavigationEvent.NavigateToMultimediaSelector -> {
-                                val intent = Intent(context, MultimediaSelectorUI::class.java).apply {
-                                    putExtra("sessionId", event.parentSessionId)
-                                    putExtra("sessionTitle", event.sessionTitle)
-                                    putExtra("subSessionId", event.subSessionId)
-                                    putExtra("subSessionTitle", event.subSessionTitle)
-                                    putExtra("treatmentTypes", event.treatmentType)
-                                }
-                                startActivity(intent)
-                            }
-                            SesionesViewModel.NavigationEvent.NavigateBack -> {
-                                finish()
-                            }
-                        }
-                    }
-                }
-
-                SesionesMenuScreen(
-                    uiState = uiState,
-                    onEvent = viewModel::onEvent
-                )
-            }
-        }
-    }
-
-    private var isFirstResume = true
-
-    override fun onResume() {
-        super.onResume()
-        if (isFirstResume) {
-            isFirstResume = false
-        } else {
-            viewModel.onEvent(SesionesEvent.Refresh)
-        }
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SesionesMenuScreen(
     uiState: SesionesUiState,
     onEvent: (SesionesEvent) -> Unit
 ) {
-    val signatureColor = colorResource(R.color.principal)
-    val topBarTitle = remember(uiState.treatmentTypes) {
-        when {
-            uiState.treatmentTypes.contains(TreatmentType.HTA) && uiState.treatmentTypes.contains(TreatmentType.DIABETES) -> "Hipertensión y Diabetes"
-            uiState.treatmentTypes.contains(TreatmentType.HTA) -> "Hipertensión"
-            uiState.treatmentTypes.contains(TreatmentType.DIABETES) -> "Diabetes"
-            else -> "Sesiones"
+    if (uiState.isLoading) {
+        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            CircularProgressIndicator()
         }
-    }
+    } else {
+        val lazyListState = rememberLazyListState()
+        LazyColumn(
+            state = lazyListState,
+            modifier = Modifier
+                .fillMaxSize()
+                .background(colorResource(id = R.color.background))
+                .scrollbar(lazyListState)
+                .padding(horizontal = 16.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+            contentPadding = PaddingValues(vertical = 12.dp)
+        ) {
+            val hasHta = uiState.treatmentTypes.contains(TreatmentType.HTA)
+            val hasDiabetes = uiState.treatmentTypes.contains(TreatmentType.DIABETES)
 
-    Surface(modifier = Modifier.fillMaxSize().systemBarsPadding(), color = colorResource(R.color.background)) {
-        Column(modifier = Modifier.fillMaxSize()) {
-            TopAppBar(
-                navigationIcon = {
-                    Surface(
-                        shape = RoundedCornerShape(12.dp),
-                        color = colorResource(R.color.contraste),
-                        modifier = Modifier
-                            .padding(start = 8.dp)
-                            .heightIn(min = 36.dp)
-                            .clickable { onEvent(SesionesEvent.BackClicked) }
-                    ) {
-                        Box(
-                            modifier = Modifier
-                                .padding(horizontal = 12.dp, vertical = 6.dp),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Text(
-                                text = "Cerrar",
-                                color = colorResource(R.color.white),
-                                fontWeight = FontWeight.SemiBold,
-                                fontSize = 14.sp
-                            )
-                        }
-                    }
-                },
-                title = { 
-                    Text(
-                        text = topBarTitle, 
-                        color = colorResource(R.color.white), 
-                        fontWeight = FontWeight.Bold,
-                        maxLines = 1,
-                        modifier = Modifier
-                            .basicMarquee()
-                            .clickable { onEvent(SesionesEvent.DebugAdvanceWeek) }
-                    )
-                },
-                colors = TopAppBarDefaults.topAppBarColors(containerColor = signatureColor)
-            )
-
-            if (uiState.isLoading) {
-                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    CircularProgressIndicator()
+            if (hasHta) {
+                item {
+                    TreatmentHeader(title = "Hipertensión Arterial")
                 }
-            } else {
-                val lazyListState = rememberLazyListState()
-                LazyColumn(
-                    state = lazyListState,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .weight(1f)
-                        .scrollbar(lazyListState)
-                        .padding(horizontal = 16.dp),
-                    verticalArrangement = Arrangement.spacedBy(8.dp),
-                    contentPadding = PaddingValues(vertical = 12.dp)
-                ) {
-                    val hasHta = uiState.treatmentTypes.contains(TreatmentType.HTA)
-                    val hasDiabetes = uiState.treatmentTypes.contains(TreatmentType.DIABETES)
+                items(uiState.htaSessions, key = { "hta-${it.id}" }) { session ->
+                    SessionItemView(
+                        session = session,
+                        subSessions = uiState.subSessions[session.id] ?: emptyList(),
+                        expanded = uiState.expandedSessionId == session.id,
+                        onEvent = onEvent
+                    )
+                }
+            }
 
-                    if (hasHta) {
-                        item {
-                            TreatmentHeader(title = "Hipertensión Arterial")
-                        }
-                        items(uiState.htaSessions, key = { "hta-${it.id}" }) { session ->
-                            SessionItemView(
-                                session = session,
-                                subSessions = uiState.subSessions[session.id] ?: emptyList(),
-                                expanded = uiState.expandedSessionId == session.id,
-                                onEvent = onEvent
-                            )
-                        }
-                    }
+            if (hasHta && hasDiabetes) {
+                item {
+                    HorizontalDivider(
+                        modifier = Modifier.padding(vertical = 16.dp, horizontal = 8.dp),
+                        thickness = 1.dp,
+                        color = Color.LightGray
+                    )
+                }
+            }
 
-                    if (hasHta && hasDiabetes) {
-                        item {
-                            HorizontalDivider(
-                                modifier = Modifier.padding(vertical = 16.dp, horizontal = 8.dp),
-                                thickness = 1.dp,
-                                color = Color.LightGray
-                            )
-                        }
-                    }
-
-                    if (hasDiabetes) {
-                        item {
-                            TreatmentHeader(title = "Diabetes")
-                        }
-                        items(uiState.diabetesSessions, key = { "diabetes-${it.id}" }) { session ->
-                            SessionItemView(
-                                session = session,
-                                subSessions = uiState.subSessions[session.id] ?: emptyList(),
-                                expanded = uiState.expandedSessionId == session.id,
-                                onEvent = onEvent
-                            )
-                        }
-                    }
+            if (hasDiabetes) {
+                item {
+                    TreatmentHeader(title = "Diabetes")
+                }
+                items(uiState.diabetesSessions, key = { "diabetes-${it.id}" }) { session ->
+                    SessionItemView(
+                        session = session,
+                        subSessions = uiState.subSessions[session.id] ?: emptyList(),
+                        expanded = uiState.expandedSessionId == session.id,
+                        onEvent = onEvent
+                    )
                 }
             }
         }

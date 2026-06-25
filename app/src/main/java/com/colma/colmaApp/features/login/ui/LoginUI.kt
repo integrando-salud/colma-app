@@ -44,7 +44,6 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import com.colma.colmaApp.R
-import com.colma.colmaApp.features.MenuMain.ui.MenuMainUI
 import com.colma.colmaApp.features.login.viewmodel.LoginEvent
 import com.colma.colmaApp.features.login.viewmodel.LoginUiState
 import com.colma.colmaApp.features.login.viewmodel.LoginViewModel
@@ -52,120 +51,8 @@ import com.colma.colmaApp.features.login.viewmodel.LoginViewModelFactory
 import com.colma.colmaApp.ui.theme.ColmaAppTheme
 import kotlinx.coroutines.launch
 
-class LoginUI : ComponentActivity() {
-
-    private val viewModel: LoginViewModel by viewModels {
-        LoginViewModelFactory(applicationContext)
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        WindowCompat.setDecorFitsSystemWindows(window, false)
-
-        window.statusBarColor = ContextCompat.getColor(this, R.color.principal)
-        window.navigationBarColor = ContextCompat.getColor(this, R.color.background)
-
-        WindowInsetsControllerCompat(window, window.decorView).apply {
-            isAppearanceLightStatusBars = false // Dark status bar (principal color), so light icons
-            isAppearanceLightNavigationBars = true // White navigation bar, so dark icons
-        }
-
-        setContent {
-            ColmaAppTheme {
-                val uiState by viewModel.uiState.collectAsState()
-                val context = LocalContext.current
-
-                // Show dialog when there's an error
-                if (uiState.error != null) {
-                    Dialog(onDismissRequest = { viewModel.clearError() }) {
-                        var isVisible by remember { mutableStateOf(false) }
-                        
-                        // Trigger entrance animation
-                        LaunchedEffect(Unit) {
-                            isVisible = true
-                        }
-
-                        AnimatedVisibility(
-                            visible = isVisible,
-                            enter = fadeIn() + scaleIn(initialScale = 0.8f),
-                            exit = fadeOut() + scaleOut(targetScale = 0.8f)
-                        ) {
-                            Surface(
-                                shape = RoundedCornerShape(28.dp),
-                                color = Color.White,
-                                tonalElevation = 6.dp,
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(16.dp)
-                                    .shadow(elevation = 24.dp, shape = RoundedCornerShape(28.dp))
-                            ) {
-                                Column(
-                                    modifier = Modifier.padding(24.dp),
-                                    horizontalAlignment = Alignment.Start
-                                ) {
-                                    Text(
-                                        text = "Error de ingreso",
-                                        fontSize = 20.sp,
-                                        fontWeight = FontWeight.Bold,
-                                        color = Color.Black
-                                    )
-                                    
-                                    Spacer(modifier = Modifier.height(16.dp))
-                                    
-                                    Text(
-                                        text = uiState.error ?: "Credenciales incorrectas. Intente nuevamente.",
-                                        fontSize = 16.sp,
-                                        color = Color.Gray
-                                    )
-                                    
-                                    Spacer(modifier = Modifier.height(24.dp))
-                                    
-                                    Row(
-                                        modifier = Modifier.fillMaxWidth(),
-                                        horizontalArrangement = Arrangement.End
-                                    ) {
-                                        TextButton(
-                                            onClick = {
-                                                isVisible = false
-                                                viewModel.clearError()
-                                            }
-                                        ) {
-                                            Text(
-                                                "Aceptar",
-                                                color = colorResource(R.color.principal),
-                                                fontWeight = FontWeight.Bold
-                                            )
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-
-                LaunchedEffect(Unit) {
-                    viewModel.navigationEvent.collect { event ->
-                        when (event) {
-                            is LoginViewModel.NavigationEvent.NavigateToHome -> {
-                                startActivity(Intent(this@LoginUI, MenuMainUI::class.java))
-                                finish()
-                            }
-                        }
-                    }
-                }
-
-                if (uiState.isCheckingSession) {
-                    LoadingScreen()
-                } else {
-                    LoginScreen(
-                        uiState = uiState,
-                        onEvent = viewModel::onEvent
-                    )
-                }
-            }
-        }
-    }
-}
+// LoginUI activity has been migrated to MainActivity.kt as a NavHost route.
+// The Composable functions LoadingScreen and LoginScreen are retained here for routing.
 
 @Composable
 fun LoadingScreen() {

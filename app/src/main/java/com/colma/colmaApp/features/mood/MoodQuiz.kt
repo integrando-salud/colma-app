@@ -71,294 +71,219 @@ import com.colma.colmaApp.features.mood.viewmodel.MoodQuizViewModel
 import com.colma.colmaApp.features.mood.viewmodel.MoodQuizViewModelFactory
 import com.colma.colmaApp.ui.theme.ColmaAppTheme
 
-class MoodQuizActivity : ComponentActivity() {
-
-    private val viewModel: MoodQuizViewModel by viewModels {
-        MoodQuizViewModelFactory(MoodRepositoryImpl(applicationContext))
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-
-        window.statusBarColor = ContextCompat.getColor(this, R.color.principal)
-        window.navigationBarColor = ContextCompat.getColor(this, R.color.background)
-
-        WindowInsetsControllerCompat(window, window.decorView).apply {
-            isAppearanceLightStatusBars = false // Dark status bar (principal color), so light icons
-            isAppearanceLightNavigationBars = true // White navigation bar, so dark icons
-        }
-
-        setContent {
-            ColmaAppTheme {
-                val uiState by viewModel.uiState.collectAsState()
-
-                LaunchedEffect(Unit) {
-                    viewModel.sideEffects.collect { effect ->
-                        when (effect) {
-                            MoodQuizViewModel.SideEffect.NavigateBack -> finish()
-                            MoodQuizViewModel.SideEffect.NavigateBackWithResult -> {
-                                setResult(Activity.RESULT_OK)
-                                finish()
-                            }
-                        }
-                    }
-                }
-
-                MoodQuizScreen(
-                    uiState = uiState,
-                    onEvent = viewModel::onEvent
-                )
-            }
-        }
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MoodQuizScreen(
     uiState: MoodQuizUiState,
     onEvent: (MoodQuizEvent) -> Unit
 ) {
-    Scaffold(
-        modifier = Modifier.systemBarsPadding(),
-        topBar = {
-            TopAppBar(
-                title = {
-                    Text(
-                        text = "Estado de ánimo",
-                        fontWeight = FontWeight.Bold,
-                        maxLines = 1,
-                        modifier = Modifier.basicMarquee(
-                            iterations = Int.MAX_VALUE,
-                            initialDelayMillis = 2000,
-                            repeatDelayMillis = 1500
-                        )
-                    )
-                },
-                navigationIcon = {
-                    IconButton(onClick = { onEvent(MoodQuizEvent.BackPressed) }) {
-                        Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "Volver")
-                    }
-                },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = colorResource(R.color.principal),
-                    titleContentColor = Color.White,
-                    navigationIconContentColor = Color.White
-                )
-            )
-        }
-    ) { innerPadding ->
-        BackHandler(onBack = { onEvent(MoodQuizEvent.BackPressed) })
-        Box(
+    BackHandler(onBack = { onEvent(MoodQuizEvent.BackPressed) })
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(colorResource(id = R.color.background))
+    ) {
+        val scrollState = rememberScrollState()
+        Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(innerPadding)
-                .background(colorResource(id = R.color.background))
+                .padding(horizontal = 16.dp, vertical = 12.dp)
+                .verticalScroll(scrollState)
         ) {
-            val scrollState = rememberScrollState()
+            Text(
+                text = "Durante las dos últimas semanas, ¿con qué frecuencia se ha visto afectado por los siguientes problemas?",
+                style = MaterialTheme.typography.bodyMedium
+            )
+
+            Spacer(Modifier.height(12.dp))
+
             Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(horizontal = 16.dp, vertical = 12.dp)
-                    .verticalScroll(scrollState)
+                modifier = Modifier,
+                verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
-                Text(
-                    text = "Durante las dos últimas semanas, ¿con qué frecuencia se ha visto afectado por los siguientes problemas?",
-                    style = MaterialTheme.typography.bodyMedium
+                QuestionRow(
+                    question = uiState.questions.getOrElse(0) { "" },
+                    optionLabels = uiState.optionLabels,
+                    selected = uiState.answers.getOrElse(0) { -1 },
+                    onSelect = { sel -> onEvent(MoodQuizEvent.AnswerQuestion(0, sel)) },
+                    disabled = uiState.firstTwoQuestionsLocked
                 )
 
-                Spacer(Modifier.height(12.dp))
+                QuestionRow(
+                    question = uiState.questions.getOrElse(1) { "" },
+                    optionLabels = uiState.optionLabels,
+                    selected = uiState.answers.getOrElse(1) { -1 },
+                    onSelect = { sel -> onEvent(MoodQuizEvent.AnswerQuestion(1, sel)) },
+                    disabled = uiState.firstTwoQuestionsLocked
+                )
 
-                Column(
-                    modifier = Modifier,
-                    verticalArrangement = Arrangement.spacedBy(12.dp)
-                ) {
-                    QuestionRow(
-                        question = uiState.questions.getOrElse(0) { "" },
-                        optionLabels = uiState.optionLabels,
-                        selected = uiState.answers.getOrElse(0) { -1 },
-                        onSelect = { sel -> onEvent(MoodQuizEvent.AnswerQuestion(0, sel)) },
-                        disabled = uiState.firstTwoQuestionsLocked
-                    )
-
-                    QuestionRow(
-                        question = uiState.questions.getOrElse(1) { "" },
-                        optionLabels = uiState.optionLabels,
-                        selected = uiState.answers.getOrElse(1) { -1 },
-                        onSelect = { sel -> onEvent(MoodQuizEvent.AnswerQuestion(1, sel)) },
-                        disabled = uiState.firstTwoQuestionsLocked
-                    )
-
-                    if (uiState.showRestOfQuestions) {
-                        for (i in 2 until uiState.questions.size) {
-                            QuestionRow(
-                                question = uiState.questions[i],
-                                optionLabels = uiState.optionLabels,
-                                selected = uiState.answers[i],
-                                onSelect = { sel -> onEvent(MoodQuizEvent.AnswerQuestion(i, sel)) },
-                                disabled = false
-                            )
-                        }
+                if (uiState.showRestOfQuestions) {
+                    for (i in 2 until uiState.questions.size) {
+                        QuestionRow(
+                            question = uiState.questions[i],
+                            optionLabels = uiState.optionLabels,
+                            selected = uiState.answers[i],
+                            onSelect = { sel -> onEvent(MoodQuizEvent.AnswerQuestion(i, sel)) },
+                            disabled = false
+                        )
                     }
                 }
-
-                Spacer(Modifier.height(12.dp))
-
-                Button(
-                    onClick = { onEvent(MoodQuizEvent.SaveClicked) },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(52.dp),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = colorResource(R.color.principal),
-                        contentColor = Color.White
-                    )
-                ) {
-                    Text(text = "Guardar")
-                }
-
-                if (uiState.showConfirmDialog) {
-                    AlertDialog(
-                        onDismissRequest = { onEvent(MoodQuizEvent.DismissConfirmDialog) },
-                        title = {
-                            Text(
-                                text = "¿Está seguro/a que desea guardar este registro de estado de ánimo?",
-                                fontWeight = FontWeight.Bold,
-                                fontSize = 18.sp
-                            )
-                        },
-                        confirmButton = {
-                            Button(
-                                onClick = { onEvent(MoodQuizEvent.ConfirmSubmit) },
-                                colors = ButtonDefaults.buttonColors(
-                                    containerColor = Color(0xFF4CAF50), // Green
-                                    contentColor = Color.White
-                                ),
-                                elevation = ButtonDefaults.buttonElevation(defaultElevation = 4.dp)
-                            ) {
-                                Text("Guardar")
-                            }
-                        },
-                        dismissButton = {
-                            Button(
-                                onClick = { onEvent(MoodQuizEvent.DismissConfirmDialog) },
-                                colors = ButtonDefaults.buttonColors(
-                                    containerColor = colorResource(R.color.rojo_boton),
-                                    contentColor = Color.White
-                                ),
-                                elevation = ButtonDefaults.buttonElevation(defaultElevation = 4.dp)
-                            ) {
-                                Text("Cancelar")
-                            }
-                        }
-                    )
-                }
-
-                if (uiState.showMoreQuestionsDialog) {
-                    AlertDialog(
-                        onDismissRequest = { onEvent(MoodQuizEvent.DismissMoreQuestionsDialog) },
-                        title = {
-                            Text(
-                                text = "¿Está seguro/a que desea guardar este registro de estado de ánimo?",
-                                fontWeight = FontWeight.Bold,
-                                fontSize = 18.sp
-                            )
-                        },
-                        confirmButton = {
-                            Button(
-                                onClick = { onEvent(MoodQuizEvent.ConfirmMoreQuestions) },
-                                colors = ButtonDefaults.buttonColors(
-                                    containerColor = Color(0xFF4CAF50), // Green
-                                    contentColor = Color.White
-                                ),
-                                elevation = ButtonDefaults.buttonElevation(defaultElevation = 4.dp)
-                            ) {
-                                Text("Guardar")
-                            }
-                        },
-                        dismissButton = {
-                            Button(
-                                onClick = { onEvent(MoodQuizEvent.DismissMoreQuestionsDialog) },
-                                colors = ButtonDefaults.buttonColors(
-                                    containerColor = colorResource(R.color.rojo_boton),
-                                    contentColor = Color.White
-                                ),
-                                elevation = ButtonDefaults.buttonElevation(defaultElevation = 4.dp)
-                            ) {
-                                Text("Cancelar")
-                            }
-                        }
-                    )
-                }
-
-                if (uiState.showWarningDialog) {
-                    AlertDialog(
-                        onDismissRequest = { onEvent(MoodQuizEvent.DismissWarningDialog) },
-                        title = {
-                            Text(
-                                text = uiState.warningDialogMessage,
-                                fontWeight = FontWeight.Bold,
-                                fontSize = 18.sp
-                            )
-                        },
-                        confirmButton = {
-                            Button(
-                                onClick = { onEvent(MoodQuizEvent.DismissWarningDialog) },
-                                colors = ButtonDefaults.buttonColors(
-                                    containerColor = colorResource(R.color.principal_boton),
-                                    contentColor = Color.White
-                                ),
-                                elevation = ButtonDefaults.buttonElevation(defaultElevation = 2.dp)
-                            ) {
-                                Text("Cerrar")
-                            }
-                        }
-                    )
-                }
-
-                if (uiState.showCompletionDialog) {
-                    AlertDialog(
-                        onDismissRequest = { onEvent(MoodQuizEvent.DismissCompletionDialog) },
-                        title = {
-                            Text(
-                                text = uiState.completionDialogMessage,
-                                fontWeight = FontWeight.Bold,
-                                fontSize = 18.sp
-                            )
-                        },
-                        confirmButton = {
-                            Button(
-                                onClick = { onEvent(MoodQuizEvent.AcceptCompletionDialog) },
-                                colors = ButtonDefaults.buttonColors(
-                                    containerColor = colorResource(R.color.principal_boton),
-                                    contentColor = Color.White
-                                ),
-                                elevation = ButtonDefaults.buttonElevation(defaultElevation = 2.dp)
-                            ) {
-                                Text("Cerrar")
-                            }
-                        }
-                    )
-                }
-
-                Spacer(modifier = Modifier.height(40.dp))
             }
-            if (scrollState.canScrollForward) {
-                Icon(
-                    imageVector = Icons.Default.KeyboardArrowDown,
-                    contentDescription = "Deslizar para ver más",
-                    tint = Color.White,
-                    modifier = Modifier
-                        .align(Alignment.BottomEnd)
-                        .padding(end = 16.dp, bottom = 16.dp)
-                        .background(
-                            color = colorResource(id = R.color.principal),
-                            shape = CircleShape
+
+            Spacer(Modifier.height(12.dp))
+
+            Button(
+                onClick = { onEvent(MoodQuizEvent.SaveClicked) },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(52.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = colorResource(R.color.principal),
+                    contentColor = Color.White
+                )
+            ) {
+                Text(text = "Guardar")
+            }
+
+            if (uiState.showConfirmDialog) {
+                AlertDialog(
+                    onDismissRequest = { onEvent(MoodQuizEvent.DismissConfirmDialog) },
+                    title = {
+                        Text(
+                            text = "¿Está seguro/a que desea guardar este registro de estado de ánimo?",
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 18.sp
                         )
-                        .size(48.dp)
+                    },
+                    confirmButton = {
+                        Button(
+                            onClick = { onEvent(MoodQuizEvent.ConfirmSubmit) },
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = Color(0xFF4CAF50), // Green
+                                contentColor = Color.White
+                            ),
+                            elevation = ButtonDefaults.buttonElevation(defaultElevation = 4.dp)
+                        ) {
+                            Text("Guardar")
+                        }
+                    },
+                    dismissButton = {
+                        Button(
+                            onClick = { onEvent(MoodQuizEvent.DismissConfirmDialog) },
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = colorResource(R.color.rojo_boton),
+                                contentColor = Color.White
+                            ),
+                            elevation = ButtonDefaults.buttonElevation(defaultElevation = 4.dp)
+                        ) {
+                            Text("Cancelar")
+                        }
+                    }
                 )
             }
+
+            if (uiState.showMoreQuestionsDialog) {
+                AlertDialog(
+                    onDismissRequest = { onEvent(MoodQuizEvent.DismissMoreQuestionsDialog) },
+                    title = {
+                        Text(
+                            text = "¿Está seguro/a que desea guardar este registro de estado de ánimo?",
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 18.sp
+                        )
+                    },
+                    confirmButton = {
+                        Button(
+                            onClick = { onEvent(MoodQuizEvent.ConfirmMoreQuestions) },
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = Color(0xFF4CAF50), // Green
+                                contentColor = Color.White
+                            ),
+                            elevation = ButtonDefaults.buttonElevation(defaultElevation = 4.dp)
+                        ) {
+                            Text("Guardar")
+                        }
+                    },
+                    dismissButton = {
+                        Button(
+                            onClick = { onEvent(MoodQuizEvent.DismissMoreQuestionsDialog) },
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = colorResource(R.color.rojo_boton),
+                                contentColor = Color.White
+                            ),
+                            elevation = ButtonDefaults.buttonElevation(defaultElevation = 4.dp)
+                        ) {
+                            Text("Cancelar")
+                        }
+                    }
+                )
+            }
+
+            if (uiState.showWarningDialog) {
+                AlertDialog(
+                    onDismissRequest = { onEvent(MoodQuizEvent.DismissWarningDialog) },
+                    title = {
+                        Text(
+                            text = uiState.warningDialogMessage,
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 18.sp
+                        )
+                    },
+                    confirmButton = {
+                        Button(
+                            onClick = { onEvent(MoodQuizEvent.DismissWarningDialog) },
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = colorResource(R.color.principal_boton),
+                                contentColor = Color.White
+                            ),
+                            elevation = ButtonDefaults.buttonElevation(defaultElevation = 2.dp)
+                        ) {
+                            Text("Cerrar")
+                        }
+                    }
+                )
+            }
+
+            if (uiState.showCompletionDialog) {
+                AlertDialog(
+                    onDismissRequest = { onEvent(MoodQuizEvent.DismissCompletionDialog) },
+                    title = {
+                        Text(
+                            text = uiState.completionDialogMessage,
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 18.sp
+                        )
+                    },
+                    confirmButton = {
+                        Button(
+                            onClick = { onEvent(MoodQuizEvent.AcceptCompletionDialog) },
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = colorResource(R.color.principal_boton),
+                                contentColor = Color.White
+                            ),
+                            elevation = ButtonDefaults.buttonElevation(defaultElevation = 2.dp)
+                        ) {
+                            Text("Cerrar")
+                        }
+                    }
+                )
+            }
+
+            Spacer(modifier = Modifier.height(40.dp))
+        }
+        if (scrollState.canScrollForward) {
+            Icon(
+                imageVector = Icons.Default.KeyboardArrowDown,
+                contentDescription = "Deslizar para ver más",
+                tint = Color.White,
+                modifier = Modifier
+                    .align(Alignment.BottomEnd)
+                    .padding(end = 16.dp, bottom = 16.dp)
+                    .background(
+                        color = colorResource(id = R.color.principal),
+                        shape = CircleShape
+                    )
+                    .size(48.dp)
+            )
         }
     }
 }

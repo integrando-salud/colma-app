@@ -50,87 +50,9 @@ import com.colma.colmaApp.features.sesiones.MultimediaSelector.viewmodel.Multime
 import com.colma.colmaApp.features.multimedia.ui.scrollbar
 import com.colma.colmaApp.ui.theme.ColmaAppTheme
 
-class MultimediaSelectorUI : ComponentActivity() {
+// MultimediaSelectorUI activity has been migrated to MainActivity.kt as a NavHost route.
+// The Composable functions and helper classes are retained here for routing.
 
-    private val viewModel: MultimediaSelectorViewModel by viewModels {
-        MultimediaSelectorViewModelFactory(applicationContext)
-    }
-
-    override fun onResume() {
-        super.onResume()
-        // Reload options to update completion status (ticks)
-        if (viewModel.uiState.value.sessionId != -1L) {
-            viewModel.loadMultimediaOptions()
-        }
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        WindowCompat.setDecorFitsSystemWindows(window, false)
-
-        window.statusBarColor = ContextCompat.getColor(this, R.color.principal)
-        window.navigationBarColor = ContextCompat.getColor(this, R.color.background)
-
-        WindowInsetsControllerCompat(window, window.decorView).apply {
-            isAppearanceLightStatusBars = false
-            isAppearanceLightNavigationBars = true
-        }
-
-        val sessionId = intent?.getLongExtra("sessionId", -1L) ?: -1L
-        val sessionTitle = intent?.getStringExtra("sessionTitle") ?: "Sesión"
-        val subSessionId = intent?.getLongExtra("subSessionId", -1L) ?: -1L
-        val subSessionTitle = intent?.getStringExtra("subSessionTitle") ?: ""
-        val treatmentTypesString = intent?.getStringExtra("treatmentTypes") ?: "HTA"
-        val treatmentTypes = treatmentTypesString.split(',').mapNotNull {
-            try {
-                TreatmentType.valueOf(it.trim().uppercase())
-            } catch (e: IllegalArgumentException) {
-                null
-            }
-        }.ifEmpty { listOf(TreatmentType.HTA) }
-
-        viewModel.initialize(sessionId, sessionTitle, subSessionId, subSessionTitle, treatmentTypes)
-
-        setContent {
-            ColmaAppTheme {
-                val uiState by viewModel.uiState.collectAsState()
-
-                LaunchedEffect(Unit) {
-                    viewModel.navigationEvent.collect { event ->
-                        when (event) {
-                            is MultimediaSelectorViewModel.NavigationEvent.NavigateToMultimedia -> {
-                                navigateToMultimedia(event.option, event.index, uiState)
-                            }
-                            is MultimediaSelectorViewModel.NavigationEvent.NavigateBack -> {
-                                finish()
-                            }
-                        }
-                    }
-                }
-
-                MultimediaSelectorScreen(
-                    uiState = uiState,
-                    onEvent = viewModel::onEvent
-                )
-            }
-        }
-    }
-
-    private fun navigateToMultimedia(option: MultimediaOption, index: Int, uiState: MultimediaSelectorUiState) {
-        val intent = Intent(this, com.colma.colmaApp.features.multimedia.ui.MultimediaActivity::class.java)
-        intent.apply {
-            putExtra("sessionId", uiState.sessionId)
-            putExtra("sessionTitle", uiState.sessionTitle)
-            putExtra("subSessionId", uiState.subSessionId)
-            putExtra("subSessionTitle", uiState.subSessionTitle)
-            putExtra("treatmentTypes", uiState.treatmentTypes.joinToString(",") { it.name })
-            putExtra("currentMultimediaIndex", index)
-        }
-        startActivity(intent)
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MultimediaSelectorScreen(
     uiState: MultimediaSelectorUiState,
@@ -138,85 +60,45 @@ fun MultimediaSelectorScreen(
 ) {
     val signatureColor = colorResource(R.color.principal)
 
-    fun friendlySubLabel(subId: Long, parentId: Long): String {
-        return try {
-            val maybeIndex = subId - parentId * 10
-            if (maybeIndex in 1..999) "Semana $maybeIndex" else "Semana $subId"
-        } catch (e: Exception) {
-            "Semana $subId"
-        }
-    }
-
-    Surface(modifier = Modifier.fillMaxSize().systemBarsPadding(), color = colorResource(R.color.background)) {
-        Column(modifier = Modifier.fillMaxSize()) {
-            TopAppBar(
-                title = { },
-                colors = TopAppBarDefaults.topAppBarColors(containerColor = signatureColor),
-                navigationIcon = {
-                    Surface(
-                        shape = RoundedCornerShape(12.dp),
-                        color = colorResource(R.color.contraste),
-                        modifier = Modifier
-                            .padding(start = 8.dp)
-                            .heightIn(min = 36.dp)
-                            .clickable { onEvent(MultimediaSelectorEvent.BackClicked) }
-                    ) {
-                        Box(
-                            modifier = Modifier
-                                .padding(horizontal = 12.dp, vertical = 6.dp),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Text(
-                                text = "Cerrar",
-                                color = colorResource(R.color.white),
-                                fontWeight = FontWeight.SemiBold,
-                                fontSize = 14.sp
-                            )
-                        }
-                    }
-                }
-            )
-
-            if (uiState.isLoading) {
-                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    CircularProgressIndicator()
-                }
-            } else if (uiState.error != null) {
-                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    Text(text = "Error: ${uiState.error}", color = Color.Red)
-                }
-            } else {
-                val scrollState = rememberScrollState()
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(colorResource(id = R.color.background))
+    ) {
+        if (uiState.isLoading) {
+            CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+        } else if (uiState.error != null) {
+            Text(text = "Error: ${uiState.error}", color = Color.Red, modifier = Modifier.align(Alignment.Center))
+        } else {
+            val scrollState = rememberScrollState()
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.spacedBy(12.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
                 Column(
                     modifier = Modifier
-                        .fillMaxSize(),
+                        .weight(1f)
+                        .padding(16.dp)
+                        .scrollbar(scrollState)
+                        .verticalScroll(scrollState),
                     verticalArrangement = Arrangement.spacedBy(12.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Column(
-                        modifier = Modifier
-                            .weight(1f)
-                            .padding(16.dp)
-                            .scrollbar(scrollState)
-                            .verticalScroll(scrollState),
-                        verticalArrangement = Arrangement.spacedBy(12.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        uiState.multimediaOptions.forEachIndexed { index, option ->
-                            MultimediaOptionCard(option = option, signatureColor = signatureColor) {
-                                onEvent(MultimediaSelectorEvent.MultimediaOptionClicked(option, index))
-                            }
+                    uiState.multimediaOptions.forEachIndexed { index, option ->
+                        MultimediaOptionCard(option = option, signatureColor = signatureColor) {
+                            onEvent(MultimediaSelectorEvent.MultimediaOptionClicked(option, index))
                         }
                     }
-                    if (uiState.multimediaOptions.isNotEmpty()) {
-                        StepProgressBar(
-                            options = uiState.multimediaOptions,
-                            signatureColor = signatureColor,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(horizontal = 16.dp, vertical = 12.dp)
-                        )
-                    }
+                }
+                if (uiState.multimediaOptions.isNotEmpty()) {
+                    StepProgressBar(
+                        options = uiState.multimediaOptions,
+                        signatureColor = signatureColor,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp, vertical = 12.dp)
+                    )
                 }
             }
         }

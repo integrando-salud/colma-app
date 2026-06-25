@@ -62,55 +62,8 @@ import com.colma.colmaApp.ui.theme.ColmaAppTheme
 import com.colma.colmaApp.utils.varios.HealthRecordCard
 import com.colma.colmaApp.utils.varios.HistoryCard
 
-class MoodMenuActivity : ComponentActivity() {
-
-    private val viewModel: MoodMenuViewModel by viewModels {
-        MoodMenuViewModelFactory(MoodRepositoryImpl(applicationContext))
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-
-        window.statusBarColor = ContextCompat.getColor(this, R.color.principal)
-        window.navigationBarColor = ContextCompat.getColor(this, R.color.background)
-
-        WindowInsetsControllerCompat(window, window.decorView).apply {
-            isAppearanceLightStatusBars = false // Dark status bar (principal color), so light icons
-            isAppearanceLightNavigationBars = true // White navigation bar, so dark icons
-        }
-
-        setContent {
-            ColmaAppTheme {
-                val uiState by viewModel.uiState.collectAsState()
-                val context = LocalContext.current
-                val launcher = rememberLauncherForActivityResult(
-                    contract = ActivityResultContracts.StartActivityForResult()
-                ) { result ->
-                    if (result.resultCode == Activity.RESULT_OK) {
-                        viewModel.onEvent(MoodMenuEvent.RefreshHistory)
-                    }
-                }
-                LaunchedEffect(Unit) {
-                    viewModel.navigationEvent.collect { event ->
-                        when (event) {
-                            is MoodMenuViewModel.NavigationEvent.NavigateToQuiz -> {
-                                val intent = Intent(context, MoodQuizActivity::class.java)
-                                launcher.launch(intent)
-                            }
-                        }
-                    }
-                }
-
-                MoodMenuScreen(
-                    uiState = uiState,
-                    onEvent = viewModel::onEvent,
-                    onBack = { finish() }
-                )
-            }
-        }
-    }
-}
+// MoodMenuActivity activity has been migrated to MainActivity.kt as a NavHost route.
+// The Composable functions and helper classes are retained here for routing.
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -129,84 +82,53 @@ fun MoodMenuScreen(
         lifecycleOwner.lifecycle.addObserver(observer)
     }
 
-    Scaffold(
-        modifier = Modifier.systemBarsPadding(),
-        topBar = {
-            TopAppBar(
-                title = {
-                    Text(
-                        text = "Estado de ánimo",
-                        fontWeight = FontWeight.Bold,
-                        maxLines = 1,
-                        modifier = Modifier.basicMarquee(
-                            iterations = Int.MAX_VALUE,
-                            initialDelayMillis = 2000,
-                            repeatDelayMillis = 1500
-                        )
-                    )
-                },
-                navigationIcon = {
-                    IconButton(onClick = onBack) {
-                        Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "Volver")
-                    }
-                },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = colorResource(R.color.principal),
-                    titleContentColor = Color.White,
-                    navigationIconContentColor = Color.White
-                )
-            )
-        }
-    ) { innerPadding ->
-        Box(
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(colorResource(id = R.color.background))
+    ) {
+        Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(innerPadding)
-                .background(colorResource(id = R.color.background))
+                .padding(horizontal = 20.dp)
+                .padding(top = 12.dp)
+                .verticalScroll(rememberScrollState()),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(horizontal = 20.dp)
-                    .padding(top = 12.dp)
-                    .verticalScroll(rememberScrollState()),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                HealthRecordCard(
-                    label = "Estado de ánimo",
-                    onClick = {
-                        onEvent(MoodMenuEvent.AddMoodClicked)
+            HealthRecordCard(
+                label = "Estado de ánimo",
+                onClick = {
+                    onEvent(MoodMenuEvent.AddMoodClicked)
+                },
+                modifier = Modifier.fillMaxWidth(),
+                enabled = uiState.canAccessQuiz
+            )
+
+            if (!uiState.canAccessQuiz && uiState.restrictionMessage.isNotEmpty()) {
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(
+                    text = buildAnnotatedString {
+                        append(uiState.restrictionMessage)
+                        withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
+                            append(uiState.restrictionDate)
+                        }
+                        append(".")
                     },
-                    modifier = Modifier.fillMaxWidth(),
-                    enabled = uiState.canAccessQuiz
-                )
-
-                if (!uiState.canAccessQuiz && uiState.restrictionMessage.isNotEmpty()) {
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Text(
-                        text = buildAnnotatedString {
-                            append(uiState.restrictionMessage)
-                            withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
-                                append(uiState.restrictionDate)
-                            }
-                            append(".")
-                        },
-                        color = Color.Black,
-                        fontSize = 14.sp,
-                        modifier = Modifier.padding(horizontal = 8.dp)
-                    )
-                }
-
-                Spacer(modifier = Modifier.height(28.dp))
-
-                HistoryCard(
-                    history = uiState.history,
-                    onClear = { /*TODO*/ },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(bottom = 16.dp)
+                    color = Color.Black,
+                    fontSize = 14.sp,
+                    modifier = Modifier.padding(horizontal = 8.dp)
                 )
             }
+
+            Spacer(modifier = Modifier.height(28.dp))
+
+            HistoryCard(
+                history = uiState.history,
+                onClear = { /*TODO*/ },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 16.dp)
+            )
         }
     }
 }

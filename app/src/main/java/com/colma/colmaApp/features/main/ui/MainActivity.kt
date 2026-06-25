@@ -1,82 +1,122 @@
 package com.colma.colmaApp.features.main.ui
 
 import android.content.Intent
-import androidx.core.content.ContextCompat
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.navigationBarsPadding
-import androidx.compose.foundation.layout.systemBarsPadding
-import androidx.compose.foundation.layout.offset
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Email
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material3.BottomAppBar
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.DrawerValue
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FabPosition
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ModalDrawerSheet
-import androidx.compose.material3.ModalNavigationDrawer
-import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarItem
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.material3.rememberDrawerState
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Call
+import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.Face
+import androidx.compose.material.icons.filled.Done
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.colma.colmaApp.R
-import com.colma.colmaApp.ui.theme.ColmaAppTheme
-import kotlinx.coroutines.launch
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.hapticfeedback.HapticFeedbackType
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalHapticFeedback
+import androidx.compose.ui.window.DialogProperties
+import androidx.core.content.ContextCompat
 import androidx.core.view.WindowInsetsControllerCompat
-import com.colma.colmaApp.features.instructions.ui.InstructionsActivity
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelStoreOwner
+import androidx.navigation.NavType
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
+
+import com.colma.colmaApp.R
+import com.colma.colmaApp.features.login.ui.LoadingScreen
+import com.colma.colmaApp.features.login.ui.LoginScreen
+import com.colma.colmaApp.features.login.viewmodel.LoginViewModel
+import com.colma.colmaApp.features.login.viewmodel.LoginViewModelFactory
+import com.colma.colmaApp.features.MenuMain.data.MenuMainRepositoryImpl
+import com.colma.colmaApp.features.MenuMain.viewmodel.MenuMainEvent
+import com.colma.colmaApp.features.MenuMain.viewmodel.MenuMainViewModel
+import com.colma.colmaApp.features.MenuMain.viewmodel.MenuMainViewModelFactory
+import com.colma.colmaApp.features.MenuMain.ui.MenuScreen
+import com.colma.colmaApp.features.MenuMain.ui.CongratulationAnimation
+import com.colma.colmaApp.features.MenuMain.ui.DrawerItem
+import com.colma.colmaApp.features.sesiones.SesionesMenu.ui.SesionesMenuScreen
+import com.colma.colmaApp.features.sesiones.SesionesMenu.viewmodel.SesionesEvent
+import com.colma.colmaApp.features.sesiones.SesionesMenu.viewmodel.SesionesViewModel
+import com.colma.colmaApp.features.sesiones.SesionesMenu.viewmodel.SesionesViewModelFactory
+import com.colma.colmaApp.features.sesiones.SesionesMenu.domain.SesionesRepository
+import com.colma.colmaApp.features.sesiones.MultimediaSelector.ui.MultimediaSelectorScreen
+import com.colma.colmaApp.features.sesiones.MultimediaSelector.viewmodel.MultimediaSelectorEvent
+import com.colma.colmaApp.features.sesiones.MultimediaSelector.viewmodel.MultimediaSelectorViewModel
+import com.colma.colmaApp.features.sesiones.MultimediaSelector.viewmodel.MultimediaSelectorViewModelFactory
+import com.colma.colmaApp.features.sesiones.MultimediaSelector.domain.TreatmentType
+import com.colma.colmaApp.features.multimedia.ui.MultimediaScreen
+import com.colma.colmaApp.features.multimedia.viewmodel.MultimediaEvent
+import com.colma.colmaApp.features.multimedia.viewmodel.MultimediaViewModel
+import com.colma.colmaApp.features.multimedia.viewmodel.MultimediaViewModelFactory
+import com.colma.colmaApp.features.sesiones.MultimediaSelector.domain.MultimediaContentType
+import com.colma.colmaApp.features.RegistroSalud.ui.RegistrosSaludScreen
+import com.colma.colmaApp.features.RegistroSalud.data.RegistroSaludRepositoryImpl
+import com.colma.colmaApp.features.RegistroSalud.viewmodel.RegistroSaludEvent
+import com.colma.colmaApp.features.RegistroSalud.viewmodel.RegistroSaludViewModel
+import com.colma.colmaApp.features.RegistroSalud.viewmodel.RegistroSaludViewModelFactory
+import com.colma.colmaApp.features.glucosa.ui.GlucosaScreen
+import com.colma.colmaApp.features.glucosa.viewmodel.GlucosaEvent
+import com.colma.colmaApp.features.glucosa.viewmodel.GlucosaViewModel
+import com.colma.colmaApp.features.glucosa.viewmodel.GlucosaViewModelFactory
+import com.colma.colmaApp.features.glucosa.data.GlucosaRepositoryImpl
+import com.colma.colmaApp.features.presion.ui.PresionScreen
+import com.colma.colmaApp.features.presion.viewmodel.PresionEvent
+import com.colma.colmaApp.features.presion.viewmodel.PresionViewModel
+import com.colma.colmaApp.features.presion.viewmodel.PresionViewModelFactory
+import com.colma.colmaApp.features.presion.data.PresionRepositoryImpl
+import com.colma.colmaApp.features.mood.MoodMenuScreen
+import com.colma.colmaApp.features.mood.viewmodel.MoodMenuEvent
+import com.colma.colmaApp.features.mood.viewmodel.MoodMenuViewModel
+import com.colma.colmaApp.features.mood.viewmodel.MoodMenuViewModelFactory
+import com.colma.colmaApp.features.mood.data.MoodRepositoryImpl
+import com.colma.colmaApp.features.mood.MoodQuizScreen
+import com.colma.colmaApp.features.mood.viewmodel.MoodQuizEvent
+import com.colma.colmaApp.features.mood.viewmodel.MoodQuizViewModel
+import com.colma.colmaApp.features.mood.viewmodel.MoodQuizViewModelFactory
+import com.colma.colmaApp.features.MetasHistory.ui.MetasHistoryScreen
+import com.colma.colmaApp.features.MetasHistory.viewmodel.MetasHistoryViewModel
+import com.colma.colmaApp.features.MetasHistory.viewmodel.MetasHistoryViewModelFactory
+import com.colma.colmaApp.features.MetasHistory.data.MetasHistoryRepositoryImpl
+import com.colma.colmaApp.features.sesiones.SessionContent.ui.SessionContentScreen
+import com.colma.colmaApp.features.sesiones.SessionContent.viewmodel.SessionContentEvent
+import com.colma.colmaApp.features.sesiones.SessionContent.viewmodel.SessionContentViewModel
+import com.colma.colmaApp.features.sesiones.SessionContent.viewmodel.SessionContentViewModelFactory
+import com.colma.colmaApp.features.sesiones.SessionContent.data.SessionContentRepositoryImpl
+import com.colma.colmaApp.features.instructions.ui.InstructionsScreen
+import com.colma.colmaApp.servicios.database.dbhelper.DbHelper
+import com.colma.colmaApp.ui.theme.ColmaAppTheme
+import com.colma.colmaApp.utils.TopBarConfig
+import com.colma.colmaApp.utils.varios.CustomAlertDialog
+import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -93,247 +133,893 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             ColmaAppTheme {
-                MainScreen()
+                MainAppContainer()
             }
         }
+    }
+}
+
+@Composable
+inline fun <reified VM : ViewModel> entryViewModel(
+    storeOwner: ViewModelStoreOwner,
+    factory: ViewModelProvider.Factory
+): VM {
+    return remember(storeOwner, VM::class.java) {
+        ViewModelProvider(storeOwner, factory)[VM::class.java]
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen() {
-    // Drawer state + coroutine scope
+fun MainAppContainer() {
+    val navController = rememberNavController()
+    var topBarConfig by remember { mutableStateOf(TopBarConfig()) }
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
 
-    ModalNavigationDrawer(
-        drawerState = drawerState,
-        drawerContent = {
-            ModalDrawerSheet(drawerContainerColor = Color.White) {
-                // replace with your logo
-                Image(
-                    painter = painterResource(id = R.drawable.colma_logo),
-                    contentDescription = "App Logo",
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 24.dp)
-                        .size(200.dp)
-                        .align(Alignment.CenterHorizontally)
-                )
+    val context = LocalContext.current
+    val activity = context as ComponentActivity
 
-                Spacer(Modifier.height(55.dp))
+    // Scope MenuMainViewModel to the Activity so it can be shared with the Navigation Drawer
+    val menuViewModel = entryViewModel<MenuMainViewModel>(
+        storeOwner = activity,
+        factory = MenuMainViewModelFactory(
+            MenuMainRepositoryImpl(context.applicationContext, DbHelper(context.applicationContext))
+        )
+    )
+    val menuUiState by menuViewModel.uiState.collectAsState()
+    val snackbarHostState = remember { SnackbarHostState() }
 
-                Button(
-                    onClick = { /* handle logout or exit */ },
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0xFFE84589),
-                        contentColor = Color.White
-                    ),
-                    modifier = Modifier
-                        .fillMaxWidth(0.7f)
-                        .align(Alignment.CenterHorizontally)
-                ) {
-                    Text(text = "Salir")
-                }
-            }
-        }
-    ) {
-        Scaffold(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(Color.White)
-                .systemBarsPadding(),
-            containerColor = Color.Transparent,
-            topBar = {
-                TopAppBar(
-                    title = {
-                        Text(
-                            text = "Colma App",
-                            fontWeight = FontWeight.Bold
-                        )
-                    },
-                    navigationIcon = {
-                        IconButton(
-                            onClick = { scope.launch { drawerState.open() } }
-                        ) {
-                            Icon(
-                                imageVector = Icons.Default.Menu,
-                                contentDescription = "Abrir menú"
-                            )
-                        }
-                    },
-                    colors = TopAppBarDefaults.topAppBarColors(
-                        containerColor = Color(0xFFE84589),
-                        titleContentColor = Color.White,
-                        navigationIconContentColor = Color.White
-                    )
-                )
-            },
-            floatingActionButton = {
-                FloatingActionButton(
-                    onClick = { /* TODO: new session */ },
-                    containerColor = Color(0xFFE84589),
-                    contentColor = Color.White,
-                    shape = CircleShape,
-                    modifier = Modifier
-                        // push it *down* into the BottomAppBar by 28.dp
-                        .offset(y = 45.dp)
-                ) {
-                    Icon(Icons.Default.Add, contentDescription = "Nueva sesión")
-                }
-            },
-            floatingActionButtonPosition = FabPosition.Center,
-
-            // Full-width BottomAppBar
-            bottomBar = {
-                BottomAppBar(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(72.dp),      // <-- thinner than the default 56.dp
-                    containerColor = Color(0xFFD55A95),
-                    tonalElevation = 4.dp
-                ) {
-                }
-            }
-        ) { innerPadding ->
-            // Here’s your original Greeting, with padding applied
-            Box(
-                modifier = Modifier
-                    .padding(innerPadding)
-                    .fillMaxSize()
-            ) {
-                // 1) Your main content goes here:
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(bottom = 80.dp), // leave space for the bar + half the FAB
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Text(
-                        text = "¡Bienvenido!",
-                        style = MaterialTheme.typography.titleMedium,
-                        color = Color.Black,
-                        fontWeight = FontWeight.Bold,
-                        modifier = Modifier
-                            .background(Color.Transparent)
-                            .padding(top = 32.dp, bottom = 15.dp)
-                            .alpha(0.9f),
-                        letterSpacing = 1.sp
-                    )
-
-                    Text(
-                        text = "Selecciona una sesion o revisa tus registros",
-                        style = MaterialTheme.typography.titleMedium,
-                        color = Color.Black,
-                        fontWeight = FontWeight.SemiBold,
-                        modifier = Modifier
-                            .background(Color.Transparent)
-                            .padding(vertical = 1.dp)
-                            .alpha(0.9f),
-
-                    )
-
-                    SessionRoulette()
-                }
-            }
+    LaunchedEffect(menuUiState.snackbarMessage) {
+        menuUiState.snackbarMessage?.let { message ->
+            snackbarHostState.showSnackbar(message)
+            menuViewModel.onEvent(MenuMainEvent.SnackbarDismissed)
         }
     }
-}
 
-@Composable
-fun SessionRoulette() {
-    val sessions = listOf(
-        "Session Alpha",
-        "Session Beta",
-        "Session Gamma",
-        "Session Delta",
-        "Session Epsilon",
-        "Session Zeta"
-    )
-
-    var selectedIndex by remember { mutableStateOf(0) }
-    val haptic = LocalHapticFeedback.current
-    val context = LocalContext.current
-
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        // Watermark
-        Image(
-            painter = painterResource(id = R.drawable.colma_logo),
-            contentDescription = null,
-            modifier = Modifier
-                .fillMaxSize()
-                .alpha(0.45f),
-            contentScale = ContentScale.Crop
+    // Modal navigation drawer dialogs (recreated from MenuMainUI)
+    if (menuUiState.showObjectiveDialog && menuUiState.todaysObjective != null) {
+        CustomAlertDialog(
+            show = true,
+            onDismissRequest = { menuViewModel.onEvent(MenuMainEvent.ObjectiveDialogDismissed) },
+            title = "Objetivo para Hoy",
+            description = "¿Completaste este objetivo?: ${menuUiState.todaysObjective!!.actividad ?: "No hay detalles."}",
+            onYes = { menuViewModel.onEvent(MenuMainEvent.ObjectiveCompleted) },
+            onNo = { menuViewModel.onEvent(MenuMainEvent.ObjectiveNotCompleted("")) }
         )
+    }
 
-        // Sessions + Button
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
-                .verticalScroll(rememberScrollState()),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            // 1) The session items
-            sessions.forEachIndexed { index, title ->
-                val isSelected   = index == selectedIndex
-                val bgColor      = if (isSelected) Color(0xFFE84589) else Color(0xFFF0F0F0)
-                val contentColor = if (isSelected) Color.White     else Color.Black
-                val fontSize     = if (isSelected) 24.sp            else 16.sp
-                val verticalPad  = if (isSelected) 16.dp            else 12.dp
+    if (menuUiState.showReasonDialog) {
+        val reasons = listOf(
+            "No tenía energía / ánimo para hacerlo",
+            "Otras actividades me quitaron tiempo (trabajo, familia, etc.)",
+            "Tuve dificultades para hacer la actividad",
+            "Tuve un problema de salud / estuve enfermo(a)",
+            "La persona con quien iba a hacer la actividad no pudo acompañarme",
+            "Me olvidé de hacer la actividad.",
+            "otro"
+        )
+        var selectedReason by remember { mutableStateOf(menuUiState.selectedReason) }
 
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth(0.8f)
-                        .padding(vertical = 4.dp)
-                        .background(bgColor, shape = MaterialTheme.shapes.medium)
-                        .clickable {
-                            haptic.performHapticFeedback(HapticFeedbackType.LongPress)
-                            selectedIndex = index
+        AlertDialog(
+            onDismissRequest = { menuViewModel.onEvent(MenuMainEvent.ObjectiveDialogDismissed) },
+            properties = DialogProperties(dismissOnBackPress = false, dismissOnClickOutside = false),
+            title = { Text("¿Por qué no completaste el objetivo?") },
+            text = {
+                Column {
+                    reasons.forEach { reason ->
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clickable { selectedReason = reason }
+                                .padding(vertical = 4.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            RadioButton(
+                                selected = (reason == selectedReason),
+                                onClick = { selectedReason = reason }
+                            )
+                            Text(text = reason, modifier = Modifier.padding(start = 8.dp))
                         }
-                        .padding(vertical = verticalPad, horizontal = 12.dp)
+                    }
+                }
+            },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        if (selectedReason.isNotBlank()) {
+                            menuViewModel.onEvent(MenuMainEvent.ObjectiveNotCompleted(selectedReason))
+                        }
+                    },
+                    colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.principal_boton), contentColor = Color.White)
                 ) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(8.dp),
-                        modifier = Modifier.align(Alignment.CenterStart)
-                    ) {
-                        Icon(
-                            imageVector = if (isSelected) Icons.Default.Favorite else Icons.Default.Lock,
-                            contentDescription = if (isSelected) "Unlocked" else "Locked",
-                            tint = contentColor
-                        )
-                        Text(
-                            text = title,
-                            fontSize = fontSize,
-                            color = contentColor
-                        )
+                    Text("Aceptar")
+                }
+            }
+        )
+    }
+
+    if (menuUiState.showOtherReasonDialog) {
+        AlertDialog(
+            onDismissRequest = { menuViewModel.onEvent(MenuMainEvent.ObjectiveDialogDismissed) },
+            properties = DialogProperties(dismissOnBackPress = false, dismissOnClickOutside = false),
+            title = { Text("Por favor, explica la razón") },
+            text = {
+                OutlinedTextField(
+                    value = menuUiState.otherReasonInput,
+                    onValueChange = { menuViewModel.onEvent(MenuMainEvent.OtherReasonChanged(it)) },
+                    label = { Text("Razón") }
+                )
+            },
+            confirmButton = {
+                Button(
+                    onClick = { menuViewModel.onEvent(MenuMainEvent.OtherReasonConfirmed) },
+                    colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.principal_boton), contentColor = Color.White)
+                ) {
+                    Text("Aceptar")
+                }
+            }
+        )
+    }
+
+    if (menuUiState.showFeedbackDialog) {
+        AlertDialog(
+            onDismissRequest = { menuViewModel.onEvent(MenuMainEvent.DismissFeedbackDialog) },
+            properties = DialogProperties(dismissOnBackPress = false, dismissOnClickOutside = false),
+            icon = {
+                if (menuUiState.showTrophyInFeedback) {
+                    CongratulationAnimation()
+                } else if (menuUiState.isHelpRequestFeedback && menuUiState.isSuccessFeedback) {
+                    Icon(
+                        imageVector = Icons.Default.Done,
+                        contentDescription = null,
+                        modifier = Modifier.size(60.dp),
+                        tint = Color(0xFF4CAF50)
+                    )
+                }
+            },
+            title = {
+                Text(
+                    text = menuUiState.feedbackMessage,
+                    fontSize = if (menuUiState.isHelpRequestFeedback) 20.sp else 18.sp,
+                    fontWeight = FontWeight.SemiBold,
+                    textAlign = if (menuUiState.isHelpRequestFeedback) TextAlign.Center else TextAlign.Start,
+                    modifier = Modifier.fillMaxWidth()
+                )
+            },
+            confirmButton = {
+                Button(
+                    onClick = { menuViewModel.onEvent(MenuMainEvent.DismissFeedbackDialog) },
+                    colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.principal_boton), contentColor = Color.White)
+                ) {
+                    Text("Aceptar", fontSize = 16.sp)
+                }
+            }
+        )
+    }
+
+    if (menuUiState.showNoInternetDialog) {
+        AlertDialog(
+            onDismissRequest = { menuViewModel.onEvent(MenuMainEvent.DismissNoInternetDialog) },
+            title = { Text("Sin conexión") },
+            text = { Text("Los datos se actualizarán cuando tenga acceso a internet.", fontSize = 16.sp) },
+            confirmButton = {
+                Button(
+                    onClick = { menuViewModel.onEvent(MenuMainEvent.DismissNoInternetDialog) },
+                    colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.principal_boton), contentColor = Color.White)
+                ) {
+                    Text("Aceptar", fontSize = 16.sp)
+                }
+            }
+        )
+    }
+
+    if (menuUiState.showHelpRequestDialog) {
+        CustomAlertDialog(
+            show = true,
+            onDismissRequest = { menuViewModel.onEvent(MenuMainEvent.DismissHelpRequestDialog) },
+            title = "¿Está seguro/a que quieres pedir ayuda técnica a tu promotora de salud?",
+            description = "",
+            yesLabel = "Confirmar",
+            noLabel = "Cancelar",
+            onYes = { menuViewModel.onEvent(MenuMainEvent.ConfirmHelpRequest) },
+            onNo = { menuViewModel.onEvent(MenuMainEvent.DismissHelpRequestDialog) }
+        )
+    }
+
+    // Modal navigation drawer
+    CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
+        ModalNavigationDrawer(
+            drawerState = drawerState,
+            modifier = Modifier.systemBarsPadding(),
+            drawerContent = {
+                CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
+                    ModalDrawerSheet(drawerContainerColor = Color.White) {
+                        Column(
+                            modifier = Modifier
+                                .fillMaxHeight()
+                                .verticalScroll(rememberScrollState())
+                        ) {
+                            Image(
+                                painter = painterResource(id = R.drawable.colma_logo),
+                                contentDescription = "Logo de la aplicación",
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(vertical = 24.dp)
+                                    .sizeIn(maxWidth = 200.dp, maxHeight = 200.dp)
+                                    .align(Alignment.CenterHorizontally)
+                            )
+
+                            Spacer(Modifier.height(12.dp))
+
+                            DrawerItem("Inicio", Icons.Default.Home) {
+                                scope.launch { drawerState.close() }
+                                navController.navigate("menu_main") {
+                                    popUpTo("menu_main") { inclusive = false }
+                                }
+                            }
+
+                            DrawerItem("Ayuda técnica de la promotora de salud", Icons.Default.Call) {
+                                scope.launch { drawerState.close() }
+                                menuViewModel.onEvent(MenuMainEvent.OnRequestHelpClick)
+                            }
+
+                            DrawerItem("Información adicional", Icons.Default.Info) {
+                                scope.launch { drawerState.close() }
+                                navController.navigate("instructions")
+                            }
+
+                            Spacer(Modifier.height(28.dp))
+
+                            Button(
+                                onClick = {
+                                    scope.launch { drawerState.close() }
+                                    menuViewModel.onEvent(MenuMainEvent.OnSalirClick)
+                                },
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = colorResource(R.color.principal),
+                                    contentColor = Color.White
+                                ),
+                                modifier = Modifier
+                                    .fillMaxWidth(0.7f)
+                                    .align(Alignment.CenterHorizontally)
+                            ) {
+                                Text(text = "Cerrar sesión")
+                            }
+
+                            Spacer(Modifier.height(18.dp))
+                        }
                     }
                 }
             }
+        ) {
+            CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
+                Scaffold(
+                    snackbarHost = { SnackbarHost(snackbarHostState) },
+                    topBar = {
+                        if (topBarConfig.showTopBar) {
+                            TopAppBar(
+                                title = {
+                                    Text(
+                                        text = topBarConfig.title,
+                                        fontWeight = FontWeight.Bold,
+                                        maxLines = 1,
+                                        modifier = Modifier.basicMarquee(
+                                            iterations = Int.MAX_VALUE,
+                                            initialDelayMillis = 2000,
+                                            repeatDelayMillis = 1500
+                                        )
+                                    )
+                                },
+                                navigationIcon = {
+                                    if (topBarConfig.showBackButton) {
+                                        IconButton(onClick = { topBarConfig.onBackClick?.invoke() ?: navController.popBackStack() }) {
+                                            Icon(
+                                                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                                                contentDescription = "Volver"
+                                            )
+                                        }
+                                    } else if (topBarConfig.showMenuButton) {
+                                        IconButton(onClick = { scope.launch { drawerState.open() } }) {
+                                            Icon(
+                                                imageVector = Icons.Default.Menu,
+                                                contentDescription = "Abrir menú"
+                                            )
+                                        }
+                                    }
+                                },
+                                actions = {
+                                    val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
+                                    if (currentRoute == "menu_main") {
+                                        Surface(
+                                            shape = RoundedCornerShape(12.dp),
+                                            color = colorResource(R.color.contraste),
+                                            modifier = Modifier
+                                                .padding(end = 8.dp)
+                                                .heightIn(min = 36.dp)
+                                                .clickable { scope.launch { drawerState.open() } }
+                                        ) {
+                                            Box(
+                                                modifier = Modifier
+                                                    .padding(horizontal = 12.dp, vertical = 6.dp),
+                                                contentAlignment = Alignment.Center
+                                            ) {
+                                                Text(
+                                                    text = "Menú",
+                                                    color = colorResource(R.color.white),
+                                                    fontWeight = FontWeight.SemiBold,
+                                                    fontSize = 14.sp
+                                                )
+                                            }
+                                        }
+                                    }
+                                },
+                                colors = TopAppBarDefaults.topAppBarColors(
+                                    containerColor = colorResource(R.color.principal),
+                                    titleContentColor = Color.White,
+                                    navigationIconContentColor = Color.White
+                                )
+                            )
+                        }
+                    }
+                ) { innerPadding ->
+                    NavHost(
+                        navController = navController,
+                        startDestination = "login",
+                        modifier = Modifier.padding(innerPadding)
+                    ) {
+                        composable("login") { backStackEntry ->
+                            val loginViewModel = entryViewModel<LoginViewModel>(
+                                storeOwner = backStackEntry,
+                                factory = LoginViewModelFactory(context.applicationContext)
+                            )
+                            val uiState by loginViewModel.uiState.collectAsState()
 
-            // 2) Spacer to separate list from button
-            Spacer(modifier = Modifier.height(24.dp))
+                            LaunchedEffect(Unit) {
+                                topBarConfig = TopBarConfig(showTopBar = false)
+                            }
 
-            // 3) Your Intent‐launching Button
-            Button(
-                onClick = {
-                    val intent = Intent(context, InstructionsActivity::class.java)
-                    context.startActivity(intent)
-                },
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFFE84589),
-                    contentColor = Color.White
-                ),
-                modifier = Modifier
-                    .fillMaxWidth(0.6f)
-                    .height(48.dp),
-                shape = MaterialTheme.shapes.medium
-            ) {
-                Text(text = "Ver Instrucciones", fontWeight = FontWeight.SemiBold)
+                            LaunchedEffect(Unit) {
+                                loginViewModel.navigationEvent.collect { event ->
+                                    when (event) {
+                                        is LoginViewModel.NavigationEvent.NavigateToHome -> {
+                                            navController.navigate("menu_main") {
+                                                popUpTo("login") { inclusive = true }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
+                            if (uiState.isCheckingSession) {
+                                LoadingScreen()
+                            } else {
+                                LoginScreen(
+                                    uiState = uiState,
+                                    onEvent = loginViewModel::onEvent
+                                )
+                            }
+                        }
+
+                        composable("menu_main") {
+                            val uiState by menuViewModel.uiState.collectAsState()
+
+                            LaunchedEffect(uiState.userName) {
+                                topBarConfig = TopBarConfig(
+                                    title = "Bienvenido/a ${uiState.userName}",
+                                    showMenuButton = true,
+                                    showBackButton = false,
+                                    showTopBar = true
+                                )
+                            }
+
+                            LaunchedEffect(Unit) {
+                                menuViewModel.navigationEvent.collect { event ->
+                                    when (event) {
+                                        is MenuMainViewModel.NavigationEvent.NavigateToSessions -> {
+                                            navController.navigate("sesiones_menu/HTA,DIABETES")
+                                        }
+                                        is MenuMainViewModel.NavigationEvent.NavigateToHealthRegisters -> {
+                                            navController.navigate("registros_salud")
+                                        }
+                                        is MenuMainViewModel.NavigationEvent.NavigateToMetasHistory -> {
+                                            navController.navigate("metas_history")
+                                        }
+                                        is MenuMainViewModel.NavigationEvent.NavigateToLogin -> {
+                                            navController.navigate("login") {
+                                                popUpTo("menu_main") { inclusive = true }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
+                            MenuScreen(
+                                uiState = uiState,
+                                onEvent = menuViewModel::onEvent,
+                                snackbarHostState = snackbarHostState
+                            )
+                        }
+
+                        composable(
+                            route = "sesiones_menu/{treatmentTypes}",
+                            arguments = listOf(navArgument("treatmentTypes") { type = NavType.StringType })
+                        ) { backStackEntry ->
+                            val treatmentTypesString = backStackEntry.arguments?.getString("treatmentTypes") ?: "HTA"
+                            val treatmentTypes = remember(treatmentTypesString) {
+                                treatmentTypesString.split(',').mapNotNull {
+                                    try {
+                                        TreatmentType.valueOf(it.trim().uppercase())
+                                    } catch (e: IllegalArgumentException) {
+                                        null
+                                    }
+                                }.ifEmpty { listOf(TreatmentType.HTA) }
+                            }
+
+                            val sesionesViewModel = entryViewModel<SesionesViewModel>(
+                                storeOwner = backStackEntry,
+                                factory = SesionesViewModelFactory(context.applicationContext)
+                            )
+                            val uiState by sesionesViewModel.uiState.collectAsState()
+
+                            LaunchedEffect(treatmentTypes) {
+                                sesionesViewModel.onEvent(SesionesEvent.SetTreatmentTypes(treatmentTypes))
+                            }
+
+                            val topBarTitle = remember(uiState.treatmentTypes) {
+                                when {
+                                    uiState.treatmentTypes.contains(TreatmentType.HTA) && uiState.treatmentTypes.contains(TreatmentType.DIABETES) -> "Hipertensión y Diabetes"
+                                    uiState.treatmentTypes.contains(TreatmentType.HTA) -> "Hipertensión"
+                                    uiState.treatmentTypes.contains(TreatmentType.DIABETES) -> "Diabetes"
+                                    else -> "Sesiones"
+                                }
+                            }
+
+                            LaunchedEffect(topBarTitle) {
+                                topBarConfig = TopBarConfig(
+                                    title = topBarTitle,
+                                    showBackButton = true,
+                                    onBackClick = { sesionesViewModel.onEvent(SesionesEvent.BackClicked) },
+                                    showTopBar = true
+                                )
+                            }
+
+                            LaunchedEffect(Unit) {
+                                sesionesViewModel.navigationEvent.collect { event ->
+                                    when (event) {
+                                        is SesionesViewModel.NavigationEvent.NavigateToMultimediaSelector -> {
+                                            navController.navigate("multimedia_selector/${event.parentSessionId}/${event.sessionTitle}/${event.subSessionId}/${event.subSessionTitle}/${event.treatmentType}")
+                                        }
+                                        SesionesViewModel.NavigationEvent.NavigateBack -> {
+                                            navController.popBackStack()
+                                        }
+                                    }
+                                }
+                            }
+
+                            val lifecycleOwner = LocalLifecycleOwner.current
+                            DisposableEffect(lifecycleOwner) {
+                                val observer = LifecycleEventObserver { _, event ->
+                                    if (event == Lifecycle.Event.ON_RESUME) {
+                                        sesionesViewModel.onEvent(SesionesEvent.Refresh)
+                                    }
+                                }
+                                lifecycleOwner.lifecycle.addObserver(observer)
+                                onDispose {
+                                    lifecycleOwner.lifecycle.removeObserver(observer)
+                                }
+                            }
+
+                            SesionesMenuScreen(
+                                uiState = uiState,
+                                onEvent = sesionesViewModel::onEvent
+                            )
+                        }
+
+                        composable(
+                            route = "multimedia_selector/{sessionId}/{sessionTitle}/{subSessionId}/{subSessionTitle}/{treatmentTypes}",
+                            arguments = listOf(
+                                navArgument("sessionId") { type = NavType.LongType },
+                                navArgument("sessionTitle") { type = NavType.StringType },
+                                navArgument("subSessionId") { type = NavType.LongType },
+                                navArgument("subSessionTitle") { type = NavType.StringType },
+                                navArgument("treatmentTypes") { type = NavType.StringType }
+                            )
+                        ) { backStackEntry ->
+                            val sessionId = backStackEntry.arguments?.getLong("sessionId") ?: -1L
+                            val sessionTitle = backStackEntry.arguments?.getString("sessionTitle") ?: "Sesión"
+                            val subSessionId = backStackEntry.arguments?.getLong("subSessionId") ?: -1L
+                            val subSessionTitle = backStackEntry.arguments?.getString("subSessionTitle") ?: ""
+                            val treatmentTypesString = backStackEntry.arguments?.getString("treatmentTypes") ?: "HTA"
+                            val treatmentTypes = remember(treatmentTypesString) {
+                                treatmentTypesString.split(',').mapNotNull {
+                                    try {
+                                        TreatmentType.valueOf(it.trim().uppercase())
+                                    } catch (e: IllegalArgumentException) {
+                                        null
+                                    }
+                                }.ifEmpty { listOf(TreatmentType.HTA) }
+                            }
+
+                            val multimediaSelectorViewModel = entryViewModel<MultimediaSelectorViewModel>(
+                                storeOwner = backStackEntry,
+                                factory = MultimediaSelectorViewModelFactory(context.applicationContext)
+                            )
+                            val uiState by multimediaSelectorViewModel.uiState.collectAsState()
+
+                            LaunchedEffect(sessionId, sessionTitle, subSessionId, subSessionTitle, treatmentTypes) {
+                                multimediaSelectorViewModel.initialize(sessionId, sessionTitle, subSessionId, subSessionTitle, treatmentTypes)
+                            }
+
+                            LaunchedEffect(Unit) {
+                                topBarConfig = TopBarConfig(
+                                    title = "",
+                                    showBackButton = true,
+                                    onBackClick = { multimediaSelectorViewModel.onEvent(MultimediaSelectorEvent.BackClicked) },
+                                    showTopBar = true
+                                )
+                            }
+
+                            LaunchedEffect(Unit) {
+                                multimediaSelectorViewModel.navigationEvent.collect { event ->
+                                    when (event) {
+                                        is MultimediaSelectorViewModel.NavigationEvent.NavigateToMultimedia -> {
+                                            navController.navigate("multimedia/${uiState.sessionId}/${uiState.sessionTitle}/${uiState.subSessionId}/${uiState.subSessionTitle}/${uiState.treatmentTypes.joinToString(",") { it.name }}/${event.index}")
+                                        }
+                                        MultimediaSelectorViewModel.NavigationEvent.NavigateBack -> {
+                                            navController.popBackStack()
+                                        }
+                                    }
+                                }
+                            }
+
+                            val lifecycleOwner = LocalLifecycleOwner.current
+                            DisposableEffect(lifecycleOwner) {
+                                val observer = LifecycleEventObserver { _, event ->
+                                    if (event == Lifecycle.Event.ON_RESUME) {
+                                        if (multimediaSelectorViewModel.uiState.value.sessionId != -1L) {
+                                            multimediaSelectorViewModel.loadMultimediaOptions()
+                                        }
+                                    }
+                                }
+                                lifecycleOwner.lifecycle.addObserver(observer)
+                                onDispose {
+                                    lifecycleOwner.lifecycle.removeObserver(observer)
+                                }
+                            }
+
+                            MultimediaSelectorScreen(
+                                uiState = uiState,
+                                onEvent = multimediaSelectorViewModel::onEvent
+                            )
+                        }
+
+                        composable(
+                            route = "multimedia/{sessionId}/{sessionTitle}/{subSessionId}/{subSessionTitle}/{treatmentTypes}/{index}",
+                            arguments = listOf(
+                                navArgument("sessionId") { type = NavType.LongType },
+                                navArgument("sessionTitle") { type = NavType.StringType },
+                                navArgument("subSessionId") { type = NavType.LongType },
+                                navArgument("subSessionTitle") { type = NavType.StringType },
+                                navArgument("treatmentTypes") { type = NavType.StringType },
+                                navArgument("index") { type = NavType.IntType }
+                            )
+                        ) { backStackEntry ->
+                            val sessionId = backStackEntry.arguments?.getLong("sessionId") ?: -1L
+                            val sessionTitle = backStackEntry.arguments?.getString("sessionTitle") ?: "Sesión"
+                            val subSessionId = backStackEntry.arguments?.getLong("subSessionId") ?: -1L
+                            val subSessionTitle = backStackEntry.arguments?.getString("subSessionTitle") ?: ""
+                            val treatmentTypesString = backStackEntry.arguments?.getString("treatmentTypes") ?: ""
+                            val currentMultimediaIndex = backStackEntry.arguments?.getInt("index") ?: 0
+
+                            val multimediaViewModel = entryViewModel<MultimediaViewModel>(
+                                storeOwner = backStackEntry,
+                                factory = MultimediaViewModelFactory(context.applicationContext)
+                            )
+                            val uiState by multimediaViewModel.uiState.collectAsState()
+
+                            LaunchedEffect(sessionId, sessionTitle, subSessionId, subSessionTitle, treatmentTypesString, currentMultimediaIndex) {
+                                multimediaViewModel.onEvent(
+                                    MultimediaEvent.LoadMultimedia(
+                                        sessionId = sessionId,
+                                        sessionTitle = sessionTitle,
+                                        subSessionId = subSessionId,
+                                        subSessionTitle = subSessionTitle,
+                                        treatmentTypesString = treatmentTypesString,
+                                        startIndex = currentMultimediaIndex
+                                    )
+                                )
+                            }
+
+                            val currentOption = uiState.currentMultimediaOption
+                            val topBarTitle = remember(currentOption) {
+                                currentOption?.type?.let { type ->
+                                    when (type) {
+                                        MultimediaContentType.DESCRIPTION -> "Descripción"
+                                        MultimediaContentType.VIDEO -> "Video"
+                                        MultimediaContentType.AUDIO -> "Audio"
+                                        MultimediaContentType.METAS -> "Metas"
+                                        MultimediaContentType.QUIZ -> "Pregunta del día"
+                                        else -> type.name
+                                    }
+                                } ?: ""
+                            }
+
+                            LaunchedEffect(topBarTitle) {
+                                topBarConfig = TopBarConfig(
+                                    title = topBarTitle,
+                                    showBackButton = true,
+                                    onBackClick = { multimediaViewModel.onEvent(MultimediaEvent.Finish) },
+                                    showTopBar = true
+                                )
+                            }
+
+                            LaunchedEffect(Unit) {
+                                multimediaViewModel.navigationEvent.collect { event ->
+                                    when (event) {
+                                        is MultimediaViewModel.NavigationEvent.NavigateBack -> {
+                                            navController.popBackStack()
+                                        }
+                                    }
+                                }
+                            }
+
+                            MultimediaScreen(
+                                uiState = uiState,
+                                onEvent = multimediaViewModel::onEvent
+                            )
+                        }
+
+                        composable("registros_salud") { backStackEntry ->
+                            val registrosSaludViewModel = entryViewModel<RegistroSaludViewModel>(
+                                storeOwner = backStackEntry,
+                                factory = RegistroSaludViewModelFactory(RegistroSaludRepositoryImpl(context.applicationContext))
+                            )
+
+                            LaunchedEffect(Unit) {
+                                topBarConfig = TopBarConfig(
+                                    title = "Mis registros de salud",
+                                    showBackButton = true,
+                                    onBackClick = { registrosSaludViewModel.onEvent(RegistroSaludEvent.OnBackClicked) },
+                                    showTopBar = true
+                                )
+                            }
+
+                            LaunchedEffect(Unit) {
+                                registrosSaludViewModel.navigationEvent.collect { event ->
+                                    when (event) {
+                                        is RegistroSaludViewModel.NavigationEvent.NavigateToGlucosa -> {
+                                            navController.navigate("glucosa")
+                                        }
+                                        is RegistroSaludViewModel.NavigationEvent.NavigateToPresion -> {
+                                            navController.navigate("presion")
+                                        }
+                                        is RegistroSaludViewModel.NavigationEvent.NavigateToEstadoAnimo -> {
+                                            navController.navigate("mood_menu")
+                                        }
+                                        is RegistroSaludViewModel.NavigationEvent.NavigateBack -> {
+                                            navController.popBackStack()
+                                        }
+                                    }
+                                }
+                            }
+
+                            RegistrosSaludScreen(onEvent = registrosSaludViewModel::onEvent)
+                        }
+
+                        composable("glucosa") { backStackEntry ->
+                            val glucosaViewModel = entryViewModel<GlucosaViewModel>(
+                                storeOwner = backStackEntry,
+                                factory = GlucosaViewModelFactory(GlucosaRepositoryImpl(context.applicationContext))
+                            )
+                            val uiState by glucosaViewModel.uiState.collectAsState()
+
+                            LaunchedEffect(Unit) {
+                                topBarConfig = TopBarConfig(
+                                    title = "Medición de Glucosa",
+                                    showBackButton = true,
+                                    onBackClick = { navController.popBackStack() },
+                                    showTopBar = true
+                                )
+                            }
+
+                            GlucosaScreen(
+                                uiState = uiState,
+                                onEvent = glucosaViewModel::onEvent,
+                                onBack = { navController.popBackStack() }
+                            )
+                        }
+
+                        composable("presion") { backStackEntry ->
+                            val presionViewModel = entryViewModel<PresionViewModel>(
+                                storeOwner = backStackEntry,
+                                factory = PresionViewModelFactory(PresionRepositoryImpl(context.applicationContext))
+                            )
+                            val uiState by presionViewModel.uiState.collectAsState()
+
+                            LaunchedEffect(Unit) {
+                                topBarConfig = TopBarConfig(
+                                    title = "Medición de Presión",
+                                    showBackButton = true,
+                                    onBackClick = { navController.popBackStack() },
+                                    showTopBar = true
+                                )
+                            }
+
+                            PresionScreen(
+                                uiState = uiState,
+                                onEvent = presionViewModel::onEvent,
+                                onBack = { navController.popBackStack() }
+                            )
+                        }
+
+                        composable("mood_menu") { backStackEntry ->
+                            val moodMenuViewModel = entryViewModel<MoodMenuViewModel>(
+                                storeOwner = backStackEntry,
+                                factory = MoodMenuViewModelFactory(MoodRepositoryImpl(context.applicationContext))
+                            )
+                            val uiState by moodMenuViewModel.uiState.collectAsState()
+
+                            LaunchedEffect(Unit) {
+                                topBarConfig = TopBarConfig(
+                                    title = "Estado de ánimo",
+                                    showBackButton = true,
+                                    onBackClick = { navController.popBackStack() },
+                                    showTopBar = true
+                                )
+                            }
+
+                            LaunchedEffect(Unit) {
+                                moodMenuViewModel.navigationEvent.collect { event ->
+                                    when (event) {
+                                        is MoodMenuViewModel.NavigationEvent.NavigateToQuiz -> {
+                                            navController.navigate("mood_quiz")
+                                        }
+                                    }
+                                }
+                            }
+
+                            LaunchedEffect(Unit) {
+                                moodMenuViewModel.onEvent(MoodMenuEvent.RefreshHistory)
+                            }
+
+                            MoodMenuScreen(
+                                uiState = uiState,
+                                onEvent = moodMenuViewModel::onEvent,
+                                onBack = { navController.popBackStack() }
+                            )
+                        }
+
+                        composable("mood_quiz") { backStackEntry ->
+                            val moodQuizViewModel = entryViewModel<MoodQuizViewModel>(
+                                storeOwner = backStackEntry,
+                                factory = MoodQuizViewModelFactory(MoodRepositoryImpl(context.applicationContext))
+                            )
+                            val uiState by moodQuizViewModel.uiState.collectAsState()
+
+                            LaunchedEffect(Unit) {
+                                topBarConfig = TopBarConfig(
+                                    title = "Estado de ánimo",
+                                    showBackButton = true,
+                                    onBackClick = { moodQuizViewModel.onEvent(MoodQuizEvent.BackPressed) },
+                                    showTopBar = true
+                                )
+                            }
+
+                            LaunchedEffect(Unit) {
+                                moodQuizViewModel.sideEffects.collect { effect ->
+                                    when (effect) {
+                                        MoodQuizViewModel.SideEffect.NavigateBack -> {
+                                            navController.popBackStack()
+                                        }
+                                        MoodQuizViewModel.SideEffect.NavigateBackWithResult -> {
+                                            navController.popBackStack()
+                                        }
+                                    }
+                                }
+                            }
+
+                            MoodQuizScreen(
+                                uiState = uiState,
+                                onEvent = moodQuizViewModel::onEvent
+                            )
+                        }
+
+                        composable("metas_history") { backStackEntry ->
+                            val metasHistoryViewModel = entryViewModel<MetasHistoryViewModel>(
+                                storeOwner = backStackEntry,
+                                factory = MetasHistoryViewModelFactory(MetasHistoryRepositoryImpl(context.applicationContext))
+                            )
+                            val uiState by metasHistoryViewModel.uiState.collectAsState()
+
+                            LaunchedEffect(Unit) {
+                                topBarConfig = TopBarConfig(
+                                    title = "Mis metas",
+                                    showBackButton = true,
+                                    onBackClick = { navController.popBackStack() },
+                                    showTopBar = true
+                                )
+                            }
+
+                            MetasHistoryScreen(
+                                uiState = uiState,
+                                onBack = { navController.popBackStack() }
+                            )
+                        }
+
+                        composable(
+                            route = "session_content/{sessionId}/{sessionTitle}/{subSessionId}/{subSessionTitle}",
+                            arguments = listOf(
+                                navArgument("sessionId") { type = NavType.LongType },
+                                navArgument("sessionTitle") { type = NavType.StringType },
+                                navArgument("subSessionId") { type = NavType.LongType },
+                                navArgument("subSessionTitle") { type = NavType.StringType }
+                            )
+                        ) { backStackEntry ->
+                            val sessionId = backStackEntry.arguments?.getLong("sessionId") ?: -1L
+                            val sessionTitle = backStackEntry.arguments?.getString("sessionTitle") ?: "Sesión"
+                            val subSessionId = backStackEntry.arguments?.getLong("subSessionId") ?: -1L
+                            val subSessionTitle = backStackEntry.arguments?.getString("subSessionTitle") ?: ""
+
+                            val sessionContentViewModel = entryViewModel<SessionContentViewModel>(
+                                storeOwner = backStackEntry,
+                                factory = SessionContentViewModelFactory(SessionContentRepositoryImpl())
+                            )
+                            val uiState by sessionContentViewModel.uiState.collectAsState()
+
+                            LaunchedEffect(sessionId, sessionTitle, subSessionId, subSessionTitle) {
+                                sessionContentViewModel.onEvent(
+                                    SessionContentEvent.LoadSession(
+                                        sessionId = sessionId,
+                                        sessionTitle = sessionTitle,
+                                        subSessionId = subSessionId.takeIf { it != -1L },
+                                        subSessionTitle = subSessionTitle
+                                    )
+                                )
+                            }
+
+                            LaunchedEffect(Unit) {
+                                topBarConfig = TopBarConfig(
+                                    title = "Tema de hoy",
+                                    showBackButton = true,
+                                    onBackClick = { navController.popBackStack() },
+                                    showTopBar = true
+                                )
+                            }
+
+                            LaunchedEffect(Unit) {
+                                sessionContentViewModel.navigationEvent.collect { event ->
+                                    when (event) {
+                                        is SessionContentViewModel.NavigationEvent.NavigateBack -> {
+                                            navController.popBackStack()
+                                        }
+                                    }
+                                }
+                            }
+
+                            SessionContentScreen(
+                                uiState = uiState,
+                                onEvent = sessionContentViewModel::onEvent,
+                                viewModel = sessionContentViewModel
+                            )
+                        }
+
+                        composable("instructions") {
+                            LaunchedEffect(Unit) {
+                                topBarConfig = TopBarConfig(
+                                    title = "Instrucciones",
+                                    showBackButton = true,
+                                    onBackClick = { navController.popBackStack() },
+                                    showTopBar = true
+                                )
+                            }
+
+                            InstructionsScreen(
+                                onFinish = { navController.popBackStack() }
+                            )
+                        }
+                    }
+                }
             }
         }
     }

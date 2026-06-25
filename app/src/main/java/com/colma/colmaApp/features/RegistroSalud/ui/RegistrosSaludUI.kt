@@ -50,97 +50,27 @@ import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import com.colma.colmaApp.R
-import com.colma.colmaApp.features.mood.MoodMenuActivity
 import com.colma.colmaApp.features.RegistroSalud.data.RegistroSaludRepositoryImpl
 import com.colma.colmaApp.features.RegistroSalud.viewmodel.RegistroSaludEvent
 import com.colma.colmaApp.features.RegistroSalud.viewmodel.RegistroSaludViewModel
 import com.colma.colmaApp.features.RegistroSalud.viewmodel.RegistroSaludViewModelFactory
-import com.colma.colmaApp.features.glucosa.ui.GlucosaUI
-import com.colma.colmaApp.features.presion.ui.PresionUI
 import com.colma.colmaApp.ui.theme.ColmaAppTheme
 import android.graphics.Color as AndroidColor
 
-class RegistrosSaludUI : ComponentActivity() {
-    private val viewModel: RegistroSaludViewModel by viewModels {
-        RegistroSaludViewModelFactory(
-            RegistroSaludRepositoryImpl(applicationContext)
-        )
-    }
+// RegistrosSaludUI activity has been migrated to MainActivity.kt as a NavHost route.
+// The Composable functions and helper classes are retained here for routing.
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        window.statusBarColor = ContextCompat.getColor(this, R.color.principal)
-        window.navigationBarColor = ContextCompat.getColor(this, R.color.background)
-
-        WindowInsetsControllerCompat(window, window.decorView).apply {
-            isAppearanceLightStatusBars = false
-            isAppearanceLightNavigationBars = true
-        }
-
-        setContent {
-            ColmaAppTheme {
-                LaunchedEffect(Unit) {
-                    viewModel.navigationEvent.collect { event ->
-                        when (event) {
-                            is RegistroSaludViewModel.NavigationEvent.NavigateToGlucosa -> {
-                                startActivity(Intent(this@RegistrosSaludUI, GlucosaUI::class.java))
-                            }
-                            is RegistroSaludViewModel.NavigationEvent.NavigateToPresion -> {
-                                startActivity(Intent(this@RegistrosSaludUI, PresionUI::class.java))
-                            }
-                            is RegistroSaludViewModel.NavigationEvent.NavigateToEstadoAnimo -> {
-                                startActivity(Intent(this@RegistrosSaludUI, MoodMenuActivity::class.java))
-                            }
-                            is RegistroSaludViewModel.NavigationEvent.NavigateBack -> {
-                                finish()
-                            }
-                        }
-                    }
-                }
-                RegistrosSaludScreen(onEvent = viewModel::onEvent)
-            }
-        }
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RegistrosSaludScreen(
     onEvent: (RegistroSaludEvent) -> Unit
 ) {
     val signatureColor = colorResource(R.color.principal)
 
-    Scaffold(
-        modifier = Modifier.systemBarsPadding(),
-        topBar = {
-            TopAppBar(
-                title = { 
-                    Text(
-                        text = "Mis registros de salud", 
-                        fontWeight = FontWeight.Bold,
-                        maxLines = 1,
-                        modifier = Modifier.basicMarquee()
-                    ) 
-                },
-                navigationIcon = {
-                    IconButton(onClick = { onEvent(RegistroSaludEvent.OnBackClicked) }) {
-                        Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "Volver")
-                    }
-                },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = signatureColor,
-                    titleContentColor = Color.White,
-                    navigationIconContentColor = Color.White
-                )
-            )
-        }
-    ) { innerPadding ->
-        Box(
-            modifier = Modifier
-                .padding(innerPadding)
-                .fillMaxSize()
-                .background(colorResource(id = R.color.background))
-        ) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(colorResource(id = R.color.background))
+    ) {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -278,4 +208,3 @@ fun RegistrosSaludScreen(
             }
         }
     }
-}

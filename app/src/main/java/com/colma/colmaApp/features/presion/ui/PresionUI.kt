@@ -86,82 +86,8 @@ import java.util.Locale
 private val detailsDateFormatter = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
 private val detailsTimeFormatter = SimpleDateFormat("hh:mm a", Locale("es"))
 
-class PresionUI : ComponentActivity() {
-    private val viewModel: PresionViewModel by viewModels {
-        PresionViewModelFactory(PresionRepositoryImpl(applicationContext))
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-
-        window.statusBarColor = ContextCompat.getColor(this, R.color.principal)
-        window.navigationBarColor = ContextCompat.getColor(this, R.color.background)
-
-        WindowInsetsControllerCompat(window, window.decorView).apply {
-            isAppearanceLightStatusBars = false // Dark status bar (principal color), so light icons
-            isAppearanceLightNavigationBars = true // White navigation bar, so dark icons
-        }
-
-        setContent {
-            ColmaAppTheme {
-                val uiState by viewModel.uiState.collectAsState()
-                val context = LocalContext.current
-
-                if (uiState.warningDialog.show) {
-                    AlertDialog(
-                        onDismissRequest = { viewModel.onEvent(PresionEvent.DismissWarningDialog) },
-                        title = {
-                            Text(
-                                text = uiState.warningDialog.message,
-                                fontWeight = FontWeight.Bold,
-                                fontSize = 18.sp
-                            )
-                        },
-                        confirmButton = {
-                            Button(
-                                onClick = { viewModel.onEvent(PresionEvent.DismissWarningDialog) },
-                                modifier = Modifier.heightIn(min = 48.dp),
-                                colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.principal_boton), contentColor = Color.White),
-                                elevation = ButtonDefaults.buttonElevation(defaultElevation = 2.dp)
-                            ) {
-                                Text("Cerrar", fontSize = 16.sp)
-                            }
-                        }
-                    )
-                }
-
-                if (uiState.showSuccessDialog) {
-                    AlertDialog(
-                        onDismissRequest = { viewModel.onEvent(PresionEvent.DismissSuccessDialog) },
-                        title = { Text("Éxito", fontWeight = FontWeight.Bold) },
-                        text = { 
-                            Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
-                                Text("Registro guardado con éxito.", fontSize = 16.sp) 
-                            }
-                        },
-                        confirmButton = {
-                            Button(
-                                onClick = { viewModel.onEvent(PresionEvent.DismissSuccessDialog) },
-                                modifier = Modifier.heightIn(min = 48.dp),
-                                colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.principal_boton), contentColor = Color.White),
-                                elevation = ButtonDefaults.buttonElevation(defaultElevation = 2.dp)
-                            ) {
-                                Text("Cerrar", fontSize = 16.sp)
-                            }
-                        }
-                    )
-                }
-
-                PresionScreen(
-                    uiState = uiState,
-                    onEvent = viewModel::onEvent,
-                    onBack = { finish() }
-                )
-            }
-        }
-    }
-}
+// PresionUI activity has been migrated to MainActivity.kt as a NavHost route.
+// The Composable functions and helper classes are retained here for routing.
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -226,37 +152,11 @@ fun PresionScreen(
         initialMinute = measurementCalendar.get(Calendar.MINUTE)
     )
 
-    Scaffold(
-        modifier = Modifier.systemBarsPadding(),
-        topBar = {
-            TopAppBar(
-                title = { 
-                    Text(
-                        text = "Medición de Presión", 
-                        fontWeight = FontWeight.Bold,
-                        maxLines = 1,
-                        modifier = Modifier.basicMarquee()
-                    ) 
-                },
-                navigationIcon = {
-                    IconButton(onClick = onBack) {
-                        Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "Volver")
-                    }
-                },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = signatureColor,
-                    titleContentColor = Color.White,
-                    navigationIconContentColor = Color.White
-                )
-            )
-        }
-    ) { innerPadding ->
-        Box(
-            modifier = Modifier
-                .padding(innerPadding)
-                .fillMaxSize()
-                .background(colorResource(id = R.color.background))
-        ) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(colorResource(id = R.color.background))
+    ) {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -559,7 +459,6 @@ fun PresionScreen(
             }
         }
     }
-}
 
 /**
  * Helper function to generate nationality-based high pressure warning text.

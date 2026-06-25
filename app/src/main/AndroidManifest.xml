@@ -20,79 +20,15 @@
 
         <activity
             android:name=".features.main.ui.MainActivity"
-            android:exported="false"
+            android:exported="true"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.ColmaApp">
-        </activity>
-        <activity android:name=".features.login.ui.LoginUI"
-            android:exported="true"
-            android:screenOrientation="portrait"
-            >
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
-
-        <activity android:name=".features.multimedia.ui.MultimediaActivity"
-            android:exported="false"
-            android:screenOrientation="portrait"/>
-
-        <activity android:name=".features.sesiones.MultimediaSelector.ui.MultimediaSelectorUI"
-            android:exported="false"
-            android:screenOrientation="portrait"/>
-
-        <activity android:name=".features.instructions.ui.InstructionsActivity"
-            android:exported="false"
-            android:screenOrientation="portrait">
-        </activity>
-
-        <activity android:name=".features.MenuMain.ui.MenuMainUI"
-            android:exported="false"
-            android:screenOrientation="portrait">
-
-        </activity>
-
-        <activity android:name=".features.RegistroSalud.ui.RegistrosSaludUI"
-            android:exported="false"
-            android:screenOrientation="portrait"/>
-
-        <activity             android:name=".features.glucosa.ui.GlucosaUI"
-            android:exported="false"
-            android:screenOrientation="portrait"/>
-
-        <activity             android:name=".features.presion.ui.PresionUI"
-            android:exported="false"
-            android:screenOrientation="portrait"/>
-
-        <activity
-                    android:name=".features.mood.MoodMenuActivity"
-                    android:exported="false"
-                    android:screenOrientation="portrait" />
-
-<activity
-            android:name=".features.mood.MoodQuizActivity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
-
-        <activity android:name=".features.sesiones.SesionesMenu.ui.SesionesMenuUI"
-            android:exported="false"
-            android:screenOrientation="portrait">
-
-
-        </activity>
-
-        <activity android:name=".features.MetasHistory.ui.MetasHistoryUI"
-            android:exported="false"
-            android:screenOrientation="portrait">
-        </activity>
-
-        <activity android:name=".features.sesiones.SessionContent.ui.SessionContentUI"
-            android:exported="false"
-            android:screenOrientation="portrait"/>
 
         <activity android:name=".utils.videoPlayer.FullscreenVideoActivity"
             android:screenOrientation="portrait" />

@@ -62,50 +62,17 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.colma.colmaApp.R
-import com.colma.colmaApp.features.main.ui.MainScreen
 import com.colma.colmaApp.ui.theme.ColmaAppTheme
 import kotlinx.coroutines.launch
 
-class InstructionsActivity : ComponentActivity() {
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-
-        window.statusBarColor = ContextCompat.getColor(this, R.color.principal)
-        window.navigationBarColor = ContextCompat.getColor(this, R.color.background)
-
-        WindowInsetsControllerCompat(window, window.decorView).apply {
-            isAppearanceLightStatusBars = false // Dark status bar (principal color), so light icons
-            isAppearanceLightNavigationBars = true // White navigation bar, so dark icons
-        }
-
-        setContent {
-            ColmaAppTheme {
-                InstructionsScreen()
-            }
-        }
-    }
-}
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun InstructionsScreen() {
+fun InstructionsScreen(onFinish: () -> Unit = {}) {
     val pageCount = 3                      // number of pages
     val pagerState = rememberPagerState { pageCount }
     val scope = rememberCoroutineScope()
 
-    Surface(color = Color.White, modifier = Modifier.fillMaxSize().systemBarsPadding()) {
+    Surface(color = Color.White, modifier = Modifier.fillMaxSize()) {
         Column(modifier = Modifier.fillMaxSize()) {
-            // 1) TopAppBar (optional)
-            TopAppBar(
-                title = { Text("Instrucciones", fontSize = 20.sp, color = Color.White) },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color(0xFFE84589),
-                    titleContentColor = Color.White
-                )
-            )
-
             // 2) Pager itself
             HorizontalPager(
                 state = pagerState,
@@ -134,8 +101,7 @@ fun InstructionsScreen() {
                     if (pagerState.currentPage < pageCount - 1) {
                         scope.launch { pagerState.animateScrollToPage(pagerState.currentPage + 1) }
                     } else {
-                        // finish instructions, maybe finish activity
-                        (scope as? ComponentActivity)?.finish()
+                        onFinish()
                     }
                 },
                 modifier = Modifier

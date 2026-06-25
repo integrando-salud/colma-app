@@ -7,6 +7,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.annotation.RawRes
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -45,152 +46,44 @@ import com.google.android.exoplayer2.MediaItem
 import kotlinx.coroutines.delay
 import android.graphics.Color as AndroidColor
 
-class SessionContentUI : ComponentActivity() {
-
-    private val viewModel: SessionContentViewModel by viewModels {
-        SessionContentViewModelFactory(SessionContentRepositoryImpl())
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        WindowCompat.setDecorFitsSystemWindows(window, false)
-
-        window.statusBarColor = ContextCompat.getColor(this, R.color.principal)
-        window.navigationBarColor = ContextCompat.getColor(this, R.color.background)
-
-        WindowInsetsControllerCompat(window, window.decorView).apply {
-            isAppearanceLightStatusBars = false
-            isAppearanceLightNavigationBars = true
-        }
-
-        val sessionId = intent?.getLongExtra("sessionId", -1L) ?: -1L
-        val sessionTitle = intent?.getStringExtra("sessionTitle") ?: "Sesión"
-        val subSessionId = intent?.getLongExtra("subSessionId", -1L) ?: -1L
-        val subSessionTitle = intent?.getStringExtra("subSessionTitle")
-
-        viewModel.onEvent(
-            SessionContentEvent.LoadSession(
-                sessionId = sessionId,
-                sessionTitle = sessionTitle,
-                subSessionId = subSessionId.takeIf { it != -1L },
-                subSessionTitle = subSessionTitle
-            )
-        )
-
-        setContent {
-            ColmaAppTheme {
-                val uiState by viewModel.uiState.collectAsState()
-
-                SessionContentScreen(
-                    uiState = uiState,
-                    onEvent = viewModel::onEvent,
-                    viewModel = viewModel
-                )
-            }
-        }
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SessionContentScreen(
     uiState: SessionContentUiState,
     onEvent: (SessionContentEvent) -> Unit,
-    viewModel: SessionContentViewModel
+    viewModel: SessionContentViewModel,
+    onBack: () -> Unit = {}
 ) {
     val signatureColor = colorResource(R.color.principal)
-    val context = LocalContext.current
-    val activity = context as? Activity
-
     val tabs = listOf("Información", "Video", "Audio")
-
     @RawRes val audioRes = R.raw.audio_explicativo
 
     LaunchedEffect(Unit) {
         viewModel.navigationEvent.collect { event ->
             when (event) {
                 is SessionContentViewModel.NavigationEvent.NavigateBack -> {
-                    activity?.finish()
+                    onBack()
                 }
             }
         }
     }
 
-    fun friendlySubLabel(subId: Long, parentId: Long): String {
-        return "Semana $subId"
-    }
-
-    Scaffold(
-        modifier = Modifier.systemBarsPadding(),
-        topBar = {
-            TopAppBar(
-                title = { },
-                colors = TopAppBarDefaults.topAppBarColors(containerColor = signatureColor),
-                navigationIcon = {
-                    Surface(
-                        shape = RoundedCornerShape(12.dp),
-                        color = colorResource(R.color.contraste),
-                        modifier = Modifier
-                            .padding(start = 8.dp)
-                            .heightIn(min = 36.dp)
-                            .clickable { onEvent(SessionContentEvent.BackClicked) }
-                    ) {
-                        Box(
-                            modifier = Modifier
-                                .padding(horizontal = 12.dp, vertical = 6.dp),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Text(
-                                text = "Cerrar",
-                                color = colorResource(R.color.white),
-                                fontWeight = FontWeight.SemiBold,
-                                fontSize = 14.sp
-                            )
-                        }
-                    }
-                }
-            )
-        },
-        bottomBar = {
-            Surface(
-                tonalElevation = 6.dp,
-                color = MaterialTheme.colorScheme.surface
-            ) {
-                Box(modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 12.dp),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Button(
-                        onClick = { onEvent(SessionContentEvent.TerminarClicked) },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .heightIn(min = 56.dp),
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = signatureColor,
-                            contentColor = Color.White
-                        ),
-                        shape = RoundedCornerShape(8.dp)
-                    ) {
-                        Text(text = "Terminar", fontWeight = FontWeight.SemiBold, fontSize = 18.sp)
-                    }
-                }
-            }
-        },
-        containerColor = colorResource(R.color.background)
-    ) { inner ->
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(colorResource(R.color.background))
+    ) {
         val scrollState = rememberScrollState()
         Column(
             modifier = Modifier
-                .padding(inner)
-                .fillMaxSize()
+                .weight(1f)
+                .fillMaxWidth()
                 .padding(horizontal = 16.dp)
                 .scrollbar(scrollState)
                 .verticalScroll(scrollState),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             if (uiState.isLoading) {
-                CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
+                CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally).padding(top = 32.dp))
             } else {
                 TabRow(selectedTabIndex = uiState.selectedTab) {
                     tabs.forEachIndexed { index, title ->
@@ -220,6 +113,31 @@ fun SessionContentScreen(
                             AudioContent(audioResId = audioRes)
                         }
                     }
+                }
+            }
+        }
+
+        Surface(
+            tonalElevation = 6.dp,
+            color = MaterialTheme.colorScheme.surface
+        ) {
+            Box(modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp, vertical = 12.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                Button(
+                    onClick = { onEvent(SessionContentEvent.TerminarClicked) },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .heightIn(min = 56.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = signatureColor,
+                        contentColor = Color.White
+                    ),
+                    shape = RoundedCornerShape(8.dp)
+                ) {
+                    Text(text = "Terminar", fontWeight = FontWeight.SemiBold, fontSize = 18.sp)
                 }
             }
         }
