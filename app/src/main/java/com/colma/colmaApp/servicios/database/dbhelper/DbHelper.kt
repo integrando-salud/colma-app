@@ -15,6 +15,7 @@ import com.colma.colmaApp.servicios.Modelos.QuizResponseRecord
 import com.colma.colmaApp.servicios.internetCommunication.model.CentroSalud
 import com.colma.colmaApp.servicios.internetCommunication.model.Pais
 import com.colma.colmaApp.servicios.internetCommunication.model.Usuario
+import com.colma.colmaApp.utils.EncryptionUtils
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper
 import java.io.File
 import java.io.FileOutputStream
@@ -31,6 +32,121 @@ class DbHelper(context: Context) :
     companion object {
         private const val DATABASE_NAME = "colmadb.db"
         private const val DATABASE_VERSION = 13
+    }
+
+    data class CredencialLocal(
+        val id: Int = 0,
+        val documentoEncriptado: String,
+        val passwordEncriptada: String,
+        val tokenEncriptado: String,
+        val idUsuario: Int
+    )
+
+    override fun onOpen(db: SQLiteDatabase) {
+        super.onOpen(db)
+        try {
+            db.execSQL("""
+                CREATE TABLE IF NOT EXISTS credenciales (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    documento_encriptado TEXT,
+                    password_encriptada TEXT,
+                    token_encriptado TEXT,
+                    id_usuario INTEGER
+                );
+            """)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    fun getSavedCredentialForDni(dni: String): CredencialLocal? {
+        val db = readableDatabase
+        try {
+            db.query(
+                "credenciales",
+                arrayOf("id", "documento_encriptado", "password_encriptada", "token_encriptado", "id_usuario"),
+                null, null, null, null, null
+            ).use { cursor ->
+                val idIndex = cursor.getColumnIndex("id")
+                val docIndex = cursor.getColumnIndex("documento_encriptado")
+                val pwdIndex = cursor.getColumnIndex("password_encriptada")
+                val tokenIndex = cursor.getColumnIndex("token_encriptado")
+                val userIndex = cursor.getColumnIndex("id_usuario")
+
+                if (idIndex != -1 && docIndex != -1 && pwdIndex != -1 && tokenIndex != -1 && userIndex != -1) {
+                    while (cursor.moveToNext()) {
+                        val encryptedDoc = cursor.getString(docIndex)
+                        try {
+                            val decryptedDoc = EncryptionUtils.decrypt(encryptedDoc)
+                            if (decryptedDoc == dni) {
+                                return CredencialLocal(
+                                    id = cursor.getInt(idIndex),
+                                    documentoEncriptado = encryptedDoc,
+                                    passwordEncriptada = cursor.getString(pwdIndex),
+                                    tokenEncriptado = cursor.getString(tokenIndex),
+                                    idUsuario = cursor.getInt(userIndex)
+                                )
+                            }
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
+                    }
+                }
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return null
+    }
+
+    fun saveOrUpdateCredential(dni: String, passwordRaw: String, tokenRaw: String, idUsuario: Int) {
+        try {
+            val existing = getSavedCredentialForDni(dni)
+            val encryptedPassword = EncryptionUtils.encrypt(passwordRaw)
+            val encryptedToken = EncryptionUtils.encrypt(tokenRaw)
+            val encryptedDni = EncryptionUtils.encrypt(dni)
+
+            val db = writableDatabase
+            val values = ContentValues().apply {
+                put("documento_encriptado", encryptedDni)
+                put("password_encriptada", encryptedPassword)
+                put("token_encriptado", encryptedToken)
+                put("id_usuario", idUsuario)
+            }
+
+            if (existing != null) {
+                try {
+                    val decryptedPassword = EncryptionUtils.decrypt(existing.passwordEncriptada)
+                    val decryptedToken = EncryptionUtils.decrypt(existing.tokenEncriptado)
+                    if (decryptedPassword == passwordRaw && decryptedToken == tokenRaw && existing.idUsuario == idUsuario) {
+                        return
+                    }
+                } catch (e: Exception) {
+                    // Overwrite if decryption fails
+                }
+                db.update("credenciales", values, "id = ?", arrayOf(existing.id.toString()))
+            } else {
+                db.insert("credenciales", null, values)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    fun verifyCredentialOffline(dni: String, passwordRaw: String): Result<Pair<String, Int>> {
+        return try {
+            val credential = getSavedCredentialForDni(dni)
+                ?: return Result.failure(Exception("Usuario no encontrado en la base de datos local"))
+            val decryptedPassword = EncryptionUtils.decrypt(credential.passwordEncriptada)
+            if (decryptedPassword == passwordRaw) {
+                val decryptedToken = EncryptionUtils.decrypt(credential.tokenEncriptado)
+                Result.success(Pair(decryptedToken, credential.idUsuario))
+            } else {
+                Result.failure(Exception("Contraseña incorrecta"))
+            }
+        } catch (e: Exception) {
+            Result.failure(Exception("Error al verificar credenciales: ${e.message}"))
+        }
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {

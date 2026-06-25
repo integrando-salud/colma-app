@@ -113,7 +113,7 @@ class LoginUI : ComponentActivity() {
                                     Spacer(modifier = Modifier.height(16.dp))
                                     
                                     Text(
-                                        text = "Credenciales incorrectas. Intente nuevamente.",
+                                        text = uiState.error ?: "Credenciales incorrectas. Intente nuevamente.",
                                         fontSize = 16.sp,
                                         color = Color.Gray
                                     )
