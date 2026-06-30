@@ -57,7 +57,10 @@ class SessionStepsRepositoryImpl(
         contentRepository.getMultimediaOptions(treatmentType, sessionId, subSessionId).fold(
             onSuccess = { multimediaContents ->
                 Result.success(multimediaContents.map { multimediaContent ->
-                    val contentAssetId = multimediaContent.contentAsset?.let {
+                    val isLocalFile = multimediaContent.contentAsset?.contains("/") == true || multimediaContent.contentAsset?.contains("\\") == true
+                    val localFilePath = if (isLocalFile) multimediaContent.contentAsset else null
+                    
+                    val contentAssetId = if (isLocalFile) null else multimediaContent.contentAsset?.let {
                         ResourceUtils.getResourceId(context, it, "raw")
                     }
                     
@@ -68,7 +71,8 @@ class SessionStepsRepositoryImpl(
                         multimediaContent.metasId,
                         treatmentType.name,
                         sessionId,
-                        subSessionId
+                        subSessionId,
+                        localFilePath
                     )
                     
                     val isCompleted = dbHelper.getMultimediaReadRecordExists(
@@ -79,6 +83,11 @@ class SessionStepsRepositoryImpl(
                         multimediaType = multimediaContent.type.name,
                         multimediaUniqueKey = uniqueKey
                     )
+
+                    val localDescriptionAudios = multimediaContent.descriptionAudios?.filter { it.contains("/") || it.contains("\\") }
+                    val staticDescriptionAudioRes = multimediaContent.descriptionAudios?.filter { !it.contains("/") && !it.contains("\\") }?.map { audioName ->
+                        ResourceUtils.getResourceId(context, audioName, "raw")
+                    }
 
                     MultimediaOption(
                         type = multimediaContent.type,
@@ -94,10 +103,11 @@ class SessionStepsRepositoryImpl(
                         contentAssetId = contentAssetId,
                         questions = multimediaContent.questions,
                         metasId = multimediaContent.metasId,
-                        descriptionAudios = multimediaContent.descriptionAudios?.map { audioName ->
-                            ResourceUtils.getResourceId(context, audioName, "raw")
-                        },
-                        isCompleted = isCompleted
+                        descriptionAudios = staticDescriptionAudioRes,
+                        isCompleted = isCompleted,
+                        localFilePath = localFilePath,
+                        localDescriptionAudios = localDescriptionAudios,
+                        localDescriptionImages = multimediaContent.descriptionImages
                     )
                 })
             },
@@ -112,11 +122,18 @@ class SessionStepsRepositoryImpl(
         metasId: String?,
         treatmentId: String,
         weekId: Long,
-        sessionId: Long
+        sessionId: Long,
+        localFilePath: String? = null
     ): String {
         val sanitizedTitle = title.replace(" ", "_").replace("[^a-zA-Z0-9_]".toRegex(), "")
         return when (type) {
-            MultimediaContentType.VIDEO, MultimediaContentType.AUDIO -> "ASSET_$contentAssetId"
+            MultimediaContentType.VIDEO, MultimediaContentType.AUDIO -> {
+                if (localFilePath != null) {
+                    "LOCAL_${treatmentId}_${weekId}_${sessionId}_${sanitizedTitle}"
+                } else {
+                    "ASSET_$contentAssetId"
+                }
+            }
             MultimediaContentType.QUIZ -> "QUIZ_${treatmentId}_${weekId}_${sessionId}_${sanitizedTitle}"
             MultimediaContentType.METAS -> "METAS_$metasId"
             MultimediaContentType.DESCRIPTION -> "DESCRIPTION_${treatmentId}_${weekId}_${sessionId}_${sanitizedTitle}"

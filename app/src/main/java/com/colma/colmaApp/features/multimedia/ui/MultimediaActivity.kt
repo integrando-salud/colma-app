@@ -107,18 +107,32 @@ fun MultimediaScreen(
                                 InformationDisplayContent(
                                     displayContent = currentOption.fullDescription ?: currentOption.description,
                                     descriptionAudios = currentOption.descriptionAudios,
+                                    localDescriptionAudios = currentOption.localDescriptionAudios,
+                                    localDescriptionImages = currentOption.localDescriptionImages,
                                     navigationButtons = navButtons
                                 )
                             }
                             MultimediaContentType.VIDEO -> {
-                                currentOption.contentAssetId?.let {
-                                    VideoContent(contentAssetId = it, navigationButtons = navButtons)
-                                } ?: Text("Video resource not found.")
+                                if (currentOption.localFilePath != null || currentOption.contentAssetId != null) {
+                                    VideoContent(
+                                        contentAssetId = currentOption.contentAssetId,
+                                        localFilePath = currentOption.localFilePath,
+                                        navigationButtons = navButtons
+                                    )
+                                } else {
+                                    Text("Video resource not found.")
+                                }
                             }
                             MultimediaContentType.AUDIO -> {
-                                currentOption.contentAssetId?.let {
-                                    AudioContent(audioResId = it, navigationButtons = navButtons)
-                                } ?: Text("Audio resource not found.")
+                                if (currentOption.localFilePath != null || currentOption.contentAssetId != null) {
+                                    AudioContent(
+                                        audioResId = currentOption.contentAssetId,
+                                        localFilePath = currentOption.localFilePath,
+                                        navigationButtons = navButtons
+                                    )
+                                } else {
+                                    Text("Audio resource not found.")
+                                }
                             }
                             MultimediaContentType.METAS -> {
                                 currentOption.metasId?.let {

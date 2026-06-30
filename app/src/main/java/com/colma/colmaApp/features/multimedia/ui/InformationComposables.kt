@@ -1,5 +1,11 @@
 package com.colma.colmaApp.features.multimedia.ui
 
+import android.graphics.BitmapFactory
+import androidx.compose.foundation.Image
+import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.draw.clip
+import java.io.File
 import android.net.Uri
 import android.os.Handler
 import android.os.Looper
@@ -36,13 +42,20 @@ import java.util.*
 fun InformationDisplayContent(
     displayContent: String,
     descriptionAudios: List<Int>? = null,
+    localDescriptionAudios: List<String>? = null,
+    localDescriptionImages: List<String>? = null,
     navigationButtons: @Composable () -> Unit = {}
 ) {
     val signatureColor = colorResource(R.color.principal)
     val paragraphs = remember(displayContent) {
         displayContent.split("\n\n").filter { it.isNotBlank() }
     }
-    val pagerState = rememberPagerState(pageCount = { paragraphs.size })
+    val pageCount = if (paragraphs.isNotEmpty()) {
+        paragraphs.size
+    } else {
+        maxOf(localDescriptionAudios?.size ?: 0, localDescriptionImages?.size ?: 0).coerceAtLeast(1)
+    }
+    val pagerState = rememberPagerState(pageCount = { pageCount })
     val scrollState = rememberScrollState()
 
     BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
@@ -56,7 +69,7 @@ fun InformationDisplayContent(
             FlexibleFooterColumn(
                 minHeight = screenHeight,
                 content = {
-                    if (paragraphs.isNotEmpty()) {
+                    if (pageCount > 0) {
                         HorizontalPager(
                             state = pagerState,
                             modifier = Modifier
@@ -64,22 +77,23 @@ fun InformationDisplayContent(
                                 .height(500.dp)
                         ) { page ->
                             InformationCard(
-                                displayContent = paragraphs[page],
-                                audioResId = descriptionAudios?.getOrNull(page)
+                                displayContent = paragraphs.getOrNull(page) ?: "",
+                                audioResId = descriptionAudios?.getOrNull(page),
+                                localAudioPath = localDescriptionAudios?.getOrNull(page),
+                                localImagePath = localDescriptionImages?.getOrNull(page)
                             )
                         }
                         Spacer(Modifier.height(16.dp))
                         HorizontalPagerIndicator(
                             pagerState = pagerState,
-                            pageCount = paragraphs.size,
+                            pageCount = pageCount,
                             activeColor = signatureColor,
                             inactiveColor = Color.LightGray,
                             modifier = Modifier.align(Alignment.CenterHorizontally)
                         )
                     } else {
                         InformationCard(
-                            displayContent = "No content provided.",
-                            audioResId = descriptionAudios?.getOrNull(0)
+                            displayContent = "No content provided."
                         )
                     }
                 },
@@ -101,7 +115,9 @@ fun InformationDisplayContent(
 @Composable
 fun InformationCard(
     displayContent: String,
-    audioResId: Int? = null
+    audioResId: Int? = null,
+    localAudioPath: String? = null,
+    localImagePath: String? = null
 ) {
     val context = LocalContext.current
     var tts by remember { mutableStateOf<TextToSpeech?>(null) }
@@ -114,10 +130,16 @@ fun InformationCard(
     var exoPlayer by remember { mutableStateOf<ExoPlayer?>(null) }
     var isPlayingAudio by remember { mutableStateOf(false) }
 
-    DisposableEffect(audioResId) {
-        if (audioResId != null) {
+    val hasAudio = audioResId != null || localAudioPath != null
+
+    DisposableEffect(audioResId, localAudioPath) {
+        if (hasAudio) {
             val player = ExoPlayer.Builder(context).build().apply {
-                val uri = Uri.parse("android.resource://${context.packageName}/$audioResId")
+                val uri = if (localAudioPath != null) {
+                    Uri.parse(localAudioPath)
+                } else {
+                    Uri.parse("android.resource://${context.packageName}/$audioResId")
+                }
                 setMediaItem(MediaItem.fromUri(uri))
                 prepare()
                 playWhenReady = false
@@ -134,7 +156,7 @@ fun InformationCard(
     }
 
     DisposableEffect(Unit) {
-        if (audioResId == null) {
+        if (!hasAudio) {
             isInitializing = true
             val speech = TextToSpeech(context) { status ->
                 if (status == TextToSpeech.SUCCESS) {
@@ -196,7 +218,7 @@ fun InformationCard(
                 )
                 if (isInitializing) {
                     CircularProgressIndicator(modifier = Modifier.size(24.dp), color = Color(0xFFE84589), strokeWidth = 2.dp)
-                } else if (audioResId != null && exoPlayer != null) {
+                } else if (hasAudio && exoPlayer != null) {
                     IconButton(onClick = {
                         exoPlayer?.let { player ->
                             if (isPlayingAudio) {
@@ -226,14 +248,44 @@ fun InformationCard(
                 }
             }
             Spacer(Modifier.height(16.dp))
-            Icon(
-                painter = painterResource(R.drawable.outline_unknown_document_24),
-                contentDescription = null,
-                modifier = Modifier.size(64.dp),
-                tint = Color(0xFFE84589)
-            )
+            if (localImagePath != null) {
+                val bitmap = remember(localImagePath) {
+                    try {
+                        BitmapFactory.decodeFile(localImagePath)
+                    } catch (e: Exception) {
+                        null
+                    }
+                }
+                if (bitmap != null) {
+                    Image(
+                        bitmap = bitmap.asImageBitmap(),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(250.dp)
+                            .clip(RoundedCornerShape(8.dp)),
+                        contentScale = ContentScale.Fit
+                    )
+                } else {
+                    Icon(
+                        painter = painterResource(R.drawable.outline_unknown_document_24),
+                        contentDescription = null,
+                        modifier = Modifier.size(64.dp),
+                        tint = Color(0xFFE84589)
+                    )
+                }
+            } else {
+                Icon(
+                    painter = painterResource(R.drawable.outline_unknown_document_24),
+                    contentDescription = null,
+                    modifier = Modifier.size(64.dp),
+                    tint = Color(0xFFE84589)
+                )
+            }
             Spacer(Modifier.height(16.dp))
-            Text(displayContent, fontSize = 16.sp, textAlign = TextAlign.Left)
+            if (displayContent.isNotEmpty()) {
+                Text(displayContent, fontSize = 16.sp, textAlign = TextAlign.Left)
+            }
         }
     }
 }

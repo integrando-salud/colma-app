@@ -56,6 +56,7 @@ import com.colma.colmaApp.features.login.ui.LoadingScreen
 import com.colma.colmaApp.features.login.ui.LoginScreen
 import com.colma.colmaApp.features.login.viewmodel.LoginViewModel
 import com.colma.colmaApp.features.login.viewmodel.LoginViewModelFactory
+import com.colma.colmaApp.features.content.ui.TreatmentDownloadScreen
 import com.colma.colmaApp.features.MenuMain.data.MenuMainRepositoryImpl
 import com.colma.colmaApp.features.MenuMain.viewmodel.MenuMainEvent
 import com.colma.colmaApp.features.MenuMain.viewmodel.MenuMainViewModel
@@ -112,6 +113,7 @@ import com.colma.colmaApp.servicios.database.dbhelper.DbHelper
 import com.colma.colmaApp.ui.theme.ColmaAppTheme
 import com.colma.colmaApp.utils.TopBarConfig
 import com.colma.colmaApp.utils.varios.CustomAlertDialog
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
@@ -152,6 +154,15 @@ fun MainAppContainer() {
     var topBarConfig by remember { mutableStateOf(TopBarConfig()) }
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
+
+    var isBackClickPending by remember { mutableStateOf(false) }
+
+    LaunchedEffect(isBackClickPending) {
+        if (isBackClickPending) {
+            delay(800)
+            isBackClickPending = false
+        }
+    }
 
     val context = LocalContext.current
     val activity = context as ComponentActivity
@@ -409,7 +420,15 @@ fun MainAppContainer() {
                                 },
                                 navigationIcon = {
                                     if (topBarConfig.showBackButton) {
-                                        IconButton(onClick = { topBarConfig.onBackClick?.invoke() ?: navController.popBackStack() }) {
+                                        IconButton(
+                                            onClick = {
+                                                if (!isBackClickPending) {
+                                                    isBackClickPending = true
+                                                    topBarConfig.onBackClick?.invoke() ?: navController.popBackStack()
+                                                }
+                                            },
+                                            enabled = !isBackClickPending
+                                        ) {
                                             Icon(
                                                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                                                 contentDescription = "Volver"
@@ -479,7 +498,7 @@ fun MainAppContainer() {
                                 loginViewModel.navigationEvent.collect { event ->
                                     when (event) {
                                         is LoginViewModel.NavigationEvent.NavigateToHome -> {
-                                            navController.navigate("menu_main") {
+                                            navController.navigate("treatment_download") {
                                                 popUpTo("login") { inclusive = true }
                                             }
                                         }
@@ -495,6 +514,16 @@ fun MainAppContainer() {
                                     onEvent = loginViewModel::onEvent
                                 )
                             }
+                        }
+
+                        composable("treatment_download") {
+                            LaunchedEffect(Unit) {
+                                topBarConfig = TopBarConfig(showTopBar = false)
+                            }
+                            TreatmentDownloadScreen(
+                                navController = navController,
+                                context = context.applicationContext
+                            )
                         }
 
                         composable("menu_main") {

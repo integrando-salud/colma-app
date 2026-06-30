@@ -1,0 +1,38 @@
+package com.colma.colmaApp.servicios.internetCommunication
+
+import com.colma.colmaApp.BuildConfig
+import com.colma.colmaApp.servicios.internetCommunication.network.TreatmentApiService
+import okhttp3.OkHttpClient
+import okhttp3.ResponseBody
+import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Response
+import retrofit2.Retrofit
+import java.util.concurrent.TimeUnit
+
+class TreatmentService {
+
+    private val okHttpClient = OkHttpClient.Builder()
+        .addInterceptor(HttpLoggingInterceptor().apply {
+            level = HttpLoggingInterceptor.Level.HEADERS
+        })
+        .connectTimeout(30, TimeUnit.SECONDS)
+        .readTimeout(60, TimeUnit.SECONDS)
+        .build()
+
+    private val retrofit: Retrofit = Retrofit.Builder()
+        .baseUrl(BuildConfig.API_HOST)
+        .client(okHttpClient)
+        .build()
+
+    private val apiService: TreatmentApiService = retrofit.create(TreatmentApiService::class.java)
+
+    suspend fun getTratamiento(token: String): Response<ResponseBody> {
+        val bearerToken = if (token.startsWith("Bearer ")) token else "Bearer $token"
+        return apiService.getTratamiento(bearerToken)
+    }
+
+    suspend fun downloadFile(token: String, fileUrl: String): Response<ResponseBody> {
+        val bearerToken = if (token.startsWith("Bearer ")) token else "Bearer $token"
+        return apiService.downloadFile(bearerToken, fileUrl)
+    }
+}

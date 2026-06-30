@@ -196,10 +196,17 @@ class MenuMainRepositoryImpl(
         return try {
             val syncRequest = createSyncDataPayload(userId)
 
-            // Exit early if there is nothing to sync
+            // Exit early if there is nothing to sync, but still download treatment
             if (syncRequest.glucosa.isEmpty() && syncRequest.presion.isEmpty() && syncRequest.estadoAnimo.isEmpty() && syncRequest.quiz.isEmpty() && syncRequest.metas.isEmpty() && syncRequest.multimediaRead.isEmpty()) {
-                Log.d(TAG, "No data to synchronize for user $userId.")
-                return Result.success("No data to synchronize.")
+                Log.d(TAG, "No data to synchronize for user $userId. Triggering treatment download only.")
+                try {
+                    val downloadRepo = com.colma.colmaApp.features.content.data.TreatmentDownloadRepositoryImpl(context)
+                    downloadRepo.downloadAndSaveTreatment(token)
+                    Log.d(TAG, "Treatment downloaded successfully during early exit sync.")
+                } catch (e: Exception) {
+                    Log.e(TAG, "Error downloading treatment: ${e.message}", e)
+                }
+                return Result.success("No data to synchronize, treatment downloaded.")
             }
 
             // Log the request body
@@ -222,6 +229,16 @@ class MenuMainRepositoryImpl(
                 dbHelper.markMultimediaReadSent(syncRequest.multimediaRead.map { it.idMultimediaRead.toLong() })
 
                 dbHelper.insertSincronizacion(nowLocal(), "200", null)
+
+                // Trigger treatment download
+                try {
+                    val downloadRepo = com.colma.colmaApp.features.content.data.TreatmentDownloadRepositoryImpl(context)
+                    downloadRepo.downloadAndSaveTreatment(token)
+                    Log.d(TAG, "Treatment downloaded successfully during sync.")
+                } catch (e: Exception) {
+                    Log.e(TAG, "Error downloading treatment: ${e.message}", e)
+                }
+
                 Result.success(response.body()?.message ?: "Synchronization successful")
             } else {
                 val errorBody = response.errorBody()?.string() ?: "Unknown error"

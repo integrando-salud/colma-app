@@ -36,7 +36,8 @@ import com.google.android.exoplayer2.ui.PlayerView
 
 @Composable
 fun VideoContent(
-    @RawRes contentAssetId: Int,
+    @RawRes contentAssetId: Int?,
+    localFilePath: String? = null,
     navigationButtons: @Composable () -> Unit = {}
 ) {
     val scrollState = rememberScrollState()
@@ -72,6 +73,7 @@ fun VideoContent(
                             Spacer(Modifier.height(16.dp))
                             VideoPlayerWithFullscreen(
                                 resId = contentAssetId,
+                                localFilePath = localFilePath,
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .height(400.dp)
@@ -95,15 +97,20 @@ fun VideoContent(
 
 @Composable
 fun VideoPlayerWithFullscreen(
-    @RawRes resId: Int,
+    @RawRes resId: Int?,
+    localFilePath: String? = null,
     modifier: Modifier = Modifier,
     playerWidth: Dp = 320.dp,
     playerHeight: Dp = 200.dp
 ) {
     val context = LocalContext.current
-    val uriString = "android.resource://${context.packageName}/$resId"
-    var lastPosition by rememberSaveable(resId) { mutableStateOf(0L) }
-    val exoPlayer = remember(resId) {
+    val uriString = when {
+        localFilePath != null -> localFilePath
+        resId != null && resId != 0 -> "android.resource://${context.packageName}/$resId"
+        else -> ""
+    }
+    var lastPosition by rememberSaveable(uriString) { mutableStateOf(0L) }
+    val exoPlayer = remember(uriString) {
         ExoPlayer.Builder(context).build().apply {
             setMediaItem(MediaItem.fromUri(Uri.parse(uriString)))
             prepare()
@@ -120,7 +127,7 @@ fun VideoPlayerWithFullscreen(
             exoPlayer.seekTo(pos)
         }
     }
-    DisposableEffect(key1 = resId) {
+    DisposableEffect(key1 = uriString) {
         onDispose { exoPlayer.release() }
     }
     Box(

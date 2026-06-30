@@ -28,14 +28,15 @@ import java.util.concurrent.TimeUnit
 
 @Composable
 fun AudioContent(
-    @RawRes audioResId: Int,
+    @RawRes audioResId: Int?,
+    localFilePath: String? = null,
     navigationButtons: @Composable () -> Unit = {}
 ) {
     val context = LocalContext.current
-    val exoPlayer = remember(audioResId) {
+    val uriString = if (localFilePath != null) localFilePath else "android.resource://${context.packageName}/$audioResId"
+    val exoPlayer = remember(uriString) {
         ExoPlayer.Builder(context).build().apply {
-            val uri = Uri.parse("android.resource://${context.packageName}/$audioResId")
-            setMediaItem(MediaItem.fromUri(uri))
+            setMediaItem(MediaItem.fromUri(Uri.parse(uriString)))
             prepare()
             playWhenReady = false
         }
@@ -47,9 +48,9 @@ fun AudioContent(
         }
     }
 
-    var isPlaying by rememberSaveable(audioResId) { mutableStateOf(false) }
-    var playbackPositionMs by remember(audioResId) { mutableStateOf(0L) }
-    var durationMs by remember(audioResId) { mutableStateOf(0L) }
+    var isPlaying by rememberSaveable(uriString) { mutableStateOf(false) }
+    var playbackPositionMs by remember(uriString) { mutableStateOf(0L) }
+    var durationMs by remember(uriString) { mutableStateOf(0L) }
 
     LaunchedEffect(exoPlayer) {
         var attempts = 0

@@ -14,26 +14,47 @@ import kotlinx.serialization.json.Json
 import kotlinx.serialization.decodeFromString
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import java.io.File
 
 class ContentRepositoryImpl(private val context: Context) : ContentRepository {
     private val TAG = "ContentRepository"
 
-    private var content: ContentDictionary? = null
-
     private suspend fun loadContent(): ContentDictionary {
-        if (content == null) {
-            content = withContext(Dispatchers.IO) {
-                try {
-                    val jsonText = context.assets.open("content.json").bufferedReader().use { it.readText() }
-                    Log.d(TAG, "Successfully read content.json (${jsonText.length} characters)")
-                    Json.decodeFromString(jsonText)
-                } catch (e: Exception) {
-                    Log.e(TAG, "Error loading content.json: ${e.message}", e)
-                    throw e
+        return withContext(Dispatchers.IO) {
+            try {
+                // 1. Load static asset content
+                val assetJsonText = context.assets.open("content.json").bufferedReader().use { it.readText() }
+                val assetContent = Json { ignoreUnknownKeys = true }.decodeFromString<ContentDictionary>(assetJsonText)
+                val treatments = assetContent.treatments.toMutableList()
+
+                // 2. Load downloaded local content if exists
+                val localFile = File(context.filesDir, "treatment_download.json")
+                if (localFile.exists() && localFile.length() > 0) {
+                    try {
+                        val localJsonText = localFile.readText()
+                        val localContent = Json { ignoreUnknownKeys = true }.decodeFromString<ContentDictionary>(localJsonText)
+                        
+                        // Replace matching treatments with local ones
+                        localContent.treatments.forEach { localTreatment ->
+                            val index = treatments.indexOfFirst { it.id == localTreatment.id }
+                            if (index != -1) {
+                                treatments[index] = localTreatment
+                            } else {
+                                treatments.add(localTreatment)
+                            }
+                        }
+                        Log.d(TAG, "Successfully loaded and merged downloaded treatments.")
+                    } catch (e: Exception) {
+                        Log.e(TAG, "Error loading treatment_download.json: ${e.message}", e)
+                    }
                 }
+
+                ContentDictionary(treatments)
+            } catch (e: Exception) {
+                Log.e(TAG, "Error loading content: ${e.message}", e)
+                throw e
             }
         }
-        return content!!
     }
 
     override suspend fun getAllTreatments(): Result<List<TreatmentContent>> {
