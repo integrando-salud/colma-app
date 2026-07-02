@@ -254,6 +254,89 @@ class DbHelper(context: Context) :
             }
         }
 
+        // Step 4.5: Ensure all tables exist before performing checks or updates
+        try {
+            db.execSQL("""
+                CREATE TABLE IF NOT EXISTS multimedia_read_table (
+                    id_multimedia_read INTEGER PRIMARY KEY AUTOINCREMENT,
+                    id_usuario INTEGER,
+                    treatment_id TEXT,
+                    week_id INTEGER,
+                    session_id INTEGER,
+                    multimedia_type TEXT,
+                    multimedia_unique_key TEXT,
+                    fecha_registro TEXT,
+                    fecha_sincronizacion TEXT
+                );
+            """)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+        try {
+            db.execSQL("""
+                CREATE TABLE IF NOT EXISTS quiz_response_table (
+                    id_quiz_response INTEGER PRIMARY KEY AUTOINCREMENT,
+                    id_usuario INTEGER,
+                    quiz_type TEXT,
+                    week_id INTEGER,
+                    session_id INTEGER,
+                    quiz_title TEXT,
+                    fecha_registro TEXT,
+                    fecha_sincronizacion TEXT,
+                    total_questions INTEGER,
+                    correct_answers INTEGER,
+                    percentage_correct REAL,
+                    multimedia_unique_key TEXT,
+                    treatment_type TEXT
+                );
+            """)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+        try {
+            db.execSQL("""
+                CREATE TABLE IF NOT EXISTS question_response_table (
+                    id_question_response INTEGER PRIMARY KEY AUTOINCREMENT,
+                    id_quiz_response INTEGER,
+                    question_index INTEGER,
+                    question_text TEXT,
+                    user_answer_index INTEGER,
+                    user_answer_text TEXT,
+                    correct_answer_index INTEGER,
+                    correct_answer_text TEXT,
+                    is_correct INTEGER,
+                    posibles_respuestas TEXT,
+                    FOREIGN KEY (id_quiz_response) REFERENCES quiz_response_table(id_quiz_response) ON DELETE CASCADE
+                );
+            """)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+        try {
+            db.execSQL("""
+            CREATE TABLE IF NOT EXISTS paises (
+                id INTEGER PRIMARY KEY,
+                nombre TEXT
+            );
+        """)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+        try {
+            db.execSQL("""
+            CREATE TABLE IF NOT EXISTS centros_salud (
+                id INTEGER PRIMARY KEY,
+                nombre TEXT
+            );
+        """)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
         // Step 5: Ensure 'treatment_type' column exists in 'quiz_response_table'
         var treatmentTypeColumnExists = false
         try {
@@ -304,86 +387,6 @@ class DbHelper(context: Context) :
             } catch (e: Exception) {
                 e.printStackTrace()
             }
-        }
-		
-        try {
-            db.execSQL("""
-                CREATE TABLE IF NOT EXISTS multimedia_read_table (
-                    id_multimedia_read INTEGER PRIMARY KEY AUTOINCREMENT,
-                    id_usuario INTEGER,
-                    treatment_id TEXT,
-                    week_id INTEGER,
-                    session_id INTEGER,
-                    multimedia_type TEXT,
-                    multimedia_unique_key TEXT,
-                    fecha_registro TEXT,
-                    fecha_sincronizacion TEXT
-                );
-            """)
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-
-        try {
-            db.execSQL("""
-                CREATE TABLE IF NOT EXISTS quiz_response_table (
-                    id_quiz_response INTEGER PRIMARY KEY AUTOINCREMENT,
-                    id_usuario INTEGER,
-                    quiz_type TEXT,
-                    week_id INTEGER,
-                    session_id INTEGER,
-                    quiz_title TEXT,
-                    fecha_registro TEXT,
-                    fecha_sincronizacion TEXT,
-                    total_questions INTEGER,
-                    correct_answers INTEGER,
-                    percentage_correct REAL,
-                    multimedia_unique_key TEXT
-                );
-            """)
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-
-        try {
-            db.execSQL("""
-                CREATE TABLE IF NOT EXISTS question_response_table (
-                    id_question_response INTEGER PRIMARY KEY AUTOINCREMENT,
-                    id_quiz_response INTEGER,
-                    question_index INTEGER,
-                    question_text TEXT,
-                    user_answer_index INTEGER,
-                    user_answer_text TEXT,
-                    correct_answer_index INTEGER,
-                    correct_answer_text TEXT,
-                    is_correct INTEGER,
-                    FOREIGN KEY (id_quiz_response) REFERENCES quiz_response_table(id_quiz_response) ON DELETE CASCADE
-                );
-            """)
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-
-        try {
-            db.execSQL("""
-            CREATE TABLE IF NOT EXISTS paises (
-                id INTEGER PRIMARY KEY,
-                nombre TEXT
-            );
-        """)
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-
-        try {
-            db.execSQL("""
-            CREATE TABLE IF NOT EXISTS centros_salud (
-                id INTEGER PRIMARY KEY,
-                nombre TEXT
-            );
-        """)
-        } catch (e: Exception) {
-            e.printStackTrace()
         }
 
         // Add new columns to 'usuarios' table
