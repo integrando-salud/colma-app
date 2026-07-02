@@ -65,27 +65,9 @@ class TreatmentDownloadViewModel(
                 )
             }
 
-            val hasInternet = NetworkUtils.isInternetAvailable(context)
-            val hasLocalData = repository.isTreatmentDownloaded()
-
-            if (!hasInternet) {
-                if (hasLocalData) {
-                    // Already have local data, skip directly to main screen
-                    _uiState.update { it.copy(isFinished = true) }
-                } else {
-                    _uiState.update { 
-                        it.copy(
-                            statusText = "No hay conexión a internet para descargar el tratamiento.",
-                            error = "Sin conexión a internet",
-                            showRetryButtons = true
-                        )
-                    }
-                }
-                return@launch
-            }
-
             val token = SessionManager.getAuthToken()
-            if (token == null) {
+            val userId = SessionManager.getUserId()
+            if (token == null || userId == null) {
                 _uiState.update { 
                     it.copy(
                         statusText = "Error de autenticación.",
@@ -96,7 +78,26 @@ class TreatmentDownloadViewModel(
                 return@launch
             }
 
-            val result = repository.downloadAndSaveTreatment(token) { progress, status ->
+            val hasLocalData = repository.isTreatmentDownloaded(userId)
+            if (hasLocalData) {
+                // Already have local data, skip directly to main screen
+                _uiState.update { it.copy(isFinished = true, progress = 1.0f) }
+                return@launch
+            }
+
+            val hasInternet = NetworkUtils.isInternetAvailable(context)
+            if (!hasInternet) {
+                _uiState.update { 
+                    it.copy(
+                        statusText = "No hay conexión a internet para descargar el tratamiento.",
+                        error = "Sin conexión a internet",
+                        showRetryButtons = true
+                    )
+                }
+                return@launch
+            }
+
+            val result = repository.downloadAndSaveTreatment(token, userId) { progress, status ->
                 _uiState.update { 
                     it.copy(
                         progress = progress,

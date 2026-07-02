@@ -28,7 +28,12 @@ class ContentRepositoryImpl(private val context: Context) : ContentRepository {
                 val treatments = assetContent.treatments.toMutableList()
 
                 // 2. Load downloaded local content if exists
-                val localFile = File(context.filesDir, "treatment_download.json")
+                val userId = com.colma.colmaApp.servicios.session.SessionManager.getUserId()
+                val localFile = if (userId != null) {
+                    File(context.filesDir, "treatment_download_${userId}.json")
+                } else {
+                    File(context.filesDir, "treatment_download.json")
+                }
                 if (localFile.exists() && localFile.length() > 0) {
                     try {
                         val localJsonText = localFile.readText()

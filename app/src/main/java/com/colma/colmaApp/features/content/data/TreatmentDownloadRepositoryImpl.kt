@@ -31,6 +31,7 @@ class TreatmentDownloadRepositoryImpl(private val context: Context) : TreatmentD
 
     override suspend fun downloadAndSaveTreatment(
         token: String,
+        userId: Int,
         onProgress: ((progress: Float, status: String) -> Unit)?
     ): Result<Unit> = withContext(Dispatchers.IO) {
         try {
@@ -257,9 +258,9 @@ class TreatmentDownloadRepositoryImpl(private val context: Context) : TreatmentD
             val localContentDict = ContentDictionary(treatments = listOf(mappedTreatment))
             val jsonText = Json { prettyPrint = true; encodeDefaults = true }.encodeToString(localContentDict)
 
-            val localJsonFile = File(context.filesDir, "treatment_download.json")
+            val localJsonFile = File(context.filesDir, "treatment_download_${userId}.json")
             localJsonFile.writeText(jsonText)
-            Log.d(TAG, "Successfully saved treatment_download.json: ${localJsonFile.absolutePath}")
+            Log.d(TAG, "Successfully saved treatment_download_${userId}.json: ${localJsonFile.absolutePath}")
 
             onProgress?.invoke(1.0f, "Completado")
             Result.success(Unit)
@@ -269,25 +270,19 @@ class TreatmentDownloadRepositoryImpl(private val context: Context) : TreatmentD
         }
     }
 
-    override suspend fun isTreatmentDownloaded(): Boolean = withContext(Dispatchers.IO) {
-        val file = File(context.filesDir, "treatment_download.json")
+    override suspend fun isTreatmentDownloaded(userId: Int): Boolean = withContext(Dispatchers.IO) {
+        val file = File(context.filesDir, "treatment_download_${userId}.json")
         file.exists() && file.length() > 0
     }
 
-    override suspend fun clearDownloadedTreatment(): Unit = withContext(Dispatchers.IO) {
+    override suspend fun clearDownloadedTreatment(userId: Int): Unit = withContext(Dispatchers.IO) {
         try {
-            // Delete treatment_download.json
-            val file = File(context.filesDir, "treatment_download.json")
+            // Delete treatment_download_${userId}.json
+            val file = File(context.filesDir, "treatment_download_${userId}.json")
             if (file.exists()) {
                 file.delete()
             }
-
-            // Delete api/ multimedia folder recursively
-            val mediaDir = File(context.filesDir, "api")
-            if (mediaDir.exists()) {
-                mediaDir.deleteRecursively()
-            }
-            Log.d(TAG, "Successfully cleared downloaded treatment files.")
+            Log.d(TAG, "Successfully cleared downloaded treatment JSON for user $userId.")
         } catch (e: Exception) {
             Log.e(TAG, "Error clearing downloaded treatment: ${e.message}")
         }

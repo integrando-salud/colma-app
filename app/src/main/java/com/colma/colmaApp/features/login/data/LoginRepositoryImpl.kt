@@ -8,6 +8,7 @@ import com.colma.colmaApp.servicios.database.dbhelper.DbHelper
 import com.colma.colmaApp.servicios.internetCommunication.LoginService
 import com.colma.colmaApp.servicios.internetCommunication.model.LoginResponse
 import com.colma.colmaApp.servicios.session.SessionManager
+import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -31,6 +32,7 @@ class LoginRepositoryImpl(
 
                     if (response.isSuccessful) {
                         val loginResponse: LoginResponse? = response.body()
+                        Log.d(TAG, "Login response body JSON: ${Gson().toJson(loginResponse)}")
                         if (loginResponse != null && loginResponse.token.isNotEmpty()) {
                             SessionManager.saveSession(loginResponse.token, loginResponse.usuario.id)
                             dbHelper.upsertUsuario(loginResponse.usuario) // Save the user data

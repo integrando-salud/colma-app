@@ -201,7 +201,7 @@ class MenuMainRepositoryImpl(
                 Log.d(TAG, "No data to synchronize for user $userId. Triggering treatment download only.")
                 try {
                     val downloadRepo = com.colma.colmaApp.features.content.data.TreatmentDownloadRepositoryImpl(context)
-                    downloadRepo.downloadAndSaveTreatment(token)
+                    downloadRepo.downloadAndSaveTreatment(token, userId)
                     Log.d(TAG, "Treatment downloaded successfully during early exit sync.")
                 } catch (e: Exception) {
                     Log.e(TAG, "Error downloading treatment: ${e.message}", e)
@@ -233,7 +233,7 @@ class MenuMainRepositoryImpl(
                 // Trigger treatment download
                 try {
                     val downloadRepo = com.colma.colmaApp.features.content.data.TreatmentDownloadRepositoryImpl(context)
-                    downloadRepo.downloadAndSaveTreatment(token)
+                    downloadRepo.downloadAndSaveTreatment(token, userId)
                     Log.d(TAG, "Treatment downloaded successfully during sync.")
                 } catch (e: Exception) {
                     Log.e(TAG, "Error downloading treatment: ${e.message}", e)
