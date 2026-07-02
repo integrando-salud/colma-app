@@ -542,7 +542,7 @@ fun MainAppContainer() {
                                 menuViewModel.navigationEvent.collect { event ->
                                     when (event) {
                                         is MenuMainViewModel.NavigationEvent.NavigateToSessions -> {
-                                            navController.navigate("sesiones_menu/HTA,DIABETES")
+                                            navController.navigate("sesiones_menu/${event.treatmentTypes}")
                                         }
                                         is MenuMainViewModel.NavigationEvent.NavigateToHealthRegisters -> {
                                             navController.navigate("registros_salud")

@@ -292,6 +292,18 @@ class MenuMainRepositoryImpl(
         }
     }
 
+    override suspend fun getDownloadedTreatmentTypes(): List<String> = withContext(Dispatchers.IO) {
+        val contentRepo = com.colma.colmaApp.features.content.data.ContentRepositoryImpl(context)
+        contentRepo.getAllTreatments().fold(
+            onSuccess = { treatments ->
+                treatments.map { it.id.name }
+            },
+            onFailure = {
+                listOf("HTA", "DIABETES")
+            }
+        )
+    }
+
     private fun nowLocal(): String {
         val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
         sdf.timeZone = java.util.TimeZone.getDefault()

@@ -22,12 +22,7 @@ class ContentRepositoryImpl(private val context: Context) : ContentRepository {
     private suspend fun loadContent(): ContentDictionary {
         return withContext(Dispatchers.IO) {
             try {
-                // 1. Load static asset content
-                val assetJsonText = context.assets.open("content.json").bufferedReader().use { it.readText() }
-                val assetContent = Json { ignoreUnknownKeys = true }.decodeFromString<ContentDictionary>(assetJsonText)
-                val treatments = assetContent.treatments.toMutableList()
-
-                // 2. Load downloaded local content if exists
+                // 1. Load downloaded local content if exists
                 val userId = com.colma.colmaApp.servicios.session.SessionManager.getUserId()
                 val localFile = if (userId != null) {
                     File(context.filesDir, "treatment_download_${userId}.json")
@@ -38,23 +33,16 @@ class ContentRepositoryImpl(private val context: Context) : ContentRepository {
                     try {
                         val localJsonText = localFile.readText()
                         val localContent = Json { ignoreUnknownKeys = true }.decodeFromString<ContentDictionary>(localJsonText)
-                        
-                        // Replace matching treatments with local ones
-                        localContent.treatments.forEach { localTreatment ->
-                            val index = treatments.indexOfFirst { it.id == localTreatment.id }
-                            if (index != -1) {
-                                treatments[index] = localTreatment
-                            } else {
-                                treatments.add(localTreatment)
-                            }
-                        }
-                        Log.d(TAG, "Successfully loaded and merged downloaded treatments.")
+                        Log.d(TAG, "Successfully loaded user-specific downloaded treatments.")
+                        return@withContext localContent
                     } catch (e: Exception) {
                         Log.e(TAG, "Error loading treatment_download.json: ${e.message}", e)
                     }
                 }
 
-                ContentDictionary(treatments)
+                // 2. Fallback to static asset content
+                val assetJsonText = context.assets.open("content.json").bufferedReader().use { it.readText() }
+                Json { ignoreUnknownKeys = true }.decodeFromString<ContentDictionary>(assetJsonText)
             } catch (e: Exception) {
                 Log.e(TAG, "Error loading content: ${e.message}", e)
                 throw e

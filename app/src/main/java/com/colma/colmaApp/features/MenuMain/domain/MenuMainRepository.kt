@@ -14,4 +14,5 @@ interface MenuMainRepository {
     suspend fun logout()
     suspend fun getUserName(): String?
     suspend fun requestHelp(): Result<String>
+    suspend fun getDownloadedTreatmentTypes(): List<String>
 }

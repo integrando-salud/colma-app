@@ -79,7 +79,10 @@ class MenuMainViewModel(private val repository: MenuMainRepository) : ViewModel(
         }
     
         private fun navigateToSessions() {
-            viewModelScope.launch { _navigationEvent.send(NavigationEvent.NavigateToSessions) }
+            viewModelScope.launch {
+                val treatmentTypes = repository.getDownloadedTreatmentTypes().joinToString(",")
+                _navigationEvent.send(NavigationEvent.NavigateToSessions(treatmentTypes))
+            }
         }
     
         private fun navigateToHealthRegisters() {
@@ -270,7 +273,7 @@ class MenuMainViewModel(private val repository: MenuMainRepository) : ViewModel(
     }
 
     sealed class NavigationEvent {
-        object NavigateToSessions : NavigationEvent()
+        data class NavigateToSessions(val treatmentTypes: String) : NavigationEvent()
         object NavigateToHealthRegisters : NavigationEvent()
         object NavigateToMetasHistory : NavigationEvent()
         object NavigateToLogin : NavigationEvent()
