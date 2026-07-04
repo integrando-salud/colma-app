@@ -50,6 +50,9 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import androidx.compose.animation.AnimatedContentTransitionScope
+import androidx.compose.animation.core.tween
+
 
 import com.colma.colmaApp.R
 import com.colma.colmaApp.features.login.ui.LoadingScreen
@@ -733,7 +736,31 @@ fun MainAppContainer() {
                                 navArgument("subSessionTitle") { type = NavType.StringType },
                                 navArgument("treatmentTypes") { type = NavType.StringType },
                                 navArgument("index") { type = NavType.IntType }
-                            )
+                            ),
+                            enterTransition = {
+                                slideIntoContainer(
+                                    AnimatedContentTransitionScope.SlideDirection.Left,
+                                    animationSpec = tween(400)
+                                )
+                            },
+                            exitTransition = {
+                                slideOutOfContainer(
+                                    AnimatedContentTransitionScope.SlideDirection.Left,
+                                    animationSpec = tween(400)
+                                )
+                            },
+                            popEnterTransition = {
+                                slideIntoContainer(
+                                    AnimatedContentTransitionScope.SlideDirection.Right,
+                                    animationSpec = tween(400)
+                                )
+                            },
+                            popExitTransition = {
+                                slideOutOfContainer(
+                                    AnimatedContentTransitionScope.SlideDirection.Right,
+                                    animationSpec = tween(400)
+                                )
+                            }
                         ) { backStackEntry ->
                             val sessionId = backStackEntry.arguments?.getLong("sessionId") ?: -1L
                             val sessionTitle = backStackEntry.arguments?.getString("sessionTitle") ?: "Sesión"
