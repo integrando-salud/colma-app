@@ -225,12 +225,30 @@ class TreatmentDownloadRepositoryImpl(private val context: Context) : TreatmentD
                         )
                     }
 
-                    // Merge static QUIZ and METAS from all matching static subsessions
+                    // Merge static QUIZ, METAS and DESCRIPTION from all matching static subsessions
                     staticSubSessions.flatMap { it.multimedia }.filter {
-                        it.type == MultimediaContentType.QUIZ || it.type == MultimediaContentType.METAS
+                        it.type == MultimediaContentType.QUIZ ||
+                        it.type == MultimediaContentType.METAS ||
+                        it.type == MultimediaContentType.DESCRIPTION
                     }.forEach { staticItem ->
-                        if (multimediaList.none { it.type == staticItem.type }) {
-                            multimediaList.add(staticItem)
+                        if (staticItem.type == MultimediaContentType.DESCRIPTION) {
+                            if (multimediaList.none { it.title == staticItem.title }) {
+                                multimediaList.add(staticItem)
+                            }
+                        } else {
+                            if (multimediaList.none { it.type == staticItem.type }) {
+                                multimediaList.add(staticItem)
+                            }
+                        }
+                    }
+
+                    // Sort multimediaList based on the order in staticSubSession.multimedia
+                    staticSubSession?.let { staticSub ->
+                        multimediaList.sortBy { item ->
+                            val index = staticSub.multimedia.indexOfFirst {
+                                it.type == item.type && (it.title == item.title || it.type != MultimediaContentType.DESCRIPTION)
+                            }
+                            if (index != -1) index else 999
                         }
                     }
 

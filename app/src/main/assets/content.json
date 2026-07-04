@@ -658,7 +658,7 @@
       "sessions": [
         {
           "id": 17,
-          "title": "Semana 1 Diabetes",
+          "title": "Semana 1: ¿Qué es la activación conductual?",
           "thumbnail": "missing_photo",
           "duration": "10 min",
           "subSessions": [
@@ -668,88 +668,107 @@
               "duration": "05:00",
               "multimedia": [
                 {
-                  "type": "VIDEO",
-                  "title": "Video Introducción (Diabetes)",
-                  "description": "Ver el vídeo de introducción a la sesión de diabetes",
-                  "iconImageVector": "PlayArrow",
-                  "contentAsset": "diabetes_sesion_1_1"
-                },
-                {
                   "type": "DESCRIPTION",
-                  "title": "Descripción (Diabetes)",
-                  "description": "Conoce más sobre la diabetes.",
-                  "fullDescription": "Vivir con diabetes significa aprender a conocer nuestro cuerpo y mantener el equilibrio en los\nniveles de glucosa en sangre. Este equilibrio puede verse afectado por lo que comemos, por la\nactividad física que realizamos, el estrés o los medicamentos. Cuando la glucosa está muy alta,\npodés sentir mucha sed, tener ganas de orinar frecuentemente, tener mucha hambre o perder\npeso sin ninguna explicación. También hay otros síntomas, como tener la piel seca, picazón, ver\nborroso, tener sueño, náuseas o heridas que demoran en sanar. Si tenés alguno de estos\nsíntomas, es importante que midas tu glucosa y que vayas a tu centro de salud\n\nControlar la presión arterial nos permite mantener el corazón, los riñones, el cerebro y los ojos saludables. Con pequeñas acciones podemos cuidar nuestro cuerpo todos los días. ¿Qué podés hacer para controlar tu presión? Podés cuidarte apoyándote en estos cuatro pilares importantes\n\nSabemos que esto no siempre es fácil y es normal que lleve tiempo incorporar nuevas rutinas. Sin embargo, lo importante es construirlas paso a paso. Cada pequeño avance cuenta. Cada elección saludable es una forma de cuidarnos, de sentirnos mejor hoy y proteger nuestro cuerpo para mañana\n\nHoy vimos dos situaciones importantes: cuando la glucosa está demasiado alta y cuando está muy baja. Recordá que conocer tu cuerpo y hacer los controles que te indica el equipo de salud te ayuda a cuidarte mejor cada día",
-                  "DescriptionAudio":  ["diabetes_audio_sesion_1_1_1", "diabetes_audio_sesion_1_1_2", "diabetes_audio_sesion_1_1_3", "diabetes_audio_sesion_1_1_4", "diabetes_audio_sesion_1_1_1"],
+                  "title": "Estado de ánimo y conducta: ¿qué nos pasa cuando dejamos de hacer cosas?",
+                  "description": "¡Hola! Qué bueno tenerte acá. El primer paso es siempre el más importante, y hoy lo estás dando. Vamos a explorar formas de mantenernos activos incluso cuando el ánimo está bajo, y cómo eso puede ayudarnos a sentirnos mejor.",
+                  "fullDescription": "¡Hola! Qué bueno tenerte acá. El primer paso es siempre el más importante, y hoy lo estás dando. Vamos a explorar formas de mantenernos activos incluso cuando el ánimo está bajo, y cómo eso puede ayudarnos a sentirnos mejor.",
                   "iconResId": "outline_unknown_document_24"
                 },
                 {
-                  "type": "AUDIO",
-                  "title": "Audio Explicativo",
-                  "description": "Escuchar el contenido de la sesión",
-                  "iconResId": "outline_headphones_24",
-                  "contentAsset": "audio_explicativo"
+                  "type": "VIDEO",
+                  "title": "Video",
+                  "description": "Ver video de la sesión",
+                  "iconImageVector": "PlayArrow",
+                  "contentAsset": "exercise"
+                },
+                {
+                  "type": "QUIZ",
+                  "title": "Pregunta del día",
+                  "description": "Responde las preguntas de la sesión",
+                  "iconResId": "outline_trophy_24",
+                  "questions": [
+                    {
+                      "questionText": "Cuando tenemos el ánimo bajo, ¿qué suele ayudar más?",
+                      "options": [
+                        "Hacer de golpe todos los pendientes para",
+                        "Esperar a que vuelvan las ganas antes de",
+                        "Empezar de a poco con pequeñas actividades"
+                      ],
+                      "correctAnswerIndex": 2
+                    }
+                  ]
+                },
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Fin de la sesión",
+                  "description": "¡Excelente inicio! Ya diste el primer paso al comenzar. En la siguiente sesión veremos cómo la activación conductual nos va a ayudar a poner esto en práctica.",
+                  "fullDescription": "¡Excelente inicio! Ya diste el primer paso al comenzar. En la siguiente sesión veremos cómo la activación conductual nos va a ayudar a poner esto en práctica.",
+                  "iconResId": "outline_unknown_document_24"
                 }
               ]
             },
             {
               "id": 2,
               "title": "Sesión 2",
-              "duration": "07:00",
+              "duration": "05:00",
               "multimedia": [
                 {
+                  "type": "DESCRIPTION",
+                  "title": "La activación conductual, empezar de a poco",
+                  "description": "¡Hola de nuevo! Qué bueno verte por acá. Sumar actividades que disfrutás y que son importantes para vos ayuda a llenar tu ‘tanque’ de ánimo. Vamos a poner en práctica la activación conductual: una forma de sentirte mejor haciendo pequeñas cosas que te dan placer o son importantes para vos.",
+                  "fullDescription": "¡Hola de nuevo! Qué bueno verte por acá. Sumar actividades que disfrutás y que son importantes para vos ayuda a llenar tu ‘tanque’ de ánimo. Vamos a poner en práctica la activación conductual: una forma de sentirte mejor haciendo pequeñas cosas que te dan placer o son importantes para vos.",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
                   "type": "VIDEO",
-                  "title": "Video Explicativo (Diabetes)",
-                  "description": "Ver el vídeo explicativo de la sesión de diabetes",
+                  "title": "Video",
+                  "description": "Ver video de la sesión",
                   "iconImageVector": "PlayArrow",
-                  "contentAsset": "diabetes_sesion_2_1"
+                  "contentAsset": "exercise"
                 },
                 {
                   "type": "QUIZ",
                   "title": "Pregunta del día",
-                  "description": "Responde las preguntas del módulo 5 de Diabetes",
+                  "description": "Responde las preguntas de la sesión",
                   "iconResId": "outline_trophy_24",
                   "questions": [
                     {
-                      "questionText": "La insulina es como una llave que permite que la glucosa entre en las células y nos dé energía",
+                      "questionText": "En la activación conductual, hay que esperar a tener ganas para empezar a hacer cosas.",
                       "options": [
                         "Verdadero",
                         "Falso"
                       ],
                       "correctAnswerIndex": 0
-                    },
-                    {
-                      "questionText": "Tener mucha sed, orinar mucho y tener mucha hambre pueden ser señales de que...",
-                      "options": [
-                        "La glucosa está baja y necesitas comer algo",
-                        "La glucosa está alta y necesita controlarse",
-                        "La glucosa está equilibrada"
-                      ],
-                      "correctAnswerIndex": 1
-                    },
-                    {
-                      "questionText": "La mejor forma de saber cómo está mi glucosa es...",
-                      "options": [
-                        "Midiéndola con un glucómetro o un análisis de sangre",
-                        "Solo reconociendo las señales de mi cuerpo",
-                        "No es necesario saberlo"
-                      ],
-                      "correctAnswerIndex": 0
                     }
                   ]
+                },
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Fin de la sesión",
+                  "description": "¡Bien hecho! Ahora sabés que cargar nafta de a poquito puede mover tu ánimo. En la próxima sesión vas a elegir tu primera actividad. ¡Nos vemos!",
+                  "fullDescription": "¡Bien hecho! Ahora sabés que cargar nafta de a poquito puede mover tu ánimo. En la próxima sesión vas a elegir tu primera actividad. ¡Nos vemos!",
+                  "iconResId": "outline_unknown_document_24"
                 }
               ]
             },
             {
               "id": 3,
               "title": "Sesión 3",
-              "duration": "03:00",
+              "duration": "05:00",
               "multimedia": [
                 {
-                  "type": "VIDEO",
-                  "title": "Video Principal (Diabetes)",
-                  "description": "Primer video de la sesión de diabetes",
-                  "iconImageVector": "PlayArrow",
-                  "contentAsset": "diabetes_sesion_3_1"
+                  "type": "DESCRIPTION",
+                  "title": "Elegir y planificar mis actividades",
+                  "description": "¡Hola! Qué bueno que estés acá. La meta de esta semana es elegir una actividad pequeña que te pueda dar un poco de disfrute. Elegimos sumar momentos que hacen bien: ¡el tanque del disfrute empieza a llenarse!",
+                  "fullDescription": "¡Hola! Qué bueno que estés acá. La meta de esta semana es elegir una actividad pequeña que te pueda dar un poco de disfrute. Elegimos sumar momentos que hacen bien: ¡el tanque del disfrute empieza a llenarse!",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Lectura",
+                  "description": "Lee y escucha la sesión del día",
+                  "fullDescription": "",
+                  "iconResId": "outline_unknown_document_24"
                 },
                 {
                   "type": "METAS",
@@ -759,11 +778,11 @@
                   "metasId": "diabetes"
                 },
                 {
-                  "type": "VIDEO",
-                  "title": "Video Complementario (Diabetes)",
-                  "description": "Segundo video de la sesión de diabetes",
-                  "iconImageVector": "PlayArrow",
-                  "contentAsset": "diabetes_sesion_3_3"
+                  "type": "DESCRIPTION",
+                  "title": "Fin de la sesión",
+                  "description": "¡Excelente! Ya tenés tu primera meta y un plan. Esta semana, intentá hacerla. En la próxima semana vamos a ver cómo te fue y seguiremos avanzando. ¡Vos podés!",
+                  "fullDescription": "¡Excelente! Ya tenés tu primera meta y un plan. Esta semana, intentá hacerla. En la próxima semana vamos a ver cómo te fue y seguiremos avanzando. ¡Vos podés!",
+                  "iconResId": "outline_unknown_document_24"
                 }
               ]
             }
@@ -771,28 +790,152 @@
         },
         {
           "id": 33,
-          "title": "Semana 2 Diabetes",
+          "title": "Semana 2: Organizando nuestras actividades",
           "thumbnail": "missing_photo",
           "duration": "10 min",
           "subSessions": [
             {
               "id": 1,
-              "title": "Sesion 1",
+              "title": "Sesión 1",
               "duration": "05:00",
               "multimedia": [
                 {
-                  "type": "VIDEO",
-                  "title": "Video Genérico (Diabetes)",
-                  "description": "Ver el vídeo genérico de la sesión de diabetes",
-                  "iconImageVector": "PlayArrow",
-                  "contentAsset": "exercise"
+                  "type": "DESCRIPTION",
+                  "title": "Tres herramientas para cumplir con tus actividades",
+                  "description": "¡Hola! Qué bueno que seguís acá. Hoy vamos a abrir una caja de herramientas para ayudarte a cumplir tu meta, incluso en los días difíciles. Seguir tu plan puede ayudarte a continuar, incluso en días difíciles . Hacer actividades según tu plan suele funcionar mejor que guiarte por el ánimo del momento.",
+                  "fullDescription": "¡Hola! Qué bueno que seguís acá. Hoy vamos a abrir una caja de herramientas para ayudarte a cumplir tu meta, incluso en los días difíciles. Seguir tu plan puede ayudarte a continuar, incluso en días difíciles . Hacer actividades según tu plan suele funcionar mejor que guiarte por el ánimo del momento.\n\nEn esta sesión vamos a explorar 3 herramientas para ayudarte a superar obstáculos y seguir con tu meta: planificar con detalle, dividir en pasos pequeños y pedir ayuda.",
+                  "iconResId": "outline_unknown_document_24"
                 },
                 {
-                  "type": "AUDIO",
-                  "title": "Audio Genérico (Diabetes)",
-                  "description": "Escuchar el audio genérico de la sesión de diabetes",
-                  "iconResId": "outline_headphones_24",
-                  "contentAsset": "audio_explicativo"
+                  "type": "DESCRIPTION",
+                  "title": "Lectura 1",
+                  "description": "Lee y escucha la sesión del día",
+                  "fullDescription": "",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Lectura 2",
+                  "description": "Lee y escucha la sesión del día",
+                  "fullDescription": "",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Lectura 3",
+                  "description": "Lee y escucha la sesión del día",
+                  "fullDescription": "",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
+                  "type": "QUIZ",
+                  "title": "Pregunta del día",
+                  "description": "Responde las preguntas de la sesión",
+                  "iconResId": "outline_trophy_24",
+                  "questions": [
+                    {
+                      "questionText": "Empezar con acciones pequeñas hace que sea más fácil avanzar hacia una meta.",
+                      "options": [
+                        "Verdadero",
+                        "Falso"
+                      ],
+                      "correctAnswerIndex": 0
+                    }
+                  ]
+                },
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Fin de la sesión",
+                  "description": "Esta semana intentá seguir tu plan, incluso en los días en que estás con pocas ganas. En la próxima sesión te contamos cómo otras personas fueron resolviendo sus obstáculos. Quizás eso te sume",
+                  "fullDescription": "Esta semana intentá seguir tu plan, incluso en los días en que estás con pocas ganas. En la próxima sesión te contamos cómo otras personas fueron resolviendo sus obstáculos. Quizás eso te sume",
+                  "iconResId": "outline_unknown_document_24"
+                }
+              ]
+            },
+            {
+              "id": 2,
+              "title": "Sesión 2",
+              "duration": "05:00",
+              "multimedia": [
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Superar obstáculos comunes",
+                  "description": "¡Hola! Hoy vamos a hablar de algo que suele aparecer en el camino: los obstáculos. Hay distintas formas de superarlos, y lo que funciona mejor puede ser diferente para cada persona. Las piedras también son parte del camino. Lo importante es saber qué hacer. Vamos a aprender a reconocer los obstáculos más comunes y qué hacer para superarlos sin abandonar tu meta.",
+                  "fullDescription": "¡Hola! Hoy vamos a hablar de algo que suele aparecer en el camino: los obstáculos. Hay distintas formas de superarlos, y lo que funciona mejor puede ser diferente para cada persona. Las piedras también son parte del camino. Lo importante es saber qué hacer. Vamos a aprender a reconocer los obstáculos más comunes y qué hacer para superarlos sin abandonar tu meta.",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Lectura 1",
+                  "description": "Lee y escucha la sesión del día",
+                  "fullDescription": "",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Lectura 2",
+                  "description": "Lee y escucha la sesión del día",
+                  "fullDescription": "",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Lectura 3",
+                  "description": "Lee y escucha la sesión del día",
+                  "fullDescription": "",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Lectura 4",
+                  "description": "Lee y escucha la sesión del día",
+                  "fullDescription": "",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
+                  "type": "QUIZ",
+                  "title": "Pregunta del día",
+                  "description": "Responde las preguntas de la sesión",
+                  "iconResId": "outline_trophy_24",
+                  "questions": [
+                    {
+                      "questionText": "Cuando aparece una “piedra en el camino” (por ejemplo: “no tengo ganas”), ¿qué es lo más útil?",
+                      "options": [
+                        "Esperar a sentirte mejor y recién ahí hacerlo.",
+                        "Reconocer la barrera y hacer una versión más",
+                        "Dejar la meta para la próxima semana."
+                      ],
+                      "correctAnswerIndex": 1
+                    }
+                  ]
+                },
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Fin de la sesión",
+                  "description": "Como vimos, hay días en los que hasta cosas que parecen simples tienen sus dificultades. Pero casi todo se soluciona si identificás la piedra 'en el camino' y ajustás el plan. En la próxima sesión vamos a ver cómo revisar tu progreso. ¡Te va a ayudar mucho!",
+                  "fullDescription": "Como vimos, hay días en los que hasta cosas que parecen simples tienen sus dificultades. Pero casi todo se soluciona si identificás la piedra 'en el camino' y ajustás el plan. En la próxima sesión vamos a ver cómo revisar tu progreso. ¡Te va a ayudar mucho!",
+                  "iconResId": "outline_unknown_document_24"
+                }
+              ]
+            },
+            {
+              "id": 3,
+              "title": "Sesión 3",
+              "duration": "05:00",
+              "multimedia": [
+                {
+                  "type": "DESCRIPTION",
+                  "title": "La importancia de revisar mis metas",
+                  "description": "¡Hola! Llegaste a una parte clave: revisar tu meta. No para juzgarte, sino para aprender y avanzar. Las metas son esa pequeñas tareas o actividades que vamos haciendo y que nos llevaran a mejorar nuestra salud. No son para cumplir con nadie sino con vos mismo.",
+                  "fullDescription": "¡Hola! Llegaste a una parte clave: revisar tu meta. No para juzgarte, sino para aprender y avanzar. Las metas son esa pequeñas tareas o actividades que vamos haciendo y que nos llevaran a mejorar nuestra salud. No son para cumplir con nadie sino con vos mismo.\n\nHoy vamos a ver por qué revisar tu meta sirve para ver lo que avanzaste, entender qué te costó y ajustar el plan si hace falta.",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
+                  "type": "VIDEO",
+                  "title": "Video",
+                  "description": "Ver video de la sesión",
+                  "iconImageVector": "PlayArrow",
+                  "contentAsset": "exercise"
                 },
                 {
                   "type": "METAS",
@@ -800,6 +943,13 @@
                   "description": "Configura tus metas para esta sesión de diabetes",
                   "iconResId": "outline_trophy_24",
                   "metasId": "diabetes"
+                },
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Fin de la sesión",
+                  "description": "¡Muy bien! Revisar tu meta es una forma de cuidarte: te ayuda a ver tus avances y aprender de lo difícil. La próxima semana veremos algo importante: cómo premiarte de forma sana por tu esfuerzo.",
+                  "fullDescription": "¡Muy bien! Revisar tu meta es una forma de cuidarte: te ayuda a ver tus avances y aprender de lo difícil. La próxima semana veremos algo importante: cómo premiarte de forma sana por tu esfuerzo.",
+                  "iconResId": "outline_unknown_document_24"
                 }
               ]
             }
@@ -807,28 +957,131 @@
         },
         {
           "id": 34,
-          "title": "Semana 3 Diabetes",
+          "title": "Semana 3: La activación conductual y la salud",
           "thumbnail": "missing_photo",
           "duration": "10 min",
           "subSessions": [
             {
               "id": 1,
-              "title": "Sesion 1",
+              "title": "Sesión 1",
               "duration": "05:00",
               "multimedia": [
                 {
+                  "type": "DESCRIPTION",
+                  "title": "Premiarme de forma sana",
+                  "description": "¡Hola! Venís haciendo esfuerzos, incluso cuando no era fácil. Hoy vamos a ver formas de premiar nuestro esfuerzo de manera saludable para seguir avanzando. Hoy el premio no es por hacerlo perfecto: es por intentarlo y seguir tu plan.",
+                  "fullDescription": "¡Hola! Venís haciendo esfuerzos, incluso cuando no era fácil. Hoy vamos a ver formas de premiar nuestro esfuerzo de manera saludable para seguir avanzando. Hoy el premio no es por hacerlo perfecto: es por intentarlo y seguir tu plan.\n\nVamos a ver por qué premiar tu esfuerzo de forma saludable puede ayudarte a seguir adelante y cómo elegir un premio que te haga bien. : La activación",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Lectura 1",
+                  "description": "Lee y escucha la sesión del día",
+                  "fullDescription": "",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Lectura 2",
+                  "description": "Lee y escucha la sesión del día",
+                  "fullDescription": "",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
+                  "type": "QUIZ",
+                  "title": "Pregunta del día",
+                  "description": "Responde las preguntas de la sesión",
+                  "iconResId": "outline_trophy_24",
+                  "questions": [
+                    {
+                      "questionText": "Un buen premio es solo para cuando cumples tu meta al 100%.",
+                      "options": [
+                        "Verdadero",
+                        "Falso"
+                      ],
+                      "correctAnswerIndex": 0
+                    }
+                  ]
+                },
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Fin de la sesión",
+                  "description": "¡Muy bien! Premiarte de forma sana es una manera de reconocer tu esfuerzo y aumentar tus ganas de seguir. En la próxima sesión vamos a ver cómo las metas se conectan con el cuidado de tu salud.",
+                  "fullDescription": "¡Muy bien! Premiarte de forma sana es una manera de reconocer tu esfuerzo y aumentar tus ganas de seguir. En la próxima sesión vamos a ver cómo las metas se conectan con el cuidado de tu salud.",
+                  "iconResId": "outline_unknown_document_24"
+                }
+              ]
+            },
+            {
+              "id": 2,
+              "title": "Sesión 2",
+              "duration": "05:00",
+              "multimedia": [
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Usando la activación conductual para cuidar mi salud",
+                  "description": "¡Hola! Hoy vamos a ver cómo todo lo que fuimos trabajando sobre metas y pasos chiquitos también te puede ayudar con el cuidado de tu salud. Cuando el ánimo cambia, el plan te sostiene: pasos pequeños también cuentan para tu salud.",
+                  "fullDescription": "¡Hola! Hoy vamos a ver cómo todo lo que fuimos trabajando sobre metas y pasos chiquitos también te puede ayudar con el cuidado de tu salud. Cuando el ánimo cambia, el plan te sostiene: pasos pequeños también cuentan para tu salud.\n\nSeguimos trabajando con metas y pasos pequeños como aliados para cuidar tu salud, incluso en días difíciles. Hoy vas a ver cómo aplicarlos al cuidado de tu salud física.",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
                   "type": "VIDEO",
-                  "title": "Video Genérico (Diabetes)",
-                  "description": "Ver el vídeo genérico de la sesión de diabetes",
+                  "title": "Video",
+                  "description": "Ver video de la sesión",
                   "iconImageVector": "PlayArrow",
                   "contentAsset": "exercise"
                 },
                 {
-                  "type": "AUDIO",
-                  "title": "Audio Genérico (Diabetes)",
-                  "description": "Escuchar el audio genérico de la sesión de diabetes",
-                  "iconResId": "outline_headphones_24",
-                  "contentAsset": "audio_explicativo"
+                  "type": "QUIZ",
+                  "title": "Pregunta del día",
+                  "description": "Responde las preguntas de la sesión",
+                  "iconResId": "outline_trophy_24",
+                  "questions": [
+                    {
+                      "questionText": "Cuando el estado de ánimo está bajo y cuesta cuidarse (por ejemplo, tomar el medicamento), ¿qué estrategia suele ser más útil?",
+                      "options": [
+                        "Esperar a “sentirse con ganas” para recién",
+                        "Hacer un plan simple (qué/cuándo/dónde) y",
+                        "Dejarlo para la próxima semana para"
+                      ],
+                      "correctAnswerIndex": 1
+                    }
+                  ]
+                },
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Fin de la sesión",
+                  "description": "Lo que venimos trabajando con metas y pasos pequeños también sirve para el cuidado de tu salud. Las metas son como pasos que te acercan a un objetivo mayor: sentirte mejor y cuidar tu salud. Pasos chiquitos, plan claro y apoyo cuando haga falta. En la próxima sesión vamos a hacer un repaso de todo lo aprendido.",
+                  "fullDescription": "Lo que venimos trabajando con metas y pasos pequeños también sirve para el cuidado de tu salud. Las metas son como pasos que te acercan a un objetivo mayor: sentirte mejor y cuidar tu salud. Pasos chiquitos, plan claro y apoyo cuando haga falta. En la próxima sesión vamos a hacer un repaso de todo lo aprendido.",
+                  "iconResId": "outline_unknown_document_24"
+                }
+              ]
+            },
+            {
+              "id": 3,
+              "title": "Sesión 3",
+              "duration": "05:00",
+              "multimedia": [
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Revisando lo aprendido",
+                  "description": "¡Hola! Llegaste a un momento importante: hoy vamos a repasar todo lo que trabajamos estas semanas. La idea es que te quedes con lo esencial para seguir aplicándolo día a día.",
+                  "fullDescription": "¡Hola! Llegaste a un momento importante: hoy vamos a repasar todo lo que trabajamos estas semanas. La idea es que te quedes con lo esencial para seguir aplicándolo día a día.\n\nYa vimos algunas herramientas. Ahora vamos a ponerlas en práctica para cuidar tu salud. Repasaremos lo que trabajamos estas semanas y elegiremos qué vas a seguir aplicando para avanzar paso a paso, incluso durante los días difíciles.",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Lectura 1",
+                  "description": "Lee y escucha la sesión del día",
+                  "fullDescription": "",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Lectura 2",
+                  "description": "Lee y escucha la sesión del día",
+                  "fullDescription": "",
+                  "iconResId": "outline_unknown_document_24"
                 },
                 {
                   "type": "METAS",
@@ -836,6 +1089,13 @@
                   "description": "Configura tus metas para esta sesión de diabetes",
                   "iconResId": "outline_trophy_24",
                   "metasId": "diabetes"
+                },
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Fin de la sesión",
+                  "description": "¡Excelente! Completaste las primeras tres semanas. Ya tenés herramientas que funcionan. Ahora viene algo muy importante: vamos a aplicar todo esto a tu estilo de vida, con consejos prácticos sobre alimentación, actividad física, sueño y . ¡Seguí adelante, vas muy bien!",
+                  "fullDescription": "¡Excelente! Completaste las primeras tres semanas. Ya tenés herramientas que funcionan. Ahora viene algo muy importante: vamos a aplicar todo esto a tu estilo de vida, con consejos prácticos sobre alimentación, actividad física, sueño y . ¡Seguí adelante, vas muy bien!",
+                  "iconResId": "outline_unknown_document_24"
                 }
               ]
             }
@@ -843,35 +1103,121 @@
         },
         {
           "id": 35,
-          "title": "Semana 4 Diabetes",
+          "title": "Semana 4: Comprendiendo la diabetes",
           "thumbnail": "missing_photo",
           "duration": "10 min",
           "subSessions": [
             {
               "id": 1,
-              "title": "Sesion 1",
+              "title": "Sesión 1",
               "duration": "05:00",
               "multimedia": [
                 {
+                  "type": "DESCRIPTION",
+                  "title": "¿Qué es la diabetes?",
+                  "description": "¡Hola! Cuidar tu glucosa es cuidarte. Vamos a conversar sobre qué es la diabetes y qué formas existen para medir tus niveles de glucosa.",
+                  "fullDescription": "¡Hola! Cuidar tu glucosa es cuidarte. Vamos a conversar sobre qué es la diabetes y qué formas existen para medir tus niveles de glucosa.",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
                   "type": "VIDEO",
-                  "title": "Video Genérico (Diabetes)",
-                  "description": "Ver el vídeo genérico de la sesión de diabetes",
+                  "title": "Video",
+                  "description": "Ver video de la sesión",
                   "iconImageVector": "PlayArrow",
                   "contentAsset": "exercise"
                 },
                 {
-                  "type": "AUDIO",
-                  "title": "Audio Genérico (Diabetes)",
-                  "description": "Escuchar el audio genérico de la sesión de diabetes",
-                  "iconResId": "outline_headphones_24",
-                  "contentAsset": "audio_explicativo"
+                  "type": "DESCRIPTION",
+                  "title": "Lectura",
+                  "description": "Lee y escucha la sesión del día",
+                  "fullDescription": "",
+                  "iconResId": "outline_unknown_document_24"
                 },
                 {
-                  "type": "METAS",
-                  "title": "Metas (Diabetes)",
-                  "description": "Configura tus metas para esta sesión de diabetes",
+                  "type": "DESCRIPTION",
+                  "title": "Fin de la sesión",
+                  "description": "Con hábitos y constancia, podés mantenerte saludable cada día.",
+                  "fullDescription": "Con hábitos y constancia, podés mantenerte saludable cada día.",
+                  "iconResId": "outline_unknown_document_24"
+                }
+              ]
+            },
+            {
+              "id": 2,
+              "title": "Sesión 2",
+              "duration": "05:00",
+              "multimedia": [
+                {
+                  "type": "DESCRIPTION",
+                  "title": "¿Cómo sé si tengo la glucosa alta o baja?",
+                  "description": "¡Hola! Te damos la bienvenida a esta sesión sobre diabetes. Conocer tu cuerpo y medir tu glucosa te ayuda a cuidarte mejor cada día. Vamos a hablar de cómo podés reconocer si tu glucosa está muy alta o muy baja y qué podés hacer al respecto.",
+                  "fullDescription": "¡Hola! Te damos la bienvenida a esta sesión sobre diabetes. Conocer tu cuerpo y medir tu glucosa te ayuda a cuidarte mejor cada día. Vamos a hablar de cómo podés reconocer si tu glucosa está muy alta o muy baja y qué podés hacer al respecto.",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Lectura 1",
+                  "description": "Lee y escucha la sesión del día",
+                  "fullDescription": "",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Lectura 2",
+                  "description": "Lee y escucha la sesión del día",
+                  "fullDescription": "",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
+                  "type": "QUIZ",
+                  "title": "Pregunta del día",
+                  "description": "Responde las preguntas de la sesión",
                   "iconResId": "outline_trophy_24",
-                  "metasId": "diabetes"
+                  "questions": [
+                    {
+                      "questionText": "La mejor forma de saber cómo está mi glucosa es midiéndola con un glucómetro o un análisis de sangre",
+                      "options": [
+                        "Verdadero",
+                        "Falso"
+                      ],
+                      "correctAnswerIndex": 0
+                    }
+                  ]
+                },
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Fin de la sesión",
+                  "description": "Reconocer los síntomas y medir tu glucosa te ayuda a cuidarte y actuar a tiempo.",
+                  "fullDescription": "Reconocer los síntomas y medir tu glucosa te ayuda a cuidarte y actuar a tiempo.",
+                  "iconResId": "outline_unknown_document_24"
+                }
+              ]
+            },
+            {
+              "id": 3,
+              "title": "Sesión 3",
+              "duration": "05:00",
+              "multimedia": [
+                {
+                  "type": "DESCRIPTION",
+                  "title": "¿Cuáles son los beneficios de controlar la diabetes?",
+                  "description": "¡Hola! Te damos la bienvenida a esta sesión sobre diabetes. Cada pequeño esfuerzo cuenta, y tu cuerpo te lo agradece. Repasaremos cómo la diabetes está relacionada con la salud de tus riñones, tu corazón, tus ojos y tu sistema nervioso.",
+                  "fullDescription": "¡Hola! Te damos la bienvenida a esta sesión sobre diabetes. Cada pequeño esfuerzo cuenta, y tu cuerpo te lo agradece. Repasaremos cómo la diabetes está relacionada con la salud de tus riñones, tu corazón, tus ojos y tu sistema nervioso.",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Lectura",
+                  "description": "Lee y escucha la sesión del día",
+                  "fullDescription": "",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Fin de la sesión",
+                  "description": "Cuidar tu glucosa es cuidar tus riñones, tu vista, tu sistema nervioso y tu corazón.",
+                  "fullDescription": "Cuidar tu glucosa es cuidar tus riñones, tu vista, tu sistema nervioso y tu corazón.",
+                  "iconResId": "outline_unknown_document_24"
                 }
               ]
             }
@@ -879,28 +1225,100 @@
         },
         {
           "id": 21,
-          "title": "Semana 5 Diabetes",
+          "title": "Semana 5: Aprendiendo a cuidarme",
           "thumbnail": "missing_photo",
           "duration": "10 min",
           "subSessions": [
             {
               "id": 1,
-              "title": "Sesion 1",
+              "title": "Sesión 1",
               "duration": "05:00",
               "multimedia": [
                 {
+                  "type": "DESCRIPTION",
+                  "title": "Cuidarnos para sentirnos mejor",
+                  "description": "¡Hola! El cuerpo agradece los pequeños cuidados, incluso cuando a primera vista estos parecen poco importantes. Vamos a identificar formas simples de cuidar el cuerpo y las emociones, incluso cuando no hay ganas.",
+                  "fullDescription": "¡Hola! El cuerpo agradece los pequeños cuidados, incluso cuando a primera vista estos parecen poco importantes. Vamos a identificar formas simples de cuidar el cuerpo y las emociones, incluso cuando no hay ganas.",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
                   "type": "VIDEO",
-                  "title": "Video Genérico (Diabetes)",
-                  "description": "Ver el vídeo genérico de la sesión de diabetes",
+                  "title": "Video",
+                  "description": "Ver video de la sesión",
                   "iconImageVector": "PlayArrow",
                   "contentAsset": "exercise"
                 },
                 {
-                  "type": "AUDIO",
-                  "title": "Audio Genérico (Diabetes)",
-                  "description": "Escuchar el audio genérico de la sesión de diabetes",
-                  "iconResId": "outline_headphones_24",
-                  "contentAsset": "audio_explicativo"
+                  "type": "DESCRIPTION",
+                  "title": "Fin de la sesión",
+                  "description": "¡Seguí así, tu constancia es tu mejor aliada!",
+                  "fullDescription": "¡Seguí así, tu constancia es tu mejor aliada!",
+                  "iconResId": "outline_unknown_document_24"
+                }
+              ]
+            },
+            {
+              "id": 2,
+              "title": "Sesión 2",
+              "duration": "05:00",
+              "multimedia": [
+                {
+                  "type": "DESCRIPTION",
+                  "title": "¿Cómo el movimiento nos hace sentir mejor?",
+                  "description": "¡Hola! No hace falta mucho para empezar: unos minutos pueden cambiar cómo nos sentimos. Hoy vamos a aprender a integrar el ejercicio como un hábito, dándole valor a los pequeños movimientos incluso en los días de ánimo bajo.",
+                  "fullDescription": "¡Hola! No hace falta mucho para empezar: unos minutos pueden cambiar cómo nos sentimos. Hoy vamos a aprender a integrar el ejercicio como un hábito, dándole valor a los pequeños movimientos incluso en los días de ánimo bajo.",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Lectura",
+                  "description": "Lee y escucha la sesión del día",
+                  "fullDescription": "",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
+                  "type": "QUIZ",
+                  "title": "Pregunta del día",
+                  "description": "Responde las preguntas de la sesión",
+                  "iconResId": "outline_trophy_24",
+                  "questions": [
+                    {
+                      "questionText": "¿Cuáles son los beneficios del movimiento y la actividad física en nuestro cuerpo?",
+                      "options": [
+                        "Mejora la presión, mejora la glucosa, reduce",
+                        "Sólo me ayuda a bajar de peso para tener"
+                      ],
+                      "correctAnswerIndex": 0
+                    }
+                  ]
+                },
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Fin de la sesión",
+                  "description": "¡ Seguí así, tu constancia es tu mejor aliada!",
+                  "fullDescription": "¡ Seguí así, tu constancia es tu mejor aliada!",
+                  "iconResId": "outline_unknown_document_24"
+                }
+              ]
+            },
+            {
+              "id": 3,
+              "title": "Sesión 3",
+              "duration": "05:00",
+              "multimedia": [
+                {
+                  "type": "DESCRIPTION",
+                  "title": "¿Cómo empezar a movernos de manera segura?",
+                  "description": "¡Hola! Te damos la bienvenida a esta sesión sobre ejercicio. Empezá despacio, cuidate y avanzá poco a poco. Hoy vamos a prepararnos para hacer ejercicio de manera segura. Además, hablaremos de qué actividades sencillas podés hacer para moverte más.",
+                  "fullDescription": "¡Hola! Te damos la bienvenida a esta sesión sobre ejercicio. Empezá despacio, cuidate y avanzá poco a poco. Hoy vamos a prepararnos para hacer ejercicio de manera segura. Además, hablaremos de qué actividades sencillas podés hacer para moverte más.",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Lectura",
+                  "description": "Lee y escucha la sesión del día",
+                  "fullDescription": "",
+                  "iconResId": "outline_unknown_document_24"
                 },
                 {
                   "type": "METAS",
@@ -908,6 +1326,13 @@
                   "description": "Configura tus metas para esta sesión de diabetes",
                   "iconResId": "outline_trophy_24",
                   "metasId": "diabetes"
+                },
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Fin de la sesión",
+                  "description": "El ejercicio te ayuda, siempre que lo hagas de forma segura y continua.",
+                  "fullDescription": "El ejercicio te ayuda, siempre que lo hagas de forma segura y continua.",
+                  "iconResId": "outline_unknown_document_24"
                 }
               ]
             }
@@ -915,28 +1340,107 @@
         },
         {
           "id": 22,
-          "title": "Semana 6 Diabetes",
+          "title": "Semana 6: Actividad física cuerpo y mente en movimiento",
           "thumbnail": "missing_photo",
           "duration": "10 min",
           "subSessions": [
             {
               "id": 1,
-              "title": "Sesion 1",
+              "title": "Sesión 1",
               "duration": "05:00",
               "multimedia": [
                 {
+                  "type": "DESCRIPTION",
+                  "title": "Haciendo del ejercicio un hábito saludable",
+                  "description": "¡Hola! Recordá que cualquier movimiento, por pequeño que sea, es un triunfo para tu corazón y tu ánimo. Hoy vamos a aprender a construir el hábito de movernos a nuestro propio ritmo y sin presiones.",
+                  "fullDescription": "¡Hola! Recordá que cualquier movimiento, por pequeño que sea, es un triunfo para tu corazón y tu ánimo. Hoy vamos a aprender a construir el hábito de movernos a nuestro propio ritmo y sin presiones.",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Lectura 1",
+                  "description": "Lee y escucha la sesión del día",
+                  "fullDescription": "",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Lectura 2",
+                  "description": "Lee y escucha la sesión del día",
+                  "fullDescription": "",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
+                  "type": "QUIZ",
+                  "title": "Pregunta del día",
+                  "description": "Responde las preguntas de la sesión",
+                  "iconResId": "outline_trophy_24",
+                  "questions": [
+                    {
+                      "questionText": "Hacer un poco de ejercicio puede ayudar a sentirse mejor de ánimo.",
+                      "options": [
+                        "Verdadero",
+                        "Falso"
+                      ],
+                      "correctAnswerIndex": 0
+                    }
+                  ]
+                },
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Fin de la sesión",
+                  "description": "Cada vez que te movés, tu cuerpo y tu mente te lo agradecen.",
+                  "fullDescription": "Cada vez que te movés, tu cuerpo y tu mente te lo agradecen.",
+                  "iconResId": "outline_unknown_document_24"
+                }
+              ]
+            },
+            {
+              "id": 2,
+              "title": "Sesión 2",
+              "duration": "05:00",
+              "multimedia": [
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Movimiento y flexibilidad",
+                  "description": "¡Hola! Un pequeño comienzo es un gran cambio Hoy revisaremos unas rutinas de ejercicios de flexibilidad",
+                  "fullDescription": "¡Hola! Un pequeño comienzo es un gran cambio Hoy revisaremos unas rutinas de ejercicios de flexibilidad",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
                   "type": "VIDEO",
-                  "title": "Video Genérico (Diabetes)",
-                  "description": "Ver el vídeo genérico de la sesión de diabetes",
+                  "title": "Video",
+                  "description": "Ver video de la sesión",
                   "iconImageVector": "PlayArrow",
                   "contentAsset": "exercise"
                 },
                 {
-                  "type": "AUDIO",
-                  "title": "Audio Genérico (Diabetes)",
-                  "description": "Escuchar el audio genérico de la sesión de diabetes",
-                  "iconResId": "outline_headphones_24",
-                  "contentAsset": "audio_explicativo"
+                  "type": "DESCRIPTION",
+                  "title": "Fin de la sesión",
+                  "description": "Repetí los ejercicios la mayor cantidad de días a la semana que puedas. Pronto notarás el cambio en tu forma de sentirte. Recrodá que el mundo no se cambia en un día, a seguir construyendo este cambio en tu vida.",
+                  "fullDescription": "Repetí los ejercicios la mayor cantidad de días a la semana que puedas. Pronto notarás el cambio en tu forma de sentirte. Recrodá que el mundo no se cambia en un día, a seguir construyendo este cambio en tu vida.",
+                  "iconResId": "outline_unknown_document_24"
+                }
+              ]
+            },
+            {
+              "id": 3,
+              "title": "Sesión 3",
+              "duration": "05:00",
+              "multimedia": [
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Movimiento y coordinación",
+                  "description": "¡Hola! Cuando elegís moverte, elegís cuidarte. Y ese movimiento tiene más fuerza de la que imaginás. Hoy revisaremos unas rutinas de ejercicios de coordinación muscular.",
+                  "fullDescription": "¡Hola! Cuando elegís moverte, elegís cuidarte. Y ese movimiento tiene más fuerza de la que imaginás. Hoy revisaremos unas rutinas de ejercicios de coordinación muscular.",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
+                  "type": "VIDEO",
+                  "title": "Video",
+                  "description": "Ver video de la sesión",
+                  "iconImageVector": "PlayArrow",
+                  "contentAsset": "exercise"
                 },
                 {
                   "type": "METAS",
@@ -944,6 +1448,13 @@
                   "description": "Configura tus metas para esta sesión de diabetes",
                   "iconResId": "outline_trophy_24",
                   "metasId": "diabetes"
+                },
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Fin de la sesión",
+                  "description": "Repetí los ejercicios la mayor cantidad de días a la semana que puedas. Pronto notarás el cambio en tu salud.",
+                  "fullDescription": "Repetí los ejercicios la mayor cantidad de días a la semana que puedas. Pronto notarás el cambio en tu salud.",
+                  "iconResId": "outline_unknown_document_24"
                 }
               ]
             }
@@ -951,28 +1462,100 @@
         },
         {
           "id": 23,
-          "title": "Semana 7 Diabetes",
+          "title": "Semana 7: ¿Cómo alimentarnos mejor?",
           "thumbnail": "missing_photo",
           "duration": "10 min",
           "subSessions": [
             {
               "id": 1,
-              "title": "Sesion 1",
+              "title": "Sesión 1",
               "duration": "05:00",
               "multimedia": [
                 {
+                  "type": "DESCRIPTION",
+                  "title": "¿Cómo comenzar a alimentarnos mejor?",
+                  "description": "¡Hola! Te damos la bienvenida a esta nueva semana. Una alimentación saludable empieza con hábitos simples. Hoy vamos a conversar sobre cómo alimentarnos mejor.",
+                  "fullDescription": "¡Hola! Te damos la bienvenida a esta nueva semana. Una alimentación saludable empieza con hábitos simples. Hoy vamos a conversar sobre cómo alimentarnos mejor.",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
                   "type": "VIDEO",
-                  "title": "Video Genérico (Diabetes)",
-                  "description": "Ver el vídeo genérico de la sesión de diabetes",
+                  "title": "Video",
+                  "description": "Ver video de la sesión",
                   "iconImageVector": "PlayArrow",
                   "contentAsset": "exercise"
                 },
                 {
-                  "type": "AUDIO",
-                  "title": "Audio Genérico (Diabetes)",
-                  "description": "Escuchar el audio genérico de la sesión de diabetes",
-                  "iconResId": "outline_headphones_24",
-                  "contentAsset": "audio_explicativo"
+                  "type": "DESCRIPTION",
+                  "title": "Fin de la sesión",
+                  "description": "Intenta comer a horario, no excederte en las porciones, y tomar agua.",
+                  "fullDescription": "Intenta comer a horario, no excederte en las porciones, y tomar agua.",
+                  "iconResId": "outline_unknown_document_24"
+                }
+              ]
+            },
+            {
+              "id": 2,
+              "title": "Sesión 2",
+              "duration": "05:00",
+              "multimedia": [
+                {
+                  "type": "DESCRIPTION",
+                  "title": "¿Cómo podemos organizar nuestras comidas?",
+                  "description": "¡Hola! Te damos la bienvenida a esta nueva sesión sobre alimentación. Con lo que hay en casa, se pueden hacer elecciones que cuidan la salud. Hoy hablaremos de cómo organizar nuestras comidas.",
+                  "fullDescription": "¡Hola! Te damos la bienvenida a esta nueva sesión sobre alimentación. Con lo que hay en casa, se pueden hacer elecciones que cuidan la salud. Hoy hablaremos de cómo organizar nuestras comidas.",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
+                  "type": "VIDEO",
+                  "title": "Video",
+                  "description": "Ver video de la sesión",
+                  "iconImageVector": "PlayArrow",
+                  "contentAsset": "exercise"
+                },
+                {
+                  "type": "QUIZ",
+                  "title": "Pregunta del día",
+                  "description": "Responde las preguntas de la sesión",
+                  "iconResId": "outline_trophy_24",
+                  "questions": [
+                    {
+                      "questionText": "Organizar mejor tus comidas te ayuda a cuidar tu salud",
+                      "options": [
+                        "Verdadero",
+                        "Falso"
+                      ],
+                      "correctAnswerIndex": 0
+                    }
+                  ]
+                },
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Fin de la sesión",
+                  "description": "Organizar las comidas es buscar equilibrio, no perfección.",
+                  "fullDescription": "Organizar las comidas es buscar equilibrio, no perfección.",
+                  "iconResId": "outline_unknown_document_24"
+                }
+              ]
+            },
+            {
+              "id": 3,
+              "title": "Sesión 3",
+              "duration": "05:00",
+              "multimedia": [
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Comer sano teniendo diabetes",
+                  "description": "¡Hola! Te damos la bienvenida a esta sesión. Hoy vamos a ver cómo elegir alimentos que te ayuden a cuidar tu diabetes.",
+                  "fullDescription": "¡Hola! Te damos la bienvenida a esta sesión. Hoy vamos a ver cómo elegir alimentos que te ayuden a cuidar tu diabetes.",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
+                  "type": "VIDEO",
+                  "title": "Video",
+                  "description": "Ver video de la sesión",
+                  "iconImageVector": "PlayArrow",
+                  "contentAsset": "exercise"
                 },
                 {
                   "type": "METAS",
@@ -980,6 +1563,13 @@
                   "description": "Configura tus metas para esta sesión de diabetes",
                   "iconResId": "outline_trophy_24",
                   "metasId": "diabetes"
+                },
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Fin de la sesión",
+                  "description": "No hace falta cambiar todo de golpe: valorá cada paso que das hacia una vida más sana.",
+                  "fullDescription": "No hace falta cambiar todo de golpe: valorá cada paso que das hacia una vida más sana.",
+                  "iconResId": "outline_unknown_document_24"
                 }
               ]
             }
@@ -987,28 +1577,114 @@
         },
         {
           "id": 24,
-          "title": "Semana 8 Diabetes",
+          "title": "Semana 8: Alimentación saludable en el día a día",
           "thumbnail": "missing_photo",
           "duration": "10 min",
           "subSessions": [
             {
               "id": 1,
-              "title": "Sesion 1",
+              "title": "Sesión 1",
               "duration": "05:00",
               "multimedia": [
                 {
+                  "type": "DESCRIPTION",
+                  "title": "Comiendo saludable en el día a día",
+                  "description": "¡Hola! Te damos la bienvenida a esta nueva semana. Tu salud comienza en tu cocina. Vamos a aprender recetas prácticas para el día a día.",
+                  "fullDescription": "¡Hola! Te damos la bienvenida a esta nueva semana. Tu salud comienza en tu cocina. Vamos a aprender recetas prácticas para el día a día.",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
                   "type": "VIDEO",
-                  "title": "Video Genérico (Diabetes)",
-                  "description": "Ver el vídeo genérico de la sesión de diabetes",
+                  "title": "Video Receta 1",
+                  "description": "Ver video de la sesión",
                   "iconImageVector": "PlayArrow",
                   "contentAsset": "exercise"
                 },
                 {
-                  "type": "AUDIO",
-                  "title": "Audio Genérico (Diabetes)",
-                  "description": "Escuchar el audio genérico de la sesión de diabetes",
-                  "iconResId": "outline_headphones_24",
-                  "contentAsset": "audio_explicativo"
+                  "type": "VIDEO",
+                  "title": "Video Receta 2",
+                  "description": "Ver video de la sesión",
+                  "iconImageVector": "PlayArrow",
+                  "contentAsset": "exercise"
+                },
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Fin de la sesión",
+                  "description": "Disfruta el sabor de cuidarte.",
+                  "fullDescription": "Disfruta el sabor de cuidarte.",
+                  "iconResId": "outline_unknown_document_24"
+                }
+              ]
+            },
+            {
+              "id": 2,
+              "title": "Sesión 2",
+              "duration": "05:00",
+              "multimedia": [
+                {
+                  "type": "DESCRIPTION",
+                  "title": "¿Cómo hacer que la alimentación saludable sea un hábito?",
+                  "description": "¡Hola! Te damos la bienvenida a la sesión de hoy. Con pequeños pasos, buena organización y elecciones simples, podés comer mejor sin gastar más. Revisaremos algunas recomendaciones para que comer saludable sea más fácil y accesible en tu día a día.",
+                  "fullDescription": "¡Hola! Te damos la bienvenida a la sesión de hoy. Con pequeños pasos, buena organización y elecciones simples, podés comer mejor sin gastar más. Revisaremos algunas recomendaciones para que comer saludable sea más fácil y accesible en tu día a día.",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Lectura 1",
+                  "description": "Lee y escucha la sesión del día",
+                  "fullDescription": "",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Lectura 2",
+                  "description": "Lee y escucha la sesión del día",
+                  "fullDescription": "",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
+                  "type": "QUIZ",
+                  "title": "Pregunta del día",
+                  "description": "Responde las preguntas de la sesión",
+                  "iconResId": "outline_trophy_24",
+                  "questions": [
+                    {
+                      "questionText": "¿Qué puede hacer María para organizar mejor sus comidas?",
+                      "options": [
+                        "Planificar un menú semanal junto a su hija.",
+                        "Comprar comida cada día sin planificar."
+                      ],
+                      "correctAnswerIndex": 0
+                    }
+                  ]
+                },
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Fin de la sesión",
+                  "description": "Con un poco de organización, como planear las comidas, hacer una lista y cocinar por adelantado, podés ahorrar tiempo y dinero.",
+                  "fullDescription": "Con un poco de organización, como planear las comidas, hacer una lista y cocinar por adelantado, podés ahorrar tiempo y dinero.",
+                  "iconResId": "outline_unknown_document_24"
+                }
+              ]
+            },
+            {
+              "id": 3,
+              "title": "Sesión 3",
+              "duration": "05:00",
+              "multimedia": [
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Hábitos que ayudan a sentirse mejor",
+                  "description": "¡Hola! Te damos la bienvenida a esta sesión. Sentirse mejor no es una meta lejana. Hoy conoceremos los grupos de alimentos y cómo organizarlos.",
+                  "fullDescription": "¡Hola! Te damos la bienvenida a esta sesión. Sentirse mejor no es una meta lejana. Hoy conoceremos los grupos de alimentos y cómo organizarlos.",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
+                  "type": "VIDEO",
+                  "title": "Video",
+                  "description": "Ver video de la sesión",
+                  "iconImageVector": "PlayArrow",
+                  "contentAsset": "exercise"
                 },
                 {
                   "type": "METAS",
@@ -1016,6 +1692,13 @@
                   "description": "Configura tus metas para esta sesión de diabetes",
                   "iconResId": "outline_trophy_24",
                   "metasId": "diabetes"
+                },
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Fin de la sesión",
+                  "description": "Construir, de a poco, hábitos posibles que cuiden tu cuerpo y tu día a día.",
+                  "fullDescription": "Construir, de a poco, hábitos posibles que cuiden tu cuerpo y tu día a día.",
+                  "iconResId": "outline_unknown_document_24"
                 }
               ]
             }
@@ -1023,28 +1706,105 @@
         },
         {
           "id": 25,
-          "title": "Semana 9 Diabetes",
+          "title": "Semana 9: Comer rico juntos, sin dejar de cuidarnos",
           "thumbnail": "missing_photo",
           "duration": "10 min",
           "subSessions": [
             {
               "id": 1,
-              "title": "Sesion 1",
+              "title": "Sesión 1",
               "duration": "05:00",
               "multimedia": [
                 {
-                  "type": "VIDEO",
-                  "title": "Video Genérico (Diabetes)",
-                  "description": "Ver el vídeo genérico de la sesión de diabetes",
-                  "iconImageVector": "PlayArrow",
-                  "contentAsset": "exercise"
+                  "type": "DESCRIPTION",
+                  "title": "Comer lo mismo, cuidarnos todos",
+                  "description": "¡Hola! Te damos la bienvenida a esta sesión. Cuando cocinamos en casa, no sólo preparamos comida: construimos salud para todos. Hoy vamos a ver cómo adaptar una alimentación más saludable usando los mismos alimentos para toda la familia.",
+                  "fullDescription": "¡Hola! Te damos la bienvenida a esta sesión. Cuando cocinamos en casa, no sólo preparamos comida: construimos salud para todos. Hoy vamos a ver cómo adaptar una alimentación más saludable usando los mismos alimentos para toda la familia.",
+                  "iconResId": "outline_unknown_document_24"
                 },
                 {
-                  "type": "AUDIO",
-                  "title": "Audio Genérico (Diabetes)",
-                  "description": "Escuchar el audio genérico de la sesión de diabetes",
-                  "iconResId": "outline_headphones_24",
-                  "contentAsset": "audio_explicativo"
+                  "type": "DESCRIPTION",
+                  "title": "Lectura 1",
+                  "description": "Lee y escucha la sesión del día",
+                  "fullDescription": "",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Lectura 2",
+                  "description": "Lee y escucha la sesión del día",
+                  "fullDescription": "",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Fin de la sesión",
+                  "description": "Elegir agua, más verduras y comida casera es la mejor receta para alimentarnos de manera más saludable.",
+                  "fullDescription": "Elegir agua, más verduras y comida casera es la mejor receta para alimentarnos de manera más saludable.",
+                  "iconResId": "outline_unknown_document_24"
+                }
+              ]
+            },
+            {
+              "id": 2,
+              "title": "Sesión 2",
+              "duration": "05:00",
+              "multimedia": [
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Elegir bien sin dejar de disfrutar",
+                  "description": "¡Hola! Te damos la bienvenida a esta sesión Cuidarte no significa dejar de participar de actividades y/o celebraciones: el secreto es encontrar tu propia manera de disfrutar sin presiones ni culpas. Hoy vamos a aprender estrategias para disfrutar de los encuentros y festejos cuidando nuestra salud.",
+                  "fullDescription": "¡Hola! Te damos la bienvenida a esta sesión Cuidarte no significa dejar de participar de actividades y/o celebraciones: el secreto es encontrar tu propia manera de disfrutar sin presiones ni culpas. Hoy vamos a aprender estrategias para disfrutar de los encuentros y festejos cuidando nuestra salud.",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Lectura 1",
+                  "description": "Lee y escucha la sesión del día",
+                  "fullDescription": "",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Lectura 2",
+                  "description": "Lee y escucha la sesión del día",
+                  "fullDescription": "",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Lectura 3",
+                  "description": "Lee y escucha la sesión del día",
+                  "fullDescription": "",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Fin de la sesión",
+                  "description": "Recordá que el centro del festejo es compartir el momento",
+                  "fullDescription": "Recordá que el centro del festejo es compartir el momento",
+                  "iconResId": "outline_unknown_document_24"
+                }
+              ]
+            },
+            {
+              "id": 3,
+              "title": "Sesión 3",
+              "duration": "05:00",
+              "multimedia": [
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Pequeños cambios que hacen la diferencia",
+                  "description": "¡Hola! Cuidar tu salud y tu bolsillo es posible. Cuidarse con la comida no tiene por qué ser caro ni complicado.",
+                  "fullDescription": "¡Hola! Cuidar tu salud y tu bolsillo es posible. Cuidarse con la comida no tiene por qué ser caro ni complicado.",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
+                  "type": "VIDEO",
+                  "title": "Video",
+                  "description": "Ver video de la sesión",
+                  "iconImageVector": "PlayArrow",
+                  "contentAsset": "exercise"
                 },
                 {
                   "type": "METAS",
@@ -1052,6 +1812,13 @@
                   "description": "Configura tus metas para esta sesión de diabetes",
                   "iconResId": "outline_trophy_24",
                   "metasId": "diabetes"
+                },
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Fin de la sesión",
+                  "description": "Pequeños cambios que se sostienen en el tiempo hacen la diferencia.",
+                  "fullDescription": "Pequeños cambios que se sostienen en el tiempo hacen la diferencia.",
+                  "iconResId": "outline_unknown_document_24"
                 }
               ]
             }
@@ -1059,28 +1826,98 @@
         },
         {
           "id": 26,
-          "title": "Semana 10 Diabetes",
+          "title": "Semana 10: Consultas médicas",
           "thumbnail": "missing_photo",
           "duration": "10 min",
           "subSessions": [
             {
               "id": 1,
-              "title": "Sesion 1",
+              "title": "Sesión 1",
               "duration": "05:00",
               "multimedia": [
                 {
+                  "type": "DESCRIPTION",
+                  "title": "La importancia de los controles de salud",
+                  "description": "¡Hola! La salud es un camino, no un destino. Asegúrate de contar con un buen mapa: ¡tus controles de salud! Hoy conoceremos la importancia de los controles de salud y cómo prepararnos para participar en los mismos.",
+                  "fullDescription": "¡Hola! La salud es un camino, no un destino. Asegúrate de contar con un buen mapa: ¡tus controles de salud! Hoy conoceremos la importancia de los controles de salud y cómo prepararnos para participar en los mismos.",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
                   "type": "VIDEO",
-                  "title": "Video Genérico (Diabetes)",
-                  "description": "Ver el vídeo genérico de la sesión de diabetes",
+                  "title": "Video",
+                  "description": "Ver video de la sesión",
                   "iconImageVector": "PlayArrow",
                   "contentAsset": "exercise"
                 },
                 {
-                  "type": "AUDIO",
-                  "title": "Audio Genérico (Diabetes)",
-                  "description": "Escuchar el audio genérico de la sesión de diabetes",
-                  "iconResId": "outline_headphones_24",
-                  "contentAsset": "audio_explicativo"
+                  "type": "DESCRIPTION",
+                  "title": "Fin de la sesión",
+                  "description": "Recordá que la consulta es un espacio donde vos sos el protagonista",
+                  "fullDescription": "Recordá que la consulta es un espacio donde vos sos el protagonista",
+                  "iconResId": "outline_unknown_document_24"
+                }
+              ]
+            },
+            {
+              "id": 2,
+              "title": "Sesión 2",
+              "duration": "05:00",
+              "multimedia": [
+                {
+                  "type": "DESCRIPTION",
+                  "title": "¿Por qué es importante controlar tu glucosa?",
+                  "description": "¡Hola! Un pequeño hábito, una gran diferencia. Hoy vamos a conocer cómo tomar de forma correcta tu glucemia.",
+                  "fullDescription": "¡Hola! Un pequeño hábito, una gran diferencia. Hoy vamos a conocer cómo tomar de forma correcta tu glucemia.",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Lectura 1",
+                  "description": "Lee y escucha la sesión del día",
+                  "fullDescription": "",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Lectura 2",
+                  "description": "Lee y escucha la sesión del día",
+                  "fullDescription": "",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Fin de la sesión",
+                  "description": "Un valor solo no te define, pero si notás números altos o síntomas extraños, consultá a tu médico: cada paso en tu cuidado suma.",
+                  "fullDescription": "Un valor solo no te define, pero si notás números altos o síntomas extraños, consultá a tu médico: cada paso en tu cuidado suma.",
+                  "iconResId": "outline_unknown_document_24"
+                }
+              ]
+            },
+            {
+              "id": 3,
+              "title": "Sesión 3",
+              "duration": "05:00",
+              "multimedia": [
+                {
+                  "type": "DESCRIPTION",
+                  "title": "¿Cuándo es importante consultar con tu médico?",
+                  "description": "¡Hola! Tus mediciones son herramientas para que tomes el control de tu bienestar cada día. Hoy vamos a aprender a reconocer cuándo un valor de azúcar es una señal para consultar a tu médico sin perder la calma.",
+                  "fullDescription": "¡Hola! Tus mediciones son herramientas para que tomes el control de tu bienestar cada día. Hoy vamos a aprender a reconocer cuándo un valor de azúcar es una señal para consultar a tu médico sin perder la calma.",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Lectura 1",
+                  "description": "Lee y escucha la sesión del día",
+                  "fullDescription": "",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Lectura 2",
+                  "description": "Lee y escucha la sesión del día",
+                  "fullDescription": "",
+                  "iconResId": "outline_unknown_document_24"
                 },
                 {
                   "type": "METAS",
@@ -1088,6 +1925,13 @@
                   "description": "Configura tus metas para esta sesión de diabetes",
                   "iconResId": "outline_trophy_24",
                   "metasId": "diabetes"
+                },
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Fin de la sesión",
+                  "description": "Hoy aprendimos a escuchar al cuerpo y actuar a tiempo cuando nos da señales.",
+                  "fullDescription": "Hoy aprendimos a escuchar al cuerpo y actuar a tiempo cuando nos da señales.",
+                  "iconResId": "outline_unknown_document_24"
                 }
               ]
             }
@@ -1095,28 +1939,107 @@
         },
         {
           "id": 27,
-          "title": "Semana 11 Diabetes",
+          "title": "Semana 11: La importancia de nuestro tratamiento",
           "thumbnail": "missing_photo",
           "duration": "10 min",
           "subSessions": [
             {
               "id": 1,
-              "title": "Sesion 1",
+              "title": "Sesión 1",
               "duration": "05:00",
               "multimedia": [
                 {
+                  "type": "DESCRIPTION",
+                  "title": "El tratamiento para la diabetes",
+                  "description": "¡Hola! Te damos la bienvenida a esta nueva semana. Tu medicación es una aliada: saber cómo funciona te ayuda a cuidarte mejor. Hoy veremos por qué respetar tus medicamentos y sus horarios es la clave.",
+                  "fullDescription": "¡Hola! Te damos la bienvenida a esta nueva semana. Tu medicación es una aliada: saber cómo funciona te ayuda a cuidarte mejor. Hoy veremos por qué respetar tus medicamentos y sus horarios es la clave.",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Lectura 1",
+                  "description": "Lee y escucha la sesión del día",
+                  "fullDescription": "",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Lectura 2",
+                  "description": "Lee y escucha la sesión del día",
+                  "fullDescription": "",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Fin de la sesión",
+                  "description": "Tomar tu medicación te da la tranquilidad de saber que hoy hiciste lo mejor por tu cuerpo.",
+                  "fullDescription": "Tomar tu medicación te da la tranquilidad de saber que hoy hiciste lo mejor por tu cuerpo.",
+                  "iconResId": "outline_unknown_document_24"
+                }
+              ]
+            },
+            {
+              "id": 2,
+              "title": "Sesión 2",
+              "duration": "05:00",
+              "multimedia": [
+                {
+                  "type": "DESCRIPTION",
+                  "title": "¿Por qué es importante la medicación y cuidar nuestra diabetes todos los días?",
+                  "description": "¡Hola! Te damos la bienvenida a esta sesión. Pequeños pasos diarios hacen una gran diferencia. Hablaremos de por qué es tan importante seguir tu tratamiento todos los días.",
+                  "fullDescription": "¡Hola! Te damos la bienvenida a esta sesión. Pequeños pasos diarios hacen una gran diferencia. Hablaremos de por qué es tan importante seguir tu tratamiento todos los días.",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
                   "type": "VIDEO",
-                  "title": "Video Genérico (Diabetes)",
-                  "description": "Ver el vídeo genérico de la sesión de diabetes",
+                  "title": "Video",
+                  "description": "Ver video de la sesión",
                   "iconImageVector": "PlayArrow",
                   "contentAsset": "exercise"
                 },
                 {
-                  "type": "AUDIO",
-                  "title": "Audio Genérico (Diabetes)",
-                  "description": "Escuchar el audio genérico de la sesión de diabetes",
-                  "iconResId": "outline_headphones_24",
-                  "contentAsset": "audio_explicativo"
+                  "type": "QUIZ",
+                  "title": "Pregunta del día",
+                  "description": "Responde las preguntas de la sesión",
+                  "iconResId": "outline_trophy_24",
+                  "questions": [
+                    {
+                      "questionText": "¿Cómo puedo cuidar mi diabetes?",
+                      "options": [
+                        "No es necesario cuidarse.",
+                        "Con medicación y hábitos saludables."
+                      ],
+                      "correctAnswerIndex": 1
+                    }
+                  ]
+                },
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Fin de la sesión",
+                  "description": "Tomar tu medicación todos los días y mantener hábitos saludables te ayuda a mantener tu glucosa estable y a proteger tu salud a largo plazo.",
+                  "fullDescription": "Tomar tu medicación todos los días y mantener hábitos saludables te ayuda a mantener tu glucosa estable y a proteger tu salud a largo plazo.",
+                  "iconResId": "outline_unknown_document_24"
+                }
+              ]
+            },
+            {
+              "id": 3,
+              "title": "Sesión 3",
+              "duration": "05:00",
+              "multimedia": [
+                {
+                  "type": "DESCRIPTION",
+                  "title": "¿Cómo recordar tomar los medicamentos y evitar olvidos?",
+                  "description": "¡Hola! Te damos la bienvenida a esta sesión. No se trata de perfección, sino de constancia y cuidado hacia vos mismo. Revisaremos algunos consejos para ayudarte a tomar tus medicamentos con más facilidad y sin estrés.",
+                  "fullDescription": "¡Hola! Te damos la bienvenida a esta sesión. No se trata de perfección, sino de constancia y cuidado hacia vos mismo. Revisaremos algunos consejos para ayudarte a tomar tus medicamentos con más facilidad y sin estrés.",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
+                  "type": "VIDEO",
+                  "title": "Video",
+                  "description": "Ver video de la sesión",
+                  "iconImageVector": "PlayArrow",
+                  "contentAsset": "exercise"
                 },
                 {
                   "type": "METAS",
@@ -1124,6 +2047,13 @@
                   "description": "Configura tus metas para esta sesión de diabetes",
                   "iconResId": "outline_trophy_24",
                   "metasId": "diabetes"
+                },
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Fin de la sesión",
+                  "description": "Organizar tus medicamentos y crear pequeños hábitos diarios puede ayudarte mucho.",
+                  "fullDescription": "Organizar tus medicamentos y crear pequeños hábitos diarios puede ayudarte mucho.",
+                  "iconResId": "outline_unknown_document_24"
                 }
               ]
             }
@@ -1131,28 +2061,142 @@
         },
         {
           "id": 28,
-          "title": "Semana 12 Diabetes",
+          "title": "Semana 12: ¿Cómo dormir mejor?",
           "thumbnail": "missing_photo",
           "duration": "10 min",
           "subSessions": [
             {
               "id": 1,
-              "title": "Sesion 1",
+              "title": "Sesión 1",
               "duration": "05:00",
               "multimedia": [
                 {
-                  "type": "VIDEO",
-                  "title": "Video Genérico (Diabetes)",
-                  "description": "Ver el vídeo genérico de la sesión de diabetes",
-                  "iconImageVector": "PlayArrow",
-                  "contentAsset": "exercise"
+                  "type": "DESCRIPTION",
+                  "title": "¿Por qué es importante dormir bien?",
+                  "description": "¡Hola! Te damos la bienvenida a esta sesión sobre el sueño. Un buen descanso es una parte esencial de tu salud. Repasaremos el por qué dormir bien es una de las mejores medicinas que existen para tu salud.",
+                  "fullDescription": "¡Hola! Te damos la bienvenida a esta sesión sobre el sueño. Un buen descanso es una parte esencial de tu salud. Repasaremos el por qué dormir bien es una de las mejores medicinas que existen para tu salud.",
+                  "iconResId": "outline_unknown_document_24"
                 },
                 {
-                  "type": "AUDIO",
-                  "title": "Audio Genérico (Diabetes)",
-                  "description": "Escuchar el audio genérico de la sesión de diabetes",
-                  "iconResId": "outline_headphones_24",
-                  "contentAsset": "audio_explicativo"
+                  "type": "DESCRIPTION",
+                  "title": "Lectura 1",
+                  "description": "Lee y escucha la sesión del día",
+                  "fullDescription": "",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Lectura 2",
+                  "description": "Lee y escucha la sesión del día",
+                  "fullDescription": "",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Lectura 3",
+                  "description": "Lee y escucha la sesión del día",
+                  "fullDescription": "",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Fin de la sesión",
+                  "description": "Dormir te ayuda a controlar la glucosa y la presión, y a mejorar tu energía y ánimo.",
+                  "fullDescription": "Dormir te ayuda a controlar la glucosa y la presión, y a mejorar tu energía y ánimo.",
+                  "iconResId": "outline_unknown_document_24"
+                }
+              ]
+            },
+            {
+              "id": 2,
+              "title": "Sesión 2",
+              "duration": "05:00",
+              "multimedia": [
+                {
+                  "type": "DESCRIPTION",
+                  "title": "¿Cómo mejorar nuestra rutina nocturna?",
+                  "description": "¡Hola! Te damos la bienvenida a esta sesión. Con pasos simples y constantes podés mejorar tus noches y tu bienestar. Repasaremos cómo crear una rutina nocturna que te ayude a dormir mejor y despertar con más energía.",
+                  "fullDescription": "¡Hola! Te damos la bienvenida a esta sesión. Con pasos simples y constantes podés mejorar tus noches y tu bienestar. Repasaremos cómo crear una rutina nocturna que te ayude a dormir mejor y despertar con más energía.",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Lectura 1",
+                  "description": "Lee y escucha la sesión del día",
+                  "fullDescription": "",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Lectura 2",
+                  "description": "Lee y escucha la sesión del día",
+                  "fullDescription": "",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Lectura 3",
+                  "description": "Lee y escucha la sesión del día",
+                  "fullDescription": "",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
+                  "type": "QUIZ",
+                  "title": "Pregunta del día",
+                  "description": "Responde las preguntas de la sesión",
+                  "iconResId": "outline_trophy_24",
+                  "questions": [
+                    {
+                      "questionText": "Antes de dormir, es mejor…",
+                      "options": [
+                        "Comer ligero y tomar poca agua",
+                        "Comer comidas pesadas y tomar bastante"
+                      ],
+                      "correctAnswerIndex": 0
+                    }
+                  ]
+                },
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Fin de la sesión",
+                  "description": "Prepararte para dormir con una rutina tranquila ayuda a que descanses mejor.",
+                  "fullDescription": "Prepararte para dormir con una rutina tranquila ayuda a que descanses mejor.",
+                  "iconResId": "outline_unknown_document_24"
+                }
+              ]
+            },
+            {
+              "id": 3,
+              "title": "Sesión 3",
+              "duration": "05:00",
+              "multimedia": [
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Problemas comunes al dormir y qué hacer",
+                  "description": "¡Hola! Te damos la bienvenida a la última sesión de la semana. No se trata de dormir perfecto, se trata de dormir mejor. Veremos maneras simples para manejar esas noches en las que nos cuesta dormir o nos despertamos varias veces.",
+                  "fullDescription": "¡Hola! Te damos la bienvenida a la última sesión de la semana. No se trata de dormir perfecto, se trata de dormir mejor. Veremos maneras simples para manejar esas noches en las que nos cuesta dormir o nos despertamos varias veces.",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Lectura 1",
+                  "description": "Lee y escucha la sesión del día",
+                  "fullDescription": "",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Lectura 2",
+                  "description": "Lee y escucha la sesión del día",
+                  "fullDescription": "",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Lectura 3",
+                  "description": "Lee y escucha la sesión del día",
+                  "fullDescription": "",
+                  "iconResId": "outline_unknown_document_24"
                 },
                 {
                   "type": "METAS",
@@ -1160,6 +2204,13 @@
                   "description": "Configura tus metas para esta sesión de diabetes",
                   "iconResId": "outline_trophy_24",
                   "metasId": "diabetes"
+                },
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Fin de la sesión",
+                  "description": "Con pasos sencillos y constantes podemos mejorar nuestro descanso y despertar con más energía y bienestar.",
+                  "fullDescription": "Con pasos sencillos y constantes podemos mejorar nuestro descanso y despertar con más energía y bienestar.",
+                  "iconResId": "outline_unknown_document_24"
                 }
               ]
             }
@@ -1167,35 +2218,91 @@
         },
         {
           "id": 29,
-          "title": "Semana 13 Diabetes",
+          "title": "Semana 13: Manejo del estrés",
           "thumbnail": "missing_photo",
           "duration": "10 min",
           "subSessions": [
             {
               "id": 1,
-              "title": "Sesion 1",
+              "title": "Sesión 1",
               "duration": "05:00",
               "multimedia": [
                 {
+                  "type": "DESCRIPTION",
+                  "title": "¿Qué es el estrés y cómo nos afecta?",
+                  "description": "¡Hola! Hacer una pausa corta también es una forma de cuidarse. Hablaremos sobre el estrés en la vida diaria y cómo atravesarlo.",
+                  "fullDescription": "¡Hola! Hacer una pausa corta también es una forma de cuidarse. Hablaremos sobre el estrés en la vida diaria y cómo atravesarlo.",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
                   "type": "VIDEO",
-                  "title": "Video Genérico (Diabetes)",
-                  "description": "Ver el vídeo genérico de la sesión de diabetes",
+                  "title": "Video",
+                  "description": "Ver video de la sesión",
                   "iconImageVector": "PlayArrow",
                   "contentAsset": "exercise"
                 },
                 {
-                  "type": "AUDIO",
-                  "title": "Audio Genérico (Diabetes)",
-                  "description": "Escuchar el audio genérico de la sesión de diabetes",
-                  "iconResId": "outline_headphones_24",
-                  "contentAsset": "audio_explicativo"
+                  "type": "DESCRIPTION",
+                  "title": "Fin de la sesión",
+                  "description": "Recordá que el autocuidado se construye en gestos simples, todos los días.",
+                  "fullDescription": "Recordá que el autocuidado se construye en gestos simples, todos los días.",
+                  "iconResId": "outline_unknown_document_24"
+                }
+              ]
+            },
+            {
+              "id": 2,
+              "title": "Sesión 2",
+              "duration": "05:00",
+              "multimedia": [
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Técnicas simples para manejar el estrés",
+                  "description": "¡Hola! Un minuto para respirar puede cambiar cómo seguimos nuestro día. Hoy conoceremos la técnica de respiración en cuatro pasos.",
+                  "fullDescription": "¡Hola! Un minuto para respirar puede cambiar cómo seguimos nuestro día. Hoy conoceremos la técnica de respiración en cuatro pasos.",
+                  "iconResId": "outline_unknown_document_24"
                 },
                 {
-                  "type": "METAS",
-                  "title": "Metas (Diabetes)",
-                  "description": "Configura tus metas para esta sesión de diabetes",
-                  "iconResId": "outline_trophy_24",
-                  "metasId": "diabetes"
+                  "type": "DESCRIPTION",
+                  "title": "Lectura",
+                  "description": "Lee y escucha la sesión del día",
+                  "fullDescription": "",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Fin de la sesión",
+                  "description": "Podemos sumar la respiración consciente como parte de nuestro cuidado diario. Con práctica, puede transformarse en una aliada para acompañar nuestro bienestar emocional y fortalecer nuestra salud.",
+                  "fullDescription": "Podemos sumar la respiración consciente como parte de nuestro cuidado diario. Con práctica, puede transformarse en una aliada para acompañar nuestro bienestar emocional y fortalecer nuestra salud.",
+                  "iconResId": "outline_unknown_document_24"
+                }
+              ]
+            },
+            {
+              "id": 3,
+              "title": "Sesión 3",
+              "duration": "05:00",
+              "multimedia": [
+                {
+                  "type": "DESCRIPTION",
+                  "title": "La salud mental también es parte del tratamiento de la diabetes",
+                  "description": "¡Hola! Cuidar cómo nos sentimos nos ayuda a sostener los hábitos y el autocuidado en el tiempo. Hoy vamos a reconocer el impacto que tiene la salud mental en la diabetes y promover pequeñas acciones de cuidado emocional que contribuyan al bienestar.",
+                  "fullDescription": "¡Hola! Cuidar cómo nos sentimos nos ayuda a sostener los hábitos y el autocuidado en el tiempo. Hoy vamos a reconocer el impacto que tiene la salud mental en la diabetes y promover pequeñas acciones de cuidado emocional que contribuyan al bienestar.",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Lectura",
+                  "description": "Lee y escucha la sesión del día",
+                  "fullDescription": "",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Fin de la sesión",
+                  "description": "Recordemos que el cuidado de la diabetes incluye también cómo nos sentimos día a día. Incorporar el cuidado emocional es fundamental para el tratamiento.",
+                  "fullDescription": "Recordemos que el cuidado de la diabetes incluye también cómo nos sentimos día a día. Incorporar el cuidado emocional es fundamental para el tratamiento.",
+                  "iconResId": "outline_unknown_document_24"
                 }
               ]
             }
@@ -1203,28 +2310,158 @@
         },
         {
           "id": 30,
-          "title": "Semana 14 Diabetes",
+          "title": "Semana 14: El apoyo de los demás en nuestros hábitos",
           "thumbnail": "missing_photo",
           "duration": "10 min",
           "subSessions": [
             {
               "id": 1,
-              "title": "Sesion 1",
+              "title": "Sesión 1",
               "duration": "05:00",
               "multimedia": [
                 {
+                  "type": "DESCRIPTION",
+                  "title": "¿Cómo el apoyo de otros ayuda a mantener los hábitos?",
+                  "description": "¡Hola! Hoy empezamos algo nuevo: vamos a hablar del poder que tiene la compañía de otros. En el cuidado de la salud, hacer y estar con otros nos puede ayudar mucho: a sostener nuestras metas, sentirnos mejor y cuidar nuestra salud.",
+                  "fullDescription": "¡Hola! Hoy empezamos algo nuevo: vamos a hablar del poder que tiene la compañía de otros. En el cuidado de la salud, hacer y estar con otros nos puede ayudar mucho: a sostener nuestras metas, sentirnos mejor y cuidar nuestra salud.\n\nEstar acompañados puede darnos un empujón para avanzar. Hoy retomaremos el valor de la compañía y el apoyo de otras personas para cuidarte y avanzar con tus metas de salud.",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
                   "type": "VIDEO",
-                  "title": "Video Genérico (Diabetes)",
-                  "description": "Ver el vídeo genérico de la sesión de diabetes",
+                  "title": "Video",
+                  "description": "Ver video de la sesión",
                   "iconImageVector": "PlayArrow",
                   "contentAsset": "exercise"
                 },
                 {
-                  "type": "AUDIO",
-                  "title": "Audio Genérico (Diabetes)",
-                  "description": "Escuchar el audio genérico de la sesión de diabetes",
-                  "iconResId": "outline_headphones_24",
-                  "contentAsset": "audio_explicativo"
+                  "type": "QUIZ",
+                  "title": "Pregunta del día",
+                  "description": "Responde las preguntas de la sesión",
+                  "iconResId": "outline_trophy_24",
+                  "questions": [
+                    {
+                      "questionText": "El apoyo de otras personas también puede ayudarte a sostener tus metas de salud y seguir avanzando.",
+                      "options": [
+                        "Verdadero",
+                        "Falso"
+                      ],
+                      "correctAnswerIndex": 0
+                    }
+                  ]
+                },
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Fin de la sesión",
+                  "description": "Ya diste el primer paso: entender el poder de la compañía. En la próxima sesión aprenderemos cómo empezar a construir tu equipo de apoyo. ¡No estás solo/a en esto!",
+                  "fullDescription": "Ya diste el primer paso: entender el poder de la compañía. En la próxima sesión aprenderemos cómo empezar a construir tu equipo de apoyo. ¡No estás solo/a en esto!",
+                  "iconResId": "outline_unknown_document_24"
+                }
+              ]
+            },
+            {
+              "id": 2,
+              "title": "Sesión 2",
+              "duration": "05:00",
+              "multimedia": [
+                {
+                  "type": "DESCRIPTION",
+                  "title": "¿Cómo pedir ayuda o compañía?",
+                  "description": "¡Hola! Ya sabemos que tener apoyo es bueno. Pero ¿cómo lo pedimos? A veces, esa es la parte más difícil. Hoy vas a conocer 3 pasos sencillos para pedir ayuda o compañía. Animarse a pedir ayuda puede hacer la diferencia.",
+                  "fullDescription": "¡Hola! Ya sabemos que tener apoyo es bueno. Pero ¿cómo lo pedimos? A veces, esa es la parte más difícil. Hoy vas a conocer 3 pasos sencillos para pedir ayuda o compañía. Animarse a pedir ayuda puede hacer la diferencia.",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Lectura 1",
+                  "description": "Lee y escucha la sesión del día",
+                  "fullDescription": "",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Lectura 2",
+                  "description": "Lee y escucha la sesión del día",
+                  "fullDescription": "",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Lectura 3",
+                  "description": "Lee y escucha la sesión del día",
+                  "fullDescription": "",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Lectura 4",
+                  "description": "Lee y escucha la sesión del día",
+                  "fullDescription": "",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
+                  "type": "QUIZ",
+                  "title": "Pregunta del día",
+                  "description": "Responde las preguntas de la sesión",
+                  "iconResId": "outline_trophy_24",
+                  "questions": [
+                    {
+                      "questionText": "¿Al pedir ayuda, es mejor ser claro y específico sobre lo que necesitas?",
+                      "options": [
+                        "Verdadero",
+                        "Falso"
+                      ],
+                      "correctAnswerIndex": 0
+                    }
+                  ]
+                },
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Fin de la sesión",
+                  "description": "Animarte a pedir apoyo puede hacer la diferencia. Estás construyendo tu equipo de apoyo paso a paso. En la próxima sesión veremos cómo compartir tus logros puede fortalecer ese equipo y ayudarte a seguir avanzando.",
+                  "fullDescription": "Animarte a pedir apoyo puede hacer la diferencia. Estás construyendo tu equipo de apoyo paso a paso. En la próxima sesión veremos cómo compartir tus logros puede fortalecer ese equipo y ayudarte a seguir avanzando.",
+                  "iconResId": "outline_unknown_document_24"
+                }
+              ]
+            },
+            {
+              "id": 3,
+              "title": "Sesión 3",
+              "duration": "05:00",
+              "multimedia": [
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Compartir mis avances: Pequeños logros, gran impacto",
+                  "description": "¡Felicitaciones! Llegaste a la última sesión de este módulo. Hemos descubierto por qué necesitamos apoyo y hemos aprendido a pedirlo. Ahora vamos a revelar un secreto muy poderoso: ayudar a otros también nos ayuda a nosotros mismos.",
+                  "fullDescription": "¡Felicitaciones! Llegaste a la última sesión de este módulo. Hemos descubierto por qué necesitamos apoyo y hemos aprendido a pedirlo. Ahora vamos a revelar un secreto muy poderoso: ayudar a otros también nos ayuda a nosotros mismos.\n\nCompartir tus pasos ayuda a sostener la motivación. Cuando lo contás, también animás a otros. Vas a descubrir cómo el simple acto de compartir tus pequeños avances puede crear un círculo de apoyo que te mantiene motivado vos y a otros.",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Lectura 1",
+                  "description": "Lee y escucha la sesión del día",
+                  "fullDescription": "",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Lectura 2",
+                  "description": "Lee y escucha la sesión del día",
+                  "fullDescription": "",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Lectura 3",
+                  "description": "Lee y escucha la sesión del día",
+                  "fullDescription": "",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Lectura 4",
+                  "description": "Lee y escucha la sesión del día",
+                  "fullDescription": "",
+                  "iconResId": "outline_unknown_document_24"
                 },
                 {
                   "type": "METAS",
@@ -1232,6 +2469,13 @@
                   "description": "Configura tus metas para esta sesión de diabetes",
                   "iconResId": "outline_trophy_24",
                   "metasId": "diabetes"
+                },
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Fin de la sesión",
+                  "description": "El apoyo de los demás es una herramienta muy importante para sostener el cuidado de tu salud: no tenés que hacerlo solo/a. Podés seguir construyendo tu equipo paso a paso: pedir apoyo cuando lo necesites y compartir tus avances. Cada conexión cuenta.",
+                  "fullDescription": "El apoyo de los demás es una herramienta muy importante para sostener el cuidado de tu salud: no tenés que hacerlo solo/a. Podés seguir construyendo tu equipo paso a paso: pedir apoyo cuando lo necesites y compartir tus avances. Cada conexión cuenta.",
+                  "iconResId": "outline_unknown_document_24"
                 }
               ]
             }
@@ -1239,28 +2483,91 @@
         },
         {
           "id": 31,
-          "title": "Semana 15 Diabetes",
+          "title": "Semana 15: Revisemos nuestros avances",
           "thumbnail": "missing_photo",
           "duration": "10 min",
           "subSessions": [
             {
               "id": 1,
-              "title": "Sesion 1",
+              "title": "Sesión 1",
               "duration": "05:00",
               "multimedia": [
                 {
+                  "type": "DESCRIPTION",
+                  "title": "Hacer una pausa y revisar nuestros avances",
+                  "description": "¡Hola! Cuidarse no es hacerlo todo, es empezar por algo. Hoy vamos a valorar lo que hemos logrado.",
+                  "fullDescription": "¡Hola! Cuidarse no es hacerlo todo, es empezar por algo. Hoy vamos a valorar lo que hemos logrado.",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
                   "type": "VIDEO",
-                  "title": "Video Genérico (Diabetes)",
-                  "description": "Ver el vídeo genérico de la sesión de diabetes",
+                  "title": "Video",
+                  "description": "Ver video de la sesión",
                   "iconImageVector": "PlayArrow",
                   "contentAsset": "exercise"
                 },
                 {
-                  "type": "AUDIO",
-                  "title": "Audio Genérico (Diabetes)",
-                  "description": "Escuchar el audio genérico de la sesión de diabetes",
-                  "iconResId": "outline_headphones_24",
-                  "contentAsset": "audio_explicativo"
+                  "type": "DESCRIPTION",
+                  "title": "Fin de la sesión",
+                  "description": "Reconocer lo que logramos no es conformarse. Es darnos fuerzas para seguir avanzando.",
+                  "fullDescription": "Reconocer lo que logramos no es conformarse. Es darnos fuerzas para seguir avanzando.",
+                  "iconResId": "outline_unknown_document_24"
+                }
+              ]
+            },
+            {
+              "id": 2,
+              "title": "Sesión 2",
+              "duration": "05:00",
+              "multimedia": [
+                {
+                  "type": "DESCRIPTION",
+                  "title": "¿Qué hacer si encontramos obstáculos?",
+                  "description": "¡Hola! Lo importante es seguir intentándolo, no hacerlo perfecto. Hoy vamos a aprender que los obstáculos y la falta de ganas no son fallas, sino parte del camino para encontrar un equilibrio real en nuestro cuidado.",
+                  "fullDescription": "¡Hola! Lo importante es seguir intentándolo, no hacerlo perfecto. Hoy vamos a aprender que los obstáculos y la falta de ganas no son fallas, sino parte del camino para encontrar un equilibrio real en nuestro cuidado.",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Lectura 1",
+                  "description": "Lee y escucha la sesión del día",
+                  "fullDescription": "",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Lectura 2",
+                  "description": "Lee y escucha la sesión del día",
+                  "fullDescription": "",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Fin de la sesión",
+                  "description": "Cada mañana es una oportunidad para iniciar de nuevo; estamos acá para acompañarte en cada paso, sea fácil o difícil.",
+                  "fullDescription": "Cada mañana es una oportunidad para iniciar de nuevo; estamos acá para acompañarte en cada paso, sea fácil o difícil.",
+                  "iconResId": "outline_unknown_document_24"
+                }
+              ]
+            },
+            {
+              "id": 3,
+              "title": "Sesión 3",
+              "duration": "05:00",
+              "multimedia": [
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Continuamos avanzando",
+                  "description": "¡Hola! Tu capacidad para volver a comenzar es más fuerte que los tropiezos. Hoy vamos a valorar lo que hemos logrado.",
+                  "fullDescription": "¡Hola! Tu capacidad para volver a comenzar es más fuerte que los tropiezos. Hoy vamos a valorar lo que hemos logrado.",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Lectura",
+                  "description": "Lee y escucha la sesión del día",
+                  "fullDescription": "",
+                  "iconResId": "outline_unknown_document_24"
                 },
                 {
                   "type": "METAS",
@@ -1268,6 +2575,13 @@
                   "description": "Configura tus metas para esta sesión de diabetes",
                   "iconResId": "outline_trophy_24",
                   "metasId": "diabetes"
+                },
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Fin de la sesión",
+                  "description": "Cada pequeño cuidado es una forma de elegirte. Y eso ya es un gran paso.",
+                  "fullDescription": "Cada pequeño cuidado es una forma de elegirte. Y eso ya es un gran paso.",
+                  "iconResId": "outline_unknown_document_24"
                 }
               ]
             }
@@ -1275,35 +2589,114 @@
         },
         {
           "id": 32,
-          "title": "Semana 16 Diabetes",
+          "title": "Semana 16: Cómo mantenemos los cambios",
           "thumbnail": "missing_photo",
           "duration": "10 min",
           "subSessions": [
             {
               "id": 1,
-              "title": "Sesion 1",
+              "title": "Sesión 1",
               "duration": "05:00",
               "multimedia": [
                 {
+                  "type": "DESCRIPTION",
+                  "title": "¿Qué te funciona? Diseña tu propio plan de autocuidado",
+                  "description": "¡Hola! Llegamos a la última semana de contenido. Hoy vamos a hacer algo especial: vas a diseñar tu propio plan de autocuidado, basado en lo que realmente te funciona. El mejor plan es el que se adapta a tu realidad.",
+                  "fullDescription": "¡Hola! Llegamos a la última semana de contenido. Hoy vamos a hacer algo especial: vas a diseñar tu propio plan de autocuidado, basado en lo que realmente te funciona. El mejor plan es el que se adapta a tu realidad.",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Lectura 1",
+                  "description": "Lee y escucha la sesión del día",
+                  "fullDescription": "",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Lectura 2",
+                  "description": "Lee y escucha la sesión del día",
+                  "fullDescription": "",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Fin de la sesión",
+                  "description": "Ahora tenés algo que es tuyo: un plan hecho a tu medida. En las próximas sesiones vamos a ver cómo manejar los días difíciles y a repasar todas tus herramientas. ¡Seguí adelante!",
+                  "fullDescription": "Ahora tenés algo que es tuyo: un plan hecho a tu medida. En las próximas sesiones vamos a ver cómo manejar los días difíciles y a repasar todas tus herramientas. ¡Seguí adelante!",
+                  "iconResId": "outline_unknown_document_24"
+                }
+              ]
+            },
+            {
+              "id": 2,
+              "title": "Sesión 2",
+              "duration": "05:00",
+              "multimedia": [
+                {
+                  "type": "DESCRIPTION",
+                  "title": "¿Cómo manejar semanas difíciles?",
+                  "description": "¡Hola! Hoy vamos a hablar de algo que nos pasa a todos: los días en que las cosas no salen como planeamos. Y vas a ver que eso también es parte del camino. Tropezar no es fracasar. Lo importante es pararse de nuevo y volver a intentarlo. Vamos a ver cómo podemos manejar las semanas difíciles sin abandonar el camino.",
+                  "fullDescription": "¡Hola! Hoy vamos a hablar de algo que nos pasa a todos: los días en que las cosas no salen como planeamos. Y vas a ver que eso también es parte del camino. Tropezar no es fracasar. Lo importante es pararse de nuevo y volver a intentarlo. Vamos a ver cómo podemos manejar las semanas difíciles sin abandonar el camino.",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
                   "type": "VIDEO",
-                  "title": "Video Genérico (Diabetes)",
-                  "description": "Ver el vídeo genérico de la sesión de diabetes",
+                  "title": "Video",
+                  "description": "Ver video de la sesión",
                   "iconImageVector": "PlayArrow",
                   "contentAsset": "exercise"
                 },
                 {
-                  "type": "AUDIO",
-                  "title": "Audio Genérico (Diabetes)",
-                  "description": "Escuchar el audio genérico de la sesión de diabetes",
-                  "iconResId": "outline_headphones_24",
-                  "contentAsset": "audio_explicativo"
+                  "type": "QUIZ",
+                  "title": "Pregunta del día",
+                  "description": "Responde las preguntas de la sesión",
+                  "iconResId": "outline_trophy_24",
+                  "questions": [
+                    {
+                      "questionText": "Después de una semana difícil en la que no pudiste seguir tu plan, ¿qué es lo más útil?",
+                      "options": [
+                        "Pensar que todo lo anterior fue en vano y",
+                        "Esperar a sentirme motivado antes de volver"
+                      ],
+                      "correctAnswerIndex": 2
+                    }
+                  ]
                 },
                 {
-                  "type": "METAS",
-                  "title": "Metas (Diabetes)",
-                  "description": "Configura tus metas para esta sesión de diabetes",
-                  "iconResId": "outline_trophy_24",
-                  "metasId": "diabetes"
+                  "type": "DESCRIPTION",
+                  "title": "Fin de la sesión",
+                  "description": "Las recaídas no son el final del camino. Son una curva más. Ahora sabes qué hacer cuando aparecen. En la próxima sesión vamos a repasar todas tus herramientas para que las tengas siempre a mano. ¡No estás solo en esto!",
+                  "fullDescription": "Las recaídas no son el final del camino. Son una curva más. Ahora sabes qué hacer cuando aparecen. En la próxima sesión vamos a repasar todas tus herramientas para que las tengas siempre a mano. ¡No estás solo en esto!",
+                  "iconResId": "outline_unknown_document_24"
+                }
+              ]
+            },
+            {
+              "id": 3,
+              "title": "Sesión 3",
+              "duration": "05:00",
+              "multimedia": [
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Tus herramientas personales: repaso final",
+                  "description": "¡Hola! Esta es la última sesión de contenido. Pero no es un final: es un nuevo comienzo. Hoy vamos a repasar todas las herramientas que vimos para que las tengas siempre a mano. Ya tenés todo lo que necesitas. Ahora es tuyo.",
+                  "fullDescription": "¡Hola! Esta es la última sesión de contenido. Pero no es un final: es un nuevo comienzo. Hoy vamos a repasar todas las herramientas que vimos para que las tengas siempre a mano. Ya tenés todo lo que necesitas. Ahora es tuyo.",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Lectura",
+                  "description": "Lee y escucha la sesión del día",
+                  "fullDescription": "",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Fin de la sesión",
+                  "description": "Completaste las 16 semanas de contenido nuevo. ¡Eso es un logro enorme! En las próximas semanas te acompañaremos con sesiones de repaso para que sigas practicando. Pero recordá que lo más valioso ya lo tenés. Cuidarte es un camino, no un destino. Y vos ya estás caminando. Información adicional Información adicional sobre la diabetes Información sobre la hipertensión Información sobre salud mental Alimentación saludable Alimentación para personas con diabetes Alimentación para personas con hipertensión Actividad física Dormir mejor Consumo de tabaco",
+                  "fullDescription": "Completaste las 16 semanas de contenido nuevo. ¡Eso es un logro enorme! En las próximas semanas te acompañaremos con sesiones de repaso para que sigas practicando. Pero recordá que lo más valioso ya lo tenés. Cuidarte es un camino, no un destino. Y vos ya estás caminando. Información adicional Información adicional sobre la diabetes Información sobre la hipertensión Información sobre salud mental Alimentación saludable Alimentación para personas con diabetes Alimentación para personas con hipertensión Actividad física Dormir mejor Consumo de tabaco",
+                  "iconResId": "outline_unknown_document_24"
                 }
               ]
             }
