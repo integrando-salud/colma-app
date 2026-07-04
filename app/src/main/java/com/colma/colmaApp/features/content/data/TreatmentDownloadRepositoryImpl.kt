@@ -79,13 +79,7 @@ class TreatmentDownloadRepositoryImpl(private val context: Context) : TreatmentD
                 null
             }
             // Load static treatments for merging quizzes/metas
-            val staticTreatments = when (treatmentType) {
-                TreatmentType.DBT_HTA -> listOfNotNull(
-                    assetContentDict?.treatments?.find { it.id == TreatmentType.DIABETES },
-                    assetContentDict?.treatments?.find { it.id == TreatmentType.HTA }
-                )
-                else -> listOfNotNull(assetContentDict?.treatments?.find { it.id == treatmentType })
-            }
+            val staticTreatments = listOfNotNull(assetContentDict?.treatments?.find { it.id == treatmentType })
 
             // Calculate total files to download first to report accurate progress
             val semanas = serverTreatment.semanas ?: emptyList()
