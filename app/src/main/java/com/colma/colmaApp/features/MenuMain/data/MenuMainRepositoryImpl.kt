@@ -7,6 +7,7 @@ import com.colma.colmaApp.servicios.internetCommunication.SyncService
 import com.colma.colmaApp.servicios.internetCommunication.HelpRequestService
 import com.colma.colmaApp.servicios.session.SessionManager
 import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
@@ -137,25 +138,27 @@ class MenuMainRepositoryImpl(
             )
         }
 
-        val metaData = pendingMetas.map { m ->
-            com.colma.colmaApp.servicios.internetCommunication.model.MetaData(
-                idMeta = m.id_meta.toInt(),
-                idUsuario = m.id_usuario ?: userId,
-                semana = m.semana ?: 0,
-                sesion = m.sesion ?: 0,
-                tipoActividad = m.tipo_actividad ?: "",
-                actividad = m.actividad ?: "",
-                lugar = m.lugar ?: "",
-                acompaniante = m.acompañante,
-                fechaRegistro = m.fecha_regisitro ?: clientSyncTimestamp,
-                fechaUsuario = m.fecha_edicion ?: m.fecha_regisitro ?: clientSyncTimestamp,
-                fechaEdicion = m.fecha_edicion,
-                fechaSincronizacion = clientSyncTimestamp,
-                metaCumplida = m.meta_cumplida ?: 0,
-                fechaObjetivo = m.fecha_objetivo ?: clientSyncTimestamp,
-                motivoIncumplimiento = m.motivo_incumplimiento
-            )
-        }
+        val metaData = pendingMetas
+            .filter { it.meta_cumplida != null && it.meta_cumplida != 0 }
+            .map { m ->
+                com.colma.colmaApp.servicios.internetCommunication.model.MetaData(
+                    idMeta = m.id_meta.toInt(),
+                    idUsuario = m.id_usuario ?: userId,
+                    semana = m.semana ?: 0,
+                    sesion = m.sesion ?: 0,
+                    tipoActividad = m.tipo_actividad ?: "",
+                    actividad = m.actividad ?: "",
+                    lugar = m.lugar ?: "",
+                    acompaniante = m.acompañante,
+                    fechaRegistro = m.fecha_regisitro ?: clientSyncTimestamp,
+                    fechaUsuario = m.fecha_edicion ?: m.fecha_regisitro ?: clientSyncTimestamp,
+                    fechaEdicion = m.fecha_edicion,
+                    fechaSincronizacion = clientSyncTimestamp,
+                    metaCumplida = (m.meta_cumplida == 2),
+                    fechaObjetivo = m.fecha_objetivo ?: clientSyncTimestamp,
+                    motivoIncumplimiento = m.motivo_incumplimiento
+                )
+            }
 
         val multimediaReadData = pendingMultimediaRead.map { mr ->
             com.colma.colmaApp.servicios.internetCommunication.model.MultimediaReadData(
@@ -196,22 +199,15 @@ class MenuMainRepositoryImpl(
         return try {
             val syncRequest = createSyncDataPayload(userId)
 
-            // Exit early if there is nothing to sync, but still download treatment
-            if (syncRequest.glucosa.isEmpty() && syncRequest.presion.isEmpty() && syncRequest.estadoAnimo.isEmpty() && syncRequest.quiz.isEmpty() && syncRequest.metas.isEmpty() && syncRequest.multimediaRead.isEmpty()) {
-                Log.d(TAG, "No data to synchronize for user $userId. Triggering treatment download only.")
-                try {
-                    val downloadRepo = com.colma.colmaApp.features.content.data.TreatmentDownloadRepositoryImpl(context)
-                    downloadRepo.downloadAndSaveTreatment(token, userId)
-                    Log.d(TAG, "Treatment downloaded successfully during early exit sync.")
-                } catch (e: Exception) {
-                    Log.e(TAG, "Error downloading treatment: ${e.message}", e)
-                }
-                return Result.success("No data to synchronize, treatment downloaded.")
-            }
+            // Log the formatted JSON payload (always logged, even if empty)
+            val requestBodyJson = GsonBuilder().setPrettyPrinting().serializeNulls().create().toJson(syncRequest)
+            Log.d(TAG, "Sync Request Payload for user $userId:\n$requestBodyJson")
 
-            // Log the request body
-            val requestBodyJson = Gson().toJson(syncRequest)
-            Log.d(TAG, "Sync Request Body for user $userId: $requestBodyJson")
+            // Exit early if there is nothing to sync
+            if (syncRequest.glucosa.isEmpty() && syncRequest.presion.isEmpty() && syncRequest.estadoAnimo.isEmpty() && syncRequest.quiz.isEmpty() && syncRequest.metas.isEmpty() && syncRequest.multimediaRead.isEmpty()) {
+                Log.d(TAG, "No data to synchronize for user $userId.")
+                return Result.success("No data to synchronize.")
+            }
 
             val response = syncService.syncData(token, syncRequest) // Removed "Bearer " prefix as it's handled in SyncService
 
@@ -229,15 +225,6 @@ class MenuMainRepositoryImpl(
                 dbHelper.markMultimediaReadSent(syncRequest.multimediaRead.map { it.idMultimediaRead.toLong() })
 
                 dbHelper.insertSincronizacion(nowLocal(), "200", null)
-
-                // Trigger treatment download
-                try {
-                    val downloadRepo = com.colma.colmaApp.features.content.data.TreatmentDownloadRepositoryImpl(context)
-                    downloadRepo.downloadAndSaveTreatment(token, userId)
-                    Log.d(TAG, "Treatment downloaded successfully during sync.")
-                } catch (e: Exception) {
-                    Log.e(TAG, "Error downloading treatment: ${e.message}", e)
-                }
 
                 Result.success(response.body()?.message ?: "Synchronization successful")
             } else {

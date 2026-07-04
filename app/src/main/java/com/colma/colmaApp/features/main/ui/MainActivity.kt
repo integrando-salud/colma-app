@@ -593,6 +593,7 @@ fun MainAppContainer() {
 
                             val topBarTitle = remember(uiState.treatmentTypes) {
                                 when {
+                                    uiState.treatmentTypes.contains(TreatmentType.DBT_HTA) -> "Hipertensión y Diabetes"
                                     uiState.treatmentTypes.contains(TreatmentType.HTA) && uiState.treatmentTypes.contains(TreatmentType.DIABETES) -> "Hipertensión y Diabetes"
                                     uiState.treatmentTypes.contains(TreatmentType.HTA) -> "Hipertensión"
                                     uiState.treatmentTypes.contains(TreatmentType.DIABETES) -> "Diabetes"

@@ -109,6 +109,7 @@ fun SessionListScreen(
         ) {
             val hasHta = uiState.treatmentTypes.contains(TreatmentType.HTA)
             val hasDiabetes = uiState.treatmentTypes.contains(TreatmentType.DIABETES)
+            val hasDbtHta = uiState.treatmentTypes.contains(TreatmentType.DBT_HTA)
 
             if (hasHta) {
                 item {
@@ -150,6 +151,24 @@ fun SessionListScreen(
                 }
                 itemsIndexed(uiState.diabetesSessions, key = { _, it -> "diabetes-${it.id}" }) { index, session ->
                     StaggeredItemWrapper(index = startIndex + index + 1) {
+                        SessionItemView(
+                            session = session,
+                            subSessions = uiState.subSessions[session.id] ?: emptyList(),
+                            expanded = uiState.expandedSessionId == session.id,
+                            onEvent = onEvent
+                        )
+                    }
+                }
+            }
+
+            if (hasDbtHta) {
+                item {
+                    StaggeredItemWrapper(index = 0) {
+                        TreatmentHeader(title = "Diabetes e Hipertensión Arterial")
+                    }
+                }
+                itemsIndexed(uiState.diabetesSessions, key = { _, it -> "dbthta-${it.id}" }) { index, session ->
+                    StaggeredItemWrapper(index = index + 1) {
                         SessionItemView(
                             session = session,
                             subSessions = uiState.subSessions[session.id] ?: emptyList(),

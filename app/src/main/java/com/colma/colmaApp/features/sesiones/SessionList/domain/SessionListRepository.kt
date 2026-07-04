@@ -21,7 +21,9 @@ data class SubSessionItem(
 interface SessionListRepository {
     suspend fun getHtaSessions(): List<SessionItem>
     suspend fun getDiabetesSessions(): List<SessionItem>
+    suspend fun getDbtHtaSessions(): List<SessionItem>
     suspend fun getHtaSubSessions(sessionId: Long): List<SubSessionItem>
     suspend fun getDiabetesSubSessions(sessionId: Long): List<SubSessionItem>
+    suspend fun getDbtHtaSubSessions(sessionId: Long): List<SubSessionItem>
     suspend fun debugAdvanceOneWeek()
 }

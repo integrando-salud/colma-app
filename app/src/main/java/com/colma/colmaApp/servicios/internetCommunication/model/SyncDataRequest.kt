@@ -93,7 +93,7 @@ data class MetaData(
     @SerializedName("fecha_usuario") val fechaUsuario: String,
     @SerializedName("fecha_edicion") val fechaEdicion: String?,
     @SerializedName("fecha_sincronizacion") val fechaSincronizacion: String,
-    @SerializedName("meta_cumplida") val metaCumplida: Int,
+    @SerializedName("meta_cumplida") val metaCumplida: Boolean,
     @SerializedName("fecha_objetivo") val fechaObjetivo: String,
     @SerializedName("motivo_incumplimiento") val motivoIncumplimiento: String?
 )

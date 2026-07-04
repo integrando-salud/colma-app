@@ -52,7 +52,7 @@ class SessionListRepositoryImpl(
                 treatmentContents
                     .filter { it.id == TreatmentType.HTA }
                     .flatMap { it.sessions }
-                    .filterIndexed { index, _ -> index <= elapsedWeeks }
+                    // .filterIndexed { index, _ -> index <= elapsedWeeks }
                     .map { sessionContent ->
                         SessionItem(
                             id = sessionContent.id,
@@ -80,7 +80,7 @@ class SessionListRepositoryImpl(
                 treatmentContents
                     .filter { it.id == TreatmentType.DIABETES }
                     .flatMap { it.sessions }
-                    .filterIndexed { index, _ -> index <= elapsedWeeks }
+                    // .filterIndexed { index, _ -> index <= elapsedWeeks }
                     .map { sessionContent ->
                         SessionItem(
                             id = sessionContent.id,
@@ -96,6 +96,48 @@ class SessionListRepositoryImpl(
                 emptyList()
             }
         )
+    }
+
+    override suspend fun getDbtHtaSessions(): List<SessionItem> = withContext(Dispatchers.IO) {
+        val fechaRegistro = dbHelper.getUsuarioPrimerLogin(userId)
+        val elapsedWeeks = getElapsedWeeks(fechaRegistro)
+
+        contentRepository.getAllTreatments().fold(
+            onSuccess = { treatmentContents ->
+                Log.d(TAG, "Successfully loaded ${treatmentContents.size} treatments")
+                treatmentContents
+                    .filter { it.id == TreatmentType.DBT_HTA }
+                    .flatMap { it.sessions }
+                    // .filterIndexed { index, _ -> index <= elapsedWeeks }
+                    .map { sessionContent ->
+                        SessionItem(
+                            id = sessionContent.id,
+                            title = sessionContent.title,
+                            treatmentType = TreatmentType.DBT_HTA,
+                            thumbnailRes = com.colma.colmaApp.utils.ResourceUtils.getResourceId(context, sessionContent.thumbnail, "drawable"),
+                            duration = sessionContent.duration
+                        )
+                    }
+            },
+            onFailure = { error ->
+                Log.e(TAG, "Error loading DBT_HTA sessions: ${error.message}", error)
+                emptyList()
+            }
+        )
+    }
+
+    override suspend fun getDbtHtaSubSessions(sessionId: Long): List<SubSessionItem> = withContext(Dispatchers.IO) {
+        contentRepository.getSubSessions(TreatmentType.DBT_HTA, sessionId).getOrDefault(emptyList())
+            .map { subSessionContent ->
+                val totalContent = subSessionContent.multimedia.size
+                val readCount = dbHelper.getReadMultimediaCount(userId, TreatmentType.DBT_HTA.name, sessionId.toInt(), subSessionContent.id.toInt())
+                SubSessionItem(
+                    id = subSessionContent.id,
+                    title = subSessionContent.title,
+                    duration = subSessionContent.duration,
+                    isCompleted = totalContent > 0 && readCount >= totalContent
+                )
+            }
     }
 
     override suspend fun debugAdvanceOneWeek() {

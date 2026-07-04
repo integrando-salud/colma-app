@@ -18,6 +18,7 @@ class SyncService {
 
     private val gson = GsonBuilder()
         .setLenient()
+        .serializeNulls()
         .create()
 
     private val okHttpClient = OkHttpClient.Builder()

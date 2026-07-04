@@ -12,7 +12,7 @@ enum class MultimediaContentType {
     QUIZ
 }
 
-enum class TreatmentType { HTA, DIABETES }
+enum class TreatmentType { HTA, DIABETES, DBT_HTA }
 
 data class MultimediaOption(
     val type: MultimediaContentType,

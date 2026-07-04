@@ -360,5 +360,20 @@ fun getMetasOptions(treatmentType: TreatmentType): Pair<List<String>, List<Strin
             ),
             conQuienOptions
         )
+        TreatmentType.DBT_HTA -> Pair(
+            listOf(
+                "Subir escaleras en lugar de usar el ascensor.",
+                "Bajar una parada de colectivo antes.",
+                "Bailar una canción en casa.",
+                "Caminar al mercado.",
+                "Pasear en bicicleta.",
+                "Ordenar la cocina o una habitación.",
+                "Ir de compras o ir al mercado.",
+                "Hacer un trámite pendiente",
+                "Limpiar un espacio de la casa.",
+                "Organizar la semana."
+            ),
+            conQuienOptions
+        )
     }
 }

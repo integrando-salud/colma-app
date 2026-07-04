@@ -78,7 +78,14 @@ class TreatmentDownloadRepositoryImpl(private val context: Context) : TreatmentD
                 Log.w(TAG, "Could not load static content.json from assets: ${e.message}")
                 null
             }
-            val staticTreatment = assetContentDict?.treatments?.find { it.id == treatmentType }
+            // Load static treatments for merging quizzes/metas
+            val staticTreatments = when (treatmentType) {
+                TreatmentType.DBT_HTA -> listOfNotNull(
+                    assetContentDict?.treatments?.find { it.id == TreatmentType.DIABETES },
+                    assetContentDict?.treatments?.find { it.id == TreatmentType.HTA }
+                )
+                else -> listOfNotNull(assetContentDict?.treatments?.find { it.id == treatmentType })
+            }
 
             // Calculate total files to download first to report accurate progress
             val semanas = serverTreatment.semanas ?: emptyList()
@@ -97,12 +104,14 @@ class TreatmentDownloadRepositoryImpl(private val context: Context) : TreatmentD
             var downloadedCount = 0
 
             for ((weekIndex, serverSemana) in semanas.withIndex()) {
-                val staticSession = staticTreatment?.sessions?.getOrNull(weekIndex)
+                val staticSessions = staticTreatments.mapNotNull { it.sessions.getOrNull(weekIndex) }
+                val staticSession = staticSessions.firstOrNull()
                 val mappedSubSessions = mutableListOf<SubSessionContent>()
 
                 val sesiones = serverSemana.sesiones ?: emptyList()
                 for ((sessionIndex, serverSesion) in sesiones.withIndex()) {
-                    val staticSubSession = staticSession?.subSessions?.getOrNull(sessionIndex)
+                    val staticSubSessions = staticSessions.mapNotNull { it.subSessions.getOrNull(sessionIndex) }
+                    val staticSubSession = staticSubSessions.firstOrNull()
                     val serverContents = serverSesion.content ?: emptyList()
 
                     // Download files and map paths
@@ -216,10 +225,10 @@ class TreatmentDownloadRepositoryImpl(private val context: Context) : TreatmentD
                         )
                     }
 
-                    // Merge static QUIZ and METAS
-                    staticSubSession?.multimedia?.filter {
+                    // Merge static QUIZ and METAS from all matching static subsessions
+                    staticSubSessions.flatMap { it.multimedia }.filter {
                         it.type == MultimediaContentType.QUIZ || it.type == MultimediaContentType.METAS
-                    }?.forEach { staticItem ->
+                    }.forEach { staticItem ->
                         if (multimediaList.none { it.type == staticItem.type }) {
                             multimediaList.add(staticItem)
                         }

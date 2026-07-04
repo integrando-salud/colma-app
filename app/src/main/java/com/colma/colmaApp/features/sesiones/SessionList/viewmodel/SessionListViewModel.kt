@@ -86,11 +86,18 @@ class SessionListViewModel(private val repository: SessionListRepository) : View
             try {
                 val hasHta = _uiState.value.treatmentTypes.contains(TreatmentType.HTA)
                 val hasDiabetes = _uiState.value.treatmentTypes.contains(TreatmentType.DIABETES)
+                val hasDbtHta = _uiState.value.treatmentTypes.contains(TreatmentType.DBT_HTA)
 
-                Log.d(TAG, "Has HTA: $hasHta, Has Diabetes: $hasDiabetes")
+                Log.d(TAG, "Has HTA: $hasHta, Has Diabetes: $hasDiabetes, Has DBT_HTA: $hasDbtHta")
 
                 val htaSessions = if (hasHta) repository.getHtaSessions() else emptyList()
-                val diabetesSessions = if (hasDiabetes) repository.getDiabetesSessions() else emptyList()
+                val diabetesSessions = if (hasDiabetes) {
+                    repository.getDiabetesSessions()
+                } else if (hasDbtHta) {
+                    repository.getDbtHtaSessions()
+                } else {
+                    emptyList()
+                }
 
                 Log.d(TAG, "Loaded ${htaSessions.size} HTA sessions and ${diabetesSessions.size} Diabetes sessions")
 
@@ -118,6 +125,7 @@ class SessionListViewModel(private val repository: SessionListRepository) : View
                     val subSessions = when (it.treatmentType) {
                         TreatmentType.HTA -> repository.getHtaSubSessions(sessionId)
                         TreatmentType.DIABETES -> repository.getDiabetesSubSessions(sessionId)
+                        TreatmentType.DBT_HTA -> repository.getDbtHtaSubSessions(sessionId)
                     }
                     _uiState.update { state ->
                         state.copy(subSessions = state.subSessions + (sessionId to subSessions))
