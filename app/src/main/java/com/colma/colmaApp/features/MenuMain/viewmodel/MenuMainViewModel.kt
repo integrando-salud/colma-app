@@ -96,6 +96,7 @@ class MenuMainViewModel(private val repository: MenuMainRepository) : ViewModel(
             private fun navigateToLogin() {
                 viewModelScope.launch {
                     repository.logout()
+                    _uiState.update { MenuMainUiState() }
                     _navigationEvent.send(NavigationEvent.NavigateToLogin)
                 }
             }    

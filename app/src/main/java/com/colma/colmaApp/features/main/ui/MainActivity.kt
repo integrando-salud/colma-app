@@ -529,6 +529,10 @@ fun MainAppContainer() {
                         composable("menu_main") {
                             val uiState by menuViewModel.uiState.collectAsState()
 
+                            LaunchedEffect(Unit) {
+                                menuViewModel.onEvent(MenuMainEvent.LoadInitialData)
+                            }
+
                             LaunchedEffect(uiState.userName) {
                                 topBarConfig = TopBarConfig(
                                     title = "Bienvenido/a ${uiState.userName}",
