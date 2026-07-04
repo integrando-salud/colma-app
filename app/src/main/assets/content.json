@@ -767,7 +767,7 @@
                   "type": "DESCRIPTION",
                   "title": "Lectura",
                   "description": "Lee y escucha la sesión del día",
-                  "fullDescription": "",
+                  "fullDescription": "En la sesión anterior vimos que hacer actividades es como ponerle nafta a nuestro ánimo. Hay dos tipos: las que te dan disfrute y las que son importantes. Hoy vamos a empezar por el disfrute: elegir algo pequeño que te guste hacer. Cómo elegir y planificar: Hay dos estrategias claves que pueden ayudarnos a que esto funcione. Ahora pensá algo que te gustaba y que dejaste de hacer porque no tenías ánimo. Eligí algo pequeño, que se pueda realizar en 5 o 10 minutos está perfecto. Si aún parece difícil, eligí algo que te tome aún menos tiempo. Y si es una actividad que ya realizás y te hace bien, podés dedicarle más tiempo. Lo importante es que sea posible para vos hoy. Ayuda mucho que el plan sea claro: qué día, a qué hora más o menos y en qué lugar. Y una cosa más: pensá qué necesitás tener listo para que sea más fácil (por ejemplo: audífonos, un libro a mano, ropa cómoda, tu té preparado).",
                   "iconResId": "outline_unknown_document_24"
                 },
                 {
@@ -810,21 +810,21 @@
                   "type": "DESCRIPTION",
                   "title": "Lectura 1",
                   "description": "Lee y escucha la sesión del día",
-                  "fullDescription": "",
+                  "fullDescription": "Tu caja de herramientas para cumplir tu meta: Cuando nuestro estado de ánimo baja, tener un plan nos mantiene activos. Cuando decimos “plan”, nos referimos a saber: qué vamos a hacer, cuándo y dónde. Y si hace falta, qué necesitamos tener listo. Ahora veamos las herramientas que nos pueden ayudar a crear nuestro plan: Herramienta 1: La Lupa (Planificá con más detalle) Problema: “Mi plan se siente poco claro.” Solución: Usá la lupa para revisar los detalles. Preguntate: “¿Está claro qué voy a hacer, cuándo y dónde?” Si no, ajustalo ahora.",
                   "iconResId": "outline_unknown_document_24"
                 },
                 {
                   "type": "DESCRIPTION",
                   "title": "Lectura 2",
                   "description": "Lee y escucha la sesión del día",
-                  "fullDescription": "",
+                  "fullDescription": "Herramienta 2: La Tijera (Dividí en pasos pequeños) Problema: “No sé por dónde empezar.” Solución: Usá la tijera para cortar tu meta en partes más pequeñas. Hacé solo la primera parte. Ejemplos: En vez de “ordenar todo” → “ordenar una esquina por 5 minutos.” En vez de “salir a caminar” → “ponerme las zapatillas y salir a la puerta.”",
                   "iconResId": "outline_unknown_document_24"
                 },
                 {
                   "type": "DESCRIPTION",
                   "title": "Lectura 3",
                   "description": "Lee y escucha la sesión del día",
-                  "fullDescription": "",
+                  "fullDescription": ". Herramienta 3: El silbato (Pedir ayuda) Problema: “Solo/a no me está saliendo.” Solución: Pedir ayuda es una estrategia inteligente, no una debilidad. Ejemplos: ● “¿Me acompañás a caminar 10 minutos?” ● “¿Me ayudás a acordarme de tomar la pastilla?” ● “¿Podemos hablar un ratito?” Recordá: planificá, dividí y pedí ayuda. Así podés avanzar, incluso cuando no tengas muchas ganas.",
                   "iconResId": "outline_unknown_document_24"
                 },
                 {
@@ -868,28 +868,28 @@
                   "type": "DESCRIPTION",
                   "title": "Lectura 1",
                   "description": "Lee y escucha la sesión del día",
-                  "fullDescription": "",
+                  "fullDescription": "Cuando intentamos hacer algo nuevo, es normal que aparezcan obstáculos o \"piedras en el camino\". Las piedras no significan que estamos fallando. Significan que lo estamos intentando. Hoy vamos a conversar sobre las 4 piedras más comunes y qué hacer cuando aparecen. Así vas a poder seguir avanzando, aunque el camino no esté completamente libre. PIEDRA 1: Ánimo bajo Cómo se siente: “No va a servir”, “no lo voy a disfrutar”, “¿para qué?” Respuesta útil: Volvé a lo básico. Hacelo más pequeño, aunque sea mínimo. Ejemplo: Ana planificó “llamar a una amiga querida”, pero piensa: “no vale la pena.” Solución: Le mandó un mensaje corto: “Hola, estaba pensando en vos.”",
                   "iconResId": "outline_unknown_document_24"
                 },
                 {
                   "type": "DESCRIPTION",
                   "title": "Lectura 2",
                   "description": "Lee y escucha la sesión del día",
-                  "fullDescription": "",
+                  "fullDescription": "PIEDRA 2: Falta de energía Cómo se siente: \"No tengo energía\", \"hoy no puedo\". Respuesta útil: Bajá la exigencia. Probá dar un paso pequeño y planificá un descanso después. Ejemplo: Carlos eligió \"caminar 15 minutos\", pero se siente agotado. Solución: Mentalizate: \"Solo me pongo las zapatillas y camino hasta la esquina. Si no puedo más, vuelvo\". Si de verdad no doy más, lo cambio por algo que requiera menos energía, como respirar profundo 2 minutos sentado.",
                   "iconResId": "outline_unknown_document_24"
                 },
                 {
                   "type": "DESCRIPTION",
                   "title": "Lectura 3",
                   "description": "Lee y escucha la sesión del día",
-                  "fullDescription": "",
+                  "fullDescription": "Cómo se siente: \"No me alcanza el día\", \"se me pasó\". Respuesta útil: Agendá un espacio pequeño y protegelo. 10 minutos cuentan. Ejemplo: Ana quería \"tomar un té tranquila\", pero el día se llenó de actividades. Solución: Programá tomar su té \"justo después de tomar la pastilla de la mañana\", así se da ese tiempo como parte de su rutina y no se le olvida.",
                   "iconResId": "outline_unknown_document_24"
                 },
                 {
                   "type": "DESCRIPTION",
                   "title": "Lectura 4",
                   "description": "Lee y escucha la sesión del día",
-                  "fullDescription": "",
+                  "fullDescription": "PIEDRA 4: Cuesta empezar Cómo se siente: “No me sale empezar”, “lo pateo”, “si empiezo, me va a costar”. Respuesta útil: Usá la regla de los 5 minutos: “Solo empiezo a realizar la actividad por 5 minutos. Después decido si sigo.” Ejemplo: Carlos planificó “caminar 15 minutos”, pero no logra salir. Solución: Me mentalizo: “Mi única meta ahora es salir de casa. Camino 5 minutos y después decido”. Carlos sale, camina unos minutos… y al estar afuera, empieza a animarse y termina caminando más de lo que pensaba. Y si no, igual ya hizo lo más difícil: empezar. Las piedras no significan que fallaste. Significan que estás intentando. Seguí tu plan, no tu ánimo: ajustá el tamaño, protegé un tiempo pequeño y usá la regla de los 5 minutos.",
                   "iconResId": "outline_unknown_document_24"
                 },
                 {
@@ -977,14 +977,14 @@
                   "type": "DESCRIPTION",
                   "title": "Lectura 1",
                   "description": "Lee y escucha la sesión del día",
-                  "fullDescription": "",
+                  "fullDescription": "Un premio por intentarlo: Cuando nuestro estado de ánimo está bajo, es fácil criticarnos por ‘no hacer lo suficiente’. Pero cada intento cuenta. La clave es premiar el esfuerzo, no la perfección. Ejemplo de Carlos: Carlos se propuso caminar 15 minutos. No lo hizo perfecto todos los días, pero sí lo intentó y avanzó. Después de caminar, Carlos se dio un premio saludable: se preparó una bebida caliente y se sentó 5 minutos a escuchar una canción que le gusta. Eso lo ayudó a pensar: “Bien. Lo hice. Puedo seguir.” ¿Qué es un buen premio? Un buen premio es algo que: 1. Te gusta. 2. Es saludable (te da bienestar, no malestar). 3. Podés hacerlo justo después de tu actividad (para conectar el esfuerzo con el premio).",
                   "iconResId": "outline_unknown_document_24"
                 },
                 {
                   "type": "DESCRIPTION",
                   "title": "Lectura 2",
                   "description": "Lee y escucha la sesión del día",
-                  "fullDescription": "",
+                  "fullDescription": "Cuidado con los “falsos premios” A veces hacemos cosas que nos alivian por un momento, pero que después nos hacen sentir peor. Por ejemplo, comer en exceso, tomar alcohol o quedarnos en la cama todo el día. Esos son “falsos premios”, porque al final no nos hacen realmente bien. Es mejor buscar algo que sí lo haga. Ideas de premios saludables ● Prepararte un té o café y disfrutarlo. ● Escuchar tu canción favorita 5 minutos. ● Darte un baño tibio o una ducha tranquila. ● Leer un capítulo o cinco páginas. ● Llamar a alguien para conversar un rato. Decirte en voz alta: “Buen trabajo. Fue difícil, pero lo intenté.”",
                   "iconResId": "outline_unknown_document_24"
                 },
                 {
@@ -1073,14 +1073,14 @@
                   "type": "DESCRIPTION",
                   "title": "Lectura 1",
                   "description": "Lee y escucha la sesión del día",
-                  "fullDescription": "",
+                  "fullDescription": "Tu camino hasta aquí: En estas tres semanas aprendiste cosas importantes. Vamos a repasarlas juntos. Lo que lograron Ana y Carlos: Ana y Carlos, al igual que vos, fueron aprendiendo paso a paso. Mirá lo que lograron: De metas pequeñas a cambios de estilo de vida . Todo lo que aprendiste hasta ahora tiene un propósito más grande: ayudarte a hacer cambios en tu estilo de vida que te permitan mejorar tu bienestar y tu salud. No se trata de cambiar todo de golpe, sino de ir sumando pequeñas acciones que, con el tiempo, hacen una gran diferencia. Eso es exactamente lo que vamos a trabajar en las próximas semanas.",
                   "iconResId": "outline_unknown_document_24"
                 },
                 {
                   "type": "DESCRIPTION",
                   "title": "Lectura 2",
                   "description": "Lee y escucha la sesión del día",
-                  "fullDescription": "",
+                  "fullDescription": "Lo que viene En las próximas semanas vamos a ver cómo aplicar todo esto a cuatro áreas clave para tu salud: ● Consejos prácticos para comer mejor, paso a paso. ● Cómo moverte más, aunque sea un poco cada día. ● Estrategias para descansar mejor. ● Técnicas simples para manejar el estrés y la tensión. Ahora, una meta de importancia Hasta ahora elegiste metas de disfrute: cosas que te gustan y te dan un respiro. Hoy vas a elegir tu primera meta de importancia: algo valioso o necesario para vos. Puede que no sea tan divertido, pero hacerla te va a hacer sentir capaz y te va a ayudar a avanzar. Recordá: empezá con algo pequeño. Usá las herramientas que ya conocés. Y si aparece una piedra, ya sabés qué hacer.",
                   "iconResId": "outline_unknown_document_24"
                 },
                 {
@@ -1130,7 +1130,7 @@
                   "type": "DESCRIPTION",
                   "title": "Lectura",
                   "description": "Lee y escucha la sesión del día",
-                  "fullDescription": "",
+                  "fullDescription": "¿Cómo podés saber si tus niveles de glucosa están controlados o no? La única forma confiable de medir tu glucosa es analizando tu sangre. Algunas aplicaciones de celular dicen que pueden hacerlo con la cámara del celular, ¡pero eso no es cierto! Solo los glucómetros y los análisis de sangre realizados por profesionales pueden dar resultados reales. ● Si te hacés la prueba en ayunas y tu glucosa da por encima de 126 mg/dl, significa que está alta. ● Y si en cualquier momento del día el resultado pasa los 200, también significa que tu glucosa está elevada. Si tenés alguno de estos resultados, anotalo y acercate a tu centro de salud. Además, tu médico puede pedirte un análisis de sangre llamado hemoglobina glicosilada. Este resultado muestra cómo estuvieron tus niveles de glucosa durante los últimos dos o tres meses. Si el valor es de 7% o más, significa que tu glucosa estuvo elevada de forma constante durante estos meses. Es muy importante que midas tu glucosa con la frecuencia que te indicó tu médico para ver si está controlada. También puede recomendarte hacerte una prueba de hemoglobina glicosilada cada tres meses.",
                   "iconResId": "outline_unknown_document_24"
                 },
                 {
@@ -1158,14 +1158,14 @@
                   "type": "DESCRIPTION",
                   "title": "Lectura 1",
                   "description": "Lee y escucha la sesión del día",
-                  "fullDescription": "",
+                  "fullDescription": "Vivir con diabetes significa aprender a conocer nuestro cuerpo y mantener un equilibrio en los niveles de glucosa en sangre. Este equilibrio puede verse afectado por lo que comemos, la actividad física que realizamos, el estrés o los medicamentos. Cuando la glucosa está muy alta, podés sentir mucha sed, tener ganas de orinar frecuentemente, tener mucha hambre o perder peso sin ninguna explicación. También hay otros síntomas, como tener la piel seca, picazón, ver borroso, tener sueño, náuseas o heridas que tardan en sanar. Si tenés alguno de estos síntomas, es importante que midas tu glucosa y que te acerques a tu centro de salud. Es importante reconocer las señales de que tu glucosa está alta o baja, pero recordá que nada reemplaza la medición con un glucómetro o un análisis de sangre. Medirte la glucosa es una herramienta clave para cuidar tu salud, ya que te ayuda a vos y a tu médico a tomar mejores decisiones.",
                   "iconResId": "outline_unknown_document_24"
                 },
                 {
                   "type": "DESCRIPTION",
                   "title": "Lectura 2",
                   "description": "Lee y escucha la sesión del día",
-                  "fullDescription": "",
+                  "fullDescription": "Ahora, cuando la glucosa está demasiado baja, también hay que estar atentos, porque significa que tu cuerpo no tiene suficiente energía. Cuando tu glucosa está muy baja podés sentir temblores, el corazón acelerado, sudor, dolor de cabeza o mareos. También es común sentir cansancio, hambre intensa, visión borrosa, ansiedad o irritabilidad. Si sentís alguno de estos síntomas, aparecen más o se intensifican, necesitás centrarte en dos cosas: tomar un vaso pequeño de jugo o un caramelo, y después medirte la glucosa. Si tenés un glucómetro en casa, usalo. Si no lo tenés, acercate a un centro de salud. Si tu glucosa está por debajo de 70, está baja, y es recomendable que vayas a tu centro de salud para que te ayuden a nivelarla. Hoy vimos dos situaciones importantes: cuando la glucosa está demasiado alta y cuando está muy baja. Recordá que conocer tu cuerpo y medirte la glucosa te ayuda a cuidarte mejor cada día.",
                   "iconResId": "outline_unknown_document_24"
                 },
                 {
@@ -1209,7 +1209,7 @@
                   "type": "DESCRIPTION",
                   "title": "Lectura",
                   "description": "Lee y escucha la sesión del día",
-                  "fullDescription": "",
+                  "fullDescription": "¿Por qué controlar tu diabetes es cuidar tus riñones, tu corazón, tus ojos y tu cuerpo? Cuando mantenés tu diabetes bajo control, ayudás a que tus riñones sigan haciendo bien su trabajo, también cuidás tu corazón, protegés tus ojos y cuidás tus piernas, pies y manos. Cuando la glucosa se mantiene alta por mucho tiempo, algunas personas pueden presentar problemas en estas partes del cuerpo. Esto no les ocurre a todas las personas y, cuando pasa, puede mantenerse bajo control con seguimiento médico, alimentación saludable y actividad física. Recordá que mantener tu glucosa bajo control es cuidar tu salud. Esto te va a permitir tener más energía en tu día a día y también mejorar tu estado de ánimo. En las próximas sesiones te vamos a dar consejos fáciles para cuidar tu alimentación, moverte más y cuidar tu salud diariamente.",
                   "iconResId": "outline_unknown_document_24"
                 },
                 {
@@ -1273,7 +1273,7 @@
                   "type": "DESCRIPTION",
                   "title": "Lectura",
                   "description": "Lee y escucha la sesión del día",
-                  "fullDescription": "",
+                  "fullDescription": "¿Por qué el movimiento nos ayuda? ● Mejora los niveles de azúcar en el cuerpo. ● Mejora la presión arterial. ● Libera tensiones, mejora el ánimo y reduce la tristeza. ● Da más energía para las actividades del día. ● Mejora el sueño. ● Fortalece el cuerpo para evitar dolores. ¿Qué tipo de movimientos podemos hacer? ● Caminar, aunque sea unos minutos. ● Subir y bajar escaleras. ● Mover brazos y piernas sentado/a. ● Poner música y bailar un ratito. ¿Qué hacer cuando no tenemos ganas? ● Empezar de a poco: 2 a 5 minutos es suficiente. ● Hacerlo acompañado si es posible. ● Elegir algo que me guste (música, caminar afuera, movimiento suave). ● Celebrar cada esfuerzo, aunque sea pequeño. ¿Cómo convertirlo en un hábito? ● Hacerlo siempre en el mismo momento del día. ● Unirse a un grupo en tu comunidad o familia. ● Usar recordatorios simples: una nota en la heladera o una alarma en el teléfono. ● Anotar los días en que lo hicimos. Ser pacientes: crear hábitos lleva semanas, no días.",
                   "iconResId": "outline_unknown_document_24"
                 },
                 {
@@ -1317,7 +1317,7 @@
                   "type": "DESCRIPTION",
                   "title": "Lectura",
                   "description": "Lee y escucha la sesión del día",
-                  "fullDescription": "",
+                  "fullDescription": "Hacer ejercicio con frecuencia es una excelente manera de cuidar tu salud. ● Te ayuda a mantener tu glucosa y presión arterial estables. ● Fortalece tu corazón y tus arterias. ● Te hace sentir de mejor ánimo. Antes de empezar a hacer ejercicio, es importante saber cómo hacerlo de forma segura. Para eso, tenemos los siguientes consejos para vos. Si recién empezás ● Empezá de a poco: ejercitate unos minutos y aumentá poco a poco cada día. Antes de hacer ejercicio ● Comé una hora antes. ● Usá ropa cómoda y zapatillas que no aprieten. ● Entrá en calor con movimientos suaves. ● Si tenés diabetes, cuidá tus pies: usá medias de algodón sin costuras o con las costuras hacia afuera. Durante el ejercicio ● Tomá agua poco a poco. ● Evitá el calor fuerte y el sol. ● Si sentís mareos o falta de aire, detenete y descansá. Después de hacer ejercicio ● Estirá tus músculos para relajarte. ● Revisá tus pies. ● Si hay ampollas o heridas, descansá o hacé ejercicios sentado/a. Lo importante es moverte, aunque sea un poco, todos los días. De esta forma, tu cuerpo va a generar más energía, lo que te va a permitir tener un mejor ánimo y estado de salud. Ahora que repasamos cómo hacer ejercicio de manera segura, hay que empezar con algunas actividades sencillas para moverte. ¡Podés elegir la actividad que más te guste!",
                   "iconResId": "outline_unknown_document_24"
                 },
                 {
@@ -1360,14 +1360,14 @@
                   "type": "DESCRIPTION",
                   "title": "Lectura 1",
                   "description": "Lee y escucha la sesión del día",
-                  "fullDescription": "",
+                  "fullDescription": "El ejercicio es un hábito que se incorpora con el tiempo. No se trata de hacerlo perfectamente, sino de empezar de a poco y sostenerlo. Recordá que el ejercicio no es para cumplir ni para “hacerlo bien” . Es para cuidarnos y sentirnos mejor. ¿Cómo empezar? ● Podés empezar poco a poco. Y está bien. ● No hace falta empezar con 30 minutos. 5 o 10 minutos también cuentan. ● Lo importante es que te muevas un poco cada día. ● El hábito se construye paso a paso, no de golpe. Ya empezaste, pero esta semana no pudiste seguir. ¿Qué hacer? ● Retomar es parte del camino. No es fallar. ● A todos nos pasa. ● Podés volver a empezar cualquier día. ● Lo importante es que vuelvas a intentarlo. ● Pensá por qué no te resultó y planificá algo diferente que te pueda ayudar a tener mejores resultados.",
                   "iconResId": "outline_unknown_document_24"
                 },
                 {
                   "type": "DESCRIPTION",
                   "title": "Lectura 2",
                   "description": "Lee y escucha la sesión del día",
-                  "fullDescription": "",
+                  "fullDescription": "La frustración es normal Cuando estamos cansados, desanimados o con muchas preocupaciones, cuesta empezar. Esto no significa que no podamos. Significa que necesitamos ser más amables con nosotros mismos. ● Respirá profundo. ● Repetí: “Hago un poquito de lo que puedo hoy.” ● Felicitate por cada intento, aunque parezca pequeño. Empezar sin presiones Acciones simples y posibles: ● Caminar mientras hago quehaceres. ● Mover mis brazos y piernas mientras estoy sentado/a. ● Subir y bajar escaleras. ● Bailar una canción que me guste. ● Hacer estiramientos suaves. ¿Cómo sostener el hábito? ● Hacerlo en el mismo horario cada día. ● Usar recordatorios simples (nota en la heladera, alarma del celular). ● Hacer actividades en grupo, en el barrio o con la familia. ● Buscar algo que me guste: escuchar música, bailar, salir a caminar. Recordar que un poco es mejor que nada.",
                   "iconResId": "outline_unknown_document_24"
                 },
                 {
@@ -1632,14 +1632,14 @@
                   "type": "DESCRIPTION",
                   "title": "Lectura 1",
                   "description": "Lee y escucha la sesión del día",
-                  "fullDescription": "",
+                  "fullDescription": "A veces comer saludable parece complicado, pero no tiene por qué serlo. Veamos algunos trucos y hábitos que podemos aplicar en casa para planear mejor las comidas y ahorrar tiempo y plata. Planeá las comidas y hacé una lista de compras ● Planeá las comidas de la semana junto a las personas con las que vivís. ● A partir de ese menú, hacé una lista de compras para evitar olvidos y compras innecesarias. Tené en cuenta qué frutas y verduras están de temporada para incluirlas: suelen ser más frescas, ricas y baratas.",
                   "iconResId": "outline_unknown_document_24"
                 },
                 {
                   "type": "DESCRIPTION",
                   "title": "Lectura 2",
                   "description": "Lee y escucha la sesión del día",
-                  "fullDescription": "",
+                  "fullDescription": "Cociná por adelantado ● Prepará una buena cantidad de ensalada fresca para dos días y guardala en la heladera. ● Cociná suficientes legumbres para tres o cuatro días y guardalas en la heladera. Así vas a tener opciones listas cuando estés con poco tiempo o cansado/a. Prepará comidas sencillas y saludables ● Usá el recetario de la aplicación para probar platos fáciles, ricos y nutritivos. No necesitás ingredientes complicados o caros para comer bien. Tené colaciones rápidas y saludables ● Tené frutas y verduras frescas a mano para cuando te dé hambre entre comidas. ● Tené queso fresco bajo en sal y grasa para usar en el desayuno o en colaciones.",
                   "iconResId": "outline_unknown_document_24"
                 },
                 {
@@ -1726,14 +1726,14 @@
                   "type": "DESCRIPTION",
                   "title": "Lectura 1",
                   "description": "Lee y escucha la sesión del día",
-                  "fullDescription": "",
+                  "fullDescription": "La comida que se prepara en casa puede ser buena para todos. Cuando hacemos pequeños cambios en ella para cuidar nuestra salud, toda la familia se beneficia: hay más energía, más nutrientes, se crean hábitos saludables y acompañan a grandes y chicos. Comer lo mismo ayuda a compartir la mesa, y disfrutar juntos va a facilitar mantener los cambios en el tiempo. ● Elegí alimentos que llenen y rindan: como legumbres, huevo, arroz y verduras. ● Priorizá la comida hecha en casa: cocinar te va a ayudar a saber qué estás comiendo y a manejar mejor las cantidades. Elegí alimentos frescos cuando sea posible: reducí el azúcar, la sal y los alimentos procesados (esos que vienen empaquetados) como gaseosas, papas fritas, jugos en caja o botella y galletitas, porque suben rápido el azúcar y no llenan.",
                   "iconResId": "outline_unknown_document_24"
                 },
                 {
                   "type": "DESCRIPTION",
                   "title": "Lectura 2",
                   "description": "Lee y escucha la sesión del día",
-                  "fullDescription": "",
+                  "fullDescription": "Sabemos que parece complicado, pero con pequeños cambios podemos lograr que nuestras comidas sean más saludables para toda la familia, por ejemplo: ● Agregá verduras a las comidas diarias, de a poco y como más te guste. Las verduras de estación son más sabrosas y económicas. ● No necesitás eliminar por completo los platos que tienen arroz, fideos o papas. Comer un poco menos de estos alimentos y completar el plato agregando siempre verduras o legumbres te va a ayudar a tener una mejor alimentación. ● Usá condimentos naturales para dar sabor, como ajo, cebolla o hierbas. ● Elegí formas más saludables de preparar los alimentos cuando sea posible, como cocinarlos al horno, a la plancha o hervidos. ● Tomá agua como bebida principal en todas las comidas. Son los mismos alimentos de siempre, solo que preparados de una forma que cuida más la salud. Cuando toda la familia come lo mismo, se simplifica la cocina, se ahorra tiempo y se construyen hábitos que benefician a todos.",
                   "iconResId": "outline_unknown_document_24"
                 },
                 {
@@ -1761,21 +1761,21 @@
                   "type": "DESCRIPTION",
                   "title": "Lectura 1",
                   "description": "Lee y escucha la sesión del día",
-                  "fullDescription": "",
+                  "fullDescription": "Las reuniones, los cumpleaños y los encuentros con otras personas suelen ser momentos lindos para compartir, charlar y pasarla bien. En esos espacios también suele haber comidas distintas a las de todos los días, y a veces surge la duda de cómo cuidarse sin sentirse afuera de la celebración. Cuidarse no significa dejar de participar ni hacer todo a la perfección. Cada persona va encontrando su manera, y eso lleva tiempo.",
                   "iconResId": "outline_unknown_document_24"
                 },
                 {
                   "type": "DESCRIPTION",
                   "title": "Lectura 2",
                   "description": "Lee y escucha la sesión del día",
-                  "fullDescription": "",
+                  "fullDescription": "Acá tenemos algunas ideas que a muchas personas les resultaron útiles y que quizás también puedan ayudarte. ● Por ejemplo, algunas personas prefieren no llegar con mucha hambre a la reunión, por lo que comen algo saludable antes. ● Otras se toman un momento para mirar qué hay y elegir con calma lo que más les gusta. ● Empezar con una porción más chica también puede ser una opción, y después ver si seguimos con hambre. ● Cuando hay verduras o ensaladas, sumarlas ayuda a equilibrar la comida. ● Tomar agua durante la reunión también es una buena opción, en lugar de bebidas dulces. ● Si tenés muchas ganas de tomar una gaseosa, es mejor elegir una sin azúcar, las “zero” . ● Comer despacio, charlando y disfrutando, permite darnos cuenta de cuándo ya estamos satisfechos.",
                   "iconResId": "outline_unknown_document_24"
                 },
                 {
                   "type": "DESCRIPTION",
                   "title": "Lectura 3",
                   "description": "Lee y escucha la sesión del día",
-                  "fullDescription": "",
+                  "fullDescription": "No todas estas ideas sirven para todas las personas, y no hace falta usarlas todas. Lo importante es encontrar lo que nos haga sentir bien, sin culpa y sin exigencias. Disfrutar de un evento no se mide por lo que comemos, sino por el momento compartido. Cuidarse también puede ser parte de ese disfrute. Cada pequeño gesto cuenta. Elegir con calma y con cariño hacia nuestro cuerpo es una forma de cuidarnos.",
                   "iconResId": "outline_unknown_document_24"
                 },
                 {
@@ -1874,14 +1874,14 @@
                   "type": "DESCRIPTION",
                   "title": "Lectura 1",
                   "description": "Lee y escucha la sesión del día",
-                  "fullDescription": "",
+                  "fullDescription": "Medir la glucosa o azúcar en la sangre permite detectar a tiempo si está alta o baja, y así ayudar a evitar complicaciones en nuestro cuerpo. Con un control regular, es posible cuidar órganos importantes como el corazón, los riñones, los ojos y los pies. Controlar la glucosa también ayuda a entender qué cosas influyen de manera positiva en nuestra salud, como una alimentación balanceada, la actividad física diaria, el descanso y los medicamentos. No se trata de hacerlo perfectamente ni de medirse todo el tiempo, sino de hacerlo para prestar atención a cómo está nuestro cuerpo. En algunos centros de salud, el personal puede ayudarnos a medirla y a comprender los resultados. O, si tenemos un glucómetro, podemos medirla en casa. Esto permite llevar un seguimiento y compartir esa información con tu médico.",
                   "iconResId": "outline_unknown_document_24"
                 },
                 {
                   "type": "DESCRIPTION",
                   "title": "Lectura 2",
                   "description": "Lee y escucha la sesión del día",
-                  "fullDescription": "",
+                  "fullDescription": "Es importante tener en cuenta que una sola medición de la glucosa no nos dice cómo está nuestra salud en general: representa solo un momento específico. Por eso es importante que intentes seguir la recomendación de tu médico sobre cada cuánto es necesario medirse. Si al medirte notás varios valores muy altos, por ejemplo, más de 200 de glucosa, o si tenés síntomas diversos como mucha sed, orinar con frecuencia, cansancio extremo o visión borrosa, es importante que busques atención en tu centro de salud. Sabemos que muchas veces cuesta mantener el control o que no siempre se puede, y está bien. Cada pequeño paso cuenta. Ante cualquier duda, acercate a tu centro de salud. Cuidarte es un proceso, y no tenés que hacerlo solo o sola.",
                   "iconResId": "outline_unknown_document_24"
                 },
                 {
@@ -1909,14 +1909,14 @@
                   "type": "DESCRIPTION",
                   "title": "Lectura 1",
                   "description": "Lee y escucha la sesión del día",
-                  "fullDescription": "",
+                  "fullDescription": "Como conversamos en la sesión anterior, es muy importante que te midas la presión y el azúcar en casa. También vimos que una medición aislada no define tu salud. Lo que cuenta es el conjunto de tus mediciones a lo largo del tiempo. Sin embargo, hay momentos en los que tu cuerpo te envía señales de alerta que no debés pasar por alto. Vamos a repasar juntos cuándo es necesario que busques atención en tu centro de salud. Hablemos primero de la presión. Si al medirte notás que los resultados son repetidamente mucho más altos de lo habitual, esa es una señal para estar atentos. En estos casos se recomienda que saques un turno en tu centro de salud para revisar tus valores y tu medicación. Pero atención: si tu presión es igual o mayor a 180/110, también llamado 18/11, o si los valores altos vienen acompañados de un dolor de cabeza muy fuerte, visión borrosa, mareos, dolor en el pecho, falta de aire o una debilidad repentina en los brazos o piernas, no esperes. Estos síntomas, junto con la presión alta, requieren atención de emergencia.",
                   "iconResId": "outline_unknown_document_24"
                 },
                 {
                   "type": "DESCRIPTION",
                   "title": "Lectura 2",
                   "description": "Lee y escucha la sesión del día",
-                  "fullDescription": "",
+                  "fullDescription": "Ahora, pasemos a la glucosa o azúcar. Es normal que el azúcar en sangre varíe un poco, pero si tus mediciones son muy altas de forma repetida, sacá un turno en tu centro de salud para revisar el tratamiento que estás recibiendo. Buscá atención cuanto antes si notás síntomas como sed excesiva que no se calma, necesidad de orinar mucho más de lo común, un cansancio extremo que no te permite seguir con tu día o visión borrosa. Por otro lado, si sentís temblores, sudor frío o mareos, podría ser que tu azúcar esté muy baja. En ese caso, consumí algo dulce (puede ser un vaso de gaseosa o un caramelo) y, si no mejorás, buscá atención de emergencia. Cuidarte es un camino que se hace paso a paso, y cada pequeño cuidado que tenés hoy suma para tu bienestar de mañana. No tengas miedo de consultar; el equipo de tu centro de salud está para acompañarte. ¡Seguí adelante!",
                   "iconResId": "outline_unknown_document_24"
                 },
                 {
@@ -1959,14 +1959,14 @@
                   "type": "DESCRIPTION",
                   "title": "Lectura 1",
                   "description": "Lee y escucha la sesión del día",
-                  "fullDescription": "",
+                  "fullDescription": "Cuando vivís con condiciones crónicas como la diabetes, es común sentir que, si no hay síntomas hoy, no hace falta la medicación. Sin embargo, muchas de estas condiciones trabajan de forma silenciosa. Imaginá que tu medicación es un equipo de protección que te cuida todo el día. Cada dosis indicada por tu médico es el escudo que tu cuerpo necesita para evitar que el azúcar se acumule en tu sangre. No es recomendable cambiar la dosis, dejar el medicamento o empezar uno nuevo por tu cuenta, aunque te sientas bien o hayas escuchado el consejo de otra persona. ¿Por qué insistimos tanto con los horarios? No es por capricho. Para que el medicamento haga efecto, tiene que mantener un nivel parejo en tu cuerpo. Si lo tomás siempre a la misma hora, esa protección es constante. Saltar una dosis o cambiar el horario porque sí es como dejar la puerta de tu casa abierta de noche: el cuidado y la seguridad son menos efectivos.",
                   "iconResId": "outline_unknown_document_24"
                 },
                 {
                   "type": "DESCRIPTION",
                   "title": "Lectura 2",
                   "description": "Lee y escucha la sesión del día",
-                  "fullDescription": "",
+                  "fullDescription": "Recordá esto: tus medicamentos no dañan tu cuerpo; lo cuidan. Tomarlos cada día no es solo una rutina, es una decisión diaria de proteger tu corazón, tu vista, tus riñones y, sobre todo, tu tranquilidad. Procurá no guiarte por consejos externos ni modificar tu tratamiento sin hablar con tu médico; cada paso que das con constancia es un paso hacia una vida más saludable. Sabemos que mantener la constancia requiere esfuerzo, y hay días que cuestan más que otros, pero no estás solo en esto. Tu tratamiento es el compañero que te permite seguir disfrutando de las cosas que más querés.",
                   "iconResId": "outline_unknown_document_24"
                 },
                 {
@@ -2081,21 +2081,21 @@
                   "type": "DESCRIPTION",
                   "title": "Lectura 1",
                   "description": "Lee y escucha la sesión del día",
-                  "fullDescription": "",
+                  "fullDescription": "Dormir no es perder el tiempo. Dormir es recuperar energía, igual que cuando cargás tu celular para tener suficiente batería durante el día. Mientras dormís, tu cuerpo realiza muchas tareas importantes: 1. Organiza y limpia lo que pasó en el día. Es como si tu cerebro barriera la casa, ordenara los recuerdos y sacara lo que ya no sirve. Esto te ayuda a pensar mejor, recordar más y sentirte con más calma. 2. Regula la glucosa y la presión arterial. Cuando dormís poco, tu cuerpo entra en un estado de alerta. Eso hace que tu glucosa pueda subir y tu presión se mantenga más alta. Dormir bien es una forma natural de ayudar a mantener tu glucosa y tu presión controladas.",
                   "iconResId": "outline_unknown_document_24"
                 },
                 {
                   "type": "DESCRIPTION",
                   "title": "Lectura 2",
                   "description": "Lee y escucha la sesión del día",
-                  "fullDescription": "",
+                  "fullDescription": "3. Fortalecé tus defensas. Dormir es como darle a tu sistema inmunológico un equipo de limpieza que trabaja de noche. Te ayuda a ser menos propenso/a a infecciones y enfermedades. 4. Mejorá tu ánimo y tu energía. Un buen descanso te deja con el cuerpo más liviano, más activo y con más ganas para tus actividades del día. 5. Protegé tu corazón. Dormir poco durante varios días o semanas puede cansar tu corazón. Dormir bien, en cambio, le permite a tu corazón trabajar con calma y recuperarse, acompañando el cuidado que ya hacés de tu alimentación, movimiento y medicación.",
                   "iconResId": "outline_unknown_document_24"
                 },
                 {
                   "type": "DESCRIPTION",
                   "title": "Lectura 3",
                   "description": "Lee y escucha la sesión del día",
-                  "fullDescription": "",
+                  "fullDescription": "Muchas personas creen que se acostumbran a dormir poco. Pero el cuerpo no se acostumbra: se va cansando y, con el tiempo, eso puede afectar tu salud. Dormir bien no siempre es fácil, especialmente si hay preocupaciones, ruidos o responsabilidades. Pero incluso pequeños cambios pueden hacer una gran diferencia. Recordá: dormir no es un lujo. Es una necesidad. Es una forma de cuidarte, de cuidar tu energía y tu salud.",
                   "iconResId": "outline_unknown_document_24"
                 },
                 {
@@ -2123,21 +2123,21 @@
                   "type": "DESCRIPTION",
                   "title": "Lectura 1",
                   "description": "Lee y escucha la sesión del día",
-                  "fullDescription": "",
+                  "fullDescription": "Dormir bien depende de cómo nos preparamos para hacerlo. Una buena rutina nocturna te va a ayudar a relajarte, desconectarte del día y preparar tu cuerpo para descansar. Acá tenés algunas ideas: 1. Fijá una hora aproximada para acostarte. No tiene que ser exacta, pero sí parecida todos los días. El cuerpo se acostumbra a los horarios, y eso facilita conciliar el sueño. 2. Creá un espacio tranquilo. Tu habitación tiene que sentirse como un lugar de descanso. ● Apagá las luces. ● Evitá los ruidos fuertes. ● Mantené el espacio ordenado. Un ambiente tranquilo ayuda a que la mente se calme.",
                   "iconResId": "outline_unknown_document_24"
                 },
                 {
                   "type": "DESCRIPTION",
                   "title": "Lectura 2",
                   "description": "Lee y escucha la sesión del día",
-                  "fullDescription": "",
+                  "fullDescription": "3. Apagá las pantallas con anticipación. La luz del celular, la televisión o la tablet mantiene al cerebro alerta. Intentá apagarlas 30 minutos antes de dormir. Ese tiempo ayuda a que tu cuerpo entienda que ya es momento de descansar. 4. Hacé un “ ritual relajante ”, es decir, una actividad que ayude a tu cuerpo a saber que es hora de descansar. Puede ser algo corto, pero constante, por ejemplo: ● Tomar una infusión, por ejemplo, una manzanilla. ● Estirar suavemente el cuerpo. ● Respirar profundo varias veces. ● Escuchar música tranquila. ● Leer unas líneas de un libro. Lo importante es que sea algo que te guste y te relaje.",
                   "iconResId": "outline_unknown_document_24"
                 },
                 {
                   "type": "DESCRIPTION",
                   "title": "Lectura 3",
                   "description": "Lee y escucha la sesión del día",
-                  "fullDescription": "",
+                  "fullDescription": "5. Evitá comer comidas pesadas y tomar agua antes de dormir. Comer en gran cantidad antes de dormir puede incomodarte y dificultar el sueño. Elegí comidas livianas y esperá unos 30 minutos después de comer para acostarte. Además, intentá tomar poca agua antes de dormir porque puede hacer que te despiertes por necesidad de ir al baño. 6. Mantené tus preocupaciones fuera de la cama. Si tenés muchas ideas en la cabeza, probá escribirlas en un papel antes de acostarte. Es como “ guardarlas ” para mañana, permitiendo que tu mente descanse. Crear una rutina nocturna no es cuestión de perfección, sino de repetición. Poco a poco, tu cuerpo va a aprender a reconocer la hora de descansar y tus noches van a ser más tranquilas. Recordá: una buena noche empieza mucho antes de acostarte.",
                   "iconResId": "outline_unknown_document_24"
                 },
                 {
@@ -2181,21 +2181,21 @@
                   "type": "DESCRIPTION",
                   "title": "Lectura 1",
                   "description": "Lee y escucha la sesión del día",
-                  "fullDescription": "",
+                  "fullDescription": "A muchas personas les cuesta dormir. Algunas dan vueltas en la cama, otras se despiertan varias veces y otras se levantan muy temprano sin querer. Si te pasa, no estás solo. Es más común de lo que parece. Hoy veremos tres problemas frecuentes y qué podés hacer en cada caso. 1. Me cuesta quedarme dormido. A veces la mente sigue “ encendida ” incluso cuando ya querés dormir. Tal vez estás pensando en tus cosas pendientes, en tus preocupaciones o en algo que pasó durante el día. ¿Qué podés hacer? ● Apagá las pantallas al menos 30 minutos antes de acostarte. La luz del celular o la televisión mantiene alerta al cerebro. ● Hacé algo tranquilo antes de dormir: escuchá música suave, estirate un poco, respirá lento. ● Si pasan más de 20–30 minutos y no te dormís, levantate y hacé algo tranquilo en otro lugar. Volver a la cama cuando estás más relajado ayuda a que tu mente no asocie la cama con “ luchar para dormir ”.",
                   "iconResId": "outline_unknown_document_24"
                 },
                 {
                   "type": "DESCRIPTION",
                   "title": "Lectura 2",
                   "description": "Lee y escucha la sesión del día",
-                  "fullDescription": "",
+                  "fullDescription": "2. Me despierto varias veces por la noche. Puede pasar por ruido, estrés, necesidad de ir al baño o simplemente porque tenés un sueño más liviano que el de los demás. ¿Qué podés hacer? ● Evitá tomar mucha agua antes de dormir. ● Mantené tu habitación oscura y con poco ruido. ● Si te despertás, respirá profundo unas cuantas veces y evitá mirar la hora; eso genera más ansiedad. ● Si tomás medicación que te hace ir al baño, preguntale a tu médico si es mejor cambiarla de horario.",
                   "iconResId": "outline_unknown_document_24"
                 },
                 {
                   "type": "DESCRIPTION",
                   "title": "Lectura 3",
                   "description": "Lee y escucha la sesión del día",
-                  "fullDescription": "",
+                  "fullDescription": "3. Me despierto muy temprano y ya no puedo volver a dormir. Esto puede pasar cuando el cuerpo está muy cansado, preocupado o por dormir en horarios irregulares. ¿Qué podés hacer? Intentá mantener una rutina: acostarte y levantarte casi a la misma hora todos los días. Evitá las siestas largas; 20–30 minutos es suficiente. Si te despertás antes de tiempo, evitá prender el celular o la televisión; la luz despierta aún más al cerebro. Dormir mejor no siempre pasa de un día para otro. Pero incluso un pequeño cambio puede ayudarte a tener noches más tranquilas y días con más energía. Recordá: el objetivo no es dormir perfecto, sino dormir mejor. Cada noche cuenta.",
                   "iconResId": "outline_unknown_document_24"
                 },
                 {
@@ -2266,7 +2266,7 @@
                   "type": "DESCRIPTION",
                   "title": "Lectura",
                   "description": "Lee y escucha la sesión del día",
-                  "fullDescription": "",
+                  "fullDescription": "Vamos a tomarnos unos minutos para hacer un ejercicio de respiración. No hace falta hacerlo perfecto. Solo acompañar el ritmo de nuestra respiración. Buscá una posición cómoda. Podés estar sentado o sentada, con los pies apoyados en el piso, o como estés ahora. Empezaremos con una respiración simple, contando del uno al cuatro. Esta técnica se llama respiración en cuatro tiempos y sirve para bajar un poco el ritmo. Comenzamos Tomá aire por la nariz llevando el aire al abdomen. 1, 2, 3, 4. Sostené el aire en el abdomen. 1, 2, 3, 4. Soltá el aire lentamente. 1, 2, 3, 4. Esperá antes de volver a inhalar. 1, 2, 3, 4. Si notás tensión en los hombros o la mandíbula, aflojalos un poco durante la exhalación. Inhalá. 1, 2, 3, 4. Sostené. 1, 2, 3, 4. Exhalá. 1, 2, 3, 4. Esperá. 1, 2, 3, 4. Cada exhalación es una forma de ir soltando un poco la tensión. Inhalá. 1, 2, 3, 4. Sostené. 1, 2, 3, 4. Exhalá. 1, 2, 3, 4. Esperá. 1, 2, 3, 4. Inhalá. 1, 2, 3, 4. Sostené. 1, 2, 3, 4. Exhalá. 1, 2, 3, 4. Esperá. 1, 2, 3, 4. Ahora dejamos de contar. La respiración vuelve a su ritmo natural. Notá cómo estás en este momento. Tal vez igual, tal vez con una sensación de orden por dentro. Esta fue solo una pausa breve. Cuando estés listo o lista, continuá con tus actividades.",
                   "iconResId": "outline_unknown_document_24"
                 },
                 {
@@ -2294,7 +2294,7 @@
                   "type": "DESCRIPTION",
                   "title": "Lectura",
                   "description": "Lee y escucha la sesión del día",
-                  "fullDescription": "",
+                  "fullDescription": "La salud mental también es parte del tratamiento de la diabetes. Vivir con diabetes no es solo tomar medicación o cuidar la alimentación: también implica cumplir rutinas, controles y hábitos diarios. Por eso, el estrés y el estado de ánimo influyen en cómo el cuerpo regula la glucosa. Muchas personas sienten cansancio de “ estar siempre pendientes de su salud ”. Además, tienen miedo a las complicaciones, frustración cuando los resultados de sus estudios no mejoran o les cuesta mantener hábitos saludables. Por eso, es importante contar con espacios y personas que nos acompañen: espacios para hablar y ser escuchado/a, redes de apoyo como la familia y los amigos, y apoyo de la comunidad. Además, hay pequeñas acciones, que vimos en sesiones anteriores, que nos pueden ayudar a manejar el estrés, como practicar la respiración y hacer una pausa en el día.",
                   "iconResId": "outline_unknown_document_24"
                 },
                 {
@@ -2374,28 +2374,35 @@
                   "type": "DESCRIPTION",
                   "title": "Lectura 1",
                   "description": "Lee y escucha la sesión del día",
-                  "fullDescription": "",
+                  "fullDescription": "Pedir ayuda en tres pasos simples. ¿Por qué nos cuesta pedir ayuda? A veces necesitamos apoyo y nos cuesta pedirlo. Puede ser por no querer molestar, porque no encontramos las palabras o porque no sabemos bien por dónde empezar. Eso es bastante común. Sin embargo, pedir ayuda también se puede practicar. Los 3 pasos para pedir ayuda Acá tenés 3 pasos simples que te van a ayudar a pedir apoyo de forma clara y respetuosa: Paso 1: Pensar ¿Qué necesito exactamente? Sé específico/a. ¿Compañía para caminar? ¿Un recordatorio para mi medicación? ¿Alguien con quien hablar de mi día? Ejemplo: “ Necesito caminar 3 veces esta semana, pero me desanimo si voy solo. ”",
                   "iconResId": "outline_unknown_document_24"
                 },
                 {
                   "type": "DESCRIPTION",
                   "title": "Lectura 2",
                   "description": "Lee y escucha la sesión del día",
-                  "fullDescription": "",
+                  "fullDescription": "Paso 2: Elegir Pensá en tu familia, amigos y vecinos. “ ¿Quién sería la persona adecuada para esto? ¿Quién sabe escuchar? ¿A quién también le gusta caminar? ¿Quién vive cerca? ” Ejemplo: “ Mi vecina Carmen siempre sale a regar sus plantas a la mañana. Quizás le gustaría caminar conmigo. ” Paso 3: Pedir Hablá con claridad y amabilidad. Explicá lo que necesitás y por qué es importante para vos. Dale a la otra persona la opción de decir que no. Ejemplo: “ Carmen, estoy tratando de caminar más por mi salud. ¿Te gustaría acompañarme alguna mañana de esta semana? ”",
                   "iconResId": "outline_unknown_document_24"
                 },
                 {
                   "type": "DESCRIPTION",
                   "title": "Lectura 3",
                   "description": "Lee y escucha la sesión del día",
-                  "fullDescription": "",
+                  "fullDescription": "También puede pasar que alguna persona no pueda hacerlo, y eso es parte del camino. En esos casos, la idea es no desanimarte y buscar apoyo en otras personas o espacios donde sí puedas encontrarlo. Hay ayudas más simples, como pedir que te recuerden tomar una pastilla, y otras que llevan más tiempo o compromiso, como salir a caminar juntos seguido. Por eso, es bueno pensar en distintas opciones de apoyo según lo que necesites. Dar el primer paso es lo que cuenta.",
                   "iconResId": "outline_unknown_document_24"
                 },
                 {
                   "type": "DESCRIPTION",
                   "title": "Lectura 4",
                   "description": "Lee y escucha la sesión del día",
-                  "fullDescription": "",
+                  "fullDescription": "Ejemplos de Ana y Carlos Veamos cómo Ana y Carlos usaron estos 3 pasos: Ejemplo de Ana: Ana necesitaba que alguien le recordara tomar su medicación. Así usó los 3 pasos: PENSAR: “ Necesito un recordatorio para no olvidarme de mi pastilla de la mañana. ” ELEGIR: “ Mi hija me llama casi todos los días. Ella podría ayudarme. ” PEDIR: “ Hija, estoy tratando de ser más constante con mi medicación. ¿Podrías preguntarme si ya la tomé cuando me llames a la mañana? ” Su hija le dijo que sí y ahora Ana tiene un recordatorio cariñoso todos los días.",
+                  "iconResId": "outline_unknown_document_24"
+                },
+                {
+                  "type": "DESCRIPTION",
+                  "title": "Lectura 5",
+                  "description": "Lee y escucha la sesión del día",
+                  "fullDescription": "Ejemplo de Carlos: Carlos quería compañía para caminar. Así usó los 3 pasos: PENSAR: “ Me cuesta caminar solo. Me desanimo y lo dejo. ” ELEGIR: “ Mi primo Miguel vive cerca y a veces lo veo caminando. ” PEDIR: “ Miguel, estoy tratando de caminar más por mi diabetes. ¿Te gustaría que caminemos juntos los domingos? ” Miguel aceptó y ahora los domingos son su día de caminata. Tu turno Ahora te toca a vos. Pensá en una pequeña cosa que podrías pedir esta semana y practicá estos 3 pasos en tu mente. No tiene que ser algo grande. Puede ser tan simple como: “ ¿Me acompañás a caminar? ” o “ ¿Me recordás mi turno? ”. Dar el primer paso es lo que cuenta.",
                   "iconResId": "outline_unknown_document_24"
                 },
                 {
@@ -2439,28 +2446,28 @@
                   "type": "DESCRIPTION",
                   "title": "Lectura 1",
                   "description": "Lee y escucha la sesión del día",
-                  "fullDescription": "",
+                  "fullDescription": "Cuando compartís, el apoyo crece En las sesiones anteriores trabajaste cómo recibir apoyo. Hoy vamos a sumar algo más: compartir tus logros. Cuando compartís un pequeño logro, no solo lo reconocés vos, sino que permitís que otras personas puedan tomarlo como una idea o un empujón: “ si ella pudo, quizá yo también ”. Sin mencionar que, muchas veces, cuando vos compartís, los demás suelen responder dándote ánimo. Así se va formando un círculo que nos fortalece.",
                   "iconResId": "outline_unknown_document_24"
                 },
                 {
                   "type": "DESCRIPTION",
                   "title": "Lectura 2",
                   "description": "Lee y escucha la sesión del día",
-                  "fullDescription": "",
+                  "fullDescription": "¿Qué puedo compartir? ¡Cada paso cuenta! No necesitás tener un gran logro para poder compartirlo. Las pequeñas victorias de cada día son muy poderosas. Acá tenés algunas ideas de cosas que podés compartir: “ Hoy logré incluir una verdura más en mi almuerzo. ” “ Aunque no tenía muchas ganas, salí a caminar 5 minutos. ” “ Me acordé de tomar todos mis vasos de agua. ” “ Tomé mi medicación a la hora correcta. ” “ Hoy me sentí con un poco más de energía. ” “ Logré resistir la tentación de comer algo que me hace mal. ” Podés compartir tu logro con un familiar, un amigo, tu vecino o tu agente comunitaria de salud. ¡Decirlo en voz alta lo hace más real y valioso! También podés apoyarte en grupos de tu comunidad o barrio donde otras personas estén pasando por experiencias parecidas y puedan acompañarte.",
                   "iconResId": "outline_unknown_document_24"
                 },
                 {
                   "type": "DESCRIPTION",
                   "title": "Lectura 3",
                   "description": "Lee y escucha la sesión del día",
-                  "fullDescription": "",
+                  "fullDescription": "Ejemplos de Ana y Carlos Veamos cómo Ana y Carlos comparten sus pequeños logros: Ejemplo de Ana: Ana le cuenta a su vecina Carmen: “ Hoy tomé mi pastilla apenas me desperté, sin olvidarme. ” Carmen le responde: “ ¡Qué bueno, Ana! Gracias por contármelo. ¿Cómo hiciste? ” Ana le dice: “ Dejé el pastillero en la mesa de luz. ” Carmen contesta: “ Buena idea. Yo también voy a probar. ” Ana se siente acompañada y reconocida, y Carmen se lleva una idea útil. Así se fortalece el círculo de apoyo. Ejemplo de Carlos: Carlos le manda un mensaje a Miguel: “ Hoy caminé 10 minutos, aunque llovía un poco. ” Miguel responde: “ ¡Eso, primo! Si vos podés con la lluvia, yo también puedo. Mañana salgo yo también. ” Carlos se siente orgulloso, y Miguel se siente motivado. El círculo sigue.",
                   "iconResId": "outline_unknown_document_24"
                 },
                 {
                   "type": "DESCRIPTION",
                   "title": "Lectura 4",
                   "description": "Lee y escucha la sesión del día",
-                  "fullDescription": "",
+                  "fullDescription": "Considerá sumarte a un grupo Otra forma de dar y recibir apoyo es sumarte a un grupo de tu comunidad. Puede ser un grupo de caminata, de tejido, de tu iglesia o de cualquier actividad que te guste. Estar con otras personas que comparten tus intereses puede ser una gran fuente de alegría y compañía. Ahora, tu meta de apoyo Para cerrar esta sesión, te invitamos a elegir una meta que implique conectarte con alguien. Puede ser compartir un logro, pedir ayuda o simplemente pasar un rato con alguien con quien te sientas bien.",
                   "iconResId": "outline_unknown_document_24"
                 },
                 {
@@ -2531,14 +2538,14 @@
                   "type": "DESCRIPTION",
                   "title": "Lectura 1",
                   "description": "Lee y escucha la sesión del día",
-                  "fullDescription": "",
+                  "fullDescription": "El camino no es una línea recta Es natural que en estos meses hayan surgido dificultades. Sentirse cansado o desmotivado no es un retroceso, es parte de ser humano. No significa que estés fallando, sino que esas dificultades son parte de la búsqueda de equilibrio. Identificá tus barreras Reconocer qué nos detiene es el primer paso para avanzar. A veces el obstáculo es externo, pero otras veces nace de nuestro estado de ánimo: ● El peso emocional: La falta de ganas, el cansancio físico o el sentirse desanimado. ● La rutina diaria: El ritmo acelerado, la falta de tiempo o las condiciones del día a día. ● La carga mental: Los olvidos o las preocupaciones por la familia y la economía nos quitan energía para el autocuidado.",
                   "iconResId": "outline_unknown_document_24"
                 },
                 {
                   "type": "DESCRIPTION",
                   "title": "Lectura 2",
                   "description": "Lee y escucha la sesión del día",
-                  "fullDescription": "",
+                  "fullDescription": "Tu caja de herramientas frente a los obstáculos Cuando el camino se ponga difícil, recordá que tenés opciones: ● Sé más amable con vos: No todos los días se puede dar el 100%. Si hoy solo podés dar el 10%, da ese 10% con orgullo. ● Permiso para volver a empezar: Cada mañana es una nueva oportunidad. Podés empezar de cero las veces que sea necesario; seguir adelante es más importante que hacerlo perfecto o no hacerlo. ● La fuerza del apoyo: Pedir ayuda no es perder independencia, es ganar aliados. Podés apoyarte en tus seres queridos o en tu equipo de salud. ● Conectá con tu propósito: En los momentos de duda, cerrá los ojos y recordá la razón principal por la que decidiste empezar a cuidarte. Este camino no se hace solo. Estamos para acompañarte en cada paso, en los momentos fáciles y en aquellos que sean más desafiantes.",
                   "iconResId": "outline_unknown_document_24"
                 },
                 {
@@ -2566,7 +2573,7 @@
                   "type": "DESCRIPTION",
                   "title": "Lectura",
                   "description": "Lee y escucha la sesión del día",
-                  "fullDescription": "",
+                  "fullDescription": "Cuidarse no es algo que se logra de un día para otro. Es un camino, con días buenos, pero también con otros que son difíciles. Hay semanas en las que hacemos más, nos sentimos con ganas y motivados; pero hay otras en las que todo nos cuesta un montón. Puede pasar que dejemos de hacer ejercicio, que nos olvidemos de tomar la medicación o que perdamos las ganas. Pero eso no borra todo lo que ya avanzamos. Cada vez que retomamos los cuidados, nos estamos eligiendo a nosotros mismos. Y eso también es parte de cuidar nuestra salud. Te propongo lo siguiente. Te invito a cerrar los ojos y pensar en un momento de estas 16 semanas en el que las cosas se hicieron más difíciles. Tal vez fue un día en el que te olvidaste de tomar una pastilla, comiste distinto a lo que querías o todo se sintió más pesado. Es posible que ese día hayas sentido que retrocediste, y, sin embargo, acá estás hoy. Eso significa que tu capacidad de volver a empezar es más fuerte que los tropiezos. Cada vez que retomás, no volvés a cero, porque la realidad es que volvés a empezar con la experiencia de lo recorrido. Para terminar, te propongo la siguiente reflexión: ¿Qué palabra te dirías a vos mismo/a en esos días difíciles para ayudarte a volver a intentar?",
                   "iconResId": "outline_unknown_document_24"
                 },
                 {
@@ -2609,14 +2616,14 @@
                   "type": "DESCRIPTION",
                   "title": "Lectura 1",
                   "description": "Lee y escucha la sesión del día",
-                  "fullDescription": "",
+                  "fullDescription": "Durante estas 16 semanas trabajaste en muchas cosas. Aprendiste sobre tu salud, activación conductual, manejo del estrés y sobre la importancia del apoyo de otras personas. Ahora viene algo muy importante: elegir qué te sirve a vos y armar tu propio plan. ¿Qué te funcionó? Cada persona es diferente. Lo que le sirvió a Ana no es lo mismo que le sirvió a Carlos. Por eso, lo más importante es que identifiques qué te funcionó a vos. Vamos a repasar algunas preguntas que te pueden guiar en esa reflexión: ¿Qué actividades de disfrute o importancia te ayudaron más a sentirte mejor? ¿Qué herramienta usaste más: planificar con detalle, dividir en pasos pequeños o pedir ayuda? ¿Qué piedra te dificultó más seguido y qué hiciste para superarla? ¿Quién te acompañó o te ayudó en este camino?",
                   "iconResId": "outline_unknown_document_24"
                 },
                 {
                   "type": "DESCRIPTION",
                   "title": "Lectura 2",
                   "description": "Lee y escucha la sesión del día",
-                  "fullDescription": "",
+                  "fullDescription": "Cómo armaron el plan Ana y Carlos Ana y Carlos también tuvieron que encontrar lo que les funcionaba. Para ello, armaron su plan: Plan de Ana: ● Tomo mi pastilla con el desayuno, todos los días. ● Camino 10 minutos con Carmen, 3 veces por semana. ● Si no puedo caminar, hago 5 minutos de estiramiento en casa. Plan de Carlos: ● Camino 15 minutos los lunes, miércoles y viernes. ● Si estoy cansado, solo me pongo las zapatillas y salgo hasta la puerta. ● Si no me sale, le aviso a Miguel y caminamos juntos el domingo. ● Me mido la glucosa los martes y jueves. Armá tu plan Ahora te toca a vos. No tiene que ser perfecto ni complicado. Solo tiene que ser posible. Tu plan de autocuidado tiene 4 partes: 1. Mi actividad principal: ¿Qué voy a hacer? ¿Cuándo y dónde? 2. Mi plan B: Si no puedo hacer mi actividad principal, ¿cuál es una versión más sencilla? 3. Mi apoyo: ¿A quién puedo pedirle ayuda o compañía? 4. Mi premio saludable: ¿Cómo voy a reconocerme y premiarme por mi esfuerzo?",
                   "iconResId": "outline_unknown_document_24"
                 },
                 {
@@ -2688,7 +2695,7 @@
                   "type": "DESCRIPTION",
                   "title": "Lectura",
                   "description": "Lee y escucha la sesión del día",
-                  "fullDescription": "",
+                  "fullDescription": "Tu caja de herramientas completa En estas semanas construiste herramientas prácticas para tu día a día. Ahora vamos a repasarlas para que sean parte de tu rutina. Tus herramientas para la salud Además de las herramientas de activación conductual, durante las semanas trabajaste temas clave para tu salud: Lo que lograron Ana y Carlos Ana y Carlos empezaron con el ánimo bajo y sin ganas de hacer mucho. Mirá dónde están ahora: Ana: ● Toma su medicación todos los días con el desayuno. ● Camina con Carmen 3 veces por semana. ● Se mide la presión cada semana. ● Cuando tiene una semana difícil, vuelve a su plan con un paso más pequeño. Carlos: ● Camina 15 minutos 3 veces por semana. ● Se mide la glucosa 2 veces por semana. ● Si pierde la motivación, usa la regla de los 5 minutos. ● Miguel lo acompaña los domingos. Un mensaje final Felicitaciones por llegar hasta acá. Durante 16 semanas repasamos cómo funciona el ánimo, cómo dar pequeños pasos cuando las ganas no aparecen, cómo cuidar tu salud con herramientas simples y cómo pedir ayuda cuando hace falta. Nada de eso se pierde. Todo eso es tuyo. Cuidarte no es hacerlo todo. Es hacer algo, cada día, con lo que tengas. Y eso, ya lo sabés hacer.",
                   "iconResId": "outline_unknown_document_24"
                 },
                 {

@@ -160,95 +160,96 @@ class TreatmentDownloadRepositoryImpl(private val context: Context) : TreatmentD
                     // Build mapped MultimediaContent list
                     val multimediaList = mutableListOf<MultimediaContent>()
 
-                    // Filter out reading audios/images to group them
                     val audioItems = downloadedFiles.filter { it.title.contains("audio-", ignoreCase = true) }
                     val imageItems = downloadedFiles.filter { it.title.contains("imagen-", ignoreCase = true) }
                     val videoItems = downloadedFiles.filter { it.title.contains("video-", ignoreCase = true) }
 
-                    // Determine number of readings (max index)
-                    val maxIndex = maxOf(
-                        audioItems.mapNotNull { extractIndex(it.title) }.maxOrNull() ?: 0,
-                        imageItems.mapNotNull { extractIndex(it.title) }.maxOrNull() ?: 0
-                    )
-
-                    if (maxIndex > 0) {
-                        val staticDescription = staticSubSession?.multimedia?.find { it.type == MultimediaContentType.DESCRIPTION }
-                        val localAudios = mutableListOf<String>()
-                        val localImages = mutableListOf<String>()
-
-                        for (i in 1..maxIndex) {
-                            val audioItem = audioItems.find { extractIndex(it.title) == i }
-                            val imageItem = imageItems.find { extractIndex(it.title) == i }
-
-                            if (audioItem != null) {
-                                localAudios.add(audioItem.localPath)
-                            }
-                            if (imageItem != null) {
-                                localImages.add(imageItem.localPath)
-                            }
-                        }
-
-                        multimediaList.add(
-                            MultimediaContent(
-                                type = MultimediaContentType.DESCRIPTION,
-                                title = staticDescription?.title ?: "Descripción de la sesión",
-                                description = staticDescription?.description ?: "Lee y escucha la sesión del día",
-                                fullDescription = staticDescription?.fullDescription ?: "",
-                                iconResId = staticDescription?.iconResId ?: "outline_unknown_document_24",
-                                iconImageVector = staticDescription?.iconImageVector,
-                                contentAsset = null,
-                                metasId = staticDescription?.metasId,
-                                questions = staticDescription?.questions,
-                                descriptionAudios = localAudios,
-                                descriptionImages = localImages
-                            )
-                        )
-                    }
-
-                    // Add video items
-                    videoItems.forEach { videoItem ->
-                        val staticVideo = staticSubSession?.multimedia?.find { it.type == MultimediaContentType.VIDEO }
-                        multimediaList.add(
-                            MultimediaContent(
-                                type = MultimediaContentType.VIDEO,
-                                title = staticVideo?.title ?: videoItem.title,
-                                description = staticVideo?.description ?: "Ver video de la sesión",
-                                fullDescription = staticVideo?.fullDescription,
-                                iconResId = staticVideo?.iconResId,
-                                iconImageVector = staticVideo?.iconImageVector ?: "PlayArrow",
-                                contentAsset = videoItem.localPath,
-                                metasId = staticVideo?.metasId,
-                                questions = staticVideo?.questions,
-                                descriptionAudios = null,
-                                descriptionImages = null
-                            )
-                        )
-                    }
-
-                    // Merge static QUIZ, METAS and DESCRIPTION from all matching static subsessions
-                    staticSubSessions.flatMap { it.multimedia }.filter {
-                        it.type == MultimediaContentType.QUIZ ||
-                        it.type == MultimediaContentType.METAS ||
-                        it.type == MultimediaContentType.DESCRIPTION
-                    }.forEach { staticItem ->
-                        if (staticItem.type == MultimediaContentType.DESCRIPTION) {
-                            if (multimediaList.none { it.title == staticItem.title }) {
-                                multimediaList.add(staticItem)
-                            }
-                        } else {
-                            if (multimediaList.none { it.type == staticItem.type }) {
-                                multimediaList.add(staticItem)
+                    if (staticSubSession != null) {
+                        staticSubSession.multimedia.forEach { staticItem ->
+                            when (staticItem.type) {
+                                MultimediaContentType.DESCRIPTION -> {
+                                    if (staticItem.title.contains("Lectura", ignoreCase = true)) {
+                                        val digits = staticItem.title.filter { it.isDigit() }
+                                        val idx = digits.toIntOrNull() ?: 1
+                                        val audioItem = audioItems.find { extractIndex(it.title) == idx }
+                                        val imageItem = imageItems.find { extractIndex(it.title) == idx }
+                                        multimediaList.add(
+                                            MultimediaContent(
+                                                type = MultimediaContentType.DESCRIPTION,
+                                                title = staticItem.title,
+                                                description = staticItem.description,
+                                                fullDescription = staticItem.fullDescription ?: "",
+                                                iconResId = staticItem.iconResId ?: "outline_unknown_document_24",
+                                                iconImageVector = staticItem.iconImageVector,
+                                                contentAsset = null,
+                                                metasId = staticItem.metasId,
+                                                questions = staticItem.questions,
+                                                descriptionAudios = if (audioItem != null) listOf(audioItem.localPath) else null,
+                                                descriptionImages = if (imageItem != null) listOf(imageItem.localPath) else null
+                                            )
+                                        )
+                                    } else {
+                                        multimediaList.add(staticItem)
+                                    }
+                                }
+                                MultimediaContentType.VIDEO -> {
+                                    val videoIdx = staticSubSession.multimedia.filter { it.type == MultimediaContentType.VIDEO }.indexOf(staticItem) + 1
+                                    val videoItem = videoItems.find { extractIndex(it.title) == videoIdx } ?: videoItems.firstOrNull()
+                                    multimediaList.add(
+                                        MultimediaContent(
+                                            type = MultimediaContentType.VIDEO,
+                                            title = staticItem.title,
+                                            description = staticItem.description,
+                                            fullDescription = staticItem.fullDescription,
+                                            iconResId = staticItem.iconResId,
+                                            iconImageVector = staticItem.iconImageVector ?: "PlayArrow",
+                                            contentAsset = videoItem?.localPath,
+                                            metasId = staticItem.metasId,
+                                            questions = staticItem.questions,
+                                            descriptionAudios = null,
+                                            descriptionImages = null
+                                        )
+                                    )
+                                }
+                                MultimediaContentType.QUIZ, MultimediaContentType.METAS -> {
+                                    multimediaList.add(staticItem)
+                                }
+                                else -> {
+                                    multimediaList.add(staticItem)
+                                }
                             }
                         }
-                    }
-
-                    // Sort multimediaList based on the order in staticSubSession.multimedia
-                    staticSubSession?.let { staticSub ->
-                        multimediaList.sortBy { item ->
-                            val index = staticSub.multimedia.indexOfFirst {
-                                it.type == item.type && (it.title == item.title || it.type != MultimediaContentType.DESCRIPTION)
-                            }
-                            if (index != -1) index else 999
+                    } else {
+                        // Fallback fallback loop if static content doesn't exist
+                        val maxIndex = maxOf(
+                            audioItems.mapNotNull { extractIndex(it.title) }.maxOrNull() ?: 0,
+                            imageItems.mapNotNull { extractIndex(it.title) }.maxOrNull() ?: 0
+                        )
+                        if (maxIndex > 0) {
+                            val localAudios = audioItems.map { it.localPath }
+                            val localImages = imageItems.map { it.localPath }
+                            multimediaList.add(
+                                MultimediaContent(
+                                    type = MultimediaContentType.DESCRIPTION,
+                                    title = "Lectura",
+                                    description = "Lee y escucha la sesión del día",
+                                    fullDescription = "",
+                                    iconResId = "outline_unknown_document_24",
+                                    descriptionAudios = localAudios,
+                                    descriptionImages = localImages
+                                )
+                            )
+                        }
+                        videoItems.forEach { videoItem ->
+                            multimediaList.add(
+                                MultimediaContent(
+                                    type = MultimediaContentType.VIDEO,
+                                    title = videoItem.title,
+                                    description = "Ver video de la sesión",
+                                    iconImageVector = "PlayArrow",
+                                    contentAsset = videoItem.localPath
+                                )
+                            )
                         }
                     }
 
