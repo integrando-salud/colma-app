@@ -91,7 +91,7 @@ class SessionStepsRepositoryImpl(
 
                     MultimediaOption(
                         type = multimediaContent.type,
-                        title = multimediaContent.title,
+                        title = multimediaContent.title.replace("\\s*\\([^)]*\\)".toRegex(), ""),
                         description = multimediaContent.description,
                         fullDescription = multimediaContent.fullDescription,
                         iconResId = multimediaContent.iconResId?.let {
