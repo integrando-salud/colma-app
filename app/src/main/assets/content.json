@@ -36,21 +36,20 @@
                   "iconResId": "outline_trophy_24",
                   "questions": [
                     {
-                      "questionText": "Cuando tenemos el ánimo bajo, ¿qué suele ayudar más?",
+                      "questionText": "Cuando  tenemos  el  ánimo  bajo,  ¿qué  suele  ayudar  más?   A.  Hacer  de  golpe  todos  los  pendientes  para  “ponernos  al  día”.  B.  Esperar  a  que  vuelvan  las  ganas  antes  de  hacer  algo.  C.  Empezar  de  a  poco  con  pequeñas  actividades  que  me  hacen  bien  o  son  importantes.   Respuesta  correcta:  C",
                       "options": [
-                        "Hacer de golpe todos los pendientes para",
-                        "Esperar a que vuelvan las ganas antes de",
-                        "Empezar de a poco con pequeñas actividades"
+                        "Verdadero",
+                        "Falso"
                       ],
-                      "correctAnswerIndex": 2
+                      "correctAnswerIndex": 0
                     }
                   ]
                 },
                 {
                   "type": "DESCRIPTION",
-                  "title": "Fin de la sesión",
-                  "description": "¡Excelente inicio! Ya diste el primer paso al comenzar. En la siguiente sesión veremos cómo la activación conductual nos va a ayudar a poner esto en práctica.",
-                  "fullDescription": "¡Excelente inicio! Ya diste el primer paso al comenzar. En la siguiente sesión veremos cómo la activación conductual nos va a ayudar a poner esto en práctica.",
+                  "title": "Bienvenida",
+                  "description": "Fin de la sesión ¡Excelente inicio! Ya diste el primer paso al comenzar. En la siguiente sesión veremos cómo la activación conductual nos va a ayudar a poner esto en práctica.",
+                  "fullDescription": "Fin de la sesión ¡Excelente inicio! Ya diste el primer paso al comenzar. En la siguiente sesión veremos cómo la activación conductual nos va a ayudar a poner esto en práctica.",
                   "iconResId": "outline_unknown_document_24"
                 }
               ]
@@ -62,9 +61,9 @@
               "multimedia": [
                 {
                   "type": "DESCRIPTION",
-                  "title": "La activación conductual, empezar de a poco",
-                  "description": "¡Hola de nuevo! Qué bueno verte por acá. Sumar actividades que disfrutás y que son importantes para vos ayuda a llenar tu ‘tanque’ de ánimo. Vamos a poner en práctica la activación conductual: una forma de sentirte mejor haciendo pequeñas cosas que te dan placer o son importantes para vos.",
-                  "fullDescription": "¡Hola de nuevo! Qué bueno verte por acá. Sumar actividades que disfrutás y que son importantes para vos ayuda a llenar tu ‘tanque’ de ánimo. Vamos a poner en práctica la activación conductual: una forma de sentirte mejor haciendo pequeñas cosas que te dan placer o son importantes para vos.",
+                  "title": "Bienvenida",
+                  "description": "La activación conductual, empezar de a poco ¡Hola de nuevo! Qué bueno verte por acá. Sumar actividades que disfrutás y que son importantes para vos ayuda a llenar tu ‘tanque’ de ánimo. Vamos a poner en práctica la activación conductual: una forma de sentirte mejor haciendo pequeñas cosas que te dan placer o son importantes para vos.",
+                  "fullDescription": "La activación conductual, empezar de a poco ¡Hola de nuevo! Qué bueno verte por acá. Sumar actividades que disfrutás y que son importantes para vos ayuda a llenar tu ‘tanque’ de ánimo. Vamos a poner en práctica la activación conductual: una forma de sentirte mejor haciendo pequeñas cosas que te dan placer o son importantes para vos.",
                   "iconResId": "outline_unknown_document_24"
                 },
                 {
@@ -81,10 +80,9 @@
                   "iconResId": "outline_trophy_24",
                   "questions": [
                     {
-                      "questionText": "En la activación conductual, hay que esperar a tener ganas para empezar a hacer cosas.",
+                      "questionText": "",
                       "options": [
-                        "Verdadero",
-                        "Falso"
+                        "En  la  activación  conductual,  hay  que  esperar  a  tener  ganas  para  empezar  a  hacer  cosas.    -  Verdadero  -  Falso   Respuesta  correcta:  Falso."
                       ],
                       "correctAnswerIndex": 0
                     }
@@ -92,9 +90,9 @@
                 },
                 {
                   "type": "DESCRIPTION",
-                  "title": "Fin de la sesión",
-                  "description": "¡Bien hecho! Ahora sabés que cargar nafta de a poquito puede mover tu ánimo. En la próxima sesión vas a elegir tu primera actividad. ¡Nos vemos!",
-                  "fullDescription": "¡Bien hecho! Ahora sabés que cargar nafta de a poquito puede mover tu ánimo. En la próxima sesión vas a elegir tu primera actividad. ¡Nos vemos!",
+                  "title": "Bienvenida",
+                  "description": "Fin de la sesión ¡Bien hecho! Ahora sabés que cargar nafta de a poquito puede mover tu ánimo. En la próxima sesión vas a elegir tu primera actividad. ¡Nos vemos!",
+                  "fullDescription": "Fin de la sesión ¡Bien hecho! Ahora sabés que cargar nafta de a poquito puede mover tu ánimo. En la próxima sesión vas a elegir tu primera actividad. ¡Nos vemos!",
                   "iconResId": "outline_unknown_document_24"
                 }
               ]
@@ -107,8 +105,8 @@
                 {
                   "type": "DESCRIPTION",
                   "title": "Elegir y planificar mis actividades",
-                  "description": "¡Hola! Qué bueno que estés acá. La meta de esta semana es elegir una actividad pequeña que te pueda dar un poco de disfrute. Elegimos sumar momentos que hacen bien: ¡el tanque del disfrute empieza a llenarse!",
-                  "fullDescription": "¡Hola! Qué bueno que estés acá. La meta de esta semana es elegir una actividad pequeña que te pueda dar un poco de disfrute. Elegimos sumar momentos que hacen bien: ¡el tanque del disfrute empieza a llenarse!",
+                  "description": "¡Hola! Qué bueno que estés acá. Hoy te proponemos elegir tu primera actividad para mover tu ánimo. La meta de esta semana es elegir una actividad pequeña que te pueda dar un poco de disfrute. Elegimos sumar momentos que hacen bien: ¡el tanque del disfrute empieza a llenarse! Te proponemos elegir una actividad de disfrute y planificar cuándo y dónde hacerla esta semana.",
+                  "fullDescription": "¡Hola! Qué bueno que estés acá. Hoy te proponemos elegir tu primera actividad para mover tu ánimo. La meta de esta semana es elegir una actividad pequeña que te pueda dar un poco de disfrute. Elegimos sumar momentos que hacen bien: ¡el tanque del disfrute empieza a llenarse! Te proponemos elegir una actividad de disfrute y planificar cuándo y dónde hacerla esta semana.",
                   "iconResId": "outline_unknown_document_24"
                 },
                 {
@@ -120,16 +118,16 @@
                 },
                 {
                   "type": "METAS",
-                  "title": "Metas (Hipertensión)",
-                  "description": "Configura tus metas para esta sesión de hipertensión",
+                  "title": "Metas",
+                  "description": "Configura tus metas para esta sesión",
                   "iconResId": "outline_trophy_24",
                   "metasId": "hta"
                 },
                 {
                   "type": "DESCRIPTION",
-                  "title": "Fin de la sesión",
-                  "description": "¡Excelente! Ya tenés tu primera meta y un plan. Esta semana, intentá hacerla. En la próxima semana vamos a ver cómo te fue y seguiremos avanzando. ¡Vos podés!",
-                  "fullDescription": "¡Excelente! Ya tenés tu primera meta y un plan. Esta semana, intentá hacerla. En la próxima semana vamos a ver cómo te fue y seguiremos avanzando. ¡Vos podés!",
+                  "title": "Bienvenida",
+                  "description": "Fin de la sesión ¡Excelente! Ya tenés tu primera meta y un plan. Esta semana, intentá hacerla. En la próxima semana vamos a ver cómo te fue y seguiremos avanzando. ¡Vos podés!",
+                  "fullDescription": "Fin de la sesión ¡Excelente! Ya tenés tu primera meta y un plan. Esta semana, intentá hacerla. En la próxima semana vamos a ver cómo te fue y seguiremos avanzando. ¡Vos podés!",
                   "iconResId": "outline_unknown_document_24"
                 }
               ]
@@ -149,9 +147,9 @@
               "multimedia": [
                 {
                   "type": "DESCRIPTION",
-                  "title": "Tres herramientas para cumplir con tus actividades",
-                  "description": "¡Hola! Qué bueno que seguís acá. Hoy vamos a abrir una caja de herramientas para ayudarte a cumplir tu meta, incluso en los días difíciles. Seguir tu plan puede ayudarte a continuar, incluso en días difíciles . Hacer actividades según tu plan suele funcionar mejor que guiarte por el ánimo del momento.",
-                  "fullDescription": "¡Hola! Qué bueno que seguís acá. Hoy vamos a abrir una caja de herramientas para ayudarte a cumplir tu meta, incluso en los días difíciles. Seguir tu plan puede ayudarte a continuar, incluso en días difíciles . Hacer actividades según tu plan suele funcionar mejor que guiarte por el ánimo del momento.\n\nEn esta sesión vamos a explorar 3 herramientas para ayudarte a superar obstáculos y seguir con tu meta: planificar con detalle, dividir en pasos pequeños y pedir ayuda.",
+                  "title": "Tres herramientas para cumplir con mis actividades",
+                  "description": "¡Hola! Qué bueno que seguís acá. Hoy vamos a abrir una caja de herramientas para ayudarte a cumplir tu meta, incluso en los días difíciles. Seguir tu plan puede ayudarte a continuar, incluso en días difíciles. Hacer actividades según tu plan suele funcionar mejor que guiarte por el ánimo del momento.",
+                  "fullDescription": "¡Hola! Qué bueno que seguís acá. Hoy vamos a abrir una caja de herramientas para ayudarte a cumplir tu meta, incluso en los días difíciles. Seguir tu plan puede ayudarte a continuar, incluso en días difíciles. Hacer actividades según tu plan suele funcionar mejor que guiarte por el ánimo del momento.\n\nEn esta sesión vamos a explorar 3 herramientas para ayudarte a superar obstáculos y seguir con tu meta: planificar con detalle, dividir en pasos pequeños y pedir ayuda.",
                   "iconResId": "outline_unknown_document_24"
                 },
                 {
@@ -182,10 +180,9 @@
                   "iconResId": "outline_trophy_24",
                   "questions": [
                     {
-                      "questionText": "Empezar con acciones pequeñas hace que sea más fácil avanzar hacia una meta.",
+                      "questionText": "",
                       "options": [
-                        "Verdadero",
-                        "Falso"
+                        "Empezar  con  acciones  pequeñas  hace  que  sea  más  fácil  avanzar  hacia  una  meta.    -  Verdadero  -  Falso   Respuesta  correcta:  Verdadero"
                       ],
                       "correctAnswerIndex": 0
                     }
@@ -193,9 +190,9 @@
                 },
                 {
                   "type": "DESCRIPTION",
-                  "title": "Fin de la sesión",
-                  "description": "Esta semana intentá seguir tu plan, incluso en los días en que estás con pocas ganas. En la próxima sesión te contamos cómo otras personas fueron resolviendo sus obstáculos. Quizás eso te sume",
-                  "fullDescription": "Esta semana intentá seguir tu plan, incluso en los días en que estás con pocas ganas. En la próxima sesión te contamos cómo otras personas fueron resolviendo sus obstáculos. Quizás eso te sume",
+                  "title": "Bienvenida",
+                  "description": "Fin de la sesión Esta semana intentá seguir tu plan, incluso en los días en que estás con pocas ganas. En la próxima sesión te contamos cómo otras personas fueron resolviendo sus obstáculos. Quizás eso te sume.",
+                  "fullDescription": "Fin de la sesión Esta semana intentá seguir tu plan, incluso en los días en que estás con pocas ganas. En la próxima sesión te contamos cómo otras personas fueron resolviendo sus obstáculos. Quizás eso te sume.",
                   "iconResId": "outline_unknown_document_24"
                 }
               ]
@@ -208,8 +205,8 @@
                 {
                   "type": "DESCRIPTION",
                   "title": "Superar obstáculos comunes",
-                  "description": "¡Hola! Hoy vamos a hablar de algo que suele aparecer en el camino: los obstáculos. Hay distintas formas de superarlos, y lo que funciona mejor puede ser diferente para cada persona. Las piedras también son parte del camino. Lo importante es saber qué hacer. Vamos a aprender a reconocer los obstáculos más comunes y qué hacer para superarlos sin abandonar tu meta.",
-                  "fullDescription": "¡Hola! Hoy vamos a hablar de algo que suele aparecer en el camino: los obstáculos. Hay distintas formas de superarlos, y lo que funciona mejor puede ser diferente para cada persona. Las piedras también son parte del camino. Lo importante es saber qué hacer. Vamos a aprender a reconocer los obstáculos más comunes y qué hacer para superarlos sin abandonar tu meta.",
+                  "description": "¡Hola! Hoy vamos a hablar de algo que suele aparecer en el camino: Vamos a aprender a reconocer los obstáculos más comunes y qué hacer para superarlos sin abandonar tu meta.",
+                  "fullDescription": "¡Hola! Hoy vamos a hablar de algo que suele aparecer en el camino: Vamos a aprender a reconocer los obstáculos más comunes y qué hacer para superarlos sin abandonar tu meta.",
                   "iconResId": "outline_unknown_document_24"
                 },
                 {
@@ -247,21 +244,20 @@
                   "iconResId": "outline_trophy_24",
                   "questions": [
                     {
-                      "questionText": "Cuando aparece una “piedra en el camino” (por ejemplo: “no tengo ganas”), ¿qué es lo más útil?",
+                      "questionText": "Cuando  aparece  una  “piedra  en  el  camino”  (por  ejemplo:  “no  tengo  ganas”),  ¿qué  es  lo  más  útil?   A:  Esperar  a  sentirte  mejor  y  recién  ahí  hacerlo.  B:  Reconocer  la  barrera  y  hacer  una  versión  más  pequeña  del  plan.  C:  Dejar  la  meta  para  la  próxima  semana.   Respuesta  correcta:  B",
                       "options": [
-                        "Esperar a sentirte mejor y recién ahí hacerlo.",
-                        "Reconocer la barrera y hacer una versión más",
-                        "Dejar la meta para la próxima semana."
+                        "Verdadero",
+                        "Falso"
                       ],
-                      "correctAnswerIndex": 1
+                      "correctAnswerIndex": 0
                     }
                   ]
                 },
                 {
                   "type": "DESCRIPTION",
-                  "title": "Fin de la sesión",
-                  "description": "Como vimos, hay días en los que hasta cosas que parecen simples tienen sus dificultades. Pero casi todo se soluciona si identificás la piedra 'en el camino' y ajustás el plan. En la próxima sesión vamos a ver cómo revisar tu progreso. ¡Te va a ayudar mucho!",
-                  "fullDescription": "Como vimos, hay días en los que hasta cosas que parecen simples tienen sus dificultades. Pero casi todo se soluciona si identificás la piedra 'en el camino' y ajustás el plan. En la próxima sesión vamos a ver cómo revisar tu progreso. ¡Te va a ayudar mucho!",
+                  "title": "Bienvenida",
+                  "description": "Fin de la sesión Como vimos, hay días en los que hasta cosas que parecen simples tienen sus dificultades. Pero casi todo se soluciona si identificás la piedra 'en el camino' y ajustás el plan. En la próxima sesión vamos a ver cómo revisar tu progreso. ¡Te va a ayudar mucho!",
+                  "fullDescription": "Fin de la sesión Como vimos, hay días en los que hasta cosas que parecen simples tienen sus dificultades. Pero casi todo se soluciona si identificás la piedra 'en el camino' y ajustás el plan. En la próxima sesión vamos a ver cómo revisar tu progreso. ¡Te va a ayudar mucho!",
                   "iconResId": "outline_unknown_document_24"
                 }
               ]
@@ -274,8 +270,8 @@
                 {
                   "type": "DESCRIPTION",
                   "title": "La importancia de revisar mis metas",
-                  "description": "¡Hola! Llegaste a una parte clave: revisar tu meta. No para juzgarte, sino para aprender y avanzar. Las metas son esa pequeñas tareas o actividades que vamos haciendo y que nos llevaran a mejorar nuestra salud. No son para cumplir con nadie sino con vos mismo.",
-                  "fullDescription": "¡Hola! Llegaste a una parte clave: revisar tu meta. No para juzgarte, sino para aprender y avanzar. Las metas son esa pequeñas tareas o actividades que vamos haciendo y que nos llevaran a mejorar nuestra salud. No son para cumplir con nadie sino con vos mismo.\n\nHoy vamos a ver por qué revisar tu meta sirve para ver lo que avanzaste, entender qué te costó y ajustar el plan si hace falta.",
+                  "description": "¡Hola! Llegaste a una parte clave: revisar tu meta. No para juzgarte, sino para aprender y avanzar. Las metas son esa pequeñas tareas o actividades que vamos haciendo y que nos llevaran a mejorar nuestra salud. No son para cumplir con nadie sino vos mismo.",
+                  "fullDescription": "¡Hola! Llegaste a una parte clave: revisar tu meta. No para juzgarte, sino para aprender y avanzar. Las metas son esa pequeñas tareas o actividades que vamos haciendo y que nos llevaran a mejorar nuestra salud. No son para cumplir con nadie sino vos mismo.\n\nHoy vamos a ver por qué revisar tu meta sirve para ver lo que avanzaste, entender qué te costó y ajustar el plan si hace falta.",
                   "iconResId": "outline_unknown_document_24"
                 },
                 {
@@ -287,16 +283,16 @@
                 },
                 {
                   "type": "METAS",
-                  "title": "Metas (Hipertensión)",
-                  "description": "Configura tus metas para esta sesión de hipertensión",
+                  "title": "Metas",
+                  "description": "Configura tus metas para esta sesión",
                   "iconResId": "outline_trophy_24",
                   "metasId": "hta"
                 },
                 {
                   "type": "DESCRIPTION",
-                  "title": "Fin de la sesión",
-                  "description": "¡Muy bien! Revisar tu meta es una forma de cuidarte: te ayuda a ver tus avances y aprender de lo difícil. La próxima semana veremos algo importante: cómo premiarte de forma sana por tu esfuerzo.",
-                  "fullDescription": "¡Muy bien! Revisar tu meta es una forma de cuidarte: te ayuda a ver tus avances y aprender de lo difícil. La próxima semana veremos algo importante: cómo premiarte de forma sana por tu esfuerzo.",
+                  "title": "Bienvenida",
+                  "description": "Fin de la sesión ¡Muy bien! Revisar tu meta es una forma de cuidarte: te ayuda a ver tus avances y aprender de lo difícil. La próxima semana veremos algo importante: cómo premiarte de forma sana por tu esfuerzo.",
+                  "fullDescription": "Fin de la sesión ¡Muy bien! Revisar tu meta es una forma de cuidarte: te ayuda a ver tus avances y aprender de lo difícil. La próxima semana veremos algo importante: cómo premiarte de forma sana por tu esfuerzo.",
                   "iconResId": "outline_unknown_document_24"
                 }
               ]
@@ -318,7 +314,7 @@
                   "type": "DESCRIPTION",
                   "title": "Premiarme de forma sana",
                   "description": "¡Hola! Venís haciendo esfuerzos, incluso cuando no era fácil. Hoy vamos a ver formas de premiar nuestro esfuerzo de manera saludable para seguir avanzando. Hoy el premio no es por hacerlo perfecto: es por intentarlo y seguir tu plan.",
-                  "fullDescription": "¡Hola! Venís haciendo esfuerzos, incluso cuando no era fácil. Hoy vamos a ver formas de premiar nuestro esfuerzo de manera saludable para seguir avanzando. Hoy el premio no es por hacerlo perfecto: es por intentarlo y seguir tu plan.\n\nVamos a ver por qué premiar tu esfuerzo de forma saludable puede ayudarte a seguir adelante y cómo elegir un premio que te haga bien. : La activación",
+                  "fullDescription": "¡Hola! Venís haciendo esfuerzos, incluso cuando no era fácil. Hoy vamos a ver formas de premiar nuestro esfuerzo de manera saludable para seguir avanzando. Hoy el premio no es por hacerlo perfecto: es por intentarlo y seguir tu plan.\n\nVamos a ver por qué premiar tu esfuerzo de forma saludable puede ayudarte a seguir adelante y cómo elegir un premio que te haga bien.",
                   "iconResId": "outline_unknown_document_24"
                 },
                 {
@@ -342,10 +338,9 @@
                   "iconResId": "outline_trophy_24",
                   "questions": [
                     {
-                      "questionText": "Un buen premio es solo para cuando cumples tu meta al 100%.",
+                      "questionText": "",
                       "options": [
-                        "Verdadero",
-                        "Falso"
+                        "Un  buen  premio  es  solo  para  cuando  cumples  tu  meta  al  100%.   -  Verdadero  -  Falso   Respuesta  correcta:  Falso"
                       ],
                       "correctAnswerIndex": 0
                     }
@@ -353,9 +348,9 @@
                 },
                 {
                   "type": "DESCRIPTION",
-                  "title": "Fin de la sesión",
-                  "description": "¡Muy bien! Premiarte de forma sana es una manera de reconocer tu esfuerzo y aumentar tus ganas de seguir. En la próxima sesión vamos a ver cómo las metas se conectan con el cuidado de tu salud.",
-                  "fullDescription": "¡Muy bien! Premiarte de forma sana es una manera de reconocer tu esfuerzo y aumentar tus ganas de seguir. En la próxima sesión vamos a ver cómo las metas se conectan con el cuidado de tu salud.",
+                  "title": "Bienvenida",
+                  "description": "Fin de la sesión ¡Muy bien! Premiarte de forma sana es una manera de reconocer tu esfuerzo y aumentar tus ganas de seguir. En la próxima sesión vamos a ver cómo las metas se conectan con el cuidado de tu salud.",
+                  "fullDescription": "Fin de la sesión ¡Muy bien! Premiarte de forma sana es una manera de reconocer tu esfuerzo y aumentar tus ganas de seguir. En la próxima sesión vamos a ver cómo las metas se conectan con el cuidado de tu salud.",
                   "iconResId": "outline_unknown_document_24"
                 }
               ]
@@ -368,8 +363,8 @@
                 {
                   "type": "DESCRIPTION",
                   "title": "Usando la activación conductual para cuidar mi salud",
-                  "description": "¡Hola! Hoy vamos a ver cómo todo lo que fuimos trabajando sobre metas y pasos chiquitos también te puede ayudar con el cuidado de tu salud. Cuando el ánimo cambia, el plan te sostiene: pasos pequeños también cuentan para tu salud.",
-                  "fullDescription": "¡Hola! Hoy vamos a ver cómo todo lo que fuimos trabajando sobre metas y pasos chiquitos también te puede ayudar con el cuidado de tu salud. Cuando el ánimo cambia, el plan te sostiene: pasos pequeños también cuentan para tu salud.\n\nSeguimos trabajando con metas y pasos pequeños como aliados para cuidar tu salud, incluso en días difíciles. Hoy vas a ver cómo aplicarlos al cuidado de tu salud física.",
+                  "description": "¡Hola! Hoy vamos a ver cómo todo lo que fuimos trabajando sobre metas y pasos chiquitos también te puede ayudar con el cuidado de tu salud. Cuando el ánimo cambia, el plan te sostiene: pasos chiquitos también cuentan para tu salud.",
+                  "fullDescription": "¡Hola! Hoy vamos a ver cómo todo lo que fuimos trabajando sobre metas y pasos chiquitos también te puede ayudar con el cuidado de tu salud. Cuando el ánimo cambia, el plan te sostiene: pasos chiquitos también cuentan para tu salud.\n\nSeguimos trabajando con metas y pasos pequeños como aliados para cuidar tu salud, incluso en días difíciles. Hoy vas a ver cómo aplicarlos al cuidado de tu salud física, por ejemplo, en la hipertensión, con un ejemplo concreto.",
                   "iconResId": "outline_unknown_document_24"
                 },
                 {
@@ -386,21 +381,20 @@
                   "iconResId": "outline_trophy_24",
                   "questions": [
                     {
-                      "questionText": "Cuando el estado de ánimo está bajo y cuesta cuidarse (por ejemplo, tomar el medicamento), ¿qué estrategia suele ser más útil?",
+                      "questionText": "Cuando  el  estado  de  ánimo  está  bajo  y  cuesta  cuidarse  (por  ejemplo,  tomar  el  medicamento),  ¿qué  estrategia  suele  ser  más  útil?   A)  Esperar  a  “sentirse  con  ganas”  para  recién  empezar.  B)  Hacer  un  plan  simple  (qué/cuándo/dónde)  y  empezar  con  un  paso  pequeño,  aunque  no  haya  ganas.  C)  Dejarlo  para  la  próxima  semana  para  “empezar  bien”.   Respuesta  correcta:  B",
                       "options": [
-                        "Esperar a “sentirse con ganas” para recién",
-                        "Hacer un plan simple (qué/cuándo/dónde) y",
-                        "Dejarlo para la próxima semana para"
+                        "Verdadero",
+                        "Falso"
                       ],
-                      "correctAnswerIndex": 1
+                      "correctAnswerIndex": 0
                     }
                   ]
                 },
                 {
                   "type": "DESCRIPTION",
-                  "title": "Fin de la sesión",
-                  "description": "Lo que venimos trabajando con metas y pasos pequeños también sirve para el cuidado de tu salud. Las metas son como pasos que te acercan a un objetivo mayor: sentirte mejor y cuidar tu salud. Pasos chiquitos, plan claro y apoyo cuando haga falta. En la próxima sesión vamos a hacer un repaso de todo lo aprendido.",
-                  "fullDescription": "Lo que venimos trabajando con metas y pasos pequeños también sirve para el cuidado de tu salud. Las metas son como pasos que te acercan a un objetivo mayor: sentirte mejor y cuidar tu salud. Pasos chiquitos, plan claro y apoyo cuando haga falta. En la próxima sesión vamos a hacer un repaso de todo lo aprendido.",
+                  "title": "Bienvenida",
+                  "description": "Fin de la sesión Lo que venimos trabajando con metas y pasos pequeños también sirve para el cuidado de tu salud. Las metas son como pasos que te acercan a un objetivo mayor: sentirte mejor y cuidar tu salud. Pasos chiquitos, plan claro y apoyo cuando haga falta. En la próxima sesión vamos a hacer un repaso de todo lo aprendido",
+                  "fullDescription": "Fin de la sesión Lo que venimos trabajando con metas y pasos pequeños también sirve para el cuidado de tu salud. Las metas son como pasos que te acercan a un objetivo mayor: sentirte mejor y cuidar tu salud. Pasos chiquitos, plan claro y apoyo cuando haga falta. En la próxima sesión vamos a hacer un repaso de todo lo aprendido",
                   "iconResId": "outline_unknown_document_24"
                 }
               ]
@@ -414,7 +408,7 @@
                   "type": "DESCRIPTION",
                   "title": "Revisando lo aprendido",
                   "description": "¡Hola! Llegaste a un momento importante: hoy vamos a repasar todo lo que trabajamos estas semanas. La idea es que te quedes con lo esencial para seguir aplicándolo día a día.",
-                  "fullDescription": "¡Hola! Llegaste a un momento importante: hoy vamos a repasar todo lo que trabajamos estas semanas. La idea es que te quedes con lo esencial para seguir aplicándolo día a día.\n\nYa vimos algunas herramientas. Ahora vamos a ponerlas en práctica para cuidar tu salud. Repasaremos lo que trabajamos estas semanas y elegiremos qué vas a seguir aplicando para avanzar paso a paso, incluso durante los días difíciles.",
+                  "fullDescription": "¡Hola! Llegaste a un momento importante: hoy vamos a repasar todo lo que trabajamos estas semanas. La idea es que te quedes con lo esencial para seguir aplicándolo día a día.\n\nYa vimos algunas herramientas. Ahora vamos a ponerlas en práctica para cuidar tu salud. Repasar lo que trabajamos estas semanas y elegir qué vas a seguir aplicando para avanzar paso a paso, incluso durante los días difíciles.",
                   "iconResId": "outline_unknown_document_24"
                 },
                 {
@@ -433,16 +427,16 @@
                 },
                 {
                   "type": "METAS",
-                  "title": "Metas (Hipertensión)",
-                  "description": "Configura tus metas para esta sesión de hipertensión",
+                  "title": "Metas",
+                  "description": "Configura tus metas para esta sesión",
                   "iconResId": "outline_trophy_24",
                   "metasId": "hta"
                 },
                 {
                   "type": "DESCRIPTION",
-                  "title": "Fin de la sesión",
-                  "description": "¡Excelente! Completaste las primeras tres semanas. Ya tenés herramientas que funcionan. Ahora viene algo muy importante: vamos a aplicar todo esto a tu estilo de vida, con consejos prácticos sobre alimentación, actividad física, sueño y . ¡Seguí adelante, vas muy bien!",
-                  "fullDescription": "¡Excelente! Completaste las primeras tres semanas. Ya tenés herramientas que funcionan. Ahora viene algo muy importante: vamos a aplicar todo esto a tu estilo de vida, con consejos prácticos sobre alimentación, actividad física, sueño y . ¡Seguí adelante, vas muy bien!",
+                  "title": "Bienvenida",
+                  "description": "Fin de la sesión ¡Excelente! Completaste las primeras tres semanas. Ya tenés herramientas que funcionan. Ahora viene algo muy importante: vamos a aplicar todo esto a tu estilo de vida, con consejos prácticos sobre alimentación, actividad física, sueño y . ¡Seguí adelante, vas muy bien!",
+                  "fullDescription": "Fin de la sesión ¡Excelente! Completaste las primeras tres semanas. Ya tenés herramientas que funcionan. Ahora viene algo muy importante: vamos a aplicar todo esto a tu estilo de vida, con consejos prácticos sobre alimentación, actividad física, sueño y . ¡Seguí adelante, vas muy bien!",
                   "iconResId": "outline_unknown_document_24"
                 }
               ]
@@ -462,9 +456,9 @@
               "multimedia": [
                 {
                   "type": "DESCRIPTION",
-                  "title": "¿Qué es la hipertensión?",
-                  "description": "¡Hola! Cuidar tu presión arterial es cuidarte. Vamos a conversar sobre qué es la hipertensión y qué formas existen para medir tus niveles de presión arterial.",
-                  "fullDescription": "¡Hola! Cuidar tu presión arterial es cuidarte. Vamos a conversar sobre qué es la hipertensión y qué formas existen para medir tus niveles de presión arterial.",
+                  "title": "¿Qué es la hipertensión arterial?",
+                  "description": "¡Hola! El mejor momento para cuidar tu corazón es ahora. ¡Prevenir es ganar! Vamos a conocer cómo se diagnostica la hipertensión arterial.",
+                  "fullDescription": "¡Hola! El mejor momento para cuidar tu corazón es ahora. ¡Prevenir es ganar! Vamos a conocer cómo se diagnostica la hipertensión arterial.",
                   "iconResId": "outline_unknown_document_24"
                 },
                 {
@@ -476,16 +470,9 @@
                 },
                 {
                   "type": "DESCRIPTION",
-                  "title": "Lectura",
-                  "description": "Lee y escucha la sesión del día",
-                  "fullDescription": "¿Cómo podés saber si tus niveles de presión arterial están controlados o no? La única forma confiable de medir tu presión arterial es analizando tu sangre. Algunas aplicaciones de celular dicen que pueden hacerlo con la cámara del celular, ¡pero eso no es cierto! Solo los glucómetros y los análisis de sangre realizados por profesionales pueden dar resultados reales. ● Si te hacés la prueba en ayunas y tu presión arterial da por encima de 126 mg/dl, significa que está alta. ● Y si en cualquier momento del día el resultado pasa los 200, también significa que tu presión arterial está elevada. Si tenés alguno de estos resultados, anotalo y acercate a tu centro de salud. Además, tu médico puede pedirte un análisis de sangre llamado hemoglobina glicosilada. Este resultado muestra cómo estuvieron tus niveles de presión arterial durante los últimos dos o tres meses. Si el valor es de 7% o más, significa que tu presión arterial estuvo elevada de forma constante durante estos meses. Es muy importante que midas tu presión arterial con la frecuencia que te indicó tu médico para ver si está controlada. También puede recomendarte hacerte una prueba de hemoglobina glicosilada cada tres meses.",
-                  "iconResId": "outline_unknown_document_24"
-                },
-                {
-                  "type": "DESCRIPTION",
-                  "title": "Fin de la sesión",
-                  "description": "Con hábitos y constancia, podés mantenerte saludable cada día.",
-                  "fullDescription": "Con hábitos y constancia, podés mantenerte saludable cada día.",
+                  "title": "Bienvenida",
+                  "description": "Fin de la sesión Conocer nuestra presión arterial es el primer paso para cuidar nuestra salud.",
+                  "fullDescription": "Fin de la sesión Conocer nuestra presión arterial es el primer paso para cuidar nuestra salud.",
                   "iconResId": "outline_unknown_document_24"
                 }
               ]
@@ -497,9 +484,9 @@
               "multimedia": [
                 {
                   "type": "DESCRIPTION",
-                  "title": "¿Cómo sé si tengo la presión arterial alta o baja?",
-                  "description": "¡Hola! Te damos la bienvenida a esta sesión sobre hipertensión. Conocer tu cuerpo y medir tu presión arterial te ayuda a cuidarte mejor cada día. Vamos a hablar de cómo podés reconocer si tu presión arterial está muy alta o muy baja y qué podés hacer al respecto.",
-                  "fullDescription": "¡Hola! Te damos la bienvenida a esta sesión sobre hipertensión. Conocer tu cuerpo y medir tu presión arterial te ayuda a cuidarte mejor cada día. Vamos a hablar de cómo podés reconocer si tu presión arterial está muy alta o muy baja y qué podés hacer al respecto.",
+                  "title": "¿Qué puedo hacer para controlar mi presión?",
+                  "description": "¡Hola! Cada pequeña elección de hoy es un regalo de bienestar para tu salud mañana. Vamos a incorporar pequeños hábitos para ayudar a controlar la presión.",
+                  "fullDescription": "¡Hola! Cada pequeña elección de hoy es un regalo de bienestar para tu salud mañana. Vamos a incorporar pequeños hábitos para ayudar a controlar la presión.",
                   "iconResId": "outline_unknown_document_24"
                 },
                 {
@@ -523,7 +510,7 @@
                   "iconResId": "outline_trophy_24",
                   "questions": [
                     {
-                      "questionText": "La mejor forma de saber cómo está mi presión arterial es midiéndola con un tensiómetro o un análisis de sangre",
+                      "questionText": "Aunque  me  sienta  bien,  ¿es  importante  controlar  la  presión?   A:  No,  solo  cuando  me  siento  mal  B:  Sí,  porque  muchas  veces  la  presión  alta  no  da  síntomas   Respuesta  correcta:  B",
                       "options": [
                         "Verdadero",
                         "Falso"
@@ -534,9 +521,9 @@
                 },
                 {
                   "type": "DESCRIPTION",
-                  "title": "Fin de la sesión",
-                  "description": "Reconocer los síntomas y medir tu presión arterial te ayuda a cuidarte y actuar a tiempo.",
-                  "fullDescription": "Reconocer los síntomas y medir tu presión arterial te ayuda a cuidarte y actuar a tiempo.",
+                  "title": "Bienvenida",
+                  "description": "Fin de la sesión Alimentar tu cuerpo, mover tu corazón y seguir tu tratamiento: hoy elegiste vivir mejor",
+                  "fullDescription": "Fin de la sesión Alimentar tu cuerpo, mover tu corazón y seguir tu tratamiento: hoy elegiste vivir mejor",
                   "iconResId": "outline_unknown_document_24"
                 }
               ]
@@ -548,23 +535,23 @@
               "multimedia": [
                 {
                   "type": "DESCRIPTION",
-                  "title": "¿Cuáles son los beneficios de controlar la hipertensión?",
-                  "description": "¡Hola! Te damos la bienvenida a esta sesión sobre hipertensión. Cada pequeño esfuerzo cuenta, y tu cuerpo te lo agradece. Repasaremos cómo la hipertensión está relacionada con la salud de tus riñones, tu corazón, tus ojos y tu sistema nervioso.",
-                  "fullDescription": "¡Hola! Te damos la bienvenida a esta sesión sobre hipertensión. Cada pequeño esfuerzo cuenta, y tu cuerpo te lo agradece. Repasaremos cómo la hipertensión está relacionada con la salud de tus riñones, tu corazón, tus ojos y tu sistema nervioso.",
+                  "title": "¿Qué significa que la hipertensión sea una enfermedad crónica y silenciosa?",
+                  "description": "¡Hola! Sentirte bien no es la señal para detenerte, es la prueba de que lo estás haciendo bien. Vamos a conocer por qué la hipertensión es crónica y silenciosa.",
+                  "fullDescription": "¡Hola! Sentirte bien no es la señal para detenerte, es la prueba de que lo estás haciendo bien. Vamos a conocer por qué la hipertensión es crónica y silenciosa.",
                   "iconResId": "outline_unknown_document_24"
                 },
                 {
-                  "type": "DESCRIPTION",
-                  "title": "Lectura",
-                  "description": "Lee y escucha la sesión del día",
-                  "fullDescription": "¿Por qué controlar tu hipertensión es cuidar tus riñones, tu corazón, tus ojos y tu cuerpo? Cuando mantenés tu hipertensión bajo control, ayudás a que tus riñones sigan haciendo bien su trabajo, también cuidás tu corazón, protegés tus ojos y cuidás tus piernas, pies y manos. Cuando la presión arterial se mantiene alta por mucho tiempo, algunas personas pueden presentar problemas en estas partes del cuerpo. Esto no les ocurre a todas las personas y, cuando pasa, puede mantenerse bajo control con seguimiento médico, alimentación saludable y actividad física. Recordá que mantener tu presión arterial bajo control es cuidar tu salud. Esto te va a permitir tener más energía en tu día a día y también mejorar tu estado de ánimo. En las próximas sesiones te vamos a dar consejos fáciles para cuidar tu alimentación, moverte más y cuidar tu salud diariamente.",
-                  "iconResId": "outline_unknown_document_24"
+                  "type": "VIDEO",
+                  "title": "Video",
+                  "description": "Ver video de la sesión",
+                  "iconImageVector": "PlayArrow",
+                  "contentAsset": "exercise"
                 },
                 {
                   "type": "DESCRIPTION",
-                  "title": "Fin de la sesión",
-                  "description": "Cuidar tu presión arterial es cuidar tus riñones, tu vista, tu sistema nervioso y tu corazón.",
-                  "fullDescription": "Cuidar tu presión arterial es cuidar tus riñones, tu vista, tu sistema nervioso y tu corazón.",
+                  "title": "Bienvenida",
+                  "description": "Fin de la sesión ¡Seguí así, la constancia incluso con pasos pequeños es tu mejor aliada!",
+                  "fullDescription": "Fin de la sesión ¡Seguí así, la constancia incluso con pasos pequeños es tu mejor aliada!",
                   "iconResId": "outline_unknown_document_24"
                 }
               ]
@@ -598,9 +585,9 @@
                 },
                 {
                   "type": "DESCRIPTION",
-                  "title": "Fin de la sesión",
-                  "description": "¡Seguí así, tu constancia es tu mejor aliada!",
-                  "fullDescription": "¡Seguí así, tu constancia es tu mejor aliada!",
+                  "title": "Bienvenida",
+                  "description": "Fin de la sesión ¡Seguí así, tu constancia es tu mejor aliada!",
+                  "fullDescription": "Fin de la sesión ¡Seguí así, tu constancia es tu mejor aliada!",
                   "iconResId": "outline_unknown_document_24"
                 }
               ]
@@ -631,10 +618,10 @@
                   "iconResId": "outline_trophy_24",
                   "questions": [
                     {
-                      "questionText": "¿Cuáles son los beneficios del movimiento y la actividad física en nuestro cuerpo?",
+                      "questionText": "¿Cuáles  son  los  beneficios  del  movimiento  y  la  actividad  física  en  nuestro  cuerpo?   A:  Mejora  la  presión,  mejora  la  glucosa,  reduce  el  estrés,  mejora  el  sueño,  descenso  de  peso  B:  Sólo  me  ayuda  a  bajar  de  peso  para  tener  una  mejor  figura   Respuesta  correcta:  A",
                       "options": [
-                        "Mejora la presión, mejora la presión arterial, reduce",
-                        "Sólo me ayuda a bajar de peso para tener"
+                        "Verdadero",
+                        "Falso"
                       ],
                       "correctAnswerIndex": 0
                     }
@@ -642,9 +629,9 @@
                 },
                 {
                   "type": "DESCRIPTION",
-                  "title": "Fin de la sesión",
-                  "description": "¡ Seguí así, tu constancia es tu mejor aliada!",
-                  "fullDescription": "¡ Seguí así, tu constancia es tu mejor aliada!",
+                  "title": "Bienvenida",
+                  "description": "Fin de la sesión ¡Seguí así, tu constancia es tu mejor aliada!",
+                  "fullDescription": "Fin de la sesión ¡Seguí así, tu constancia es tu mejor aliada!",
                   "iconResId": "outline_unknown_document_24"
                 }
               ]
@@ -657,8 +644,8 @@
                 {
                   "type": "DESCRIPTION",
                   "title": "¿Cómo empezar a movernos de manera segura?",
-                  "description": "¡Hola! Te damos la bienvenida a esta sesión sobre ejercicio. Empezá despacio, cuidate y avanzá poco a poco. Hoy vamos a prepararnos para hacer ejercicio de manera segura. Además, hablaremos de qué actividades sencillas podés hacer para moverte más.",
-                  "fullDescription": "¡Hola! Te damos la bienvenida a esta sesión sobre ejercicio. Empezá despacio, cuidate y avanzá poco a poco. Hoy vamos a prepararnos para hacer ejercicio de manera segura. Además, hablaremos de qué actividades sencillas podés hacer para moverte más.",
+                  "description": "¡Hola! Te damos la bienvenida a esta sesión sobre ejercicio. Empezá despacio, cuidate y avanza poco a poco. Hoy vamos a prepararnos para hacer ejercicio de manera segura. Además, hablaremos de qué actividades sencillas podés hacer para moverte más.",
+                  "fullDescription": "¡Hola! Te damos la bienvenida a esta sesión sobre ejercicio. Empezá despacio, cuidate y avanza poco a poco. Hoy vamos a prepararnos para hacer ejercicio de manera segura. Además, hablaremos de qué actividades sencillas podés hacer para moverte más.",
                   "iconResId": "outline_unknown_document_24"
                 },
                 {
@@ -670,16 +657,16 @@
                 },
                 {
                   "type": "METAS",
-                  "title": "Metas (Hipertensión)",
-                  "description": "Configura tus metas para esta sesión de hipertensión",
+                  "title": "Metas",
+                  "description": "Configura tus metas para esta sesión",
                   "iconResId": "outline_trophy_24",
                   "metasId": "hta"
                 },
                 {
                   "type": "DESCRIPTION",
-                  "title": "Fin de la sesión",
-                  "description": "El ejercicio te ayuda, siempre que lo hagas de forma segura y continua.",
-                  "fullDescription": "El ejercicio te ayuda, siempre que lo hagas de forma segura y continua.",
+                  "title": "Bienvenida",
+                  "description": "Fin de la sesión El ejercicio te ayuda, siempre que lo hagas de forma segura y continua.",
+                  "fullDescription": "Fin de la sesión El ejercicio te ayuda, siempre que lo hagas de forma segura y continua.",
                   "iconResId": "outline_unknown_document_24"
                 }
               ]
@@ -700,8 +687,8 @@
                 {
                   "type": "DESCRIPTION",
                   "title": "Haciendo del ejercicio un hábito saludable",
-                  "description": "¡Hola! Recordá que cualquier movimiento, por pequeño que sea, es un triunfo para tu corazón y tu ánimo. Hoy vamos a aprender a construir el hábito de movernos a nuestro propio ritmo y sin presiones.",
-                  "fullDescription": "¡Hola! Recordá que cualquier movimiento, por pequeño que sea, es un triunfo para tu corazón y tu ánimo. Hoy vamos a aprender a construir el hábito de movernos a nuestro propio ritmo y sin presiones.",
+                  "description": "¡Hola! Recordá que cualquier movimiento, por pequeño que sea, es un triunfo para tu corazón y tu ánimo Hoy vamos a aprender a construir el hábito de movernos a nuestro propio ritmo y sin presiones.",
+                  "fullDescription": "¡Hola! Recordá que cualquier movimiento, por pequeño que sea, es un triunfo para tu corazón y tu ánimo Hoy vamos a aprender a construir el hábito de movernos a nuestro propio ritmo y sin presiones.",
                   "iconResId": "outline_unknown_document_24"
                 },
                 {
@@ -725,10 +712,9 @@
                   "iconResId": "outline_trophy_24",
                   "questions": [
                     {
-                      "questionText": "Hacer un poco de ejercicio puede ayudar a sentirse mejor de ánimo.",
+                      "questionText": "",
                       "options": [
-                        "Verdadero",
-                        "Falso"
+                        "Hacer  un  poco  de  ejercicio  puede  ayudar  a  sentirse  mejor  de  ánimo.   -  Verdadero  -  Falso   Respuesta  correcta:  Verdadero"
                       ],
                       "correctAnswerIndex": 0
                     }
@@ -736,9 +722,9 @@
                 },
                 {
                   "type": "DESCRIPTION",
-                  "title": "Fin de la sesión",
-                  "description": "Cada vez que te movés, tu cuerpo y tu mente te lo agradecen.",
-                  "fullDescription": "Cada vez que te movés, tu cuerpo y tu mente te lo agradecen.",
+                  "title": "Bienvenida",
+                  "description": "Fin de la sesión Cada vez que te movés, tu cuerpo y tu mente te lo agradecen.",
+                  "fullDescription": "Fin de la sesión Cada vez que te movés, tu cuerpo y tu mente te lo agradecen.",
                   "iconResId": "outline_unknown_document_24"
                 }
               ]
@@ -764,9 +750,9 @@
                 },
                 {
                   "type": "DESCRIPTION",
-                  "title": "Fin de la sesión",
-                  "description": "Repetí los ejercicios la mayor cantidad de días a la semana que puedas. Pronto notarás el cambio en tu forma de sentirte. Recrodá que el mundo no se cambia en un día, a seguir construyendo este cambio en tu vida.",
-                  "fullDescription": "Repetí los ejercicios la mayor cantidad de días a la semana que puedas. Pronto notarás el cambio en tu forma de sentirte. Recrodá que el mundo no se cambia en un día, a seguir construyendo este cambio en tu vida.",
+                  "title": "Bienvenida",
+                  "description": "Fin de la sesión Repite los ejercicios la mayor cantidad de días a la semana que puedas. Pronto notarás el cambio en tu forma de sentirte. Recuerda que el mundo no se cambia en un día, a seguir construyendo este cambio en tu vida.",
+                  "fullDescription": "Fin de la sesión Repite los ejercicios la mayor cantidad de días a la semana que puedas. Pronto notarás el cambio en tu forma de sentirte. Recuerda que el mundo no se cambia en un día, a seguir construyendo este cambio en tu vida.",
                   "iconResId": "outline_unknown_document_24"
                 }
               ]
@@ -792,16 +778,16 @@
                 },
                 {
                   "type": "METAS",
-                  "title": "Metas (Hipertensión)",
-                  "description": "Configura tus metas para esta sesión de hipertensión",
+                  "title": "Metas",
+                  "description": "Configura tus metas para esta sesión",
                   "iconResId": "outline_trophy_24",
                   "metasId": "hta"
                 },
                 {
                   "type": "DESCRIPTION",
-                  "title": "Fin de la sesión",
-                  "description": "Repetí los ejercicios la mayor cantidad de días a la semana que puedas. Pronto notarás el cambio en tu salud.",
-                  "fullDescription": "Repetí los ejercicios la mayor cantidad de días a la semana que puedas. Pronto notarás el cambio en tu salud.",
+                  "title": "Bienvenida",
+                  "description": "Fin de la sesión Repite los ejercicios la mayor cantidad de días a la semana que puedas. Pronto notarás el cambio en tu salud.",
+                  "fullDescription": "Fin de la sesión Repite los ejercicios la mayor cantidad de días a la semana que puedas. Pronto notarás el cambio en tu salud.",
                   "iconResId": "outline_unknown_document_24"
                 }
               ]
@@ -835,9 +821,9 @@
                 },
                 {
                   "type": "DESCRIPTION",
-                  "title": "Fin de la sesión",
-                  "description": "Intenta comer a horario, no excederte en las porciones, y tomar agua.",
-                  "fullDescription": "Intenta comer a horario, no excederte en las porciones, y tomar agua.",
+                  "title": "Bienvenida",
+                  "description": "Fin de la sesión Intenta comer a hoario, no excederte en las porciones, y tomar agua.",
+                  "fullDescription": "Fin de la sesión Intenta comer a hoario, no excederte en las porciones, y tomar agua.",
                   "iconResId": "outline_unknown_document_24"
                 }
               ]
@@ -868,10 +854,9 @@
                   "iconResId": "outline_trophy_24",
                   "questions": [
                     {
-                      "questionText": "Organizar mejor tus comidas te ayuda a cuidar tu salud",
+                      "questionText": "",
                       "options": [
-                        "Verdadero",
-                        "Falso"
+                        "Organizar  mejor  tus  comidas  te  ayuda  a  cuidar  tu  salud    -  Verdadero  -  Falso   Respuesta  correcta:  Verdadero"
                       ],
                       "correctAnswerIndex": 0
                     }
@@ -879,9 +864,9 @@
                 },
                 {
                   "type": "DESCRIPTION",
-                  "title": "Fin de la sesión",
-                  "description": "Organizar las comidas es buscar equilibrio, no perfección.",
-                  "fullDescription": "Organizar las comidas es buscar equilibrio, no perfección.",
+                  "title": "Bienvenida",
+                  "description": "Fin de la sesión Organizar las comidas es buscar equilibrio, no perfección.",
+                  "fullDescription": "Fin de la sesión Organizar las comidas es buscar equilibrio, no perfección.",
                   "iconResId": "outline_unknown_document_24"
                 }
               ]
@@ -894,8 +879,8 @@
                 {
                   "type": "DESCRIPTION",
                   "title": "Comer sano teniendo hipertensión",
-                  "description": "¡Hola! Te damos la bienvenida a esta sesión. Hoy vamos a ver cómo elegir alimentos que te ayuden a cuidar tu hipertensión.",
-                  "fullDescription": "¡Hola! Te damos la bienvenida a esta sesión. Hoy vamos a ver cómo elegir alimentos que te ayuden a cuidar tu hipertensión.",
+                  "description": "¡Hola! Hoy vamos a ver cómo elegir alimentos que te ayuden a cuidar tu presión sin presiones.",
+                  "fullDescription": "¡Hola! Hoy vamos a ver cómo elegir alimentos que te ayuden a cuidar tu presión sin presiones.",
                   "iconResId": "outline_unknown_document_24"
                 },
                 {
@@ -907,16 +892,16 @@
                 },
                 {
                   "type": "METAS",
-                  "title": "Metas (Hipertensión)",
-                  "description": "Configura tus metas para esta sesión de hipertensión",
+                  "title": "Metas",
+                  "description": "Configura tus metas para esta sesión",
                   "iconResId": "outline_trophy_24",
                   "metasId": "hta"
                 },
                 {
                   "type": "DESCRIPTION",
-                  "title": "Fin de la sesión",
-                  "description": "No hace falta cambiar todo de golpe: valorá cada paso que das hacia una vida más sana.",
-                  "fullDescription": "No hace falta cambiar todo de golpe: valorá cada paso que das hacia una vida más sana.",
+                  "title": "Bienvenida",
+                  "description": "Fin de la sesión No hace falta cambiar todo de golpe: valorá cada paso que das hacia una vida más sana",
+                  "fullDescription": "Fin de la sesión No hace falta cambiar todo de golpe: valorá cada paso que das hacia una vida más sana",
                   "iconResId": "outline_unknown_document_24"
                 }
               ]
@@ -943,23 +928,23 @@
                 },
                 {
                   "type": "VIDEO",
-                  "title": "Video Receta 1",
+                  "title": "Video",
                   "description": "Ver video de la sesión",
                   "iconImageVector": "PlayArrow",
                   "contentAsset": "exercise"
                 },
                 {
                   "type": "VIDEO",
-                  "title": "Video Receta 2",
+                  "title": "Video",
                   "description": "Ver video de la sesión",
                   "iconImageVector": "PlayArrow",
                   "contentAsset": "exercise"
                 },
                 {
                   "type": "DESCRIPTION",
-                  "title": "Fin de la sesión",
-                  "description": "Disfruta el sabor de cuidarte.",
-                  "fullDescription": "Disfruta el sabor de cuidarte.",
+                  "title": "Bienvenida",
+                  "description": "Fin de la sesión Disfruta el sabor de cuidarte. saludable en el día a día",
+                  "fullDescription": "Fin de la sesión Disfruta el sabor de cuidarte. saludable en el día a día",
                   "iconResId": "outline_unknown_document_24"
                 }
               ]
@@ -997,10 +982,10 @@
                   "iconResId": "outline_trophy_24",
                   "questions": [
                     {
-                      "questionText": "¿Qué puede hacer María para organizar mejor sus comidas?",
+                      "questionText": "¿Qué  puede  hacer  María  para  organizar  mejor  sus  comidas?   A:  Planificar  un  menú  semanal  junto  a  su  hija.  B:  Comprar  comida  cada  día  sin  planificar.   Respuesta  correcta:  A",
                       "options": [
-                        "Planificar un menú semanal junto a su hija.",
-                        "Comprar comida cada día sin planificar."
+                        "Verdadero",
+                        "Falso"
                       ],
                       "correctAnswerIndex": 0
                     }
@@ -1008,9 +993,9 @@
                 },
                 {
                   "type": "DESCRIPTION",
-                  "title": "Fin de la sesión",
-                  "description": "Con un poco de organización, como planear las comidas, hacer una lista y cocinar por adelantado, podés ahorrar tiempo y dinero.",
-                  "fullDescription": "Con un poco de organización, como planear las comidas, hacer una lista y cocinar por adelantado, podés ahorrar tiempo y dinero.",
+                  "title": "Bienvenida",
+                  "description": "Fin de la sesión Con un poco de organización, como planear las comidas, hacer una lista y cocinar por adelantado, podés ahorrar tiempo y dinero.",
+                  "fullDescription": "Fin de la sesión Con un poco de organización, como planear las comidas, hacer una lista y cocinar por adelantado, podés ahorrar tiempo y dinero.",
                   "iconResId": "outline_unknown_document_24"
                 }
               ]
@@ -1036,16 +1021,16 @@
                 },
                 {
                   "type": "METAS",
-                  "title": "Metas (Hipertensión)",
-                  "description": "Configura tus metas para esta sesión de hipertensión",
+                  "title": "Metas",
+                  "description": "Configura tus metas para esta sesión",
                   "iconResId": "outline_trophy_24",
                   "metasId": "hta"
                 },
                 {
                   "type": "DESCRIPTION",
-                  "title": "Fin de la sesión",
-                  "description": "Construir, de a poco, hábitos posibles que cuiden tu cuerpo y tu día a día.",
-                  "fullDescription": "Construir, de a poco, hábitos posibles que cuiden tu cuerpo y tu día a día.",
+                  "title": "Bienvenida",
+                  "description": "Fin de la sesión Construir, de a poco, hábitos posibles que cuiden tu cuerpo y tu día a día.",
+                  "fullDescription": "Fin de la sesión Construir, de a poco, hábitos posibles que cuiden tu cuerpo y tu día a día.",
                   "iconResId": "outline_unknown_document_24"
                 }
               ]
@@ -1066,8 +1051,8 @@
                 {
                   "type": "DESCRIPTION",
                   "title": "Comer lo mismo, cuidarnos todos",
-                  "description": "¡Hola! Te damos la bienvenida a esta sesión. Cuando cocinamos en casa, no sólo preparamos comida: construimos salud para todos. Hoy vamos a ver cómo adaptar una alimentación más saludable usando los mismos alimentos para toda la familia.",
-                  "fullDescription": "¡Hola! Te damos la bienvenida a esta sesión. Cuando cocinamos en casa, no sólo preparamos comida: construimos salud para todos. Hoy vamos a ver cómo adaptar una alimentación más saludable usando los mismos alimentos para toda la familia.",
+                  "description": "¡Hola! Te damos la bienvenida a esta sesión. Cuando cocinamos en casa, no solo preparamos comida: construimos salud para todos. Adaptar una alimentación más saludable usando los mismos alimentos para toda la familia.",
+                  "fullDescription": "¡Hola! Te damos la bienvenida a esta sesión. Cuando cocinamos en casa, no solo preparamos comida: construimos salud para todos. Adaptar una alimentación más saludable usando los mismos alimentos para toda la familia.",
                   "iconResId": "outline_unknown_document_24"
                 },
                 {
@@ -1086,9 +1071,9 @@
                 },
                 {
                   "type": "DESCRIPTION",
-                  "title": "Fin de la sesión",
-                  "description": "Elegir agua, más verduras y comida casera es la mejor receta para alimentarnos de manera más saludable.",
-                  "fullDescription": "Elegir agua, más verduras y comida casera es la mejor receta para alimentarnos de manera más saludable.",
+                  "title": "Bienvenida",
+                  "description": "Fin de la sesión Elegir agua, más verduras y comida casera es la mejor receta para alimentarnos de manera más saludable.",
+                  "fullDescription": "Fin de la sesión Elegir agua, más verduras y comida casera es la mejor receta para alimentarnos de manera más saludable.",
                   "iconResId": "outline_unknown_document_24"
                 }
               ]
@@ -1128,9 +1113,9 @@
                 },
                 {
                   "type": "DESCRIPTION",
-                  "title": "Fin de la sesión",
-                  "description": "Recordá que el centro del festejo es compartir el momento",
-                  "fullDescription": "Recordá que el centro del festejo es compartir el momento",
+                  "title": "Bienvenida",
+                  "description": "Fin de la sesión Recordá que el centro del festejo es compartir el momento",
+                  "fullDescription": "Fin de la sesión Recordá que el centro del festejo es compartir el momento",
                   "iconResId": "outline_unknown_document_24"
                 }
               ]
@@ -1156,16 +1141,16 @@
                 },
                 {
                   "type": "METAS",
-                  "title": "Metas (Hipertensión)",
-                  "description": "Configura tus metas para esta sesión de hipertensión",
+                  "title": "Metas",
+                  "description": "Configura tus metas para esta sesión",
                   "iconResId": "outline_trophy_24",
                   "metasId": "hta"
                 },
                 {
                   "type": "DESCRIPTION",
-                  "title": "Fin de la sesión",
-                  "description": "Pequeños cambios que se sostienen en el tiempo hacen la diferencia.",
-                  "fullDescription": "Pequeños cambios que se sostienen en el tiempo hacen la diferencia.",
+                  "title": "Bienvenida",
+                  "description": "Fin de la sesión Pequeños cambios que se sostienen en el tiempo hacen la diferencia.",
+                  "fullDescription": "Fin de la sesión Pequeños cambios que se sostienen en el tiempo hacen la diferencia.",
                   "iconResId": "outline_unknown_document_24"
                 }
               ]
@@ -1186,8 +1171,8 @@
                 {
                   "type": "DESCRIPTION",
                   "title": "La importancia de los controles de salud",
-                  "description": "¡Hola! La salud es un camino, no un destino. Asegúrate de contar con un buen mapa: ¡tus controles de salud! Hoy conoceremos la importancia de los controles de salud y cómo prepararnos para participar en los mismos.",
-                  "fullDescription": "¡Hola! La salud es un camino, no un destino. Asegúrate de contar con un buen mapa: ¡tus controles de salud! Hoy conoceremos la importancia de los controles de salud y cómo prepararnos para participar en los mismos.",
+                  "description": "¡Hola! La salud es un camino, no un destino. Asegurate de contar con un buen mapa: ¡tus controles de salud! Hoy conoceremos la importancia de los controles de salud y cómo prepararnos para participar en los mismos.",
+                  "fullDescription": "¡Hola! La salud es un camino, no un destino. Asegurate de contar con un buen mapa: ¡tus controles de salud! Hoy conoceremos la importancia de los controles de salud y cómo prepararnos para participar en los mismos.",
                   "iconResId": "outline_unknown_document_24"
                 },
                 {
@@ -1199,9 +1184,9 @@
                 },
                 {
                   "type": "DESCRIPTION",
-                  "title": "Fin de la sesión",
-                  "description": "Recordá que la consulta es un espacio donde vos sos el protagonista",
-                  "fullDescription": "Recordá que la consulta es un espacio donde vos sos el protagonista",
+                  "title": "Bienvenida",
+                  "description": "Fin de la sesión Recordá que la consulta es un espacio donde vos sos el protagonista",
+                  "fullDescription": "Fin de la sesión Recordá que la consulta es un espacio donde vos sos el protagonista",
                   "iconResId": "outline_unknown_document_24"
                 }
               ]
@@ -1213,30 +1198,23 @@
               "multimedia": [
                 {
                   "type": "DESCRIPTION",
-                  "title": "¿Por qué es importante controlar tu presión arterial?",
-                  "description": "¡Hola! Un pequeño hábito, una gran diferencia. Hoy vamos a conocer cómo tomar de forma correcta tu glucemia.",
-                  "fullDescription": "¡Hola! Un pequeño hábito, una gran diferencia. Hoy vamos a conocer cómo tomar de forma correcta tu glucemia.",
+                  "title": "¿Por qué es importante medirse la presión?",
+                  "description": "¡Hola! Un pequeño hábito, una gran diferencia. Hoy conoceremos cómo tomar de forma correcta tu presión arterial.",
+                  "fullDescription": "¡Hola! Un pequeño hábito, una gran diferencia. Hoy conoceremos cómo tomar de forma correcta tu presión arterial.",
                   "iconResId": "outline_unknown_document_24"
                 },
                 {
                   "type": "DESCRIPTION",
-                  "title": "Lectura 1",
+                  "title": "Lectura",
                   "description": "Lee y escucha la sesión del día",
                   "fullDescription": "Medirse la presión es una forma de cuidar la salud. Muchas veces la presión alta no da síntomas, por eso medirla ayuda a saber cómo está. Además, controlarla permite prevenir problemas y cuidar órganos importantes como el corazón, el cerebro, los riñones y los ojos. Medirse la presión también ayuda a entender qué cosas pueden hacer que la presión suba o baje, como la alimentación, la actividad física diaria, el descanso, el estrés y los medicamentos. No se trata de medirse todo el tiempo, sino de medirla para estar atentos a cómo está nuestro cuerpo. Podés hacerlo en tu centro de salud, donde el personal puede ayudarte a medirla y a comprender los resultados. Además, si tenés un tensiómetro, podés medirte en casa y después compartir esa información con tu médico. Si necesitás aprender o repasar cómo medirte la presión, podés consultar la técnica en el material suplementario de esta aplicación. Recordá que una sola medición no define cómo está tu salud. Lo importante es observar los valores a lo largo del tiempo. Si notás que la presión suele estar alta, o si tenés síntomas como dolor fuerte de cabeza, mareos, palpitaciones, visión borrosa o falta de aire, es importante que se lo comentes a tu médico o al equipo de salud. Sabemos que a veces cuesta mantener los controles o que no siempre se puede, y está bien. Sin embargo, recordá que cada pequeño paso cuenta.",
                   "iconResId": "outline_unknown_document_24"
                 },
                 {
                   "type": "DESCRIPTION",
-                  "title": "Lectura 2",
-                  "description": "Lee y escucha la sesión del día",
-                  "fullDescription": "Es importante tener en cuenta que una sola medición de la presión arterial no nos dice cómo está nuestra salud en general: representa solo un momento específico. Por eso es importante que intentes seguir la recomendación de tu médico sobre cada cuánto es necesario medirse. Si al medirte notás varios valores muy altos, por ejemplo, más de 200 de presión arterial, o si tenés síntomas diversos como mucha sed, orinar con frecuencia, cansancio extremo o visión borrosa, es importante que busques atención en tu centro de salud. Sabemos que muchas veces cuesta mantener el control o que no siempre se puede, y está bien. Cada pequeño paso cuenta. Ante cualquier duda, acercate a tu centro de salud. Cuidarte es un proceso, y no tenés que hacerlo solo o sola.",
-                  "iconResId": "outline_unknown_document_24"
-                },
-                {
-                  "type": "DESCRIPTION",
-                  "title": "Fin de la sesión",
-                  "description": "Un valor solo no te define, pero si notás números altos o síntomas extraños, consultá a tu médico: cada paso en tu cuidado suma.",
-                  "fullDescription": "Un valor solo no te define, pero si notás números altos o síntomas extraños, consultá a tu médico: cada paso en tu cuidado suma.",
+                  "title": "Bienvenida",
+                  "description": "Fin de la sesión Un valor solo no te define, pero si notás números altos o síntomas extraños, consultá a tu médico: cada paso en tu cuidado suma.",
+                  "fullDescription": "Fin de la sesión Un valor solo no te define, pero si notás números altos o síntomas extraños, consultá a tu médico: cada paso en tu cuidado suma.",
                   "iconResId": "outline_unknown_document_24"
                 }
               ]
@@ -1249,8 +1227,8 @@
                 {
                   "type": "DESCRIPTION",
                   "title": "¿Cuándo es importante consultar con tu médico?",
-                  "description": "¡Hola! Tus mediciones son herramientas para que tomes el control de tu bienestar cada día. Hoy vamos a aprender a reconocer cuándo un valor de azúcar es una señal para consultar a tu médico sin perder la calma.",
-                  "fullDescription": "¡Hola! Tus mediciones son herramientas para que tomes el control de tu bienestar cada día. Hoy vamos a aprender a reconocer cuándo un valor de azúcar es una señal para consultar a tu médico sin perder la calma.",
+                  "description": "¡Hola! Tus mediciones son herramientas para que tomes el control de tu bienestar cada día. Hoy vamos a aprender a reconocer cuándo un valor de presión es una señal para consultar a tu médico sin perder la calma.",
+                  "fullDescription": "¡Hola! Tus mediciones son herramientas para que tomes el control de tu bienestar cada día. Hoy vamos a aprender a reconocer cuándo un valor de presión es una señal para consultar a tu médico sin perder la calma.",
                   "iconResId": "outline_unknown_document_24"
                 },
                 {
@@ -1269,16 +1247,16 @@
                 },
                 {
                   "type": "METAS",
-                  "title": "Metas (Hipertensión)",
-                  "description": "Configura tus metas para esta sesión de hipertensión",
+                  "title": "Metas",
+                  "description": "Configura tus metas para esta sesión",
                   "iconResId": "outline_trophy_24",
                   "metasId": "hta"
                 },
                 {
                   "type": "DESCRIPTION",
-                  "title": "Fin de la sesión",
-                  "description": "Hoy aprendimos a escuchar al cuerpo y actuar a tiempo cuando nos da señales.",
-                  "fullDescription": "Hoy aprendimos a escuchar al cuerpo y actuar a tiempo cuando nos da señales.",
+                  "title": "Bienvenida",
+                  "description": "Fin de la sesión Hoy aprendimos a escuchar al cuerpo y actuar a tiempo cuando nos da señales.",
+                  "fullDescription": "Fin de la sesión Hoy aprendimos a escuchar al cuerpo y actuar a tiempo cuando nos da señales.",
                   "iconResId": "outline_unknown_document_24"
                 }
               ]
@@ -1319,9 +1297,9 @@
                 },
                 {
                   "type": "DESCRIPTION",
-                  "title": "Fin de la sesión",
-                  "description": "Tomar tu medicación te da la tranquilidad de saber que hoy hiciste lo mejor por tu cuerpo.",
-                  "fullDescription": "Tomar tu medicación te da la tranquilidad de saber que hoy hiciste lo mejor por tu cuerpo.",
+                  "title": "Bienvenida",
+                  "description": "Fin de la sesión Tu medicación es una aliada: saber cómo funciona te ayudará a cuidarte mejor.",
+                  "fullDescription": "Fin de la sesión Tu medicación es una aliada: saber cómo funciona te ayudará a cuidarte mejor.",
                   "iconResId": "outline_unknown_document_24"
                 }
               ]
@@ -1333,9 +1311,9 @@
               "multimedia": [
                 {
                   "type": "DESCRIPTION",
-                  "title": "¿Por qué es importante la medicación y cuidar nuestra hipertensión todos los días?",
-                  "description": "¡Hola! Te damos la bienvenida a esta sesión. Pequeños pasos diarios hacen una gran diferencia. Hablaremos de por qué es tan importante seguir tu tratamiento todos los días.",
-                  "fullDescription": "¡Hola! Te damos la bienvenida a esta sesión. Pequeños pasos diarios hacen una gran diferencia. Hablaremos de por qué es tan importante seguir tu tratamiento todos los días.",
+                  "title": "¿Por qué es importante la medicación y cuidar nuestra presión arterial todos los días?",
+                  "description": "¡Hola! Te damos la bienvenida a esta sesión Pequeños pasos diarios hacen una gran diferencia. Hablaremos de por qué es tan importante seguir tu tratamiento todos los días.",
+                  "fullDescription": "¡Hola! Te damos la bienvenida a esta sesión Pequeños pasos diarios hacen una gran diferencia. Hablaremos de por qué es tan importante seguir tu tratamiento todos los días.",
                   "iconResId": "outline_unknown_document_24"
                 },
                 {
@@ -1352,20 +1330,20 @@
                   "iconResId": "outline_trophy_24",
                   "questions": [
                     {
-                      "questionText": "¿Cómo puedo cuidar mi hipertensión?",
+                      "questionText": "¿Cómo  puedo  cuidar  mi  presión  arterial?   A:  No  es  necesario  cuidarse   B:  Con  medicación  y  hábitos  saludables    Respuesta  correcta:  B",
                       "options": [
-                        "No es necesario cuidarse.",
-                        "Con medicación y hábitos saludables."
+                        "Verdadero",
+                        "Falso"
                       ],
-                      "correctAnswerIndex": 1
+                      "correctAnswerIndex": 0
                     }
                   ]
                 },
                 {
                   "type": "DESCRIPTION",
-                  "title": "Fin de la sesión",
-                  "description": "Tomar tu medicación todos los días y mantener hábitos saludables te ayuda a mantener tu presión arterial estable y a proteger tu salud a largo plazo.",
-                  "fullDescription": "Tomar tu medicación todos los días y mantener hábitos saludables te ayuda a mantener tu presión arterial estable y a proteger tu salud a largo plazo.",
+                  "title": "Bienvenida",
+                  "description": "Fin de la sesión Tomar tu medicación todos los días y mantener hábitos saludables te ayuda a mantener tu presión estable y a proteger tu salud a largo plazo.",
+                  "fullDescription": "Fin de la sesión Tomar tu medicación todos los días y mantener hábitos saludables te ayuda a mantener tu presión estable y a proteger tu salud a largo plazo.",
                   "iconResId": "outline_unknown_document_24"
                 }
               ]
@@ -1391,16 +1369,16 @@
                 },
                 {
                   "type": "METAS",
-                  "title": "Metas (Hipertensión)",
-                  "description": "Configura tus metas para esta sesión de hipertensión",
+                  "title": "Metas",
+                  "description": "Configura tus metas para esta sesión",
                   "iconResId": "outline_trophy_24",
                   "metasId": "hta"
                 },
                 {
                   "type": "DESCRIPTION",
-                  "title": "Fin de la sesión",
-                  "description": "Organizar tus medicamentos y crear pequeños hábitos diarios puede ayudarte mucho.",
-                  "fullDescription": "Organizar tus medicamentos y crear pequeños hábitos diarios puede ayudarte mucho.",
+                  "title": "Bienvenida",
+                  "description": "Fin de la sesión Organizar tus medicamentos y crear pequeños hábitos diarios puede ayudarte mucho.",
+                  "fullDescription": "Fin de la sesión Organizar tus medicamentos y crear pequeños hábitos diarios puede ayudarte mucho.",
                   "iconResId": "outline_unknown_document_24"
                 }
               ]
@@ -1448,9 +1426,9 @@
                 },
                 {
                   "type": "DESCRIPTION",
-                  "title": "Fin de la sesión",
-                  "description": "Dormir te ayuda a controlar la presión arterial y la presión, y a mejorar tu energía y ánimo.",
-                  "fullDescription": "Dormir te ayuda a controlar la presión arterial y la presión, y a mejorar tu energía y ánimo.",
+                  "title": "Bienvenida",
+                  "description": "Fin de la sesión Dormir te ayuda a controlar la glucosa y la presión, y a mejorar tu energía y ánimo.",
+                  "fullDescription": "Fin de la sesión Dormir te ayuda a controlar la glucosa y la presión, y a mejorar tu energía y ánimo.",
                   "iconResId": "outline_unknown_document_24"
                 }
               ]
@@ -1463,8 +1441,8 @@
                 {
                   "type": "DESCRIPTION",
                   "title": "¿Cómo mejorar nuestra rutina nocturna?",
-                  "description": "¡Hola! Te damos la bienvenida a esta sesión. Con pasos simples y constantes podés mejorar tus noches y tu bienestar. Repasaremos cómo crear una rutina nocturna que te ayude a dormir mejor y despertar con más energía.",
-                  "fullDescription": "¡Hola! Te damos la bienvenida a esta sesión. Con pasos simples y constantes podés mejorar tus noches y tu bienestar. Repasaremos cómo crear una rutina nocturna que te ayude a dormir mejor y despertar con más energía.",
+                  "description": "¡Hola! Te damos la bienvenida a esta sesión. Con pasos simples y constantes puedes mejorar tus noches y tu bienestar. Repasaremos cómo crear una rutina nocturna que te ayude a dormir mejor y despertar con más energía.",
+                  "fullDescription": "¡Hola! Te damos la bienvenida a esta sesión. Con pasos simples y constantes puedes mejorar tus noches y tu bienestar. Repasaremos cómo crear una rutina nocturna que te ayude a dormir mejor y despertar con más energía.",
                   "iconResId": "outline_unknown_document_24"
                 },
                 {
@@ -1495,10 +1473,10 @@
                   "iconResId": "outline_trophy_24",
                   "questions": [
                     {
-                      "questionText": "Antes de dormir, es mejor…",
+                      "questionText": "Antes  de  dormir,  es  mejor …   A:  Comer  ligero  y  tomar  poca  agua  B:  Comer  comidas  pesadas  y  tomar  bastante  agua   Respuesta  correcta:  A",
                       "options": [
-                        "Comer ligero y tomar poca agua",
-                        "Comer comidas pesadas y tomar bastante"
+                        "Verdadero",
+                        "Falso"
                       ],
                       "correctAnswerIndex": 0
                     }
@@ -1506,9 +1484,9 @@
                 },
                 {
                   "type": "DESCRIPTION",
-                  "title": "Fin de la sesión",
-                  "description": "Prepararte para dormir con una rutina tranquila ayuda a que descanses mejor.",
-                  "fullDescription": "Prepararte para dormir con una rutina tranquila ayuda a que descanses mejor.",
+                  "title": "Bienvenida",
+                  "description": "Fin de la sesión Prepararte para dormir con una rutina tranquila ayuda a que descanses mejor.",
+                  "fullDescription": "Fin de la sesión Prepararte para dormir con una rutina tranquila ayuda a que descanses mejor.",
                   "iconResId": "outline_unknown_document_24"
                 }
               ]
@@ -1548,16 +1526,16 @@
                 },
                 {
                   "type": "METAS",
-                  "title": "Metas (Hipertensión)",
-                  "description": "Configura tus metas para esta sesión de hipertensión",
+                  "title": "Metas",
+                  "description": "Configura tus metas para esta sesión",
                   "iconResId": "outline_trophy_24",
                   "metasId": "hta"
                 },
                 {
                   "type": "DESCRIPTION",
-                  "title": "Fin de la sesión",
-                  "description": "Con pasos sencillos y constantes podemos mejorar nuestro descanso y despertar con más energía y bienestar.",
-                  "fullDescription": "Con pasos sencillos y constantes podemos mejorar nuestro descanso y despertar con más energía y bienestar.",
+                  "title": "Bienvenida",
+                  "description": "Fin de la sesión Con pasos sencillos y constantes podemos mejorar nuestro descanso y despertar con más energía y bienestar.",
+                  "fullDescription": "Fin de la sesión Con pasos sencillos y constantes podemos mejorar nuestro descanso y despertar con más energía y bienestar.",
                   "iconResId": "outline_unknown_document_24"
                 }
               ]
@@ -1591,9 +1569,9 @@
                 },
                 {
                   "type": "DESCRIPTION",
-                  "title": "Fin de la sesión",
-                  "description": "Recordá que el autocuidado se construye en gestos simples, todos los días.",
-                  "fullDescription": "Recordá que el autocuidado se construye en gestos simples, todos los días.",
+                  "title": "Bienvenida",
+                  "description": "Fin de la sesión Recordá que el autocuidado se construye en gestos simples, todos los días.",
+                  "fullDescription": "Fin de la sesión Recordá que el autocuidado se construye en gestos simples, todos los días.",
                   "iconResId": "outline_unknown_document_24"
                 }
               ]
@@ -1619,9 +1597,9 @@
                 },
                 {
                   "type": "DESCRIPTION",
-                  "title": "Fin de la sesión",
-                  "description": "Podemos sumar la respiración consciente como parte de nuestro cuidado diario. Con práctica, puede transformarse en una aliada para acompañar nuestro bienestar emocional y fortalecer nuestra salud.",
-                  "fullDescription": "Podemos sumar la respiración consciente como parte de nuestro cuidado diario. Con práctica, puede transformarse en una aliada para acompañar nuestro bienestar emocional y fortalecer nuestra salud.",
+                  "title": "Bienvenida",
+                  "description": "Fin de la sesión Podemos sumar la respiración consciente como parte de nuestro cuidado diario. Con práctica, puede transformarse en una aliada para acompañar nuestro bienestar emocional y fortalecer nuestra salud.",
+                  "fullDescription": "Fin de la sesión Podemos sumar la respiración consciente como parte de nuestro cuidado diario. Con práctica, puede transformarse en una aliada para acompañar nuestro bienestar emocional y fortalecer nuestra salud.",
                   "iconResId": "outline_unknown_document_24"
                 }
               ]
@@ -1633,9 +1611,9 @@
               "multimedia": [
                 {
                   "type": "DESCRIPTION",
-                  "title": "La salud mental también es parte del tratamiento de la hipertensión",
-                  "description": "¡Hola! Cuidar cómo nos sentimos nos ayuda a sostener los hábitos y el autocuidado en el tiempo. Hoy vamos a reconocer el impacto que tiene la salud mental en la hipertensión y promover pequeñas acciones de cuidado emocional que contribuyan al bienestar.",
-                  "fullDescription": "¡Hola! Cuidar cómo nos sentimos nos ayuda a sostener los hábitos y el autocuidado en el tiempo. Hoy vamos a reconocer el impacto que tiene la salud mental en la hipertensión y promover pequeñas acciones de cuidado emocional que contribuyan al bienestar.",
+                  "title": "Cómo el estrés influye en la presión arterial y en el estado de ánimo",
+                  "description": "¡Hola! Te damos la bienvenida a esta sesión. Cuidar lo que sentimos también es cuidar nuestro corazón. Veremos cómo el estrés puede influir en la presión arterial y en el estado de ánimo, y reconoceremos la importancia de aprender a manejarlo para proteger nuestra salud.",
+                  "fullDescription": "¡Hola! Te damos la bienvenida a esta sesión. Cuidar lo que sentimos también es cuidar nuestro corazón. Veremos cómo el estrés puede influir en la presión arterial y en el estado de ánimo, y reconoceremos la importancia de aprender a manejarlo para proteger nuestra salud.",
                   "iconResId": "outline_unknown_document_24"
                 },
                 {
@@ -1647,9 +1625,9 @@
                 },
                 {
                   "type": "DESCRIPTION",
-                  "title": "Fin de la sesión",
-                  "description": "Recordemos que el cuidado de la hipertensión incluye también cómo nos sentimos día a día. Incorporar el cuidado emocional es fundamental para el tratamiento.",
-                  "fullDescription": "Recordemos que el cuidado de la hipertensión incluye también cómo nos sentimos día a día. Incorporar el cuidado emocional es fundamental para el tratamiento.",
+                  "title": "Bienvenida",
+                  "description": "Fin de la sesión Recordá que cada pequeño momento de pausa es una forma de cuidar la presión y también el bienestar.",
+                  "fullDescription": "Fin de la sesión Recordá que cada pequeño momento de pausa es una forma de cuidar la presión y también el bienestar.",
                   "iconResId": "outline_unknown_document_24"
                 }
               ]
@@ -1688,10 +1666,9 @@
                   "iconResId": "outline_trophy_24",
                   "questions": [
                     {
-                      "questionText": "El apoyo de otras personas también puede ayudarte a sostener tus metas de salud y seguir avanzando.",
+                      "questionText": "",
                       "options": [
-                        "Verdadero",
-                        "Falso"
+                        "El  apoyo  de  otras  personas  también  puede  ayudarte  a  sostener  tus  metas  de  salud  y  seguir  avanzando.   -  Verdadero  -  Falso   Respuesta  correcta:  Verdadero"
                       ],
                       "correctAnswerIndex": 0
                     }
@@ -1699,9 +1676,9 @@
                 },
                 {
                   "type": "DESCRIPTION",
-                  "title": "Fin de la sesión",
-                  "description": "Ya diste el primer paso: entender el poder de la compañía. En la próxima sesión aprenderemos cómo empezar a construir tu equipo de apoyo. ¡No estás solo/a en esto!",
-                  "fullDescription": "Ya diste el primer paso: entender el poder de la compañía. En la próxima sesión aprenderemos cómo empezar a construir tu equipo de apoyo. ¡No estás solo/a en esto!",
+                  "title": "Bienvenida",
+                  "description": "Fin de la sesión Diste el primer paso: entender el poder de la compañía. En la próxima sesión aprenderemos cómo empezar a construir tu equipo de apoyo. ¡No estás solo/a en esto!",
+                  "fullDescription": "Fin de la sesión Diste el primer paso: entender el poder de la compañía. En la próxima sesión aprenderemos cómo empezar a construir tu equipo de apoyo. ¡No estás solo/a en esto!",
                   "iconResId": "outline_unknown_document_24"
                 }
               ]
@@ -1760,10 +1737,9 @@
                   "iconResId": "outline_trophy_24",
                   "questions": [
                     {
-                      "questionText": "¿Al pedir ayuda, es mejor ser claro y específico sobre lo que necesitas?",
+                      "questionText": "",
                       "options": [
-                        "Verdadero",
-                        "Falso"
+                        "¿Al  pedir  ayuda,  es  mejor  ser  claro  y  específico  sobre  lo  que  necesitas?   -  Verdadero  -  Falso   Respuesta  correcta:  Verdadero"
                       ],
                       "correctAnswerIndex": 0
                     }
@@ -1771,9 +1747,9 @@
                 },
                 {
                   "type": "DESCRIPTION",
-                  "title": "Fin de la sesión",
-                  "description": "Animarte a pedir apoyo puede hacer la diferencia. Estás construyendo tu equipo de apoyo paso a paso. En la próxima sesión veremos cómo compartir tus logros puede fortalecer ese equipo y ayudarte a seguir avanzando.",
-                  "fullDescription": "Animarte a pedir apoyo puede hacer la diferencia. Estás construyendo tu equipo de apoyo paso a paso. En la próxima sesión veremos cómo compartir tus logros puede fortalecer ese equipo y ayudarte a seguir avanzando.",
+                  "title": "Bienvenida",
+                  "description": "Fin de la sesión Animarte a pedir apoyo puede hacer la diferencia. Estás construyendo tu equipo de apoyo paso a paso. En la próxima sesión veremos cómo compartir tus logros puede fortalecer ese equipo y ayudarte a seguir avanzando.",
+                  "fullDescription": "Fin de la sesión Animarte a pedir apoyo puede hacer la diferencia. Estás construyendo tu equipo de apoyo paso a paso. En la próxima sesión veremos cómo compartir tus logros puede fortalecer ese equipo y ayudarte a seguir avanzando.",
                   "iconResId": "outline_unknown_document_24"
                 }
               ]
@@ -1787,7 +1763,7 @@
                   "type": "DESCRIPTION",
                   "title": "Compartir mis avances: Pequeños logros, gran impacto",
                   "description": "¡Felicitaciones! Llegaste a la última sesión de este módulo. Hemos descubierto por qué necesitamos apoyo y hemos aprendido a pedirlo. Ahora vamos a revelar un secreto muy poderoso: ayudar a otros también nos ayuda a nosotros mismos.",
-                  "fullDescription": "¡Felicitaciones! Llegaste a la última sesión de este módulo. Hemos descubierto por qué necesitamos apoyo y hemos aprendido a pedirlo. Ahora vamos a revelar un secreto muy poderoso: ayudar a otros también nos ayuda a nosotros mismos.\n\nCompartir tus pasos ayuda a sostener la motivación. Cuando lo contás, también animás a otros. Vas a descubrir cómo el simple acto de compartir tus pequeños avances puede crear un círculo de apoyo que te mantiene motivado vos y a otros.",
+                  "fullDescription": "¡Felicitaciones! Llegaste a la última sesión de este módulo. Hemos descubierto por qué necesitamos apoyo y hemos aprendido a pedirlo. Ahora vamos a revelar un secreto muy poderoso: ayudar a otros también nos ayuda a nosotros mismos.\n\nCompartir tus pasos ayuda a sostener la motivación. Cuando lo contás, también animás a otros. Vas a descubrir cómo el simple acto de compartir tus pequeños avances puede crear un círculo de apoyo que te mantiene motivado a vos y a otros.",
                   "iconResId": "outline_unknown_document_24"
                 },
                 {
@@ -1820,16 +1796,16 @@
                 },
                 {
                   "type": "METAS",
-                  "title": "Metas (Hipertensión)",
-                  "description": "Configura tus metas para esta sesión de hipertensión",
+                  "title": "Metas",
+                  "description": "Configura tus metas para esta sesión",
                   "iconResId": "outline_trophy_24",
                   "metasId": "hta"
                 },
                 {
                   "type": "DESCRIPTION",
-                  "title": "Fin de la sesión",
-                  "description": "El apoyo de los demás es una herramienta muy importante para sostener el cuidado de tu salud: no tenés que hacerlo solo/a. Podés seguir construyendo tu equipo paso a paso: pedir apoyo cuando lo necesites y compartir tus avances. Cada conexión cuenta.",
-                  "fullDescription": "El apoyo de los demás es una herramienta muy importante para sostener el cuidado de tu salud: no tenés que hacerlo solo/a. Podés seguir construyendo tu equipo paso a paso: pedir apoyo cuando lo necesites y compartir tus avances. Cada conexión cuenta.",
+                  "title": "Bienvenida",
+                  "description": "Fin de la sesión El apoyo de los demás es una herramienta muy importante para sostener el cuidado de tu salud: no tenés que hacerlo solo/a . Podés seguir construyendo tu equipo paso a paso: pedir apoyo cuando lo necesites y compartir tus avances. Cada conexión cuenta.",
+                  "fullDescription": "Fin de la sesión El apoyo de los demás es una herramienta muy importante para sostener el cuidado de tu salud: no tenés que hacerlo solo/a . Podés seguir construyendo tu equipo paso a paso: pedir apoyo cuando lo necesites y compartir tus avances. Cada conexión cuenta.",
                   "iconResId": "outline_unknown_document_24"
                 }
               ]
@@ -1863,9 +1839,9 @@
                 },
                 {
                   "type": "DESCRIPTION",
-                  "title": "Fin de la sesión",
-                  "description": "Reconocer lo que logramos no es conformarse. Es darnos fuerzas para seguir avanzando.",
-                  "fullDescription": "Reconocer lo que logramos no es conformarse. Es darnos fuerzas para seguir avanzando.",
+                  "title": "Bienvenida",
+                  "description": "Fin de la sesión Reconocer lo que logramos no es conformarse. Es darnos fuerzas para seguir avanzando.",
+                  "fullDescription": "Fin de la sesión Reconocer lo que logramos no es conformarse. Es darnos fuerzas para seguir avanzando.",
                   "iconResId": "outline_unknown_document_24"
                 }
               ]
@@ -1898,9 +1874,9 @@
                 },
                 {
                   "type": "DESCRIPTION",
-                  "title": "Fin de la sesión",
-                  "description": "Cada mañana es una oportunidad para iniciar de nuevo; estamos acá para acompañarte en cada paso, sea fácil o difícil.",
-                  "fullDescription": "Cada mañana es una oportunidad para iniciar de nuevo; estamos acá para acompañarte en cada paso, sea fácil o difícil.",
+                  "title": "Bienvenida",
+                  "description": "Fin de la sesión Cada mañana es una oportunidad para iniciar de nuevo; estamos acá para acompañarte en cada paso, sea fácil o difícil.",
+                  "fullDescription": "Fin de la sesión Cada mañana es una oportunidad para iniciar de nuevo; estamos acá para acompañarte en cada paso, sea fácil o difícil.",
                   "iconResId": "outline_unknown_document_24"
                 }
               ]
@@ -1926,16 +1902,16 @@
                 },
                 {
                   "type": "METAS",
-                  "title": "Metas (Hipertensión)",
-                  "description": "Configura tus metas para esta sesión de hipertensión",
+                  "title": "Metas",
+                  "description": "Configura tus metas para esta sesión",
                   "iconResId": "outline_trophy_24",
                   "metasId": "hta"
                 },
                 {
                   "type": "DESCRIPTION",
-                  "title": "Fin de la sesión",
-                  "description": "Cada pequeño cuidado es una forma de elegirte. Y eso ya es un gran paso.",
-                  "fullDescription": "Cada pequeño cuidado es una forma de elegirte. Y eso ya es un gran paso.",
+                  "title": "Bienvenida",
+                  "description": "Fin de la sesión Cada pequeño cuidado es una forma de elegirte. Y eso ya es un gran paso.",
+                  "fullDescription": "Fin de la sesión Cada pequeño cuidado es una forma de elegirte. Y eso ya es un gran paso.",
                   "iconResId": "outline_unknown_document_24"
                 }
               ]
@@ -1976,9 +1952,9 @@
                 },
                 {
                   "type": "DESCRIPTION",
-                  "title": "Fin de la sesión",
-                  "description": "Ahora tenés algo que es tuyo: un plan hecho a tu medida. En las próximas sesiones vamos a ver cómo manejar los días difíciles y a repasar todas tus herramientas. ¡Seguí adelante!",
-                  "fullDescription": "Ahora tenés algo que es tuyo: un plan hecho a tu medida. En las próximas sesiones vamos a ver cómo manejar los días difíciles y a repasar todas tus herramientas. ¡Seguí adelante!",
+                  "title": "Bienvenida",
+                  "description": "Fin de la sesión Ahora tienes algo que es tuyo: un plan hecho a tu medida. En las próximas sesiones vamos a ver cómo manejar los días difíciles y a repasar todas tus herramientas. ¡Sigue adelante!",
+                  "fullDescription": "Fin de la sesión Ahora tienes algo que es tuyo: un plan hecho a tu medida. En las próximas sesiones vamos a ver cómo manejar los días difíciles y a repasar todas tus herramientas. ¡Sigue adelante!",
                   "iconResId": "outline_unknown_document_24"
                 }
               ]
@@ -2009,20 +1985,20 @@
                   "iconResId": "outline_trophy_24",
                   "questions": [
                     {
-                      "questionText": "Después de una semana difícil en la que no pudiste seguir tu plan, ¿qué es lo más útil?",
+                      "questionText": "",
                       "options": [
-                        "Pensar que todo lo anterior fue en vano y",
-                        "Esperar a sentirme motivado antes de volver"
+                        "Verdadero",
+                        "Falso"
                       ],
-                      "correctAnswerIndex": 2
+                      "correctAnswerIndex": 0
                     }
                   ]
                 },
                 {
                   "type": "DESCRIPTION",
-                  "title": "Fin de la sesión",
-                  "description": "Las recaídas no son el final del camino. Son una curva más. Ahora sabes qué hacer cuando aparecen. En la próxima sesión vamos a repasar todas tus herramientas para que las tengas siempre a mano. ¡No estás solo en esto!",
-                  "fullDescription": "Las recaídas no son el final del camino. Son una curva más. Ahora sabes qué hacer cuando aparecen. En la próxima sesión vamos a repasar todas tus herramientas para que las tengas siempre a mano. ¡No estás solo en esto!",
+                  "title": "Bienvenida",
+                  "description": "Fin de la sesión Las recaídas no son el final del camino. Son una curva más. Ahora sabes qué hacer cuando aparecen. En la próxima sesión vamos a repasar todas tus herramientas para que las tengas siempre a mano. ¡No estás solo en esto!",
+                  "fullDescription": "Fin de la sesión Las recaídas no son el final del camino. Son una curva más. Ahora sabes qué hacer cuando aparecen. En la próxima sesión vamos a repasar todas tus herramientas para que las tengas siempre a mano. ¡No estás solo en esto!",
                   "iconResId": "outline_unknown_document_24"
                 }
               ]
@@ -2034,9 +2010,9 @@
               "multimedia": [
                 {
                   "type": "DESCRIPTION",
-                  "title": "Tus herramientas personales: repaso final",
-                  "description": "¡Hola! Esta es la última sesión de contenido. Pero no es un final: es un nuevo comienzo. Hoy vamos a repasar todas las herramientas que vimos para que las tengas siempre a mano. Ya tenés todo lo que necesitas. Ahora es tuyo.",
-                  "fullDescription": "¡Hola! Esta es la última sesión de contenido. Pero no es un final: es un nuevo comienzo. Hoy vamos a repasar todas las herramientas que vimos para que las tengas siempre a mano. Ya tenés todo lo que necesitas. Ahora es tuyo.",
+                  "title": "Mis herramientas personales: repaso final",
+                  "description": "¡Hola! Esta es la última sesión de contenido. Pero no es un final: es un nuevo comienzo. Hoy vamos a repasar todas las herramientas que vimos para que las tengas siempre a mano. Ya tenés todo lo que necesitás. Ahora es tuyo.",
+                  "fullDescription": "¡Hola! Esta es la última sesión de contenido. Pero no es un final: es un nuevo comienzo. Hoy vamos a repasar todas las herramientas que vimos para que las tengas siempre a mano. Ya tenés todo lo que necesitás. Ahora es tuyo.",
                   "iconResId": "outline_unknown_document_24"
                 },
                 {
@@ -2048,9 +2024,9 @@
                 },
                 {
                   "type": "DESCRIPTION",
-                  "title": "Fin de la sesión",
-                  "description": "Completaste las 16 semanas de contenido nuevo. ¡Eso es un logro enorme! En las próximas semanas te acompañaremos con sesiones de repaso para que sigas practicando. Pero recordá que lo más valioso ya lo tenés. Cuidarte es un camino, no un destino. Y vos ya estás caminando. Información adicional Información adicional sobre la hipertensión Información sobre la hipertensión Información sobre salud mental Alimentación saludable Alimentación para personas con hipertensión Alimentación para personas con hipertensión Actividad física Dormir mejor Consumo de tabaco",
-                  "fullDescription": "Completaste las 16 semanas de contenido nuevo. ¡Eso es un logro enorme! En las próximas semanas te acompañaremos con sesiones de repaso para que sigas practicando. Pero recordá que lo más valioso ya lo tenés. Cuidarte es un camino, no un destino. Y vos ya estás caminando. Información adicional Información adicional sobre la hipertensión Información sobre la hipertensión Información sobre salud mental Alimentación saludable Alimentación para personas con hipertensión Alimentación para personas con hipertensión Actividad física Dormir mejor Consumo de tabaco",
+                  "title": "Bienvenida",
+                  "description": "Fin de la sesión Completaste las 16 semanas de contenido nuevo. ¡Eso es un logro enorme! En las próximas semanas te acompañaremos con sesiones de repaso para que sigas practicando. Pero recordá que lo más valioso ya lo tenés. Cuidarte es un camino, no un destino. Y vos ya estás caminando. Información adicional Información adicional sobre la diabetes Información sobre la hipertensión Información sobre salud mental Alimentación saludable Alimentación para personas con diabetes Alimentación para personas con hipertensión Actividad física Dormir mejor Consumo de tabaco",
+                  "fullDescription": "Fin de la sesión Completaste las 16 semanas de contenido nuevo. ¡Eso es un logro enorme! En las próximas semanas te acompañaremos con sesiones de repaso para que sigas practicando. Pero recordá que lo más valioso ya lo tenés. Cuidarte es un camino, no un destino. Y vos ya estás caminando. Información adicional Información adicional sobre la diabetes Información sobre la hipertensión Información sobre salud mental Alimentación saludable Alimentación para personas con diabetes Alimentación para personas con hipertensión Actividad física Dormir mejor Consumo de tabaco",
                   "iconResId": "outline_unknown_document_24"
                 }
               ]
@@ -4149,7 +4125,7 @@
                 },
                 {
                   "type": "QUIZ",
-                  "title": "Pregunta del día",
+                  "title": "Pregunta del día (Diabetes)",
                   "description": "Responde las preguntas de la sesión",
                   "iconResId": "outline_trophy_24",
                   "questions": [
@@ -4161,6 +4137,22 @@
                         "Empezar de a poco con pequeñas actividades"
                       ],
                       "correctAnswerIndex": 2
+                    }
+                  ]
+                },
+                {
+                  "type": "QUIZ",
+                  "title": "Pregunta del día (Hipertensión)",
+                  "description": "Responde las preguntas de la sesión",
+                  "iconResId": "outline_trophy_24",
+                  "questions": [
+                    {
+                      "questionText": "Cuando  tenemos  el  ánimo  bajo,  ¿qué  suele  ayudar  más?   A.  Hacer  de  golpe  todos  los  pendientes  para  “ponernos  al  día”.  B.  Esperar  a  que  vuelvan  las  ganas  antes  de  hacer  algo.  C.  Empezar  de  a  poco  con  pequeñas  actividades  que  me  hacen  bien  o  son  importantes.   Respuesta  correcta:  C",
+                      "options": [
+                        "Verdadero",
+                        "Falso"
+                      ],
+                      "correctAnswerIndex": 0
                     }
                   ]
                 },
@@ -4180,9 +4172,9 @@
               "multimedia": [
                 {
                   "type": "DESCRIPTION",
-                  "title": "La activación conductual, empezar de a poco",
-                  "description": "¡Hola de nuevo! Qué bueno verte por acá. Sumar actividades que disfrutás y que son importantes para vos ayuda a llenar tu ‘tanque’ de ánimo. Vamos a poner en práctica la activación conductual: una forma de sentirte mejor haciendo pequeñas cosas que te dan placer o son importantes para vos.",
-                  "fullDescription": "¡Hola de nuevo! Qué bueno verte por acá. Sumar actividades que disfrutás y que son importantes para vos ayuda a llenar tu ‘tanque’ de ánimo. Vamos a poner en práctica la activación conductual: una forma de sentirte mejor haciendo pequeñas cosas que te dan placer o son importantes para vos.",
+                  "title": "Bienvenida",
+                  "description": "¡Hola de nuevo! Qué bueno verte por acá. Sumar actividades que disfrutás y que son importantes para vos ayuda a llenar tu ‘tanque’ de ánimo. Vamos a poner en práctica la activación conductual: una forma de sentirte mejor haciendo pequeñas cosas que te dan placer o son importantes para vos.\n\nLa activación conductual, empezar de a poco ¡Hola de nuevo! Qué bueno verte por acá. Sumar actividades que disfrutás y que son importantes para vos ayuda a llenar tu ‘tanque’ de ánimo. Vamos a poner en práctica la activación conductual: una forma de sentirte mejor haciendo pequeñas cosas que te dan placer o son importantes para vos.",
+                  "fullDescription": "¡Hola de nuevo! Qué bueno verte por acá. Sumar actividades que disfrutás y que son importantes para vos ayuda a llenar tu ‘tanque’ de ánimo. Vamos a poner en práctica la activación conductual: una forma de sentirte mejor haciendo pequeñas cosas que te dan placer o son importantes para vos.\n\nLa activación conductual, empezar de a poco ¡Hola de nuevo! Qué bueno verte por acá. Sumar actividades que disfrutás y que son importantes para vos ayuda a llenar tu ‘tanque’ de ánimo. Vamos a poner en práctica la activación conductual: una forma de sentirte mejor haciendo pequeñas cosas que te dan placer o son importantes para vos.",
                   "iconResId": "outline_unknown_document_24"
                 },
                 {
@@ -4194,7 +4186,7 @@
                 },
                 {
                   "type": "QUIZ",
-                  "title": "Pregunta del día",
+                  "title": "Pregunta del día (Diabetes)",
                   "description": "Responde las preguntas de la sesión",
                   "iconResId": "outline_trophy_24",
                   "questions": [
@@ -4203,6 +4195,21 @@
                       "options": [
                         "Verdadero",
                         "Falso"
+                      ],
+                      "correctAnswerIndex": 0
+                    }
+                  ]
+                },
+                {
+                  "type": "QUIZ",
+                  "title": "Pregunta del día (Hipertensión)",
+                  "description": "Responde las preguntas de la sesión",
+                  "iconResId": "outline_trophy_24",
+                  "questions": [
+                    {
+                      "questionText": "",
+                      "options": [
+                        "En  la  activación  conductual,  hay  que  esperar  a  tener  ganas  para  empezar  a  hacer  cosas.    -  Verdadero  -  Falso   Respuesta  correcta:  Falso."
                       ],
                       "correctAnswerIndex": 0
                     }
@@ -4246,7 +4253,7 @@
                 {
                   "type": "METAS",
                   "title": "Metas (Hipertensión)",
-                  "description": "Configura tus metas para esta sesión de hipertensión",
+                  "description": "Configura tus metas para esta sesión",
                   "iconResId": "outline_trophy_24",
                   "metasId": "hta"
                 },
@@ -4274,9 +4281,9 @@
               "multimedia": [
                 {
                   "type": "DESCRIPTION",
-                  "title": "Tres herramientas para cumplir con tus actividades",
-                  "description": "¡Hola! Qué bueno que seguís acá. Hoy vamos a abrir una caja de herramientas para ayudarte a cumplir tu meta, incluso en los días difíciles. Seguir tu plan puede ayudarte a continuar, incluso en días difíciles . Hacer actividades según tu plan suele funcionar mejor que guiarte por el ánimo del momento.",
-                  "fullDescription": "¡Hola! Qué bueno que seguís acá. Hoy vamos a abrir una caja de herramientas para ayudarte a cumplir tu meta, incluso en los días difíciles. Seguir tu plan puede ayudarte a continuar, incluso en días difíciles . Hacer actividades según tu plan suele funcionar mejor que guiarte por el ánimo del momento.\n\nEn esta sesión vamos a explorar 3 herramientas para ayudarte a superar obstáculos y seguir con tu meta: planificar con detalle, dividir en pasos pequeños y pedir ayuda.",
+                  "title": "Bienvenida",
+                  "description": "¡Hola! Qué bueno que seguís acá. Hoy vamos a abrir una caja de herramientas para ayudarte a cumplir tu meta, incluso en los días difíciles. Seguir tu plan puede ayudarte a continuar, incluso en días difíciles . Hacer actividades según tu plan suele funcionar mejor que guiarte por el ánimo del momento.\n\n¡Hola! Qué bueno que seguís acá. Hoy vamos a abrir una caja de herramientas para ayudarte a cumplir tu meta, incluso en los días difíciles. Seguir tu plan puede ayudarte a continuar, incluso en días difíciles. Hacer actividades según tu plan suele funcionar mejor que guiarte por el ánimo del momento.",
+                  "fullDescription": "¡Hola! Qué bueno que seguís acá. Hoy vamos a abrir una caja de herramientas para ayudarte a cumplir tu meta, incluso en los días difíciles. Seguir tu plan puede ayudarte a continuar, incluso en días difíciles . Hacer actividades según tu plan suele funcionar mejor que guiarte por el ánimo del momento.\n\nEn esta sesión vamos a explorar 3 herramientas para ayudarte a superar obstáculos y seguir con tu meta: planificar con detalle, dividir en pasos pequeños y pedir ayuda.\n\n¡Hola! Qué bueno que seguís acá. Hoy vamos a abrir una caja de herramientas para ayudarte a cumplir tu meta, incluso en los días difíciles. Seguir tu plan puede ayudarte a continuar, incluso en días difíciles. Hacer actividades según tu plan suele funcionar mejor que guiarte por el ánimo del momento.\n\nEn esta sesión vamos a explorar 3 herramientas para ayudarte a superar obstáculos y seguir con tu meta: planificar con detalle, dividir en pasos pequeños y pedir ayuda.",
                   "iconResId": "outline_unknown_document_24"
                 },
                 {
@@ -4302,7 +4309,7 @@
                 },
                 {
                   "type": "QUIZ",
-                  "title": "Pregunta del día",
+                  "title": "Pregunta del día (Diabetes)",
                   "description": "Responde las preguntas de la sesión",
                   "iconResId": "outline_trophy_24",
                   "questions": [
@@ -4311,6 +4318,21 @@
                       "options": [
                         "Verdadero",
                         "Falso"
+                      ],
+                      "correctAnswerIndex": 0
+                    }
+                  ]
+                },
+                {
+                  "type": "QUIZ",
+                  "title": "Pregunta del día (Hipertensión)",
+                  "description": "Responde las preguntas de la sesión",
+                  "iconResId": "outline_trophy_24",
+                  "questions": [
+                    {
+                      "questionText": "",
+                      "options": [
+                        "Empezar  con  acciones  pequeñas  hace  que  sea  más  fácil  avanzar  hacia  una  meta.    -  Verdadero  -  Falso   Respuesta  correcta:  Verdadero"
                       ],
                       "correctAnswerIndex": 0
                     }
@@ -4367,7 +4389,7 @@
                 },
                 {
                   "type": "QUIZ",
-                  "title": "Pregunta del día",
+                  "title": "Pregunta del día (Diabetes)",
                   "description": "Responde las preguntas de la sesión",
                   "iconResId": "outline_trophy_24",
                   "questions": [
@@ -4379,6 +4401,22 @@
                         "Dejar la meta para la próxima semana."
                       ],
                       "correctAnswerIndex": 1
+                    }
+                  ]
+                },
+                {
+                  "type": "QUIZ",
+                  "title": "Pregunta del día (Hipertensión)",
+                  "description": "Responde las preguntas de la sesión",
+                  "iconResId": "outline_trophy_24",
+                  "questions": [
+                    {
+                      "questionText": "Cuando  aparece  una  “piedra  en  el  camino”  (por  ejemplo:  “no  tengo  ganas”),  ¿qué  es  lo  más  útil?   A:  Esperar  a  sentirte  mejor  y  recién  ahí  hacerlo.  B:  Reconocer  la  barrera  y  hacer  una  versión  más  pequeña  del  plan.  C:  Dejar  la  meta  para  la  próxima  semana.   Respuesta  correcta:  B",
+                      "options": [
+                        "Verdadero",
+                        "Falso"
+                      ],
+                      "correctAnswerIndex": 0
                     }
                   ]
                 },
@@ -4420,7 +4458,7 @@
                 {
                   "type": "METAS",
                   "title": "Metas (Hipertensión)",
-                  "description": "Configura tus metas para esta sesión de hipertensión",
+                  "description": "Configura tus metas para esta sesión",
                   "iconResId": "outline_trophy_24",
                   "metasId": "hta"
                 },
@@ -4469,7 +4507,7 @@
                 },
                 {
                   "type": "QUIZ",
-                  "title": "Pregunta del día",
+                  "title": "Pregunta del día (Diabetes)",
                   "description": "Responde las preguntas de la sesión",
                   "iconResId": "outline_trophy_24",
                   "questions": [
@@ -4478,6 +4516,21 @@
                       "options": [
                         "Verdadero",
                         "Falso"
+                      ],
+                      "correctAnswerIndex": 0
+                    }
+                  ]
+                },
+                {
+                  "type": "QUIZ",
+                  "title": "Pregunta del día (Hipertensión)",
+                  "description": "Responde las preguntas de la sesión",
+                  "iconResId": "outline_trophy_24",
+                  "questions": [
+                    {
+                      "questionText": "",
+                      "options": [
+                        "Un  buen  premio  es  solo  para  cuando  cumples  tu  meta  al  100%.   -  Verdadero  -  Falso   Respuesta  correcta:  Falso"
                       ],
                       "correctAnswerIndex": 0
                     }
@@ -4513,7 +4566,7 @@
                 },
                 {
                   "type": "QUIZ",
-                  "title": "Pregunta del día",
+                  "title": "Pregunta del día (Diabetes)",
                   "description": "Responde las preguntas de la sesión",
                   "iconResId": "outline_trophy_24",
                   "questions": [
@@ -4525,6 +4578,22 @@
                         "Dejarlo para la próxima semana para"
                       ],
                       "correctAnswerIndex": 1
+                    }
+                  ]
+                },
+                {
+                  "type": "QUIZ",
+                  "title": "Pregunta del día (Hipertensión)",
+                  "description": "Responde las preguntas de la sesión",
+                  "iconResId": "outline_trophy_24",
+                  "questions": [
+                    {
+                      "questionText": "Cuando  el  estado  de  ánimo  está  bajo  y  cuesta  cuidarse  (por  ejemplo,  tomar  el  medicamento),  ¿qué  estrategia  suele  ser  más  útil?   A)  Esperar  a  “sentirse  con  ganas”  para  recién  empezar.  B)  Hacer  un  plan  simple  (qué/cuándo/dónde)  y  empezar  con  un  paso  pequeño,  aunque  no  haya  ganas.  C)  Dejarlo  para  la  próxima  semana  para  “empezar  bien”.   Respuesta  correcta:  B",
+                      "options": [
+                        "Verdadero",
+                        "Falso"
+                      ],
+                      "correctAnswerIndex": 0
                     }
                   ]
                 },
@@ -4573,7 +4642,7 @@
                 {
                   "type": "METAS",
                   "title": "Metas (Hipertensión)",
-                  "description": "Configura tus metas para esta sesión de hipertensión",
+                  "description": "Configura tus metas para esta sesión",
                   "iconResId": "outline_trophy_24",
                   "metasId": "hta"
                 },
@@ -4602,8 +4671,8 @@
                 {
                   "type": "DESCRIPTION",
                   "title": "Bienvenida",
-                  "description": "¡Hola! Cuidar tu glucosa es cuidarte. Vamos a conversar sobre qué es la diabetes y qué formas existen para medir tus niveles de glucosa.\n\n¡Hola! Cuidar tu presión arterial es cuidarte. Vamos a conversar sobre qué es la hipertensión y qué formas existen para medir tus niveles de presión arterial.",
-                  "fullDescription": "¡Hola! Cuidar tu glucosa es cuidarte. Vamos a conversar sobre qué es la diabetes y qué formas existen para medir tus niveles de glucosa.\n\n¡Hola! Cuidar tu presión arterial es cuidarte. Vamos a conversar sobre qué es la hipertensión y qué formas existen para medir tus niveles de presión arterial.",
+                  "description": "¡Hola! Cuidar tu glucosa es cuidarte. Vamos a conversar sobre qué es la diabetes y qué formas existen para medir tus niveles de glucosa.\n\n¡Hola! El mejor momento para cuidar tu corazón es ahora. ¡Prevenir es ganar! Vamos a conocer cómo se diagnostica la hipertensión arterial.",
+                  "fullDescription": "¡Hola! Cuidar tu glucosa es cuidarte. Vamos a conversar sobre qué es la diabetes y qué formas existen para medir tus niveles de glucosa.\n\n¡Hola! El mejor momento para cuidar tu corazón es ahora. ¡Prevenir es ganar! Vamos a conocer cómo se diagnostica la hipertensión arterial.",
                   "iconResId": "outline_unknown_document_24"
                 },
                 {
@@ -4637,8 +4706,8 @@
                 {
                   "type": "DESCRIPTION",
                   "title": "Bienvenida",
-                  "description": "¡Hola! Te damos la bienvenida a esta sesión sobre diabetes. Conocer tu cuerpo y medir tu glucosa te ayuda a cuidarte mejor cada día. Vamos a hablar de cómo podés reconocer si tu glucosa está muy alta o muy baja y qué podés hacer al respecto.\n\n¡Hola! Te damos la bienvenida a esta sesión sobre hipertensión. Conocer tu cuerpo y medir tu presión arterial te ayuda a cuidarte mejor cada día. Vamos a hablar de cómo podés reconocer si tu presión arterial está muy alta o muy baja y qué podés hacer al respecto.",
-                  "fullDescription": "¡Hola! Te damos la bienvenida a esta sesión sobre diabetes. Conocer tu cuerpo y medir tu glucosa te ayuda a cuidarte mejor cada día. Vamos a hablar de cómo podés reconocer si tu glucosa está muy alta o muy baja y qué podés hacer al respecto.\n\n¡Hola! Te damos la bienvenida a esta sesión sobre hipertensión. Conocer tu cuerpo y medir tu presión arterial te ayuda a cuidarte mejor cada día. Vamos a hablar de cómo podés reconocer si tu presión arterial está muy alta o muy baja y qué podés hacer al respecto.",
+                  "description": "¡Hola! Te damos la bienvenida a esta sesión sobre diabetes. Conocer tu cuerpo y medir tu glucosa te ayuda a cuidarte mejor cada día. Vamos a hablar de cómo podés reconocer si tu glucosa está muy alta o muy baja y qué podés hacer al respecto.\n\n¡Hola! Cada pequeña elección de hoy es un regalo de bienestar para tu salud mañana. Vamos a incorporar pequeños hábitos para ayudar a controlar la presión.",
+                  "fullDescription": "¡Hola! Te damos la bienvenida a esta sesión sobre diabetes. Conocer tu cuerpo y medir tu glucosa te ayuda a cuidarte mejor cada día. Vamos a hablar de cómo podés reconocer si tu glucosa está muy alta o muy baja y qué podés hacer al respecto.\n\n¡Hola! Cada pequeña elección de hoy es un regalo de bienestar para tu salud mañana. Vamos a incorporar pequeños hábitos para ayudar a controlar la presión.",
                   "iconResId": "outline_unknown_document_24"
                 },
                 {
@@ -4692,7 +4761,7 @@
                   "iconResId": "outline_trophy_24",
                   "questions": [
                     {
-                      "questionText": "La mejor forma de saber cómo está mi presión arterial es midiéndola con un tensiómetro o un análisis de sangre",
+                      "questionText": "Aunque  me  sienta  bien,  ¿es  importante  controlar  la  presión?   A:  No,  solo  cuando  me  siento  mal  B:  Sí,  porque  muchas  veces  la  presión  alta  no  da  síntomas   Respuesta  correcta:  B",
                       "options": [
                         "Verdadero",
                         "Falso"
@@ -4704,8 +4773,8 @@
                 {
                   "type": "DESCRIPTION",
                   "title": "Fin de la sesión",
-                  "description": "Reconocer los síntomas y medir tu glucosa te ayuda a cuidarte y actuar a tiempo.\n\nReconocer los síntomas y medir tu presión arterial te ayuda a cuidarte y actuar a tiempo.",
-                  "fullDescription": "Reconocer los síntomas y medir tu glucosa te ayuda a cuidarte y actuar a tiempo.\n\nReconocer los síntomas y medir tu presión arterial te ayuda a cuidarte y actuar a tiempo.",
+                  "description": "Reconocer los síntomas y medir tu glucosa te ayuda a cuidarte y actuar a tiempo.",
+                  "fullDescription": "Reconocer los síntomas y medir tu glucosa te ayuda a cuidarte y actuar a tiempo.",
                   "iconResId": "outline_unknown_document_24"
                 }
               ]
@@ -4718,8 +4787,8 @@
                 {
                   "type": "DESCRIPTION",
                   "title": "Bienvenida",
-                  "description": "¡Hola! Te damos la bienvenida a esta sesión sobre diabetes. Cada pequeño esfuerzo cuenta, y tu cuerpo te lo agradece. Repasaremos cómo la diabetes está relacionada con la salud de tus riñones, tu corazón, tus ojos y tu sistema nervioso.\n\n¡Hola! Te damos la bienvenida a esta sesión sobre hipertensión. Cada pequeño esfuerzo cuenta, y tu cuerpo te lo agradece. Repasaremos cómo la hipertensión está relacionada con la salud de tus riñones, tu corazón, tus ojos y tu sistema nervioso.",
-                  "fullDescription": "¡Hola! Te damos la bienvenida a esta sesión sobre diabetes. Cada pequeño esfuerzo cuenta, y tu cuerpo te lo agradece. Repasaremos cómo la diabetes está relacionada con la salud de tus riñones, tu corazón, tus ojos y tu sistema nervioso.\n\n¡Hola! Te damos la bienvenida a esta sesión sobre hipertensión. Cada pequeño esfuerzo cuenta, y tu cuerpo te lo agradece. Repasaremos cómo la hipertensión está relacionada con la salud de tus riñones, tu corazón, tus ojos y tu sistema nervioso.",
+                  "description": "¡Hola! Te damos la bienvenida a esta sesión sobre diabetes. Cada pequeño esfuerzo cuenta, y tu cuerpo te lo agradece. Repasaremos cómo la diabetes está relacionada con la salud de tus riñones, tu corazón, tus ojos y tu sistema nervioso.\n\n¡Hola! Sentirte bien no es la señal para detenerte, es la prueba de que lo estás haciendo bien. Vamos a conocer por qué la hipertensión es crónica y silenciosa.",
+                  "fullDescription": "¡Hola! Te damos la bienvenida a esta sesión sobre diabetes. Cada pequeño esfuerzo cuenta, y tu cuerpo te lo agradece. Repasaremos cómo la diabetes está relacionada con la salud de tus riñones, tu corazón, tus ojos y tu sistema nervioso.\n\n¡Hola! Sentirte bien no es la señal para detenerte, es la prueba de que lo estás haciendo bien. Vamos a conocer por qué la hipertensión es crónica y silenciosa.",
                   "iconResId": "outline_unknown_document_24"
                 },
                 {
@@ -4732,8 +4801,8 @@
                 {
                   "type": "DESCRIPTION",
                   "title": "Fin de la sesión",
-                  "description": "Cuidar tu glucosa es cuidar tus riñones, tu vista, tu sistema nervioso y tu corazón.\n\nCuidar tu presión arterial es cuidar tus riñones, tu vista, tu sistema nervioso y tu corazón.",
-                  "fullDescription": "Cuidar tu glucosa es cuidar tus riñones, tu vista, tu sistema nervioso y tu corazón.\n\nCuidar tu presión arterial es cuidar tus riñones, tu vista, tu sistema nervioso y tu corazón.",
+                  "description": "Cuidar tu glucosa es cuidar tus riñones, tu vista, tu sistema nervioso y tu corazón.",
+                  "fullDescription": "Cuidar tu glucosa es cuidar tus riñones, tu vista, tu sistema nervioso y tu corazón.",
                   "iconResId": "outline_unknown_document_24"
                 }
               ]
@@ -4795,7 +4864,7 @@
                 },
                 {
                   "type": "QUIZ",
-                  "title": "Pregunta del día",
+                  "title": "Pregunta del día (Diabetes)",
                   "description": "Responde las preguntas de la sesión",
                   "iconResId": "outline_trophy_24",
                   "questions": [
@@ -4804,6 +4873,22 @@
                       "options": [
                         "Mejora la presión, mejora la glucosa, reduce",
                         "Sólo me ayuda a bajar de peso para tener"
+                      ],
+                      "correctAnswerIndex": 0
+                    }
+                  ]
+                },
+                {
+                  "type": "QUIZ",
+                  "title": "Pregunta del día (Hipertensión)",
+                  "description": "Responde las preguntas de la sesión",
+                  "iconResId": "outline_trophy_24",
+                  "questions": [
+                    {
+                      "questionText": "¿Cuáles  son  los  beneficios  del  movimiento  y  la  actividad  física  en  nuestro  cuerpo?   A:  Mejora  la  presión,  mejora  la  glucosa,  reduce  el  estrés,  mejora  el  sueño,  descenso  de  peso  B:  Sólo  me  ayuda  a  bajar  de  peso  para  tener  una  mejor  figura   Respuesta  correcta:  A",
+                      "options": [
+                        "Verdadero",
+                        "Falso"
                       ],
                       "correctAnswerIndex": 0
                     }
@@ -4847,7 +4932,7 @@
                 {
                   "type": "METAS",
                   "title": "Metas (Hipertensión)",
-                  "description": "Configura tus metas para esta sesión de hipertensión",
+                  "description": "Configura tus metas para esta sesión",
                   "iconResId": "outline_trophy_24",
                   "metasId": "hta"
                 },
@@ -4896,7 +4981,7 @@
                 },
                 {
                   "type": "QUIZ",
-                  "title": "Pregunta del día",
+                  "title": "Pregunta del día (Diabetes)",
                   "description": "Responde las preguntas de la sesión",
                   "iconResId": "outline_trophy_24",
                   "questions": [
@@ -4905,6 +4990,21 @@
                       "options": [
                         "Verdadero",
                         "Falso"
+                      ],
+                      "correctAnswerIndex": 0
+                    }
+                  ]
+                },
+                {
+                  "type": "QUIZ",
+                  "title": "Pregunta del día (Hipertensión)",
+                  "description": "Responde las preguntas de la sesión",
+                  "iconResId": "outline_trophy_24",
+                  "questions": [
+                    {
+                      "questionText": "",
+                      "options": [
+                        "Hacer  un  poco  de  ejercicio  puede  ayudar  a  sentirse  mejor  de  ánimo.   -  Verdadero  -  Falso   Respuesta  correcta:  Verdadero"
                       ],
                       "correctAnswerIndex": 0
                     }
@@ -4976,7 +5076,7 @@
                 {
                   "type": "METAS",
                   "title": "Metas (Hipertensión)",
-                  "description": "Configura tus metas para esta sesión de hipertensión",
+                  "description": "Configura tus metas para esta sesión",
                   "iconResId": "outline_trophy_24",
                   "metasId": "hta"
                 },
@@ -5046,7 +5146,7 @@
                 },
                 {
                   "type": "QUIZ",
-                  "title": "Pregunta del día",
+                  "title": "Pregunta del día (Diabetes)",
                   "description": "Responde las preguntas de la sesión",
                   "iconResId": "outline_trophy_24",
                   "questions": [
@@ -5055,6 +5155,21 @@
                       "options": [
                         "Verdadero",
                         "Falso"
+                      ],
+                      "correctAnswerIndex": 0
+                    }
+                  ]
+                },
+                {
+                  "type": "QUIZ",
+                  "title": "Pregunta del día (Hipertensión)",
+                  "description": "Responde las preguntas de la sesión",
+                  "iconResId": "outline_trophy_24",
+                  "questions": [
+                    {
+                      "questionText": "",
+                      "options": [
+                        "Organizar  mejor  tus  comidas  te  ayuda  a  cuidar  tu  salud    -  Verdadero  -  Falso   Respuesta  correcta:  Verdadero"
                       ],
                       "correctAnswerIndex": 0
                     }
@@ -5077,8 +5192,8 @@
                 {
                   "type": "DESCRIPTION",
                   "title": "Bienvenida",
-                  "description": "¡Hola! Te damos la bienvenida a esta sesión. Hoy vamos a ver cómo elegir alimentos que te ayuden a cuidar tu diabetes.\n\n¡Hola! Te damos la bienvenida a esta sesión. Hoy vamos a ver cómo elegir alimentos que te ayuden a cuidar tu hipertensión.",
-                  "fullDescription": "¡Hola! Te damos la bienvenida a esta sesión. Hoy vamos a ver cómo elegir alimentos que te ayuden a cuidar tu diabetes.\n\n¡Hola! Te damos la bienvenida a esta sesión. Hoy vamos a ver cómo elegir alimentos que te ayuden a cuidar tu hipertensión.",
+                  "description": "¡Hola! Te damos la bienvenida a esta sesión. Hoy vamos a ver cómo elegir alimentos que te ayuden a cuidar tu diabetes.\n\n¡Hola! Hoy vamos a ver cómo elegir alimentos que te ayuden a cuidar tu presión sin presiones.",
+                  "fullDescription": "¡Hola! Te damos la bienvenida a esta sesión. Hoy vamos a ver cómo elegir alimentos que te ayuden a cuidar tu diabetes.\n\n¡Hola! Hoy vamos a ver cómo elegir alimentos que te ayuden a cuidar tu presión sin presiones.",
                   "iconResId": "outline_unknown_document_24"
                 },
                 {
@@ -5098,7 +5213,7 @@
                 {
                   "type": "METAS",
                   "title": "Metas (Hipertensión)",
-                  "description": "Configura tus metas para esta sesión de hipertensión",
+                  "description": "Configura tus metas para esta sesión",
                   "iconResId": "outline_trophy_24",
                   "metasId": "hta"
                 },
@@ -5182,7 +5297,7 @@
                 },
                 {
                   "type": "QUIZ",
-                  "title": "Pregunta del día",
+                  "title": "Pregunta del día (Diabetes)",
                   "description": "Responde las preguntas de la sesión",
                   "iconResId": "outline_trophy_24",
                   "questions": [
@@ -5191,6 +5306,22 @@
                       "options": [
                         "Planificar un menú semanal junto a su hija.",
                         "Comprar comida cada día sin planificar."
+                      ],
+                      "correctAnswerIndex": 0
+                    }
+                  ]
+                },
+                {
+                  "type": "QUIZ",
+                  "title": "Pregunta del día (Hipertensión)",
+                  "description": "Responde las preguntas de la sesión",
+                  "iconResId": "outline_trophy_24",
+                  "questions": [
+                    {
+                      "questionText": "¿Qué  puede  hacer  María  para  organizar  mejor  sus  comidas?   A:  Planificar  un  menú  semanal  junto  a  su  hija.  B:  Comprar  comida  cada  día  sin  planificar.   Respuesta  correcta:  A",
+                      "options": [
+                        "Verdadero",
+                        "Falso"
                       ],
                       "correctAnswerIndex": 0
                     }
@@ -5234,7 +5365,7 @@
                 {
                   "type": "METAS",
                   "title": "Metas (Hipertensión)",
-                  "description": "Configura tus metas para esta sesión de hipertensión",
+                  "description": "Configura tus metas para esta sesión",
                   "iconResId": "outline_trophy_24",
                   "metasId": "hta"
                 },
@@ -5361,7 +5492,7 @@
                 {
                   "type": "METAS",
                   "title": "Metas (Hipertensión)",
-                  "description": "Configura tus metas para esta sesión de hipertensión",
+                  "description": "Configura tus metas para esta sesión",
                   "iconResId": "outline_trophy_24",
                   "metasId": "hta"
                 },
@@ -5418,8 +5549,8 @@
                 {
                   "type": "DESCRIPTION",
                   "title": "Bienvenida",
-                  "description": "¡Hola! Un pequeño hábito, una gran diferencia. Hoy vamos a conocer cómo tomar de forma correcta tu glucemia.\n\n¡Hola! Un pequeño hábito, una gran diferencia. Hoy vamos a conocer cómo tomar de forma correcta tu glucemia.",
-                  "fullDescription": "¡Hola! Un pequeño hábito, una gran diferencia. Hoy vamos a conocer cómo tomar de forma correcta tu glucemia.\n\n¡Hola! Un pequeño hábito, una gran diferencia. Hoy vamos a conocer cómo tomar de forma correcta tu glucemia.",
+                  "description": "¡Hola! Un pequeño hábito, una gran diferencia. Hoy vamos a conocer cómo tomar de forma correcta tu glucemia.\n\n¡Hola! Un pequeño hábito, una gran diferencia. Hoy conoceremos cómo tomar de forma correcta tu presión arterial.",
+                  "fullDescription": "¡Hola! Un pequeño hábito, una gran diferencia. Hoy vamos a conocer cómo tomar de forma correcta tu glucemia.\n\n¡Hola! Un pequeño hábito, una gran diferencia. Hoy conoceremos cómo tomar de forma correcta tu presión arterial.",
                   "iconResId": "outline_unknown_document_24"
                 },
                 {
@@ -5488,7 +5619,7 @@
                 {
                   "type": "METAS",
                   "title": "Metas (Hipertensión)",
-                  "description": "Configura tus metas para esta sesión de hipertensión",
+                  "description": "Configura tus metas para esta sesión",
                   "iconResId": "outline_trophy_24",
                   "metasId": "hta"
                 },
@@ -5566,8 +5697,8 @@
                 {
                   "type": "DESCRIPTION",
                   "title": "Bienvenida",
-                  "description": "¡Hola! Te damos la bienvenida a esta sesión. Pequeños pasos diarios hacen una gran diferencia. Hablaremos de por qué es tan importante seguir tu tratamiento todos los días.\n\n¡Hola! Te damos la bienvenida a esta sesión. Pequeños pasos diarios hacen una gran diferencia. Hablaremos de por qué es tan importante seguir tu tratamiento todos los días.",
-                  "fullDescription": "¡Hola! Te damos la bienvenida a esta sesión. Pequeños pasos diarios hacen una gran diferencia. Hablaremos de por qué es tan importante seguir tu tratamiento todos los días.\n\n¡Hola! Te damos la bienvenida a esta sesión. Pequeños pasos diarios hacen una gran diferencia. Hablaremos de por qué es tan importante seguir tu tratamiento todos los días.",
+                  "description": "¡Hola! Te damos la bienvenida a esta sesión. Pequeños pasos diarios hacen una gran diferencia. Hablaremos de por qué es tan importante seguir tu tratamiento todos los días.\n\n¡Hola! Te damos la bienvenida a esta sesión Pequeños pasos diarios hacen una gran diferencia. Hablaremos de por qué es tan importante seguir tu tratamiento todos los días.",
+                  "fullDescription": "¡Hola! Te damos la bienvenida a esta sesión. Pequeños pasos diarios hacen una gran diferencia. Hablaremos de por qué es tan importante seguir tu tratamiento todos los días.\n\n¡Hola! Te damos la bienvenida a esta sesión Pequeños pasos diarios hacen una gran diferencia. Hablaremos de por qué es tan importante seguir tu tratamiento todos los días.",
                   "iconResId": "outline_unknown_document_24"
                 },
                 {
@@ -5600,20 +5731,20 @@
                   "iconResId": "outline_trophy_24",
                   "questions": [
                     {
-                      "questionText": "¿Cómo puedo cuidar mi hipertensión?",
+                      "questionText": "¿Cómo  puedo  cuidar  mi  presión  arterial?   A:  No  es  necesario  cuidarse   B:  Con  medicación  y  hábitos  saludables    Respuesta  correcta:  B",
                       "options": [
-                        "No es necesario cuidarse.",
-                        "Con medicación y hábitos saludables."
+                        "Verdadero",
+                        "Falso"
                       ],
-                      "correctAnswerIndex": 1
+                      "correctAnswerIndex": 0
                     }
                   ]
                 },
                 {
                   "type": "DESCRIPTION",
                   "title": "Fin de la sesión",
-                  "description": "Tomar tu medicación todos los días y mantener hábitos saludables te ayuda a mantener tu glucosa estable y a proteger tu salud a largo plazo.\n\nTomar tu medicación todos los días y mantener hábitos saludables te ayuda a mantener tu presión arterial estable y a proteger tu salud a largo plazo.",
-                  "fullDescription": "Tomar tu medicación todos los días y mantener hábitos saludables te ayuda a mantener tu glucosa estable y a proteger tu salud a largo plazo.\n\nTomar tu medicación todos los días y mantener hábitos saludables te ayuda a mantener tu presión arterial estable y a proteger tu salud a largo plazo.",
+                  "description": "Tomar tu medicación todos los días y mantener hábitos saludables te ayuda a mantener tu glucosa estable y a proteger tu salud a largo plazo.",
+                  "fullDescription": "Tomar tu medicación todos los días y mantener hábitos saludables te ayuda a mantener tu glucosa estable y a proteger tu salud a largo plazo.",
                   "iconResId": "outline_unknown_document_24"
                 }
               ]
@@ -5647,7 +5778,7 @@
                 {
                   "type": "METAS",
                   "title": "Metas (Hipertensión)",
-                  "description": "Configura tus metas para esta sesión de hipertensión",
+                  "description": "Configura tus metas para esta sesión",
                   "iconResId": "outline_trophy_24",
                   "metasId": "hta"
                 },
@@ -5704,8 +5835,8 @@
                 {
                   "type": "DESCRIPTION",
                   "title": "Fin de la sesión",
-                  "description": "Dormir te ayuda a controlar la glucosa y la presión, y a mejorar tu energía y ánimo.\n\nDormir te ayuda a controlar la presión arterial y la presión, y a mejorar tu energía y ánimo.",
-                  "fullDescription": "Dormir te ayuda a controlar la glucosa y la presión, y a mejorar tu energía y ánimo.\n\nDormir te ayuda a controlar la presión arterial y la presión, y a mejorar tu energía y ánimo.",
+                  "description": "Dormir te ayuda a controlar la glucosa y la presión, y a mejorar tu energía y ánimo.",
+                  "fullDescription": "Dormir te ayuda a controlar la glucosa y la presión, y a mejorar tu energía y ánimo.",
                   "iconResId": "outline_unknown_document_24"
                 }
               ]
@@ -5745,7 +5876,7 @@
                 },
                 {
                   "type": "QUIZ",
-                  "title": "Pregunta del día",
+                  "title": "Pregunta del día (Diabetes)",
                   "description": "Responde las preguntas de la sesión",
                   "iconResId": "outline_trophy_24",
                   "questions": [
@@ -5754,6 +5885,22 @@
                       "options": [
                         "Comer ligero y tomar poca agua",
                         "Comer comidas pesadas y tomar bastante"
+                      ],
+                      "correctAnswerIndex": 0
+                    }
+                  ]
+                },
+                {
+                  "type": "QUIZ",
+                  "title": "Pregunta del día (Hipertensión)",
+                  "description": "Responde las preguntas de la sesión",
+                  "iconResId": "outline_trophy_24",
+                  "questions": [
+                    {
+                      "questionText": "Antes  de  dormir,  es  mejor …   A:  Comer  ligero  y  tomar  poca  agua  B:  Comer  comidas  pesadas  y  tomar  bastante  agua   Respuesta  correcta:  A",
+                      "options": [
+                        "Verdadero",
+                        "Falso"
                       ],
                       "correctAnswerIndex": 0
                     }
@@ -5811,7 +5958,7 @@
                 {
                   "type": "METAS",
                   "title": "Metas (Hipertensión)",
-                  "description": "Configura tus metas para esta sesión de hipertensión",
+                  "description": "Configura tus metas para esta sesión",
                   "iconResId": "outline_trophy_24",
                   "metasId": "hta"
                 },
@@ -5896,8 +6043,8 @@
                 {
                   "type": "DESCRIPTION",
                   "title": "Bienvenida",
-                  "description": "¡Hola! Cuidar cómo nos sentimos nos ayuda a sostener los hábitos y el autocuidado en el tiempo. Hoy vamos a reconocer el impacto que tiene la salud mental en la diabetes y promover pequeñas acciones de cuidado emocional que contribuyan al bienestar.\n\n¡Hola! Cuidar cómo nos sentimos nos ayuda a sostener los hábitos y el autocuidado en el tiempo. Hoy vamos a reconocer el impacto que tiene la salud mental en la hipertensión y promover pequeñas acciones de cuidado emocional que contribuyan al bienestar.",
-                  "fullDescription": "¡Hola! Cuidar cómo nos sentimos nos ayuda a sostener los hábitos y el autocuidado en el tiempo. Hoy vamos a reconocer el impacto que tiene la salud mental en la diabetes y promover pequeñas acciones de cuidado emocional que contribuyan al bienestar.\n\n¡Hola! Cuidar cómo nos sentimos nos ayuda a sostener los hábitos y el autocuidado en el tiempo. Hoy vamos a reconocer el impacto que tiene la salud mental en la hipertensión y promover pequeñas acciones de cuidado emocional que contribuyan al bienestar.",
+                  "description": "¡Hola! Cuidar cómo nos sentimos nos ayuda a sostener los hábitos y el autocuidado en el tiempo. Hoy vamos a reconocer el impacto que tiene la salud mental en la diabetes y promover pequeñas acciones de cuidado emocional que contribuyan al bienestar.\n\n¡Hola! Te damos la bienvenida a esta sesión. Cuidar lo que sentimos también es cuidar nuestro corazón. Veremos cómo el estrés puede influir en la presión arterial y en el estado de ánimo, y reconoceremos la importancia de aprender a manejarlo para proteger nuestra salud.",
+                  "fullDescription": "¡Hola! Cuidar cómo nos sentimos nos ayuda a sostener los hábitos y el autocuidado en el tiempo. Hoy vamos a reconocer el impacto que tiene la salud mental en la diabetes y promover pequeñas acciones de cuidado emocional que contribuyan al bienestar.\n\n¡Hola! Te damos la bienvenida a esta sesión. Cuidar lo que sentimos también es cuidar nuestro corazón. Veremos cómo el estrés puede influir en la presión arterial y en el estado de ánimo, y reconoceremos la importancia de aprender a manejarlo para proteger nuestra salud.",
                   "iconResId": "outline_unknown_document_24"
                 },
                 {
@@ -5917,8 +6064,8 @@
                 {
                   "type": "DESCRIPTION",
                   "title": "Fin de la sesión",
-                  "description": "Recordemos que el cuidado de la diabetes incluye también cómo nos sentimos día a día. Incorporar el cuidado emocional es fundamental para el tratamiento.\n\nRecordemos que el cuidado de la hipertensión incluye también cómo nos sentimos día a día. Incorporar el cuidado emocional es fundamental para el tratamiento.",
-                  "fullDescription": "Recordemos que el cuidado de la diabetes incluye también cómo nos sentimos día a día. Incorporar el cuidado emocional es fundamental para el tratamiento.\n\nRecordemos que el cuidado de la hipertensión incluye también cómo nos sentimos día a día. Incorporar el cuidado emocional es fundamental para el tratamiento.",
+                  "description": "Recordemos que el cuidado de la diabetes incluye también cómo nos sentimos día a día. Incorporar el cuidado emocional es fundamental para el tratamiento.",
+                  "fullDescription": "Recordemos que el cuidado de la diabetes incluye también cómo nos sentimos día a día. Incorporar el cuidado emocional es fundamental para el tratamiento.",
                   "iconResId": "outline_unknown_document_24"
                 }
               ]
@@ -5952,7 +6099,7 @@
                 },
                 {
                   "type": "QUIZ",
-                  "title": "Pregunta del día",
+                  "title": "Pregunta del día (Diabetes)",
                   "description": "Responde las preguntas de la sesión",
                   "iconResId": "outline_trophy_24",
                   "questions": [
@@ -5961,6 +6108,21 @@
                       "options": [
                         "Verdadero",
                         "Falso"
+                      ],
+                      "correctAnswerIndex": 0
+                    }
+                  ]
+                },
+                {
+                  "type": "QUIZ",
+                  "title": "Pregunta del día (Hipertensión)",
+                  "description": "Responde las preguntas de la sesión",
+                  "iconResId": "outline_trophy_24",
+                  "questions": [
+                    {
+                      "questionText": "",
+                      "options": [
+                        "El  apoyo  de  otras  personas  también  puede  ayudarte  a  sostener  tus  metas  de  salud  y  seguir  avanzando.   -  Verdadero  -  Falso   Respuesta  correcta:  Verdadero"
                       ],
                       "correctAnswerIndex": 0
                     }
@@ -6024,7 +6186,7 @@
                 },
                 {
                   "type": "QUIZ",
-                  "title": "Pregunta del día",
+                  "title": "Pregunta del día (Diabetes)",
                   "description": "Responde las preguntas de la sesión",
                   "iconResId": "outline_trophy_24",
                   "questions": [
@@ -6033,6 +6195,21 @@
                       "options": [
                         "Verdadero",
                         "Falso"
+                      ],
+                      "correctAnswerIndex": 0
+                    }
+                  ]
+                },
+                {
+                  "type": "QUIZ",
+                  "title": "Pregunta del día (Hipertensión)",
+                  "description": "Responde las preguntas de la sesión",
+                  "iconResId": "outline_trophy_24",
+                  "questions": [
+                    {
+                      "questionText": "",
+                      "options": [
+                        "¿Al  pedir  ayuda,  es  mejor  ser  claro  y  específico  sobre  lo  que  necesitas?   -  Verdadero  -  Falso   Respuesta  correcta:  Verdadero"
                       ],
                       "correctAnswerIndex": 0
                     }
@@ -6097,7 +6274,7 @@
                 {
                   "type": "METAS",
                   "title": "Metas (Hipertensión)",
-                  "description": "Configura tus metas para esta sesión de hipertensión",
+                  "description": "Configura tus metas para esta sesión",
                   "iconResId": "outline_trophy_24",
                   "metasId": "hta"
                 },
@@ -6210,7 +6387,7 @@
                 {
                   "type": "METAS",
                   "title": "Metas (Hipertensión)",
-                  "description": "Configura tus metas para esta sesión de hipertensión",
+                  "description": "Configura tus metas para esta sesión",
                   "iconResId": "outline_trophy_24",
                   "metasId": "hta"
                 },
@@ -6287,7 +6464,7 @@
                 },
                 {
                   "type": "QUIZ",
-                  "title": "Pregunta del día",
+                  "title": "Pregunta del día (Diabetes)",
                   "description": "Responde las preguntas de la sesión",
                   "iconResId": "outline_trophy_24",
                   "questions": [
@@ -6298,6 +6475,22 @@
                         "Esperar a sentirme motivado antes de volver"
                       ],
                       "correctAnswerIndex": 2
+                    }
+                  ]
+                },
+                {
+                  "type": "QUIZ",
+                  "title": "Pregunta del día (Hipertensión)",
+                  "description": "Responde las preguntas de la sesión",
+                  "iconResId": "outline_trophy_24",
+                  "questions": [
+                    {
+                      "questionText": "",
+                      "options": [
+                        "Verdadero",
+                        "Falso"
+                      ],
+                      "correctAnswerIndex": 0
                     }
                   ]
                 },
@@ -6317,9 +6510,9 @@
               "multimedia": [
                 {
                   "type": "DESCRIPTION",
-                  "title": "Tus herramientas personales: repaso final",
-                  "description": "¡Hola! Esta es la última sesión de contenido. Pero no es un final: es un nuevo comienzo. Hoy vamos a repasar todas las herramientas que vimos para que las tengas siempre a mano. Ya tenés todo lo que necesitas. Ahora es tuyo.",
-                  "fullDescription": "¡Hola! Esta es la última sesión de contenido. Pero no es un final: es un nuevo comienzo. Hoy vamos a repasar todas las herramientas que vimos para que las tengas siempre a mano. Ya tenés todo lo que necesitas. Ahora es tuyo.",
+                  "title": "Bienvenida",
+                  "description": "¡Hola! Esta es la última sesión de contenido. Pero no es un final: es un nuevo comienzo. Hoy vamos a repasar todas las herramientas que vimos para que las tengas siempre a mano. Ya tenés todo lo que necesitas. Ahora es tuyo.\n\n¡Hola! Esta es la última sesión de contenido. Pero no es un final: es un nuevo comienzo. Hoy vamos a repasar todas las herramientas que vimos para que las tengas siempre a mano. Ya tenés todo lo que necesitás. Ahora es tuyo.",
+                  "fullDescription": "¡Hola! Esta es la última sesión de contenido. Pero no es un final: es un nuevo comienzo. Hoy vamos a repasar todas las herramientas que vimos para que las tengas siempre a mano. Ya tenés todo lo que necesitas. Ahora es tuyo.\n\n¡Hola! Esta es la última sesión de contenido. Pero no es un final: es un nuevo comienzo. Hoy vamos a repasar todas las herramientas que vimos para que las tengas siempre a mano. Ya tenés todo lo que necesitás. Ahora es tuyo.",
                   "iconResId": "outline_unknown_document_24"
                 },
                 {
@@ -6332,8 +6525,8 @@
                 {
                   "type": "DESCRIPTION",
                   "title": "Fin de la sesión",
-                  "description": "Completaste las 16 semanas de contenido nuevo. ¡Eso es un logro enorme! En las próximas semanas te acompañaremos con sesiones de repaso para que sigas practicando. Pero recordá que lo más valioso ya lo tenés. Cuidarte es un camino, no un destino. Y vos ya estás caminando. Información adicional Información adicional sobre la diabetes Información sobre la hipertensión Información sobre salud mental Alimentación saludable Alimentación para personas con diabetes Alimentación para personas con hipertensión Actividad física Dormir mejor Consumo de tabaco\n\nCompletaste las 16 semanas de contenido nuevo. ¡Eso es un logro enorme! En las próximas semanas te acompañaremos con sesiones de repaso para que sigas practicando. Pero recordá que lo más valioso ya lo tenés. Cuidarte es un camino, no un destino. Y vos ya estás caminando. Información adicional Información adicional sobre la hipertensión Información sobre la hipertensión Información sobre salud mental Alimentación saludable Alimentación para personas con hipertensión Alimentación para personas con hipertensión Actividad física Dormir mejor Consumo de tabaco",
-                  "fullDescription": "Completaste las 16 semanas de contenido nuevo. ¡Eso es un logro enorme! En las próximas semanas te acompañaremos con sesiones de repaso para que sigas practicando. Pero recordá que lo más valioso ya lo tenés. Cuidarte es un camino, no un destino. Y vos ya estás caminando. Información adicional Información adicional sobre la diabetes Información sobre la hipertensión Información sobre salud mental Alimentación saludable Alimentación para personas con diabetes Alimentación para personas con hipertensión Actividad física Dormir mejor Consumo de tabaco\n\nCompletaste las 16 semanas de contenido nuevo. ¡Eso es un logro enorme! En las próximas semanas te acompañaremos con sesiones de repaso para que sigas practicando. Pero recordá que lo más valioso ya lo tenés. Cuidarte es un camino, no un destino. Y vos ya estás caminando. Información adicional Información adicional sobre la hipertensión Información sobre la hipertensión Información sobre salud mental Alimentación saludable Alimentación para personas con hipertensión Alimentación para personas con hipertensión Actividad física Dormir mejor Consumo de tabaco",
+                  "description": "Completaste las 16 semanas de contenido nuevo. ¡Eso es un logro enorme! En las próximas semanas te acompañaremos con sesiones de repaso para que sigas practicando. Pero recordá que lo más valioso ya lo tenés. Cuidarte es un camino, no un destino. Y vos ya estás caminando. Información adicional Información adicional sobre la diabetes Información sobre la hipertensión Información sobre salud mental Alimentación saludable Alimentación para personas con diabetes Alimentación para personas con hipertensión Actividad física Dormir mejor Consumo de tabaco",
+                  "fullDescription": "Completaste las 16 semanas de contenido nuevo. ¡Eso es un logro enorme! En las próximas semanas te acompañaremos con sesiones de repaso para que sigas practicando. Pero recordá que lo más valioso ya lo tenés. Cuidarte es un camino, no un destino. Y vos ya estás caminando. Información adicional Información adicional sobre la diabetes Información sobre la hipertensión Información sobre salud mental Alimentación saludable Alimentación para personas con diabetes Alimentación para personas con hipertensión Actividad física Dormir mejor Consumo de tabaco",
                   "iconResId": "outline_unknown_document_24"
                 }
               ]
