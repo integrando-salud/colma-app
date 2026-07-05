@@ -36,12 +36,13 @@
                   "iconResId": "outline_trophy_24",
                   "questions": [
                     {
-                      "questionText": "Cuando  tenemos  el  ánimo  bajo,  ¿qué  suele  ayudar  más?   A.  Hacer  de  golpe  todos  los  pendientes  para  “ponernos  al  día”.  B.  Esperar  a  que  vuelvan  las  ganas  antes  de  hacer  algo.  C.  Empezar  de  a  poco  con  pequeñas  actividades  que  me  hacen  bien  o  son  importantes.   Respuesta  correcta:  C",
+                      "questionText": "Cuando tenemos el ánimo bajo, ¿qué suele ayudar más?",
                       "options": [
-                        "Verdadero",
-                        "Falso"
+                        "Hacer de golpe todos los pendientes para “ponernos al día”.",
+                        "Esperar a que vuelvan las ganas antes de hacer algo.",
+                        "Empezar de a poco con pequeñas actividades que me hacen bien o son importantes."
                       ],
-                      "correctAnswerIndex": 0
+                      "correctAnswerIndex": 2
                     }
                   ]
                 },
@@ -80,11 +81,12 @@
                   "iconResId": "outline_trophy_24",
                   "questions": [
                     {
-                      "questionText": "",
+                      "questionText": "En la activación conductual, hay que esperar a tener ganas para empezar a hacer cosas.",
                       "options": [
-                        "En  la  activación  conductual,  hay  que  esperar  a  tener  ganas  para  empezar  a  hacer  cosas.    -  Verdadero  -  Falso   Respuesta  correcta:  Falso."
+                        "Verdadero",
+                        "Falso"
                       ],
-                      "correctAnswerIndex": 0
+                      "correctAnswerIndex": 1
                     }
                   ]
                 },
@@ -180,9 +182,10 @@
                   "iconResId": "outline_trophy_24",
                   "questions": [
                     {
-                      "questionText": "",
+                      "questionText": "Empezar con acciones pequeñas hace que sea más fácil avanzar hacia una meta.",
                       "options": [
-                        "Empezar  con  acciones  pequeñas  hace  que  sea  más  fácil  avanzar  hacia  una  meta.    -  Verdadero  -  Falso   Respuesta  correcta:  Verdadero"
+                        "Verdadero",
+                        "Falso"
                       ],
                       "correctAnswerIndex": 0
                     }
@@ -244,12 +247,13 @@
                   "iconResId": "outline_trophy_24",
                   "questions": [
                     {
-                      "questionText": "Cuando  aparece  una  “piedra  en  el  camino”  (por  ejemplo:  “no  tengo  ganas”),  ¿qué  es  lo  más  útil?   A:  Esperar  a  sentirte  mejor  y  recién  ahí  hacerlo.  B:  Reconocer  la  barrera  y  hacer  una  versión  más  pequeña  del  plan.  C:  Dejar  la  meta  para  la  próxima  semana.   Respuesta  correcta:  B",
+                      "questionText": "Cuando aparece una “piedra en el camino” (por ejemplo: “no tengo ganas”), ¿qué es lo más útil?",
                       "options": [
-                        "Verdadero",
-                        "Falso"
+                        "Esperar a sentirte mejor y recién ahí hacerlo.",
+                        "Reconocer la barrera y hacer una versión más pequeña del plan.",
+                        "Dejar la meta para la próxima semana."
                       ],
-                      "correctAnswerIndex": 0
+                      "correctAnswerIndex": 1
                     }
                   ]
                 },
@@ -338,11 +342,12 @@
                   "iconResId": "outline_trophy_24",
                   "questions": [
                     {
-                      "questionText": "",
+                      "questionText": "Un buen premio es solo para cuando cumples tu meta al 100%.",
                       "options": [
-                        "Un  buen  premio  es  solo  para  cuando  cumples  tu  meta  al  100%.   -  Verdadero  -  Falso   Respuesta  correcta:  Falso"
+                        "Verdadero",
+                        "Falso"
                       ],
-                      "correctAnswerIndex": 0
+                      "correctAnswerIndex": 1
                     }
                   ]
                 },
@@ -381,12 +386,13 @@
                   "iconResId": "outline_trophy_24",
                   "questions": [
                     {
-                      "questionText": "Cuando  el  estado  de  ánimo  está  bajo  y  cuesta  cuidarse  (por  ejemplo,  tomar  el  medicamento),  ¿qué  estrategia  suele  ser  más  útil?   A)  Esperar  a  “sentirse  con  ganas”  para  recién  empezar.  B)  Hacer  un  plan  simple  (qué/cuándo/dónde)  y  empezar  con  un  paso  pequeño,  aunque  no  haya  ganas.  C)  Dejarlo  para  la  próxima  semana  para  “empezar  bien”.   Respuesta  correcta:  B",
+                      "questionText": "Cuando el estado de ánimo está bajo y cuesta cuidarse (por ejemplo, tomar el medicamento), ¿qué estrategia suele ser más útil?",
                       "options": [
-                        "Verdadero",
-                        "Falso"
+                        "Esperar a “sentirse con ganas” para recién empezar.",
+                        "Hacer un plan simple (qué/cuándo/dónde) y empezar con un paso pequeño, aunque no haya ganas.",
+                        "Dejarlo para la próxima semana para “empezar bien”."
                       ],
-                      "correctAnswerIndex": 0
+                      "correctAnswerIndex": 1
                     }
                   ]
                 },
@@ -510,12 +516,12 @@
                   "iconResId": "outline_trophy_24",
                   "questions": [
                     {
-                      "questionText": "Aunque  me  sienta  bien,  ¿es  importante  controlar  la  presión?   A:  No,  solo  cuando  me  siento  mal  B:  Sí,  porque  muchas  veces  la  presión  alta  no  da  síntomas   Respuesta  correcta:  B",
+                      "questionText": "Aunque me sienta bien, ¿es importante controlar la presión?",
                       "options": [
-                        "Verdadero",
-                        "Falso"
+                        "No, solo cuando me siento mal",
+                        "Sí, porque muchas veces la presión alta no da síntomas"
                       ],
-                      "correctAnswerIndex": 0
+                      "correctAnswerIndex": 1
                     }
                   ]
                 },
@@ -618,10 +624,10 @@
                   "iconResId": "outline_trophy_24",
                   "questions": [
                     {
-                      "questionText": "¿Cuáles  son  los  beneficios  del  movimiento  y  la  actividad  física  en  nuestro  cuerpo?   A:  Mejora  la  presión,  mejora  la  glucosa,  reduce  el  estrés,  mejora  el  sueño,  descenso  de  peso  B:  Sólo  me  ayuda  a  bajar  de  peso  para  tener  una  mejor  figura   Respuesta  correcta:  A",
+                      "questionText": "¿Cuáles son los beneficios del movimiento y la actividad física en nuestro cuerpo?",
                       "options": [
-                        "Verdadero",
-                        "Falso"
+                        "Mejora la presión, mejora la glucosa, reduce el estrés, mejora el sueño, descenso de peso",
+                        "Sólo me ayuda a bajar de peso para tener una mejor figura"
                       ],
                       "correctAnswerIndex": 0
                     }
@@ -712,9 +718,10 @@
                   "iconResId": "outline_trophy_24",
                   "questions": [
                     {
-                      "questionText": "",
+                      "questionText": "Hacer un poco de ejercicio puede ayudar a sentirse mejor de ánimo.",
                       "options": [
-                        "Hacer  un  poco  de  ejercicio  puede  ayudar  a  sentirse  mejor  de  ánimo.   -  Verdadero  -  Falso   Respuesta  correcta:  Verdadero"
+                        "Verdadero",
+                        "Falso"
                       ],
                       "correctAnswerIndex": 0
                     }
@@ -854,9 +861,10 @@
                   "iconResId": "outline_trophy_24",
                   "questions": [
                     {
-                      "questionText": "",
+                      "questionText": "Organizar mejor tus comidas te ayuda a cuidar tu salud",
                       "options": [
-                        "Organizar  mejor  tus  comidas  te  ayuda  a  cuidar  tu  salud    -  Verdadero  -  Falso   Respuesta  correcta:  Verdadero"
+                        "Verdadero",
+                        "Falso"
                       ],
                       "correctAnswerIndex": 0
                     }
@@ -982,10 +990,10 @@
                   "iconResId": "outline_trophy_24",
                   "questions": [
                     {
-                      "questionText": "¿Qué  puede  hacer  María  para  organizar  mejor  sus  comidas?   A:  Planificar  un  menú  semanal  junto  a  su  hija.  B:  Comprar  comida  cada  día  sin  planificar.   Respuesta  correcta:  A",
+                      "questionText": "¿Qué puede hacer María para organizar mejor sus comidas?",
                       "options": [
-                        "Verdadero",
-                        "Falso"
+                        "Planificar un menú semanal junto a su hija.",
+                        "Comprar comida cada día sin planificar."
                       ],
                       "correctAnswerIndex": 0
                     }
@@ -1330,12 +1338,12 @@
                   "iconResId": "outline_trophy_24",
                   "questions": [
                     {
-                      "questionText": "¿Cómo  puedo  cuidar  mi  presión  arterial?   A:  No  es  necesario  cuidarse   B:  Con  medicación  y  hábitos  saludables    Respuesta  correcta:  B",
+                      "questionText": "¿Cómo puedo cuidar mi presión arterial?",
                       "options": [
-                        "Verdadero",
-                        "Falso"
+                        "No es necesario cuidarse",
+                        "Con medicación y hábitos saludables"
                       ],
-                      "correctAnswerIndex": 0
+                      "correctAnswerIndex": 1
                     }
                   ]
                 },
@@ -1473,10 +1481,10 @@
                   "iconResId": "outline_trophy_24",
                   "questions": [
                     {
-                      "questionText": "Antes  de  dormir,  es  mejor …   A:  Comer  ligero  y  tomar  poca  agua  B:  Comer  comidas  pesadas  y  tomar  bastante  agua   Respuesta  correcta:  A",
+                      "questionText": "Antes de dormir, es mejor …",
                       "options": [
-                        "Verdadero",
-                        "Falso"
+                        "Comer ligero y tomar poca agua",
+                        "Comer comidas pesadas y tomar bastante agua"
                       ],
                       "correctAnswerIndex": 0
                     }
@@ -1666,9 +1674,10 @@
                   "iconResId": "outline_trophy_24",
                   "questions": [
                     {
-                      "questionText": "",
+                      "questionText": "El apoyo de otras personas también puede ayudarte a sostener tus metas de salud y seguir avanzando.",
                       "options": [
-                        "El  apoyo  de  otras  personas  también  puede  ayudarte  a  sostener  tus  metas  de  salud  y  seguir  avanzando.   -  Verdadero  -  Falso   Respuesta  correcta:  Verdadero"
+                        "Verdadero",
+                        "Falso"
                       ],
                       "correctAnswerIndex": 0
                     }
@@ -1737,9 +1746,10 @@
                   "iconResId": "outline_trophy_24",
                   "questions": [
                     {
-                      "questionText": "",
+                      "questionText": "¿Al pedir ayuda, es mejor ser claro y específico sobre lo que necesitas?",
                       "options": [
-                        "¿Al  pedir  ayuda,  es  mejor  ser  claro  y  específico  sobre  lo  que  necesitas?   -  Verdadero  -  Falso   Respuesta  correcta:  Verdadero"
+                        "Verdadero",
+                        "Falso"
                       ],
                       "correctAnswerIndex": 0
                     }
@@ -1985,12 +1995,13 @@
                   "iconResId": "outline_trophy_24",
                   "questions": [
                     {
-                      "questionText": "",
+                      "questionText": "Después de una semana difícil en la que no pudiste seguir tu plan, ¿qué es lo más útil?",
                       "options": [
-                        "Verdadero",
-                        "Falso"
+                        "Pensar que todo lo anterior fue en vano y empezar un plan completamente nuevo.",
+                        "Esperar a sentirme motivado antes de volver a intentar.",
+                        "Retomar mi plan, ás con un paso más pequeño, sin juzgarme por la pausa."
                       ],
-                      "correctAnswerIndex": 0
+                      "correctAnswerIndex": 2
                     }
                   ]
                 },
@@ -2073,9 +2084,9 @@
                     {
                       "questionText": "Cuando tenemos el ánimo bajo, ¿qué suele ayudar más?",
                       "options": [
-                        "Hacer de golpe todos los pendientes para",
-                        "Esperar a que vuelvan las ganas antes de",
-                        "Empezar de a poco con pequeñas actividades"
+                        "Hacer de golpe todos los pendientes para “ponernos al día”.",
+                        "Esperar a que vuelvan las ganas antes de hacer algo.",
+                        "Empezar de a poco con pequeñas actividades que me hacen bien o son importantes."
                       ],
                       "correctAnswerIndex": 2
                     }
@@ -2121,7 +2132,7 @@
                         "Verdadero",
                         "Falso"
                       ],
-                      "correctAnswerIndex": 0
+                      "correctAnswerIndex": 1
                     }
                   ]
                 },
@@ -2155,8 +2166,8 @@
                 },
                 {
                   "type": "METAS",
-                  "title": "Metas (Diabetes)",
-                  "description": "Configura tus metas para esta sesión de diabetes",
+                  "title": "Metas",
+                  "description": "Configura tus metas para esta sesión",
                   "iconResId": "outline_trophy_24",
                   "metasId": "diabetes"
                 },
@@ -2285,7 +2296,7 @@
                       "questionText": "Cuando aparece una “piedra en el camino” (por ejemplo: “no tengo ganas”), ¿qué es lo más útil?",
                       "options": [
                         "Esperar a sentirte mejor y recién ahí hacerlo.",
-                        "Reconocer la barrera y hacer una versión más",
+                        "Reconocer la barrera y hacer una versión más pequeña del plan.",
                         "Dejar la meta para la próxima semana."
                       ],
                       "correctAnswerIndex": 1
@@ -2322,8 +2333,8 @@
                 },
                 {
                   "type": "METAS",
-                  "title": "Metas (Diabetes)",
-                  "description": "Configura tus metas para esta sesión de diabetes",
+                  "title": "Metas",
+                  "description": "Configura tus metas para esta sesión",
                   "iconResId": "outline_trophy_24",
                   "metasId": "diabetes"
                 },
@@ -2382,7 +2393,7 @@
                         "Verdadero",
                         "Falso"
                       ],
-                      "correctAnswerIndex": 0
+                      "correctAnswerIndex": 1
                     }
                   ]
                 },
@@ -2423,9 +2434,9 @@
                     {
                       "questionText": "Cuando el estado de ánimo está bajo y cuesta cuidarse (por ejemplo, tomar el medicamento), ¿qué estrategia suele ser más útil?",
                       "options": [
-                        "Esperar a “sentirse con ganas” para recién",
-                        "Hacer un plan simple (qué/cuándo/dónde) y",
-                        "Dejarlo para la próxima semana para"
+                        "Esperar a “sentirse con ganas” para recién empezar.",
+                        "Hacer un plan simple (qué/cuándo/dónde) y empezar con un paso pequeño, aunque no haya ganas.",
+                        "Dejarlo para la próxima semana para “empezar bien”."
                       ],
                       "correctAnswerIndex": 1
                     }
@@ -2468,8 +2479,8 @@
                 },
                 {
                   "type": "METAS",
-                  "title": "Metas (Diabetes)",
-                  "description": "Configura tus metas para esta sesión de diabetes",
+                  "title": "Metas",
+                  "description": "Configura tus metas para esta sesión",
                   "iconResId": "outline_trophy_24",
                   "metasId": "diabetes"
                 },
@@ -2668,8 +2679,8 @@
                     {
                       "questionText": "¿Cuáles son los beneficios del movimiento y la actividad física en nuestro cuerpo?",
                       "options": [
-                        "Mejora la presión, mejora la glucosa, reduce",
-                        "Sólo me ayuda a bajar de peso para tener"
+                        "Mejora la presión, mejora la glucosa, reduce el estrés, mejora el sueño, descenso de peso",
+                        "Sólo me ayuda a bajar de peso para tener una mejor figura"
                       ],
                       "correctAnswerIndex": 0
                     }
@@ -2705,8 +2716,8 @@
                 },
                 {
                   "type": "METAS",
-                  "title": "Metas (Diabetes)",
-                  "description": "Configura tus metas para esta sesión de diabetes",
+                  "title": "Metas",
+                  "description": "Configura tus metas para esta sesión",
                   "iconResId": "outline_trophy_24",
                   "metasId": "diabetes"
                 },
@@ -2827,8 +2838,8 @@
                 },
                 {
                   "type": "METAS",
-                  "title": "Metas (Diabetes)",
-                  "description": "Configura tus metas para esta sesión de diabetes",
+                  "title": "Metas",
+                  "description": "Configura tus metas para esta sesión",
                   "iconResId": "outline_trophy_24",
                   "metasId": "diabetes"
                 },
@@ -2942,8 +2953,8 @@
                 },
                 {
                   "type": "METAS",
-                  "title": "Metas (Diabetes)",
-                  "description": "Configura tus metas para esta sesión de diabetes",
+                  "title": "Metas",
+                  "description": "Configura tus metas para esta sesión",
                   "iconResId": "outline_trophy_24",
                   "metasId": "diabetes"
                 },
@@ -3071,8 +3082,8 @@
                 },
                 {
                   "type": "METAS",
-                  "title": "Metas (Diabetes)",
-                  "description": "Configura tus metas para esta sesión de diabetes",
+                  "title": "Metas",
+                  "description": "Configura tus metas para esta sesión",
                   "iconResId": "outline_trophy_24",
                   "metasId": "diabetes"
                 },
@@ -3191,8 +3202,8 @@
                 },
                 {
                   "type": "METAS",
-                  "title": "Metas (Diabetes)",
-                  "description": "Configura tus metas para esta sesión de diabetes",
+                  "title": "Metas",
+                  "description": "Configura tus metas para esta sesión",
                   "iconResId": "outline_trophy_24",
                   "metasId": "diabetes"
                 },
@@ -3304,8 +3315,8 @@
                 },
                 {
                   "type": "METAS",
-                  "title": "Metas (Diabetes)",
-                  "description": "Configura tus metas para esta sesión de diabetes",
+                  "title": "Metas",
+                  "description": "Configura tus metas para esta sesión",
                   "iconResId": "outline_trophy_24",
                   "metasId": "diabetes"
                 },
@@ -3426,8 +3437,8 @@
                 },
                 {
                   "type": "METAS",
-                  "title": "Metas (Diabetes)",
-                  "description": "Configura tus metas para esta sesión de diabetes",
+                  "title": "Metas",
+                  "description": "Configura tus metas para esta sesión",
                   "iconResId": "outline_trophy_24",
                   "metasId": "diabetes"
                 },
@@ -3533,7 +3544,7 @@
                       "questionText": "Antes de dormir, es mejor…",
                       "options": [
                         "Comer ligero y tomar poca agua",
-                        "Comer comidas pesadas y tomar bastante"
+                        "Comer comidas pesadas y tomar bastante agua"
                       ],
                       "correctAnswerIndex": 0
                     }
@@ -3583,8 +3594,8 @@
                 },
                 {
                   "type": "METAS",
-                  "title": "Metas (Diabetes)",
-                  "description": "Configura tus metas para esta sesión de diabetes",
+                  "title": "Metas",
+                  "description": "Configura tus metas para esta sesión",
                   "iconResId": "outline_trophy_24",
                   "metasId": "diabetes"
                 },
@@ -3855,8 +3866,8 @@
                 },
                 {
                   "type": "METAS",
-                  "title": "Metas (Diabetes)",
-                  "description": "Configura tus metas para esta sesión de diabetes",
+                  "title": "Metas",
+                  "description": "Configura tus metas para esta sesión",
                   "iconResId": "outline_trophy_24",
                   "metasId": "diabetes"
                 },
@@ -3961,8 +3972,8 @@
                 },
                 {
                   "type": "METAS",
-                  "title": "Metas (Diabetes)",
-                  "description": "Configura tus metas para esta sesión de diabetes",
+                  "title": "Metas",
+                  "description": "Configura tus metas para esta sesión",
                   "iconResId": "outline_trophy_24",
                   "metasId": "diabetes"
                 },
@@ -4046,8 +4057,9 @@
                     {
                       "questionText": "Después de una semana difícil en la que no pudiste seguir tu plan, ¿qué es lo más útil?",
                       "options": [
-                        "Pensar que todo lo anterior fue en vano y",
-                        "Esperar a sentirme motivado antes de volver"
+                        "Pensar que todo lo anterior fue en vano y empezar un plan completamente nuevo.",
+                        "Esperar a sentirme motivado antes de volver a intentar.",
+                        "Retomar mi plan, ás con un paso más pequeño, sin juzgarme por la pausa."
                       ],
                       "correctAnswerIndex": 2
                     }
@@ -4125,34 +4137,18 @@
                 },
                 {
                   "type": "QUIZ",
-                  "title": "Pregunta del día (Diabetes)",
+                  "title": "Pregunta del día",
                   "description": "Responde las preguntas de la sesión",
                   "iconResId": "outline_trophy_24",
                   "questions": [
                     {
                       "questionText": "Cuando tenemos el ánimo bajo, ¿qué suele ayudar más?",
                       "options": [
-                        "Hacer de golpe todos los pendientes para",
-                        "Esperar a que vuelvan las ganas antes de",
-                        "Empezar de a poco con pequeñas actividades"
+                        "Hacer de golpe todos los pendientes para “ponernos al día”.",
+                        "Esperar a que vuelvan las ganas antes de hacer algo.",
+                        "Empezar de a poco con pequeñas actividades que me hacen bien o son importantes."
                       ],
                       "correctAnswerIndex": 2
-                    }
-                  ]
-                },
-                {
-                  "type": "QUIZ",
-                  "title": "Pregunta del día (Hipertensión)",
-                  "description": "Responde las preguntas de la sesión",
-                  "iconResId": "outline_trophy_24",
-                  "questions": [
-                    {
-                      "questionText": "Cuando  tenemos  el  ánimo  bajo,  ¿qué  suele  ayudar  más?   A.  Hacer  de  golpe  todos  los  pendientes  para  “ponernos  al  día”.  B.  Esperar  a  que  vuelvan  las  ganas  antes  de  hacer  algo.  C.  Empezar  de  a  poco  con  pequeñas  actividades  que  me  hacen  bien  o  son  importantes.   Respuesta  correcta:  C",
-                      "options": [
-                        "Verdadero",
-                        "Falso"
-                      ],
-                      "correctAnswerIndex": 0
                     }
                   ]
                 },
@@ -4186,7 +4182,7 @@
                 },
                 {
                   "type": "QUIZ",
-                  "title": "Pregunta del día (Diabetes)",
+                  "title": "Pregunta del día",
                   "description": "Responde las preguntas de la sesión",
                   "iconResId": "outline_trophy_24",
                   "questions": [
@@ -4196,22 +4192,7 @@
                         "Verdadero",
                         "Falso"
                       ],
-                      "correctAnswerIndex": 0
-                    }
-                  ]
-                },
-                {
-                  "type": "QUIZ",
-                  "title": "Pregunta del día (Hipertensión)",
-                  "description": "Responde las preguntas de la sesión",
-                  "iconResId": "outline_trophy_24",
-                  "questions": [
-                    {
-                      "questionText": "",
-                      "options": [
-                        "En  la  activación  conductual,  hay  que  esperar  a  tener  ganas  para  empezar  a  hacer  cosas.    -  Verdadero  -  Falso   Respuesta  correcta:  Falso."
-                      ],
-                      "correctAnswerIndex": 0
+                      "correctAnswerIndex": 1
                     }
                   ]
                 },
@@ -4246,7 +4227,7 @@
                 {
                   "type": "METAS",
                   "title": "Metas (Diabetes)",
-                  "description": "Configura tus metas para esta sesión de diabetes",
+                  "description": "Configura tus metas para esta sesión",
                   "iconResId": "outline_trophy_24",
                   "metasId": "diabetes"
                 },
@@ -4309,7 +4290,7 @@
                 },
                 {
                   "type": "QUIZ",
-                  "title": "Pregunta del día (Diabetes)",
+                  "title": "Pregunta del día",
                   "description": "Responde las preguntas de la sesión",
                   "iconResId": "outline_trophy_24",
                   "questions": [
@@ -4318,21 +4299,6 @@
                       "options": [
                         "Verdadero",
                         "Falso"
-                      ],
-                      "correctAnswerIndex": 0
-                    }
-                  ]
-                },
-                {
-                  "type": "QUIZ",
-                  "title": "Pregunta del día (Hipertensión)",
-                  "description": "Responde las preguntas de la sesión",
-                  "iconResId": "outline_trophy_24",
-                  "questions": [
-                    {
-                      "questionText": "",
-                      "options": [
-                        "Empezar  con  acciones  pequeñas  hace  que  sea  más  fácil  avanzar  hacia  una  meta.    -  Verdadero  -  Falso   Respuesta  correcta:  Verdadero"
                       ],
                       "correctAnswerIndex": 0
                     }
@@ -4389,7 +4355,7 @@
                 },
                 {
                   "type": "QUIZ",
-                  "title": "Pregunta del día (Diabetes)",
+                  "title": "Pregunta del día",
                   "description": "Responde las preguntas de la sesión",
                   "iconResId": "outline_trophy_24",
                   "questions": [
@@ -4397,26 +4363,10 @@
                       "questionText": "Cuando aparece una “piedra en el camino” (por ejemplo: “no tengo ganas”), ¿qué es lo más útil?",
                       "options": [
                         "Esperar a sentirte mejor y recién ahí hacerlo.",
-                        "Reconocer la barrera y hacer una versión más",
+                        "Reconocer la barrera y hacer una versión más pequeña del plan.",
                         "Dejar la meta para la próxima semana."
                       ],
                       "correctAnswerIndex": 1
-                    }
-                  ]
-                },
-                {
-                  "type": "QUIZ",
-                  "title": "Pregunta del día (Hipertensión)",
-                  "description": "Responde las preguntas de la sesión",
-                  "iconResId": "outline_trophy_24",
-                  "questions": [
-                    {
-                      "questionText": "Cuando  aparece  una  “piedra  en  el  camino”  (por  ejemplo:  “no  tengo  ganas”),  ¿qué  es  lo  más  útil?   A:  Esperar  a  sentirte  mejor  y  recién  ahí  hacerlo.  B:  Reconocer  la  barrera  y  hacer  una  versión  más  pequeña  del  plan.  C:  Dejar  la  meta  para  la  próxima  semana.   Respuesta  correcta:  B",
-                      "options": [
-                        "Verdadero",
-                        "Falso"
-                      ],
-                      "correctAnswerIndex": 0
                     }
                   ]
                 },
@@ -4451,7 +4401,7 @@
                 {
                   "type": "METAS",
                   "title": "Metas (Diabetes)",
-                  "description": "Configura tus metas para esta sesión de diabetes",
+                  "description": "Configura tus metas para esta sesión",
                   "iconResId": "outline_trophy_24",
                   "metasId": "diabetes"
                 },
@@ -4507,7 +4457,7 @@
                 },
                 {
                   "type": "QUIZ",
-                  "title": "Pregunta del día (Diabetes)",
+                  "title": "Pregunta del día",
                   "description": "Responde las preguntas de la sesión",
                   "iconResId": "outline_trophy_24",
                   "questions": [
@@ -4517,22 +4467,7 @@
                         "Verdadero",
                         "Falso"
                       ],
-                      "correctAnswerIndex": 0
-                    }
-                  ]
-                },
-                {
-                  "type": "QUIZ",
-                  "title": "Pregunta del día (Hipertensión)",
-                  "description": "Responde las preguntas de la sesión",
-                  "iconResId": "outline_trophy_24",
-                  "questions": [
-                    {
-                      "questionText": "",
-                      "options": [
-                        "Un  buen  premio  es  solo  para  cuando  cumples  tu  meta  al  100%.   -  Verdadero  -  Falso   Respuesta  correcta:  Falso"
-                      ],
-                      "correctAnswerIndex": 0
+                      "correctAnswerIndex": 1
                     }
                   ]
                 },
@@ -4566,34 +4501,18 @@
                 },
                 {
                   "type": "QUIZ",
-                  "title": "Pregunta del día (Diabetes)",
+                  "title": "Pregunta del día",
                   "description": "Responde las preguntas de la sesión",
                   "iconResId": "outline_trophy_24",
                   "questions": [
                     {
                       "questionText": "Cuando el estado de ánimo está bajo y cuesta cuidarse (por ejemplo, tomar el medicamento), ¿qué estrategia suele ser más útil?",
                       "options": [
-                        "Esperar a “sentirse con ganas” para recién",
-                        "Hacer un plan simple (qué/cuándo/dónde) y",
-                        "Dejarlo para la próxima semana para"
+                        "Esperar a “sentirse con ganas” para recién empezar.",
+                        "Hacer un plan simple (qué/cuándo/dónde) y empezar con un paso pequeño, aunque no haya ganas.",
+                        "Dejarlo para la próxima semana para “empezar bien”."
                       ],
                       "correctAnswerIndex": 1
-                    }
-                  ]
-                },
-                {
-                  "type": "QUIZ",
-                  "title": "Pregunta del día (Hipertensión)",
-                  "description": "Responde las preguntas de la sesión",
-                  "iconResId": "outline_trophy_24",
-                  "questions": [
-                    {
-                      "questionText": "Cuando  el  estado  de  ánimo  está  bajo  y  cuesta  cuidarse  (por  ejemplo,  tomar  el  medicamento),  ¿qué  estrategia  suele  ser  más  útil?   A)  Esperar  a  “sentirse  con  ganas”  para  recién  empezar.  B)  Hacer  un  plan  simple  (qué/cuándo/dónde)  y  empezar  con  un  paso  pequeño,  aunque  no  haya  ganas.  C)  Dejarlo  para  la  próxima  semana  para  “empezar  bien”.   Respuesta  correcta:  B",
-                      "options": [
-                        "Verdadero",
-                        "Falso"
-                      ],
-                      "correctAnswerIndex": 0
                     }
                   ]
                 },
@@ -4635,7 +4554,7 @@
                 {
                   "type": "METAS",
                   "title": "Metas (Diabetes)",
-                  "description": "Configura tus metas para esta sesión de diabetes",
+                  "description": "Configura tus metas para esta sesión",
                   "iconResId": "outline_trophy_24",
                   "metasId": "diabetes"
                 },
@@ -4761,12 +4680,12 @@
                   "iconResId": "outline_trophy_24",
                   "questions": [
                     {
-                      "questionText": "Aunque  me  sienta  bien,  ¿es  importante  controlar  la  presión?   A:  No,  solo  cuando  me  siento  mal  B:  Sí,  porque  muchas  veces  la  presión  alta  no  da  síntomas   Respuesta  correcta:  B",
+                      "questionText": "Aunque me sienta bien, ¿es importante controlar la presión?",
                       "options": [
-                        "Verdadero",
-                        "Falso"
+                        "No, solo cuando me siento mal",
+                        "Sí, porque muchas veces la presión alta no da síntomas"
                       ],
-                      "correctAnswerIndex": 0
+                      "correctAnswerIndex": 1
                     }
                   ]
                 },
@@ -4864,31 +4783,15 @@
                 },
                 {
                   "type": "QUIZ",
-                  "title": "Pregunta del día (Diabetes)",
+                  "title": "Pregunta del día",
                   "description": "Responde las preguntas de la sesión",
                   "iconResId": "outline_trophy_24",
                   "questions": [
                     {
                       "questionText": "¿Cuáles son los beneficios del movimiento y la actividad física en nuestro cuerpo?",
                       "options": [
-                        "Mejora la presión, mejora la glucosa, reduce",
-                        "Sólo me ayuda a bajar de peso para tener"
-                      ],
-                      "correctAnswerIndex": 0
-                    }
-                  ]
-                },
-                {
-                  "type": "QUIZ",
-                  "title": "Pregunta del día (Hipertensión)",
-                  "description": "Responde las preguntas de la sesión",
-                  "iconResId": "outline_trophy_24",
-                  "questions": [
-                    {
-                      "questionText": "¿Cuáles  son  los  beneficios  del  movimiento  y  la  actividad  física  en  nuestro  cuerpo?   A:  Mejora  la  presión,  mejora  la  glucosa,  reduce  el  estrés,  mejora  el  sueño,  descenso  de  peso  B:  Sólo  me  ayuda  a  bajar  de  peso  para  tener  una  mejor  figura   Respuesta  correcta:  A",
-                      "options": [
-                        "Verdadero",
-                        "Falso"
+                        "Mejora la presión, mejora la glucosa, reduce el estrés, mejora el sueño, descenso de peso",
+                        "Sólo me ayuda a bajar de peso para tener una mejor figura"
                       ],
                       "correctAnswerIndex": 0
                     }
@@ -4925,7 +4828,7 @@
                 {
                   "type": "METAS",
                   "title": "Metas (Diabetes)",
-                  "description": "Configura tus metas para esta sesión de diabetes",
+                  "description": "Configura tus metas para esta sesión",
                   "iconResId": "outline_trophy_24",
                   "metasId": "diabetes"
                 },
@@ -4981,7 +4884,7 @@
                 },
                 {
                   "type": "QUIZ",
-                  "title": "Pregunta del día (Diabetes)",
+                  "title": "Pregunta del día",
                   "description": "Responde las preguntas de la sesión",
                   "iconResId": "outline_trophy_24",
                   "questions": [
@@ -4990,21 +4893,6 @@
                       "options": [
                         "Verdadero",
                         "Falso"
-                      ],
-                      "correctAnswerIndex": 0
-                    }
-                  ]
-                },
-                {
-                  "type": "QUIZ",
-                  "title": "Pregunta del día (Hipertensión)",
-                  "description": "Responde las preguntas de la sesión",
-                  "iconResId": "outline_trophy_24",
-                  "questions": [
-                    {
-                      "questionText": "",
-                      "options": [
-                        "Hacer  un  poco  de  ejercicio  puede  ayudar  a  sentirse  mejor  de  ánimo.   -  Verdadero  -  Falso   Respuesta  correcta:  Verdadero"
                       ],
                       "correctAnswerIndex": 0
                     }
@@ -5069,7 +4957,7 @@
                 {
                   "type": "METAS",
                   "title": "Metas (Diabetes)",
-                  "description": "Configura tus metas para esta sesión de diabetes",
+                  "description": "Configura tus metas para esta sesión",
                   "iconResId": "outline_trophy_24",
                   "metasId": "diabetes"
                 },
@@ -5146,7 +5034,7 @@
                 },
                 {
                   "type": "QUIZ",
-                  "title": "Pregunta del día (Diabetes)",
+                  "title": "Pregunta del día",
                   "description": "Responde las preguntas de la sesión",
                   "iconResId": "outline_trophy_24",
                   "questions": [
@@ -5155,21 +5043,6 @@
                       "options": [
                         "Verdadero",
                         "Falso"
-                      ],
-                      "correctAnswerIndex": 0
-                    }
-                  ]
-                },
-                {
-                  "type": "QUIZ",
-                  "title": "Pregunta del día (Hipertensión)",
-                  "description": "Responde las preguntas de la sesión",
-                  "iconResId": "outline_trophy_24",
-                  "questions": [
-                    {
-                      "questionText": "",
-                      "options": [
-                        "Organizar  mejor  tus  comidas  te  ayuda  a  cuidar  tu  salud    -  Verdadero  -  Falso   Respuesta  correcta:  Verdadero"
                       ],
                       "correctAnswerIndex": 0
                     }
@@ -5206,7 +5079,7 @@
                 {
                   "type": "METAS",
                   "title": "Metas (Diabetes)",
-                  "description": "Configura tus metas para esta sesión de diabetes",
+                  "description": "Configura tus metas para esta sesión",
                   "iconResId": "outline_trophy_24",
                   "metasId": "diabetes"
                 },
@@ -5297,7 +5170,7 @@
                 },
                 {
                   "type": "QUIZ",
-                  "title": "Pregunta del día (Diabetes)",
+                  "title": "Pregunta del día",
                   "description": "Responde las preguntas de la sesión",
                   "iconResId": "outline_trophy_24",
                   "questions": [
@@ -5306,22 +5179,6 @@
                       "options": [
                         "Planificar un menú semanal junto a su hija.",
                         "Comprar comida cada día sin planificar."
-                      ],
-                      "correctAnswerIndex": 0
-                    }
-                  ]
-                },
-                {
-                  "type": "QUIZ",
-                  "title": "Pregunta del día (Hipertensión)",
-                  "description": "Responde las preguntas de la sesión",
-                  "iconResId": "outline_trophy_24",
-                  "questions": [
-                    {
-                      "questionText": "¿Qué  puede  hacer  María  para  organizar  mejor  sus  comidas?   A:  Planificar  un  menú  semanal  junto  a  su  hija.  B:  Comprar  comida  cada  día  sin  planificar.   Respuesta  correcta:  A",
-                      "options": [
-                        "Verdadero",
-                        "Falso"
                       ],
                       "correctAnswerIndex": 0
                     }
@@ -5358,7 +5215,7 @@
                 {
                   "type": "METAS",
                   "title": "Metas (Diabetes)",
-                  "description": "Configura tus metas para esta sesión de diabetes",
+                  "description": "Configura tus metas para esta sesión",
                   "iconResId": "outline_trophy_24",
                   "metasId": "diabetes"
                 },
@@ -5485,7 +5342,7 @@
                 {
                   "type": "METAS",
                   "title": "Metas (Diabetes)",
-                  "description": "Configura tus metas para esta sesión de diabetes",
+                  "description": "Configura tus metas para esta sesión",
                   "iconResId": "outline_trophy_24",
                   "metasId": "diabetes"
                 },
@@ -5612,7 +5469,7 @@
                 {
                   "type": "METAS",
                   "title": "Metas (Diabetes)",
-                  "description": "Configura tus metas para esta sesión de diabetes",
+                  "description": "Configura tus metas para esta sesión",
                   "iconResId": "outline_trophy_24",
                   "metasId": "diabetes"
                 },
@@ -5731,12 +5588,12 @@
                   "iconResId": "outline_trophy_24",
                   "questions": [
                     {
-                      "questionText": "¿Cómo  puedo  cuidar  mi  presión  arterial?   A:  No  es  necesario  cuidarse   B:  Con  medicación  y  hábitos  saludables    Respuesta  correcta:  B",
+                      "questionText": "¿Cómo puedo cuidar mi presión arterial?",
                       "options": [
-                        "Verdadero",
-                        "Falso"
+                        "No es necesario cuidarse",
+                        "Con medicación y hábitos saludables"
                       ],
-                      "correctAnswerIndex": 0
+                      "correctAnswerIndex": 1
                     }
                   ]
                 },
@@ -5771,7 +5628,7 @@
                 {
                   "type": "METAS",
                   "title": "Metas (Diabetes)",
-                  "description": "Configura tus metas para esta sesión de diabetes",
+                  "description": "Configura tus metas para esta sesión",
                   "iconResId": "outline_trophy_24",
                   "metasId": "diabetes"
                 },
@@ -5884,7 +5741,7 @@
                       "questionText": "Antes de dormir, es mejor…",
                       "options": [
                         "Comer ligero y tomar poca agua",
-                        "Comer comidas pesadas y tomar bastante"
+                        "Comer comidas pesadas y tomar bastante agua"
                       ],
                       "correctAnswerIndex": 0
                     }
@@ -5897,10 +5754,10 @@
                   "iconResId": "outline_trophy_24",
                   "questions": [
                     {
-                      "questionText": "Antes  de  dormir,  es  mejor …   A:  Comer  ligero  y  tomar  poca  agua  B:  Comer  comidas  pesadas  y  tomar  bastante  agua   Respuesta  correcta:  A",
+                      "questionText": "Antes de dormir, es mejor …",
                       "options": [
-                        "Verdadero",
-                        "Falso"
+                        "Comer ligero y tomar poca agua",
+                        "Comer comidas pesadas y tomar bastante agua"
                       ],
                       "correctAnswerIndex": 0
                     }
@@ -5951,7 +5808,7 @@
                 {
                   "type": "METAS",
                   "title": "Metas (Diabetes)",
-                  "description": "Configura tus metas para esta sesión de diabetes",
+                  "description": "Configura tus metas para esta sesión",
                   "iconResId": "outline_trophy_24",
                   "metasId": "diabetes"
                 },
@@ -6099,7 +5956,7 @@
                 },
                 {
                   "type": "QUIZ",
-                  "title": "Pregunta del día (Diabetes)",
+                  "title": "Pregunta del día",
                   "description": "Responde las preguntas de la sesión",
                   "iconResId": "outline_trophy_24",
                   "questions": [
@@ -6108,21 +5965,6 @@
                       "options": [
                         "Verdadero",
                         "Falso"
-                      ],
-                      "correctAnswerIndex": 0
-                    }
-                  ]
-                },
-                {
-                  "type": "QUIZ",
-                  "title": "Pregunta del día (Hipertensión)",
-                  "description": "Responde las preguntas de la sesión",
-                  "iconResId": "outline_trophy_24",
-                  "questions": [
-                    {
-                      "questionText": "",
-                      "options": [
-                        "El  apoyo  de  otras  personas  también  puede  ayudarte  a  sostener  tus  metas  de  salud  y  seguir  avanzando.   -  Verdadero  -  Falso   Respuesta  correcta:  Verdadero"
                       ],
                       "correctAnswerIndex": 0
                     }
@@ -6186,7 +6028,7 @@
                 },
                 {
                   "type": "QUIZ",
-                  "title": "Pregunta del día (Diabetes)",
+                  "title": "Pregunta del día",
                   "description": "Responde las preguntas de la sesión",
                   "iconResId": "outline_trophy_24",
                   "questions": [
@@ -6195,21 +6037,6 @@
                       "options": [
                         "Verdadero",
                         "Falso"
-                      ],
-                      "correctAnswerIndex": 0
-                    }
-                  ]
-                },
-                {
-                  "type": "QUIZ",
-                  "title": "Pregunta del día (Hipertensión)",
-                  "description": "Responde las preguntas de la sesión",
-                  "iconResId": "outline_trophy_24",
-                  "questions": [
-                    {
-                      "questionText": "",
-                      "options": [
-                        "¿Al  pedir  ayuda,  es  mejor  ser  claro  y  específico  sobre  lo  que  necesitas?   -  Verdadero  -  Falso   Respuesta  correcta:  Verdadero"
                       ],
                       "correctAnswerIndex": 0
                     }
@@ -6267,7 +6094,7 @@
                 {
                   "type": "METAS",
                   "title": "Metas (Diabetes)",
-                  "description": "Configura tus metas para esta sesión de diabetes",
+                  "description": "Configura tus metas para esta sesión",
                   "iconResId": "outline_trophy_24",
                   "metasId": "diabetes"
                 },
@@ -6380,7 +6207,7 @@
                 {
                   "type": "METAS",
                   "title": "Metas (Diabetes)",
-                  "description": "Configura tus metas para esta sesión de diabetes",
+                  "description": "Configura tus metas para esta sesión",
                   "iconResId": "outline_trophy_24",
                   "metasId": "diabetes"
                 },
@@ -6464,33 +6291,18 @@
                 },
                 {
                   "type": "QUIZ",
-                  "title": "Pregunta del día (Diabetes)",
+                  "title": "Pregunta del día",
                   "description": "Responde las preguntas de la sesión",
                   "iconResId": "outline_trophy_24",
                   "questions": [
                     {
                       "questionText": "Después de una semana difícil en la que no pudiste seguir tu plan, ¿qué es lo más útil?",
                       "options": [
-                        "Pensar que todo lo anterior fue en vano y",
-                        "Esperar a sentirme motivado antes de volver"
+                        "Pensar que todo lo anterior fue en vano y empezar un plan completamente nuevo.",
+                        "Esperar a sentirme motivado antes de volver a intentar.",
+                        "Retomar mi plan, ás con un paso más pequeño, sin juzgarme por la pausa."
                       ],
                       "correctAnswerIndex": 2
-                    }
-                  ]
-                },
-                {
-                  "type": "QUIZ",
-                  "title": "Pregunta del día (Hipertensión)",
-                  "description": "Responde las preguntas de la sesión",
-                  "iconResId": "outline_trophy_24",
-                  "questions": [
-                    {
-                      "questionText": "",
-                      "options": [
-                        "Verdadero",
-                        "Falso"
-                      ],
-                      "correctAnswerIndex": 0
                     }
                   ]
                 },
