@@ -35,8 +35,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.staticCompositionLocalOf
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
@@ -60,10 +63,15 @@ import com.colma.colmaApp.features.sesiones.SessionSteps.viewmodel.SessionStepsU
 import com.colma.colmaApp.features.sesiones.SessionSteps.viewmodel.SessionStepsViewModel
 import com.colma.colmaApp.features.sesiones.SessionSteps.viewmodel.SessionStepsViewModelFactory
 import com.colma.colmaApp.features.multimedia.ui.scrollbar
+import androidx.compose.animation.Crossfade
+import androidx.compose.ui.graphics.Brush
+import com.colma.colmaApp.features.sesiones.SessionList.ui.shimmerBrush
 import com.colma.colmaApp.ui.theme.ColmaAppTheme
 
 // SessionStepsUI activity has been migrated to MainActivity.kt as a NavHost route.
 // The Composable functions and helper classes are retained here for routing.
+
+val LocalScreenStartTime = staticCompositionLocalOf { 0L }
 
 @Composable
 fun SessionStepsScreen(
@@ -71,49 +79,160 @@ fun SessionStepsScreen(
     onEvent: (SessionStepsEvent) -> Unit
 ) {
     val signatureColor = colorResource(R.color.principal)
+    val startTime = remember { System.currentTimeMillis() }
 
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(colorResource(id = R.color.background))
-    ) {
-        if (uiState.error != null) {
-            Text(text = "Error: ${uiState.error}", color = Color.Red, modifier = Modifier.align(Alignment.Center))
-        } else {
-            val scrollState = rememberScrollState()
-            Column(
-                modifier = Modifier.fillMaxSize(),
-                verticalArrangement = Arrangement.spacedBy(12.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Column(
-                    modifier = Modifier
-                        .weight(1f)
-                        .padding(16.dp)
-                        .scrollbar(scrollState)
-                        .verticalScroll(scrollState),
-                    verticalArrangement = Arrangement.spacedBy(12.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    uiState.multimediaOptions.forEachIndexed { index, option ->
-                        StaggeredItemWrapper(index = index) {
-                            SessionStepCard(option = option, signatureColor = signatureColor) {
-                                onEvent(SessionStepsEvent.SessionStepClicked(option, index))
+    CompositionLocalProvider(LocalScreenStartTime provides startTime) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(colorResource(id = R.color.background))
+        ) {
+            if (uiState.error != null) {
+                Text(text = "Error: ${uiState.error}", color = Color.Red, modifier = Modifier.align(Alignment.Center))
+            } else {
+                Crossfade(targetState = uiState.isLoading, label = "sessionStepsContent") { loading ->
+                    if (loading) {
+                        val brush = shimmerBrush()
+                        Column(
+                            modifier = Modifier.fillMaxSize(),
+                            verticalArrangement = Arrangement.spacedBy(12.dp),
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            Column(
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .padding(16.dp),
+                                verticalArrangement = Arrangement.spacedBy(12.dp),
+                                horizontalAlignment = Alignment.CenterHorizontally
+                            ) {
+                                repeat(3) {
+                                    SessionStepCardSkeleton(brush = brush)
+                                }
+                            }
+                            StepProgressBarSkeleton(brush = brush)
+                        }
+                    } else {
+                        val scrollState = rememberScrollState()
+                        Column(
+                            modifier = Modifier.fillMaxSize(),
+                            verticalArrangement = Arrangement.spacedBy(12.dp),
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            Column(
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .padding(16.dp)
+                                    .scrollbar(scrollState)
+                                    .verticalScroll(scrollState),
+                                verticalArrangement = Arrangement.spacedBy(12.dp),
+                                horizontalAlignment = Alignment.CenterHorizontally
+                            ) {
+                                uiState.multimediaOptions.forEachIndexed { index, option ->
+                                    StaggeredItemWrapper(index = index) {
+                                        SessionStepCard(option = option, signatureColor = signatureColor) {
+                                            onEvent(SessionStepsEvent.SessionStepClicked(option, index))
+                                        }
+                                    }
+                                }
+                            }
+                            if (uiState.multimediaOptions.isNotEmpty()) {
+                                StaggeredItemWrapper(index = uiState.multimediaOptions.size) {
+                                    StepProgressBar(
+                                        options = uiState.multimediaOptions,
+                                        signatureColor = signatureColor,
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .padding(horizontal = 16.dp, vertical = 12.dp)
+                                    )
+                                }
                             }
                         }
                     }
                 }
-                if (uiState.multimediaOptions.isNotEmpty()) {
-                    StaggeredItemWrapper(index = uiState.multimediaOptions.size) {
-                        StepProgressBar(
-                            options = uiState.multimediaOptions,
-                            signatureColor = signatureColor,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(horizontal = 16.dp, vertical = 12.dp)
-                        )
-                    }
+            }
+        }
+    }
+}
+
+@Composable
+fun SessionStepCardSkeleton(brush: Brush) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .shadow(elevation = 6.dp, shape = RoundedCornerShape(12.dp)),
+        shape = RoundedCornerShape(12.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 6.dp),
+        colors = CardDefaults.cardColors(containerColor = Color.White)
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .heightIn(min = 80.dp)
+                .padding(20.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Box(
+                modifier = Modifier
+                    .size(40.dp)
+                    .clip(CircleShape)
+                    .background(brush)
+            )
+
+            Spacer(modifier = Modifier.width(16.dp))
+
+            Column(modifier = Modifier.weight(1f)) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth(0.6f)
+                        .height(20.dp)
+                        .clip(RoundedCornerShape(4.dp))
+                        .background(brush)
+                )
+                Spacer(modifier = Modifier.height(6.dp))
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth(0.8f)
+                        .height(14.dp)
+                        .clip(RoundedCornerShape(4.dp))
+                        .background(brush)
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun StepProgressBarSkeleton(brush: Brush) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp, vertical = 12.dp),
+        shape = RoundedCornerShape(12.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+        colors = CardDefaults.cardColors(containerColor = Color.White)
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp, vertical = 12.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center
+        ) {
+            repeat(4) { index ->
+                if (index > 0) {
+                    Box(
+                        modifier = Modifier
+                            .width(24.dp)
+                            .height(2.dp)
+                            .background(brush)
+                    )
                 }
+                Box(
+                    modifier = Modifier
+                        .size(22.dp)
+                        .clip(CircleShape)
+                        .background(brush)
+                )
             }
         }
     }
@@ -124,9 +243,17 @@ fun StaggeredItemWrapper(
     index: Int,
     content: @Composable () -> Unit
 ) {
+    val screenStartTime = LocalScreenStartTime.current
     var isVisible by remember { mutableStateOf(false) }
     LaunchedEffect(Unit) {
-        delay(index * 40L) // slightly faster (40ms) stagger for snappier loading
+        val elapsed = System.currentTimeMillis() - screenStartTime
+        if (elapsed < 500L) {
+            val delayTime = (index * 40L).coerceAtMost(240L)
+            delay(delayTime)
+        } else {
+            // Already past initial animation window; render immediately
+            isVisible = true
+        }
         isVisible = true
     }
     val alpha by animateFloatAsState(

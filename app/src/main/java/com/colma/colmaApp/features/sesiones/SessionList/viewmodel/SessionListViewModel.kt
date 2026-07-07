@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.colma.colmaApp.features.sesiones.SessionSteps.domain.TreatmentType
 import com.colma.colmaApp.features.sesiones.SessionList.domain.SessionListRepository
+import com.colma.colmaApp.features.sesiones.SessionList.domain.SubSessionItem
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -101,10 +102,22 @@ class SessionListViewModel(private val repository: SessionListRepository) : View
 
                 Log.d(TAG, "Loaded ${htaSessions.size} HTA sessions and ${diabetesSessions.size} Diabetes sessions")
 
+                val subSessionsMap = mutableMapOf<Long, List<SubSessionItem>>()
+                val allSessions = htaSessions + diabetesSessions
+                allSessions.forEach { session ->
+                    val subSessions = when (session.treatmentType) {
+                        TreatmentType.HTA -> repository.getHtaSubSessions(session.id)
+                        TreatmentType.DIABETES -> repository.getDiabetesSubSessions(session.id)
+                        TreatmentType.DBT_HTA -> repository.getDbtHtaSubSessions(session.id)
+                    }
+                    subSessionsMap[session.id] = subSessions
+                }
+
                 _uiState.update {
                     it.copy(
                         htaSessions = htaSessions,
                         diabetesSessions = diabetesSessions,
+                        subSessions = subSessionsMap,
                         isLoading = false
                     )
                 }

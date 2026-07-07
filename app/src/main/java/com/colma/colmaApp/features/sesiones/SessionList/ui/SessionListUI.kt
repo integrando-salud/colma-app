@@ -6,11 +6,19 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.Crossfade
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -41,6 +49,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.CheckCircle
@@ -63,6 +72,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.staticCompositionLocalOf
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -90,93 +101,259 @@ import com.colma.colmaApp.ui.theme.ColmaAppTheme
 // SessionListUI activity has been migrated to MainActivity.kt as a NavHost route.
 // The Composable functions and helper classes are retained here for routing.
 
+val LocalScreenStartTime = staticCompositionLocalOf { 0L }
+
 @Composable
 fun SessionListScreen(
     uiState: SessionListUiState,
     onEvent: (SessionListEvent) -> Unit
 ) {
-    Box(modifier = Modifier.fillMaxSize()) {
-        val lazyListState = rememberLazyListState()
-        LazyColumn(
-            state = lazyListState,
+    val startTime = remember { System.currentTimeMillis() }
+    CompositionLocalProvider(LocalScreenStartTime provides startTime) {
+        Box(modifier = Modifier.fillMaxSize()) {
+            Crossfade(targetState = uiState.isLoading, label = "sessionListContent") { loading ->
+                if (loading) {
+                    SessionListSkeleton(treatmentTypes = uiState.treatmentTypes)
+                } else {
+                    val lazyListState = rememberLazyListState()
+                    LazyColumn(
+                        state = lazyListState,
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(colorResource(id = R.color.background))
+                            .scrollbar(lazyListState)
+                            .padding(horizontal = 16.dp),
+                        verticalArrangement = Arrangement.spacedBy(8.dp),
+                        contentPadding = PaddingValues(vertical = 12.dp)
+                    ) {
+                        val hasHta = uiState.treatmentTypes.contains(TreatmentType.HTA)
+                        val hasDiabetes = uiState.treatmentTypes.contains(TreatmentType.DIABETES)
+                        val hasDbtHta = uiState.treatmentTypes.contains(TreatmentType.DBT_HTA)
+
+                        if (hasHta) {
+                            item {
+                                StaggeredItemWrapper(index = 0) {
+                                    TreatmentHeader(title = "Hipertensión Arterial")
+                                }
+                            }
+                            itemsIndexed(uiState.htaSessions, key = { _, it -> "hta-${it.id}" }) { index, session ->
+                                StaggeredItemWrapper(index = index + 1) {
+                                    SessionItemView(
+                                        session = session,
+                                        subSessions = uiState.subSessions[session.id] ?: emptyList(),
+                                        expanded = uiState.expandedSessionId == session.id,
+                                        onEvent = onEvent
+                                    )
+                                }
+                            }
+                        }
+
+                        if (hasHta && hasDiabetes) {
+                            item {
+                                val dividerIndex = uiState.htaSessions.size + 1
+                                StaggeredItemWrapper(index = dividerIndex) {
+                                    HorizontalDivider(
+                                        modifier = Modifier.padding(vertical = 16.dp, horizontal = 8.dp),
+                                        thickness = 1.dp,
+                                        color = Color.LightGray
+                                    )
+                                }
+                            }
+                        }
+
+                        if (hasDiabetes) {
+                            val startIndex = if (hasHta) uiState.htaSessions.size + 2 else 0
+                            item {
+                                StaggeredItemWrapper(index = startIndex) {
+                                    TreatmentHeader(title = "Diabetes")
+                                }
+                            }
+                            itemsIndexed(uiState.diabetesSessions, key = { _, it -> "diabetes-${it.id}" }) { index, session ->
+                                StaggeredItemWrapper(index = startIndex + index + 1) {
+                                    SessionItemView(
+                                        session = session,
+                                        subSessions = uiState.subSessions[session.id] ?: emptyList(),
+                                        expanded = uiState.expandedSessionId == session.id,
+                                        onEvent = onEvent
+                                    )
+                                }
+                            }
+                        }
+
+                        if (hasDbtHta) {
+                            item {
+                                StaggeredItemWrapper(index = 0) {
+                                    TreatmentHeader(title = "Diabetes e Hipertensión Arterial")
+                                }
+                            }
+                            itemsIndexed(uiState.diabetesSessions, key = { _, it -> "dbthta-${it.id}" }) { index, session ->
+                                StaggeredItemWrapper(index = index + 1) {
+                                    SessionItemView(
+                                        session = session,
+                                        subSessions = uiState.subSessions[session.id] ?: emptyList(),
+                                        expanded = uiState.expandedSessionId == session.id,
+                                        onEvent = onEvent
+                                    )
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun shimmerBrush(
+    showShimmer: Boolean = true,
+    targetValue: Float = 1000f
+): Brush {
+    return if (showShimmer) {
+        val transition = rememberInfiniteTransition(label = "shimmer")
+        val translateAnim by transition.animateFloat(
+            initialValue = 0f,
+            targetValue = targetValue,
+            animationSpec = infiniteRepeatable(
+                animation = tween(durationMillis = 1200, easing = LinearEasing),
+                repeatMode = RepeatMode.Restart
+            ),
+            label = "shimmerTranslation"
+        )
+
+        Brush.linearGradient(
+            colors = listOf(
+                Color(0xFFE2E8F0),
+                Color(0xFFEDF2F7),
+                Color(0xFFE2E8F0)
+            ),
+            start = Offset.Zero,
+            end = Offset(x = translateAnim, y = translateAnim)
+        )
+    } else {
+        Brush.linearGradient(
+            colors = listOf(Color.Transparent, Color.Transparent),
+            start = Offset.Zero,
+            end = Offset.Zero
+        )
+    }
+}
+
+@Composable
+fun SessionListSkeleton(treatmentTypes: List<TreatmentType>) {
+    val brush = shimmerBrush()
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(colorResource(id = R.color.background))
+            .padding(horizontal = 16.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+        contentPadding = PaddingValues(vertical = 12.dp)
+    ) {
+        val hasHta = treatmentTypes.contains(TreatmentType.HTA)
+        val hasDiabetes = treatmentTypes.contains(TreatmentType.DIABETES)
+        val hasDbtHta = treatmentTypes.contains(TreatmentType.DBT_HTA)
+
+        // Default to showing at least one treatment type skeleton if empty initially
+        val actualHta = hasHta || (!hasDiabetes && !hasDbtHta)
+
+        if (actualHta) {
+            item {
+                TreatmentHeaderSkeleton(brush = brush)
+            }
+            items(3) {
+                SessionCardSkeleton(brush = brush)
+            }
+        }
+
+        if (hasHta && hasDiabetes) {
+            item {
+                HorizontalDivider(
+                    modifier = Modifier.padding(vertical = 16.dp, horizontal = 8.dp),
+                    thickness = 1.dp,
+                    color = Color.LightGray
+                )
+            }
+        }
+
+        if (hasDiabetes) {
+            item {
+                TreatmentHeaderSkeleton(brush = brush)
+            }
+            items(3) {
+                SessionCardSkeleton(brush = brush)
+            }
+        }
+
+        if (hasDbtHta) {
+            item {
+                TreatmentHeaderSkeleton(brush = brush)
+            }
+            items(3) {
+                SessionCardSkeleton(brush = brush)
+            }
+        }
+    }
+}
+
+@Composable
+fun TreatmentHeaderSkeleton(brush: Brush) {
+    Box(
+        modifier = Modifier
+            .padding(bottom = 8.dp, top = 4.dp, start = 11.dp)
+            .width(180.dp)
+            .height(24.dp)
+            .clip(RoundedCornerShape(4.dp))
+            .background(brush)
+    )
+}
+
+@Composable
+fun SessionCardSkeleton(brush: Brush) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 11.dp)
+            .padding(horizontal = 11.dp),
+        shape = RoundedCornerShape(12.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 6.dp),
+        colors = CardDefaults.cardColors(containerColor = colorResource(R.color.white))
+    ) {
+        Row(
             modifier = Modifier
-                .fillMaxSize()
-                .background(colorResource(id = R.color.background))
-                .scrollbar(lazyListState)
-                .padding(horizontal = 16.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-            contentPadding = PaddingValues(vertical = 12.dp)
+                .fillMaxWidth()
+                .heightIn(min = 92.dp)
+                .padding(horizontal = 16.dp, vertical = 12.dp),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            val hasHta = uiState.treatmentTypes.contains(TreatmentType.HTA)
-            val hasDiabetes = uiState.treatmentTypes.contains(TreatmentType.DIABETES)
-            val hasDbtHta = uiState.treatmentTypes.contains(TreatmentType.DBT_HTA)
+            // Image skeleton
+            Box(
+                modifier = Modifier
+                    .size(72.dp)
+                    .clip(RoundedCornerShape(8.dp))
+                    .background(brush)
+            )
 
-            if (hasHta) {
-                item {
-                    StaggeredItemWrapper(index = 0) {
-                        TreatmentHeader(title = "Hipertensión Arterial")
-                    }
-                }
-                itemsIndexed(uiState.htaSessions, key = { _, it -> "hta-${it.id}" }) { index, session ->
-                    StaggeredItemWrapper(index = index + 1) {
-                        SessionItemView(
-                            session = session,
-                            subSessions = uiState.subSessions[session.id] ?: emptyList(),
-                            expanded = uiState.expandedSessionId == session.id,
-                            onEvent = onEvent
-                        )
-                    }
-                }
-            }
+            Spacer(modifier = Modifier.width(12.dp))
 
-            if (hasHta && hasDiabetes) {
-                item {
-                    val dividerIndex = uiState.htaSessions.size + 1
-                    StaggeredItemWrapper(index = dividerIndex) {
-                        HorizontalDivider(
-                            modifier = Modifier.padding(vertical = 16.dp, horizontal = 8.dp),
-                            thickness = 1.dp,
-                            color = Color.LightGray
-                        )
-                    }
-                }
-            }
-
-            if (hasDiabetes) {
-                val startIndex = if (hasHta) uiState.htaSessions.size + 2 else 0
-                item {
-                    StaggeredItemWrapper(index = startIndex) {
-                        TreatmentHeader(title = "Diabetes")
-                    }
-                }
-                itemsIndexed(uiState.diabetesSessions, key = { _, it -> "diabetes-${it.id}" }) { index, session ->
-                    StaggeredItemWrapper(index = startIndex + index + 1) {
-                        SessionItemView(
-                            session = session,
-                            subSessions = uiState.subSessions[session.id] ?: emptyList(),
-                            expanded = uiState.expandedSessionId == session.id,
-                            onEvent = onEvent
-                        )
-                    }
-                }
-            }
-
-            if (hasDbtHta) {
-                item {
-                    StaggeredItemWrapper(index = 0) {
-                        TreatmentHeader(title = "Diabetes e Hipertensión Arterial")
-                    }
-                }
-                itemsIndexed(uiState.diabetesSessions, key = { _, it -> "dbthta-${it.id}" }) { index, session ->
-                    StaggeredItemWrapper(index = index + 1) {
-                        SessionItemView(
-                            session = session,
-                            subSessions = uiState.subSessions[session.id] ?: emptyList(),
-                            expanded = uiState.expandedSessionId == session.id,
-                            onEvent = onEvent
-                        )
-                    }
-                }
+            Column(modifier = Modifier.weight(1f)) {
+                // Title line 1
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth(0.7f)
+                        .height(20.dp)
+                        .clip(RoundedCornerShape(4.dp))
+                        .background(brush)
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                // Title line 2 or subtitle placeholder
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth(0.4f)
+                        .height(14.dp)
+                        .clip(RoundedCornerShape(4.dp))
+                        .background(brush)
+                )
             }
         }
     }
@@ -187,9 +364,17 @@ fun StaggeredItemWrapper(
     index: Int,
     content: @Composable () -> Unit
 ) {
+    val screenStartTime = LocalScreenStartTime.current
     var isVisible by remember { mutableStateOf(false) }
     LaunchedEffect(Unit) {
-        delay(index * 40L) // slightly faster (40ms) stagger for snappier loading
+        val elapsed = System.currentTimeMillis() - screenStartTime
+        if (elapsed < 500L) {
+            val delayTime = (index * 40L).coerceAtMost(240L)
+            delay(delayTime)
+        } else {
+            // Already past initial animation window; render immediately
+            isVisible = true
+        }
         isVisible = true
     }
     val alpha by animateFloatAsState(
