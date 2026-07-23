@@ -70,16 +70,22 @@ class TreatmentDownloadRepositoryImpl(private val context: Context) : TreatmentD
 
             Log.d(TAG, "Starting download of files for treatment type: $treatmentType")
 
+            val dbHelper = com.colma.colmaApp.servicios.database.dbhelper.DbHelper(context)
+            val user = dbHelper.getUsuario(userId)
+            val paisNombre = user?.pais?.nombre?.lowercase() ?: "argentina"
+            val countryCode = if (paisNombre.contains("peru") || paisNombre.contains("perú")) "PE" else "AR"
+
             // Load static content.json from assets to merge quizzes and metas
-            val assetContentDict: ContentDictionary? = try {
+            val assetContentDict: com.colma.colmaApp.features.content.model.StaticContentCatalog? = try {
                 val jsonText = context.assets.open("content.json").bufferedReader().use { it.readText() }
-                Json { ignoreUnknownKeys = true }.decodeFromString<ContentDictionary>(jsonText)
+                Json { ignoreUnknownKeys = true }.decodeFromString<com.colma.colmaApp.features.content.model.StaticContentCatalog>(jsonText)
             } catch (e: Exception) {
                 Log.w(TAG, "Could not load static content.json from assets: ${e.message}")
                 null
             }
             // Load static treatments for merging quizzes/metas
-            val staticTreatments = listOfNotNull(assetContentDict?.treatments?.find { it.id == treatmentType })
+            val countryTreatments = assetContentDict?.countries?.get(countryCode) ?: emptyList()
+            val staticTreatments = listOfNotNull(countryTreatments.find { it.id == treatmentType })
 
             // Calculate total files to download first to report accurate progress
             val semanas = serverTreatment.semanas ?: emptyList()
@@ -271,6 +277,7 @@ class TreatmentDownloadRepositoryImpl(private val context: Context) : TreatmentD
             val mappedTreatment = TreatmentContent(
                 id = treatmentType,
                 name = serverTreatment.nombre ?: tipoStr,
+                country = countryCode,
                 sessions = mappedSessions
             )
 

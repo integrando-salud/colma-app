@@ -40,9 +40,21 @@ class ContentRepositoryImpl(private val context: Context) : ContentRepository {
                     }
                 }
 
-                // 2. Fallback to static asset content
+                // 2. Fallback to static asset content catalog partitioned by country
+                val dbHelper = com.colma.colmaApp.servicios.database.dbhelper.DbHelper(context)
+                val countryCode = if (userId != null) {
+                    val user = dbHelper.getUsuario(userId)
+                    val paisNombre = user?.pais?.nombre?.lowercase() ?: "argentina"
+                    if (paisNombre.contains("peru") || paisNombre.contains("perú")) "PE" else "AR"
+                } else {
+                    "AR"
+                }
+
                 val assetJsonText = context.assets.open("content.json").bufferedReader().use { it.readText() }
-                Json { ignoreUnknownKeys = true }.decodeFromString<ContentDictionary>(assetJsonText)
+                val catalog = Json { ignoreUnknownKeys = true }.decodeFromString<com.colma.colmaApp.features.content.model.StaticContentCatalog>(assetJsonText)
+                val countryTreatments = catalog.countries[countryCode] ?: emptyList()
+                
+                ContentDictionary(countryTreatments)
             } catch (e: Exception) {
                 Log.e(TAG, "Error loading content: ${e.message}", e)
                 throw e

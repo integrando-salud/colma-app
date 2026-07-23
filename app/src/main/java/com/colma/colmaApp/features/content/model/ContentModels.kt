@@ -10,9 +10,15 @@ data class ContentDictionary(
 )
 
 @Serializable
+data class StaticContentCatalog(
+    val countries: Map<String, List<TreatmentContent>>
+)
+
+@Serializable
 data class TreatmentContent(
     val id: TreatmentType,
     val name: String,
+    val country: String = "AR",
     val sessions: List<SessionContent>
 )
 
