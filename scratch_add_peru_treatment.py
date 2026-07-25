@@ -10,10 +10,10 @@ lectura_files = sorted(os.listdir(lecturas_dir))
 
 def clean_reading_text(text):
     text = re.sub(r'[ \t]+', ' ', text)
-    text = re.sub(r'\n\s*(●|\d+\.)', r'<P_BREAK>\1', text)
+    text = re.sub(r'\s*(●|\b\d+\.(?=\s|$))', r'<P_BREAK>\1', text)
     text = re.sub(r'([.?!:])\s*\n+', r'\1<P_BREAK>', text)
     text = re.sub(r'\s*\n+\s*', ' ', text)
-    text = text.replace('<P_BREAK>', '\n')
+    text = text.replace('<P_BREAK>', '\n \n')
     text = re.sub(r' +', ' ', text)
     return text.strip()
 
