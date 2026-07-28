@@ -1,5 +1,12 @@
 package com.colma.colmaApp.features.multimedia.ui
 
+import android.Manifest
+import android.content.pm.PackageManager
+import android.os.Build
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
+
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -45,6 +52,28 @@ fun MetasContent(
         TreatmentType.HTA
     }
     val context = LocalContext.current
+    var hasNotificationPermission by remember {
+        mutableStateOf(
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED
+            } else {
+                true
+            }
+        )
+    }
+
+    val permissionLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestPermission()
+    ) { isGranted ->
+        hasNotificationPermission = isGranted
+    }
+
+    LaunchedEffect(Unit) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU && !hasNotificationPermission) {
+            permissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+        }
+    }
+
     val dbHelper = remember { DbHelper(context) }
     val scope = rememberCoroutineScope()
     val dbDateTimeFormat = remember { SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US) }
@@ -264,6 +293,8 @@ fun MetasContent(
                                 }
                             }
                             if (result > 0L) {
+                                val scheduledMeta = newMeta.copy(id_meta = result)
+                                com.colma.colmaApp.utils.notifications.NotificationHelper.scheduleGoalNotification(context, scheduledMeta)
                                 withContext(Dispatchers.Main) {
                                     showSuccessDialog = true
                                 }

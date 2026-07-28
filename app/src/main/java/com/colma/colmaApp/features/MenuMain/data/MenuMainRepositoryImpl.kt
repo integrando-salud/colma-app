@@ -43,6 +43,7 @@ class MenuMainRepositoryImpl(
     override suspend fun updateMeta(meta: RegistrosSaludModelos.MetaRecord) {
         withContext(Dispatchers.IO) {
             dbHelper.updateMeta(meta)
+            com.colma.colmaApp.utils.notifications.NotificationHelper.cancelGoalNotification(context, meta.id_meta)
         }
     }
 

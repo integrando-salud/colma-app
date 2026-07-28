@@ -1963,6 +1963,28 @@ class DbHelper(context: Context) :
         }
     }
 
+    fun getUncompletedFutureMetas(): List<RegistrosSaludModelos.MetaRecord> {
+        val results = mutableListOf<RegistrosSaludModelos.MetaRecord>()
+        val db = readableDatabase
+        val cursor = db.query(
+            "metas_table",
+            null,
+            "meta_cumplida = 0",
+            null,
+            null,
+            null,
+            "id_meta ASC"
+        )
+        cursor.use { c ->
+            if (c.moveToFirst()) {
+                do {
+                    results.add(cursorToMetaRecord(c))
+                } while (c.moveToNext())
+            }
+        }
+        return results
+    }
+
     private fun cursorToMetaRecord(c: Cursor): RegistrosSaludModelos.MetaRecord {
         return RegistrosSaludModelos.MetaRecord(
             id_meta = c.getLongOrNull("id_meta") ?: -1L,
