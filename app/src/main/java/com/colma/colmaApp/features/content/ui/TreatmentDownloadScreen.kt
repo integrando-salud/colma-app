@@ -203,22 +203,23 @@ fun TreatmentDownloadScreen(
                 Spacer(modifier = Modifier.height(24.dp))
 
                 Text(
-                    text = if (uiState.error != null) "Error de Descarga" else "Descargando Tratamiento",
+                    text = if (uiState.error != null) "Error de Descarga" else "Descargando",
                     fontSize = 22.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color.DarkGray,
                     textAlign = TextAlign.Center
                 )
 
-                Spacer(modifier = Modifier.height(12.dp))
-
-                Text(
-                    text = uiState.statusText,
-                    fontSize = 15.sp,
-                    color = Color.Gray,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.fillMaxWidth()
-                )
+                if (uiState.error != null) {
+                    Spacer(modifier = Modifier.height(12.dp))
+                    Text(
+                        text = uiState.statusText,
+                        fontSize = 15.sp,
+                        color = Color.Gray,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                }
 
                 Spacer(modifier = Modifier.height(24.dp))
 
