@@ -217,154 +217,167 @@ fun MainAppContainer() {
         }
     }
 
-    // Modal navigation drawer dialogs (recreated from MenuMainUI)
-    if (menuUiState.showObjectiveDialog && menuUiState.todaysObjective != null) {
-        CustomAlertDialog(
-            show = true,
-            onDismissRequest = { menuViewModel.onEvent(MenuMainEvent.ObjectiveDialogDismissed) },
-            title = "Objetivo para Hoy",
-            description = "¿Completaste este objetivo?: ${menuUiState.todaysObjective!!.actividad ?: "No hay detalles."}",
-            onYes = { menuViewModel.onEvent(MenuMainEvent.ObjectiveCompleted) },
-            onNo = { menuViewModel.onEvent(MenuMainEvent.ObjectiveNotCompleted("")) }
-        )
-    }
+    val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
 
-    if (menuUiState.showReasonDialog) {
-        val reasons = listOf(
-            "No tenía energía / ánimo para hacerlo",
-            "Otras actividades me quitaron tiempo (trabajo, familia, etc.)",
-            "Tuve dificultades para hacer la actividad",
-            "Tuve un problema de salud / estuve enfermo(a)",
-            "La persona con quien iba a hacer la actividad no pudo acompañarme",
-            "Me olvidé de hacer la actividad.",
-            "otro"
-        )
-        var selectedReason by remember { mutableStateOf(menuUiState.selectedReason) }
+    // Modal navigation drawer dialogs (recreated from MenuMainUI) - Only shown on main menu
+    if (currentRoute == "menu_main" && !menuUiState.isLoading) {
+        if (menuUiState.showObjectiveDialog && menuUiState.todaysObjective != null) {
+            CustomAlertDialog(
+                show = true,
+                onDismissRequest = { menuViewModel.onEvent(MenuMainEvent.ObjectiveDialogDismissed) },
+                title = "Objetivo para Hoy",
+                description = "¿Completaste este objetivo?: ${menuUiState.todaysObjective!!.actividad ?: "No hay detalles."}",
+                onYes = { menuViewModel.onEvent(MenuMainEvent.ObjectiveCompleted) },
+                onNo = { menuViewModel.onEvent(MenuMainEvent.ObjectiveNotCompleted("")) }
+            )
+        }
 
-        AlertDialog(
-            onDismissRequest = { menuViewModel.onEvent(MenuMainEvent.ObjectiveDialogDismissed) },
-            properties = DialogProperties(dismissOnBackPress = false, dismissOnClickOutside = false),
-            title = { Text("¿Por qué no completaste el objetivo?") },
-            text = {
-                Column {
-                    reasons.forEach { reason ->
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .clickable { selectedReason = reason }
-                                .padding(vertical = 4.dp),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            RadioButton(
-                                selected = (reason == selectedReason),
-                                onClick = { selectedReason = reason }
-                            )
-                            Text(text = reason, modifier = Modifier.padding(start = 8.dp))
+        if (menuUiState.showReasonDialog) {
+            val reasons = listOf(
+                "No tenía energía / ánimo para hacerlo",
+                "Otras actividades me quitaron tiempo (trabajo, familia, etc.)",
+                "Tuve dificultades para hacer la actividad",
+                "Tuve un problema de salud / estuve enfermo(a)",
+                "La persona con quien iba a hacer la actividad no pudo acompañarme",
+                "Me olvidé de hacer la actividad.",
+                "otro"
+            )
+            var selectedReason by remember { mutableStateOf(menuUiState.selectedReason) }
+
+            AlertDialog(
+                onDismissRequest = { menuViewModel.onEvent(MenuMainEvent.ObjectiveDialogDismissed) },
+                properties = DialogProperties(dismissOnBackPress = false, dismissOnClickOutside = false),
+                title = { Text("¿Por qué no completaste el objetivo?") },
+                text = {
+                    Column {
+                        reasons.forEach { reason ->
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .clickable { selectedReason = reason }
+                                    .padding(vertical = 4.dp),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                RadioButton(
+                                    selected = (reason == selectedReason),
+                                    onClick = { selectedReason = reason }
+                                )
+                                Text(text = reason, modifier = Modifier.padding(start = 8.dp))
+                            }
                         }
                     }
+                },
+                confirmButton = {
+                    Button(
+                        onClick = {
+                            if (selectedReason.isNotBlank()) {
+                                menuViewModel.onEvent(MenuMainEvent.ObjectiveNotCompleted(selectedReason))
+                            }
+                        },
+                        colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.principal_boton), contentColor = Color.White)
+                    ) {
+                        Text("Aceptar")
+                    }
                 }
-            },
-            confirmButton = {
-                Button(
-                    onClick = {
-                        if (selectedReason.isNotBlank()) {
-                            menuViewModel.onEvent(MenuMainEvent.ObjectiveNotCompleted(selectedReason))
-                        }
-                    },
-                    colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.principal_boton), contentColor = Color.White)
-                ) {
-                    Text("Aceptar")
-                }
-            }
-        )
-    }
+            )
+        }
 
-    if (menuUiState.showOtherReasonDialog) {
-        AlertDialog(
-            onDismissRequest = { menuViewModel.onEvent(MenuMainEvent.ObjectiveDialogDismissed) },
-            properties = DialogProperties(dismissOnBackPress = false, dismissOnClickOutside = false),
-            title = { Text("Por favor, explica la razón") },
-            text = {
-                OutlinedTextField(
-                    value = menuUiState.otherReasonInput,
-                    onValueChange = { menuViewModel.onEvent(MenuMainEvent.OtherReasonChanged(it)) },
-                    label = { Text("Razón") }
-                )
-            },
-            confirmButton = {
-                Button(
-                    onClick = { menuViewModel.onEvent(MenuMainEvent.OtherReasonConfirmed) },
-                    colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.principal_boton), contentColor = Color.White)
-                ) {
-                    Text("Aceptar")
-                }
-            }
-        )
-    }
-
-    if (menuUiState.showFeedbackDialog) {
-        AlertDialog(
-            onDismissRequest = { menuViewModel.onEvent(MenuMainEvent.DismissFeedbackDialog) },
-            properties = DialogProperties(dismissOnBackPress = false, dismissOnClickOutside = false),
-            icon = {
-                if (menuUiState.showTrophyInFeedback) {
-                    CongratulationAnimation()
-                } else if (menuUiState.isHelpRequestFeedback && menuUiState.isSuccessFeedback) {
-                    Icon(
-                        imageVector = Icons.Default.Done,
-                        contentDescription = null,
-                        modifier = Modifier.size(60.dp),
-                        tint = Color(0xFF4CAF50)
+        if (menuUiState.showOtherReasonDialog) {
+            AlertDialog(
+                onDismissRequest = { menuViewModel.onEvent(MenuMainEvent.ObjectiveDialogDismissed) },
+                properties = DialogProperties(dismissOnBackPress = false, dismissOnClickOutside = false),
+                title = { Text("Escribe otro motivo") },
+                text = {
+                    var otherReason by remember { mutableStateOf(menuUiState.otherReasonInput) }
+                    OutlinedTextField(
+                        value = otherReason,
+                        onValueChange = {
+                            otherReason = it
+                            menuViewModel.onEvent(MenuMainEvent.OtherReasonChanged(it))
+                        },
+                        label = { Text("Motivo") },
+                        modifier = Modifier.fillMaxWidth()
                     )
+                },
+                confirmButton = {
+                    Button(
+                        onClick = {
+                            if (menuUiState.otherReasonInput.isNotBlank()) {
+                                menuViewModel.onEvent(MenuMainEvent.OtherReasonConfirmed)
+                            }
+                        },
+                        colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.principal_boton), contentColor = Color.White)
+                    ) {
+                        Text("Aceptar")
+                    }
                 }
-            },
-            title = {
-                Text(
-                    text = menuUiState.feedbackMessage,
-                    fontSize = if (menuUiState.isHelpRequestFeedback) 20.sp else 18.sp,
-                    fontWeight = FontWeight.SemiBold,
-                    textAlign = if (menuUiState.isHelpRequestFeedback) TextAlign.Center else TextAlign.Start,
-                    modifier = Modifier.fillMaxWidth()
-                )
-            },
-            confirmButton = {
-                Button(
-                    onClick = { menuViewModel.onEvent(MenuMainEvent.DismissFeedbackDialog) },
-                    colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.principal_boton), contentColor = Color.White)
-                ) {
-                    Text("Aceptar", fontSize = 16.sp)
-                }
-            }
-        )
-    }
+            )
+        }
 
-    if (menuUiState.showNoInternetDialog) {
-        AlertDialog(
-            onDismissRequest = { menuViewModel.onEvent(MenuMainEvent.DismissNoInternetDialog) },
-            title = { Text("Sin conexión") },
-            text = { Text("Los datos se actualizarán cuando tenga acceso a internet.", fontSize = 16.sp) },
-            confirmButton = {
-                Button(
-                    onClick = { menuViewModel.onEvent(MenuMainEvent.DismissNoInternetDialog) },
-                    colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.principal_boton), contentColor = Color.White)
-                ) {
-                    Text("Aceptar", fontSize = 16.sp)
+        if (menuUiState.showFeedbackDialog) {
+            AlertDialog(
+                onDismissRequest = { menuViewModel.onEvent(MenuMainEvent.DismissFeedbackDialog) },
+                properties = DialogProperties(dismissOnBackPress = false, dismissOnClickOutside = false),
+                icon = {
+                    if (menuUiState.showTrophyInFeedback) {
+                        CongratulationAnimation()
+                    } else if (menuUiState.isHelpRequestFeedback && menuUiState.isSuccessFeedback) {
+                        Icon(
+                            imageVector = Icons.Default.Done,
+                            contentDescription = null,
+                            modifier = Modifier.size(60.dp),
+                            tint = Color(0xFF4CAF50)
+                        )
+                    }
+                },
+                title = {
+                    Text(
+                        text = menuUiState.feedbackMessage,
+                        fontSize = if (menuUiState.isHelpRequestFeedback) 20.sp else 18.sp,
+                        fontWeight = FontWeight.SemiBold,
+                        textAlign = if (menuUiState.isHelpRequestFeedback) TextAlign.Center else TextAlign.Start,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                },
+                confirmButton = {
+                    Button(
+                        onClick = { menuViewModel.onEvent(MenuMainEvent.DismissFeedbackDialog) },
+                        colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.principal_boton), contentColor = Color.White)
+                    ) {
+                        Text("Aceptar", fontSize = 16.sp)
+                    }
                 }
-            }
-        )
-    }
+            )
+        }
 
-    if (menuUiState.showHelpRequestDialog) {
-        CustomAlertDialog(
-            show = true,
-            onDismissRequest = { menuViewModel.onEvent(MenuMainEvent.DismissHelpRequestDialog) },
-            title = "¿Está seguro/a que quieres pedir ayuda técnica a tu promotora de salud?",
-            description = "",
-            yesLabel = "Confirmar",
-            noLabel = "Cancelar",
-            onYes = { menuViewModel.onEvent(MenuMainEvent.ConfirmHelpRequest) },
-            onNo = { menuViewModel.onEvent(MenuMainEvent.DismissHelpRequestDialog) }
-        )
+        if (menuUiState.showNoInternetDialog) {
+            AlertDialog(
+                onDismissRequest = { menuViewModel.onEvent(MenuMainEvent.DismissNoInternetDialog) },
+                title = { Text("Sin conexión") },
+                text = { Text("Los datos se actualizarán cuando tenga acceso a internet.", fontSize = 16.sp) },
+                confirmButton = {
+                    Button(
+                        onClick = { menuViewModel.onEvent(MenuMainEvent.DismissNoInternetDialog) },
+                        colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.principal_boton), contentColor = Color.White)
+                    ) {
+                        Text("Aceptar", fontSize = 16.sp)
+                    }
+                }
+            )
+        }
+
+        if (menuUiState.showHelpRequestDialog) {
+            CustomAlertDialog(
+                show = true,
+                onDismissRequest = { menuViewModel.onEvent(MenuMainEvent.DismissHelpRequestDialog) },
+                title = "¿Está seguro/a que quieres pedir ayuda técnica a tu promotora de salud?",
+                description = "",
+                yesLabel = "Confirmar",
+                noLabel = "Cancelar",
+                onYes = { menuViewModel.onEvent(MenuMainEvent.ConfirmHelpRequest) },
+                onNo = { menuViewModel.onEvent(MenuMainEvent.DismissHelpRequestDialog) }
+            )
+        }
     }
 
     // Modal navigation drawer

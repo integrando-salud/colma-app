@@ -27,14 +27,14 @@ class MenuMainRepositoryImpl(
     private val helpRequestService = HelpRequestService()
 
     override suspend fun getPendingPastMeta(): RegistrosSaludModelos.MetaRecord? {
-        val userId = SessionManager.getUserId()
+        val userId = SessionManager.getUserId() ?: return null
         return withContext(Dispatchers.IO) {
             dbHelper.getPendingPastMeta(userId)
         }
     }
 
     override suspend fun getPendingFutureMetasCount(): Int {
-        val userId = SessionManager.getUserId()
+        val userId = SessionManager.getUserId() ?: return 0
         return withContext(Dispatchers.IO) {
             dbHelper.getPendingFutureMetasCount(userId)
         }
@@ -278,6 +278,10 @@ class MenuMainRepositoryImpl(
                 Result.failure(e)
             }
         }
+    }
+
+    override suspend fun getUserId(): Int? {
+        return SessionManager.getUserId()
     }
 
     override suspend fun getDownloadedTreatmentTypes(): List<String> = withContext(Dispatchers.IO) {

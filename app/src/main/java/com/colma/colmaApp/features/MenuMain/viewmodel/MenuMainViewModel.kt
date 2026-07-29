@@ -23,9 +23,9 @@ class MenuMainViewModel(private val repository: MenuMainRepository) : ViewModel(
     private val _navigationEvent = Channel<NavigationEvent>()
     val navigationEvent = _navigationEvent.receiveAsFlow()
 
+    private var hasAutoSynced = false
+
     init {
-        onEvent(MenuMainEvent.LoadInitialData)
-        autoSyncOnStartup()
     }
 
     private val reasonMessages = mapOf(
@@ -61,6 +61,12 @@ class MenuMainViewModel(private val repository: MenuMainRepository) : ViewModel(
 
         private fun loadInitialData() {
             viewModelScope.launch {
+                val userId = repository.getUserId()
+                if (userId == null) {
+                    Log.d(TAG, "No user ID found, skipping loadInitialData")
+                    _uiState.update { MenuMainUiState() }
+                    return@launch
+                }
                 _uiState.update { it.copy(isLoading = true) }
                 val pendingPastMeta = repository.getPendingPastMeta()
                 val pendingMetasCount = repository.getPendingFutureMetasCount()
@@ -74,6 +80,11 @@ class MenuMainViewModel(private val repository: MenuMainRepository) : ViewModel(
                         userName = userName,
                         isLoading = false
                     )
+                }
+
+                if (!hasAutoSynced) {
+                    hasAutoSynced = true
+                    autoSyncOnStartup()
                 }
             }
         }
@@ -169,6 +180,11 @@ class MenuMainViewModel(private val repository: MenuMainRepository) : ViewModel(
 
         private fun autoSyncOnStartup() {
             viewModelScope.launch {
+                val userId = repository.getUserId()
+                if (userId == null) {
+                    Log.d(TAG, "No user ID found, skipping autoSyncOnStartup")
+                    return@launch
+                }
                 Log.d(TAG, "Auto-sync triggered on app startup")
                 repository.synchronizeData()
                     .onSuccess { message ->
@@ -177,7 +193,7 @@ class MenuMainViewModel(private val repository: MenuMainRepository) : ViewModel(
                         loadInitialData()
                     }
                     .onFailure { error ->
-                        Log.w(TAG, "Auto-sync failed (non-critical): ${error.message}")
+                        Log.w(TAG, "auto-sync failed (non-critical): ${error.message}")
                     }
             }
         }
