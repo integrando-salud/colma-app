@@ -142,11 +142,13 @@ class PresionRepositoryImpl(private val context: Context) : PresionRepository {
                 advertencia = advertencia
             )
 
+            val completedSessionsCount = dbHelper.getCompletedSessionsCount(userId)
             val syncRequest = SyncDataRequest(
                 deviceTimestamp = System.currentTimeMillis(),
                 userId = userId,
                 app = "colmaApp",
                 clientSyncTimestamp = now,
+                sesionesCompletadas = completedSessionsCount,
                 glucosa = emptyList(),
                 presion = listOf(presionData),
                 estadoAnimo = emptyList(),

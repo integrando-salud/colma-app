@@ -54,6 +54,17 @@ class DbHelper(context: Context) :
                     id_usuario INTEGER
                 );
             """)
+            db.execSQL("""
+                CREATE TABLE IF NOT EXISTS sesiones_completadas (
+                    id_usuario INTEGER,
+                    treatment_id TEXT,
+                    week_id INTEGER,
+                    session_id INTEGER,
+                    fecha_completado TEXT DEFAULT (datetime('now', 'localtime')),
+                    fecha_sincronizacion TEXT,
+                    PRIMARY KEY (id_usuario, treatment_id, week_id, session_id)
+                );
+            """)
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -2256,6 +2267,33 @@ class DbHelper(context: Context) :
                 } catch (e: Exception) {
                     false
                 }
+            }
+
+            fun getCompletedSessionsCount(idUsuario: Int): Int {
+                val db = readableDatabase
+                val query = "SELECT COUNT(*) FROM sesiones_completadas WHERE id_usuario = ?"
+                db.rawQuery(query, arrayOf(idUsuario.toString())).use { cursor ->
+                    if (cursor.moveToFirst()) {
+                        return cursor.getInt(0)
+                    }
+                }
+                return 0
+            }
+
+            fun insertCompletedSession(idUsuario: Int, treatmentId: String, weekId: Int, sessionId: Int): Long {
+                val db = writableDatabase
+                val values = ContentValues().apply {
+                    put("id_usuario", idUsuario)
+                    put("treatment_id", treatmentId)
+                    put("week_id", weekId)
+                    put("session_id", sessionId)
+                }
+                return db.insertWithOnConflict(
+                    "sesiones_completadas",
+                    null,
+                    values,
+                    SQLiteDatabase.CONFLICT_IGNORE
+                )
             }
         }
         

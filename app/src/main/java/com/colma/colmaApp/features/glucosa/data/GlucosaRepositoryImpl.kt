@@ -141,11 +141,13 @@ class GlucosaRepositoryImpl(private val context: Context) : GlucosaRepository {
                 advertencia = advertencia 
             )
 
+            val completedSessionsCount = dbHelper.getCompletedSessionsCount(userId)
             val syncRequest = SyncDataRequest(
                 deviceTimestamp = System.currentTimeMillis(),
                 userId = userId,
                 app = "colmaApp",
                 clientSyncTimestamp = now,
+                sesionesCompletadas = completedSessionsCount,
                 glucosa = listOf(glucosaData),
                 presion = emptyList(),
                 estadoAnimo = emptyList(),

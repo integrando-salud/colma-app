@@ -151,14 +151,41 @@ class SessionStepsRepositoryImpl(
     }
 
     override suspend fun saveMultimediaRead(multimediaReadRecord: RegistrosSaludModelos.MultimediaReadRecord) {
+        val treatmentId = multimediaReadRecord.treatment_id ?: "UNKNOWN"
+        val weekId = multimediaReadRecord.week_id ?: -1
+        val sessionId = multimediaReadRecord.session_id ?: -1
+
         dbHelper.upsertMultimediaRead(
             idUsuario = userId,
-            treatmentId = multimediaReadRecord.treatment_id ?: "UNKNOWN",
-            weekId = multimediaReadRecord.week_id ?: -1,
-            sessionId = multimediaReadRecord.session_id ?: -1,
+            treatmentId = treatmentId,
+            weekId = weekId,
+            sessionId = sessionId,
             multimediaType = multimediaReadRecord.multimedia_type ?: "UNKNOWN",
             multimediaUniqueKey = multimediaReadRecord.multimedia_unique_key ?: "UNKNOWN"
         )
+
+        // Check if the subsession has been completed
+        val treatmentType = try {
+            TreatmentType.valueOf(treatmentId.uppercase())
+        } catch (e: Exception) {
+            null
+        }
+
+        if (treatmentType != null && weekId > 0 && sessionId > 0) {
+            val progressResult = contentRepository.getSubSessionProgress(treatmentType, weekId.toLong(), sessionId.toLong())
+            progressResult.onSuccess { progress ->
+                val totalCount = progress.totalCount
+                val readCount = dbHelper.getReadMultimediaCount(userId, treatmentId, weekId, sessionId)
+                if (totalCount > 0 && readCount >= totalCount) {
+                    dbHelper.insertCompletedSession(
+                        idUsuario = userId,
+                        treatmentId = treatmentId,
+                        weekId = weekId,
+                        sessionId = sessionId
+                    )
+                }
+            }
+        }
     }
 
     override suspend fun getSubSessionProgress(
@@ -240,11 +267,13 @@ class SessionStepsRepositoryImpl(
                 porcentajeCorrecto = quizResponse.percentage_correct?.toInt() ?: 0
             )
 
+            val completedSessionsCount = dbHelper.getCompletedSessionsCount(userId)
             val syncRequest = SyncDataRequest(
                 deviceTimestamp = System.currentTimeMillis(),
                 userId = userId,
                 app = "colmaApp",
                 clientSyncTimestamp = now,
+                sesionesCompletadas = completedSessionsCount,
                 glucosa = emptyList(),
                 presion = emptyList(),
                 estadoAnimo = emptyList(),

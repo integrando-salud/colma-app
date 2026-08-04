@@ -175,11 +175,14 @@ class MenuMainRepositoryImpl(
             )
         }
 
+        val completedSessionsCount = withContext(Dispatchers.IO) { dbHelper.getCompletedSessionsCount(userId) }
+
         return com.colma.colmaApp.servicios.internetCommunication.model.SyncDataRequest(
             deviceTimestamp = System.currentTimeMillis(),
             userId = userId,
             app = "colmaApp",
             clientSyncTimestamp = clientSyncTimestamp,
+            sesionesCompletadas = completedSessionsCount,
             glucosa = glucosaData,
             presion = presionData,
             estadoAnimo = estadoAnimoData,

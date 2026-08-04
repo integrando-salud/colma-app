@@ -1,12 +1,22 @@
 package com.colma.colmaApp.servicios.internetCommunication.model
 
+import com.google.gson.JsonDeserializationContext
+import com.google.gson.JsonDeserializer
+import com.google.gson.JsonElement
+import com.google.gson.JsonObject
+import com.google.gson.JsonSerializationContext
+import com.google.gson.JsonSerializer
+import com.google.gson.annotations.JsonAdapter
 import com.google.gson.annotations.SerializedName
+import java.lang.reflect.Type
 
+@JsonAdapter(SyncDataRequestAdapter::class)
 data class SyncDataRequest(
     val deviceTimestamp: Long,
     val userId: Int,
     val app: String,
     val clientSyncTimestamp: String,
+    @SerializedName("sesiones_completadas") val sesionesCompletadas: Int = 0,
     val glucosa: List<GlucosaData>,
     val presion: List<PresionData>,
     @SerializedName("estado_animo") val estadoAnimo: List<EstadoAnimoData>,
@@ -14,6 +24,62 @@ data class SyncDataRequest(
     val metas: List<MetaData>,
     @SerializedName("multimedia_read") val multimediaRead: List<MultimediaReadData>
 )
+
+class SyncDataRequestAdapter : JsonSerializer<SyncDataRequest>, JsonDeserializer<SyncDataRequest> {
+    override fun serialize(
+        src: SyncDataRequest,
+        typeOfSrc: Type,
+        context: JsonSerializationContext
+    ): JsonElement {
+        val jsonObject = JsonObject()
+        jsonObject.addProperty("app", src.app)
+        jsonObject.addProperty("clientSyncTimestamp", src.clientSyncTimestamp)
+        jsonObject.addProperty("deviceTimestamp", src.deviceTimestamp)
+        jsonObject.addProperty("sesiones_completadas", src.sesionesCompletadas)
+        jsonObject.add("estado_animo", context.serialize(src.estadoAnimo))
+        jsonObject.add("glucosa", context.serialize(src.glucosa))
+        jsonObject.add("metas", context.serialize(src.metas))
+        jsonObject.add("multimedia_read", context.serialize(src.multimediaRead))
+        jsonObject.add("presion", context.serialize(src.presion))
+        jsonObject.add("quiz", context.serialize(src.quiz))
+        jsonObject.addProperty("userId", src.userId)
+        return jsonObject
+    }
+
+    override fun deserialize(
+        json: JsonElement,
+        typeOfT: Type,
+        context: JsonDeserializationContext
+    ): SyncDataRequest {
+        val obj = json.asJsonObject
+        val deviceTimestamp = obj.get("deviceTimestamp")?.asLong ?: 0L
+        val userId = obj.get("userId")?.asInt ?: 0
+        val app = obj.get("app")?.asString ?: ""
+        val clientSyncTimestamp = obj.get("clientSyncTimestamp")?.asString ?: ""
+        val sesionesCompletadas = (obj.get("sesiones_completadas") ?: obj.get("sesionesCompletadas"))?.asInt ?: 0
+        
+        val glucosa: List<GlucosaData> = context.deserialize<Array<GlucosaData>>(obj.get("glucosa"), Array<GlucosaData>::class.java)?.toList() ?: emptyList()
+        val presion: List<PresionData> = context.deserialize<Array<PresionData>>(obj.get("presion"), Array<PresionData>::class.java)?.toList() ?: emptyList()
+        val estadoAnimo: List<EstadoAnimoData> = context.deserialize<Array<EstadoAnimoData>>(obj.get("estado_animo") ?: obj.get("estadoAnimo"), Array<EstadoAnimoData>::class.java)?.toList() ?: emptyList()
+        val quiz: List<QuizData> = context.deserialize<Array<QuizData>>(obj.get("quiz"), Array<QuizData>::class.java)?.toList() ?: emptyList()
+        val metas: List<MetaData> = context.deserialize<Array<MetaData>>(obj.get("metas"), Array<MetaData>::class.java)?.toList() ?: emptyList()
+        val multimediaRead: List<MultimediaReadData> = context.deserialize<Array<MultimediaReadData>>(obj.get("multimedia_read") ?: obj.get("multimediaRead"), Array<MultimediaReadData>::class.java)?.toList() ?: emptyList()
+
+        return SyncDataRequest(
+            deviceTimestamp = deviceTimestamp,
+            userId = userId,
+            app = app,
+            clientSyncTimestamp = clientSyncTimestamp,
+            sesionesCompletadas = sesionesCompletadas,
+            glucosa = glucosa,
+            presion = presion,
+            estadoAnimo = estadoAnimo,
+            quiz = quiz,
+            metas = metas,
+            multimediaRead = multimediaRead
+        )
+    }
+}
 
 data class GlucosaData(
     @SerializedName("id_glucosa") val idGlucosa: Int,

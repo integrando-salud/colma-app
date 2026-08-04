@@ -143,11 +143,13 @@ class MoodRepositoryImpl(private val context: Context) : MoodRepository {
                 fechaSincronizacion = now
             )
 
+            val completedSessionsCount = dbHelper.getCompletedSessionsCount(userId)
             val syncRequest = SyncDataRequest(
                 deviceTimestamp = System.currentTimeMillis(),
                 userId = userId,
                 app = "colmaApp",
                 clientSyncTimestamp = now,
+                sesionesCompletadas = completedSessionsCount,
                 glucosa = emptyList(),
                 presion = emptyList(),
                 estadoAnimo = listOf(estadoAnimoData),
