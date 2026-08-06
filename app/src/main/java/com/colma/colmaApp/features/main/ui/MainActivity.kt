@@ -117,7 +117,7 @@ import com.colma.colmaApp.features.MetasHistory.viewmodel.MetasHistoryViewModel
 import com.colma.colmaApp.features.MetasHistory.viewmodel.MetasHistoryViewModelFactory
 import com.colma.colmaApp.features.MetasHistory.data.MetasHistoryRepositoryImpl
 
-import com.colma.colmaApp.features.instructions.ui.InstructionsScreen
+import com.colma.colmaApp.features.instructions.ui.AdditionalInfoScreen
 import com.colma.colmaApp.servicios.database.dbhelper.DbHelper
 import com.colma.colmaApp.ui.theme.ColmaAppTheme
 import com.colma.colmaApp.utils.TopBarConfig
@@ -419,7 +419,7 @@ fun MainAppContainer() {
 
                             DrawerItem("Información adicional", Icons.Default.Info) {
                                 scope.launch { drawerState.close() }
-                                navController.navigate("instructions")
+                                navController.navigate("additional_info")
                             }
 
                             Spacer(Modifier.height(28.dp))
@@ -1049,19 +1049,17 @@ fun MainAppContainer() {
 
 
 
-                        composable("instructions") {
+                        composable("additional_info") {
                             LaunchedEffect(Unit) {
                                 topBarConfig = TopBarConfig(
-                                    title = "Instrucciones",
+                                    title = "Información adicional",
                                     showBackButton = true,
                                     onBackClick = { navController.popBackStack() },
                                     showTopBar = true
                                 )
                             }
 
-                            InstructionsScreen(
-                                onFinish = { navController.popBackStack() }
-                            )
+                            AdditionalInfoScreen()
                         }
                     }
                 }
