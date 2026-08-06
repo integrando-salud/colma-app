@@ -474,7 +474,7 @@ fun SessionCard(session: SessionItem, selected: Boolean = false, onClick: () -> 
             verticalAlignment = Alignment.CenterVertically
         ) {
             Image(
-                painter = painterResource(id = session.thumbnailRes),
+                painter = painterResource(id = R.drawable.logo_colma),
                 contentDescription = "Miniatura ${session.title}",
                 modifier = Modifier
                     .sizeIn(maxWidth = 72.dp, maxHeight = 72.dp)
