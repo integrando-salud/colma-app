@@ -168,7 +168,7 @@ class FullscreenVideoActivity : ComponentActivity() {
                     PlayerView(ctx).apply {
                         player = exoPlayer
                         useController = false
-                        resizeMode = AspectRatioFrameLayout.RESIZE_MODE_FILL
+                        resizeMode = AspectRatioFrameLayout.RESIZE_MODE_FIT
                     }
                 },
                 modifier = Modifier.fillMaxSize()
