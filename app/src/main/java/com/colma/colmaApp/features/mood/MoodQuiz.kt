@@ -223,10 +223,20 @@ fun MoodQuizScreen(
                     onDismissRequest = { onEvent(MoodQuizEvent.DismissWarningDialog) },
                     title = {
                         Text(
-                            text = uiState.warningDialogMessage,
+                            text = "Atención",
                             fontWeight = FontWeight.Bold,
                             fontSize = 18.sp
                         )
+                    },
+                    text = {
+                        Column(
+                            modifier = Modifier.verticalScroll(rememberScrollState())
+                        ) {
+                            Text(
+                                text = uiState.warningDialogMessage,
+                                fontSize = 16.sp
+                            )
+                        }
                     },
                     confirmButton = {
                         Button(
@@ -248,10 +258,20 @@ fun MoodQuizScreen(
                     onDismissRequest = { onEvent(MoodQuizEvent.DismissCompletionDialog) },
                     title = {
                         Text(
-                            text = uiState.completionDialogMessage,
+                            text = "Información importante",
                             fontWeight = FontWeight.Bold,
                             fontSize = 18.sp
                         )
+                    },
+                    text = {
+                        Column(
+                            modifier = Modifier.verticalScroll(rememberScrollState())
+                        ) {
+                            Text(
+                                text = uiState.completionDialogMessage,
+                                fontSize = 16.sp
+                            )
+                        }
                     },
                     confirmButton = {
                         Button(
