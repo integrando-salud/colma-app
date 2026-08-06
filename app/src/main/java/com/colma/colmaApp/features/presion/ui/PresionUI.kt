@@ -152,6 +152,36 @@ fun PresionScreen(
         initialMinute = measurementCalendar.get(Calendar.MINUTE)
     )
 
+    if (uiState.warningDialog.show) {
+        AlertDialog(
+            onDismissRequest = { onEvent(PresionEvent.DismissWarningDialog) },
+            title = {
+                Text(
+                    text = "Alerta de salud",
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 18.sp,
+                    color = Color.Red
+                )
+            },
+            text = {
+                Text(
+                    text = uiState.warningDialog.message,
+                    fontSize = 16.sp
+                )
+            },
+            confirmButton = {
+                Button(
+                    onClick = { onEvent(PresionEvent.DismissWarningDialog) },
+                    colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.principal_boton), contentColor = Color.White)
+                ) {
+                    Text("Aceptar")
+                }
+            },
+            containerColor = Color.White,
+            shape = RoundedCornerShape(12.dp)
+        )
+    }
+
     Box(
         modifier = Modifier
             .fillMaxSize()
