@@ -131,6 +131,7 @@ fun InformationCard(
     var isPlayingAudio by remember { mutableStateOf(false) }
 
     val hasAudio = audioResId != null || localAudioPath != null
+    val hasNoAudioAndNoImage = !hasAudio && localImagePath == null
 
     DisposableEffect(audioResId, localAudioPath) {
         if (hasAudio) {
@@ -156,7 +157,7 @@ fun InformationCard(
     }
 
     DisposableEffect(Unit) {
-        if (!hasAudio) {
+        if (!hasAudio && !hasNoAudioAndNoImage) {
             isInitializing = true
             val speech = TextToSpeech(context) { status ->
                 if (status == TextToSpeech.SUCCESS) {
@@ -204,50 +205,52 @@ fun InformationCard(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top
         ) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center,
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text(
-                    "Información importante",
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.weight(1f),
-                    textAlign = TextAlign.Center
-                )
-                if (isInitializing) {
-                    CircularProgressIndicator(modifier = Modifier.size(24.dp), color = Color(0xFFE84589), strokeWidth = 2.dp)
-                } else if (hasAudio && exoPlayer != null) {
-                    IconButton(onClick = {
-                        exoPlayer?.let { player ->
-                            if (isPlayingAudio) {
-                                player.stop(); player.seekTo(0); isPlayingAudio = false
-                            } else {
-                                player.seekTo(0); player.playWhenReady = true; isPlayingAudio = true
+            if (!hasNoAudioAndNoImage) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text(
+                        "Información importante",
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier.weight(1f),
+                        textAlign = TextAlign.Center
+                    )
+                    if (isInitializing) {
+                        CircularProgressIndicator(modifier = Modifier.size(24.dp), color = Color(0xFFE84589), strokeWidth = 2.dp)
+                    } else if (hasAudio && exoPlayer != null) {
+                        IconButton(onClick = {
+                            exoPlayer?.let { player ->
+                                if (isPlayingAudio) {
+                                    player.stop(); player.seekTo(0); isPlayingAudio = false
+                                } else {
+                                    player.seekTo(0); player.playWhenReady = true; isPlayingAudio = true
+                                }
                             }
+                        }) {
+                            Icon(
+                                painter = painterResource(R.drawable.tts_icon),
+                                contentDescription = if (isPlayingAudio) "Detener audio" else "Reproducir audio",
+                                tint = Color(0xFFE84589)
+                            )
                         }
-                    }) {
-                        Icon(
-                            painter = painterResource(R.drawable.tts_icon),
-                            contentDescription = if (isPlayingAudio) "Detener audio" else "Reproducir audio",
-                            tint = Color(0xFFE84589)
-                        )
-                    }
-                } else if (isTtsReady) {
-                    IconButton(onClick = {
-                        if (isSpeaking) { tts?.stop(); isSpeaking = false }
-                        else { tts?.speak(displayContent, TextToSpeech.QUEUE_FLUSH, null, "utteranceId") }
-                    }) {
-                        Icon(
-                            painter = painterResource(R.drawable.tts_icon),
-                            contentDescription = if (isSpeaking) "Detener lectura" else "Escuchar contenido",
-                            tint = Color(0xFFE84589)
-                        )
+                    } else if (isTtsReady) {
+                        IconButton(onClick = {
+                            if (isSpeaking) { tts?.stop(); isSpeaking = false }
+                            else { tts?.speak(displayContent, TextToSpeech.QUEUE_FLUSH, null, "utteranceId") }
+                        }) {
+                            Icon(
+                                painter = painterResource(R.drawable.tts_icon),
+                                contentDescription = if (isSpeaking) "Detener lectura" else "Escuchar contenido",
+                                tint = Color(0xFFE84589)
+                            )
+                        }
                     }
                 }
+                Spacer(Modifier.height(16.dp))
             }
-            Spacer(Modifier.height(16.dp))
             if (localImagePath != null) {
                 val bitmap = remember(localImagePath) {
                     try {
@@ -266,23 +269,25 @@ fun InformationCard(
                             .clip(RoundedCornerShape(8.dp)),
                         contentScale = ContentScale.Fit
                     )
-                } else {
+                    Spacer(Modifier.height(16.dp))
+                } else if (!hasNoAudioAndNoImage) {
                     Icon(
                         painter = painterResource(R.drawable.outline_unknown_document_24),
                         contentDescription = null,
                         modifier = Modifier.size(64.dp),
                         tint = Color(0xFFE84589)
                     )
+                    Spacer(Modifier.height(16.dp))
                 }
-            } else {
+            } else if (!hasNoAudioAndNoImage) {
                 Icon(
                     painter = painterResource(R.drawable.outline_unknown_document_24),
                     contentDescription = null,
                     modifier = Modifier.size(64.dp),
                     tint = Color(0xFFE84589)
                 )
+                Spacer(Modifier.height(16.dp))
             }
-            Spacer(Modifier.height(16.dp))
             if (displayContent.isNotEmpty()) {
                 Text(displayContent, fontSize = 16.sp, textAlign = TextAlign.Left)
             }
