@@ -56,7 +56,8 @@ class SessionStepsRepositoryImpl(
 
         contentRepository.getMultimediaOptions(treatmentType, sessionId, subSessionId).fold(
             onSuccess = { multimediaContents ->
-                Result.success(multimediaContents.map { multimediaContent ->
+                val size = multimediaContents.size
+                Result.success(multimediaContents.mapIndexed { index, multimediaContent ->
                     val isLocalFile = multimediaContent.contentAsset?.contains("/") == true || multimediaContent.contentAsset?.contains("\\") == true
                     val localFilePath = if (isLocalFile) multimediaContent.contentAsset else null
                     
@@ -89,9 +90,22 @@ class SessionStepsRepositoryImpl(
                         ResourceUtils.getResourceId(context, audioName, "raw")
                     }
 
+                    val originalTitle = multimediaContent.title.replace("\\s*\\([^)]*\\)".toRegex(), "")
+                    val finalTitle = if (multimediaContent.type == MultimediaContentType.DESCRIPTION) {
+                        if (index == 0) {
+                            "Bienvenida"
+                        } else if (index == size - 1 && size > 1) {
+                            "Fin de la sesión"
+                        } else {
+                            originalTitle
+                        }
+                    } else {
+                        originalTitle
+                    }
+
                     MultimediaOption(
                         type = multimediaContent.type,
-                        title = multimediaContent.title.replace("\\s*\\([^)]*\\)".toRegex(), ""),
+                        title = finalTitle,
                         description = multimediaContent.description,
                         fullDescription = multimediaContent.fullDescription,
                         iconResId = multimediaContent.iconResId?.let {
