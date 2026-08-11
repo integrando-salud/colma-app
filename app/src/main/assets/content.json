@@ -555,6 +555,13 @@
                     "contentAsset": "exercise"
                   },
                   {
+                    "type": "METAS",
+                    "title": "Metas (Hipertensión)",
+                    "description": "Configura tus metas para esta sesión",
+                    "iconResId": "outline_trophy_24",
+                    "metasId": "hta"
+                  },
+                  {
                     "type": "DESCRIPTION",
                     "title": "Bienvenida",
                     "description": "Fin de la sesión ¡Seguí así, la constancia incluso con pasos pequeños es tu mejor aliada!",
@@ -1633,6 +1640,13 @@
                     "iconResId": "outline_unknown_document_24"
                   },
                   {
+                    "type": "METAS",
+                    "title": "Metas (Hipertensión)",
+                    "description": "Configura tus metas para esta sesión",
+                    "iconResId": "outline_trophy_24",
+                    "metasId": "hta"
+                  },
+                  {
                     "type": "DESCRIPTION",
                     "title": "Bienvenida",
                     "description": "Fin de la sesión Recordá que cada pequeño momento de pausa es una forma de cuidar la presión y también el bienestar.",
@@ -2033,6 +2047,13 @@
                     "description": "Lee y escucha la sesión del día",
                     "fullDescription": "Tu caja de herramientas completa En estas semanas construiste herramientas prácticas para tu día a día. Ahora vamos a repasarlas para que sean parte de tu rutina. Tus herramientas para la salud Además de las herramientas de activación conductual, durante las semanas trabajaste temas clave para tu salud: Lo que lograron Ana y Carlos Ana y Carlos empezaron con el ánimo bajo y sin ganas de hacer mucho. Mirá dónde están ahora: Ana: ● Toma su medicación todos los días con el desayuno. ● Camina con Carmen 3 veces por semana. ● Se mide la presión cada semana. ● Cuando tiene una semana difícil, vuelve a su plan con un paso más pequeño. Carlos: ● Camina 15 minutos 3 veces por semana. ● Se mide la glucosa 2 veces por semana. ● Si pierde la motivación, usa la regla de los 5 minutos. ● Miguel lo acompaña los domingos. Un mensaje final Felicitaciones por llegar hasta acá. Durante 16 semanas repasamos cómo funciona el ánimo, cómo dar pequeños pasos cuando las ganas no aparecen, cómo cuidar tu salud con herramientas simples y cómo pedir ayuda cuando hace falta. Nada de eso se pierde. Todo eso es tuyo. Cuidarte no es hacerlo todo. Es hacer algo, cada día, con lo que tengas. Y eso, ya lo sabés hacer.",
                     "iconResId": "outline_unknown_document_24"
+                  },
+                  {
+                    "type": "METAS",
+                    "title": "Metas (Hipertensión)",
+                    "description": "Configura tus metas para esta sesión",
+                    "iconResId": "outline_trophy_24",
+                    "metasId": "hta"
                   },
                   {
                     "type": "DESCRIPTION",
@@ -2606,6 +2627,13 @@
                     "description": "Lee y escucha la sesión del día",
                     "fullDescription": "¿Por qué controlar tu diabetes es cuidar tus riñones, tu corazón, tus ojos y tu cuerpo? Cuando mantenés tu diabetes bajo control, ayudás a que tus riñones sigan haciendo bien su trabajo, también cuidás tu corazón, protegés tus ojos y cuidás tus piernas, pies y manos. Cuando la glucosa se mantiene alta por mucho tiempo, algunas personas pueden presentar problemas en estas partes del cuerpo. Esto no les ocurre a todas las personas y, cuando pasa, puede mantenerse bajo control con seguimiento médico, alimentación saludable y actividad física. Recordá que mantener tu glucosa bajo control es cuidar tu salud. Esto te va a permitir tener más energía en tu día a día y también mejorar tu estado de ánimo. En las próximas sesiones te vamos a dar consejos fáciles para cuidar tu alimentación, moverte más y cuidar tu salud diariamente.",
                     "iconResId": "outline_unknown_document_24"
+                  },
+                  {
+                    "type": "METAS",
+                    "title": "Metas (Diabetes)",
+                    "description": "Configura tus metas para esta sesión",
+                    "iconResId": "outline_trophy_24",
+                    "metasId": "diabetes"
                   },
                   {
                     "type": "DESCRIPTION",
@@ -3693,6 +3721,13 @@
                     "iconResId": "outline_unknown_document_24"
                   },
                   {
+                    "type": "METAS",
+                    "title": "Metas (Diabetes)",
+                    "description": "Configura tus metas para esta sesión",
+                    "iconResId": "outline_trophy_24",
+                    "metasId": "diabetes"
+                  },
+                  {
                     "type": "DESCRIPTION",
                     "title": "Fin de la sesión",
                     "description": "Recordemos que el cuidado de la diabetes incluye también cómo nos sentimos día a día. Incorporar el cuidado emocional es fundamental para el tratamiento.",
@@ -4093,6 +4128,13 @@
                     "description": "Lee y escucha la sesión del día",
                     "fullDescription": "Tu caja de herramientas completa En estas semanas construiste herramientas prácticas para tu día a día. Ahora vamos a repasarlas para que sean parte de tu rutina. Tus herramientas para la salud Además de las herramientas de activación conductual, durante las semanas trabajaste temas clave para tu salud: Lo que lograron Ana y Carlos Ana y Carlos empezaron con el ánimo bajo y sin ganas de hacer mucho. Mirá dónde están ahora: Ana: ● Toma su medicación todos los días con el desayuno. ● Camina con Carmen 3 veces por semana. ● Se mide la presión cada semana. ● Cuando tiene una semana difícil, vuelve a su plan con un paso más pequeño. Carlos: ● Camina 15 minutos 3 veces por semana. ● Se mide la glucosa 2 veces por semana. ● Si pierde la motivación, usa la regla de los 5 minutos. ● Miguel lo acompaña los domingos. Un mensaje final Felicitaciones por llegar hasta acá. Durante 16 semanas repasamos cómo funciona el ánimo, cómo dar pequeños pasos cuando las ganas no aparecen, cómo cuidar tu salud con herramientas simples y cómo pedir ayuda cuando hace falta. Nada de eso se pierde. Todo eso es tuyo. Cuidarte no es hacerlo todo. Es hacer algo, cada día, con lo que tengas. Y eso, ya lo sabés hacer.",
                     "iconResId": "outline_unknown_document_24"
+                  },
+                  {
+                    "type": "METAS",
+                    "title": "Metas (Diabetes)",
+                    "description": "Configura tus metas para esta sesión",
+                    "iconResId": "outline_trophy_24",
+                    "metasId": "diabetes"
                   },
                   {
                     "type": "DESCRIPTION",
@@ -4717,6 +4759,20 @@
                     "description": "Lee y escucha la sesión del día",
                     "fullDescription": "¿Por qué controlar tu diabetes es cuidar tus riñones, tu corazón, tus ojos y tu cuerpo? Cuando mantenés tu diabetes bajo control, ayudás a que tus riñones sigan haciendo bien su trabajo, también cuidás tu corazón, protegés tus ojos y cuidás tus piernas, pies y manos. Cuando la glucosa se mantiene alta por mucho tiempo, algunas personas pueden presentar problemas en estas partes del cuerpo. Esto no les ocurre a todas las personas y, cuando pasa, puede mantenerse bajo control con seguimiento médico, alimentación saludable y actividad física. Recordá que mantener tu glucosa bajo control es cuidar tu salud. Esto te va a permitir tener más energía en tu día a día y también mejorar tu estado de ánimo. En las próximas sesiones te vamos a dar consejos fáciles para cuidar tu alimentación, moverte más y cuidar tu salud diariamente.",
                     "iconResId": "outline_unknown_document_24"
+                  },
+                  {
+                    "type": "METAS",
+                    "title": "Metas (Diabetes)",
+                    "description": "Configura tus metas para esta sesión",
+                    "iconResId": "outline_trophy_24",
+                    "metasId": "diabetes"
+                  },
+                  {
+                    "type": "METAS",
+                    "title": "Metas (Hipertensión)",
+                    "description": "Configura tus metas para esta sesión",
+                    "iconResId": "outline_trophy_24",
+                    "metasId": "hta"
                   },
                   {
                     "type": "DESCRIPTION",
@@ -5920,6 +5976,20 @@
                     "iconResId": "outline_unknown_document_24"
                   },
                   {
+                    "type": "METAS",
+                    "title": "Metas (Diabetes)",
+                    "description": "Configura tus metas para esta sesión",
+                    "iconResId": "outline_trophy_24",
+                    "metasId": "diabetes"
+                  },
+                  {
+                    "type": "METAS",
+                    "title": "Metas (Hipertensión)",
+                    "description": "Configura tus metas para esta sesión",
+                    "iconResId": "outline_trophy_24",
+                    "metasId": "hta"
+                  },
+                  {
                     "type": "DESCRIPTION",
                     "title": "Fin de la sesión",
                     "description": "Recordemos que el cuidado de la diabetes incluye también cómo nos sentimos día a día. Incorporar el cuidado emocional es fundamental para el tratamiento.",
@@ -6334,6 +6404,20 @@
                     "description": "Lee y escucha la sesión del día",
                     "fullDescription": "Tu caja de herramientas completa En estas semanas construiste herramientas prácticas para tu día a día. Ahora vamos a repasarlas para que sean parte de tu rutina. Tus herramientas para la salud Además de las herramientas de activación conductual, durante las semanas trabajaste temas clave para tu salud: Lo que lograron Ana y Carlos Ana y Carlos empezaron con el ánimo bajo y sin ganas de hacer mucho. Mirá dónde están ahora: Ana: ● Toma su medicación todos los días con el desayuno. ● Camina con Carmen 3 veces por semana. ● Se mide la presión cada semana. ● Cuando tiene una semana difícil, vuelve a su plan con un paso más pequeño. Carlos: ● Camina 15 minutos 3 veces por semana. ● Se mide la glucosa 2 veces por semana. ● Si pierde la motivación, usa la regla de los 5 minutos. ● Miguel lo acompaña los domingos. Un mensaje final Felicitaciones por llegar hasta acá. Durante 16 semanas repasamos cómo funciona el ánimo, cómo dar pequeños pasos cuando las ganas no aparecen, cómo cuidar tu salud con herramientas simples y cómo pedir ayuda cuando hace falta. Nada de eso se pierde. Todo eso es tuyo. Cuidarte no es hacerlo todo. Es hacer algo, cada día, con lo que tengas. Y eso, ya lo sabés hacer.",
                     "iconResId": "outline_unknown_document_24"
+                  },
+                  {
+                    "type": "METAS",
+                    "title": "Metas (Diabetes)",
+                    "description": "Configura tus metas para esta sesión",
+                    "iconResId": "outline_trophy_24",
+                    "metasId": "diabetes"
+                  },
+                  {
+                    "type": "METAS",
+                    "title": "Metas (Hipertensión)",
+                    "description": "Configura tus metas para esta sesión",
+                    "iconResId": "outline_trophy_24",
+                    "metasId": "hta"
                   },
                   {
                     "type": "DESCRIPTION",
@@ -6960,6 +7044,20 @@
                     "description": "Lee y escucha la sesión del día",
                     "fullDescription": "¿Por qué controlar tu diabetes es cuidar tus riñones, tu corazón, tus ojos y tu cuerpo?\n \nCuando mantienes tu diabetes bajo control, ayudas a que tus riñones sigan haciendo bien su trabajo, también cuidas tu corazón, proteges tus ojos y cuidas tus piernas, pies y manos.\n \nCuando la glucosa se mantiene alta por mucho tiempo, algunas personas pueden presentar problemas en estas partes del cuerpo.\n \nEsto no les ocurre a todas las personas y, cuando pasa, puede mantenerse bajo control con seguimiento médico, alimentación saludable y actividad física.\n \nRecuerda que mantener tu glucosa bajo control es cuidar tu salud. Esto te permitirá tener más energía en tu día a día, y también mejorar tu estado de ánimo.\n \nEn las próximas sesiones te daremos consejos fáciles para cuidar tu alimentación, moverte más y cuidar tu salud diariamente.",
                     "iconResId": "outline_unknown_document_24"
+                  },
+                  {
+                    "type": "METAS",
+                    "title": "Metas (Diabetes)",
+                    "description": "Configura tus metas para esta sesión",
+                    "iconResId": "outline_trophy_24",
+                    "metasId": "diabetes"
+                  },
+                  {
+                    "type": "METAS",
+                    "title": "Metas (Hipertensión)",
+                    "description": "Configura tus metas para esta sesión",
+                    "iconResId": "outline_trophy_24",
+                    "metasId": "hta"
                   },
                   {
                     "type": "DESCRIPTION",
@@ -8163,6 +8261,20 @@
                     "iconResId": "outline_unknown_document_24"
                   },
                   {
+                    "type": "METAS",
+                    "title": "Metas (Diabetes)",
+                    "description": "Configura tus metas para esta sesión",
+                    "iconResId": "outline_trophy_24",
+                    "metasId": "diabetes"
+                  },
+                  {
+                    "type": "METAS",
+                    "title": "Metas (Hipertensión)",
+                    "description": "Configura tus metas para esta sesión",
+                    "iconResId": "outline_trophy_24",
+                    "metasId": "hta"
+                  },
+                  {
                     "type": "DESCRIPTION",
                     "title": "Fin de la sesión",
                     "description": "Bienvenida/Cierre: Texto Fin de la sesión Recordemos que el cuidado de la diabetes y la hipertensión incluye también cómo nos sentimos día a día. Incorporar el cuidado emocional es fundamental para el tratamiento. Semana 14: El apoyo de los demás en nuestros hábitos",
@@ -8577,6 +8689,20 @@
                     "description": "Lee y escucha la sesión del día",
                     "fullDescription": "Tu caja de herramientas completa En estas semanas construiste herramientas prácticas para tu día a día. Ahora vamos a repasarlas para que sean parte de tu rutina.\n \nTus herramientas para la salud Además de las herramientas de activación conductual, durante las semanas trabajaste temas clave para tu salud:\n \nLo que lograron Ana y Carlos Ana y Carlos empezaron con el ánimo bajo y sin ganas de hacer mucho. Mira dónde están ahora:\n \nAna:\n \n● Toma su medicación todos los días con el desayuno.\n \n● Camina con Carmen 3 veces por semana.\n \n● Se mide la presión cada semana.\n \n● Cuando tiene una semana difícil, vuelve a su plan con un paso más pequeño.\n \nCarlos:\n \n● Camina 15 minutos 3 veces por semana.\n \n● Se mide la glucosa 2 veces por semana.\n \n● Si pierde la motivación, usa la regla de los 5 minutos.\n \n● Miguel lo acompaña los domingos.\n \nUn mensaje final Felicitaciones por llegar hasta aquí. Durante 16 semanas repasamos cómo funciona el ánimo, cómo dar pequeños pasos cuando las ganas no aparecen, cómo cuidar tu salud con herramientas simples y cómo pedir ayuda cuando hace falta.\n \nNada de eso se pierde. Todo eso es tuyo. Cuidarte no es hacerlo todo. Es hacer algo, cada día, con lo que tengas.\n \nY eso, ya lo sabes hacer.",
                     "iconResId": "outline_unknown_document_24"
+                  },
+                  {
+                    "type": "METAS",
+                    "title": "Metas (Diabetes)",
+                    "description": "Configura tus metas para esta sesión",
+                    "iconResId": "outline_trophy_24",
+                    "metasId": "diabetes"
+                  },
+                  {
+                    "type": "METAS",
+                    "title": "Metas (Hipertensión)",
+                    "description": "Configura tus metas para esta sesión",
+                    "iconResId": "outline_trophy_24",
+                    "metasId": "hta"
                   },
                   {
                     "type": "DESCRIPTION",
@@ -9143,6 +9269,13 @@
                     "description": "Ver video de la sesión",
                     "iconImageVector": "PlayArrow",
                     "contentAsset": "exercise"
+                  },
+                  {
+                    "type": "METAS",
+                    "title": "Metas (Hipertensión)",
+                    "description": "Configura tus metas para esta sesión",
+                    "iconResId": "outline_trophy_24",
+                    "metasId": "hta"
                   },
                   {
                     "type": "DESCRIPTION",
@@ -10223,6 +10356,13 @@
                     "iconResId": "outline_unknown_document_24"
                   },
                   {
+                    "type": "METAS",
+                    "title": "Metas (Hipertensión)",
+                    "description": "Configura tus metas para esta sesión",
+                    "iconResId": "outline_trophy_24",
+                    "metasId": "hta"
+                  },
+                  {
                     "type": "DESCRIPTION",
                     "title": "Bienvenida",
                     "description": "Bienvenida/Cierre: Texto Fin de la sesión Recuerda que cada pequeño momento de pausa es una forma de cuidar la presión y también el bienestar. Semana 14: El apoyo de los demás en nuestros hábitos",
@@ -10623,6 +10763,13 @@
                     "description": "Lee y escucha la sesión del día",
                     "fullDescription": "Tu caja de herramientas completa En estas semanas construiste herramientas prácticas para tu día a día. Ahora vamos a repasarlas para que sean parte de tu rutina. Tus herramientas para la salud Además de las herramientas de activación conductual, durante las semanas trabajaste temas clave para tu salud: Lo que lograron Ana y Carlos Ana y Carlos empezaron con el ánimo bajo y sin ganas de hacer mucho. Mirá dónde están ahora: Ana: ● Toma su medicación todos los días con el desayuno. ● Camina con Carmen 3 veces por semana. ● Se mide la presión cada semana. ● Cuando tiene una semana difícil, vuelve a su plan con un paso más pequeño. Carlos: ● Camina 15 minutos 3 veces por semana. ● Se mide la glucosa 2 veces por semana. ● Si pierde la motivación, usa la regla de los 5 minutos. ● Miguel lo acompaña los domingos. Un mensaje final Felicitaciones por llegar hasta acá. Durante 16 semanas repasamos cómo funciona el ánimo, cómo dar pequeños pasos cuando las ganas no aparecen, cómo cuidar tu salud con herramientas simples y cómo pedir ayuda cuando hace falta. Nada de eso se pierde. Todo eso es tuyo. Cuidarte no es hacerlo todo. Es hacer algo, cada día, con lo que tengas. Y eso, ya lo sabés hacer.",
                     "iconResId": "outline_unknown_document_24"
+                  },
+                  {
+                    "type": "METAS",
+                    "title": "Metas (Hipertensión)",
+                    "description": "Configura tus metas para esta sesión",
+                    "iconResId": "outline_trophy_24",
+                    "metasId": "hta"
                   },
                   {
                     "type": "DESCRIPTION",
@@ -11196,6 +11343,13 @@
                     "description": "Lee y escucha la sesión del día",
                     "fullDescription": "¿Por qué controlar tu diabetes es cuidar tus riñones, tu corazón, tus ojos y tu cuerpo? Cuando mantenés tu diabetes bajo control, ayudás a que tus riñones sigan haciendo bien su trabajo, también cuidás tu corazón, protegés tus ojos y cuidás tus piernas, pies y manos. Cuando la glucosa se mantiene alta por mucho tiempo, algunas personas pueden presentar problemas en estas partes del cuerpo. Esto no les ocurre a todas las personas y, cuando pasa, puede mantenerse bajo control con seguimiento médico, alimentación saludable y actividad física. Recordá que mantener tu glucosa bajo control es cuidar tu salud. Esto te va a permitir tener más energía en tu día a día y también mejorar tu estado de ánimo. En las próximas sesiones te vamos a dar consejos fáciles para cuidar tu alimentación, moverte más y cuidar tu salud diariamente.",
                     "iconResId": "outline_unknown_document_24"
+                  },
+                  {
+                    "type": "METAS",
+                    "title": "Metas (Diabetes)",
+                    "description": "Configura tus metas para esta sesión",
+                    "iconResId": "outline_trophy_24",
+                    "metasId": "diabetes"
                   },
                   {
                     "type": "DESCRIPTION",
@@ -12283,6 +12437,13 @@
                     "iconResId": "outline_unknown_document_24"
                   },
                   {
+                    "type": "METAS",
+                    "title": "Metas (Diabetes)",
+                    "description": "Configura tus metas para esta sesión",
+                    "iconResId": "outline_trophy_24",
+                    "metasId": "diabetes"
+                  },
+                  {
                     "type": "DESCRIPTION",
                     "title": "Fin de la sesión",
                     "description": "Bienvenida/Cierre: Texto Fin de la sesión Recordemos que el cuidado de la diabetes incluye también cómo nos sentimos día a día. Incorporar el cuidado emocional es fundamental para el tratamiento. Semana 14: El apoyo de los demás en nuestros hábitos",
@@ -12683,6 +12844,13 @@
                     "description": "Lee y escucha la sesión del día",
                     "fullDescription": "Tu caja de herramientas completa En estas semanas construiste herramientas prácticas para tu día a día. Ahora vamos a repasarlas para que sean parte de tu rutina. Tus herramientas para la salud Además de las herramientas de activación conductual, durante las semanas trabajaste temas clave para tu salud: Lo que lograron Ana y Carlos Ana y Carlos empezaron con el ánimo bajo y sin ganas de hacer mucho. Mirá dónde están ahora: Ana: ● Toma su medicación todos los días con el desayuno. ● Camina con Carmen 3 veces por semana. ● Se mide la presión cada semana. ● Cuando tiene una semana difícil, vuelve a su plan con un paso más pequeño. Carlos: ● Camina 15 minutos 3 veces por semana. ● Se mide la glucosa 2 veces por semana. ● Si pierde la motivación, usa la regla de los 5 minutos. ● Miguel lo acompaña los domingos. Un mensaje final Felicitaciones por llegar hasta acá. Durante 16 semanas repasamos cómo funciona el ánimo, cómo dar pequeños pasos cuando las ganas no aparecen, cómo cuidar tu salud con herramientas simples y cómo pedir ayuda cuando hace falta. Nada de eso se pierde. Todo eso es tuyo. Cuidarte no es hacerlo todo. Es hacer algo, cada día, con lo que tengas. Y eso, ya lo sabés hacer.",
                     "iconResId": "outline_unknown_document_24"
+                  },
+                  {
+                    "type": "METAS",
+                    "title": "Metas (Diabetes)",
+                    "description": "Configura tus metas para esta sesión",
+                    "iconResId": "outline_trophy_24",
+                    "metasId": "diabetes"
                   },
                   {
                     "type": "DESCRIPTION",
