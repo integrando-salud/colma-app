@@ -111,7 +111,7 @@ class SessionStepsRepositoryImpl(
                         if (index == 0) {
                             cleaned = cleaned.replace("(?i)^.*?(?=(¡Hola|¡Felicitaciones))".toRegex(), "")
                         } else if (index == size - 1 && size > 1) {
-                            cleaned = cleaned.replace("(?i)^Bienvenida/Cierre:\\s*Texto\\s*(Fin de la sesión)?\\s*".toRegex(), "")
+                            cleaned = cleaned.replace("(?i)^(?:Bienvenida/Cierre:\\s*Texto\\s*(?:Fin de (la )?sesión)?|Fin de (la )?sesión)\\s*".toRegex(), "")
                         }
                         cleaned
                     } else {
@@ -123,7 +123,7 @@ class SessionStepsRepositoryImpl(
                         if (index == 0) {
                             cleaned = cleaned?.replace("(?i)^.*?(?=(¡Hola|¡Felicitaciones))".toRegex(), "")
                         } else if (index == size - 1 && size > 1) {
-                            cleaned = cleaned?.replace("(?i)^Bienvenida/Cierre:\\s*Texto\\s*(Fin de la sesión)?\\s*".toRegex(), "")
+                            cleaned = cleaned?.replace("(?i)^(?:Bienvenida/Cierre:\\s*Texto\\s*(?:Fin de (la )?sesión)?|Fin de (la )?sesión)\\s*".toRegex(), "")
                         }
                         cleaned
                     } else {
