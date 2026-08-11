@@ -56,8 +56,36 @@ class SessionStepsRepositoryImpl(
 
         contentRepository.getMultimediaOptions(treatmentType, sessionId, subSessionId).fold(
             onSuccess = { multimediaContents ->
-                val size = multimediaContents.size
-                Result.success(multimediaContents.mapIndexed { index, multimediaContent ->
+                val processedContents = if (treatmentType == TreatmentType.DBT_HTA) {
+                    val hasMetas = multimediaContents.any { it.type == MultimediaContentType.METAS }
+                    if (hasMetas) {
+                        val metasTemplate = multimediaContents.first { it.type == MultimediaContentType.METAS }
+                        val unifiedMetas = metasTemplate.copy(
+                            title = "Metas (Diabetes e Hipertensión)",
+                            metasId = "dbt_hta"
+                        )
+                        val resultList = mutableListOf<com.colma.colmaApp.features.content.model.MultimediaContent>()
+                        var addedUnified = false
+                        for (item in multimediaContents) {
+                            if (item.type == MultimediaContentType.METAS) {
+                                if (!addedUnified) {
+                                    resultList.add(unifiedMetas)
+                                    addedUnified = true
+                                }
+                            } else {
+                                resultList.add(item)
+                            }
+                        }
+                        resultList
+                    } else {
+                        multimediaContents
+                    }
+                } else {
+                    multimediaContents
+                }
+
+                val size = processedContents.size
+                Result.success(processedContents.mapIndexed { index, multimediaContent ->
                     val isLocalFile = multimediaContent.contentAsset?.contains("/") == true || multimediaContent.contentAsset?.contains("\\") == true
                     val localFilePath = if (isLocalFile) multimediaContent.contentAsset else null
                     
