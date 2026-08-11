@@ -424,6 +424,10 @@ fun MainAppContainer() {
                                 navController.navigate("additional_info")
                             }
 
+                            DrawerItem("Tutorial", Icons.Default.Face) {
+                                scope.launch { drawerState.close() }
+                            }
+
                             DrawerItem("Descargar recursos de nuevo", Icons.Default.Refresh) {
                                 scope.launch { drawerState.close() }
                                 navController.navigate("treatment_download?force=true")
