@@ -103,11 +103,38 @@ class SessionStepsRepositoryImpl(
                         originalTitle
                     }
 
+                    val originalDescription = multimediaContent.description
+                    val originalFullDescription = multimediaContent.fullDescription
+
+                    val finalDescription = if (multimediaContent.type == MultimediaContentType.DESCRIPTION) {
+                        var cleaned = originalDescription.replace("(?i)\\s*Semana\\s*\\d+:\\s*.*$".toRegex(), "")
+                        if (index == 0) {
+                            cleaned = cleaned.replace("(?i)^.*?(?=(¡Hola|¡Felicitaciones))".toRegex(), "")
+                        } else if (index == size - 1 && size > 1) {
+                            cleaned = cleaned.replace("(?i)^Bienvenida/Cierre:\\s*Texto\\s*(Fin de la sesión)?\\s*".toRegex(), "")
+                        }
+                        cleaned
+                    } else {
+                        originalDescription
+                    }
+
+                    val finalFullDescription = if (multimediaContent.type == MultimediaContentType.DESCRIPTION) {
+                        var cleaned = originalFullDescription?.replace("(?i)\\s*Semana\\s*\\d+:\\s*.*$".toRegex(), "")
+                        if (index == 0) {
+                            cleaned = cleaned?.replace("(?i)^.*?(?=(¡Hola|¡Felicitaciones))".toRegex(), "")
+                        } else if (index == size - 1 && size > 1) {
+                            cleaned = cleaned?.replace("(?i)^Bienvenida/Cierre:\\s*Texto\\s*(Fin de la sesión)?\\s*".toRegex(), "")
+                        }
+                        cleaned
+                    } else {
+                        originalFullDescription
+                    }
+
                     MultimediaOption(
                         type = multimediaContent.type,
                         title = finalTitle,
-                        description = multimediaContent.description,
-                        fullDescription = multimediaContent.fullDescription,
+                        description = finalDescription,
+                        fullDescription = finalFullDescription,
                         iconResId = multimediaContent.iconResId?.let {
                             ResourceUtils.getResourceId(context, it, "drawable")
                         },
