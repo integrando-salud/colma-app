@@ -65,9 +65,22 @@ class SessionStepsRepositoryImpl(
                         ResourceUtils.getResourceId(context, it, "raw")
                     }
                     
+                    val originalTitle = multimediaContent.title.replace("\\s*\\([^)]*\\)".toRegex(), "")
+                    val finalTitle = if (multimediaContent.type == MultimediaContentType.DESCRIPTION) {
+                        if (index == 0) {
+                            "Bienvenida"
+                        } else if (index == size - 1 && size > 1) {
+                            "Fin de la sesión"
+                        } else {
+                            originalTitle
+                        }
+                    } else {
+                        originalTitle
+                    }
+
                     val uniqueKey = generateMultimediaUniqueKey(
                         multimediaContent.type,
-                        multimediaContent.title,
+                        finalTitle,
                         contentAssetId,
                         multimediaContent.metasId,
                         treatmentType.name,
@@ -88,19 +101,6 @@ class SessionStepsRepositoryImpl(
                     val localDescriptionAudios = multimediaContent.descriptionAudios?.filter { it.contains("/") || it.contains("\\") }
                     val staticDescriptionAudioRes = multimediaContent.descriptionAudios?.filter { !it.contains("/") && !it.contains("\\") }?.map { audioName ->
                         ResourceUtils.getResourceId(context, audioName, "raw")
-                    }
-
-                    val originalTitle = multimediaContent.title.replace("\\s*\\([^)]*\\)".toRegex(), "")
-                    val finalTitle = if (multimediaContent.type == MultimediaContentType.DESCRIPTION) {
-                        if (index == 0) {
-                            "Bienvenida"
-                        } else if (index == size - 1 && size > 1) {
-                            "Fin de la sesión"
-                        } else {
-                            originalTitle
-                        }
-                    } else {
-                        originalTitle
                     }
 
                     val originalDescription = multimediaContent.description
