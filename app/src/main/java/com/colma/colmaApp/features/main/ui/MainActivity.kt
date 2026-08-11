@@ -27,6 +27,7 @@ import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Call
 import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.material3.*
@@ -423,6 +424,11 @@ fun MainAppContainer() {
                                 navController.navigate("additional_info")
                             }
 
+                            DrawerItem("Descargar recursos de nuevo", Icons.Default.Refresh) {
+                                scope.launch { drawerState.close() }
+                                navController.navigate("treatment_download?force=true")
+                            }
+
                             Spacer(Modifier.height(28.dp))
 
                             Button(
@@ -563,13 +569,21 @@ fun MainAppContainer() {
                             }
                         }
 
-                        composable("treatment_download") {
+                        composable(
+                            route = "treatment_download?force={force}",
+                            arguments = listOf(navArgument("force") {
+                                type = NavType.BoolType
+                                defaultValue = false
+                            })
+                        ) { backStackEntry ->
+                            val force = backStackEntry.arguments?.getBoolean("force") ?: false
                             LaunchedEffect(Unit) {
                                 topBarConfig = TopBarConfig(showTopBar = false)
                             }
                             TreatmentDownloadScreen(
                                 navController = navController,
-                                context = context.applicationContext
+                                context = context.applicationContext,
+                                force = force
                             )
                         }
 

@@ -43,7 +43,8 @@ data class TreatmentDownloadUiState(
 
 class TreatmentDownloadViewModel(
     private val repository: TreatmentDownloadRepository,
-    private val context: Context
+    private val context: Context,
+    private val force: Boolean = false
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(TreatmentDownloadUiState())
@@ -79,7 +80,7 @@ class TreatmentDownloadViewModel(
             }
 
             val hasLocalData = repository.isTreatmentDownloaded(userId)
-            if (hasLocalData) {
+            if (hasLocalData && !force) {
                 // Already have local data, skip directly to main screen
                 _uiState.update { it.copy(isFinished = true, progress = 1.0f) }
                 return@launch
@@ -125,10 +126,11 @@ class TreatmentDownloadViewModel(
 fun TreatmentDownloadScreen(
     navController: NavController,
     context: Context,
+    force: Boolean = false,
     modifier: Modifier = Modifier
 ) {
     val repository = remember { TreatmentDownloadRepositoryImpl(context) }
-    val viewModel = remember { TreatmentDownloadViewModel(repository, context) }
+    val viewModel = remember(force) { TreatmentDownloadViewModel(repository, context, force) }
     val uiState by viewModel.uiState.collectAsState()
 
     val principalColor = colorResource(id = R.color.principal)
