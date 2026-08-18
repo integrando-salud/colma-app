@@ -1,9 +1,24 @@
+import java.util.Properties
+import java.io.FileInputStream
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.serialization)
 }
+
+val localProperties = Properties()
+val localPropertiesFile = rootProject.file("local.properties")
+if (localPropertiesFile.exists()) {
+    localPropertiesFile.inputStream().use { 
+        localProperties.load(it) 
+    }
+}
+
+val apiHost: String = (localProperties.getProperty("API_HOST")
+    ?: System.getenv("API_HOST")
+    ?: "https://api.example.com/")
 
 android {
     namespace = "com.colma.colmaApp"
@@ -26,10 +41,10 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            buildConfigField("String", "API_HOST", "\"http://158.69.219.243/\"")
+            buildConfigField("String", "API_HOST", "\"$apiHost\"")
         }
         debug {
-            buildConfigField("String", "API_HOST", "\"http://158.69.219.243/\"")
+            buildConfigField("String", "API_HOST", "\"$apiHost\"")
         }
     }
     compileOptions {

@@ -1,0 +1,9 @@
+# Archivo de ejemplo para configuración local de la aplicación.
+# Copia el contenido de este archivo en un archivo nuevo llamado 'local.properties'
+# en este mismo directorio raíz (si no existe ya) y ajusta los valores correspondientes.
+#
+# ¡IMPORTANTE!: Este archivo 'local.properties' NUNCA debe ser subido al repositorio Git
+# ya que contiene información específica del entorno de desarrollo local y credenciales.
+
+# URL base de la API del servidor (por ejemplo: https://api.tu-servidor.com/)
+API_HOST=https://api.tu-servidor.com/
