@@ -17,3 +17,31 @@ local.properties
 *.m4a
 app/src/main/res/raw/Tabacaleros/
 commit_message_*.txt
+
+# Archivos de IA para agentes
+/AGENTS.md
+/GEMINI.md
+
+# Archivos de diseño y especificaciones en assets
+/app/src/main/assets/desings/
+
+# Archivos temporales y referencias de desarrollo en la raíz
+/*.pdf
+/*.docx
+/*.xlsx
+/*.jpeg
+/*.jpg
+/*.png
+/Ejemplo response de recursos.txt
+/backend_api_documentation.json
+/ejemploRevision.txt
+/ejemploSincronizacion.json
+/plan_externalize_quizzes.txt
+/resumen_cambios_sesion.txt
+/database_der.md
+/der_base_datos.md
+
+# Scripts locales de desarrollo
+/scratch/
+/scratch*.py
+/scratch*.txt
