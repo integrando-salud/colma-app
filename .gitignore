@@ -45,3 +45,6 @@ commit_message_*.txt
 /scratch/
 /scratch*.py
 /scratch*.txt
+
+# Configuración del agente Qwen
+/.qwen/
