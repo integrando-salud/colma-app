@@ -168,7 +168,7 @@ fun FinishPage(
     }
 }
 
-private fun formatTime(ms: Long): String {
+fun formatTime(ms: Long): String {
     if (ms <= 0L) return "00:00"
     val totalSeconds = TimeUnit.MILLISECONDS.toSeconds(ms)
     val hours = totalSeconds / 3600

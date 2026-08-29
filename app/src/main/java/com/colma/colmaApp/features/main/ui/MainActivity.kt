@@ -851,17 +851,21 @@ fun MainAppContainer() {
                             }
 
                             val currentOption = uiState.currentMultimediaOption
-                            val topBarTitle = remember(currentOption) {
-                                currentOption?.type?.let { type ->
-                                    when (type) {
-                                        MultimediaContentType.DESCRIPTION -> "Descripción"
-                                        MultimediaContentType.VIDEO -> "Video"
-                                        MultimediaContentType.AUDIO -> "Audio"
-                                        MultimediaContentType.METAS -> "Metas"
-                                        MultimediaContentType.QUIZ -> "Pregunta del día"
-                                        else -> type.name
-                                    }
-                                } ?: ""
+                            val topBarTitle = remember(subSessionTitle, currentOption) {
+                                if (subSessionTitle.isNotBlank()) {
+                                    subSessionTitle
+                                } else {
+                                    currentOption?.type?.let { type ->
+                                        when (type) {
+                                            MultimediaContentType.DESCRIPTION -> "Descripción"
+                                            MultimediaContentType.VIDEO -> "Video"
+                                            MultimediaContentType.AUDIO -> "Audio"
+                                            MultimediaContentType.METAS -> "Metas"
+                                            MultimediaContentType.QUIZ -> "Pregunta del día"
+                                            else -> type.name
+                                        }
+                                    } ?: ""
+                                }
                             }
 
                             LaunchedEffect(topBarTitle) {

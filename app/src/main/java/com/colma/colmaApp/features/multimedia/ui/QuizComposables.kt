@@ -178,8 +178,8 @@ fun QuestionCard(
         Column(modifier = Modifier.padding(16.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
-                    text = "Pregunta ${questionIndex + 1}",
-                    style = MaterialTheme.typography.titleMedium,
+                    text = if (questionIndex == 0) "Pregunta del día" else "Pregunta ${questionIndex + 1}",
+                    style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold, fontSize = 18.sp),
                     modifier = Modifier.weight(1f)
                 )
                 if (isSubmitted) {

@@ -57,20 +57,9 @@ fun VideoContent(
                         modifier = Modifier.fillMaxWidth().padding(8.dp)
                     ) {
                         Column(
-                            modifier = Modifier.fillMaxWidth().padding(24.dp),
+                            modifier = Modifier.fillMaxWidth().padding(16.dp),
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
-                            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.Center) {
-                                Text("Video Explicativo", fontSize = 20.sp, fontWeight = FontWeight.Bold)
-                                Spacer(Modifier.width(8.dp))
-                                Icon(
-                                    painter = painterResource(R.drawable.outline_videocam_24),
-                                    contentDescription = "Ver video",
-                                    modifier = Modifier.size(32.dp),
-                                    tint = Color(0xFFE84589)
-                                )
-                            }
-                            Spacer(Modifier.height(16.dp))
                             VideoPlayerWithFullscreen(
                                 resId = contentAssetId,
                                 localFilePath = localFilePath,

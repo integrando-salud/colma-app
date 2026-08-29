@@ -85,14 +85,16 @@ fun InformationDisplayContent(
                                 localImagePath = localDescriptionImages?.getOrNull(page)
                             )
                         }
-                        Spacer(Modifier.height(16.dp))
-                        HorizontalPagerIndicator(
-                            pagerState = pagerState,
-                            pageCount = pageCount,
-                            activeColor = signatureColor,
-                            inactiveColor = Color.LightGray,
-                            modifier = Modifier.align(Alignment.CenterHorizontally)
-                        )
+                        if (pageCount > 1) {
+                            Spacer(Modifier.height(16.dp))
+                            HorizontalPagerIndicator(
+                                pagerState = pagerState,
+                                pageCount = pageCount,
+                                activeColor = signatureColor,
+                                inactiveColor = Color.LightGray,
+                                modifier = Modifier.align(Alignment.CenterHorizontally)
+                            )
+                        }
                     } else {
                         InformationCard(
                             title = title,
@@ -133,6 +135,8 @@ fun InformationCard(
 
     var exoPlayer by remember { mutableStateOf<ExoPlayer?>(null) }
     var isPlayingAudio by remember { mutableStateOf(false) }
+    var playbackPositionMs by remember { mutableStateOf(0L) }
+    var durationMs by remember { mutableStateOf(0L) }
 
     val hasAudio = audioResId != null || localAudioPath != null
     val hasNoAudioAndNoImage = !hasAudio && localImagePath == null
@@ -168,6 +172,17 @@ fun InformationCard(
         }
     }
 
+    LaunchedEffect(exoPlayer) {
+        if (exoPlayer != null) {
+            var attempts = 0
+            while (durationMs <= 0 && attempts < 20) {
+                durationMs = exoPlayer!!.duration.coerceAtLeast(0L)
+                attempts++
+                delay(100)
+            }
+        }
+    }
+
     DisposableEffect(Unit) {
         if (!hasAudio && !hasNoAudioAndNoImage) {
             isInitializing = true
@@ -192,7 +207,9 @@ fun InformationCard(
     LaunchedEffect(exoPlayer, isPlayingAudio) {
         if (exoPlayer != null && isPlayingAudio) {
             while (this.isActive && isPlayingAudio) {
-                if (exoPlayer!!.currentPosition >= exoPlayer!!.duration) {
+                playbackPositionMs = exoPlayer!!.currentPosition
+                durationMs = exoPlayer!!.duration.coerceAtLeast(0L)
+                if (exoPlayer!!.currentPosition >= exoPlayer!!.duration && exoPlayer!!.duration > 0) {
                     isPlayingAudio = false
                     break
                 }
@@ -230,41 +247,102 @@ fun InformationCard(
                         modifier = Modifier.weight(1f),
                         textAlign = TextAlign.Center
                     )
-                    if (isInitializing) {
-                        CircularProgressIndicator(modifier = Modifier.size(24.dp), color = Color(0xFFE84589), strokeWidth = 2.dp)
-                    } else if (hasAudio && exoPlayer != null) {
+                    Spacer(Modifier.width(8.dp))
+                    Icon(
+                        painter = painterResource(R.drawable.outline_unknown_document_24),
+                        contentDescription = null,
+                        modifier = Modifier.size(24.dp),
+                        tint = Color(0xFFE84589)
+                    )
+                }
+                Spacer(Modifier.height(16.dp))
+
+                if (hasAudio) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
                         IconButton(onClick = {
                             exoPlayer?.let { player ->
                                 if (isPlayingAudio) {
-                                    player.stop(); player.seekTo(0); isPlayingAudio = false
+                                    player.playWhenReady = false
+                                    isPlayingAudio = false
                                 } else {
-                                    player.seekTo(0); player.playWhenReady = true; isPlayingAudio = true
+                                    if (player.currentPosition >= player.duration && player.duration > 0) {
+                                        player.seekTo(0)
+                                    }
+                                    player.playWhenReady = true
+                                    isPlayingAudio = true
                                 }
                             }
                         }) {
                             Icon(
-                                painter = painterResource(R.drawable.tts_icon),
-                                contentDescription = if (isPlayingAudio) "Detener audio" else "Reproducir audio",
+                                painter = if (isPlayingAudio) painterResource(R.drawable.baseline_pause_24) else painterResource(R.drawable.baseline_play_arrow_24),
+                                contentDescription = if (isPlayingAudio) "Pausar" else "Reproducir",
+                                modifier = Modifier.size(36.dp),
                                 tint = Color(0xFFE84589)
                             )
                         }
-                    } else if (isTtsReady) {
-                        IconButton(onClick = {
-                            if (isSpeaking) { tts?.stop(); isSpeaking = false }
-                            else {
-                                val textToSpeak = if (!title.isNullOrBlank()) "$title. $cleanedDisplayContent" else cleanedDisplayContent
-                                tts?.speak(textToSpeak, TextToSpeech.QUEUE_FLUSH, null, "utteranceId")
+                        val duration = (durationMs.coerceAtLeast(1L)).toFloat()
+                        val position = (playbackPositionMs.coerceIn(0L, durationMs)).toFloat()
+                        Slider(
+                            value = if (duration > 0f) (position / duration) else 0f,
+                            onValueChange = { frac ->
+                                val newPos = (frac * duration).toLong().coerceIn(0L, durationMs)
+                                exoPlayer?.seekTo(newPos)
+                                playbackPositionMs = newPos
+                            },
+                            modifier = Modifier.weight(1f).padding(horizontal = 8.dp),
+                            colors = SliderDefaults.colors(
+                                thumbColor = Color(0xFFE84589),
+                                activeTrackColor = Color(0xFFE84589),
+                                inactiveTrackColor = Color(0xFFF3C0D6)
+                            )
+                        )
+                    }
+                    Spacer(Modifier.height(4.dp))
+                    Row(
+                        modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Text(formatTime(playbackPositionMs), fontSize = 12.sp, color = Color.Gray)
+                        Text(formatTime(durationMs), fontSize = 12.sp, color = Color.Gray)
+                    }
+                    Spacer(Modifier.height(16.dp))
+                } else if (isTtsReady || isInitializing) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        if (isInitializing) {
+                            CircularProgressIndicator(modifier = Modifier.size(24.dp), color = Color(0xFFE84589), strokeWidth = 2.dp)
+                        } else {
+                            IconButton(onClick = {
+                                if (isSpeaking) {
+                                    tts?.stop()
+                                    isSpeaking = false
+                                } else {
+                                    val textToSpeak = if (!title.isNullOrBlank()) "$title. $cleanedDisplayContent" else cleanedDisplayContent
+                                    tts?.speak(textToSpeak, TextToSpeech.QUEUE_FLUSH, null, "utteranceId")
+                                }
+                            }) {
+                                Icon(
+                                    painter = painterResource(R.drawable.tts_icon),
+                                    contentDescription = if (isSpeaking) "Detener lectura" else "Escuchar contenido",
+                                    tint = Color(0xFFE84589),
+                                    modifier = Modifier.size(32.dp)
+                                )
                             }
-                        }) {
-                            Icon(
-                                painter = painterResource(R.drawable.tts_icon),
-                                contentDescription = if (isSpeaking) "Detener lectura" else "Escuchar contenido",
-                                tint = Color(0xFFE84589)
+                            Text(
+                                if (isSpeaking) "Reproduciendo lectura..." else "Escuchar contenido",
+                                fontSize = 14.sp,
+                                color = Color.Gray,
+                                modifier = Modifier.padding(start = 8.dp)
                             )
                         }
                     }
+                    Spacer(Modifier.height(16.dp))
                 }
-                Spacer(Modifier.height(16.dp))
             } else if (!title.isNullOrBlank()) {
                 Text(
                     text = title,
@@ -276,6 +354,7 @@ fun InformationCard(
                 )
                 Spacer(Modifier.height(16.dp))
             }
+
             if (localImagePath != null) {
                 val bitmap = remember(localImagePath) {
                     try {
@@ -295,24 +374,9 @@ fun InformationCard(
                         contentScale = ContentScale.Fit
                     )
                     Spacer(Modifier.height(16.dp))
-                } else if (!hasNoAudioAndNoImage) {
-                    Icon(
-                        painter = painterResource(R.drawable.outline_unknown_document_24),
-                        contentDescription = null,
-                        modifier = Modifier.size(64.dp),
-                        tint = Color(0xFFE84589)
-                    )
-                    Spacer(Modifier.height(16.dp))
                 }
-            } else if (!hasNoAudioAndNoImage) {
-                Icon(
-                    painter = painterResource(R.drawable.outline_unknown_document_24),
-                    contentDescription = null,
-                    modifier = Modifier.size(64.dp),
-                    tint = Color(0xFFE84589)
-                )
-                Spacer(Modifier.height(16.dp))
             }
+
             if (cleanedDisplayContent.isNotEmpty()) {
                 Text(cleanedDisplayContent, fontSize = 16.sp, textAlign = TextAlign.Left, modifier = Modifier.fillMaxWidth())
             }
