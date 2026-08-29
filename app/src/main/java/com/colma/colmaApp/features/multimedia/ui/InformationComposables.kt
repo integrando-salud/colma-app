@@ -49,7 +49,17 @@ fun InformationDisplayContent(
 ) {
     val signatureColor = colorResource(R.color.principal)
     val paragraphs = remember(displayContent) {
-        displayContent.split("\n\n").filter { it.isNotBlank() }
+        val text = displayContent.trim()
+        if (text.contains(Regex("(?i)\\bPlaca\\s*(\\d+|uno|dos|tres|cuatro|cinco)\\b"))) {
+            val parts = text.split(Regex("(?i)\\bPlaca\\s*(\\d+|uno|dos|tres|cuatro|cinco):?\\s*"))
+                .map { it.trim() }
+                .filter { it.isNotBlank() && !it.matches(Regex("(?i)^(\\d+|uno|dos|tres|cuatro|cinco)$")) }
+            if (parts.isNotEmpty()) parts else listOf(text)
+        } else if (text.contains("\n\n")) {
+            text.split("\n\n").map { it.trim() }.filter { it.isNotBlank() }
+        } else {
+            listOf(text).filter { it.isNotBlank() }
+        }
     }
     val pageCount = if (paragraphs.isNotEmpty()) {
         paragraphs.size
@@ -57,62 +67,56 @@ fun InformationDisplayContent(
         maxOf(localDescriptionAudios?.size ?: 0, localDescriptionImages?.size ?: 0).coerceAtLeast(1)
     }
     val pagerState = rememberPagerState(pageCount = { pageCount })
-    val scrollState = rememberScrollState()
 
-    BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
-        val screenHeight = maxHeight
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Box(
+            modifier = Modifier
+                .weight(1f)
+                .fillMaxWidth(),
+            contentAlignment = Alignment.Center
+        ) {
+            if (pageCount > 0) {
+                HorizontalPager(
+                    state = pagerState,
+                    modifier = Modifier.fillMaxSize()
+                ) { page ->
+                    InformationCard(
+                        title = title,
+                        displayContent = paragraphs.getOrNull(page) ?: "",
+                        audioResId = descriptionAudios?.getOrNull(page),
+                        localAudioPath = localDescriptionAudios?.getOrNull(page),
+                        localImagePath = localDescriptionImages?.getOrNull(page)
+                    )
+                }
+            } else {
+                InformationCard(
+                    title = title,
+                    displayContent = "No content provided."
+                )
+            }
+        }
+
+        Spacer(Modifier.height(12.dp))
+
         Column(
             modifier = Modifier
-                .fillMaxSize()
-                .verticalScroll(scrollState),
+                .fillMaxWidth()
+                .padding(bottom = 16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            FlexibleFooterColumn(
-                minHeight = screenHeight,
-                content = {
-                    if (pageCount > 0) {
-                        HorizontalPager(
-                            state = pagerState,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(500.dp)
-                        ) { page ->
-                            InformationCard(
-                                title = if (page == 0) title else null,
-                                displayContent = paragraphs.getOrNull(page) ?: "",
-                                audioResId = descriptionAudios?.getOrNull(page),
-                                localAudioPath = localDescriptionAudios?.getOrNull(page),
-                                localImagePath = localDescriptionImages?.getOrNull(page)
-                            )
-                        }
-                        if (pageCount > 1) {
-                            Spacer(Modifier.height(16.dp))
-                            HorizontalPagerIndicator(
-                                pagerState = pagerState,
-                                pageCount = pageCount,
-                                activeColor = signatureColor,
-                                inactiveColor = Color.LightGray,
-                                modifier = Modifier.align(Alignment.CenterHorizontally)
-                            )
-                        }
-                    } else {
-                        InformationCard(
-                            title = title,
-                            displayContent = "No content provided."
-                        )
-                    }
-                },
-                footer = {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 24.dp, bottom = 32.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        navigationButtons()
-                    }
-                }
-            )
+            if (pageCount > 1) {
+                HorizontalPagerIndicator(
+                    pagerState = pagerState,
+                    pageCount = pageCount,
+                    activeColor = signatureColor,
+                    inactiveColor = Color.LightGray,
+                    modifier = Modifier.padding(bottom = 12.dp)
+                )
+            }
+            navigationButtons()
         }
     }
 }
@@ -224,11 +228,12 @@ fun InformationCard(
         colors = CardDefaults.cardColors(containerColor = Color.White),
         modifier = Modifier
             .fillMaxWidth()
-            .padding(8.dp)
+            .fillMaxHeight()
+            .padding(horizontal = 4.dp, vertical = 4.dp)
     ) {
         Column(
             modifier = Modifier
-                .fillMaxWidth()
+                .fillMaxSize()
                 .padding(24.dp)
                 .verticalScroll(scrollState),
             horizontalAlignment = Alignment.CenterHorizontally,

@@ -99,7 +99,7 @@ fun MultimediaScreen(
                     Box(
                         modifier = Modifier
                             .fillMaxSize()
-                            .padding(16.dp),
+                            .padding(horizontal = 8.dp, vertical = 12.dp),
                         contentAlignment = Alignment.TopCenter
                     ) {
                         when (currentOption.type) {
