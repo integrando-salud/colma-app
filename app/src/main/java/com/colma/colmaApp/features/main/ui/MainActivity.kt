@@ -746,9 +746,9 @@ fun MainAppContainer() {
                                 sessionStepsViewModel.initialize(sessionId, sessionTitle, subSessionId, subSessionTitle, treatmentTypes)
                             }
 
-                            LaunchedEffect(Unit) {
+                            LaunchedEffect(subSessionTitle) {
                                 topBarConfig = TopBarConfig(
-                                    title = "",
+                                    title = subSessionTitle,
                                     showBackButton = true,
                                     onBackClick = { sessionStepsViewModel.onEvent(SessionStepsEvent.BackClicked) },
                                     showTopBar = true

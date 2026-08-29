@@ -93,17 +93,19 @@ class SessionStepsRepositoryImpl(
                         ResourceUtils.getResourceId(context, it, "raw")
                     }
                     
-                    val originalTitle = multimediaContent.title.replace("\\s*\\([^)]*\\)".toRegex(), "")
-                    val finalTitle = if (multimediaContent.type == MultimediaContentType.DESCRIPTION) {
+                    val originalTitle = multimediaContent.title.trim()
+                    val finalTitle = if (originalTitle.isNotEmpty()) {
+                        originalTitle
+                    } else if (multimediaContent.type == MultimediaContentType.DESCRIPTION) {
                         if (index == 0) {
                             "Bienvenida"
                         } else if (index == size - 1 && size > 1) {
                             "Fin de la sesión"
                         } else {
-                            originalTitle
+                            "Descripción"
                         }
                     } else {
-                        originalTitle
+                        multimediaContent.type.name
                     }
 
                     val uniqueKey = generateMultimediaUniqueKey(

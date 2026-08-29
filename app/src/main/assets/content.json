@@ -49,7 +49,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Fin de la sesión ¡Excelente inicio! Ya diste el primer paso al comenzar. En la siguiente sesión veremos cómo la activación conductual nos va a ayudar a poner esto en práctica.",
                     "fullDescription": "Fin de la sesión ¡Excelente inicio! Ya diste el primer paso al comenzar. En la siguiente sesión veremos cómo la activación conductual nos va a ayudar a poner esto en práctica.",
                     "iconResId": "outline_unknown_document_24"
@@ -63,7 +63,7 @@
                 "multimedia": [
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "La activación conductual, empezar de a poco",
                     "description": "La activación conductual, empezar de a poco ¡Hola de nuevo! Qué bueno verte por acá. Sumar actividades que disfrutás y que son importantes para vos ayuda a llenar tu ‘tanque’ de ánimo. Vamos a poner en práctica la activación conductual: una forma de sentirte mejor haciendo pequeñas cosas que te dan placer o son importantes para vos.",
                     "fullDescription": "La activación conductual, empezar de a poco ¡Hola de nuevo! Qué bueno verte por acá. Sumar actividades que disfrutás y que son importantes para vos ayuda a llenar tu ‘tanque’ de ánimo. Vamos a poner en práctica la activación conductual: una forma de sentirte mejor haciendo pequeñas cosas que te dan placer o son importantes para vos.",
                     "iconResId": "outline_unknown_document_24"
@@ -93,7 +93,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Fin de la sesión ¡Bien hecho! Ahora sabés que cargar nafta de a poquito puede mover tu ánimo. En la próxima sesión vas a elegir tu primera actividad. ¡Nos vemos!",
                     "fullDescription": "Fin de la sesión ¡Bien hecho! Ahora sabés que cargar nafta de a poquito puede mover tu ánimo. En la próxima sesión vas a elegir tu primera actividad. ¡Nos vemos!",
                     "iconResId": "outline_unknown_document_24"
@@ -128,7 +128,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Fin de la sesión ¡Excelente! Ya tenés tu primera meta y un plan. Esta semana, intentá hacerla. En la próxima semana vamos a ver cómo te fue y seguiremos avanzando. ¡Vos podés!",
                     "fullDescription": "Fin de la sesión ¡Excelente! Ya tenés tu primera meta y un plan. Esta semana, intentá hacerla. En la próxima semana vamos a ver cómo te fue y seguiremos avanzando. ¡Vos podés!",
                     "iconResId": "outline_unknown_document_24"
@@ -194,7 +194,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Fin de la sesión Esta semana intentá seguir tu plan, incluso en los días en que estás con pocas ganas. En la próxima sesión te contamos cómo otras personas fueron resolviendo sus obstáculos. Quizás eso te sume.",
                     "fullDescription": "Fin de la sesión Esta semana intentá seguir tu plan, incluso en los días en que estás con pocas ganas. En la próxima sesión te contamos cómo otras personas fueron resolviendo sus obstáculos. Quizás eso te sume.",
                     "iconResId": "outline_unknown_document_24"
@@ -260,7 +260,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Fin de la sesión Como vimos, hay días en los que hasta cosas que parecen simples tienen sus dificultades. Pero casi todo se soluciona si identificás la piedra 'en el camino' y ajustás el plan. En la próxima sesión vamos a ver cómo revisar tu progreso. ¡Te va a ayudar mucho!",
                     "fullDescription": "Fin de la sesión Como vimos, hay días en los que hasta cosas que parecen simples tienen sus dificultades. Pero casi todo se soluciona si identificás la piedra 'en el camino' y ajustás el plan. En la próxima sesión vamos a ver cómo revisar tu progreso. ¡Te va a ayudar mucho!",
                     "iconResId": "outline_unknown_document_24"
@@ -295,7 +295,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Fin de la sesión ¡Muy bien! Revisar tu meta es una forma de cuidarte: te ayuda a ver tus avances y aprender de lo difícil. La próxima semana veremos algo importante: cómo premiarte de forma sana por tu esfuerzo.",
                     "fullDescription": "Fin de la sesión ¡Muy bien! Revisar tu meta es una forma de cuidarte: te ayuda a ver tus avances y aprender de lo difícil. La próxima semana veremos algo importante: cómo premiarte de forma sana por tu esfuerzo.",
                     "iconResId": "outline_unknown_document_24"
@@ -354,7 +354,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Fin de la sesión ¡Muy bien! Premiarte de forma sana es una manera de reconocer tu esfuerzo y aumentar tus ganas de seguir. En la próxima sesión vamos a ver cómo las metas se conectan con el cuidado de tu salud.",
                     "fullDescription": "Fin de la sesión ¡Muy bien! Premiarte de forma sana es una manera de reconocer tu esfuerzo y aumentar tus ganas de seguir. En la próxima sesión vamos a ver cómo las metas se conectan con el cuidado de tu salud.",
                     "iconResId": "outline_unknown_document_24"
@@ -399,7 +399,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Fin de la sesión Lo que venimos trabajando con metas y pasos pequeños también sirve para el cuidado de tu salud. Las metas son como pasos que te acercan a un objetivo mayor: sentirte mejor y cuidar tu salud. Pasos chiquitos, plan claro y apoyo cuando haga falta. En la próxima sesión vamos a hacer un repaso de todo lo aprendido",
                     "fullDescription": "Fin de la sesión Lo que venimos trabajando con metas y pasos pequeños también sirve para el cuidado de tu salud. Las metas son como pasos que te acercan a un objetivo mayor: sentirte mejor y cuidar tu salud. Pasos chiquitos, plan claro y apoyo cuando haga falta. En la próxima sesión vamos a hacer un repaso de todo lo aprendido",
                     "iconResId": "outline_unknown_document_24"
@@ -441,7 +441,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Fin de la sesión ¡Excelente! Completaste las primeras tres semanas. Ya tenés herramientas que funcionan. Ahora viene algo muy importante: vamos a aplicar todo esto a tu estilo de vida, con consejos prácticos sobre alimentación, actividad física, sueño y . ¡Seguí adelante, vas muy bien!",
                     "fullDescription": "Fin de la sesión ¡Excelente! Completaste las primeras tres semanas. Ya tenés herramientas que funcionan. Ahora viene algo muy importante: vamos a aplicar todo esto a tu estilo de vida, con consejos prácticos sobre alimentación, actividad física, sueño y . ¡Seguí adelante, vas muy bien!",
                     "iconResId": "outline_unknown_document_24"
@@ -477,7 +477,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Fin de la sesión Conocer nuestra presión arterial es el primer paso para cuidar nuestra salud.",
                     "fullDescription": "Fin de la sesión Conocer nuestra presión arterial es el primer paso para cuidar nuestra salud.",
                     "iconResId": "outline_unknown_document_24"
@@ -528,7 +528,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Fin de la sesión Alimentar tu cuerpo, mover tu corazón y seguir tu tratamiento: hoy elegiste vivir mejor",
                     "fullDescription": "Fin de la sesión Alimentar tu cuerpo, mover tu corazón y seguir tu tratamiento: hoy elegiste vivir mejor",
                     "iconResId": "outline_unknown_document_24"
@@ -563,7 +563,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Fin de la sesión ¡Seguí así, la constancia incluso con pasos pequeños es tu mejor aliada!",
                     "fullDescription": "Fin de la sesión ¡Seguí así, la constancia incluso con pasos pequeños es tu mejor aliada!",
                     "iconResId": "outline_unknown_document_24"
@@ -599,7 +599,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Fin de la sesión ¡Seguí así, tu constancia es tu mejor aliada!",
                     "fullDescription": "Fin de la sesión ¡Seguí así, tu constancia es tu mejor aliada!",
                     "iconResId": "outline_unknown_document_24"
@@ -643,7 +643,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Fin de la sesión ¡Seguí así, tu constancia es tu mejor aliada!",
                     "fullDescription": "Fin de la sesión ¡Seguí así, tu constancia es tu mejor aliada!",
                     "iconResId": "outline_unknown_document_24"
@@ -678,7 +678,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Fin de la sesión El ejercicio te ayuda, siempre que lo hagas de forma segura y continua.",
                     "fullDescription": "Fin de la sesión El ejercicio te ayuda, siempre que lo hagas de forma segura y continua.",
                     "iconResId": "outline_unknown_document_24"
@@ -737,7 +737,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Fin de la sesión Cada vez que te movés, tu cuerpo y tu mente te lo agradecen.",
                     "fullDescription": "Fin de la sesión Cada vez que te movés, tu cuerpo y tu mente te lo agradecen.",
                     "iconResId": "outline_unknown_document_24"
@@ -765,7 +765,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Fin de la sesión Repite los ejercicios la mayor cantidad de días a la semana que puedas. Pronto notarás el cambio en tu forma de sentirte. Recuerda que el mundo no se cambia en un día, a seguir construyendo este cambio en tu vida.",
                     "fullDescription": "Fin de la sesión Repite los ejercicios la mayor cantidad de días a la semana que puedas. Pronto notarás el cambio en tu forma de sentirte. Recuerda que el mundo no se cambia en un día, a seguir construyendo este cambio en tu vida.",
                     "iconResId": "outline_unknown_document_24"
@@ -800,7 +800,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Fin de la sesión Repite los ejercicios la mayor cantidad de días a la semana que puedas. Pronto notarás el cambio en tu salud.",
                     "fullDescription": "Fin de la sesión Repite los ejercicios la mayor cantidad de días a la semana que puedas. Pronto notarás el cambio en tu salud.",
                     "iconResId": "outline_unknown_document_24"
@@ -836,7 +836,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Fin de la sesión Intenta comer a hoario, no excederte en las porciones, y tomar agua.",
                     "fullDescription": "Fin de la sesión Intenta comer a hoario, no excederte en las porciones, y tomar agua.",
                     "iconResId": "outline_unknown_document_24"
@@ -880,7 +880,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Fin de la sesión Organizar las comidas es buscar equilibrio, no perfección.",
                     "fullDescription": "Fin de la sesión Organizar las comidas es buscar equilibrio, no perfección.",
                     "iconResId": "outline_unknown_document_24"
@@ -915,7 +915,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Fin de la sesión No hace falta cambiar todo de golpe: valorá cada paso que das hacia una vida más sana",
                     "fullDescription": "Fin de la sesión No hace falta cambiar todo de golpe: valorá cada paso que das hacia una vida más sana",
                     "iconResId": "outline_unknown_document_24"
@@ -958,7 +958,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Fin de la sesión Disfruta el sabor de cuidarte. saludable en el día a día",
                     "fullDescription": "Fin de la sesión Disfruta el sabor de cuidarte. saludable en el día a día",
                     "iconResId": "outline_unknown_document_24"
@@ -1009,7 +1009,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Fin de la sesión Con un poco de organización, como planear las comidas, hacer una lista y cocinar por adelantado, podés ahorrar tiempo y dinero.",
                     "fullDescription": "Fin de la sesión Con un poco de organización, como planear las comidas, hacer una lista y cocinar por adelantado, podés ahorrar tiempo y dinero.",
                     "iconResId": "outline_unknown_document_24"
@@ -1044,7 +1044,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Fin de la sesión Construir, de a poco, hábitos posibles que cuiden tu cuerpo y tu día a día.",
                     "fullDescription": "Fin de la sesión Construir, de a poco, hábitos posibles que cuiden tu cuerpo y tu día a día.",
                     "iconResId": "outline_unknown_document_24"
@@ -1087,7 +1087,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Fin de la sesión Elegir agua, más verduras y comida casera es la mejor receta para alimentarnos de manera más saludable.",
                     "fullDescription": "Fin de la sesión Elegir agua, más verduras y comida casera es la mejor receta para alimentarnos de manera más saludable.",
                     "iconResId": "outline_unknown_document_24"
@@ -1129,7 +1129,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Fin de la sesión Recordá que el centro del festejo es compartir el momento",
                     "fullDescription": "Fin de la sesión Recordá que el centro del festejo es compartir el momento",
                     "iconResId": "outline_unknown_document_24"
@@ -1164,7 +1164,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Fin de la sesión Pequeños cambios que se sostienen en el tiempo hacen la diferencia.",
                     "fullDescription": "Fin de la sesión Pequeños cambios que se sostienen en el tiempo hacen la diferencia.",
                     "iconResId": "outline_unknown_document_24"
@@ -1186,7 +1186,7 @@
                 "multimedia": [
                   {
                     "type": "DESCRIPTION",
-                    "title": "La importancia de los controles de salud",
+                    "title": "La importancia de las consultas médicas",
                     "description": "¡Hola! La salud es un camino, no un destino. Asegurate de contar con un buen mapa: ¡tus controles de salud! Hoy conoceremos la importancia de los controles de salud y cómo prepararnos para participar en los mismos.",
                     "fullDescription": "¡Hola! La salud es un camino, no un destino. Asegurate de contar con un buen mapa: ¡tus controles de salud! Hoy conoceremos la importancia de los controles de salud y cómo prepararnos para participar en los mismos.",
                     "iconResId": "outline_unknown_document_24"
@@ -1200,7 +1200,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Fin de la sesión Recordá que la consulta es un espacio donde vos sos el protagonista",
                     "fullDescription": "Fin de la sesión Recordá que la consulta es un espacio donde vos sos el protagonista",
                     "iconResId": "outline_unknown_document_24"
@@ -1228,7 +1228,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Fin de la sesión Un valor solo no te define, pero si notás números altos o síntomas extraños, consultá a tu médico: cada paso en tu cuidado suma.",
                     "fullDescription": "Fin de la sesión Un valor solo no te define, pero si notás números altos o síntomas extraños, consultá a tu médico: cada paso en tu cuidado suma.",
                     "iconResId": "outline_unknown_document_24"
@@ -1270,7 +1270,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Fin de la sesión Hoy aprendimos a escuchar al cuerpo y actuar a tiempo cuando nos da señales.",
                     "fullDescription": "Fin de la sesión Hoy aprendimos a escuchar al cuerpo y actuar a tiempo cuando nos da señales.",
                     "iconResId": "outline_unknown_document_24"
@@ -1313,7 +1313,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Fin de la sesión Tu medicación es una aliada: saber cómo funciona te ayudará a cuidarte mejor.",
                     "fullDescription": "Fin de la sesión Tu medicación es una aliada: saber cómo funciona te ayudará a cuidarte mejor.",
                     "iconResId": "outline_unknown_document_24"
@@ -1357,7 +1357,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Fin de la sesión Tomar tu medicación todos los días y mantener hábitos saludables te ayuda a mantener tu presión estable y a proteger tu salud a largo plazo.",
                     "fullDescription": "Fin de la sesión Tomar tu medicación todos los días y mantener hábitos saludables te ayuda a mantener tu presión estable y a proteger tu salud a largo plazo.",
                     "iconResId": "outline_unknown_document_24"
@@ -1392,7 +1392,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Fin de la sesión Organizar tus medicamentos y crear pequeños hábitos diarios puede ayudarte mucho.",
                     "fullDescription": "Fin de la sesión Organizar tus medicamentos y crear pequeños hábitos diarios puede ayudarte mucho.",
                     "iconResId": "outline_unknown_document_24"
@@ -1442,7 +1442,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Fin de la sesión Dormir te ayuda a controlar la glucosa y la presión, y a mejorar tu energía y ánimo.",
                     "fullDescription": "Fin de la sesión Dormir te ayuda a controlar la glucosa y la presión, y a mejorar tu energía y ánimo.",
                     "iconResId": "outline_unknown_document_24"
@@ -1500,7 +1500,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Fin de la sesión Prepararte para dormir con una rutina tranquila ayuda a que descanses mejor.",
                     "fullDescription": "Fin de la sesión Prepararte para dormir con una rutina tranquila ayuda a que descanses mejor.",
                     "iconResId": "outline_unknown_document_24"
@@ -1549,7 +1549,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Fin de la sesión Con pasos sencillos y constantes podemos mejorar nuestro descanso y despertar con más energía y bienestar.",
                     "fullDescription": "Fin de la sesión Con pasos sencillos y constantes podemos mejorar nuestro descanso y despertar con más energía y bienestar.",
                     "iconResId": "outline_unknown_document_24"
@@ -1585,7 +1585,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Fin de la sesión Recordá que el autocuidado se construye en gestos simples, todos los días.",
                     "fullDescription": "Fin de la sesión Recordá que el autocuidado se construye en gestos simples, todos los días.",
                     "iconResId": "outline_unknown_document_24"
@@ -1613,7 +1613,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Fin de la sesión Podemos sumar la respiración consciente como parte de nuestro cuidado diario. Con práctica, puede transformarse en una aliada para acompañar nuestro bienestar emocional y fortalecer nuestra salud.",
                     "fullDescription": "Fin de la sesión Podemos sumar la respiración consciente como parte de nuestro cuidado diario. Con práctica, puede transformarse en una aliada para acompañar nuestro bienestar emocional y fortalecer nuestra salud.",
                     "iconResId": "outline_unknown_document_24"
@@ -1648,7 +1648,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Fin de la sesión Recordá que cada pequeño momento de pausa es una forma de cuidar la presión y también el bienestar.",
                     "fullDescription": "Fin de la sesión Recordá que cada pequeño momento de pausa es una forma de cuidar la presión y también el bienestar.",
                     "iconResId": "outline_unknown_document_24"
@@ -1700,7 +1700,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Fin de la sesión Diste el primer paso: entender el poder de la compañía. En la próxima sesión aprenderemos cómo empezar a construir tu equipo de apoyo. ¡No estás solo/a en esto!",
                     "fullDescription": "Fin de la sesión Diste el primer paso: entender el poder de la compañía. En la próxima sesión aprenderemos cómo empezar a construir tu equipo de apoyo. ¡No estás solo/a en esto!",
                     "iconResId": "outline_unknown_document_24"
@@ -1772,7 +1772,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Fin de la sesión Animarte a pedir apoyo puede hacer la diferencia. Estás construyendo tu equipo de apoyo paso a paso. En la próxima sesión veremos cómo compartir tus logros puede fortalecer ese equipo y ayudarte a seguir avanzando.",
                     "fullDescription": "Fin de la sesión Animarte a pedir apoyo puede hacer la diferencia. Estás construyendo tu equipo de apoyo paso a paso. En la próxima sesión veremos cómo compartir tus logros puede fortalecer ese equipo y ayudarte a seguir avanzando.",
                     "iconResId": "outline_unknown_document_24"
@@ -1828,7 +1828,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Fin de la sesión El apoyo de los demás es una herramienta muy importante para sostener el cuidado de tu salud: no tenés que hacerlo solo/a . Podés seguir construyendo tu equipo paso a paso: pedir apoyo cuando lo necesites y compartir tus avances. Cada conexión cuenta.",
                     "fullDescription": "Fin de la sesión El apoyo de los demás es una herramienta muy importante para sostener el cuidado de tu salud: no tenés que hacerlo solo/a . Podés seguir construyendo tu equipo paso a paso: pedir apoyo cuando lo necesites y compartir tus avances. Cada conexión cuenta.",
                     "iconResId": "outline_unknown_document_24"
@@ -1864,7 +1864,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Fin de la sesión Reconocer lo que logramos no es conformarse. Es darnos fuerzas para seguir avanzando.",
                     "fullDescription": "Fin de la sesión Reconocer lo que logramos no es conformarse. Es darnos fuerzas para seguir avanzando.",
                     "iconResId": "outline_unknown_document_24"
@@ -1899,7 +1899,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Fin de la sesión Cada mañana es una oportunidad para iniciar de nuevo; estamos acá para acompañarte en cada paso, sea fácil o difícil.",
                     "fullDescription": "Fin de la sesión Cada mañana es una oportunidad para iniciar de nuevo; estamos acá para acompañarte en cada paso, sea fácil o difícil.",
                     "iconResId": "outline_unknown_document_24"
@@ -1934,7 +1934,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Fin de la sesión Cada pequeño cuidado es una forma de elegirte. Y eso ya es un gran paso.",
                     "fullDescription": "Fin de la sesión Cada pequeño cuidado es una forma de elegirte. Y eso ya es un gran paso.",
                     "iconResId": "outline_unknown_document_24"
@@ -1956,7 +1956,7 @@
                 "multimedia": [
                   {
                     "type": "DESCRIPTION",
-                    "title": "¿Qué te funciona? Diseña tu propio plan de autocuidado",
+                    "title": "¿Qué me funciona? Diseño mi propio plan de autocuidado",
                     "description": "¡Hola! Llegamos a la última semana de contenido. Hoy vamos a hacer algo especial: vas a diseñar tu propio plan de autocuidado, basado en lo que realmente te funciona. El mejor plan es el que se adapta a tu realidad.",
                     "fullDescription": "¡Hola! Llegamos a la última semana de contenido. Hoy vamos a hacer algo especial: vas a diseñar tu propio plan de autocuidado, basado en lo que realmente te funciona. El mejor plan es el que se adapta a tu realidad.",
                     "iconResId": "outline_unknown_document_24"
@@ -1977,7 +1977,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Fin de la sesión Ahora tienes algo que es tuyo: un plan hecho a tu medida. En las próximas sesiones vamos a ver cómo manejar los días difíciles y a repasar todas tus herramientas. ¡Sigue adelante!",
                     "fullDescription": "Fin de la sesión Ahora tienes algo que es tuyo: un plan hecho a tu medida. En las próximas sesiones vamos a ver cómo manejar los días difíciles y a repasar todas tus herramientas. ¡Sigue adelante!",
                     "iconResId": "outline_unknown_document_24"
@@ -2022,7 +2022,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Fin de la sesión Las recaídas no son el final del camino. Son una curva más. Ahora sabes qué hacer cuando aparecen. En la próxima sesión vamos a repasar todas tus herramientas para que las tengas siempre a mano. ¡No estás solo en esto!",
                     "fullDescription": "Fin de la sesión Las recaídas no son el final del camino. Son una curva más. Ahora sabes qué hacer cuando aparecen. En la próxima sesión vamos a repasar todas tus herramientas para que las tengas siempre a mano. ¡No estás solo en esto!",
                     "iconResId": "outline_unknown_document_24"
@@ -2057,7 +2057,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Fin de la sesión Completaste las 16 semanas de contenido nuevo. ¡Eso es un logro enorme! En las próximas semanas te acompañaremos con sesiones de repaso para que sigas practicando. Pero recordá que lo más valioso ya lo tenés. Cuidarte es un camino, no un destino. Y vos ya estás caminando. Información adicional Información adicional sobre la diabetes Información sobre la hipertensión Información sobre salud mental Alimentación saludable Alimentación para personas con diabetes Alimentación para personas con hipertensión Actividad física Dormir mejor Consumo de tabaco",
                     "fullDescription": "Fin de la sesión Completaste las 16 semanas de contenido nuevo. ¡Eso es un logro enorme! En las próximas semanas te acompañaremos con sesiones de repaso para que sigas practicando. Pero recordá que lo más valioso ya lo tenés. Cuidarte es un camino, no un destino. Y vos ya estás caminando. Información adicional Información adicional sobre la diabetes Información sobre la hipertensión Información sobre salud mental Alimentación saludable Alimentación para personas con diabetes Alimentación para personas con hipertensión Actividad física Dormir mejor Consumo de tabaco",
                     "iconResId": "outline_unknown_document_24"
@@ -2217,7 +2217,7 @@
                 "multimedia": [
                   {
                     "type": "DESCRIPTION",
-                    "title": "Tres herramientas para cumplir con tus actividades",
+                    "title": "Tres herramientas para cumplir con mis actividades",
                     "description": "¡Hola! Qué bueno que seguís acá. Hoy vamos a abrir una caja de herramientas para ayudarte a cumplir tu meta, incluso en los días difíciles. Seguir tu plan puede ayudarte a continuar, incluso en días difíciles . Hacer actividades según tu plan suele funcionar mejor que guiarte por el ánimo del momento.",
                     "fullDescription": "¡Hola! Qué bueno que seguís acá. Hoy vamos a abrir una caja de herramientas para ayudarte a cumplir tu meta, incluso en los días difíciles. Seguir tu plan puede ayudarte a continuar, incluso en días difíciles . Hacer actividades según tu plan suele funcionar mejor que guiarte por el ánimo del momento.\n\nEn esta sesión vamos a explorar 3 herramientas para ayudarte a superar obstáculos y seguir con tu meta: planificar con detalle, dividir en pasos pequeños y pedir ayuda.",
                     "iconResId": "outline_unknown_document_24"
@@ -3260,7 +3260,7 @@
                 "multimedia": [
                   {
                     "type": "DESCRIPTION",
-                    "title": "La importancia de los controles de salud",
+                    "title": "La importancia de las consultas médicas",
                     "description": "¡Hola! La salud es un camino, no un destino. Asegúrate de contar con un buen mapa: ¡tus controles de salud! Hoy conoceremos la importancia de los controles de salud y cómo prepararnos para participar en los mismos.",
                     "fullDescription": "¡Hola! La salud es un camino, no un destino. Asegúrate de contar con un buen mapa: ¡tus controles de salud! Hoy conoceremos la importancia de los controles de salud y cómo prepararnos para participar en los mismos.",
                     "iconResId": "outline_unknown_document_24"
@@ -4037,7 +4037,7 @@
                 "multimedia": [
                   {
                     "type": "DESCRIPTION",
-                    "title": "¿Qué te funciona? Diseña tu propio plan de autocuidado",
+                    "title": "¿Qué me funciona? Diseño mi propio plan de autocuidado",
                     "description": "¡Hola! Llegamos a la última semana de contenido. Hoy vamos a hacer algo especial: vas a diseñar tu propio plan de autocuidado, basado en lo que realmente te funciona. El mejor plan es el que se adapta a tu realidad.",
                     "fullDescription": "¡Hola! Llegamos a la última semana de contenido. Hoy vamos a hacer algo especial: vas a diseñar tu propio plan de autocuidado, basado en lo que realmente te funciona. El mejor plan es el que se adapta a tu realidad.",
                     "iconResId": "outline_unknown_document_24"
@@ -4117,7 +4117,7 @@
                 "multimedia": [
                   {
                     "type": "DESCRIPTION",
-                    "title": "Tus herramientas personales: repaso final",
+                    "title": "Mis herramientas personales: repaso final",
                     "description": "¡Hola! Esta es la última sesión de contenido. Pero no es un final: es un nuevo comienzo. Hoy vamos a repasar todas las herramientas que vimos para que las tengas siempre a mano. Ya tenés todo lo que necesitas. Ahora es tuyo.",
                     "fullDescription": "¡Hola! Esta es la última sesión de contenido. Pero no es un final: es un nuevo comienzo. Hoy vamos a repasar todas las herramientas que vimos para que las tengas siempre a mano. Ya tenés todo lo que necesitas. Ahora es tuyo.",
                     "iconResId": "outline_unknown_document_24"
@@ -4211,7 +4211,7 @@
                 "multimedia": [
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "La activación conductual, empezar de a poco",
                     "description": "¡Hola de nuevo! Qué bueno verte por acá. Sumar actividades que disfrutás y que son importantes para vos ayuda a llenar tu ‘tanque’ de ánimo. Vamos a poner en práctica la activación conductual: una forma de sentirte mejor haciendo pequeñas cosas que te dan placer o son importantes para vos.\n\nLa activación conductual, empezar de a poco ¡Hola de nuevo! Qué bueno verte por acá. Sumar actividades que disfrutás y que son importantes para vos ayuda a llenar tu ‘tanque’ de ánimo. Vamos a poner en práctica la activación conductual: una forma de sentirte mejor haciendo pequeñas cosas que te dan placer o son importantes para vos.",
                     "fullDescription": "¡Hola de nuevo! Qué bueno verte por acá. Sumar actividades que disfrutás y que son importantes para vos ayuda a llenar tu ‘tanque’ de ánimo. Vamos a poner en práctica la activación conductual: una forma de sentirte mejor haciendo pequeñas cosas que te dan placer o son importantes para vos.\n\nLa activación conductual, empezar de a poco ¡Hola de nuevo! Qué bueno verte por acá. Sumar actividades que disfrutás y que son importantes para vos ayuda a llenar tu ‘tanque’ de ánimo. Vamos a poner en práctica la activación conductual: una forma de sentirte mejor haciendo pequeñas cosas que te dan placer o son importantes para vos.",
                     "iconResId": "outline_unknown_document_24"
@@ -4305,7 +4305,7 @@
                 "multimedia": [
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Tres herramientas para cumplir con mis actividades",
                     "description": "¡Hola! Qué bueno que seguís acá. Hoy vamos a abrir una caja de herramientas para ayudarte a cumplir tu meta, incluso en los días difíciles. Seguir tu plan puede ayudarte a continuar, incluso en días difíciles . Hacer actividades según tu plan suele funcionar mejor que guiarte por el ánimo del momento.\n\n¡Hola! Qué bueno que seguís acá. Hoy vamos a abrir una caja de herramientas para ayudarte a cumplir tu meta, incluso en los días difíciles. Seguir tu plan puede ayudarte a continuar, incluso en días difíciles. Hacer actividades según tu plan suele funcionar mejor que guiarte por el ánimo del momento.",
                     "fullDescription": "¡Hola! Qué bueno que seguís acá. Hoy vamos a abrir una caja de herramientas para ayudarte a cumplir tu meta, incluso en los días difíciles. Seguir tu plan puede ayudarte a continuar, incluso en días difíciles . Hacer actividades según tu plan suele funcionar mejor que guiarte por el ánimo del momento.\n\nEn esta sesión vamos a explorar 3 herramientas para ayudarte a superar obstáculos y seguir con tu meta: planificar con detalle, dividir en pasos pequeños y pedir ayuda.\n\n¡Hola! Qué bueno que seguís acá. Hoy vamos a abrir una caja de herramientas para ayudarte a cumplir tu meta, incluso en los días difíciles. Seguir tu plan puede ayudarte a continuar, incluso en días difíciles. Hacer actividades según tu plan suele funcionar mejor que guiarte por el ánimo del momento.\n\nEn esta sesión vamos a explorar 3 herramientas para ayudarte a superar obstáculos y seguir con tu meta: planificar con detalle, dividir en pasos pequeños y pedir ayuda.",
                     "iconResId": "outline_unknown_document_24"
@@ -4632,7 +4632,7 @@
                 "multimedia": [
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "¿Qué es la diabetes?",
                     "description": "¡Hola! Cuidar tu glucosa es cuidarte. Vamos a conversar sobre qué es la diabetes y qué formas existen para medir tus niveles de glucosa.\n\n¡Hola! El mejor momento para cuidar tu corazón es ahora. ¡Prevenir es ganar! Vamos a conocer cómo se diagnostica la hipertensión arterial.",
                     "fullDescription": "¡Hola! Cuidar tu glucosa es cuidarte. Vamos a conversar sobre qué es la diabetes y qué formas existen para medir tus niveles de glucosa.\n\n¡Hola! El mejor momento para cuidar tu corazón es ahora. ¡Prevenir es ganar! Vamos a conocer cómo se diagnostica la hipertensión arterial.",
                     "iconResId": "outline_unknown_document_24"
@@ -4667,7 +4667,7 @@
                 "multimedia": [
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "¿Cómo sé si tengo la glucosa alta o baja?",
                     "description": "¡Hola! Te damos la bienvenida a esta sesión sobre diabetes. Conocer tu cuerpo y medir tu glucosa te ayuda a cuidarte mejor cada día. Vamos a hablar de cómo podés reconocer si tu glucosa está muy alta o muy baja y qué podés hacer al respecto.\n\n¡Hola! Cada pequeña elección de hoy es un regalo de bienestar para tu salud mañana. Vamos a incorporar pequeños hábitos para ayudar a controlar la presión.",
                     "fullDescription": "¡Hola! Te damos la bienvenida a esta sesión sobre diabetes. Conocer tu cuerpo y medir tu glucosa te ayuda a cuidarte mejor cada día. Vamos a hablar de cómo podés reconocer si tu glucosa está muy alta o muy baja y qué podés hacer al respecto.\n\n¡Hola! Cada pequeña elección de hoy es un regalo de bienestar para tu salud mañana. Vamos a incorporar pequeños hábitos para ayudar a controlar la presión.",
                     "iconResId": "outline_unknown_document_24"
@@ -4748,7 +4748,7 @@
                 "multimedia": [
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "¿Cuáles son los beneficios de controlar la diabetes?",
                     "description": "¡Hola! Te damos la bienvenida a esta sesión sobre diabetes. Cada pequeño esfuerzo cuenta, y tu cuerpo te lo agradece. Repasaremos cómo la diabetes está relacionada con la salud de tus riñones, tu corazón, tus ojos y tu sistema nervioso.\n\n¡Hola! Sentirte bien no es la señal para detenerte, es la prueba de que lo estás haciendo bien. Vamos a conocer por qué la hipertensión es crónica y silenciosa.",
                     "fullDescription": "¡Hola! Te damos la bienvenida a esta sesión sobre diabetes. Cada pequeño esfuerzo cuenta, y tu cuerpo te lo agradece. Repasaremos cómo la diabetes está relacionada con la salud de tus riñones, tu corazón, tus ojos y tu sistema nervioso.\n\n¡Hola! Sentirte bien no es la señal para detenerte, es la prueba de que lo estás haciendo bien. Vamos a conocer por qué la hipertensión es crónica y silenciosa.",
                     "iconResId": "outline_unknown_document_24"
@@ -5121,7 +5121,7 @@
                 "multimedia": [
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Comer sano teniendo diabetes",
                     "description": "¡Hola! Te damos la bienvenida a esta sesión. Hoy vamos a ver cómo elegir alimentos que te ayuden a cuidar tu diabetes.\n\n¡Hola! Hoy vamos a ver cómo elegir alimentos que te ayuden a cuidar tu presión sin presiones.",
                     "fullDescription": "¡Hola! Te damos la bienvenida a esta sesión. Hoy vamos a ver cómo elegir alimentos que te ayuden a cuidar tu diabetes.\n\n¡Hola! Hoy vamos a ver cómo elegir alimentos que te ayuden a cuidar tu presión sin presiones.",
                     "iconResId": "outline_unknown_document_24"
@@ -5434,7 +5434,7 @@
                 "multimedia": [
                   {
                     "type": "DESCRIPTION",
-                    "title": "La importancia de los controles de salud",
+                    "title": "La importancia de las consultas médicas",
                     "description": "¡Hola! La salud es un camino, no un destino. Asegúrate de contar con un buen mapa: ¡tus controles de salud! Hoy conoceremos la importancia de los controles de salud y cómo prepararnos para participar en los mismos.",
                     "fullDescription": "¡Hola! La salud es un camino, no un destino. Asegúrate de contar con un buen mapa: ¡tus controles de salud! Hoy conoceremos la importancia de los controles de salud y cómo prepararnos para participar en los mismos.",
                     "iconResId": "outline_unknown_document_24"
@@ -5462,7 +5462,7 @@
                 "multimedia": [
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "¿Por qué es importante controlar tu glucosa?",
                     "description": "¡Hola! Un pequeño hábito, una gran diferencia. Hoy vamos a conocer cómo tomar de forma correcta tu glucemia.\n\n¡Hola! Un pequeño hábito, una gran diferencia. Hoy conoceremos cómo tomar de forma correcta tu presión arterial.",
                     "fullDescription": "¡Hola! Un pequeño hábito, una gran diferencia. Hoy vamos a conocer cómo tomar de forma correcta tu glucemia.\n\n¡Hola! Un pequeño hábito, una gran diferencia. Hoy conoceremos cómo tomar de forma correcta tu presión arterial.",
                     "iconResId": "outline_unknown_document_24"
@@ -5561,7 +5561,7 @@
                 "multimedia": [
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "El tratamiento para la diabetes",
                     "description": "¡Hola! Te damos la bienvenida a esta nueva semana. Tu medicación es una aliada: saber cómo funciona te ayuda a cuidarte mejor. Hoy veremos por qué respetar tus medicamentos y sus horarios es la clave.\n\n¡Hola! Te damos la bienvenida a esta nueva semana. Tu medicación es una aliada: saber cómo funciona te ayuda a cuidarte mejor. Hoy veremos por qué respetar tus medicamentos y sus horarios es la clave.",
                     "fullDescription": "¡Hola! Te damos la bienvenida a esta nueva semana. Tu medicación es una aliada: saber cómo funciona te ayuda a cuidarte mejor. Hoy veremos por qué respetar tus medicamentos y sus horarios es la clave.\n\n¡Hola! Te damos la bienvenida a esta nueva semana. Tu medicación es una aliada: saber cómo funciona te ayuda a cuidarte mejor. Hoy veremos por qué respetar tus medicamentos y sus horarios es la clave.",
                     "iconResId": "outline_unknown_document_24"
@@ -5610,7 +5610,7 @@
                 "multimedia": [
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "¿Por qué es importante la medicación y cuidar nuestra diabetes todos los días?",
                     "description": "¡Hola! Te damos la bienvenida a esta sesión. Pequeños pasos diarios hacen una gran diferencia. Hablaremos de por qué es tan importante seguir tu tratamiento todos los días.\n\n¡Hola! Te damos la bienvenida a esta sesión Pequeños pasos diarios hacen una gran diferencia. Hablaremos de por qué es tan importante seguir tu tratamiento todos los días.",
                     "fullDescription": "¡Hola! Te damos la bienvenida a esta sesión. Pequeños pasos diarios hacen una gran diferencia. Hablaremos de por qué es tan importante seguir tu tratamiento todos los días.\n\n¡Hola! Te damos la bienvenida a esta sesión Pequeños pasos diarios hacen una gran diferencia. Hablaremos de por qué es tan importante seguir tu tratamiento todos los días.",
                     "iconResId": "outline_unknown_document_24"
@@ -5956,7 +5956,7 @@
                 "multimedia": [
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "La salud mental también es parte del tratamiento de la diabetes",
                     "description": "¡Hola! Cuidar cómo nos sentimos nos ayuda a sostener los hábitos y el autocuidado en el tiempo. Hoy vamos a reconocer el impacto que tiene la salud mental en la diabetes y promover pequeñas acciones de cuidado emocional que contribuyan al bienestar.\n\n¡Hola! Te damos la bienvenida a esta sesión. Cuidar lo que sentimos también es cuidar nuestro corazón. Veremos cómo el estrés puede influir en la presión arterial y en el estado de ánimo, y reconoceremos la importancia de aprender a manejarlo para proteger nuestra salud.",
                     "fullDescription": "¡Hola! Cuidar cómo nos sentimos nos ayuda a sostener los hábitos y el autocuidado en el tiempo. Hoy vamos a reconocer el impacto que tiene la salud mental en la diabetes y promover pequeñas acciones de cuidado emocional que contribuyan al bienestar.\n\n¡Hola! Te damos la bienvenida a esta sesión. Cuidar lo que sentimos también es cuidar nuestro corazón. Veremos cómo el estrés puede influir en la presión arterial y en el estado de ánimo, y reconoceremos la importancia de aprender a manejarlo para proteger nuestra salud.",
                     "iconResId": "outline_unknown_document_24"
@@ -6313,7 +6313,7 @@
                 "multimedia": [
                   {
                     "type": "DESCRIPTION",
-                    "title": "¿Qué te funciona? Diseña tu propio plan de autocuidado",
+                    "title": "¿Qué me funciona? Diseño mi propio plan de autocuidado",
                     "description": "¡Hola! Llegamos a la última semana de contenido. Hoy vamos a hacer algo especial: vas a diseñar tu propio plan de autocuidado, basado en lo que realmente te funciona. El mejor plan es el que se adapta a tu realidad.",
                     "fullDescription": "¡Hola! Llegamos a la última semana de contenido. Hoy vamos a hacer algo especial: vas a diseñar tu propio plan de autocuidado, basado en lo que realmente te funciona. El mejor plan es el que se adapta a tu realidad.",
                     "iconResId": "outline_unknown_document_24"
@@ -6393,7 +6393,7 @@
                 "multimedia": [
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Mis herramientas personales: repaso final",
                     "description": "¡Hola! Esta es la última sesión de contenido. Pero no es un final: es un nuevo comienzo. Hoy vamos a repasar todas las herramientas que vimos para que las tengas siempre a mano. Ya tenés todo lo que necesitas. Ahora es tuyo.\n\n¡Hola! Esta es la última sesión de contenido. Pero no es un final: es un nuevo comienzo. Hoy vamos a repasar todas las herramientas que vimos para que las tengas siempre a mano. Ya tenés todo lo que necesitás. Ahora es tuyo.",
                     "fullDescription": "¡Hola! Esta es la última sesión de contenido. Pero no es un final: es un nuevo comienzo. Hoy vamos a repasar todas las herramientas que vimos para que las tengas siempre a mano. Ya tenés todo lo que necesitas. Ahora es tuyo.\n\n¡Hola! Esta es la última sesión de contenido. Pero no es un final: es un nuevo comienzo. Hoy vamos a repasar todas las herramientas que vimos para que las tengas siempre a mano. Ya tenés todo lo que necesitás. Ahora es tuyo.",
                     "iconResId": "outline_unknown_document_24"
@@ -6496,7 +6496,7 @@
                 "multimedia": [
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "La activación conductual, empezar de a poco",
                     "description": "La activación conductual, empezar de a poco ¡Hola de nuevo! Qué bueno verte por aquí. Sumar actividades que disfrutas y que son importantes para ti ayuda a llenar tu ‘tanque’ de ánimo. Vamos a poner en práctica la activación conductual: una forma de sentirte mejor haciendo pequeñas cosas que te dan placer o son importantes para ti. Semana 1: ¿Qué es la activación conductual?",
                     "fullDescription": "La activación conductual, empezar de a poco ¡Hola de nuevo! Qué bueno verte por aquí. Sumar actividades que disfrutas y que son importantes para ti ayuda a llenar tu ‘tanque’ de ánimo. Vamos a poner en práctica la activación conductual: una forma de sentirte mejor haciendo pequeñas cosas que te dan placer o son importantes para ti. Semana 1: ¿Qué es la activación conductual?",
                     "iconResId": "outline_unknown_document_24"
@@ -6590,7 +6590,7 @@
                 "multimedia": [
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Tres herramientas para cumplir con mis actividades",
                     "description": "Tres herramientas para cumplir con mis actividades Placa 1 ¡Hola! Qué bueno que sigues aquí. Hoy vamos a abrir una caja de herramientas para ayudarte a cumplir tu meta, incluso en los días difíciles. Seguir tu plan puede ayudarte a continuar, incluso en días difíciles. Hacer actividades según tu plan suele funcionar mejor que guiarte por el ánimo del momento. Placa 2 En esta sesión vamos a explorar 3 herramientas para ayudarte a superar obstáculos y seguir con tu meta: planificar con detalle, dividir en pasos pequeños y pedir ayuda. Semana 2: Organizando nuestras actividades",
                     "fullDescription": "Tres herramientas para cumplir con mis actividades Placa 1 ¡Hola! Qué bueno que sigues aquí. Hoy vamos a abrir una caja de herramientas para ayudarte a cumplir tu meta, incluso en los días difíciles. Seguir tu plan puede ayudarte a continuar, incluso en días difíciles. Hacer actividades según tu plan suele funcionar mejor que guiarte por el ánimo del momento. Placa 2 En esta sesión vamos a explorar 3 herramientas para ayudarte a superar obstáculos y seguir con tu meta: planificar con detalle, dividir en pasos pequeños y pedir ayuda. Semana 2: Organizando nuestras actividades",
                     "iconResId": "outline_unknown_document_24"
@@ -6917,7 +6917,7 @@
                 "multimedia": [
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "¿Qué es la diabetes?",
                     "description": "Bienvenida/Cierre: Texto ¿Qué es la diabetes? ¡Hola! Cuidar tu glucosa y tu corazón es cuidarte y el mejor momento para hacerlo es ahora. ¡Prevenir es ganar! Vamos a conversar sobre qué es la diabetes y qué formas existen para medir tus niveles de glucosa. También conoceremos cómo se diagnostica la hipertensión arterial. Semana 4: Comprendiendo la diabetes y la hipertensión",
                     "fullDescription": "Bienvenida/Cierre: Texto ¿Qué es la diabetes? ¡Hola! Cuidar tu glucosa y tu corazón es cuidarte y el mejor momento para hacerlo es ahora. ¡Prevenir es ganar! Vamos a conversar sobre qué es la diabetes y qué formas existen para medir tus niveles de glucosa. También conoceremos cómo se diagnostica la hipertensión arterial. Semana 4: Comprendiendo la diabetes y la hipertensión",
                     "iconResId": "outline_unknown_document_24"
@@ -6952,7 +6952,7 @@
                 "multimedia": [
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "¿Cómo sé si tengo la glucosa alta o baja?",
                     "description": "¿Cómo sé si tengo la glucosa alta o baja? ¡Hola! Te damos la bienvenida a esta sesión. Conocer tu cuerpo, medir tu glucosa y controlar tu presión, te ayudan a cuidarte mejor cada día. Vamos a hablar de cómo puedes reconocer si tu glucosa está muy alta o muy baja y qué puedes hacer al respecto. También vamos a incorporar pequeños hábitos para ayudar a controlar la presión. Semana 4: Comprendiendo la diabetes y la hipertensión",
                     "fullDescription": "¿Cómo sé si tengo la glucosa alta o baja? ¡Hola! Te damos la bienvenida a esta sesión. Conocer tu cuerpo, medir tu glucosa y controlar tu presión, te ayudan a cuidarte mejor cada día. Vamos a hablar de cómo puedes reconocer si tu glucosa está muy alta o muy baja y qué puedes hacer al respecto. También vamos a incorporar pequeños hábitos para ayudar a controlar la presión. Semana 4: Comprendiendo la diabetes y la hipertensión",
                     "iconResId": "outline_unknown_document_24"
@@ -7033,7 +7033,7 @@
                 "multimedia": [
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "¿Cuáles son los beneficios de controlar la diabetes?",
                     "description": "¿Cuáles son los beneficios de controlar la diabetes? ¡Hola! Te damos la bienvenida a esta sesión. Cada pequeño esfuerzo cuenta, y tu cuerpo te lo agradece. Sentirte bien no es la señal para detenerte, es la prueba de que lo estás haciendo bien. Repasaremos cómo la diabetes está relacionada con la salud de tus riñones, tu corazón, tus ojos y tu sistema nervioso. También vamos a conocer qué significa que la hipertensión es crónica y silenciosa. Semana 4: Comprendiendo la diabetes y la hipertensión",
                     "fullDescription": "¿Cuáles son los beneficios de controlar la diabetes? ¡Hola! Te damos la bienvenida a esta sesión. Cada pequeño esfuerzo cuenta, y tu cuerpo te lo agradece. Sentirte bien no es la señal para detenerte, es la prueba de que lo estás haciendo bien. Repasaremos cómo la diabetes está relacionada con la salud de tus riñones, tu corazón, tus ojos y tu sistema nervioso. También vamos a conocer qué significa que la hipertensión es crónica y silenciosa. Semana 4: Comprendiendo la diabetes y la hipertensión",
                     "iconResId": "outline_unknown_document_24"
@@ -7406,7 +7406,7 @@
                 "multimedia": [
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Comer sano teniendo diabetes",
                     "description": "Comer sano teniendo diabetes ¡Hola! Te damos la bienvenida a esta sesión. Hoy vamos a ver cómo elegir alimentos que te ayuden a cuidar tu diabetes y presión sin presiones. Semana 7: ¿Cómo alimentarnos mejor?",
                     "fullDescription": "Comer sano teniendo diabetes ¡Hola! Te damos la bienvenida a esta sesión. Hoy vamos a ver cómo elegir alimentos que te ayuden a cuidar tu diabetes y presión sin presiones. Semana 7: ¿Cómo alimentarnos mejor?",
                     "iconResId": "outline_unknown_document_24"
@@ -7719,7 +7719,7 @@
                 "multimedia": [
                   {
                     "type": "DESCRIPTION",
-                    "title": "La importancia de los controles de salud",
+                    "title": "La importancia de las consultas médicas",
                     "description": "La importancia de las consultas médicas ¡Hola! La salud es un camino, no un destino. Asegúrate de contar con un buen mapa: ¡tus consultas médicas! Hoy conoceremos la importancia de las consultas médicas y cómo prepararnos para participar en ellas. Semana 10: Consultas médicas",
                     "fullDescription": "La importancia de las consultas médicas ¡Hola! La salud es un camino, no un destino. Asegúrate de contar con un buen mapa: ¡tus consultas médicas! Hoy conoceremos la importancia de las consultas médicas y cómo prepararnos para participar en ellas. Semana 10: Consultas médicas",
                     "iconResId": "outline_unknown_document_24"
@@ -7747,7 +7747,7 @@
                 "multimedia": [
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "¿Por qué es importante controlar tu glucosa?",
                     "description": "¿Por qué es importante controlar tu glucosa? ¡Hola! Un pequeño hábito, una gran diferencia. Hoy vamos a conocer cómo tomar de forma correcta tu glucosa y presión arterial. Semana 10: Consultas médicas",
                     "fullDescription": "¿Por qué es importante controlar tu glucosa? ¡Hola! Un pequeño hábito, una gran diferencia. Hoy vamos a conocer cómo tomar de forma correcta tu glucosa y presión arterial. Semana 10: Consultas médicas",
                     "iconResId": "outline_unknown_document_24"
@@ -7846,7 +7846,7 @@
                 "multimedia": [
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "El tratamiento para la diabetes",
                     "description": "El tratamiento para la diabetes ¡Hola! Te damos la bienvenida a esta nueva semana. Tu medicación es una aliada: saber cómo funciona te ayuda a cuidarte mejor. Hoy veremos por qué respetar tus medicamentos y sus horarios es la clave. Semana 11: La importancia de",
                     "fullDescription": "El tratamiento para la diabetes ¡Hola! Te damos la bienvenida a esta nueva semana. Tu medicación es una aliada: saber cómo funciona te ayuda a cuidarte mejor. Hoy veremos por qué respetar tus medicamentos y sus horarios es la clave. Semana 11: La importancia de",
                     "iconResId": "outline_unknown_document_24"
@@ -7895,7 +7895,7 @@
                 "multimedia": [
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "¿Por qué es importante la medicación y cuidar nuestra diabetes todos los días?",
                     "description": "¿Por qué es importante la medicación y cuidar nuestra diabetes todos los días? ¡Hola! Te damos la bienvenida a esta sesión. Pequeños pasos diarios hacen una gran diferencia. Hablaremos de por qué es tan importante seguir tu tratamiento todos los días. Semana 11: La importancia de nuestro tratamiento",
                     "fullDescription": "¿Por qué es importante la medicación y cuidar nuestra diabetes todos los días? ¡Hola! Te damos la bienvenida a esta sesión. Pequeños pasos diarios hacen una gran diferencia. Hablaremos de por qué es tan importante seguir tu tratamiento todos los días. Semana 11: La importancia de nuestro tratamiento",
                     "iconResId": "outline_unknown_document_24"
@@ -8241,7 +8241,7 @@
                 "multimedia": [
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "La salud mental también es parte del tratamiento de la diabetes",
                     "description": "La salud mental también es parte del tratamiento de la diabetes ¡Hola! Cuidar cómo nos sentimos nos ayuda a sostener los hábitos y el autocuidado en el tiempo. Hoy vamos a reconocer la relación entre la salud mental, la diabetes y la presión arterial. También veremos pequeñas acciones de cuidado emocional que contribuyan al bienestar. Semana 13: Manejo del estrés",
                     "fullDescription": "La salud mental también es parte del tratamiento de la diabetes ¡Hola! Cuidar cómo nos sentimos nos ayuda a sostener los hábitos y el autocuidado en el tiempo. Hoy vamos a reconocer la relación entre la salud mental, la diabetes y la presión arterial. También veremos pequeñas acciones de cuidado emocional que contribuyan al bienestar. Semana 13: Manejo del estrés",
                     "iconResId": "outline_unknown_document_24"
@@ -8598,7 +8598,7 @@
                 "multimedia": [
                   {
                     "type": "DESCRIPTION",
-                    "title": "¿Qué te funciona? Diseña tu propio plan de autocuidado",
+                    "title": "¿Qué me funciona? Diseño mi propio plan de autocuidado",
                     "description": "¿Qué me funciona? Diseño mi propio plan de autocuidado ¡Hola! Llegamos a la última semana de contenido. Hoy vamos a hacer algo especial: vas a diseñar tu propio plan de autocuidado, basado en lo que realmente te funciona. El mejor plan es el que se adapta a tu realidad. Semana 16: Cómo mantenemos los cambios",
                     "fullDescription": "¿Qué me funciona? Diseño mi propio plan de autocuidado ¡Hola! Llegamos a la última semana de contenido. Hoy vamos a hacer algo especial: vas a diseñar tu propio plan de autocuidado, basado en lo que realmente te funciona. El mejor plan es el que se adapta a tu realidad. Semana 16: Cómo mantenemos los cambios",
                     "iconResId": "outline_unknown_document_24"
@@ -8678,7 +8678,7 @@
                 "multimedia": [
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Mis herramientas personales: repaso final",
                     "description": "Mis herramientas personales: repaso final ¡Hola! Esta es la última sesión de contenido. Pero no es un final: es un nuevo comienzo. Hoy vamos a repasar todas las herramientas que vimos para que las tengas siempre a mano. Semana 16: Cómo mantenemos los cambios",
                     "fullDescription": "Mis herramientas personales: repaso final ¡Hola! Esta es la última sesión de contenido. Pero no es un final: es un nuevo comienzo. Hoy vamos a repasar todas las herramientas que vimos para que las tengas siempre a mano. Semana 16: Cómo mantenemos los cambios",
                     "iconResId": "outline_unknown_document_24"
@@ -8765,7 +8765,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Bienvenida/Cierre: Texto Fin de la sesión ¡Excelente inicio! Ya diste el primer paso al comenzar. En la siguiente sesión veremos cómo la activación conductual nos va a ayudar a poner esto en práctica. Semana 1: ¿Qué es la activación conductual?",
                     "fullDescription": "Bienvenida/Cierre: Texto Fin de la sesión ¡Excelente inicio! Ya diste el primer paso al comenzar. En la siguiente sesión veremos cómo la activación conductual nos va a ayudar a poner esto en práctica. Semana 1: ¿Qué es la activación conductual?",
                     "iconResId": "outline_unknown_document_24"
@@ -8779,7 +8779,7 @@
                 "multimedia": [
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "La activación conductual, empezar de a poco",
                     "description": "La activación conductual, empezar de a poco ¡Hola de nuevo! Qué bueno verte por aquí. Sumar actividades que disfrutas y que son importantes para ti ayuda a llenar tu ‘tanque’ de ánimo. Vamos a poner en práctica la activación conductual: una forma de sentirte mejor haciendo pequeñas cosas que te dan placer o son importantes para ti. Semana 1: ¿Qué es la activación conductual?",
                     "fullDescription": "La activación conductual, empezar de a poco ¡Hola de nuevo! Qué bueno verte por aquí. Sumar actividades que disfrutas y que son importantes para ti ayuda a llenar tu ‘tanque’ de ánimo. Vamos a poner en práctica la activación conductual: una forma de sentirte mejor haciendo pequeñas cosas que te dan placer o son importantes para ti. Semana 1: ¿Qué es la activación conductual?",
                     "iconResId": "outline_unknown_document_24"
@@ -8809,7 +8809,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Bienvenida/Cierre: Texto Fin de la sesión ¡Bien hecho! Ahora sabes que cargar gasolina de a poquito puede mover tu ánimo. En la próxima sesión vas a elegir tu primera actividad. ¡Nos vemos! Semana 1: ¿Qué es la activación conductual?",
                     "fullDescription": "Bienvenida/Cierre: Texto Fin de la sesión ¡Bien hecho! Ahora sabes que cargar gasolina de a poquito puede mover tu ánimo. En la próxima sesión vas a elegir tu primera actividad. ¡Nos vemos! Semana 1: ¿Qué es la activación conductual?",
                     "iconResId": "outline_unknown_document_24"
@@ -8844,7 +8844,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Bienvenida/Cierre: Texto Fin de la sesión ¡Excelente! Ya tienes tu primera meta y un plan. Esta semana, intenta hacerlo. En la próxima semana vamos a ver cómo te fue y seguiremos avanzando. ¡Tú puedes! Semana 2: Organizando nuestras actividades",
                     "fullDescription": "Bienvenida/Cierre: Texto Fin de la sesión ¡Excelente! Ya tienes tu primera meta y un plan. Esta semana, intenta hacerlo. En la próxima semana vamos a ver cómo te fue y seguiremos avanzando. ¡Tú puedes! Semana 2: Organizando nuestras actividades",
                     "iconResId": "outline_unknown_document_24"
@@ -8910,7 +8910,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Bienvenida/Cierre: Texto Fin de la sesión Esta semana trata de seguir tu plan, incluso en los días en que estás con pocas ganas. En la próxima sesión te contaremos cómo otras personas fueron resolviendo sus obstáculos. Quizás eso te ayude. Semana 2: Organizando nuestras actividades",
                     "fullDescription": "Bienvenida/Cierre: Texto Fin de la sesión Esta semana trata de seguir tu plan, incluso en los días en que estás con pocas ganas. En la próxima sesión te contaremos cómo otras personas fueron resolviendo sus obstáculos. Quizás eso te ayude. Semana 2: Organizando nuestras actividades",
                     "iconResId": "outline_unknown_document_24"
@@ -8976,7 +8976,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Bienvenida/Cierre: Texto Fin de la sesión Como ves, hay días en los que hasta cosas que parecen simples tienen sus dificultades. Pero casi todo se soluciona si identificas la piedra 'en el camino' y ajustas el plan. En la próxima sesión vamos a ver cómo revisar tu progreso. ¡Te va a ayudar mucho! Semana 2: Organizando nuestras actividades",
                     "fullDescription": "Bienvenida/Cierre: Texto Fin de la sesión Como ves, hay días en los que hasta cosas que parecen simples tienen sus dificultades. Pero casi todo se soluciona si identificas la piedra 'en el camino' y ajustas el plan. En la próxima sesión vamos a ver cómo revisar tu progreso. ¡Te va a ayudar mucho! Semana 2: Organizando nuestras actividades",
                     "iconResId": "outline_unknown_document_24"
@@ -9011,7 +9011,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Bienvenida/Cierre: Texto Fin de la sesión ¡Muy bien! Revisar tu meta es una forma de cuidarte: te ayuda a ver tus avances y aprender de lo difícil. La próxima semana veremos algo importante: cómo premiarte de forma sana por tu esfuerzo. Semana 3: La activación conductual y la salud",
                     "fullDescription": "Bienvenida/Cierre: Texto Fin de la sesión ¡Muy bien! Revisar tu meta es una forma de cuidarte: te ayuda a ver tus avances y aprender de lo difícil. La próxima semana veremos algo importante: cómo premiarte de forma sana por tu esfuerzo. Semana 3: La activación conductual y la salud",
                     "iconResId": "outline_unknown_document_24"
@@ -9070,7 +9070,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Bienvenida/Cierre: Texto Fin de la sesión ¡Muy bien! Premiarte de forma sana es una manera de reconocer tu esfuerzo y aumentar tus ganas de seguir. En la próxima sesión vamos a ver cómo las metas se conectan con el cuidado de tu salud. Semana 3: La activación conductual y la salud",
                     "fullDescription": "Bienvenida/Cierre: Texto Fin de la sesión ¡Muy bien! Premiarte de forma sana es una manera de reconocer tu esfuerzo y aumentar tus ganas de seguir. En la próxima sesión vamos a ver cómo las metas se conectan con el cuidado de tu salud. Semana 3: La activación conductual y la salud",
                     "iconResId": "outline_unknown_document_24"
@@ -9115,7 +9115,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Bienvenida/Cierre: Texto Fin de la sesión Lo que venimos trabajando con metas y pasos pequeños también sirve para el cuidado de tu salud. Las metas son como pasos que te acercan a un objetivo mayor: sentirte mejor y cuidar tu salud. Pasos pequeños, plan claro y apoyo cuando haga falta. En la próxima sesión vamos a hacer un repaso de todo lo aprendido. Semana 3: La activación conductual y la salud",
                     "fullDescription": "Bienvenida/Cierre: Texto Fin de la sesión Lo que venimos trabajando con metas y pasos pequeños también sirve para el cuidado de tu salud. Las metas son como pasos que te acercan a un objetivo mayor: sentirte mejor y cuidar tu salud. Pasos pequeños, plan claro y apoyo cuando haga falta. En la próxima sesión vamos a hacer un repaso de todo lo aprendido. Semana 3: La activación conductual y la salud",
                     "iconResId": "outline_unknown_document_24"
@@ -9157,7 +9157,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Bienvenida/Cierre: Texto Fin de la sesión ¡Excelente! Completaste las primeras tres semanas. Ya tienes herramientas que funcionan. Ahora viene algo muy importante: vamos a aplicar todo esto a tu estilo de vida, con consejos prácticos sobre alimentación, actividad física, sueño y manejo del estrés. ¡Sigue adelante, vas muy bien! Semana 4: Comprendiendo la hipertensión",
                     "fullDescription": "Bienvenida/Cierre: Texto Fin de la sesión ¡Excelente! Completaste las primeras tres semanas. Ya tienes herramientas que funcionan. Ahora viene algo muy importante: vamos a aplicar todo esto a tu estilo de vida, con consejos prácticos sobre alimentación, actividad física, sueño y manejo del estrés. ¡Sigue adelante, vas muy bien! Semana 4: Comprendiendo la hipertensión",
                     "iconResId": "outline_unknown_document_24"
@@ -9193,7 +9193,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Bienvenida/Cierre: Texto Fin de la sesión Conocer nuestra presión arterial es el primer paso para cuidar nuestra salud. Semana 4: Comprendiendo la hipertensión",
                     "fullDescription": "Bienvenida/Cierre: Texto Fin de la sesión Conocer nuestra presión arterial es el primer paso para cuidar nuestra salud. Semana 4: Comprendiendo la hipertensión",
                     "iconResId": "outline_unknown_document_24"
@@ -9244,7 +9244,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Bienvenida/Cierre: Texto Fin de la sesión Alimentar tu cuerpo, mover tu corazón y seguir tu tratamiento: hoy elegiste vivir mejor Semana 4: Comprendiendo la hipertensión",
                     "fullDescription": "Bienvenida/Cierre: Texto Fin de la sesión Alimentar tu cuerpo, mover tu corazón y seguir tu tratamiento: hoy elegiste vivir mejor Semana 4: Comprendiendo la hipertensión",
                     "iconResId": "outline_unknown_document_24"
@@ -9279,7 +9279,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Bienvenida/Cierre: Texto Fin de la sesión ¡Sigue así, la constancia incluso con pasos pequeños es tu mejor aliada! Semana 5: Aprendiendo a cuidarme",
                     "fullDescription": "Bienvenida/Cierre: Texto Fin de la sesión ¡Sigue así, la constancia incluso con pasos pequeños es tu mejor aliada! Semana 5: Aprendiendo a cuidarme",
                     "iconResId": "outline_unknown_document_24"
@@ -9315,7 +9315,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Bienvenida/Cierre: Texto Fin de la sesión ¡Sigue así, tu constancia es tu mejor aliada! Semana 5: Aprendiendo a cuidarme",
                     "fullDescription": "Bienvenida/Cierre: Texto Fin de la sesión ¡Sigue así, tu constancia es tu mejor aliada! Semana 5: Aprendiendo a cuidarme",
                     "iconResId": "outline_unknown_document_24"
@@ -9359,7 +9359,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Bienvenida/Cierre: Texto Fin de la sesión ¡Sigue así, tu constancia es tu mejor aliada! Semana 5: Aprendiendo a cuidarme",
                     "fullDescription": "Bienvenida/Cierre: Texto Fin de la sesión ¡Sigue así, tu constancia es tu mejor aliada! Semana 5: Aprendiendo a cuidarme",
                     "iconResId": "outline_unknown_document_24"
@@ -9394,7 +9394,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Bienvenida/Cierre: Texto Fin de la sesión El ejercicio te ayuda, siempre que lo hagas de forma segura y continua. Semana 6: Actividad física cuerpo y mente en movimiento",
                     "fullDescription": "Bienvenida/Cierre: Texto Fin de la sesión El ejercicio te ayuda, siempre que lo hagas de forma segura y continua. Semana 6: Actividad física cuerpo y mente en movimiento",
                     "iconResId": "outline_unknown_document_24"
@@ -9453,7 +9453,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Bienvenida/Cierre: Texto Fin de la sesión Cada vez que te mueves, tu cuerpo y tu mente te lo agradecen. Semana 6: Actividad física cuerpo y mente en movimiento",
                     "fullDescription": "Bienvenida/Cierre: Texto Fin de la sesión Cada vez que te mueves, tu cuerpo y tu mente te lo agradecen. Semana 6: Actividad física cuerpo y mente en movimiento",
                     "iconResId": "outline_unknown_document_24"
@@ -9481,7 +9481,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Bienvenida/Cierre: Texto Fin de la sesión Repite los ejercicios la mayor cantidad de días a la semana que puedas. Pronto notarás el cambio en tu forma de sentirte. Recuerda que el mundo no se cambia en un día, a seguir construyendo este cambio en tu vida. Semana 6: Actividad física cuerpo y mente en movimiento",
                     "fullDescription": "Bienvenida/Cierre: Texto Fin de la sesión Repite los ejercicios la mayor cantidad de días a la semana que puedas. Pronto notarás el cambio en tu forma de sentirte. Recuerda que el mundo no se cambia en un día, a seguir construyendo este cambio en tu vida. Semana 6: Actividad física cuerpo y mente en movimiento",
                     "iconResId": "outline_unknown_document_24"
@@ -9516,7 +9516,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Bienvenida/Cierre: Texto Fin de la sesión Repite los ejercicios la mayor cantidad de días a la semana que puedas. Pronto notarás el cambio en tu salud. Semana 7: ¿Cómo alimentarnos mejor?",
                     "fullDescription": "Bienvenida/Cierre: Texto Fin de la sesión Repite los ejercicios la mayor cantidad de días a la semana que puedas. Pronto notarás el cambio en tu salud. Semana 7: ¿Cómo alimentarnos mejor?",
                     "iconResId": "outline_unknown_document_24"
@@ -9552,7 +9552,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Bienvenida/Cierre: Texto Fin de la sesión Intenta comer a tus horas, no excederte en las porciones, y tomar agua. Semana 7: ¿Cómo alimentarnos mejor?",
                     "fullDescription": "Bienvenida/Cierre: Texto Fin de la sesión Intenta comer a tus horas, no excederte en las porciones, y tomar agua. Semana 7: ¿Cómo alimentarnos mejor?",
                     "iconResId": "outline_unknown_document_24"
@@ -9596,7 +9596,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Bienvenida/Cierre: Texto Fin de la sesión Organizar las comidas es buscar equilibrio, no perfección. Semana 7: ¿Cómo alimentarnos mejor?",
                     "fullDescription": "Bienvenida/Cierre: Texto Fin de la sesión Organizar las comidas es buscar equilibrio, no perfección. Semana 7: ¿Cómo alimentarnos mejor?",
                     "iconResId": "outline_unknown_document_24"
@@ -9631,7 +9631,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Bienvenida/Cierre: Texto Fin de la sesión No hace falta cambiar todo de golpe: valora cada paso que das hacia una vida más sana Semana 8: Alimentación saludable en el día a día",
                     "fullDescription": "Bienvenida/Cierre: Texto Fin de la sesión No hace falta cambiar todo de golpe: valora cada paso que das hacia una vida más sana Semana 8: Alimentación saludable en el día a día",
                     "iconResId": "outline_unknown_document_24"
@@ -9674,7 +9674,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Bienvenida/Cierre: Texto Fin de la sesión Disfruta el sabor de cuidarte. Semana 8: Alimentación saludable en el día a día",
                     "fullDescription": "Bienvenida/Cierre: Texto Fin de la sesión Disfruta el sabor de cuidarte. Semana 8: Alimentación saludable en el día a día",
                     "iconResId": "outline_unknown_document_24"
@@ -9725,7 +9725,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Bienvenida/Cierre: Texto Fin de la sesión Con un poco de organización, como planear las comidas, hacer una lista y cocinar por adelantado, puedes ahorrar tiempo y dinero. Semana 8: Alimentación saludable en el día a día",
                     "fullDescription": "Bienvenida/Cierre: Texto Fin de la sesión Con un poco de organización, como planear las comidas, hacer una lista y cocinar por adelantado, puedes ahorrar tiempo y dinero. Semana 8: Alimentación saludable en el día a día",
                     "iconResId": "outline_unknown_document_24"
@@ -9760,7 +9760,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Bienvenida/Cierre: Texto Fin de la sesión Construir, de a poco, hábitos posibles que cuiden tu cuerpo y tu día a día. Semana 9: Comer rico juntos, sin dejar de cuidarnos",
                     "fullDescription": "Bienvenida/Cierre: Texto Fin de la sesión Construir, de a poco, hábitos posibles que cuiden tu cuerpo y tu día a día. Semana 9: Comer rico juntos, sin dejar de cuidarnos",
                     "iconResId": "outline_unknown_document_24"
@@ -9803,7 +9803,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Bienvenida/Cierre: Texto Fin de la sesión Elegir agua, más verduras y comida casera es la mejor receta para alimentarnos de manera más saludable. Semana 9: Comer rico juntos, sin dejar de cuidarnos",
                     "fullDescription": "Bienvenida/Cierre: Texto Fin de la sesión Elegir agua, más verduras y comida casera es la mejor receta para alimentarnos de manera más saludable. Semana 9: Comer rico juntos, sin dejar de cuidarnos",
                     "iconResId": "outline_unknown_document_24"
@@ -9845,7 +9845,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Bienvenida/Cierre: Texto Fin de la sesión Recuerda que el foco de la celebración es compartir el momento. Semana 9: Comer rico juntos, sin dejar de cuidarnos",
                     "fullDescription": "Bienvenida/Cierre: Texto Fin de la sesión Recuerda que el foco de la celebración es compartir el momento. Semana 9: Comer rico juntos, sin dejar de cuidarnos",
                     "iconResId": "outline_unknown_document_24"
@@ -9880,7 +9880,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Bienvenida/Cierre: Texto Fin de la sesión Pequeños cambios que se sostienen en el tiempo hacen la diferencia. Semana 10: Consultas médicas",
                     "fullDescription": "Bienvenida/Cierre: Texto Fin de la sesión Pequeños cambios que se sostienen en el tiempo hacen la diferencia. Semana 10: Consultas médicas",
                     "iconResId": "outline_unknown_document_24"
@@ -9902,7 +9902,7 @@
                 "multimedia": [
                   {
                     "type": "DESCRIPTION",
-                    "title": "La importancia de los controles de salud",
+                    "title": "La importancia de las consultas médicas",
                     "description": "La importancia de las consultas médicas ¡Hola! La salud es un camino, no un destino. Asegúrate de contar con un buen mapa: ¡tus consultas médicas! Hoy conoceremos la importancia de las consultas médicas y cómo prepararnos para participar en ellas. Semana 10: Consultas médicas",
                     "fullDescription": "La importancia de las consultas médicas ¡Hola! La salud es un camino, no un destino. Asegúrate de contar con un buen mapa: ¡tus consultas médicas! Hoy conoceremos la importancia de las consultas médicas y cómo prepararnos para participar en ellas. Semana 10: Consultas médicas",
                     "iconResId": "outline_unknown_document_24"
@@ -9916,7 +9916,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Bienvenida/Cierre: Texto Fin de la sesión Recuerda que la consulta médica es un espacio donde eres el/la protagonista. Semana 10: Consultas médicas",
                     "fullDescription": "Bienvenida/Cierre: Texto Fin de la sesión Recuerda que la consulta médica es un espacio donde eres el/la protagonista. Semana 10: Consultas médicas",
                     "iconResId": "outline_unknown_document_24"
@@ -9944,7 +9944,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Bienvenida/Cierre: Texto Fin de la sesión Una sola medición no te define, pero si notas mediciones altas o síntomas extraños, consulta con tu médico: cada paso en tu cuidado suma. Semana 10: Consultas médicas",
                     "fullDescription": "Bienvenida/Cierre: Texto Fin de la sesión Una sola medición no te define, pero si notas mediciones altas o síntomas extraños, consulta con tu médico: cada paso en tu cuidado suma. Semana 10: Consultas médicas",
                     "iconResId": "outline_unknown_document_24"
@@ -9986,7 +9986,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Bienvenida/Cierre: Texto Fin de la sesión Hoy aprendimos a escuchar al cuerpo y actuar a tiempo cuando nos da señales. Semana 11: La importancia de nuestro tratamiento",
                     "fullDescription": "Bienvenida/Cierre: Texto Fin de la sesión Hoy aprendimos a escuchar al cuerpo y actuar a tiempo cuando nos da señales. Semana 11: La importancia de nuestro tratamiento",
                     "iconResId": "outline_unknown_document_24"
@@ -10029,7 +10029,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Bienvenida/Cierre: Texto Fin de la sesión Tu medicación es una aliada: saber cómo funciona te ayudará a cuidarte mejor. Semana 11: La importancia de nuestro tratamiento",
                     "fullDescription": "Bienvenida/Cierre: Texto Fin de la sesión Tu medicación es una aliada: saber cómo funciona te ayudará a cuidarte mejor. Semana 11: La importancia de nuestro tratamiento",
                     "iconResId": "outline_unknown_document_24"
@@ -10073,7 +10073,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Bienvenida/Cierre: Texto Fin de la sesión Tomar tu medicación todos los días y mantener hábitos saludables te ayuda a mantener tu presión estable y a proteger tu salud a largo plazo. Semana 11: La importancia de nuestro tratamiento",
                     "fullDescription": "Bienvenida/Cierre: Texto Fin de la sesión Tomar tu medicación todos los días y mantener hábitos saludables te ayuda a mantener tu presión estable y a proteger tu salud a largo plazo. Semana 11: La importancia de nuestro tratamiento",
                     "iconResId": "outline_unknown_document_24"
@@ -10108,7 +10108,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Bienvenida/Cierre: Texto Fin de la sesión Organizar tus medicamentos y crear pequeños hábitos diarios puede ayudarte mucho. Semana 12: ¿Cómo dormir mejor?",
                     "fullDescription": "Bienvenida/Cierre: Texto Fin de la sesión Organizar tus medicamentos y crear pequeños hábitos diarios puede ayudarte mucho. Semana 12: ¿Cómo dormir mejor?",
                     "iconResId": "outline_unknown_document_24"
@@ -10158,7 +10158,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Bienvenida/Cierre: Texto Fin de la sesión Dormir te ayuda a controlar la glucosa y la presión, y a mejorar tu energía y ánimo. Semana 12: ¿Cómo dormir mejor?",
                     "fullDescription": "Bienvenida/Cierre: Texto Fin de la sesión Dormir te ayuda a controlar la glucosa y la presión, y a mejorar tu energía y ánimo. Semana 12: ¿Cómo dormir mejor?",
                     "iconResId": "outline_unknown_document_24"
@@ -10216,7 +10216,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Bienvenida/Cierre: Texto Fin de la sesión Prepararte para dormir con una rutina tranquila ayuda a que descanses mejor. Semana 12: ¿Cómo dormir mejor?",
                     "fullDescription": "Bienvenida/Cierre: Texto Fin de la sesión Prepararte para dormir con una rutina tranquila ayuda a que descanses mejor. Semana 12: ¿Cómo dormir mejor?",
                     "iconResId": "outline_unknown_document_24"
@@ -10265,7 +10265,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Bienvenida/Cierre: Texto Fin de la sesión Con pasos sencillos y constantes podemos mejorar nuestro descanso y despertar con más energía y bienestar. Semana 13: Manejo del estrés",
                     "fullDescription": "Bienvenida/Cierre: Texto Fin de la sesión Con pasos sencillos y constantes podemos mejorar nuestro descanso y despertar con más energía y bienestar. Semana 13: Manejo del estrés",
                     "iconResId": "outline_unknown_document_24"
@@ -10301,7 +10301,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Bienvenida/Cierre: Texto Fin de la sesión Recuerda que el autocuidado se construye en gestos simples, todos los días. Semana 13: Manejo del estrés",
                     "fullDescription": "Bienvenida/Cierre: Texto Fin de la sesión Recuerda que el autocuidado se construye en gestos simples, todos los días. Semana 13: Manejo del estrés",
                     "iconResId": "outline_unknown_document_24"
@@ -10329,7 +10329,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Bienvenida/Cierre: Texto Fin de la sesión Podemos sumar la respiración consciente como parte de nuestro cuidado diario. Con práctica, puede transformarse en una aliada para acompañar nuestro bienestar emocional y fortalecer nuestra salud. Semana 13: Manejo del estrés",
                     "fullDescription": "Bienvenida/Cierre: Texto Fin de la sesión Podemos sumar la respiración consciente como parte de nuestro cuidado diario. Con práctica, puede transformarse en una aliada para acompañar nuestro bienestar emocional y fortalecer nuestra salud. Semana 13: Manejo del estrés",
                     "iconResId": "outline_unknown_document_24"
@@ -10364,7 +10364,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Bienvenida/Cierre: Texto Fin de la sesión Recuerda que cada pequeño momento de pausa es una forma de cuidar la presión y también el bienestar. Semana 14: El apoyo de los demás en nuestros hábitos",
                     "fullDescription": "Bienvenida/Cierre: Texto Fin de la sesión Recuerda que cada pequeño momento de pausa es una forma de cuidar la presión y también el bienestar. Semana 14: El apoyo de los demás en nuestros hábitos",
                     "iconResId": "outline_unknown_document_24"
@@ -10416,7 +10416,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Bienvenida/Cierre: Texto Fin de la sesión Has dado el primer paso: entender el poder de la compañía. En la próxima sesión aprenderemos cómo empezar a construir tu equipo de apoyo. ¡No estás solo/a en esto! Semana 14: El apoyo de los demás en nuestros hábitos",
                     "fullDescription": "Bienvenida/Cierre: Texto Fin de la sesión Has dado el primer paso: entender el poder de la compañía. En la próxima sesión aprenderemos cómo empezar a construir tu equipo de apoyo. ¡No estás solo/a en esto! Semana 14: El apoyo de los demás en nuestros hábitos",
                     "iconResId": "outline_unknown_document_24"
@@ -10488,7 +10488,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Bienvenida/Cierre: Texto Fin de la sesión Animarte a pedir apoyo puede hacer la diferencia. Estás construyendo tu equipo de apoyo paso a paso. En la próxima sesión veremos cómo compartir tus logros puede fortalecer ese equipo y ayudarte a seguir avanzando. Semana 14: El apoyo de los demás en nuestros hábitos",
                     "fullDescription": "Bienvenida/Cierre: Texto Fin de la sesión Animarte a pedir apoyo puede hacer la diferencia. Estás construyendo tu equipo de apoyo paso a paso. En la próxima sesión veremos cómo compartir tus logros puede fortalecer ese equipo y ayudarte a seguir avanzando. Semana 14: El apoyo de los demás en nuestros hábitos",
                     "iconResId": "outline_unknown_document_24"
@@ -10544,7 +10544,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Bienvenida/Cierre: Texto Fin de la sesión El apoyo de los demás es una herramienta muy importante para sostener el cuidado de tu salud: no tienes que hacerlo solo/a. Puedes seguir construyendo tu equipo paso a paso: pedir apoyo cuando lo necesites y compartir tus avances. Cada conexión cuenta. Semana 15: Revisemos nuestros avances",
                     "fullDescription": "Bienvenida/Cierre: Texto Fin de la sesión El apoyo de los demás es una herramienta muy importante para sostener el cuidado de tu salud: no tienes que hacerlo solo/a. Puedes seguir construyendo tu equipo paso a paso: pedir apoyo cuando lo necesites y compartir tus avances. Cada conexión cuenta. Semana 15: Revisemos nuestros avances",
                     "iconResId": "outline_unknown_document_24"
@@ -10580,7 +10580,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Bienvenida/Cierre: Texto Fin de la sesión Reconocer lo que logramos no es conformarse. Es darnos fuerzas para seguir avanzando. Semana 15: Revisemos nuestros avances",
                     "fullDescription": "Bienvenida/Cierre: Texto Fin de la sesión Reconocer lo que logramos no es conformarse. Es darnos fuerzas para seguir avanzando. Semana 15: Revisemos nuestros avances",
                     "iconResId": "outline_unknown_document_24"
@@ -10615,7 +10615,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Bienvenida/Cierre: Texto Fin de la sesión Cada mañana es una oportunidad para iniciar de nuevo; estamos acá para acompañarte en cada paso, sea fácil o difícil. Semana 15: Revisemos nuestros avances",
                     "fullDescription": "Bienvenida/Cierre: Texto Fin de la sesión Cada mañana es una oportunidad para iniciar de nuevo; estamos acá para acompañarte en cada paso, sea fácil o difícil. Semana 15: Revisemos nuestros avances",
                     "iconResId": "outline_unknown_document_24"
@@ -10650,7 +10650,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Bienvenida/Cierre: Texto Fin de la sesión Cada pequeño cuidado es una forma de elegirte. Y eso ya es un gran paso. Semana 16: Cómo mantenemos los cambios",
                     "fullDescription": "Bienvenida/Cierre: Texto Fin de la sesión Cada pequeño cuidado es una forma de elegirte. Y eso ya es un gran paso. Semana 16: Cómo mantenemos los cambios",
                     "iconResId": "outline_unknown_document_24"
@@ -10672,7 +10672,7 @@
                 "multimedia": [
                   {
                     "type": "DESCRIPTION",
-                    "title": "¿Qué te funciona? Diseña tu propio plan de autocuidado",
+                    "title": "¿Qué me funciona? Diseño mi propio plan de autocuidado",
                     "description": "¿Qué me funciona? Diseño mi propio plan de autocuidado ¡Hola! Llegamos a la última semana de contenido. Hoy vamos a hacer algo especial: vas a diseñar tu propio plan de autocuidado, basado en lo que realmente te funciona. El mejor plan es el que se adapta a tu realidad. Semana 16: Cómo mantenemos los cambios",
                     "fullDescription": "¿Qué me funciona? Diseño mi propio plan de autocuidado ¡Hola! Llegamos a la última semana de contenido. Hoy vamos a hacer algo especial: vas a diseñar tu propio plan de autocuidado, basado en lo que realmente te funciona. El mejor plan es el que se adapta a tu realidad. Semana 16: Cómo mantenemos los cambios",
                     "iconResId": "outline_unknown_document_24"
@@ -10693,7 +10693,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Bienvenida/Cierre: Texto Fin de la sesión Ahora tienes algo que es tuyo: un plan hecho a tu medida. En las próximas sesiones vamos a ver cómo manejar los días difíciles y a repasar todas tus herramientas. ¡Sigue adelante! Semana 16: Cómo mantenemos los cambios",
                     "fullDescription": "Bienvenida/Cierre: Texto Fin de la sesión Ahora tienes algo que es tuyo: un plan hecho a tu medida. En las próximas sesiones vamos a ver cómo manejar los días difíciles y a repasar todas tus herramientas. ¡Sigue adelante! Semana 16: Cómo mantenemos los cambios",
                     "iconResId": "outline_unknown_document_24"
@@ -10738,7 +10738,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Bienvenida/Cierre: Texto Fin de la sesión Las recaídas no son el final del camino. Son una curva más. Ahora sabes qué hacer cuando aparecen. En la próxima sesión vamos a repasar todas tus herramientas para que las tengas siempre a mano. ¡No estás solo en esto! Semana 16: Cómo mantenemos los cambios",
                     "fullDescription": "Bienvenida/Cierre: Texto Fin de la sesión Las recaídas no son el final del camino. Son una curva más. Ahora sabes qué hacer cuando aparecen. En la próxima sesión vamos a repasar todas tus herramientas para que las tengas siempre a mano. ¡No estás solo en esto! Semana 16: Cómo mantenemos los cambios",
                     "iconResId": "outline_unknown_document_24"
@@ -10773,7 +10773,7 @@
                   },
                   {
                     "type": "DESCRIPTION",
-                    "title": "Bienvenida",
+                    "title": "Fin de la sesión",
                     "description": "Bienvenida/Cierre: Texto Fin de la sesión Completaste las 16 semanas de contenido nuevo. ¡Eso es un logro enorme! En las próximas semanas te acompañaremos con sesiones de repaso para que sigas practicando. Pero recuerda: lo más valioso ya lo tienes. Cuidarte es un camino, no un destino. Y tú ya estás caminando. Información adicional Información adicional sobre la diabetes Información sobre la hipertensión Información sobre salud mental Alimentación saludable Alimentación para personas con diabetes Alimentación para personas con hipertensión Actividad física Dormir mejor Manejo del estrés Consumo de tabaco",
                     "fullDescription": "Bienvenida/Cierre: Texto Fin de la sesión Completaste las 16 semanas de contenido nuevo. ¡Eso es un logro enorme! En las próximas semanas te acompañaremos con sesiones de repaso para que sigas practicando. Pero recuerda: lo más valioso ya lo tienes. Cuidarte es un camino, no un destino. Y tú ya estás caminando. Información adicional Información adicional sobre la diabetes Información sobre la hipertensión Información sobre salud mental Alimentación saludable Alimentación para personas con diabetes Alimentación para personas con hipertensión Actividad física Dormir mejor Manejo del estrés Consumo de tabaco",
                     "iconResId": "outline_unknown_document_24"
@@ -10933,7 +10933,7 @@
                 "multimedia": [
                   {
                     "type": "DESCRIPTION",
-                    "title": "Tres herramientas para cumplir con tus actividades",
+                    "title": "Tres herramientas para cumplir con mis actividades",
                     "description": "Tres herramientas para cumplir con mis actividades Placa 1 ¡Hola! Qué bueno que sigues aquí. Hoy vamos a abrir una caja de herramientas para ayudarte a cumplir tu meta, incluso en los días difíciles. Seguir tu plan puede ayudarte a continuar, incluso en días difíciles. Hacer actividades según tu plan suele funcionar mejor que guiarte por el ánimo del momento. Placa 2 En esta sesión vamos a explorar 3 herramientas para ayudarte a superar obstáculos y seguir con tu meta: planificar con detalle, dividir en pasos pequeños y pedir ayuda. Semana 2: Organizando nuestras actividades",
                     "fullDescription": "Tres herramientas para cumplir con mis actividades Placa 1 ¡Hola! Qué bueno que sigues aquí. Hoy vamos a abrir una caja de herramientas para ayudarte a cumplir tu meta, incluso en los días difíciles. Seguir tu plan puede ayudarte a continuar, incluso en días difíciles. Hacer actividades según tu plan suele funcionar mejor que guiarte por el ánimo del momento. Placa 2 En esta sesión vamos a explorar 3 herramientas para ayudarte a superar obstáculos y seguir con tu meta: planificar con detalle, dividir en pasos pequeños y pedir ayuda. Semana 2: Organizando nuestras actividades",
                     "iconResId": "outline_unknown_document_24"
@@ -11976,7 +11976,7 @@
                 "multimedia": [
                   {
                     "type": "DESCRIPTION",
-                    "title": "La importancia de los controles de salud",
+                    "title": "La importancia de las consultas médicas",
                     "description": "La importancia de las consultas médicas ¡Hola! La salud es un camino, no un destino. Asegúrate de contar con un buen mapa: ¡tus consultas médicas! Hoy conoceremos la importancia de las consultas médicas y cómo prepararnos para participar en ellas. Semana 10: Consultas médicas",
                     "fullDescription": "La importancia de las consultas médicas ¡Hola! La salud es un camino, no un destino. Asegúrate de contar con un buen mapa: ¡tus consultas médicas! Hoy conoceremos la importancia de las consultas médicas y cómo prepararnos para participar en ellas. Semana 10: Consultas médicas",
                     "iconResId": "outline_unknown_document_24"
@@ -12753,7 +12753,7 @@
                 "multimedia": [
                   {
                     "type": "DESCRIPTION",
-                    "title": "¿Qué te funciona? Diseña tu propio plan de autocuidado",
+                    "title": "¿Qué me funciona? Diseño mi propio plan de autocuidado",
                     "description": "¿Qué me funciona? Diseño mi propio plan de autocuidado ¡Hola! Llegamos a la última semana de contenido. Hoy vamos a hacer algo especial: vas a diseñar tu propio plan de autocuidado, basado en lo que realmente te funciona. El mejor plan es el que se adapta a tu realidad. Semana 16: Cómo mantenemos los cambios",
                     "fullDescription": "¿Qué me funciona? Diseño mi propio plan de autocuidado ¡Hola! Llegamos a la última semana de contenido. Hoy vamos a hacer algo especial: vas a diseñar tu propio plan de autocuidado, basado en lo que realmente te funciona. El mejor plan es el que se adapta a tu realidad. Semana 16: Cómo mantenemos los cambios",
                     "iconResId": "outline_unknown_document_24"
@@ -12833,7 +12833,7 @@
                 "multimedia": [
                   {
                     "type": "DESCRIPTION",
-                    "title": "Tus herramientas personales: repaso final",
+                    "title": "Mis herramientas personales: repaso final",
                     "description": "Mis herramientas personales: repaso final ¡Hola! Esta es la última sesión de contenido. Pero no es un final: es un nuevo comienzo. Hoy vamos a repasar todas las herramientas que vimos para que las tengas siempre a mano. Semana 16: Cómo mantenemos los cambios",
                     "fullDescription": "Mis herramientas personales: repaso final ¡Hola! Esta es la última sesión de contenido. Pero no es un final: es un nuevo comienzo. Hoy vamos a repasar todas las herramientas que vimos para que las tengas siempre a mano. Semana 16: Cómo mantenemos los cambios",
                     "iconResId": "outline_unknown_document_24"

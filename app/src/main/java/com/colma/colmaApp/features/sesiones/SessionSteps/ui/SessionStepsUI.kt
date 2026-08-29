@@ -317,11 +317,7 @@ fun SessionStepCard(
             Spacer(modifier = Modifier.width(16.dp))
 
             Column(modifier = Modifier.weight(1f)) {
-                Text(option.title, fontSize = 20.sp, fontWeight = FontWeight.SemiBold)
-                if (option.type != MultimediaContentType.DESCRIPTION) {
-                    Spacer(modifier = Modifier.height(6.dp))
-                    Text(option.description, fontSize = 14.sp, color = Color.Gray)
-                }
+                Text(option.title, fontSize = 18.sp, fontWeight = FontWeight.SemiBold)
             }
 
             if (option.isCompleted) {
