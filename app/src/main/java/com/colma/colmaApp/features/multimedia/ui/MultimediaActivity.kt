@@ -105,6 +105,7 @@ fun MultimediaScreen(
                         when (currentOption.type) {
                             MultimediaContentType.DESCRIPTION -> {
                                 InformationDisplayContent(
+                                    title = currentOption.title,
                                     displayContent = currentOption.fullDescription ?: currentOption.description,
                                     descriptionAudios = currentOption.descriptionAudios,
                                     localDescriptionAudios = currentOption.localDescriptionAudios,

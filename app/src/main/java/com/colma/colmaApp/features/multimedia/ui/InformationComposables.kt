@@ -40,6 +40,7 @@ import java.util.*
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun InformationDisplayContent(
+    title: String? = null,
     displayContent: String,
     descriptionAudios: List<Int>? = null,
     localDescriptionAudios: List<String>? = null,
@@ -77,6 +78,7 @@ fun InformationDisplayContent(
                                 .height(500.dp)
                         ) { page ->
                             InformationCard(
+                                title = if (page == 0) title else null,
                                 displayContent = paragraphs.getOrNull(page) ?: "",
                                 audioResId = descriptionAudios?.getOrNull(page),
                                 localAudioPath = localDescriptionAudios?.getOrNull(page),
@@ -93,6 +95,7 @@ fun InformationDisplayContent(
                         )
                     } else {
                         InformationCard(
+                            title = title,
                             displayContent = "No content provided."
                         )
                     }
@@ -114,6 +117,7 @@ fun InformationDisplayContent(
 
 @Composable
 fun InformationCard(
+    title: String? = null,
     displayContent: String,
     audioResId: Int? = null,
     localAudioPath: String? = null,
@@ -132,6 +136,14 @@ fun InformationCard(
 
     val hasAudio = audioResId != null || localAudioPath != null
     val hasNoAudioAndNoImage = !hasAudio && localImagePath == null
+
+    val cleanedDisplayContent = remember(title, displayContent) {
+        if (!title.isNullOrBlank() && displayContent.startsWith(title, ignoreCase = true)) {
+            displayContent.substring(title.length).trimStart()
+        } else {
+            displayContent
+        }
+    }
 
     DisposableEffect(audioResId, localAudioPath) {
         if (hasAudio) {
@@ -212,7 +224,7 @@ fun InformationCard(
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Text(
-                        "Información importante",
+                        if (!title.isNullOrBlank()) title else "Lectura",
                         fontSize = 20.sp,
                         fontWeight = FontWeight.Bold,
                         modifier = Modifier.weight(1f),
@@ -239,7 +251,10 @@ fun InformationCard(
                     } else if (isTtsReady) {
                         IconButton(onClick = {
                             if (isSpeaking) { tts?.stop(); isSpeaking = false }
-                            else { tts?.speak(displayContent, TextToSpeech.QUEUE_FLUSH, null, "utteranceId") }
+                            else {
+                                val textToSpeak = if (!title.isNullOrBlank()) "$title. $cleanedDisplayContent" else cleanedDisplayContent
+                                tts?.speak(textToSpeak, TextToSpeech.QUEUE_FLUSH, null, "utteranceId")
+                            }
                         }) {
                             Icon(
                                 painter = painterResource(R.drawable.tts_icon),
@@ -249,6 +264,16 @@ fun InformationCard(
                         }
                     }
                 }
+                Spacer(Modifier.height(16.dp))
+            } else if (!title.isNullOrBlank()) {
+                Text(
+                    text = title,
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.Black,
+                    modifier = Modifier.fillMaxWidth(),
+                    textAlign = TextAlign.Left
+                )
                 Spacer(Modifier.height(16.dp))
             }
             if (localImagePath != null) {
@@ -288,8 +313,8 @@ fun InformationCard(
                 )
                 Spacer(Modifier.height(16.dp))
             }
-            if (displayContent.isNotEmpty()) {
-                Text(displayContent, fontSize = 16.sp, textAlign = TextAlign.Left)
+            if (cleanedDisplayContent.isNotEmpty()) {
+                Text(cleanedDisplayContent, fontSize = 16.sp, textAlign = TextAlign.Left, modifier = Modifier.fillMaxWidth())
             }
         }
     }
