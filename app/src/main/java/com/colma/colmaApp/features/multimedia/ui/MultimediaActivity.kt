@@ -59,8 +59,12 @@ fun generateMultimediaUniqueKeyForQuiz(
     weekId: Long,
     sessionId: Long
 ): String {
-    val sanitizedTitle = option.title.replace(" ", "_").replace("[^a-zA-Z0-9_]".toRegex(), "")
-    return "QUIZ_${treatmentId}_${weekId}_${sessionId}_${sanitizedTitle}"
+    return com.colma.colmaApp.features.sesiones.SessionSteps.domain.MultimediaKeyUtils.generateMultimediaUniqueKey(
+        option = option,
+        treatmentId = treatmentId,
+        weekId = weekId,
+        sessionId = sessionId
+    )
 }
 
 @Composable

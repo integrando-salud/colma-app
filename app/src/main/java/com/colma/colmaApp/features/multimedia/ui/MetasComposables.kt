@@ -102,6 +102,26 @@ fun MetasContent(
             val userId = SessionManager.getUserId() ?: 1
             val highestWeek = dbHelper.getHighestWeekWithGoal(userId, treatmentType.name.lowercase())
             val hasCompletedThisWeek = dbHelper.hasCompletedGoalForWeek(userId, currentWeekId, treatmentType.name.lowercase())
+            val hasGoalThisWeek = dbHelper.hasGoalForWeek(userId, currentWeekId, treatmentType.name.lowercase())
+            if (hasGoalThisWeek) {
+                val uniqueKey = com.colma.colmaApp.features.sesiones.SessionSteps.domain.MultimediaKeyUtils.generateMultimediaUniqueKey(
+                    type = com.colma.colmaApp.features.sesiones.SessionSteps.domain.MultimediaContentType.METAS,
+                    title = "Metas",
+                    contentAssetId = null,
+                    metasId = metasId,
+                    treatmentId = treatmentType.name,
+                    weekId = currentWeekId.toLong(),
+                    sessionId = currentSessionId.toLong()
+                )
+                dbHelper.upsertMultimediaRead(
+                    idUsuario = userId,
+                    treatmentId = treatmentType.name,
+                    weekId = currentWeekId,
+                    sessionId = currentSessionId,
+                    multimediaType = com.colma.colmaApp.features.sesiones.SessionSteps.domain.MultimediaContentType.METAS.name,
+                    multimediaUniqueKey = uniqueKey
+                )
+            }
             if (highestWeek != -1 && currentWeekId < highestWeek) {
                 withContext(Dispatchers.Main) {
                     isBlockedByFutureGoal = true
@@ -293,6 +313,25 @@ fun MetasContent(
                                 }
                             }
                             if (result > 0L) {
+                                withContext(Dispatchers.IO) {
+                                    val uniqueKey = com.colma.colmaApp.features.sesiones.SessionSteps.domain.MultimediaKeyUtils.generateMultimediaUniqueKey(
+                                        type = com.colma.colmaApp.features.sesiones.SessionSteps.domain.MultimediaContentType.METAS,
+                                        title = "Metas",
+                                        contentAssetId = null,
+                                        metasId = metasId,
+                                        treatmentId = treatmentType.name,
+                                        weekId = currentWeekId.toLong(),
+                                        sessionId = currentSessionId.toLong()
+                                    )
+                                    dbHelper.upsertMultimediaRead(
+                                        idUsuario = userId,
+                                        treatmentId = treatmentType.name,
+                                        weekId = currentWeekId,
+                                        sessionId = currentSessionId,
+                                        multimediaType = com.colma.colmaApp.features.sesiones.SessionSteps.domain.MultimediaContentType.METAS.name,
+                                        multimediaUniqueKey = uniqueKey
+                                    )
+                                }
                                 val scheduledMeta = newMeta.copy(id_meta = result)
                                 com.colma.colmaApp.utils.notifications.NotificationHelper.scheduleGoalNotification(context, scheduledMeta)
                                 withContext(Dispatchers.Main) {

@@ -30,3 +30,52 @@ data class MultimediaOption(
     val localDescriptionAudios: List<String>? = null,
     val localDescriptionImages: List<String>? = null
 )
+
+object MultimediaKeyUtils {
+    fun generateMultimediaUniqueKey(
+        type: MultimediaContentType,
+        title: String,
+        contentAssetId: Int?,
+        metasId: String?,
+        treatmentId: String,
+        weekId: Long,
+        sessionId: Long,
+        localFilePath: String? = null
+    ): String {
+        val sanitizedTitle = title.replace(" ", "_").replace("[^a-zA-Z0-9_]".toRegex(), "")
+        return when (type) {
+            MultimediaContentType.VIDEO, MultimediaContentType.AUDIO -> {
+                if (localFilePath != null) {
+                    "LOCAL_${treatmentId}_${weekId}_${sessionId}_${sanitizedTitle}"
+                } else if (contentAssetId != null && contentAssetId != 0) {
+                    "ASSET_$contentAssetId"
+                } else {
+                    "MEDIA_${treatmentId}_${weekId}_${sessionId}_${sanitizedTitle}"
+                }
+            }
+            MultimediaContentType.QUIZ -> "QUIZ_${treatmentId}_${weekId}_${sessionId}_${sanitizedTitle}"
+            MultimediaContentType.METAS -> "METAS_$metasId"
+            MultimediaContentType.DESCRIPTION -> "DESCRIPTION_${treatmentId}_${weekId}_${sessionId}_${sanitizedTitle}"
+            else -> "${type.name}_UNKNOWN"
+        }
+    }
+
+    fun generateMultimediaUniqueKey(
+        option: MultimediaOption,
+        treatmentId: String,
+        weekId: Long,
+        sessionId: Long
+    ): String {
+        return generateMultimediaUniqueKey(
+            type = option.type,
+            title = option.title,
+            contentAssetId = option.contentAssetId,
+            metasId = option.metasId,
+            treatmentId = treatmentId,
+            weekId = weekId,
+            sessionId = sessionId,
+            localFilePath = option.localFilePath
+        )
+    }
+}
+

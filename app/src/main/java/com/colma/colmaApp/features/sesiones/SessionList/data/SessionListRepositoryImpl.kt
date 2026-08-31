@@ -126,16 +126,99 @@ class SessionListRepositoryImpl(
         )
     }
 
+    private fun isSubSessionCompleted(
+        treatmentType: TreatmentType,
+        sessionId: Long,
+        subSessionId: Long,
+        multimediaList: List<com.colma.colmaApp.features.content.model.MultimediaContent>
+    ): Boolean {
+        if (multimediaList.isEmpty()) return false
+
+        val processedContents = if (treatmentType == TreatmentType.DBT_HTA) {
+            val hasMetas = multimediaList.any { it.type == com.colma.colmaApp.features.sesiones.SessionSteps.domain.MultimediaContentType.METAS }
+            if (hasMetas) {
+                val metasTemplate = multimediaList.first { it.type == com.colma.colmaApp.features.sesiones.SessionSteps.domain.MultimediaContentType.METAS }
+                val unifiedMetas = metasTemplate.copy(
+                    title = "Metas (Diabetes e Hipertensión)",
+                    metasId = "dbt_hta"
+                )
+                val resultList = mutableListOf<com.colma.colmaApp.features.content.model.MultimediaContent>()
+                var addedUnified = false
+                for (item in multimediaList) {
+                    if (item.type == com.colma.colmaApp.features.sesiones.SessionSteps.domain.MultimediaContentType.METAS) {
+                        if (!addedUnified) {
+                            resultList.add(unifiedMetas)
+                            addedUnified = true
+                        }
+                    } else {
+                        resultList.add(item)
+                    }
+                }
+                resultList
+            } else {
+                multimediaList
+            }
+        } else {
+            multimediaList
+        }
+
+        val size = processedContents.size
+        return processedContents.all { multimediaContent ->
+            val isLocalFile = multimediaContent.contentAsset?.contains("/") == true || multimediaContent.contentAsset?.contains("\\") == true
+            val localFilePath = if (isLocalFile) multimediaContent.contentAsset else null
+            val contentAssetId = if (isLocalFile) null else multimediaContent.contentAsset?.let {
+                ResourceUtils.getResourceId(context, it, "raw")
+            }
+            val originalTitle = multimediaContent.title.trim()
+            val finalTitle = if (originalTitle.isNotEmpty()) {
+                originalTitle
+            } else if (multimediaContent.type == com.colma.colmaApp.features.sesiones.SessionSteps.domain.MultimediaContentType.DESCRIPTION) {
+                if (processedContents.indexOf(multimediaContent) == 0) {
+                    "Bienvenida"
+                } else if (processedContents.indexOf(multimediaContent) == size - 1 && size > 1) {
+                    "Fin de la sesión"
+                } else {
+                    "Descripción"
+                }
+            } else {
+                multimediaContent.type.name
+            }
+
+            val uniqueKey = com.colma.colmaApp.features.sesiones.SessionSteps.domain.MultimediaKeyUtils.generateMultimediaUniqueKey(
+                type = multimediaContent.type,
+                title = finalTitle,
+                contentAssetId = contentAssetId,
+                metasId = multimediaContent.metasId,
+                treatmentId = treatmentType.name,
+                weekId = sessionId,
+                sessionId = subSessionId,
+                localFilePath = localFilePath
+            )
+
+            dbHelper.getMultimediaReadRecordExists(
+                idUsuario = userId,
+                treatmentId = treatmentType.name,
+                weekId = sessionId.toInt(),
+                sessionId = subSessionId.toInt(),
+                multimediaType = multimediaContent.type.name,
+                multimediaUniqueKey = uniqueKey
+            )
+        }
+    }
+
     override suspend fun getDbtHtaSubSessions(sessionId: Long): List<SubSessionItem> = withContext(Dispatchers.IO) {
         contentRepository.getSubSessions(TreatmentType.DBT_HTA, sessionId).getOrDefault(emptyList())
             .map { subSessionContent ->
-                val totalContent = subSessionContent.multimedia.size
-                val readCount = dbHelper.getReadMultimediaCount(userId, TreatmentType.DBT_HTA.name, sessionId.toInt(), subSessionContent.id.toInt())
                 SubSessionItem(
                     id = subSessionContent.id,
                     title = subSessionContent.title,
                     duration = subSessionContent.duration,
-                    isCompleted = totalContent > 0 && readCount >= totalContent
+                    isCompleted = isSubSessionCompleted(
+                        treatmentType = TreatmentType.DBT_HTA,
+                        sessionId = sessionId,
+                        subSessionId = subSessionContent.id,
+                        multimediaList = subSessionContent.multimedia
+                    )
                 )
             }
     }
@@ -147,13 +230,16 @@ class SessionListRepositoryImpl(
     override suspend fun getHtaSubSessions(sessionId: Long): List<SubSessionItem> = withContext(Dispatchers.IO) {
         contentRepository.getSubSessions(TreatmentType.HTA, sessionId).getOrDefault(emptyList())
             .map { subSessionContent ->
-                val totalContent = subSessionContent.multimedia.size
-                val readCount = dbHelper.getReadMultimediaCount(userId, TreatmentType.HTA.name, sessionId.toInt(), subSessionContent.id.toInt())
                 SubSessionItem(
                     id = subSessionContent.id,
                     title = subSessionContent.title,
                     duration = subSessionContent.duration,
-                    isCompleted = totalContent > 0 && readCount >= totalContent
+                    isCompleted = isSubSessionCompleted(
+                        treatmentType = TreatmentType.HTA,
+                        sessionId = sessionId,
+                        subSessionId = subSessionContent.id,
+                        multimediaList = subSessionContent.multimedia
+                    )
                 )
             }
     }
@@ -161,13 +247,16 @@ class SessionListRepositoryImpl(
     override suspend fun getDiabetesSubSessions(sessionId: Long): List<SubSessionItem> = withContext(Dispatchers.IO) {
         contentRepository.getSubSessions(TreatmentType.DIABETES, sessionId).getOrDefault(emptyList())
             .map { subSessionContent ->
-                val totalContent = subSessionContent.multimedia.size
-                val readCount = dbHelper.getReadMultimediaCount(userId, TreatmentType.DIABETES.name, sessionId.toInt(), subSessionContent.id.toInt())
                 SubSessionItem(
                     id = subSessionContent.id,
                     title = subSessionContent.title,
                     duration = subSessionContent.duration,
-                    isCompleted = totalContent > 0 && readCount >= totalContent
+                    isCompleted = isSubSessionCompleted(
+                        treatmentType = TreatmentType.DIABETES,
+                        sessionId = sessionId,
+                        subSessionId = subSessionContent.id,
+                        multimediaList = subSessionContent.multimedia
+                    )
                 )
             }
     }

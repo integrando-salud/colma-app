@@ -9,6 +9,7 @@ import com.colma.colmaApp.R
 import com.colma.colmaApp.features.content.domain.ContentRepository
 import com.colma.colmaApp.features.content.domain.SubSessionProgress
 import com.colma.colmaApp.features.sesiones.SessionSteps.domain.MultimediaContentType
+import com.colma.colmaApp.features.sesiones.SessionSteps.domain.MultimediaKeyUtils
 import com.colma.colmaApp.features.sesiones.SessionSteps.domain.MultimediaOption
 import com.colma.colmaApp.features.sesiones.SessionSteps.domain.SessionStepsRepository
 import com.colma.colmaApp.features.sesiones.SessionSteps.domain.TreatmentType
@@ -196,20 +197,16 @@ class SessionStepsRepositoryImpl(
         sessionId: Long,
         localFilePath: String? = null
     ): String {
-        val sanitizedTitle = title.replace(" ", "_").replace("[^a-zA-Z0-9_]".toRegex(), "")
-        return when (type) {
-            MultimediaContentType.VIDEO, MultimediaContentType.AUDIO -> {
-                if (localFilePath != null) {
-                    "LOCAL_${treatmentId}_${weekId}_${sessionId}_${sanitizedTitle}"
-                } else {
-                    "ASSET_$contentAssetId"
-                }
-            }
-            MultimediaContentType.QUIZ -> "QUIZ_${treatmentId}_${weekId}_${sessionId}_${sanitizedTitle}"
-            MultimediaContentType.METAS -> "METAS_$metasId"
-            MultimediaContentType.DESCRIPTION -> "DESCRIPTION_${treatmentId}_${weekId}_${sessionId}_${sanitizedTitle}"
-            else -> "${type.name}_UNKNOWN"
-        }
+        return MultimediaKeyUtils.generateMultimediaUniqueKey(
+            type = type,
+            title = title,
+            contentAssetId = contentAssetId,
+            metasId = metasId,
+            treatmentId = treatmentId,
+            weekId = weekId,
+            sessionId = sessionId,
+            localFilePath = localFilePath
+        )
     }
 
     private fun mapImageVector(name: String): ImageVector? {
@@ -243,11 +240,9 @@ class SessionStepsRepositoryImpl(
         }
 
         if (treatmentType != null && weekId > 0 && sessionId > 0) {
-            val progressResult = contentRepository.getSubSessionProgress(treatmentType, weekId.toLong(), sessionId.toLong())
-            progressResult.onSuccess { progress ->
-                val totalCount = progress.totalCount
-                val readCount = dbHelper.getReadMultimediaCount(userId, treatmentId, weekId, sessionId)
-                if (totalCount > 0 && readCount >= totalCount) {
+            val optionsResult = getMultimediaOptions(listOf(treatmentType), weekId.toLong(), sessionId.toLong())
+            optionsResult.onSuccess { options ->
+                if (options.isNotEmpty() && options.all { it.isCompleted }) {
                     dbHelper.insertCompletedSession(
                         idUsuario = userId,
                         treatmentId = treatmentId,
