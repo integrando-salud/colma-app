@@ -15,6 +15,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -26,9 +27,11 @@ import androidx.compose.material.icons.filled.Forward10
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -49,6 +52,7 @@ class FullscreenVideoActivity : ComponentActivity() {
     companion object {
         const val EXTRA_URI = "extra_video_uri"
         const val EXTRA_POSITION = "extra_position_ms"
+        const val EXTRA_IS_ZOOMED = "extra_is_zoomed"
         const val RESULT_POSITION = "result_position_ms"
         private const val STATE_POSITION = "state_position"
         private const val STATE_PLAY_WHEN_READY = "state_play_when_ready"
@@ -58,10 +62,11 @@ class FullscreenVideoActivity : ComponentActivity() {
          * Start fullscreen player. Use the ActivityResult API if you want to receive the final
          * playback position (the activity sets it as a result).
          */
-        fun start(context: Context, uriString: String, positionMs: Long = 0L) {
+        fun start(context: Context, uriString: String, positionMs: Long = 0L, isZoomed: Boolean = false) {
             val i = Intent(context, FullscreenVideoActivity::class.java).apply {
                 putExtra(EXTRA_URI, uriString)
                 putExtra(EXTRA_POSITION, positionMs)
+                putExtra(EXTRA_IS_ZOOMED, isZoomed)
             }
             context.startActivity(i)
         }
@@ -100,7 +105,7 @@ class FullscreenVideoActivity : ComponentActivity() {
 
         // Read intent
         val uriString = intent.getStringExtra(EXTRA_URI)
-
+        val initialZoomed = intent.getBooleanExtra(EXTRA_IS_ZOOMED, false)
 
         if (uriString == null) {
             finish() // nothing to play
@@ -119,6 +124,8 @@ class FullscreenVideoActivity : ComponentActivity() {
         setContent {
             VideoPlayerScreen(
                 exoPlayer = exoPlayer!!,
+                uriString = uriString,
+                initialZoomed = initialZoomed,
                 onExit = {
                     val pos = exoPlayer?.currentPosition ?: 0L
                     exoPlayer?.playWhenReady = false
@@ -131,7 +138,19 @@ class FullscreenVideoActivity : ComponentActivity() {
     }
 
     @Composable
-    fun VideoPlayerScreen(exoPlayer: ExoPlayer, onExit: () -> Unit) {
+    fun VideoPlayerScreen(exoPlayer: ExoPlayer, uriString: String, initialZoomed: Boolean = false, onExit: () -> Unit) {
+        val isExceptionVideo = initialZoomed || remember(uriString) {
+            uriString.contains("exercise", ignoreCase = true) ||
+            uriString.contains("sesion_6_2", ignoreCase = true) ||
+            uriString.contains("sesion_6", ignoreCase = true) ||
+            uriString.contains("s6.2", ignoreCase = true) ||
+            uriString.contains("s6_2", ignoreCase = true) ||
+            uriString.contains("s6-2", ignoreCase = true) ||
+            uriString.contains("semana_6", ignoreCase = true) ||
+            uriString.contains("/6/2/", ignoreCase = true) ||
+            uriString.contains("/6/2", ignoreCase = true)
+        }
+        var isZoomed by rememberSaveable(uriString) { mutableStateOf(isExceptionVideo) }
         var isPlaying by remember { mutableStateOf(exoPlayer.playWhenReady) }
         var currentPosition by remember { mutableStateOf(exoPlayer.currentPosition) }
         var duration by remember { mutableStateOf(exoPlayer.duration.coerceAtLeast(0L)) }
@@ -158,18 +177,23 @@ class FullscreenVideoActivity : ComponentActivity() {
             modifier = Modifier
                 .fillMaxSize()
                 .background(Color.Black)
-                .clickable(
-                    interactionSource = remember { MutableInteractionSource() },
-                    indication = null
-                ) { showControls = !showControls }
+                .pointerInput(Unit) {
+                    detectTapGestures(
+                        onTap = { showControls = !showControls },
+                        onDoubleTap = { isZoomed = !isZoomed }
+                    )
+                }
         ) {
             AndroidView(
                 factory = { ctx ->
                     PlayerView(ctx).apply {
                         player = exoPlayer
                         useController = false
-                        resizeMode = AspectRatioFrameLayout.RESIZE_MODE_FIT
+                        resizeMode = if (isZoomed) AspectRatioFrameLayout.RESIZE_MODE_ZOOM else AspectRatioFrameLayout.RESIZE_MODE_FIT
                     }
+                },
+                update = { view ->
+                    view.resizeMode = if (isZoomed) AspectRatioFrameLayout.RESIZE_MODE_ZOOM else AspectRatioFrameLayout.RESIZE_MODE_FIT
                 },
                 modifier = Modifier.fillMaxSize()
             )
@@ -178,20 +202,41 @@ class FullscreenVideoActivity : ComponentActivity() {
                 // Background dim
                 Box(modifier = Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.3f)))
 
-                // Top Exit Button
-                IconButton(
-                    onClick = onExit,
+                // Top Bar Controls (Zoom Toggle & Exit Button)
+                Row(
                     modifier = Modifier
-                        .align(Alignment.TopEnd)
-                        .padding(16.dp)
-                        .statusBarsPadding()
+                        .fillMaxWidth()
+                        .align(Alignment.TopCenter)
+                        .padding(horizontal = 16.dp, vertical = 8.dp)
+                        .statusBarsPadding(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Icon(
-                        imageVector = Icons.Default.Close,
-                        contentDescription = "Cerrar",
-                        tint = Color.White,
-                        modifier = Modifier.size(32.dp)
-                    )
+                    IconButton(
+                        onClick = { isZoomed = !isZoomed },
+                        modifier = Modifier.size(48.dp)
+                    ) {
+                        Icon(
+                            painter = painterResource(
+                                id = if (isZoomed) R.drawable.outline_fullscreen_exit_24 else R.drawable.outline_fullscreen_24
+                            ),
+                            contentDescription = if (isZoomed) "Ajustar a pantalla" else "Llenar pantalla",
+                            tint = Color.White,
+                            modifier = Modifier.size(32.dp)
+                        )
+                    }
+
+                    IconButton(
+                        onClick = onExit,
+                        modifier = Modifier.size(48.dp)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Close,
+                            contentDescription = "Cerrar",
+                            tint = Color.White,
+                            modifier = Modifier.size(32.dp)
+                        )
+                    }
                 }
 
                 // Bottom Controls

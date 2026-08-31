@@ -119,9 +119,11 @@ fun MultimediaScreen(
                             }
                             MultimediaContentType.VIDEO -> {
                                 if (currentOption.localFilePath != null || currentOption.contentAssetId != null) {
+                                    val isWeek6Session2 = uiState.sessionId == 6L && uiState.subSessionId == 2L
                                     VideoContent(
                                         contentAssetId = currentOption.contentAssetId,
                                         localFilePath = currentOption.localFilePath,
+                                        isAutoZoomed = isWeek6Session2,
                                         navigationButtons = navButtons
                                     )
                                 } else {

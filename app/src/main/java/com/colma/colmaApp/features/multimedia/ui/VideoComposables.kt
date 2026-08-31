@@ -38,6 +38,7 @@ import com.google.android.exoplayer2.ui.PlayerView
 fun VideoContent(
     @RawRes contentAssetId: Int?,
     localFilePath: String? = null,
+    isAutoZoomed: Boolean = false,
     navigationButtons: @Composable () -> Unit = {}
 ) {
     val scrollState = rememberScrollState()
@@ -63,6 +64,7 @@ fun VideoContent(
                             VideoPlayerWithFullscreen(
                                 resId = contentAssetId,
                                 localFilePath = localFilePath,
+                                isAutoZoomed = isAutoZoomed,
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .height(400.dp)
@@ -88,6 +90,7 @@ fun VideoContent(
 fun VideoPlayerWithFullscreen(
     @RawRes resId: Int?,
     localFilePath: String? = null,
+    isAutoZoomed: Boolean = false,
     modifier: Modifier = Modifier,
     playerWidth: Dp = 320.dp,
     playerHeight: Dp = 200.dp
@@ -119,6 +122,17 @@ fun VideoPlayerWithFullscreen(
     DisposableEffect(key1 = uriString) {
         onDispose { exoPlayer.release() }
     }
+    val isExceptionVideo = isAutoZoomed || remember(uriString) {
+        uriString.contains("exercise", ignoreCase = true) ||
+        uriString.contains("sesion_6_2", ignoreCase = true) ||
+        uriString.contains("sesion_6", ignoreCase = true) ||
+        uriString.contains("s6.2", ignoreCase = true) ||
+        uriString.contains("s6_2", ignoreCase = true) ||
+        uriString.contains("s6-2", ignoreCase = true) ||
+        uriString.contains("semana_6", ignoreCase = true) ||
+        uriString.contains("/6/2/", ignoreCase = true) ||
+        uriString.contains("/6/2", ignoreCase = true)
+    }
     Box(
         modifier = modifier
             .background(Color.Black, shape = RoundedCornerShape(8.dp))
@@ -126,6 +140,7 @@ fun VideoPlayerWithFullscreen(
                 val intent = Intent(context, FullscreenVideoActivity::class.java).apply {
                     putExtra(FullscreenVideoActivity.EXTRA_URI, uriString)
                     putExtra(FullscreenVideoActivity.EXTRA_POSITION, lastPosition)
+                    putExtra(FullscreenVideoActivity.EXTRA_IS_ZOOMED, isExceptionVideo)
                 }
                 launcher.launch(intent)
             },
@@ -136,8 +151,11 @@ fun VideoPlayerWithFullscreen(
                 PlayerView(ctx).apply {
                     player = exoPlayer
                     useController = false
-                    resizeMode = AspectRatioFrameLayout.RESIZE_MODE_FIT
+                    resizeMode = if (isExceptionVideo) AspectRatioFrameLayout.RESIZE_MODE_ZOOM else AspectRatioFrameLayout.RESIZE_MODE_FIT
                 }
+            },
+            update = { view ->
+                view.resizeMode = if (isExceptionVideo) AspectRatioFrameLayout.RESIZE_MODE_ZOOM else AspectRatioFrameLayout.RESIZE_MODE_FIT
             },
             modifier = Modifier.fillMaxSize()
         )
