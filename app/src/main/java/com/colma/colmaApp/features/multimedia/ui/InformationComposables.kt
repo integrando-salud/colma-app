@@ -55,8 +55,6 @@ fun InformationDisplayContent(
                 .map { it.trim() }
                 .filter { it.isNotBlank() && !it.matches(Regex("(?i)^(\\d+|uno|dos|tres|cuatro|cinco)$")) }
             if (parts.isNotEmpty()) parts else listOf(text)
-        } else if (text.contains("\n\n")) {
-            text.split("\n\n").map { it.trim() }.filter { it.isNotBlank() }
         } else {
             listOf(text).filter { it.isNotBlank() }
         }
