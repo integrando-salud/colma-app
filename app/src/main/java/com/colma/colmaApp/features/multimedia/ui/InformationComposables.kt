@@ -26,6 +26,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -36,6 +40,26 @@ import com.google.android.exoplayer2.MediaItem
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import java.util.*
+
+fun parseMarkdownToAnnotatedString(text: String): AnnotatedString {
+    return buildAnnotatedString {
+        val pattern = Regex("\\*\\*(.*?)\\*\\*")
+        var currentIndex = 0
+        for (match in pattern.findAll(text)) {
+            val range = match.range
+            if (range.first > currentIndex) {
+                append(text.substring(currentIndex, range.first))
+            }
+            withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
+                append(match.groupValues[1])
+            }
+            currentIndex = range.last + 1
+        }
+        if (currentIndex < text.length) {
+            append(text.substring(currentIndex))
+        }
+    }
+}
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -144,8 +168,15 @@ fun InformationCard(
     val hasNoAudioAndNoImage = !hasAudio && localImagePath == null
 
     val cleanedDisplayContent = remember(title, displayContent) {
-        if (!title.isNullOrBlank() && displayContent.startsWith(title, ignoreCase = true)) {
-            displayContent.substring(title.length).trimStart()
+        if (!title.isNullOrBlank()) {
+            val trimmed = displayContent.trimStart()
+            if (trimmed.startsWith(title, ignoreCase = true)) {
+                trimmed.substring(title.length).trimStart()
+            } else if (trimmed.startsWith("**$title**", ignoreCase = true)) {
+                trimmed.substring("**$title**".length).trimStart()
+            } else {
+                displayContent
+            }
         } else {
             displayContent
         }
@@ -325,7 +356,8 @@ fun InformationCard(
                                     tts?.stop()
                                     isSpeaking = false
                                 } else {
-                                    val textToSpeak = if (!title.isNullOrBlank()) "$title. $cleanedDisplayContent" else cleanedDisplayContent
+                                    val rawText = cleanedDisplayContent.replace("**", "")
+                                    val textToSpeak = if (!title.isNullOrBlank()) "$title. $rawText" else rawText
                                     tts?.speak(textToSpeak, TextToSpeech.QUEUE_FLUSH, null, "utteranceId")
                                 }
                             }) {
@@ -381,7 +413,10 @@ fun InformationCard(
             }
 
             if (cleanedDisplayContent.isNotEmpty()) {
-                Text(cleanedDisplayContent, fontSize = 16.sp, textAlign = TextAlign.Left, modifier = Modifier.fillMaxWidth())
+                val annotatedText = remember(cleanedDisplayContent) {
+                    parseMarkdownToAnnotatedString(cleanedDisplayContent)
+                }
+                Text(annotatedText, fontSize = 16.sp, textAlign = TextAlign.Left, modifier = Modifier.fillMaxWidth())
             }
         }
     }
