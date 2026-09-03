@@ -160,19 +160,79 @@ class TreatmentDownloadRepositoryImpl(private val context: Context) : TreatmentD
                     // Build mapped MultimediaContent list
                     val multimediaList = mutableListOf<MultimediaContent>()
 
-                    val audioItems = downloadedFiles.filter { it.title.contains("audio-", ignoreCase = true) }
-                    val imageItems = downloadedFiles.filter { it.title.contains("imagen-", ignoreCase = true) }
-                    val videoItems = downloadedFiles.filter { it.title.contains("video-", ignoreCase = true) }
+                    val audioItems = downloadedFiles.filter { 
+                        it.type.equals("AUDIO", ignoreCase = true) || 
+                        it.title.contains("audio", ignoreCase = true) || 
+                        it.title.endsWith(".mp3", ignoreCase = true) || 
+                        it.title.endsWith(".wav", ignoreCase = true) || 
+                        it.title.endsWith(".m4a", ignoreCase = true) || 
+                        it.title.endsWith(".aac", ignoreCase = true) || 
+                        it.title.endsWith(".ogg", ignoreCase = true)
+                    }
+                    val imageItems = downloadedFiles.filter { 
+                        it.type.equals("IMAGE", ignoreCase = true) || 
+                        it.type.equals("IMAGEN", ignoreCase = true) || 
+                        it.title.contains("imagen", ignoreCase = true) || 
+                        it.title.contains("image", ignoreCase = true) || 
+                        it.title.contains("img", ignoreCase = true) || 
+                        it.title.endsWith(".png", ignoreCase = true) || 
+                        it.title.endsWith(".jpg", ignoreCase = true) || 
+                        it.title.endsWith(".jpeg", ignoreCase = true) || 
+                        it.title.endsWith(".webp", ignoreCase = true)
+                    }
+                    val videoItems = downloadedFiles.filter { 
+                        it.type.equals("VIDEO", ignoreCase = true) || 
+                        it.title.contains("video", ignoreCase = true) || 
+                        it.title.endsWith(".mp4", ignoreCase = true) || 
+                        it.title.endsWith(".mov", ignoreCase = true) || 
+                        it.title.endsWith(".mkv", ignoreCase = true) || 
+                        it.title.endsWith(".webm", ignoreCase = true)
+                    }
 
                     if (staticSubSession != null) {
+                        val readingItems = staticSubSession.multimedia.filter { 
+                            it.type == MultimediaContentType.DESCRIPTION && it.title.contains("Lectura", ignoreCase = true) 
+                        }
+
                         staticSubSession.multimedia.forEach { staticItem ->
                             when (staticItem.type) {
                                 MultimediaContentType.DESCRIPTION -> {
                                     if (staticItem.title.contains("Lectura", ignoreCase = true)) {
+                                        val readingIndexInSubSession = readingItems.indexOf(staticItem)
                                         val digits = staticItem.title.filter { it.isDigit() }
-                                        val idx = digits.toIntOrNull() ?: 1
-                                        val audioItem = audioItems.find { extractIndex(it.title) == idx }
-                                        val imageItem = imageItems.find { extractIndex(it.title) == idx }
+                                        val targetIdx = digits.toIntOrNull() ?: (if (readingIndexInSubSession >= 0) readingIndexInSubSession + 1 else 1)
+
+                                        val isDmReading = staticItem.title.contains("Diabetes", ignoreCase = true) || staticItem.title.contains("DM", ignoreCase = true)
+                                        val isHtaReading = staticItem.title.contains("Hipertensión", ignoreCase = true) || staticItem.title.contains("HTA", ignoreCase = true)
+
+                                        val audioItem = audioItems.find { item ->
+                                            val itemIdx = extractIndex(item.title)
+                                            val matchesIdx = itemIdx == targetIdx
+                                            val matchesTag = if (isDmReading) item.title.contains("dm", ignoreCase = true) else if (isHtaReading) item.title.contains("hta", ignoreCase = true) else true
+                                            matchesIdx && matchesTag
+                                        } ?: audioItems.find { extractIndex(it.title) == targetIdx }
+                                          ?: audioItems.find { item ->
+                                              if (isDmReading) item.title.contains("dm", ignoreCase = true)
+                                              else if (isHtaReading) item.title.contains("hta", ignoreCase = true)
+                                              else false
+                                          }
+                                          ?: (if (readingIndexInSubSession >= 0) audioItems.getOrNull(readingIndexInSubSession) else null)
+                                          ?: (if (readingItems.size == 1 && audioItems.size == 1) audioItems.firstOrNull() else null)
+
+                                        val imageItem = imageItems.find { item ->
+                                            val itemIdx = extractIndex(item.title)
+                                            val matchesIdx = itemIdx == targetIdx
+                                            val matchesTag = if (isDmReading) item.title.contains("dm", ignoreCase = true) else if (isHtaReading) item.title.contains("hta", ignoreCase = true) else true
+                                            matchesIdx && matchesTag
+                                        } ?: imageItems.find { extractIndex(it.title) == targetIdx }
+                                          ?: imageItems.find { item ->
+                                              if (isDmReading) item.title.contains("dm", ignoreCase = true)
+                                              else if (isHtaReading) item.title.contains("hta", ignoreCase = true)
+                                              else false
+                                          }
+                                          ?: (if (readingIndexInSubSession >= 0) imageItems.getOrNull(readingIndexInSubSession) else null)
+                                          ?: (if (readingItems.size == 1 && imageItems.size == 1) imageItems.firstOrNull() else null)
+
                                         multimediaList.add(
                                             MultimediaContent(
                                                 type = MultimediaContentType.DESCRIPTION,
@@ -318,13 +378,22 @@ class TreatmentDownloadRepositoryImpl(private val context: Context) : TreatmentD
     }
 
     private fun extractIndex(title: String): Int? {
-        val hyphenIndex = title.indexOf('-')
-        if (hyphenIndex != -1) {
-            val rest = title.substring(hyphenIndex + 1)
-            val digits = rest.takeWhile { it.isDigit() }
+        val regexNamed = Regex("""(?i)(?:audio|imagen|image|img|video)[-_ ]*(?:dm|hta)?[-_ ]*(\d+)""")
+        val matchNamed = regexNamed.find(title)
+        if (matchNamed != null) {
+            return matchNamed.groupValues[1].toIntOrNull()
+        }
+        val separatorIndex = title.indexOfAny(charArrayOf('-', '_'))
+        if (separatorIndex != -1) {
+            val rest = title.substring(separatorIndex + 1)
+            val digits = rest.filter { it.isDigit() }
             if (digits.isNotEmpty()) {
                 return digits.toIntOrNull()
             }
+        }
+        val anyDigits = title.filter { it.isDigit() }
+        if (anyDigits.isNotEmpty()) {
+            return anyDigits.toIntOrNull()
         }
         return null
     }
