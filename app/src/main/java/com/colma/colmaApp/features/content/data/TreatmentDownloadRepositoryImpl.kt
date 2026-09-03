@@ -13,7 +13,7 @@ import com.colma.colmaApp.features.content.model.TreatmentContent
 import com.colma.colmaApp.features.sesiones.SessionSteps.domain.MultimediaContentType
 import com.colma.colmaApp.features.sesiones.SessionSteps.domain.TreatmentType
 import com.colma.colmaApp.servicios.internetCommunication.TreatmentService
-import com.colma.colmaApp.servicios.internetCommunication.model.ServerTreatmentResponse
+import com.colma.colmaApp.servicios.internetCommunication.model.*
 import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -89,6 +89,7 @@ class TreatmentDownloadRepositoryImpl(private val context: Context) : TreatmentD
 
             // Calculate total files to download first to report accurate progress
             val semanas = serverTreatment.semanas ?: emptyList()
+            logAllAvailableServerResources(serverTreatment)
             var totalFiles = 0
             for (semana in semanas) {
                 val sesiones = semana.sesiones ?: emptyList()
@@ -403,4 +404,47 @@ class TreatmentDownloadRepositoryImpl(private val context: Context) : TreatmentD
         val title: String,
         val localPath: String
     )
+
+    private fun logAllAvailableServerResources(serverTreatment: ServerTreatment) {
+        Log.d(TAG, "==================================================")
+        Log.d(TAG, "=== LISTADO DE RECURSOS DEL SERVIDOR (TRATAMIENTO: ${serverTreatment.tipo ?: serverTreatment.nombre}) ===")
+        Log.d(TAG, "==================================================")
+        val semanas: List<ServerSemana> = serverTreatment.semanas ?: emptyList()
+        for (semana in semanas) {
+            val semanaTitle = semana.title ?: "Semana ${semana.id}"
+            val sesiones: List<ServerSesion> = semana.sesiones ?: emptyList()
+            for (sesion in sesiones) {
+                val sesionTitle = sesion.title ?: "Sesión ${sesion.id}"
+                val contents: List<ServerContentItem> = sesion.content ?: emptyList()
+                val images = contents.filter { item: ServerContentItem ->
+                    item.type.equals("IMAGEN", true) || 
+                    item.type.equals("IMAGE", true) || 
+                    item.title?.contains("imagen", true) == true || 
+                    item.title?.contains("image", true) == true || 
+                    item.title?.contains("img", true) == true ||
+                    item.title?.endsWith(".png", true) == true ||
+                    item.title?.endsWith(".jpg", true) == true ||
+                    item.title?.endsWith(".webp", true) == true
+                }
+                val audios = contents.filter { item: ServerContentItem ->
+                    item.type.equals("AUDIO", true) || 
+                    item.title?.contains("audio", true) == true ||
+                    item.title?.endsWith(".mp3", true) == true ||
+                    item.title?.endsWith(".wav", true) == true ||
+                    item.title?.endsWith(".m4a", true) == true
+                }
+                val videos = contents.filter { item: ServerContentItem ->
+                    item.type.equals("VIDEO", true) || 
+                    item.title?.contains("video", true) == true ||
+                    item.title?.endsWith(".mp4", true) == true
+                }
+                
+                Log.d(TAG, "[$semanaTitle - $sesionTitle] -> Total items: ${contents.size} (Imágenes: ${images.size}, Audios: ${audios.size}, Videos: ${videos.size})")
+                for (c in contents) {
+                    Log.d(TAG, "    * [${c.type ?: "N/A"}] ${c.title ?: "Sin título"} -> ${c.link ?: "Sin enlace"}")
+                }
+            }
+        }
+        Log.d(TAG, "==================================================")
+    }
 }
