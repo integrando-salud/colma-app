@@ -118,28 +118,20 @@ fun MultimediaScreen(
                                 )
                             }
                             MultimediaContentType.VIDEO -> {
-                                if (currentOption.localFilePath != null || currentOption.contentAssetId != null) {
-                                    val isWeek6Session2 = uiState.sessionId == 6L && uiState.subSessionId == 2L
-                                    VideoContent(
-                                        contentAssetId = currentOption.contentAssetId,
-                                        localFilePath = currentOption.localFilePath,
-                                        isAutoZoomed = isWeek6Session2,
-                                        navigationButtons = navButtons
-                                    )
-                                } else {
-                                    Text("Video resource not found.")
-                                }
+                                val isWeek6Session2 = uiState.sessionId == 6L && uiState.subSessionId == 2L
+                                VideoContent(
+                                    contentAssetId = currentOption.contentAssetId ?: com.colma.colmaApp.R.raw.exercise,
+                                    localFilePath = currentOption.localFilePath,
+                                    isAutoZoomed = isWeek6Session2,
+                                    navigationButtons = navButtons
+                                )
                             }
                             MultimediaContentType.AUDIO -> {
-                                if (currentOption.localFilePath != null || currentOption.contentAssetId != null) {
-                                    AudioContent(
-                                        audioResId = currentOption.contentAssetId,
-                                        localFilePath = currentOption.localFilePath,
-                                        navigationButtons = navButtons
-                                    )
-                                } else {
-                                    Text("Audio resource not found.")
-                                }
+                                AudioContent(
+                                    audioResId = currentOption.contentAssetId ?: com.colma.colmaApp.R.raw.audio_explicativo,
+                                    localFilePath = currentOption.localFilePath,
+                                    navigationButtons = navButtons
+                                )
                             }
                             MultimediaContentType.METAS -> {
                                 currentOption.metasId?.let {

@@ -42,6 +42,10 @@ fun VideoContent(
     navigationButtons: @Composable () -> Unit = {}
 ) {
     val scrollState = rememberScrollState()
+    val isVideoAvailable = remember(localFilePath, contentAssetId) {
+        (localFilePath != null && java.io.File(localFilePath).exists()) || (contentAssetId != null && contentAssetId != 0)
+    }
+
     BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
         val screenHeight = maxHeight
         Column(
@@ -57,19 +61,55 @@ fun VideoContent(
                         colors = CardDefaults.cardColors(containerColor = Color.White),
                         modifier = Modifier.fillMaxWidth().padding(8.dp)
                     ) {
-                        Column(
-                            modifier = Modifier.fillMaxWidth().padding(16.dp),
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-                            VideoPlayerWithFullscreen(
-                                resId = contentAssetId,
-                                localFilePath = localFilePath,
-                                isAutoZoomed = isAutoZoomed,
+                        if (isVideoAvailable) {
+                            Column(
+                                modifier = Modifier.fillMaxWidth().padding(16.dp),
+                                horizontalAlignment = Alignment.CenterHorizontally
+                            ) {
+                                VideoPlayerWithFullscreen(
+                                    resId = contentAssetId,
+                                    localFilePath = localFilePath,
+                                    isAutoZoomed = isAutoZoomed,
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .height(400.dp)
+                                        .clip(RoundedCornerShape(8.dp))
+                                )
+                            }
+                        } else {
+                            Column(
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .height(400.dp)
-                                    .clip(RoundedCornerShape(8.dp))
-                            )
+                                    .padding(vertical = 32.dp, horizontal = 24.dp),
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                                verticalArrangement = Arrangement.spacedBy(16.dp)
+                            ) {
+                                Icon(
+                                    painter = painterResource(R.drawable.outline_unknown_document_24),
+                                    contentDescription = "Video no disponible",
+                                    tint = Color(0xFFE57373),
+                                    modifier = Modifier.size(64.dp)
+                                )
+                                Text(
+                                    text = "Video no disponible",
+                                    fontWeight = FontWeight.Bold,
+                                    fontSize = 20.sp,
+                                    color = Color(0xFF333333),
+                                    textAlign = androidx.compose.ui.text.style.TextAlign.Center
+                                )
+                                Text(
+                                    text = "Hubo un problema al descargar este video o no se encuentra disponible en el dispositivo.",
+                                    fontSize = 15.sp,
+                                    color = Color(0xFF666666),
+                                    textAlign = androidx.compose.ui.text.style.TextAlign.Center
+                                )
+                                Text(
+                                    text = "Puedes continuar con la sesión utilizando los botones de abajo.",
+                                    fontSize = 13.sp,
+                                    color = Color(0xFF888888),
+                                    textAlign = androidx.compose.ui.text.style.TextAlign.Center
+                                )
+                            }
                         }
                     }
                 },
@@ -96,10 +136,14 @@ fun VideoPlayerWithFullscreen(
     playerHeight: Dp = 200.dp
 ) {
     val context = LocalContext.current
-    val uriString = when {
-        localFilePath != null -> localFilePath
-        resId != null && resId != 0 -> "android.resource://${context.packageName}/$resId"
-        else -> ""
+    val uriString = remember(localFilePath, resId) {
+        if (localFilePath != null && java.io.File(localFilePath).exists()) {
+            localFilePath
+        } else if (resId != null && resId != 0) {
+            "android.resource://${context.packageName}/$resId"
+        } else {
+            "android.resource://${context.packageName}/${R.raw.exercise}"
+        }
     }
     var lastPosition by rememberSaveable(uriString) { mutableStateOf(0L) }
     val exoPlayer = remember(uriString) {

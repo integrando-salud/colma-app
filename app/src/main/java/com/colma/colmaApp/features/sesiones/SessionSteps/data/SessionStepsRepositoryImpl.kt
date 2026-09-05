@@ -91,7 +91,8 @@ class SessionStepsRepositoryImpl(
                     val localFilePath = if (isLocalFile) multimediaContent.contentAsset else null
                     
                     val contentAssetId = if (isLocalFile) null else multimediaContent.contentAsset?.let {
-                        ResourceUtils.getResourceId(context, it, "raw")
+                        val resId = ResourceUtils.getResourceId(context, it, "raw")
+                        if (resId != 0) resId else null
                     }
                     
                     val originalTitle = multimediaContent.title.trim()
