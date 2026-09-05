@@ -4638,6 +4638,13 @@
                     "iconResId": "outline_unknown_document_24"
                   },
                   {
+                    "type": "VIDEO",
+                    "title": "Video",
+                    "description": "¿Qué es la diabetes?",
+                    "iconImageVector": "PlayArrow",
+                    "contentAsset": "exercise"
+                  },
+                  {
                     "type": "DESCRIPTION",
                     "title": "Lectura 1 (Diabetes)",
                     "description": "¿Cómo podés saber si tus niveles de glucosa están controlados o no?\n\nLa única forma confiable de medir tu glucosa es analizando tu sangre.\n\nAlgunas aplicaciones de celular dicen que pueden hacerlo con la cámara del celular, ¡pero eso no es cierto!\n\nSolo los glucómetros y los análisis de sangre realizados por profesionales pueden dar resultados reales.\n\n● Si te hacés la prueba en ayunas y tu glucosa da por encima de 126 mg/dl, significa que está alta.\n\n● Y si en cualquier momento del día el resultado pasa los 200, también significa que tu glucosa está elevada.\n\nSi tenés alguno de estos resultados, anotalo y acercate a tu centro de salud.\n\nAdemás, tu médico puede pedirte un análisis de sangre llamado hemoglobina glicosilada.\n\nEste resultado muestra cómo estuvieron tus niveles de glucosa durante los últimos dos o tres meses.\n\nSi el valor es de 7% o más, significa que tu glucosa estuvo elevada de forma constante durante estos meses.\n\nEs muy importante que midas tu glucosa con la frecuencia que te indicó tu médico para ver si está controlada.\n\nTambién puede recomendarte hacerte una prueba de hemoglobina glicosilada cada tres meses.",
@@ -4646,7 +4653,7 @@
                   },
                   {
                     "type": "VIDEO",
-                    "title": "Video",
+                    "title": "¿Qué es la hipertensión arterial?",
                     "description": "Ver video de la sesión",
                     "iconImageVector": "PlayArrow",
                     "contentAsset": "exercise"
@@ -4687,6 +4694,22 @@
                     "iconResId": "outline_unknown_document_24"
                   },
                   {
+                    "type": "QUIZ",
+                    "title": "Pregunta del día",
+                    "description": "Responde las preguntas de la sesión",
+                    "iconResId": "outline_trophy_24",
+                    "questions": [
+                      {
+                        "questionText": "La mejor forma de saber cómo está mi glucosa es midiéndola con un glucómetro o un análisis de sangre",
+                        "options": [
+                          "Verdadero",
+                          "Falso"
+                        ],
+                        "correctAnswerIndex": 0
+                      }
+                    ]
+                  },
+                  {
                     "type": "DESCRIPTION",
                     "title": "Lectura 3 (Hipertensión)",
                     "description": "Controlar la presión arterial nos permite mantener el corazón, los riñones, el cerebro y los ojos saludables.\n\nCon pequeñas acciones, podemos cuidar nuestro cuerpo todos los días. ¿Qué puedo hacer para controlar mi presión?\n\nPodés cuidarte apoyándote en cuatro pilares importantes: Medicamentos: Tomá tus pastillas todos los días, tal como indicó el médico.\n\nPara ayudarte podés usar un pastillero, poner una alarma en el celular o dejar los medicamentos en un lugar visible (por ejemplo, sobre la mesa).\n\nAutocuidado: Medite la presión cuando puedas, descansá bien y evitá el tabaco.\n\nPodés medir tu presión arterial en casa si tenés un tensiómetro, o en el centro de salud.",
@@ -4706,14 +4729,6 @@
                     "description": "Responde las preguntas de la sesión",
                     "iconResId": "outline_trophy_24",
                     "questions": [
-                      {
-                        "questionText": "La mejor forma de saber cómo está mi glucosa es midiéndola con un glucómetro o un análisis de sangre",
-                        "options": [
-                          "Verdadero",
-                          "Falso"
-                        ],
-                        "correctAnswerIndex": 0
-                      },
                       {
                         "questionText": "Aunque me sienta bien, ¿es importante controlar la presión?",
                         "options": [
@@ -5121,6 +5136,13 @@
                   {
                     "type": "VIDEO",
                     "title": "Video",
+                    "description": "Comer sano teniendo diabetes",
+                    "iconImageVector": "PlayArrow",
+                    "contentAsset": "exercise"
+                  },
+                  {
+                    "type": "VIDEO",
+                    "title": "Comer sano teniendo hipertensión",
                     "description": "Ver video de la sesión",
                     "iconImageVector": "PlayArrow",
                     "contentAsset": "exercise"
@@ -5610,7 +5632,7 @@
                   {
                     "type": "VIDEO",
                     "title": "Video",
-                    "description": "Ver video de la sesión",
+                    "description": "¿Por qué es importante la medicación y cuidar nuestra diabetes todos los días?",
                     "iconImageVector": "PlayArrow",
                     "contentAsset": "exercise"
                   },
@@ -5627,7 +5649,22 @@
                           "Con medicación y hábitos saludables."
                         ],
                         "correctAnswerIndex": 1
-                      },
+                      }
+                    ]
+                  },
+                  {
+                    "type": "VIDEO",
+                    "title": "¿Por qué es importante la medicación y cuidar nuestra presión arterial todos los días?",
+                    "description": "Ver video de la sesión",
+                    "iconImageVector": "PlayArrow",
+                    "contentAsset": "exercise"
+                  },
+                  {
+                    "type": "QUIZ",
+                    "title": "Pregunta del día",
+                    "description": "Responde las preguntas de la sesión",
+                    "iconResId": "outline_trophy_24",
+                    "questions": [
                       {
                         "questionText": "¿Cómo puedo cuidar mi presión arterial?",
                         "options": [
@@ -6891,6 +6928,13 @@
                     "iconResId": "outline_unknown_document_24"
                   },
                   {
+                    "type": "VIDEO",
+                    "title": "Video",
+                    "description": "¿Qué es la diabetes?",
+                    "iconImageVector": "PlayArrow",
+                    "contentAsset": "exercise"
+                  },
+                  {
                     "type": "DESCRIPTION",
                     "title": "Lectura 1 (Diabetes)",
                     "description": "Lee y escucha la sesión del día",
@@ -6899,7 +6943,7 @@
                   },
                   {
                     "type": "VIDEO",
-                    "title": "Video",
+                    "title": "¿Qué es la hipertensión arterial?",
                     "description": "Ver video de la sesión",
                     "iconImageVector": "PlayArrow",
                     "contentAsset": "exercise"
@@ -6940,6 +6984,22 @@
                     "iconResId": "outline_unknown_document_24"
                   },
                   {
+                    "type": "QUIZ",
+                    "title": "Pregunta del día",
+                    "description": "Responde las preguntas de la sesión",
+                    "iconResId": "outline_trophy_24",
+                    "questions": [
+                      {
+                        "questionText": "La mejor forma de saber cómo está mi glucosa es midiéndola con un glucómetro o un análisis de sangre",
+                        "options": [
+                          "Verdadero",
+                          "Falso"
+                        ],
+                        "correctAnswerIndex": 0
+                      }
+                    ]
+                  },
+                  {
                     "type": "DESCRIPTION",
                     "title": "Lectura 3 (Hipertensión)",
                     "description": "Lee y escucha la sesión del día",
@@ -6959,14 +7019,6 @@
                     "description": "Responde las preguntas de la sesión",
                     "iconResId": "outline_trophy_24",
                     "questions": [
-                      {
-                        "questionText": "La mejor forma de saber cómo está mi glucosa es midiéndola con un glucómetro o un análisis de sangre",
-                        "options": [
-                          "Verdadero",
-                          "Falso"
-                        ],
-                        "correctAnswerIndex": 0
-                      },
                       {
                         "questionText": "Aunque me sienta bien, ¿es importante controlar la presión?",
                         "options": [
@@ -7374,6 +7426,13 @@
                   {
                     "type": "VIDEO",
                     "title": "Video",
+                    "description": "Comer sano teniendo diabetes",
+                    "iconImageVector": "PlayArrow",
+                    "contentAsset": "exercise"
+                  },
+                  {
+                    "type": "VIDEO",
+                    "title": "Comer sano teniendo hipertensión",
                     "description": "Ver video de la sesión",
                     "iconImageVector": "PlayArrow",
                     "contentAsset": "exercise"
@@ -7863,7 +7922,7 @@
                   {
                     "type": "VIDEO",
                     "title": "Video",
-                    "description": "Ver video de la sesión",
+                    "description": "¿Por qué es importante la medicación y cuidar nuestra diabetes todos los días?",
                     "iconImageVector": "PlayArrow",
                     "contentAsset": "exercise"
                   },
@@ -7880,7 +7939,22 @@
                           "Con medicación y hábitos saludables."
                         ],
                         "correctAnswerIndex": 1
-                      },
+                      }
+                    ]
+                  },
+                  {
+                    "type": "VIDEO",
+                    "title": "¿Por qué es importante la medicación y cuidar nuestra presión arterial todos los días?",
+                    "description": "Ver video de la sesión",
+                    "iconImageVector": "PlayArrow",
+                    "contentAsset": "exercise"
+                  },
+                  {
+                    "type": "QUIZ",
+                    "title": "Pregunta del día",
+                    "description": "Responde las preguntas de la sesión",
+                    "iconResId": "outline_trophy_24",
+                    "questions": [
                       {
                         "questionText": "¿Cómo puedo cuidar mi presión arterial?",
                         "options": [
