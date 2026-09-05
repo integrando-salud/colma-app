@@ -4702,7 +4702,7 @@
                   },
                   {
                     "type": "QUIZ",
-                    "title": "Pregunta del día (Diabetes)",
+                    "title": "Pregunta del día",
                     "description": "Responde las preguntas de la sesión",
                     "iconResId": "outline_trophy_24",
                     "questions": [
@@ -4713,15 +4713,7 @@
                           "Falso"
                         ],
                         "correctAnswerIndex": 0
-                      }
-                    ]
-                  },
-                  {
-                    "type": "QUIZ",
-                    "title": "Pregunta del día (Hipertensión)",
-                    "description": "Responde las preguntas de la sesión",
-                    "iconResId": "outline_trophy_24",
-                    "questions": [
+                      },
                       {
                         "questionText": "Aunque me sienta bien, ¿es importante controlar la presión?",
                         "options": [
@@ -5624,7 +5616,7 @@
                   },
                   {
                     "type": "QUIZ",
-                    "title": "Pregunta del día (Diabetes)",
+                    "title": "Pregunta del día",
                     "description": "Responde las preguntas de la sesión",
                     "iconResId": "outline_trophy_24",
                     "questions": [
@@ -5635,15 +5627,7 @@
                           "Con medicación y hábitos saludables."
                         ],
                         "correctAnswerIndex": 1
-                      }
-                    ]
-                  },
-                  {
-                    "type": "QUIZ",
-                    "title": "Pregunta del día (Hipertensión)",
-                    "description": "Responde las preguntas de la sesión",
-                    "iconResId": "outline_trophy_24",
-                    "questions": [
+                      },
                       {
                         "questionText": "¿Cómo puedo cuidar mi presión arterial?",
                         "options": [
@@ -5790,28 +5774,12 @@
                   },
                   {
                     "type": "QUIZ",
-                    "title": "Pregunta del día (Diabetes)",
+                    "title": "Pregunta del día",
                     "description": "Responde las preguntas de la sesión",
                     "iconResId": "outline_trophy_24",
                     "questions": [
                       {
                         "questionText": "Antes de dormir, es mejor…",
-                        "options": [
-                          "Comer ligero y tomar poca agua",
-                          "Comer comidas pesadas y tomar bastante agua"
-                        ],
-                        "correctAnswerIndex": 0
-                      }
-                    ]
-                  },
-                  {
-                    "type": "QUIZ",
-                    "title": "Pregunta del día (Hipertensión)",
-                    "description": "Responde las preguntas de la sesión",
-                    "iconResId": "outline_trophy_24",
-                    "questions": [
-                      {
-                        "questionText": "Antes de dormir, es mejor …",
                         "options": [
                           "Comer ligero y tomar poca agua",
                           "Comer comidas pesadas y tomar bastante agua"
@@ -6987,7 +6955,7 @@
                   },
                   {
                     "type": "QUIZ",
-                    "title": "Pregunta del día (Diabetes)",
+                    "title": "Pregunta del día",
                     "description": "Responde las preguntas de la sesión",
                     "iconResId": "outline_trophy_24",
                     "questions": [
@@ -6998,15 +6966,7 @@
                           "Falso"
                         ],
                         "correctAnswerIndex": 0
-                      }
-                    ]
-                  },
-                  {
-                    "type": "QUIZ",
-                    "title": "Pregunta del día (Hipertensión)",
-                    "description": "Responde las preguntas de la sesión",
-                    "iconResId": "outline_trophy_24",
-                    "questions": [
+                      },
                       {
                         "questionText": "Aunque me sienta bien, ¿es importante controlar la presión?",
                         "options": [
@@ -7909,7 +7869,7 @@
                   },
                   {
                     "type": "QUIZ",
-                    "title": "Pregunta del día (Diabetes)",
+                    "title": "Pregunta del día",
                     "description": "Responde las preguntas de la sesión",
                     "iconResId": "outline_trophy_24",
                     "questions": [
@@ -7920,15 +7880,7 @@
                           "Con medicación y hábitos saludables."
                         ],
                         "correctAnswerIndex": 1
-                      }
-                    ]
-                  },
-                  {
-                    "type": "QUIZ",
-                    "title": "Pregunta del día (Hipertensión)",
-                    "description": "Responde las preguntas de la sesión",
-                    "iconResId": "outline_trophy_24",
-                    "questions": [
+                      },
                       {
                         "questionText": "¿Cómo puedo cuidar mi presión arterial?",
                         "options": [
@@ -8075,28 +8027,12 @@
                   },
                   {
                     "type": "QUIZ",
-                    "title": "Pregunta del día (Diabetes)",
+                    "title": "Pregunta del día",
                     "description": "Responde las preguntas de la sesión",
                     "iconResId": "outline_trophy_24",
                     "questions": [
                       {
                         "questionText": "Antes de dormir, es mejor…",
-                        "options": [
-                          "Comer ligero y tomar poca agua",
-                          "Comer comidas pesadas y tomar bastante agua"
-                        ],
-                        "correctAnswerIndex": 0
-                      }
-                    ]
-                  },
-                  {
-                    "type": "QUIZ",
-                    "title": "Pregunta del día (Hipertensión)",
-                    "description": "Responde las preguntas de la sesión",
-                    "iconResId": "outline_trophy_24",
-                    "questions": [
-                      {
-                        "questionText": "Antes de dormir, es mejor …",
                         "options": [
                           "Comer ligero y tomar poca agua",
                           "Comer comidas pesadas y tomar bastante agua"
