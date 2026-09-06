@@ -97,6 +97,8 @@ fun MetasContent(
     var isBlockedByFutureGoal by rememberSaveable { mutableStateOf(false) }
     var blockedWeekNumber by rememberSaveable { mutableIntStateOf(-1) }
     var isBlockedByCompletedGoalThisWeek by rememberSaveable { mutableStateOf(false) }
+    var isBlockedByExistingGoalThisWeek by rememberSaveable { mutableStateOf(false) }
+    var isBlockedByActiveGoalInAnotherWeek by rememberSaveable { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
         withContext(Dispatchers.IO) {
@@ -104,6 +106,8 @@ fun MetasContent(
             val highestWeek = dbHelper.getHighestWeekWithGoal(userId, treatmentType.name.lowercase())
             val hasCompletedThisWeek = dbHelper.hasCompletedGoalForWeek(userId, currentWeekId, treatmentType.name.lowercase())
             val hasGoalThisWeek = dbHelper.hasGoalForWeek(userId, currentWeekId, treatmentType.name.lowercase())
+            val pendingFutureMetasCount = dbHelper.getPendingFutureMetasCount(userId)
+
             if (hasGoalThisWeek) {
                 val uniqueKey = com.colma.colmaApp.features.sesiones.SessionSteps.domain.MultimediaKeyUtils.generateMultimediaUniqueKey(
                     type = com.colma.colmaApp.features.sesiones.SessionSteps.domain.MultimediaContentType.METAS,
@@ -123,14 +127,17 @@ fun MetasContent(
                     multimediaUniqueKey = uniqueKey
                 )
             }
-            if (highestWeek != -1 && currentWeekId < highestWeek) {
-                withContext(Dispatchers.Main) {
+
+            withContext(Dispatchers.Main) {
+                if (highestWeek != -1 && currentWeekId < highestWeek) {
                     isBlockedByFutureGoal = true
                     blockedWeekNumber = highestWeek
-                }
-            } else if (hasCompletedThisWeek) {
-                withContext(Dispatchers.Main) {
+                } else if (hasCompletedThisWeek) {
                     isBlockedByCompletedGoalThisWeek = true
+                } else if (hasGoalThisWeek) {
+                    isBlockedByExistingGoalThisWeek = true
+                } else if (pendingFutureMetasCount > 0) {
+                    isBlockedByActiveGoalInAnotherWeek = true
                 }
             }
         }
@@ -173,6 +180,60 @@ fun MetasContent(
                     Text("Ya completaste una meta para esta semana.")
                     Spacer(Modifier.height(8.dp))
                     Text("Por favor avanza a la siguiente semana para crear una nueva meta.")
+                }
+            },
+            confirmButton = {
+                Button(
+                    onClick = { onFinish() },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = colorResource(R.color.principal),
+                        contentColor = Color.White
+                    )
+                ) {
+                    Text("Volver")
+                }
+            }
+        )
+        return
+    }
+
+    if (isBlockedByExistingGoalThisWeek) {
+        AlertDialog(
+            onDismissRequest = { },
+            containerColor = Color.White,
+            title = { Text("Meta ya seleccionada") },
+            text = {
+                Column {
+                    Text("Ya tienes una meta seleccionada para esta semana.")
+                    Spacer(Modifier.height(8.dp))
+                    Text("Puedes consultar su avance o marcarla como completada desde el menú principal.")
+                }
+            },
+            confirmButton = {
+                Button(
+                    onClick = { onFinish() },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = colorResource(R.color.principal),
+                        contentColor = Color.White
+                    )
+                ) {
+                    Text("Volver")
+                }
+            }
+        )
+        return
+    }
+
+    if (isBlockedByActiveGoalInAnotherWeek) {
+        AlertDialog(
+            onDismissRequest = { },
+            containerColor = Color.White,
+            title = { Text("Meta activa en curso") },
+            text = {
+                Column {
+                    Text("Ya tienes una meta activa pendiente.")
+                    Spacer(Modifier.height(8.dp))
+                    Text("Debes completarla antes de fijar una nueva meta.")
                 }
             },
             confirmButton = {
