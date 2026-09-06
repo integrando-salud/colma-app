@@ -229,7 +229,7 @@ class MenuMainViewModel(private val repository: MenuMainRepository) : ViewModel(
     private fun handleObjectiveNotCompleted(reason: String) {
         if (reason.isEmpty()) {
             _uiState.update { it.copy(showObjectiveDialog = false, showReasonDialog = true) }
-        } else if (reason == "otro") {
+        } else if (reason.equals("otro", ignoreCase = true)) {
             _uiState.update { it.copy(showReasonDialog = false, showOtherReasonDialog = true, selectedReason = "otro") }
         } else {
             val message = reasonMessages[reason] ?: "¡No te rindas! ¡Sigue intentando!"
@@ -244,7 +244,7 @@ class MenuMainViewModel(private val repository: MenuMainRepository) : ViewModel(
 
     private fun confirmOtherReason() {
         viewModelScope.launch {
-            val isOther = _uiState.value.selectedReason == "otro"
+            val isOther = _uiState.value.selectedReason.equals("otro", ignoreCase = true)
             val reason = if (isOther) {
                 _uiState.value.otherReasonInput
             } else {

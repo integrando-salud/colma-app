@@ -30,6 +30,8 @@ import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.filled.Done
+import androidx.compose.material.icons.filled.KeyboardArrowDown
+import com.colma.colmaApp.features.multimedia.ui.scrollbar
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -241,29 +243,65 @@ fun MainAppContainer() {
                 "Tuve un problema de salud / estuve enfermo(a)",
                 "La persona con quien iba a hacer la actividad no pudo acompañarme",
                 "Me olvidé de hacer la actividad.",
-                "otro"
+                "Otro"
             )
             var selectedReason by remember { mutableStateOf(menuUiState.selectedReason) }
+            val scrollState = rememberScrollState()
 
             AlertDialog(
                 onDismissRequest = { menuViewModel.onEvent(MenuMainEvent.ObjectiveDialogDismissed) },
                 properties = DialogProperties(dismissOnBackPress = false, dismissOnClickOutside = false),
                 title = { Text("¿Por qué no completaste el objetivo?") },
                 text = {
-                    Column {
-                        reasons.forEach { reason ->
+                    Column(modifier = Modifier.fillMaxWidth()) {
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .heightIn(max = 280.dp)
+                                .scrollbar(scrollState, width = 4.dp, color = colorResource(R.color.principal).copy(alpha = 0.6f))
+                                .verticalScroll(scrollState)
+                        ) {
+                            reasons.forEach { reason ->
+                                Row(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .clickable { selectedReason = reason }
+                                        .padding(vertical = 4.dp),
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                    RadioButton(
+                                        selected = reason.equals(selectedReason, ignoreCase = true),
+                                        onClick = { selectedReason = reason }
+                                    )
+                                    Text(text = reason, modifier = Modifier.padding(start = 8.dp))
+                                }
+                            }
+                        }
+
+                        if (scrollState.canScrollForward) {
+                            HorizontalDivider(
+                                modifier = Modifier.padding(top = 8.dp),
+                                color = Color.LightGray.copy(alpha = 0.5f)
+                            )
                             Row(
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .clickable { selectedReason = reason }
-                                    .padding(vertical = 4.dp),
+                                    .padding(top = 6.dp),
+                                horizontalArrangement = Arrangement.Center,
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
-                                RadioButton(
-                                    selected = (reason == selectedReason),
-                                    onClick = { selectedReason = reason }
+                                Icon(
+                                    imageVector = Icons.Default.KeyboardArrowDown,
+                                    contentDescription = null,
+                                    tint = colorResource(R.color.principal),
+                                    modifier = Modifier.size(16.dp)
                                 )
-                                Text(text = reason, modifier = Modifier.padding(start = 8.dp))
+                                Spacer(modifier = Modifier.width(4.dp))
+                                Text(
+                                    text = "Desliza para ver más opciones",
+                                    fontSize = 12.sp,
+                                    color = Color.Gray
+                                )
                             }
                         }
                     }
