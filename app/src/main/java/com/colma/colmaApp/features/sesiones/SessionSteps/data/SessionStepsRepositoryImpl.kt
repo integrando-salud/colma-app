@@ -176,6 +176,7 @@ class SessionStepsRepositoryImpl(
                         contentAssetId = contentAssetId,
                         questions = multimediaContent.questions,
                         metasId = multimediaContent.metasId,
+                        metasOptions = multimediaContent.metasOptions,
                         descriptionAudios = staticDescriptionAudioRes,
                         isCompleted = isCompleted,
                         localFilePath = localFilePath,

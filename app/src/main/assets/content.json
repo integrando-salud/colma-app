@@ -124,7 +124,19 @@
                     "title": "Metas",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "hta"
+                    "metasId": "hta",
+                    "metasOptions": [
+                      "Escuchar una de mis canciones favoritas",
+                      "Leer 3 páginas de un libro, revista o diario",
+                      "Ver un capítulo de mi serie favorita o una película",
+                      "Dedicar 15 minutos a un pasatiempo (ejemplo: tejer, pintar, jardinería)",
+                      "Acariciar a mi mascota por 1 minuto",
+                      "Tomarme un breve descanso para tomar un café o infusión",
+                      "Jugar cartas, dominó o algún otro juego de mesa",
+                      "Imaginarme un lugar tranquilo, hermoso o relajante (ejemplo: playa, campo) por 2 minutos",
+                      "Escribir en un papel 1 cosa positiva del día",
+                      "Salir a pasear a algún lugar (ejemplo: un parque o una plaza)"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -291,7 +303,19 @@
                     "title": "Metas",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "hta"
+                    "metasId": "hta",
+                    "metasOptions": [
+                      "Lavar los platos inmediatamente después de comer",
+                      "Sacar un turno médico o hacer un trámite pendiente",
+                      "Reparar algo pequeño en casa (ejemplo: cambiar una lamparita, coser un botón)",
+                      "Sacar a pasear a mi mascota",
+                      "Borrar fotos o mensajes antiguos del celular para liberar espacio",
+                      "Dedicar 20 minutos a jardinería o cuidado de plantas",
+                      "Organizar los gastos de la semana",
+                      "Ordenar un mueble, un cajón o una repisa",
+                      "Limpiar una parte de la casa (ejemplo: la heladera)",
+                      "Lavar, doblar o planchar ropa durante 30 minutos"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -437,7 +461,19 @@
                     "title": "Metas",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "hta"
+                    "metasId": "hta",
+                    "metasOptions": [
+                      "Lavar los platos inmediatamente después de comer",
+                      "Sacar un turno médico o hacer un trámite pendiente",
+                      "Reparar algo pequeño en casa (ejemplo: cambiar una lamparita, coser un botón)",
+                      "Sacar a pasear a mi mascota",
+                      "Borrar fotos o mensajes antiguos del celular para liberar espacio",
+                      "Dedicar 20 minutos a jardinería o cuidado de plantas",
+                      "Organizar los gastos de la semana",
+                      "Ordenar un mueble, un cajón o una repisa",
+                      "Limpiar una parte de la casa (ejemplo: la heladera)",
+                      "Lavar, doblar o planchar ropa durante 30 minutos"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -559,7 +595,19 @@
                     "title": "Metas (Hipertensión)",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "hta"
+                    "metasId": "hta",
+                    "metasOptions": [
+                      "Caminar 15 minutos a paso rápido",
+                      "Hacer marcha en el lugar (levantar rodillas estando de pie) por 5 minutos",
+                      "Bailar 1 canción en casa",
+                      "Hacer 10 minutos de estiramientos suaves",
+                      "Bajar una parada de colectivo antes y hacer el resto del camino a pie",
+                      "Hacer una rutina de ejercicios sentado en silla",
+                      "Ir caminando a hacer compras en vez de usar el auto o colectivo",
+                      "Dar una vuelta a la manzana después de comer",
+                      "Hacer ejercicios de equilibrio apoyándome en una pared o mesa firme",
+                      "Practicar un deporte recreativo o clase de baile"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -674,7 +722,19 @@
                     "title": "Metas",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "hta"
+                    "metasId": "hta",
+                    "metasOptions": [
+                      "Caminar 15 minutos a paso rápido",
+                      "Hacer marcha en el lugar (levantar rodillas estando de pie) por 5 minutos",
+                      "Bailar 1 canción en casa",
+                      "Hacer 10 minutos de estiramientos suaves",
+                      "Bajar una parada de colectivo antes y hacer el resto del camino a pie",
+                      "Hacer una rutina de ejercicios sentado en silla",
+                      "Ir caminando a hacer compras en vez de usar el auto o colectivo",
+                      "Dar una vuelta a la manzana después de comer",
+                      "Hacer ejercicios de equilibrio apoyándome en una pared o mesa firme",
+                      "Practicar un deporte recreativo o clase de baile"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -796,7 +856,19 @@
                     "title": "Metas",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "hta"
+                    "metasId": "hta",
+                    "metasOptions": [
+                      "Caminar 15 minutos a paso rápido",
+                      "Hacer marcha en el lugar (levantar rodillas estando de pie) por 5 minutos",
+                      "Bailar 1 canción en casa",
+                      "Hacer 10 minutos de estiramientos suaves",
+                      "Bajar una parada de colectivo antes y hacer el resto del camino a pie",
+                      "Hacer una rutina de ejercicios sentado en silla",
+                      "Ir caminando a hacer compras en vez de usar el auto o colectivo",
+                      "Dar una vuelta a la manzana después de comer",
+                      "Hacer ejercicios de equilibrio apoyándome en una pared o mesa firme",
+                      "Practicar un deporte recreativo o clase de baile"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -911,7 +983,19 @@
                     "title": "Metas",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "hta"
+                    "metasId": "hta",
+                    "metasOptions": [
+                      "Beber al menos 3 vasos de agua",
+                      "Comer una fruta como postre",
+                      "Cocinar sin añadir sal, usando especias o limón para condimentar",
+                      "Beber agua en lugar de gaseosas o jugos azucarados en el almuerzo",
+                      "Comprar verduras frescas para el día o la semana",
+                      "Preparar una ensalada con verduras de diferentes colores para acompañar una comida",
+                      "Leer las etiquetas de los alimentos y evitar los que tienen exceso de sodio o azúcar",
+                      "Comer una fruta en lugar de galletitas",
+                      "Retirar el salero de la mesa antes de sentarme a comer",
+                      "Preparar una botella de agua para tener a mano durante el día"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -1040,7 +1124,19 @@
                     "title": "Metas",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "hta"
+                    "metasId": "hta",
+                    "metasOptions": [
+                      "Beber al menos 3 vasos de agua",
+                      "Comer una fruta como postre",
+                      "Cocinar sin añadir sal, usando especias o limón para condimentar",
+                      "Beber agua en lugar de gaseosas o jugos azucarados en el almuerzo",
+                      "Comprar verduras frescas para el día o la semana",
+                      "Preparar una ensalada con verduras de diferentes colores para acompañar una comida",
+                      "Leer las etiquetas de los alimentos y evitar los que tienen exceso de sodio o azúcar",
+                      "Comer una fruta en lugar de galletitas",
+                      "Retirar el salero de la mesa antes de sentarme a comer",
+                      "Preparar una botella de agua para tener a mano durante el día"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -1160,7 +1256,19 @@
                     "title": "Metas",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "hta"
+                    "metasId": "hta",
+                    "metasOptions": [
+                      "Beber al menos 3 vasos de agua",
+                      "Comer una fruta como postre",
+                      "Cocinar sin añadir sal, usando especias o limón para condimentar",
+                      "Beber agua en lugar de gaseosas o jugos azucarados en el almuerzo",
+                      "Comprar verduras frescas para el día o la semana",
+                      "Preparar una ensalada con verduras de diferentes colores para acompañar una comida",
+                      "Leer las etiquetas de los alimentos y evitar los que tienen exceso de sodio o azúcar",
+                      "Comer una fruta en lugar de galletitas",
+                      "Retirar el salero de la mesa antes de sentarme a comer",
+                      "Preparar una botella de agua para tener a mano durante el día"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -1266,7 +1374,19 @@
                     "title": "Metas",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "hta"
+                    "metasId": "hta",
+                    "metasOptions": [
+                      "Tomar todos mis medicamentos del día como me los indicó el médico",
+                      "Organizar el pastillero para toda la semana",
+                      "Poner una alarma en el celular para tomar mi medicación",
+                      "Anotar dudas o síntomas en un papel para llevar a mi próxima consulta médica",
+                      "Sacar turno para mi próxima consulta médica",
+                      "Revisar cuántos medicamentos me quedan y anotar la fecha para ir a buscar más",
+                      "Aplicar crema humectante en los pies",
+                      "Medir mi glucosa y anotar el resultado",
+                      "Revisar mis pies con un espejo para ver que no estén lastimados",
+                      "Medir mi presión arterial y anotar el resultado"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -1388,7 +1508,19 @@
                     "title": "Metas",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "hta"
+                    "metasId": "hta",
+                    "metasOptions": [
+                      "Tomar todos mis medicamentos del día como me los indicó el médico",
+                      "Organizar el pastillero para toda la semana",
+                      "Poner una alarma en el celular para tomar mi medicación",
+                      "Anotar dudas o síntomas en un papel para llevar a mi próxima consulta médica",
+                      "Sacar turno para mi próxima consulta médica",
+                      "Revisar cuántos medicamentos me quedan y anotar la fecha para ir a buscar más",
+                      "Aplicar crema humectante en los pies",
+                      "Medir mi glucosa y anotar el resultado",
+                      "Revisar mis pies con un espejo para ver que no estén lastimados",
+                      "Medir mi presión arterial y anotar el resultado"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -1545,7 +1677,19 @@
                     "title": "Metas",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "hta"
+                    "metasId": "hta",
+                    "metasOptions": [
+                      "Cenar al menos 2 horas antes de irme a dormir",
+                      "Dejar el celular lejos de la cama o en modo \"No Molestar\"",
+                      "Acostarme de noche a la misma hora durante 3 días seguidos",
+                      "Crear una rutina de relajación antes de dormir (ejemplo: leer, música suave)",
+                      "No tomar café o té 2 horas antes de irme a dormir",
+                      "Apagar todas las luces antes de irme a dormir",
+                      "Hacer ejercicio suave o estiramientos antes de dormir",
+                      "Levantarme a la misma hora por la mañana durante 3 días seguidos",
+                      "Darme un baño o ducha tibia antes de acostarme",
+                      "No hacer siestas de más de 20 minutos"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -1644,7 +1788,19 @@
                     "title": "Metas (Hipertensión)",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "hta"
+                    "metasId": "hta",
+                    "metasOptions": [
+                      "Contarle a un amigo o familiar algo bueno que me pasó esta semana",
+                      "Invitar a un amigo o familiar a tomar un café o té",
+                      "Pedirle a un amigo o familiar que me acompañe a caminar",
+                      "Enviar un mensaje de texto cariñoso a alguien que quiero",
+                      "Visitar a un familiar o amigo",
+                      "Participar en una actividad comunitaria o religiosa",
+                      "Compartir una comida (almuerzo/cena) con alguien, sin prender la televisión o usar el celular",
+                      "Pedir ayuda a un amigo o familiar para una tarea sencilla (ejemplo: arreglar algo de la casa)",
+                      "Jugar un juego de mesa o cartas con la familia o amigos",
+                      "Agradecer a un familiar o amigo que me ha ayudado con algo"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -1824,7 +1980,19 @@
                     "title": "Metas",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "hta"
+                    "metasId": "hta",
+                    "metasOptions": [
+                      "Contarle a un amigo o familiar algo bueno que me pasó esta semana",
+                      "Invitar a un amigo o familiar a tomar un café o té",
+                      "Pedirle a un amigo o familiar que me acompañe a caminar",
+                      "Enviar un mensaje de texto cariñoso a alguien que quiero",
+                      "Visitar a un familiar o amigo",
+                      "Participar en una actividad comunitaria o religiosa",
+                      "Compartir una comida (almuerzo/cena) con alguien, sin prender la televisión o usar el celular",
+                      "Pedir ayuda a un amigo o familiar para una tarea sencilla (ejemplo: arreglar algo de la casa)",
+                      "Jugar un juego de mesa o cartas con la familia o amigos",
+                      "Agradecer a un familiar o amigo que me ha ayudado con algo"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -1930,7 +2098,19 @@
                     "title": "Metas",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "hta"
+                    "metasId": "hta",
+                    "metasOptions": [
+                      "Escuchar una de mis canciones favoritas",
+                      "Leer 3 páginas de un libro, revista o diario",
+                      "Ver un capítulo de mi serie favorita o una película",
+                      "Dedicar 15 minutos a un pasatiempo (ejemplo: tejer, pintar, jardinería)",
+                      "Acariciar a mi mascota por 1 minuto",
+                      "Tomarme un breve descanso para tomar un café o infusión",
+                      "Jugar cartas, dominó o algún otro juego de mesa",
+                      "Imaginarme un lugar tranquilo, hermoso o relajante (ejemplo: playa, campo) por 2 minutos",
+                      "Escribir en un papel 1 cosa positiva del día",
+                      "Salir a pasear a algún lugar (ejemplo: un parque o una plaza)"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -2053,7 +2233,19 @@
                     "title": "Metas (Hipertensión)",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "hta"
+                    "metasId": "hta",
+                    "metasOptions": [
+                      "Escuchar una de mis canciones favoritas",
+                      "Leer 3 páginas de un libro, revista o diario",
+                      "Ver un capítulo de mi serie favorita o una película",
+                      "Dedicar 15 minutos a un pasatiempo (ejemplo: tejer, pintar, jardinería)",
+                      "Acariciar a mi mascota por 1 minuto",
+                      "Tomarme un breve descanso para tomar un café o infusión",
+                      "Jugar cartas, dominó o algún otro juego de mesa",
+                      "Imaginarme un lugar tranquilo, hermoso o relajante (ejemplo: playa, campo) por 2 minutos",
+                      "Escribir en un papel 1 cosa positiva del día",
+                      "Salir a pasear a algún lugar (ejemplo: un parque o una plaza)"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -2191,7 +2383,19 @@
                     "title": "Metas",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "diabetes"
+                    "metasId": "diabetes",
+                    "metasOptions": [
+                      "Escuchar una de mis canciones favoritas",
+                      "Leer 3 páginas de un libro, revista o diario",
+                      "Ver un capítulo de mi serie favorita o una película",
+                      "Dedicar 15 minutos a un pasatiempo (ejemplo: tejer, pintar, jardinería)",
+                      "Acariciar a mi mascota por 1 minuto",
+                      "Tomarme un breve descanso para tomar un café o infusión",
+                      "Jugar cartas, dominó o algún otro juego de mesa",
+                      "Imaginarme un lugar tranquilo, hermoso o relajante (ejemplo: playa, campo) por 2 minutos",
+                      "Escribir en un papel 1 cosa positiva del día",
+                      "Salir a pasear a algún lugar (ejemplo: un parque o una plaza)"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -2358,7 +2562,19 @@
                     "title": "Metas",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "diabetes"
+                    "metasId": "diabetes",
+                    "metasOptions": [
+                      "Lavar los platos inmediatamente después de comer",
+                      "Sacar un turno médico o hacer un trámite pendiente",
+                      "Reparar algo pequeño en casa (ejemplo: cambiar una lamparita, coser un botón)",
+                      "Sacar a pasear a mi mascota",
+                      "Borrar fotos o mensajes antiguos del celular para liberar espacio",
+                      "Dedicar 20 minutos a jardinería o cuidado de plantas",
+                      "Organizar los gastos de la semana",
+                      "Ordenar un mueble, un cajón o una repisa",
+                      "Limpiar una parte de la casa (ejemplo: la heladera)",
+                      "Lavar, doblar o planchar ropa durante 30 minutos"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -2504,7 +2720,19 @@
                     "title": "Metas",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "diabetes"
+                    "metasId": "diabetes",
+                    "metasOptions": [
+                      "Lavar los platos inmediatamente después de comer",
+                      "Sacar un turno médico o hacer un trámite pendiente",
+                      "Reparar algo pequeño en casa (ejemplo: cambiar una lamparita, coser un botón)",
+                      "Sacar a pasear a mi mascota",
+                      "Borrar fotos o mensajes antiguos del celular para liberar espacio",
+                      "Dedicar 20 minutos a jardinería o cuidado de plantas",
+                      "Organizar los gastos de la semana",
+                      "Ordenar un mueble, un cajón o una repisa",
+                      "Limpiar una parte de la casa (ejemplo: la heladera)",
+                      "Lavar, doblar o planchar ropa durante 30 minutos"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -2633,7 +2861,19 @@
                     "title": "Metas (Diabetes)",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "diabetes"
+                    "metasId": "diabetes",
+                    "metasOptions": [
+                      "Caminar 15 minutos a paso rápido",
+                      "Hacer marcha en el lugar (levantar rodillas estando de pie) por 5 minutos",
+                      "Bailar 1 canción en casa",
+                      "Hacer 10 minutos de estiramientos suaves",
+                      "Bajar una parada de colectivo antes y hacer el resto del camino a pie",
+                      "Hacer una rutina de ejercicios sentado en silla",
+                      "Ir caminando a hacer compras en vez de usar el auto o colectivo",
+                      "Dar una vuelta a la manzana después de comer",
+                      "Hacer ejercicios de equilibrio apoyándome en una pared o mesa firme",
+                      "Practicar un deporte recreativo o clase de baile"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -2748,7 +2988,19 @@
                     "title": "Metas",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "diabetes"
+                    "metasId": "diabetes",
+                    "metasOptions": [
+                      "Caminar 15 minutos a paso rápido",
+                      "Hacer marcha en el lugar (levantar rodillas estando de pie) por 5 minutos",
+                      "Bailar 1 canción en casa",
+                      "Hacer 10 minutos de estiramientos suaves",
+                      "Bajar una parada de colectivo antes y hacer el resto del camino a pie",
+                      "Hacer una rutina de ejercicios sentado en silla",
+                      "Ir caminando a hacer compras en vez de usar el auto o colectivo",
+                      "Dar una vuelta a la manzana después de comer",
+                      "Hacer ejercicios de equilibrio apoyándome en una pared o mesa firme",
+                      "Practicar un deporte recreativo o clase de baile"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -2870,7 +3122,19 @@
                     "title": "Metas",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "diabetes"
+                    "metasId": "diabetes",
+                    "metasOptions": [
+                      "Caminar 15 minutos a paso rápido",
+                      "Hacer marcha en el lugar (levantar rodillas estando de pie) por 5 minutos",
+                      "Bailar 1 canción en casa",
+                      "Hacer 10 minutos de estiramientos suaves",
+                      "Bajar una parada de colectivo antes y hacer el resto del camino a pie",
+                      "Hacer una rutina de ejercicios sentado en silla",
+                      "Ir caminando a hacer compras en vez de usar el auto o colectivo",
+                      "Dar una vuelta a la manzana después de comer",
+                      "Hacer ejercicios de equilibrio apoyándome en una pared o mesa firme",
+                      "Practicar un deporte recreativo o clase de baile"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -2985,7 +3249,19 @@
                     "title": "Metas",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "diabetes"
+                    "metasId": "diabetes",
+                    "metasOptions": [
+                      "Beber al menos 3 vasos de agua",
+                      "Comer una fruta como postre",
+                      "Cocinar sin añadir sal, usando especias o limón para condimentar",
+                      "Beber agua en lugar de gaseosas o jugos azucarados en el almuerzo",
+                      "Comprar verduras frescas para el día o la semana",
+                      "Preparar una ensalada con verduras de diferentes colores para acompañar una comida",
+                      "Leer las etiquetas de los alimentos y evitar los que tienen exceso de sodio o azúcar",
+                      "Comer una fruta en lugar de galletitas",
+                      "Retirar el salero de la mesa antes de sentarme a comer",
+                      "Preparar una botella de agua para tener a mano durante el día"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -3114,7 +3390,19 @@
                     "title": "Metas",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "diabetes"
+                    "metasId": "diabetes",
+                    "metasOptions": [
+                      "Beber al menos 3 vasos de agua",
+                      "Comer una fruta como postre",
+                      "Cocinar sin añadir sal, usando especias o limón para condimentar",
+                      "Beber agua en lugar de gaseosas o jugos azucarados en el almuerzo",
+                      "Comprar verduras frescas para el día o la semana",
+                      "Preparar una ensalada con verduras de diferentes colores para acompañar una comida",
+                      "Leer las etiquetas de los alimentos y evitar los que tienen exceso de sodio o azúcar",
+                      "Comer una fruta en lugar de galletitas",
+                      "Retirar el salero de la mesa antes de sentarme a comer",
+                      "Preparar una botella de agua para tener a mano durante el día"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -3234,7 +3522,19 @@
                     "title": "Metas",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "diabetes"
+                    "metasId": "diabetes",
+                    "metasOptions": [
+                      "Beber al menos 3 vasos de agua",
+                      "Comer una fruta como postre",
+                      "Cocinar sin añadir sal, usando especias o limón para condimentar",
+                      "Beber agua en lugar de gaseosas o jugos azucarados en el almuerzo",
+                      "Comprar verduras frescas para el día o la semana",
+                      "Preparar una ensalada con verduras de diferentes colores para acompañar una comida",
+                      "Leer las etiquetas de los alimentos y evitar los que tienen exceso de sodio o azúcar",
+                      "Comer una fruta en lugar de galletitas",
+                      "Retirar el salero de la mesa antes de sentarme a comer",
+                      "Preparar una botella de agua para tener a mano durante el día"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -3347,7 +3647,19 @@
                     "title": "Metas",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "diabetes"
+                    "metasId": "diabetes",
+                    "metasOptions": [
+                      "Tomar todos mis medicamentos del día como me los indicó el médico",
+                      "Organizar el pastillero para toda la semana",
+                      "Poner una alarma en el celular para tomar mi medicación",
+                      "Anotar dudas o síntomas en un papel para llevar a mi próxima consulta médica",
+                      "Sacar turno para mi próxima consulta médica",
+                      "Revisar cuántos medicamentos me quedan y anotar la fecha para ir a buscar más",
+                      "Aplicar crema humectante en los pies",
+                      "Medir mi glucosa y anotar el resultado",
+                      "Revisar mis pies con un espejo para ver que no estén lastimados",
+                      "Medir mi presión arterial y anotar el resultado"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -3469,7 +3781,19 @@
                     "title": "Metas",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "diabetes"
+                    "metasId": "diabetes",
+                    "metasOptions": [
+                      "Tomar todos mis medicamentos del día como me los indicó el médico",
+                      "Organizar el pastillero para toda la semana",
+                      "Poner una alarma en el celular para tomar mi medicación",
+                      "Anotar dudas o síntomas en un papel para llevar a mi próxima consulta médica",
+                      "Sacar turno para mi próxima consulta médica",
+                      "Revisar cuántos medicamentos me quedan y anotar la fecha para ir a buscar más",
+                      "Aplicar crema humectante en los pies",
+                      "Medir mi glucosa y anotar el resultado",
+                      "Revisar mis pies con un espejo para ver que no estén lastimados",
+                      "Medir mi presión arterial y anotar el resultado"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -3626,7 +3950,19 @@
                     "title": "Metas",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "diabetes"
+                    "metasId": "diabetes",
+                    "metasOptions": [
+                      "Cenar al menos 2 horas antes de irme a dormir",
+                      "Dejar el celular lejos de la cama o en modo \"No Molestar\"",
+                      "Acostarme de noche a la misma hora durante 3 días seguidos",
+                      "Crear una rutina de relajación antes de dormir (ejemplo: leer, música suave)",
+                      "No tomar café o té 2 horas antes de irme a dormir",
+                      "Apagar todas las luces antes de irme a dormir",
+                      "Hacer ejercicio suave o estiramientos antes de dormir",
+                      "Levantarme a la misma hora por la mañana durante 3 días seguidos",
+                      "Darme un baño o ducha tibia antes de acostarme",
+                      "No hacer siestas de más de 20 minutos"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -3725,7 +4061,19 @@
                     "title": "Metas (Diabetes)",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "diabetes"
+                    "metasId": "diabetes",
+                    "metasOptions": [
+                      "Contarle a un amigo o familiar algo bueno que me pasó esta semana",
+                      "Invitar a un amigo o familiar a tomar un café o té",
+                      "Pedirle a un amigo o familiar que me acompañe a caminar",
+                      "Enviar un mensaje de texto cariñoso a alguien que quiero",
+                      "Visitar a un familiar o amigo",
+                      "Participar en una actividad comunitaria o religiosa",
+                      "Compartir una comida (almuerzo/cena) con alguien, sin prender la televisión o usar el celular",
+                      "Pedir ayuda a un amigo o familiar para una tarea sencilla (ejemplo: arreglar algo de la casa)",
+                      "Jugar un juego de mesa o cartas con la familia o amigos",
+                      "Agradecer a un familiar o amigo que me ha ayudado con algo"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -3905,7 +4253,19 @@
                     "title": "Metas",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "diabetes"
+                    "metasId": "diabetes",
+                    "metasOptions": [
+                      "Contarle a un amigo o familiar algo bueno que me pasó esta semana",
+                      "Invitar a un amigo o familiar a tomar un café o té",
+                      "Pedirle a un amigo o familiar que me acompañe a caminar",
+                      "Enviar un mensaje de texto cariñoso a alguien que quiero",
+                      "Visitar a un familiar o amigo",
+                      "Participar en una actividad comunitaria o religiosa",
+                      "Compartir una comida (almuerzo/cena) con alguien, sin prender la televisión o usar el celular",
+                      "Pedir ayuda a un amigo o familiar para una tarea sencilla (ejemplo: arreglar algo de la casa)",
+                      "Jugar un juego de mesa o cartas con la familia o amigos",
+                      "Agradecer a un familiar o amigo que me ha ayudado con algo"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -4011,7 +4371,19 @@
                     "title": "Metas",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "diabetes"
+                    "metasId": "diabetes",
+                    "metasOptions": [
+                      "Escuchar una de mis canciones favoritas",
+                      "Leer 3 páginas de un libro, revista o diario",
+                      "Ver un capítulo de mi serie favorita o una película",
+                      "Dedicar 15 minutos a un pasatiempo (ejemplo: tejer, pintar, jardinería)",
+                      "Acariciar a mi mascota por 1 minuto",
+                      "Tomarme un breve descanso para tomar un café o infusión",
+                      "Jugar cartas, dominó o algún otro juego de mesa",
+                      "Imaginarme un lugar tranquilo, hermoso o relajante (ejemplo: playa, campo) por 2 minutos",
+                      "Escribir en un papel 1 cosa positiva del día",
+                      "Salir a pasear a algún lugar (ejemplo: un parque o una plaza)"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -4134,7 +4506,19 @@
                     "title": "Metas (Diabetes)",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "diabetes"
+                    "metasId": "diabetes",
+                    "metasOptions": [
+                      "Escuchar una de mis canciones favoritas",
+                      "Leer 3 páginas de un libro, revista o diario",
+                      "Ver un capítulo de mi serie favorita o una película",
+                      "Dedicar 15 minutos a un pasatiempo (ejemplo: tejer, pintar, jardinería)",
+                      "Acariciar a mi mascota por 1 minuto",
+                      "Tomarme un breve descanso para tomar un café o infusión",
+                      "Jugar cartas, dominó o algún otro juego de mesa",
+                      "Imaginarme un lugar tranquilo, hermoso o relajante (ejemplo: playa, campo) por 2 minutos",
+                      "Escribir en un papel 1 cosa positiva del día",
+                      "Salir a pasear a algún lugar (ejemplo: un parque o una plaza)"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -4272,14 +4656,38 @@
                     "title": "Metas (Diabetes)",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "diabetes"
+                    "metasId": "diabetes",
+                    "metasOptions": [
+                      "Escuchar una de mis canciones favoritas",
+                      "Leer 3 páginas de un libro, revista o diario",
+                      "Ver un capítulo de mi serie favorita o una película",
+                      "Dedicar 15 minutos a un pasatiempo (ejemplo: tejer, pintar, jardinería)",
+                      "Acariciar a mi mascota por 1 minuto",
+                      "Tomarme un breve descanso para tomar un café o infusión",
+                      "Jugar cartas, dominó o algún otro juego de mesa",
+                      "Imaginarme un lugar tranquilo, hermoso o relajante (ejemplo: playa, campo) por 2 minutos",
+                      "Escribir en un papel 1 cosa positiva del día",
+                      "Salir a pasear a algún lugar (ejemplo: un parque o una plaza)"
+                    ]
                   },
                   {
                     "type": "METAS",
                     "title": "Metas (Hipertensión)",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "hta"
+                    "metasId": "hta",
+                    "metasOptions": [
+                      "Escuchar una de mis canciones favoritas",
+                      "Leer 3 páginas de un libro, revista o diario",
+                      "Ver un capítulo de mi serie favorita o una película",
+                      "Dedicar 15 minutos a un pasatiempo (ejemplo: tejer, pintar, jardinería)",
+                      "Acariciar a mi mascota por 1 minuto",
+                      "Tomarme un breve descanso para tomar un café o infusión",
+                      "Jugar cartas, dominó o algún otro juego de mesa",
+                      "Imaginarme un lugar tranquilo, hermoso o relajante (ejemplo: playa, campo) por 2 minutos",
+                      "Escribir en un papel 1 cosa positiva del día",
+                      "Salir a pasear a algún lugar (ejemplo: un parque o una plaza)"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -4446,14 +4854,38 @@
                     "title": "Metas (Diabetes)",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "diabetes"
+                    "metasId": "diabetes",
+                    "metasOptions": [
+                      "Lavar los platos inmediatamente después de comer",
+                      "Sacar un turno médico o hacer un trámite pendiente",
+                      "Reparar algo pequeño en casa (ejemplo: cambiar una lamparita, coser un botón)",
+                      "Sacar a pasear a mi mascota",
+                      "Borrar fotos o mensajes antiguos del celular para liberar espacio",
+                      "Dedicar 20 minutos a jardinería o cuidado de plantas",
+                      "Organizar los gastos de la semana",
+                      "Ordenar un mueble, un cajón o una repisa",
+                      "Limpiar una parte de la casa (ejemplo: la heladera)",
+                      "Lavar, doblar o planchar ropa durante 30 minutos"
+                    ]
                   },
                   {
                     "type": "METAS",
                     "title": "Metas (Hipertensión)",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "hta"
+                    "metasId": "hta",
+                    "metasOptions": [
+                      "Lavar los platos inmediatamente después de comer",
+                      "Sacar un turno médico o hacer un trámite pendiente",
+                      "Reparar algo pequeño en casa (ejemplo: cambiar una lamparita, coser un botón)",
+                      "Sacar a pasear a mi mascota",
+                      "Borrar fotos o mensajes antiguos del celular para liberar espacio",
+                      "Dedicar 20 minutos a jardinería o cuidado de plantas",
+                      "Organizar los gastos de la semana",
+                      "Ordenar un mueble, un cajón o una repisa",
+                      "Limpiar una parte de la casa (ejemplo: la heladera)",
+                      "Lavar, doblar o planchar ropa durante 30 minutos"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -4599,14 +5031,38 @@
                     "title": "Metas (Diabetes)",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "diabetes"
+                    "metasId": "diabetes",
+                    "metasOptions": [
+                      "Lavar los platos inmediatamente después de comer",
+                      "Sacar un turno médico o hacer un trámite pendiente",
+                      "Reparar algo pequeño en casa (ejemplo: cambiar una lamparita, coser un botón)",
+                      "Sacar a pasear a mi mascota",
+                      "Borrar fotos o mensajes antiguos del celular para liberar espacio",
+                      "Dedicar 20 minutos a jardinería o cuidado de plantas",
+                      "Organizar los gastos de la semana",
+                      "Ordenar un mueble, un cajón o una repisa",
+                      "Limpiar una parte de la casa (ejemplo: la heladera)",
+                      "Lavar, doblar o planchar ropa durante 30 minutos"
+                    ]
                   },
                   {
                     "type": "METAS",
                     "title": "Metas (Hipertensión)",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "hta"
+                    "metasId": "hta",
+                    "metasOptions": [
+                      "Lavar los platos inmediatamente después de comer",
+                      "Sacar un turno médico o hacer un trámite pendiente",
+                      "Reparar algo pequeño en casa (ejemplo: cambiar una lamparita, coser un botón)",
+                      "Sacar a pasear a mi mascota",
+                      "Borrar fotos o mensajes antiguos del celular para liberar espacio",
+                      "Dedicar 20 minutos a jardinería o cuidado de plantas",
+                      "Organizar los gastos de la semana",
+                      "Ordenar un mueble, un cajón o una repisa",
+                      "Limpiar una parte de la casa (ejemplo: la heladera)",
+                      "Lavar, doblar o planchar ropa durante 30 minutos"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -4772,14 +5228,38 @@
                     "title": "Metas (Diabetes)",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "diabetes"
+                    "metasId": "diabetes",
+                    "metasOptions": [
+                      "Caminar 15 minutos a paso rápido",
+                      "Hacer marcha en el lugar (levantar rodillas estando de pie) por 5 minutos",
+                      "Bailar 1 canción en casa",
+                      "Hacer 10 minutos de estiramientos suaves",
+                      "Bajar una parada de colectivo antes y hacer el resto del camino a pie",
+                      "Hacer una rutina de ejercicios sentado en silla",
+                      "Ir caminando a hacer compras en vez de usar el auto o colectivo",
+                      "Dar una vuelta a la manzana después de comer",
+                      "Hacer ejercicios de equilibrio apoyándome en una pared o mesa firme",
+                      "Practicar un deporte recreativo o clase de baile"
+                    ]
                   },
                   {
                     "type": "METAS",
                     "title": "Metas (Hipertensión)",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "hta"
+                    "metasId": "hta",
+                    "metasOptions": [
+                      "Caminar 15 minutos a paso rápido",
+                      "Hacer marcha en el lugar (levantar rodillas estando de pie) por 5 minutos",
+                      "Bailar 1 canción en casa",
+                      "Hacer 10 minutos de estiramientos suaves",
+                      "Bajar una parada de colectivo antes y hacer el resto del camino a pie",
+                      "Hacer una rutina de ejercicios sentado en silla",
+                      "Ir caminando a hacer compras en vez de usar el auto o colectivo",
+                      "Dar una vuelta a la manzana después de comer",
+                      "Hacer ejercicios de equilibrio apoyándome en una pared o mesa firme",
+                      "Practicar un deporte recreativo o clase de baile"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -4894,14 +5374,38 @@
                     "title": "Metas (Diabetes)",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "diabetes"
+                    "metasId": "diabetes",
+                    "metasOptions": [
+                      "Caminar 15 minutos a paso rápido",
+                      "Hacer marcha en el lugar (levantar rodillas estando de pie) por 5 minutos",
+                      "Bailar 1 canción en casa",
+                      "Hacer 10 minutos de estiramientos suaves",
+                      "Bajar una parada de colectivo antes y hacer el resto del camino a pie",
+                      "Hacer una rutina de ejercicios sentado en silla",
+                      "Ir caminando a hacer compras en vez de usar el auto o colectivo",
+                      "Dar una vuelta a la manzana después de comer",
+                      "Hacer ejercicios de equilibrio apoyándome en una pared o mesa firme",
+                      "Practicar un deporte recreativo o clase de baile"
+                    ]
                   },
                   {
                     "type": "METAS",
                     "title": "Metas (Hipertensión)",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "hta"
+                    "metasId": "hta",
+                    "metasOptions": [
+                      "Caminar 15 minutos a paso rápido",
+                      "Hacer marcha en el lugar (levantar rodillas estando de pie) por 5 minutos",
+                      "Bailar 1 canción en casa",
+                      "Hacer 10 minutos de estiramientos suaves",
+                      "Bajar una parada de colectivo antes y hacer el resto del camino a pie",
+                      "Hacer una rutina de ejercicios sentado en silla",
+                      "Ir caminando a hacer compras en vez de usar el auto o colectivo",
+                      "Dar una vuelta a la manzana después de comer",
+                      "Hacer ejercicios de equilibrio apoyándome en una pared o mesa firme",
+                      "Practicar un deporte recreativo o clase de baile"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -5023,14 +5527,38 @@
                     "title": "Metas (Diabetes)",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "diabetes"
+                    "metasId": "diabetes",
+                    "metasOptions": [
+                      "Caminar 15 minutos a paso rápido",
+                      "Hacer marcha en el lugar (levantar rodillas estando de pie) por 5 minutos",
+                      "Bailar 1 canción en casa",
+                      "Hacer 10 minutos de estiramientos suaves",
+                      "Bajar una parada de colectivo antes y hacer el resto del camino a pie",
+                      "Hacer una rutina de ejercicios sentado en silla",
+                      "Ir caminando a hacer compras en vez de usar el auto o colectivo",
+                      "Dar una vuelta a la manzana después de comer",
+                      "Hacer ejercicios de equilibrio apoyándome en una pared o mesa firme",
+                      "Practicar un deporte recreativo o clase de baile"
+                    ]
                   },
                   {
                     "type": "METAS",
                     "title": "Metas (Hipertensión)",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "hta"
+                    "metasId": "hta",
+                    "metasOptions": [
+                      "Caminar 15 minutos a paso rápido",
+                      "Hacer marcha en el lugar (levantar rodillas estando de pie) por 5 minutos",
+                      "Bailar 1 canción en casa",
+                      "Hacer 10 minutos de estiramientos suaves",
+                      "Bajar una parada de colectivo antes y hacer el resto del camino a pie",
+                      "Hacer una rutina de ejercicios sentado en silla",
+                      "Ir caminando a hacer compras en vez de usar el auto o colectivo",
+                      "Dar una vuelta a la manzana después de comer",
+                      "Hacer ejercicios de equilibrio apoyándome en una pared o mesa firme",
+                      "Practicar un deporte recreativo o clase de baile"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -5152,14 +5680,38 @@
                     "title": "Metas (Diabetes)",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "diabetes"
+                    "metasId": "diabetes",
+                    "metasOptions": [
+                      "Beber al menos 3 vasos de agua",
+                      "Comer una fruta como postre",
+                      "Cocinar sin añadir sal, usando especias o limón para condimentar",
+                      "Beber agua en lugar de gaseosas o jugos azucarados en el almuerzo",
+                      "Comprar verduras frescas para el día o la semana",
+                      "Preparar una ensalada con verduras de diferentes colores para acompañar una comida",
+                      "Leer las etiquetas de los alimentos y evitar los que tienen exceso de sodio o azúcar",
+                      "Comer una fruta en lugar de galletitas",
+                      "Retirar el salero de la mesa antes de sentarme a comer",
+                      "Preparar una botella de agua para tener a mano durante el día"
+                    ]
                   },
                   {
                     "type": "METAS",
                     "title": "Metas (Hipertensión)",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "hta"
+                    "metasId": "hta",
+                    "metasOptions": [
+                      "Beber al menos 3 vasos de agua",
+                      "Comer una fruta como postre",
+                      "Cocinar sin añadir sal, usando especias o limón para condimentar",
+                      "Beber agua en lugar de gaseosas o jugos azucarados en el almuerzo",
+                      "Comprar verduras frescas para el día o la semana",
+                      "Preparar una ensalada con verduras de diferentes colores para acompañar una comida",
+                      "Leer las etiquetas de los alimentos y evitar los que tienen exceso de sodio o azúcar",
+                      "Comer una fruta en lugar de galletitas",
+                      "Retirar el salero de la mesa antes de sentarme a comer",
+                      "Preparar una botella de agua para tener a mano durante el día"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -5288,14 +5840,38 @@
                     "title": "Metas (Diabetes)",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "diabetes"
+                    "metasId": "diabetes",
+                    "metasOptions": [
+                      "Beber al menos 3 vasos de agua",
+                      "Comer una fruta como postre",
+                      "Cocinar sin añadir sal, usando especias o limón para condimentar",
+                      "Beber agua en lugar de gaseosas o jugos azucarados en el almuerzo",
+                      "Comprar verduras frescas para el día o la semana",
+                      "Preparar una ensalada con verduras de diferentes colores para acompañar una comida",
+                      "Leer las etiquetas de los alimentos y evitar los que tienen exceso de sodio o azúcar",
+                      "Comer una fruta en lugar de galletitas",
+                      "Retirar el salero de la mesa antes de sentarme a comer",
+                      "Preparar una botella de agua para tener a mano durante el día"
+                    ]
                   },
                   {
                     "type": "METAS",
                     "title": "Metas (Hipertensión)",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "hta"
+                    "metasId": "hta",
+                    "metasOptions": [
+                      "Beber al menos 3 vasos de agua",
+                      "Comer una fruta como postre",
+                      "Cocinar sin añadir sal, usando especias o limón para condimentar",
+                      "Beber agua en lugar de gaseosas o jugos azucarados en el almuerzo",
+                      "Comprar verduras frescas para el día o la semana",
+                      "Preparar una ensalada con verduras de diferentes colores para acompañar una comida",
+                      "Leer las etiquetas de los alimentos y evitar los que tienen exceso de sodio o azúcar",
+                      "Comer una fruta en lugar de galletitas",
+                      "Retirar el salero de la mesa antes de sentarme a comer",
+                      "Preparar una botella de agua para tener a mano durante el día"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -5415,14 +5991,38 @@
                     "title": "Metas (Diabetes)",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "diabetes"
+                    "metasId": "diabetes",
+                    "metasOptions": [
+                      "Beber al menos 3 vasos de agua",
+                      "Comer una fruta como postre",
+                      "Cocinar sin añadir sal, usando especias o limón para condimentar",
+                      "Beber agua en lugar de gaseosas o jugos azucarados en el almuerzo",
+                      "Comprar verduras frescas para el día o la semana",
+                      "Preparar una ensalada con verduras de diferentes colores para acompañar una comida",
+                      "Leer las etiquetas de los alimentos y evitar los que tienen exceso de sodio o azúcar",
+                      "Comer una fruta en lugar de galletitas",
+                      "Retirar el salero de la mesa antes de sentarme a comer",
+                      "Preparar una botella de agua para tener a mano durante el día"
+                    ]
                   },
                   {
                     "type": "METAS",
                     "title": "Metas (Hipertensión)",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "hta"
+                    "metasId": "hta",
+                    "metasOptions": [
+                      "Beber al menos 3 vasos de agua",
+                      "Comer una fruta como postre",
+                      "Cocinar sin añadir sal, usando especias o limón para condimentar",
+                      "Beber agua en lugar de gaseosas o jugos azucarados en el almuerzo",
+                      "Comprar verduras frescas para el día o la semana",
+                      "Preparar una ensalada con verduras de diferentes colores para acompañar una comida",
+                      "Leer las etiquetas de los alimentos y evitar los que tienen exceso de sodio o azúcar",
+                      "Comer una fruta en lugar de galletitas",
+                      "Retirar el salero de la mesa antes de sentarme a comer",
+                      "Preparar una botella de agua para tener a mano durante el día"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -5542,14 +6142,38 @@
                     "title": "Metas (Diabetes)",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "diabetes"
+                    "metasId": "diabetes",
+                    "metasOptions": [
+                      "Tomar todos mis medicamentos del día como me los indicó el médico",
+                      "Organizar el pastillero para toda la semana",
+                      "Poner una alarma en el celular para tomar mi medicación",
+                      "Anotar dudas o síntomas en un papel para llevar a mi próxima consulta médica",
+                      "Sacar turno para mi próxima consulta médica",
+                      "Revisar cuántos medicamentos me quedan y anotar la fecha para ir a buscar más",
+                      "Aplicar crema humectante en los pies",
+                      "Medir mi glucosa y anotar el resultado",
+                      "Revisar mis pies con un espejo para ver que no estén lastimados",
+                      "Medir mi presión arterial y anotar el resultado"
+                    ]
                   },
                   {
                     "type": "METAS",
                     "title": "Metas (Hipertensión)",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "hta"
+                    "metasId": "hta",
+                    "metasOptions": [
+                      "Tomar todos mis medicamentos del día como me los indicó el médico",
+                      "Organizar el pastillero para toda la semana",
+                      "Poner una alarma en el celular para tomar mi medicación",
+                      "Anotar dudas o síntomas en un papel para llevar a mi próxima consulta médica",
+                      "Sacar turno para mi próxima consulta médica",
+                      "Revisar cuántos medicamentos me quedan y anotar la fecha para ir a buscar más",
+                      "Aplicar crema humectante en los pies",
+                      "Medir mi glucosa y anotar el resultado",
+                      "Revisar mis pies con un espejo para ver que no estén lastimados",
+                      "Medir mi presión arterial y anotar el resultado"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -5708,14 +6332,38 @@
                     "title": "Metas (Diabetes)",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "diabetes"
+                    "metasId": "diabetes",
+                    "metasOptions": [
+                      "Tomar todos mis medicamentos del día como me los indicó el médico",
+                      "Organizar el pastillero para toda la semana",
+                      "Poner una alarma en el celular para tomar mi medicación",
+                      "Anotar dudas o síntomas en un papel para llevar a mi próxima consulta médica",
+                      "Sacar turno para mi próxima consulta médica",
+                      "Revisar cuántos medicamentos me quedan y anotar la fecha para ir a buscar más",
+                      "Aplicar crema humectante en los pies",
+                      "Medir mi glucosa y anotar el resultado",
+                      "Revisar mis pies con un espejo para ver que no estén lastimados",
+                      "Medir mi presión arterial y anotar el resultado"
+                    ]
                   },
                   {
                     "type": "METAS",
                     "title": "Metas (Hipertensión)",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "hta"
+                    "metasId": "hta",
+                    "metasOptions": [
+                      "Tomar todos mis medicamentos del día como me los indicó el médico",
+                      "Organizar el pastillero para toda la semana",
+                      "Poner una alarma en el celular para tomar mi medicación",
+                      "Anotar dudas o síntomas en un papel para llevar a mi próxima consulta médica",
+                      "Sacar turno para mi próxima consulta médica",
+                      "Revisar cuántos medicamentos me quedan y anotar la fecha para ir a buscar más",
+                      "Aplicar crema humectante en los pies",
+                      "Medir mi glucosa y anotar el resultado",
+                      "Revisar mis pies con un espejo para ver que no estén lastimados",
+                      "Medir mi presión arterial y anotar el resultado"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -5872,14 +6520,38 @@
                     "title": "Metas (Diabetes)",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "diabetes"
+                    "metasId": "diabetes",
+                    "metasOptions": [
+                      "Cenar al menos 2 horas antes de irme a dormir",
+                      "Dejar el celular lejos de la cama o en modo \"No Molestar\"",
+                      "Acostarme de noche a la misma hora durante 3 días seguidos",
+                      "Crear una rutina de relajación antes de dormir (ejemplo: leer, música suave)",
+                      "No tomar café o té 2 horas antes de irme a dormir",
+                      "Apagar todas las luces antes de irme a dormir",
+                      "Hacer ejercicio suave o estiramientos antes de dormir",
+                      "Levantarme a la misma hora por la mañana durante 3 días seguidos",
+                      "Darme un baño o ducha tibia antes de acostarme",
+                      "No hacer siestas de más de 20 minutos"
+                    ]
                   },
                   {
                     "type": "METAS",
                     "title": "Metas (Hipertensión)",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "hta"
+                    "metasId": "hta",
+                    "metasOptions": [
+                      "Cenar al menos 2 horas antes de irme a dormir",
+                      "Dejar el celular lejos de la cama o en modo \"No Molestar\"",
+                      "Acostarme de noche a la misma hora durante 3 días seguidos",
+                      "Crear una rutina de relajación antes de dormir (ejemplo: leer, música suave)",
+                      "No tomar café o té 2 horas antes de irme a dormir",
+                      "Apagar todas las luces antes de irme a dormir",
+                      "Hacer ejercicio suave o estiramientos antes de dormir",
+                      "Levantarme a la misma hora por la mañana durante 3 días seguidos",
+                      "Darme un baño o ducha tibia antes de acostarme",
+                      "No hacer siestas de más de 20 minutos"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -5985,14 +6657,38 @@
                     "title": "Metas (Diabetes)",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "diabetes"
+                    "metasId": "diabetes",
+                    "metasOptions": [
+                      "Contarle a un amigo o familiar algo bueno que me pasó esta semana",
+                      "Invitar a un amigo o familiar a tomar un café o té",
+                      "Pedirle a un amigo o familiar que me acompañe a caminar",
+                      "Enviar un mensaje de texto cariñoso a alguien que quiero",
+                      "Visitar a un familiar o amigo",
+                      "Participar en una actividad comunitaria o religiosa",
+                      "Compartir una comida (almuerzo/cena) con alguien, sin prender la televisión o usar el celular",
+                      "Pedir ayuda a un amigo o familiar para una tarea sencilla (ejemplo: arreglar algo de la casa)",
+                      "Jugar un juego de mesa o cartas con la familia o amigos",
+                      "Agradecer a un familiar o amigo que me ha ayudado con algo"
+                    ]
                   },
                   {
                     "type": "METAS",
                     "title": "Metas (Hipertensión)",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "hta"
+                    "metasId": "hta",
+                    "metasOptions": [
+                      "Contarle a un amigo o familiar algo bueno que me pasó esta semana",
+                      "Invitar a un amigo o familiar a tomar un café o té",
+                      "Pedirle a un amigo o familiar que me acompañe a caminar",
+                      "Enviar un mensaje de texto cariñoso a alguien que quiero",
+                      "Visitar a un familiar o amigo",
+                      "Participar en una actividad comunitaria o religiosa",
+                      "Compartir una comida (almuerzo/cena) con alguien, sin prender la televisión o usar el celular",
+                      "Pedir ayuda a un amigo o familiar para una tarea sencilla (ejemplo: arreglar algo de la casa)",
+                      "Jugar un juego de mesa o cartas con la familia o amigos",
+                      "Agradecer a un familiar o amigo que me ha ayudado con algo"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -6172,14 +6868,38 @@
                     "title": "Metas (Diabetes)",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "diabetes"
+                    "metasId": "diabetes",
+                    "metasOptions": [
+                      "Contarle a un amigo o familiar algo bueno que me pasó esta semana",
+                      "Invitar a un amigo o familiar a tomar un café o té",
+                      "Pedirle a un amigo o familiar que me acompañe a caminar",
+                      "Enviar un mensaje de texto cariñoso a alguien que quiero",
+                      "Visitar a un familiar o amigo",
+                      "Participar en una actividad comunitaria o religiosa",
+                      "Compartir una comida (almuerzo/cena) con alguien, sin prender la televisión o usar el celular",
+                      "Pedir ayuda a un amigo o familiar para una tarea sencilla (ejemplo: arreglar algo de la casa)",
+                      "Jugar un juego de mesa o cartas con la familia o amigos",
+                      "Agradecer a un familiar o amigo que me ha ayudado con algo"
+                    ]
                   },
                   {
                     "type": "METAS",
                     "title": "Metas (Hipertensión)",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "hta"
+                    "metasId": "hta",
+                    "metasOptions": [
+                      "Contarle a un amigo o familiar algo bueno que me pasó esta semana",
+                      "Invitar a un amigo o familiar a tomar un café o té",
+                      "Pedirle a un amigo o familiar que me acompañe a caminar",
+                      "Enviar un mensaje de texto cariñoso a alguien que quiero",
+                      "Visitar a un familiar o amigo",
+                      "Participar en una actividad comunitaria o religiosa",
+                      "Compartir una comida (almuerzo/cena) con alguien, sin prender la televisión o usar el celular",
+                      "Pedir ayuda a un amigo o familiar para una tarea sencilla (ejemplo: arreglar algo de la casa)",
+                      "Jugar un juego de mesa o cartas con la familia o amigos",
+                      "Agradecer a un familiar o amigo que me ha ayudado con algo"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -6285,14 +7005,38 @@
                     "title": "Metas (Diabetes)",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "diabetes"
+                    "metasId": "diabetes",
+                    "metasOptions": [
+                      "Escuchar una de mis canciones favoritas",
+                      "Leer 3 páginas de un libro, revista o diario",
+                      "Ver un capítulo de mi serie favorita o una película",
+                      "Dedicar 15 minutos a un pasatiempo (ejemplo: tejer, pintar, jardinería)",
+                      "Acariciar a mi mascota por 1 minuto",
+                      "Tomarme un breve descanso para tomar un café o infusión",
+                      "Jugar cartas, dominó o algún otro juego de mesa",
+                      "Imaginarme un lugar tranquilo, hermoso o relajante (ejemplo: playa, campo) por 2 minutos",
+                      "Escribir en un papel 1 cosa positiva del día",
+                      "Salir a pasear a algún lugar (ejemplo: un parque o una plaza)"
+                    ]
                   },
                   {
                     "type": "METAS",
                     "title": "Metas (Hipertensión)",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "hta"
+                    "metasId": "hta",
+                    "metasOptions": [
+                      "Escuchar una de mis canciones favoritas",
+                      "Leer 3 páginas de un libro, revista o diario",
+                      "Ver un capítulo de mi serie favorita o una película",
+                      "Dedicar 15 minutos a un pasatiempo (ejemplo: tejer, pintar, jardinería)",
+                      "Acariciar a mi mascota por 1 minuto",
+                      "Tomarme un breve descanso para tomar un café o infusión",
+                      "Jugar cartas, dominó o algún otro juego de mesa",
+                      "Imaginarme un lugar tranquilo, hermoso o relajante (ejemplo: playa, campo) por 2 minutos",
+                      "Escribir en un papel 1 cosa positiva del día",
+                      "Salir a pasear a algún lugar (ejemplo: un parque o una plaza)"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -6415,14 +7159,38 @@
                     "title": "Metas (Diabetes)",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "diabetes"
+                    "metasId": "diabetes",
+                    "metasOptions": [
+                      "Escuchar una de mis canciones favoritas",
+                      "Leer 3 páginas de un libro, revista o diario",
+                      "Ver un capítulo de mi serie favorita o una película",
+                      "Dedicar 15 minutos a un pasatiempo (ejemplo: tejer, pintar, jardinería)",
+                      "Acariciar a mi mascota por 1 minuto",
+                      "Tomarme un breve descanso para tomar un café o infusión",
+                      "Jugar cartas, dominó o algún otro juego de mesa",
+                      "Imaginarme un lugar tranquilo, hermoso o relajante (ejemplo: playa, campo) por 2 minutos",
+                      "Escribir en un papel 1 cosa positiva del día",
+                      "Salir a pasear a algún lugar (ejemplo: un parque o una plaza)"
+                    ]
                   },
                   {
                     "type": "METAS",
                     "title": "Metas (Hipertensión)",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "hta"
+                    "metasId": "hta",
+                    "metasOptions": [
+                      "Escuchar una de mis canciones favoritas",
+                      "Leer 3 páginas de un libro, revista o diario",
+                      "Ver un capítulo de mi serie favorita o una película",
+                      "Dedicar 15 minutos a un pasatiempo (ejemplo: tejer, pintar, jardinería)",
+                      "Acariciar a mi mascota por 1 minuto",
+                      "Tomarme un breve descanso para tomar un café o infusión",
+                      "Jugar cartas, dominó o algún otro juego de mesa",
+                      "Imaginarme un lugar tranquilo, hermoso o relajante (ejemplo: playa, campo) por 2 minutos",
+                      "Escribir en un papel 1 cosa positiva del día",
+                      "Salir a pasear a algún lugar (ejemplo: un parque o una plaza)"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -6562,14 +7330,38 @@
                     "title": "Metas (Diabetes)",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "diabetes"
+                    "metasId": "diabetes",
+                    "metasOptions": [
+                      "Escuchar una de mis canciones favoritas",
+                      "Leer 3 páginas de un libro o una revista o el periódico",
+                      "Ver un capítulo de mi serie favorita o una película",
+                      "Dedicar 15 minutos a un pasatiempo (ejemplo: tejer, pintar, jardinería)",
+                      "Acariciar a mi mascota por 1 minuto",
+                      "Tomarme un breve descanso para tomar un café o infusión",
+                      "Jugar cartas, dominó o algún otro juego de mesa",
+                      "Imaginarme un lugar tranquilo, hermoso o relajante (ejemplo: playa, campo) por 2 minutos",
+                      "Escribir en un papel 1 cosa positiva del día",
+                      "Salir a pasear a algún lugar (ejemplo: un parque o una plaza)"
+                    ]
                   },
                   {
                     "type": "METAS",
                     "title": "Metas (Hipertensión)",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "hta"
+                    "metasId": "hta",
+                    "metasOptions": [
+                      "Escuchar una de mis canciones favoritas",
+                      "Leer 3 páginas de un libro o una revista o el periódico",
+                      "Ver un capítulo de mi serie favorita o una película",
+                      "Dedicar 15 minutos a un pasatiempo (ejemplo: tejer, pintar, jardinería)",
+                      "Acariciar a mi mascota por 1 minuto",
+                      "Tomarme un breve descanso para tomar un café o infusión",
+                      "Jugar cartas, dominó o algún otro juego de mesa",
+                      "Imaginarme un lugar tranquilo, hermoso o relajante (ejemplo: playa, campo) por 2 minutos",
+                      "Escribir en un papel 1 cosa positiva del día",
+                      "Salir a pasear a algún lugar (ejemplo: un parque o una plaza)"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -6736,14 +7528,38 @@
                     "title": "Metas (Diabetes)",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "diabetes"
+                    "metasId": "diabetes",
+                    "metasOptions": [
+                      "Lavar los platos inmediatamente después de comer",
+                      "Sacar una cita médica o hacer un trámite pendiente",
+                      "Reparar algo pequeño en casa (ejemplo: cambiar un foco, coser botón)",
+                      "Sacar a pasear a mi mascota",
+                      "Borrar fotos o mensajes antiguos del celular para liberar espacio",
+                      "Dedicar 20 minutos a jardinería o cuidado de plantas",
+                      "Organizar los gastos de la semana",
+                      "Ordenar un mueble, un cajón o una repisa",
+                      "Limpiar una parte de la casa (ejemplo: la refrigeradora)",
+                      "Lavar, doblar o planchar ropa durante 30 minutos"
+                    ]
                   },
                   {
                     "type": "METAS",
                     "title": "Metas (Hipertensión)",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "hta"
+                    "metasId": "hta",
+                    "metasOptions": [
+                      "Lavar los platos inmediatamente después de comer",
+                      "Sacar una cita médica o hacer un trámite pendiente",
+                      "Reparar algo pequeño en casa (ejemplo: cambiar un foco, coser botón)",
+                      "Sacar a pasear a mi mascota",
+                      "Borrar fotos o mensajes antiguos del celular para liberar espacio",
+                      "Dedicar 20 minutos a jardinería o cuidado de plantas",
+                      "Organizar los gastos de la semana",
+                      "Ordenar un mueble, un cajón o una repisa",
+                      "Limpiar una parte de la casa (ejemplo: la refrigeradora)",
+                      "Lavar, doblar o planchar ropa durante 30 minutos"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -6889,14 +7705,38 @@
                     "title": "Metas (Diabetes)",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "diabetes"
+                    "metasId": "diabetes",
+                    "metasOptions": [
+                      "Lavar los platos inmediatamente después de comer",
+                      "Sacar una cita médica o hacer un trámite pendiente",
+                      "Reparar algo pequeño en casa (ejemplo: cambiar un foco, coser botón)",
+                      "Sacar a pasear a mi mascota",
+                      "Borrar fotos o mensajes antiguos del celular para liberar espacio",
+                      "Dedicar 20 minutos a jardinería o cuidado de plantas",
+                      "Organizar los gastos de la semana",
+                      "Ordenar un mueble, un cajón o una repisa",
+                      "Limpiar una parte de la casa (ejemplo: la refrigeradora)",
+                      "Lavar, doblar o planchar ropa durante 30 minutos"
+                    ]
                   },
                   {
                     "type": "METAS",
                     "title": "Metas (Hipertensión)",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "hta"
+                    "metasId": "hta",
+                    "metasOptions": [
+                      "Lavar los platos inmediatamente después de comer",
+                      "Sacar una cita médica o hacer un trámite pendiente",
+                      "Reparar algo pequeño en casa (ejemplo: cambiar un foco, coser botón)",
+                      "Sacar a pasear a mi mascota",
+                      "Borrar fotos o mensajes antiguos del celular para liberar espacio",
+                      "Dedicar 20 minutos a jardinería o cuidado de plantas",
+                      "Organizar los gastos de la semana",
+                      "Ordenar un mueble, un cajón o una repisa",
+                      "Limpiar una parte de la casa (ejemplo: la refrigeradora)",
+                      "Lavar, doblar o planchar ropa durante 30 minutos"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -7062,14 +7902,38 @@
                     "title": "Metas (Diabetes)",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "diabetes"
+                    "metasId": "diabetes",
+                    "metasOptions": [
+                      "Caminar 15 minutos a paso rápido",
+                      "Hacer marcha en el sitio (levantar rodillas estando de pie) por 5 minutos",
+                      "Bailar 1 canción en casa",
+                      "Hacer 10 minutos de estiramientos suaves",
+                      "Bajarme un paradero antes del bus o micro y hacer el resto del camino a pie",
+                      "Hacer una rutina de ejercicios sentado en silla",
+                      "Ir caminando a hacer compras en vez de usar el carro, bus o moto",
+                      "Dar una vuelta a la manzana después de comer",
+                      "Hacer ejercicios de equilibrio apoyándome en una pared o mesa firme",
+                      "Practicar un deporte recreativo o clase de baile"
+                    ]
                   },
                   {
                     "type": "METAS",
                     "title": "Metas (Hipertensión)",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "hta"
+                    "metasId": "hta",
+                    "metasOptions": [
+                      "Caminar 15 minutos a paso rápido",
+                      "Hacer marcha en el sitio (levantar rodillas estando de pie) por 5 minutos",
+                      "Bailar 1 canción en casa",
+                      "Hacer 10 minutos de estiramientos suaves",
+                      "Bajarme un paradero antes del bus o micro y hacer el resto del camino a pie",
+                      "Hacer una rutina de ejercicios sentado en silla",
+                      "Ir caminando a hacer compras en vez de usar el carro, bus o moto",
+                      "Dar una vuelta a la manzana después de comer",
+                      "Hacer ejercicios de equilibrio apoyándome en una pared o mesa firme",
+                      "Practicar un deporte recreativo o clase de baile"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -7184,14 +8048,38 @@
                     "title": "Metas (Diabetes)",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "diabetes"
+                    "metasId": "diabetes",
+                    "metasOptions": [
+                      "Caminar 15 minutos a paso rápido",
+                      "Hacer marcha en el sitio (levantar rodillas estando de pie) por 5 minutos",
+                      "Bailar 1 canción en casa",
+                      "Hacer 10 minutos de estiramientos suaves",
+                      "Bajarme un paradero antes del bus o micro y hacer el resto del camino a pie",
+                      "Hacer una rutina de ejercicios sentado en silla",
+                      "Ir caminando a hacer compras en vez de usar el carro, bus o moto",
+                      "Dar una vuelta a la manzana después de comer",
+                      "Hacer ejercicios de equilibrio apoyándome en una pared o mesa firme",
+                      "Practicar un deporte recreativo o clase de baile"
+                    ]
                   },
                   {
                     "type": "METAS",
                     "title": "Metas (Hipertensión)",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "hta"
+                    "metasId": "hta",
+                    "metasOptions": [
+                      "Caminar 15 minutos a paso rápido",
+                      "Hacer marcha en el sitio (levantar rodillas estando de pie) por 5 minutos",
+                      "Bailar 1 canción en casa",
+                      "Hacer 10 minutos de estiramientos suaves",
+                      "Bajarme un paradero antes del bus o micro y hacer el resto del camino a pie",
+                      "Hacer una rutina de ejercicios sentado en silla",
+                      "Ir caminando a hacer compras en vez de usar el carro, bus o moto",
+                      "Dar una vuelta a la manzana después de comer",
+                      "Hacer ejercicios de equilibrio apoyándome en una pared o mesa firme",
+                      "Practicar un deporte recreativo o clase de baile"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -7313,14 +8201,38 @@
                     "title": "Metas (Diabetes)",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "diabetes"
+                    "metasId": "diabetes",
+                    "metasOptions": [
+                      "Caminar 15 minutos a paso rápido",
+                      "Hacer marcha en el sitio (levantar rodillas estando de pie) por 5 minutos",
+                      "Bailar 1 canción en casa",
+                      "Hacer 10 minutos de estiramientos suaves",
+                      "Bajarme un paradero antes del bus o micro y hacer el resto del camino a pie",
+                      "Hacer una rutina de ejercicios sentado en silla",
+                      "Ir caminando a hacer compras en vez de usar el carro, bus o moto",
+                      "Dar una vuelta a la manzana después de comer",
+                      "Hacer ejercicios de equilibrio apoyándome en una pared o mesa firme",
+                      "Practicar un deporte recreativo o clase de baile"
+                    ]
                   },
                   {
                     "type": "METAS",
                     "title": "Metas (Hipertensión)",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "hta"
+                    "metasId": "hta",
+                    "metasOptions": [
+                      "Caminar 15 minutos a paso rápido",
+                      "Hacer marcha en el sitio (levantar rodillas estando de pie) por 5 minutos",
+                      "Bailar 1 canción en casa",
+                      "Hacer 10 minutos de estiramientos suaves",
+                      "Bajarme un paradero antes del bus o micro y hacer el resto del camino a pie",
+                      "Hacer una rutina de ejercicios sentado en silla",
+                      "Ir caminando a hacer compras en vez de usar el carro, bus o moto",
+                      "Dar una vuelta a la manzana después de comer",
+                      "Hacer ejercicios de equilibrio apoyándome en una pared o mesa firme",
+                      "Practicar un deporte recreativo o clase de baile"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -7442,14 +8354,38 @@
                     "title": "Metas (Diabetes)",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "diabetes"
+                    "metasId": "diabetes",
+                    "metasOptions": [
+                      "Beber al menos 3 vasos de agua",
+                      "Comer una fruta como postre",
+                      "Cocinar sin añadir sal, usando especias o limón para condimentar",
+                      "Beber agua en lugar de bebidas azucaradas (ejemplo: gaseosas) en el almuerzo",
+                      "Comprar verduras frescas para el día o la semana",
+                      "Preparar una ensalada con verduras de diferentes colores para acompañar una comida",
+                      "Leer las etiquetas de los alimentos y evitar los que dicen \"Alto en Sodio/Azúcar\"",
+                      "Comer una fruta en lugar de galletas",
+                      "Retirar el salero de la mesa antes de sentarme a comer",
+                      "Preparar una botella de agua para tener a mano durante el día"
+                    ]
                   },
                   {
                     "type": "METAS",
                     "title": "Metas (Hipertensión)",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "hta"
+                    "metasId": "hta",
+                    "metasOptions": [
+                      "Beber al menos 3 vasos de agua",
+                      "Comer una fruta como postre",
+                      "Cocinar sin añadir sal, usando especias o limón para condimentar",
+                      "Beber agua en lugar de bebidas azucaradas (ejemplo: gaseosas) en el almuerzo",
+                      "Comprar verduras frescas para el día o la semana",
+                      "Preparar una ensalada con verduras de diferentes colores para acompañar una comida",
+                      "Leer las etiquetas de los alimentos y evitar los que dicen \"Alto en Sodio/Azúcar\"",
+                      "Comer una fruta en lugar de galletas",
+                      "Retirar el salero de la mesa antes de sentarme a comer",
+                      "Preparar una botella de agua para tener a mano durante el día"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -7578,14 +8514,38 @@
                     "title": "Metas (Diabetes)",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "diabetes"
+                    "metasId": "diabetes",
+                    "metasOptions": [
+                      "Beber al menos 3 vasos de agua",
+                      "Comer una fruta como postre",
+                      "Cocinar sin añadir sal, usando especias o limón para condimentar",
+                      "Beber agua en lugar de bebidas azucaradas (ejemplo: gaseosas) en el almuerzo",
+                      "Comprar verduras frescas para el día o la semana",
+                      "Preparar una ensalada con verduras de diferentes colores para acompañar una comida",
+                      "Leer las etiquetas de los alimentos y evitar los que dicen \"Alto en Sodio/Azúcar\"",
+                      "Comer una fruta en lugar de galletas",
+                      "Retirar el salero de la mesa antes de sentarme a comer",
+                      "Preparar una botella de agua para tener a mano durante el día"
+                    ]
                   },
                   {
                     "type": "METAS",
                     "title": "Metas (Hipertensión)",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "hta"
+                    "metasId": "hta",
+                    "metasOptions": [
+                      "Beber al menos 3 vasos de agua",
+                      "Comer una fruta como postre",
+                      "Cocinar sin añadir sal, usando especias o limón para condimentar",
+                      "Beber agua en lugar de bebidas azucaradas (ejemplo: gaseosas) en el almuerzo",
+                      "Comprar verduras frescas para el día o la semana",
+                      "Preparar una ensalada con verduras de diferentes colores para acompañar una comida",
+                      "Leer las etiquetas de los alimentos y evitar los que dicen \"Alto en Sodio/Azúcar\"",
+                      "Comer una fruta en lugar de galletas",
+                      "Retirar el salero de la mesa antes de sentarme a comer",
+                      "Preparar una botella de agua para tener a mano durante el día"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -7705,14 +8665,38 @@
                     "title": "Metas (Diabetes)",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "diabetes"
+                    "metasId": "diabetes",
+                    "metasOptions": [
+                      "Beber al menos 3 vasos de agua",
+                      "Comer una fruta como postre",
+                      "Cocinar sin añadir sal, usando especias o limón para condimentar",
+                      "Beber agua en lugar de bebidas azucaradas (ejemplo: gaseosas) en el almuerzo",
+                      "Comprar verduras frescas para el día o la semana",
+                      "Preparar una ensalada con verduras de diferentes colores para acompañar una comida",
+                      "Leer las etiquetas de los alimentos y evitar los que dicen \"Alto en Sodio/Azúcar\"",
+                      "Comer una fruta en lugar de galletas",
+                      "Retirar el salero de la mesa antes de sentarme a comer",
+                      "Preparar una botella de agua para tener a mano durante el día"
+                    ]
                   },
                   {
                     "type": "METAS",
                     "title": "Metas (Hipertensión)",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "hta"
+                    "metasId": "hta",
+                    "metasOptions": [
+                      "Beber al menos 3 vasos de agua",
+                      "Comer una fruta como postre",
+                      "Cocinar sin añadir sal, usando especias o limón para condimentar",
+                      "Beber agua en lugar de bebidas azucaradas (ejemplo: gaseosas) en el almuerzo",
+                      "Comprar verduras frescas para el día o la semana",
+                      "Preparar una ensalada con verduras de diferentes colores para acompañar una comida",
+                      "Leer las etiquetas de los alimentos y evitar los que dicen \"Alto en Sodio/Azúcar\"",
+                      "Comer una fruta en lugar de galletas",
+                      "Retirar el salero de la mesa antes de sentarme a comer",
+                      "Preparar una botella de agua para tener a mano durante el día"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -7832,14 +8816,38 @@
                     "title": "Metas (Diabetes)",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "diabetes"
+                    "metasId": "diabetes",
+                    "metasOptions": [
+                      "Tomar todos mis medicamentos del día como me los indicó el médico",
+                      "Organizar el pastillero para toda la semana",
+                      "Poner una alarma en el celular para tomar mi medicación",
+                      "Anotar dudas o síntomas en un papel para llevar a mi próxima consulta médica",
+                      "Sacar cita para mi próxima consulta médica",
+                      "Revisar cuántos medicamentos me quedan y anotar la fecha para ir a recoger más",
+                      "Aplicar crema humectante en los pies",
+                      "Medir mi glucosa/azúcar y anotar el resultado",
+                      "Revisar mis pies con un espejo para ver que no estén lastimados",
+                      "Medir mi presión arterial y anotar el resultado"
+                    ]
                   },
                   {
                     "type": "METAS",
                     "title": "Metas (Hipertensión)",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "hta"
+                    "metasId": "hta",
+                    "metasOptions": [
+                      "Tomar todos mis medicamentos del día como me los indicó el médico",
+                      "Organizar el pastillero para toda la semana",
+                      "Poner una alarma en el celular para tomar mi medicación",
+                      "Anotar dudas o síntomas en un papel para llevar a mi próxima consulta médica",
+                      "Sacar cita para mi próxima consulta médica",
+                      "Revisar cuántos medicamentos me quedan y anotar la fecha para ir a recoger más",
+                      "Aplicar crema humectante en los pies",
+                      "Medir mi glucosa/azúcar y anotar el resultado",
+                      "Revisar mis pies con un espejo para ver que no estén lastimados",
+                      "Medir mi presión arterial y anotar el resultado"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -7998,14 +9006,38 @@
                     "title": "Metas (Diabetes)",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "diabetes"
+                    "metasId": "diabetes",
+                    "metasOptions": [
+                      "Tomar todos mis medicamentos del día como me los indicó el médico",
+                      "Organizar el pastillero para toda la semana",
+                      "Poner una alarma en el celular para tomar mi medicación",
+                      "Anotar dudas o síntomas en un papel para llevar a mi próxima consulta médica",
+                      "Sacar cita para mi próxima consulta médica",
+                      "Revisar cuántos medicamentos me quedan y anotar la fecha para ir a recoger más",
+                      "Aplicar crema humectante en los pies",
+                      "Medir mi glucosa/azúcar y anotar el resultado",
+                      "Revisar mis pies con un espejo para ver que no estén lastimados",
+                      "Medir mi presión arterial y anotar el resultado"
+                    ]
                   },
                   {
                     "type": "METAS",
                     "title": "Metas (Hipertensión)",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "hta"
+                    "metasId": "hta",
+                    "metasOptions": [
+                      "Tomar todos mis medicamentos del día como me los indicó el médico",
+                      "Organizar el pastillero para toda la semana",
+                      "Poner una alarma en el celular para tomar mi medicación",
+                      "Anotar dudas o síntomas en un papel para llevar a mi próxima consulta médica",
+                      "Sacar cita para mi próxima consulta médica",
+                      "Revisar cuántos medicamentos me quedan y anotar la fecha para ir a recoger más",
+                      "Aplicar crema humectante en los pies",
+                      "Medir mi glucosa/azúcar y anotar el resultado",
+                      "Revisar mis pies con un espejo para ver que no estén lastimados",
+                      "Medir mi presión arterial y anotar el resultado"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -8162,14 +9194,38 @@
                     "title": "Metas (Diabetes)",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "diabetes"
+                    "metasId": "diabetes",
+                    "metasOptions": [
+                      "Cenar al menos 2 horas antes de irme a dormir",
+                      "Dejar el celular lejos de la cama o en modo \"No Molestar\"",
+                      "Acostarme de noche a la misma hora durante 3 días seguidos",
+                      "Crear una rutina de relajación antes de dormir (ejemplo: leer, música suave)",
+                      "No tomar café o té 2 horas antes de irme a dormir",
+                      "Apagar todas las luces antes de irme a dormir",
+                      "Hacer ejercicio suave o estiramientos antes de dormir",
+                      "Levantarme a la misma hora por la mañana durante 3 días seguidos",
+                      "Darme un baño o ducha tibia antes de acostarme",
+                      "No hacer siestas de más de 20 minutos"
+                    ]
                   },
                   {
                     "type": "METAS",
                     "title": "Metas (Hipertensión)",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "hta"
+                    "metasId": "hta",
+                    "metasOptions": [
+                      "Cenar al menos 2 horas antes de irme a dormir",
+                      "Dejar el celular lejos de la cama o en modo \"No Molestar\"",
+                      "Acostarme de noche a la misma hora durante 3 días seguidos",
+                      "Crear una rutina de relajación antes de dormir (ejemplo: leer, música suave)",
+                      "No tomar café o té 2 horas antes de irme a dormir",
+                      "Apagar todas las luces antes de irme a dormir",
+                      "Hacer ejercicio suave o estiramientos antes de dormir",
+                      "Levantarme a la misma hora por la mañana durante 3 días seguidos",
+                      "Darme un baño o ducha tibia antes de acostarme",
+                      "No hacer siestas de más de 20 minutos"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -8275,14 +9331,38 @@
                     "title": "Metas (Diabetes)",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "diabetes"
+                    "metasId": "diabetes",
+                    "metasOptions": [
+                      "Contarle a un amigo o familiar algo bueno que me pasó esta semana",
+                      "Invitar a un amigo o familiar a tomar un café o té",
+                      "Pedirle a un amigo o familiar que me acompañe a caminar",
+                      "Enviar un mensaje de texto cariñoso a alguien que quiero",
+                      "Visitar a un familiar o amigo",
+                      "Participar en una actividad comunitaria o religiosa",
+                      "Compartir una comida (almuerzo/cena) con alguien, sin prender la televisión o usar el celular",
+                      "Pedir ayuda a un amigo o familiar para una tarea sencilla (ejemplo: arreglar algo de la casa)",
+                      "Jugar un juego de mesa o cartas con la familia o amigos",
+                      "Agradecer a un familiar o amigo que me ha ayudado con algo"
+                    ]
                   },
                   {
                     "type": "METAS",
                     "title": "Metas (Hipertensión)",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "hta"
+                    "metasId": "hta",
+                    "metasOptions": [
+                      "Contarle a un amigo o familiar algo bueno que me pasó esta semana",
+                      "Invitar a un amigo o familiar a tomar un café o té",
+                      "Pedirle a un amigo o familiar que me acompañe a caminar",
+                      "Enviar un mensaje de texto cariñoso a alguien que quiero",
+                      "Visitar a un familiar o amigo",
+                      "Participar en una actividad comunitaria o religiosa",
+                      "Compartir una comida (almuerzo/cena) con alguien, sin prender la televisión o usar el celular",
+                      "Pedir ayuda a un amigo o familiar para una tarea sencilla (ejemplo: arreglar algo de la casa)",
+                      "Jugar un juego de mesa o cartas con la familia o amigos",
+                      "Agradecer a un familiar o amigo que me ha ayudado con algo"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -8462,14 +9542,38 @@
                     "title": "Metas (Diabetes)",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "diabetes"
+                    "metasId": "diabetes",
+                    "metasOptions": [
+                      "Contarle a un amigo o familiar algo bueno que me pasó esta semana",
+                      "Invitar a un amigo o familiar a tomar un café o té",
+                      "Pedirle a un amigo o familiar que me acompañe a caminar",
+                      "Enviar un mensaje de texto cariñoso a alguien que quiero",
+                      "Visitar a un familiar o amigo",
+                      "Participar en una actividad comunitaria o religiosa",
+                      "Compartir una comida (almuerzo/cena) con alguien, sin prender la televisión o usar el celular",
+                      "Pedir ayuda a un amigo o familiar para una tarea sencilla (ejemplo: arreglar algo de la casa)",
+                      "Jugar un juego de mesa o cartas con la familia o amigos",
+                      "Agradecer a un familiar o amigo que me ha ayudado con algo"
+                    ]
                   },
                   {
                     "type": "METAS",
                     "title": "Metas (Hipertensión)",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "hta"
+                    "metasId": "hta",
+                    "metasOptions": [
+                      "Contarle a un amigo o familiar algo bueno que me pasó esta semana",
+                      "Invitar a un amigo o familiar a tomar un café o té",
+                      "Pedirle a un amigo o familiar que me acompañe a caminar",
+                      "Enviar un mensaje de texto cariñoso a alguien que quiero",
+                      "Visitar a un familiar o amigo",
+                      "Participar en una actividad comunitaria o religiosa",
+                      "Compartir una comida (almuerzo/cena) con alguien, sin prender la televisión o usar el celular",
+                      "Pedir ayuda a un amigo o familiar para una tarea sencilla (ejemplo: arreglar algo de la casa)",
+                      "Jugar un juego de mesa o cartas con la familia o amigos",
+                      "Agradecer a un familiar o amigo que me ha ayudado con algo"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -8575,14 +9679,38 @@
                     "title": "Metas (Diabetes)",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "diabetes"
+                    "metasId": "diabetes",
+                    "metasOptions": [
+                      "Escuchar una de mis canciones favoritas",
+                      "Leer 3 páginas de un libro o una revista o el periódico",
+                      "Ver un capítulo de mi serie favorita o una película",
+                      "Dedicar 15 minutos a un pasatiempo (ejemplo: tejer, pintar, jardinería)",
+                      "Acariciar a mi mascota por 1 minuto",
+                      "Tomarme un breve descanso para tomar un café o infusión",
+                      "Jugar cartas, dominó o algún otro juego de mesa",
+                      "Imaginarme un lugar tranquilo, hermoso o relajante (ejemplo: playa, campo) por 2 minutos",
+                      "Escribir en un papel 1 cosa positiva del día",
+                      "Salir a pasear a algún lugar (ejemplo: un parque o una plaza)"
+                    ]
                   },
                   {
                     "type": "METAS",
                     "title": "Metas (Hipertensión)",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "hta"
+                    "metasId": "hta",
+                    "metasOptions": [
+                      "Escuchar una de mis canciones favoritas",
+                      "Leer 3 páginas de un libro o una revista o el periódico",
+                      "Ver un capítulo de mi serie favorita o una película",
+                      "Dedicar 15 minutos a un pasatiempo (ejemplo: tejer, pintar, jardinería)",
+                      "Acariciar a mi mascota por 1 minuto",
+                      "Tomarme un breve descanso para tomar un café o infusión",
+                      "Jugar cartas, dominó o algún otro juego de mesa",
+                      "Imaginarme un lugar tranquilo, hermoso o relajante (ejemplo: playa, campo) por 2 minutos",
+                      "Escribir en un papel 1 cosa positiva del día",
+                      "Salir a pasear a algún lugar (ejemplo: un parque o una plaza)"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -8705,14 +9833,38 @@
                     "title": "Metas (Diabetes)",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "diabetes"
+                    "metasId": "diabetes",
+                    "metasOptions": [
+                      "Escuchar una de mis canciones favoritas",
+                      "Leer 3 páginas de un libro o una revista o el periódico",
+                      "Ver un capítulo de mi serie favorita o una película",
+                      "Dedicar 15 minutos a un pasatiempo (ejemplo: tejer, pintar, jardinería)",
+                      "Acariciar a mi mascota por 1 minuto",
+                      "Tomarme un breve descanso para tomar un café o infusión",
+                      "Jugar cartas, dominó o algún otro juego de mesa",
+                      "Imaginarme un lugar tranquilo, hermoso o relajante (ejemplo: playa, campo) por 2 minutos",
+                      "Escribir en un papel 1 cosa positiva del día",
+                      "Salir a pasear a algún lugar (ejemplo: un parque o una plaza)"
+                    ]
                   },
                   {
                     "type": "METAS",
                     "title": "Metas (Hipertensión)",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "hta"
+                    "metasId": "hta",
+                    "metasOptions": [
+                      "Escuchar una de mis canciones favoritas",
+                      "Leer 3 páginas de un libro o una revista o el periódico",
+                      "Ver un capítulo de mi serie favorita o una película",
+                      "Dedicar 15 minutos a un pasatiempo (ejemplo: tejer, pintar, jardinería)",
+                      "Acariciar a mi mascota por 1 minuto",
+                      "Tomarme un breve descanso para tomar un café o infusión",
+                      "Jugar cartas, dominó o algún otro juego de mesa",
+                      "Imaginarme un lugar tranquilo, hermoso o relajante (ejemplo: playa, campo) por 2 minutos",
+                      "Escribir en un papel 1 cosa positiva del día",
+                      "Salir a pasear a algún lugar (ejemplo: un parque o una plaza)"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -8850,7 +10002,19 @@
                     "title": "Metas",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "hta"
+                    "metasId": "hta",
+                    "metasOptions": [
+                      "Escuchar una de mis canciones favoritas",
+                      "Leer 3 páginas de un libro o una revista o el periódico",
+                      "Ver un capítulo de mi serie favorita o una película",
+                      "Dedicar 15 minutos a un pasatiempo (ejemplo: tejer, pintar, jardinería)",
+                      "Acariciar a mi mascota por 1 minuto",
+                      "Tomarme un breve descanso para tomar un café o infusión",
+                      "Jugar cartas, dominó o algún otro juego de mesa",
+                      "Imaginarme un lugar tranquilo, hermoso o relajante (ejemplo: playa, campo) por 2 minutos",
+                      "Escribir en un papel 1 cosa positiva del día",
+                      "Salir a pasear a algún lugar (ejemplo: un parque o una plaza)"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -9017,7 +10181,19 @@
                     "title": "Metas",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "hta"
+                    "metasId": "hta",
+                    "metasOptions": [
+                      "Lavar los platos inmediatamente después de comer",
+                      "Sacar una cita médica o hacer un trámite pendiente",
+                      "Reparar algo pequeño en casa (ejemplo: cambiar un foco, coser botón)",
+                      "Sacar a pasear a mi mascota",
+                      "Borrar fotos o mensajes antiguos del celular para liberar espacio",
+                      "Dedicar 20 minutos a jardinería o cuidado de plantas",
+                      "Organizar los gastos de la semana",
+                      "Ordenar un mueble, un cajón o una repisa",
+                      "Limpiar una parte de la casa (ejemplo: la refrigeradora)",
+                      "Lavar, doblar o planchar ropa durante 30 minutos"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -9163,7 +10339,19 @@
                     "title": "Metas",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "hta"
+                    "metasId": "hta",
+                    "metasOptions": [
+                      "Lavar los platos inmediatamente después de comer",
+                      "Sacar una cita médica o hacer un trámite pendiente",
+                      "Reparar algo pequeño en casa (ejemplo: cambiar un foco, coser botón)",
+                      "Sacar a pasear a mi mascota",
+                      "Borrar fotos o mensajes antiguos del celular para liberar espacio",
+                      "Dedicar 20 minutos a jardinería o cuidado de plantas",
+                      "Organizar los gastos de la semana",
+                      "Ordenar un mueble, un cajón o una repisa",
+                      "Limpiar una parte de la casa (ejemplo: la refrigeradora)",
+                      "Lavar, doblar o planchar ropa durante 30 minutos"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -9285,7 +10473,19 @@
                     "title": "Metas (Hipertensión)",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "hta"
+                    "metasId": "hta",
+                    "metasOptions": [
+                      "Caminar 15 minutos a paso rápido",
+                      "Hacer marcha en el sitio (levantar rodillas estando de pie) por 5 minutos",
+                      "Bailar 1 canción en casa",
+                      "Hacer 10 minutos de estiramientos suaves",
+                      "Bajarme un paradero antes del bus o micro y hacer el resto del camino a pie",
+                      "Hacer una rutina de ejercicios sentado en silla",
+                      "Ir caminando a hacer compras en vez de usar el carro, bus o moto",
+                      "Dar una vuelta a la manzana después de comer",
+                      "Hacer ejercicios de equilibrio apoyándome en una pared o mesa firme",
+                      "Practicar un deporte recreativo o clase de baile"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -9400,7 +10600,19 @@
                     "title": "Metas",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "hta"
+                    "metasId": "hta",
+                    "metasOptions": [
+                      "Caminar 15 minutos a paso rápido",
+                      "Hacer marcha en el sitio (levantar rodillas estando de pie) por 5 minutos",
+                      "Bailar 1 canción en casa",
+                      "Hacer 10 minutos de estiramientos suaves",
+                      "Bajarme un paradero antes del bus o micro y hacer el resto del camino a pie",
+                      "Hacer una rutina de ejercicios sentado en silla",
+                      "Ir caminando a hacer compras en vez de usar el carro, bus o moto",
+                      "Dar una vuelta a la manzana después de comer",
+                      "Hacer ejercicios de equilibrio apoyándome en una pared o mesa firme",
+                      "Practicar un deporte recreativo o clase de baile"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -9522,7 +10734,19 @@
                     "title": "Metas",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "hta"
+                    "metasId": "hta",
+                    "metasOptions": [
+                      "Caminar 15 minutos a paso rápido",
+                      "Hacer marcha en el sitio (levantar rodillas estando de pie) por 5 minutos",
+                      "Bailar 1 canción en casa",
+                      "Hacer 10 minutos de estiramientos suaves",
+                      "Bajarme un paradero antes del bus o micro y hacer el resto del camino a pie",
+                      "Hacer una rutina de ejercicios sentado en silla",
+                      "Ir caminando a hacer compras en vez de usar el carro, bus o moto",
+                      "Dar una vuelta a la manzana después de comer",
+                      "Hacer ejercicios de equilibrio apoyándome en una pared o mesa firme",
+                      "Practicar un deporte recreativo o clase de baile"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -9637,7 +10861,19 @@
                     "title": "Metas",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "hta"
+                    "metasId": "hta",
+                    "metasOptions": [
+                      "Beber al menos 3 vasos de agua",
+                      "Comer una fruta como postre",
+                      "Cocinar sin añadir sal, usando especias o limón para condimentar",
+                      "Beber agua en lugar de bebidas azucaradas (ejemplo: gaseosas) en el almuerzo",
+                      "Comprar verduras frescas para el día o la semana",
+                      "Preparar una ensalada con verduras de diferentes colores para acompañar una comida",
+                      "Leer las etiquetas de los alimentos y evitar los que dicen \"Alto en Sodio/Azúcar\"",
+                      "Comer una fruta en lugar de galletas",
+                      "Retirar el salero de la mesa antes de sentarme a comer",
+                      "Preparar una botella de agua para tener a mano durante el día"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -9766,7 +11002,19 @@
                     "title": "Metas",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "hta"
+                    "metasId": "hta",
+                    "metasOptions": [
+                      "Beber al menos 3 vasos de agua",
+                      "Comer una fruta como postre",
+                      "Cocinar sin añadir sal, usando especias o limón para condimentar",
+                      "Beber agua en lugar de bebidas azucaradas (ejemplo: gaseosas) en el almuerzo",
+                      "Comprar verduras frescas para el día o la semana",
+                      "Preparar una ensalada con verduras de diferentes colores para acompañar una comida",
+                      "Leer las etiquetas de los alimentos y evitar los que dicen \"Alto en Sodio/Azúcar\"",
+                      "Comer una fruta en lugar de galletas",
+                      "Retirar el salero de la mesa antes de sentarme a comer",
+                      "Preparar una botella de agua para tener a mano durante el día"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -9886,7 +11134,19 @@
                     "title": "Metas",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "hta"
+                    "metasId": "hta",
+                    "metasOptions": [
+                      "Beber al menos 3 vasos de agua",
+                      "Comer una fruta como postre",
+                      "Cocinar sin añadir sal, usando especias o limón para condimentar",
+                      "Beber agua en lugar de bebidas azucaradas (ejemplo: gaseosas) en el almuerzo",
+                      "Comprar verduras frescas para el día o la semana",
+                      "Preparar una ensalada con verduras de diferentes colores para acompañar una comida",
+                      "Leer las etiquetas de los alimentos y evitar los que dicen \"Alto en Sodio/Azúcar\"",
+                      "Comer una fruta en lugar de galletas",
+                      "Retirar el salero de la mesa antes de sentarme a comer",
+                      "Preparar una botella de agua para tener a mano durante el día"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -9992,7 +11252,19 @@
                     "title": "Metas",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "hta"
+                    "metasId": "hta",
+                    "metasOptions": [
+                      "Tomar todos mis medicamentos del día como me los indicó el médico",
+                      "Organizar el pastillero para toda la semana",
+                      "Poner una alarma en el celular para tomar mi medicación",
+                      "Anotar dudas o síntomas en un papel para llevar a mi próxima consulta médica",
+                      "Sacar cita para mi próxima consulta médica",
+                      "Revisar cuántos medicamentos me quedan y anotar la fecha para ir a recoger más",
+                      "Aplicar crema humectante en los pies",
+                      "Medir mi glucosa/azúcar y anotar el resultado",
+                      "Revisar mis pies con un espejo para ver que no estén lastimados",
+                      "Medir mi presión arterial y anotar el resultado"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -10114,7 +11386,19 @@
                     "title": "Metas",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "hta"
+                    "metasId": "hta",
+                    "metasOptions": [
+                      "Tomar todos mis medicamentos del día como me los indicó el médico",
+                      "Organizar el pastillero para toda la semana",
+                      "Poner una alarma en el celular para tomar mi medicación",
+                      "Anotar dudas o síntomas en un papel para llevar a mi próxima consulta médica",
+                      "Sacar cita para mi próxima consulta médica",
+                      "Revisar cuántos medicamentos me quedan y anotar la fecha para ir a recoger más",
+                      "Aplicar crema humectante en los pies",
+                      "Medir mi glucosa/azúcar y anotar el resultado",
+                      "Revisar mis pies con un espejo para ver que no estén lastimados",
+                      "Medir mi presión arterial y anotar el resultado"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -10271,7 +11555,19 @@
                     "title": "Metas",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "hta"
+                    "metasId": "hta",
+                    "metasOptions": [
+                      "Cenar al menos 2 horas antes de irme a dormir",
+                      "Dejar el celular lejos de la cama o en modo \"No Molestar\"",
+                      "Acostarme de noche a la misma hora durante 3 días seguidos",
+                      "Crear una rutina de relajación antes de dormir (ejemplo: leer, música suave)",
+                      "No tomar café o té 2 horas antes de irme a dormir",
+                      "Apagar todas las luces antes de irme a dormir",
+                      "Hacer ejercicio suave o estiramientos antes de dormir",
+                      "Levantarme a la misma hora por la mañana durante 3 días seguidos",
+                      "Darme un baño o ducha tibia antes de acostarme",
+                      "No hacer siestas de más de 20 minutos"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -10370,7 +11666,19 @@
                     "title": "Metas (Hipertensión)",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "hta"
+                    "metasId": "hta",
+                    "metasOptions": [
+                      "Contarle a un amigo o familiar algo bueno que me pasó esta semana",
+                      "Invitar a un amigo o familiar a tomar un café o té",
+                      "Pedirle a un amigo o familiar que me acompañe a caminar",
+                      "Enviar un mensaje de texto cariñoso a alguien que quiero",
+                      "Visitar a un familiar o amigo",
+                      "Participar en una actividad comunitaria o religiosa",
+                      "Compartir una comida (almuerzo/cena) con alguien, sin prender la televisión o usar el celular",
+                      "Pedir ayuda a un amigo o familiar para una tarea sencilla (ejemplo: arreglar algo de la casa)",
+                      "Jugar un juego de mesa o cartas con la familia o amigos",
+                      "Agradecer a un familiar o amigo que me ha ayudado con algo"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -10550,7 +11858,19 @@
                     "title": "Metas",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "hta"
+                    "metasId": "hta",
+                    "metasOptions": [
+                      "Contarle a un amigo o familiar algo bueno que me pasó esta semana",
+                      "Invitar a un amigo o familiar a tomar un café o té",
+                      "Pedirle a un amigo o familiar que me acompañe a caminar",
+                      "Enviar un mensaje de texto cariñoso a alguien que quiero",
+                      "Visitar a un familiar o amigo",
+                      "Participar en una actividad comunitaria o religiosa",
+                      "Compartir una comida (almuerzo/cena) con alguien, sin prender la televisión o usar el celular",
+                      "Pedir ayuda a un amigo o familiar para una tarea sencilla (ejemplo: arreglar algo de la casa)",
+                      "Jugar un juego de mesa o cartas con la familia o amigos",
+                      "Agradecer a un familiar o amigo que me ha ayudado con algo"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -10656,7 +11976,19 @@
                     "title": "Metas",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "hta"
+                    "metasId": "hta",
+                    "metasOptions": [
+                      "Escuchar una de mis canciones favoritas",
+                      "Leer 3 páginas de un libro o una revista o el periódico",
+                      "Ver un capítulo de mi serie favorita o una película",
+                      "Dedicar 15 minutos a un pasatiempo (ejemplo: tejer, pintar, jardinería)",
+                      "Acariciar a mi mascota por 1 minuto",
+                      "Tomarme un breve descanso para tomar un café o infusión",
+                      "Jugar cartas, dominó o algún otro juego de mesa",
+                      "Imaginarme un lugar tranquilo, hermoso o relajante (ejemplo: playa, campo) por 2 minutos",
+                      "Escribir en un papel 1 cosa positiva del día",
+                      "Salir a pasear a algún lugar (ejemplo: un parque o una plaza)"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -10779,7 +12111,19 @@
                     "title": "Metas (Hipertensión)",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "hta"
+                    "metasId": "hta",
+                    "metasOptions": [
+                      "Escuchar una de mis canciones favoritas",
+                      "Leer 3 páginas de un libro o una revista o el periódico",
+                      "Ver un capítulo de mi serie favorita o una película",
+                      "Dedicar 15 minutos a un pasatiempo (ejemplo: tejer, pintar, jardinería)",
+                      "Acariciar a mi mascota por 1 minuto",
+                      "Tomarme un breve descanso para tomar un café o infusión",
+                      "Jugar cartas, dominó o algún otro juego de mesa",
+                      "Imaginarme un lugar tranquilo, hermoso o relajante (ejemplo: playa, campo) por 2 minutos",
+                      "Escribir en un papel 1 cosa positiva del día",
+                      "Salir a pasear a algún lugar (ejemplo: un parque o una plaza)"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -10917,7 +12261,19 @@
                     "title": "Metas",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "diabetes"
+                    "metasId": "diabetes",
+                    "metasOptions": [
+                      "Escuchar una de mis canciones favoritas",
+                      "Leer 3 páginas de un libro o una revista o el periódico",
+                      "Ver un capítulo de mi serie favorita o una película",
+                      "Dedicar 15 minutos a un pasatiempo (ejemplo: tejer, pintar, jardinería)",
+                      "Acariciar a mi mascota por 1 minuto",
+                      "Tomarme un breve descanso para tomar un café o infusión",
+                      "Jugar cartas, dominó o algún otro juego de mesa",
+                      "Imaginarme un lugar tranquilo, hermoso o relajante (ejemplo: playa, campo) por 2 minutos",
+                      "Escribir en un papel 1 cosa positiva del día",
+                      "Salir a pasear a algún lugar (ejemplo: un parque o una plaza)"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -11084,7 +12440,19 @@
                     "title": "Metas",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "diabetes"
+                    "metasId": "diabetes",
+                    "metasOptions": [
+                      "Lavar los platos inmediatamente después de comer",
+                      "Sacar una cita médica o hacer un trámite pendiente",
+                      "Reparar algo pequeño en casa (ejemplo: cambiar un foco, coser botón)",
+                      "Sacar a pasear a mi mascota",
+                      "Borrar fotos o mensajes antiguos del celular para liberar espacio",
+                      "Dedicar 20 minutos a jardinería o cuidado de plantas",
+                      "Organizar los gastos de la semana",
+                      "Ordenar un mueble, un cajón o una repisa",
+                      "Limpiar una parte de la casa (ejemplo: la refrigeradora)",
+                      "Lavar, doblar o planchar ropa durante 30 minutos"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -11230,7 +12598,19 @@
                     "title": "Metas",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "diabetes"
+                    "metasId": "diabetes",
+                    "metasOptions": [
+                      "Lavar los platos inmediatamente después de comer",
+                      "Sacar una cita médica o hacer un trámite pendiente",
+                      "Reparar algo pequeño en casa (ejemplo: cambiar un foco, coser botón)",
+                      "Sacar a pasear a mi mascota",
+                      "Borrar fotos o mensajes antiguos del celular para liberar espacio",
+                      "Dedicar 20 minutos a jardinería o cuidado de plantas",
+                      "Organizar los gastos de la semana",
+                      "Ordenar un mueble, un cajón o una repisa",
+                      "Limpiar una parte de la casa (ejemplo: la refrigeradora)",
+                      "Lavar, doblar o planchar ropa durante 30 minutos"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -11359,7 +12739,19 @@
                     "title": "Metas (Diabetes)",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "diabetes"
+                    "metasId": "diabetes",
+                    "metasOptions": [
+                      "Caminar 15 minutos a paso rápido",
+                      "Hacer marcha en el sitio (levantar rodillas estando de pie) por 5 minutos",
+                      "Bailar 1 canción en casa",
+                      "Hacer 10 minutos de estiramientos suaves",
+                      "Bajarme un paradero antes del bus o micro y hacer el resto del camino a pie",
+                      "Hacer una rutina de ejercicios sentado en silla",
+                      "Ir caminando a hacer compras en vez de usar el carro, bus o moto",
+                      "Dar una vuelta a la manzana después de comer",
+                      "Hacer ejercicios de equilibrio apoyándome en una pared o mesa firme",
+                      "Practicar un deporte recreativo o clase de baile"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -11474,7 +12866,19 @@
                     "title": "Metas",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "diabetes"
+                    "metasId": "diabetes",
+                    "metasOptions": [
+                      "Caminar 15 minutos a paso rápido",
+                      "Hacer marcha en el sitio (levantar rodillas estando de pie) por 5 minutos",
+                      "Bailar 1 canción en casa",
+                      "Hacer 10 minutos de estiramientos suaves",
+                      "Bajarme un paradero antes del bus o micro y hacer el resto del camino a pie",
+                      "Hacer una rutina de ejercicios sentado en silla",
+                      "Ir caminando a hacer compras en vez de usar el carro, bus o moto",
+                      "Dar una vuelta a la manzana después de comer",
+                      "Hacer ejercicios de equilibrio apoyándome en una pared o mesa firme",
+                      "Practicar un deporte recreativo o clase de baile"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -11596,7 +13000,19 @@
                     "title": "Metas",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "diabetes"
+                    "metasId": "diabetes",
+                    "metasOptions": [
+                      "Caminar 15 minutos a paso rápido",
+                      "Hacer marcha en el sitio (levantar rodillas estando de pie) por 5 minutos",
+                      "Bailar 1 canción en casa",
+                      "Hacer 10 minutos de estiramientos suaves",
+                      "Bajarme un paradero antes del bus o micro y hacer el resto del camino a pie",
+                      "Hacer una rutina de ejercicios sentado en silla",
+                      "Ir caminando a hacer compras en vez de usar el carro, bus o moto",
+                      "Dar una vuelta a la manzana después de comer",
+                      "Hacer ejercicios de equilibrio apoyándome en una pared o mesa firme",
+                      "Practicar un deporte recreativo o clase de baile"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -11711,7 +13127,19 @@
                     "title": "Metas",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "diabetes"
+                    "metasId": "diabetes",
+                    "metasOptions": [
+                      "Beber al menos 3 vasos de agua",
+                      "Comer una fruta como postre",
+                      "Cocinar sin añadir sal, usando especias o limón para condimentar",
+                      "Beber agua en lugar de bebidas azucaradas (ejemplo: gaseosas) en el almuerzo",
+                      "Comprar verduras frescas para el día o la semana",
+                      "Preparar una ensalada con verduras de diferentes colores para acompañar una comida",
+                      "Leer las etiquetas de los alimentos y evitar los que dicen \"Alto en Sodio/Azúcar\"",
+                      "Comer una fruta en lugar de galletas",
+                      "Retirar el salero de la mesa antes de sentarme a comer",
+                      "Preparar una botella de agua para tener a mano durante el día"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -11840,7 +13268,19 @@
                     "title": "Metas",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "diabetes"
+                    "metasId": "diabetes",
+                    "metasOptions": [
+                      "Beber al menos 3 vasos de agua",
+                      "Comer una fruta como postre",
+                      "Cocinar sin añadir sal, usando especias o limón para condimentar",
+                      "Beber agua en lugar de bebidas azucaradas (ejemplo: gaseosas) en el almuerzo",
+                      "Comprar verduras frescas para el día o la semana",
+                      "Preparar una ensalada con verduras de diferentes colores para acompañar una comida",
+                      "Leer las etiquetas de los alimentos y evitar los que dicen \"Alto en Sodio/Azúcar\"",
+                      "Comer una fruta en lugar de galletas",
+                      "Retirar el salero de la mesa antes de sentarme a comer",
+                      "Preparar una botella de agua para tener a mano durante el día"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -11960,7 +13400,19 @@
                     "title": "Metas",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "diabetes"
+                    "metasId": "diabetes",
+                    "metasOptions": [
+                      "Beber al menos 3 vasos de agua",
+                      "Comer una fruta como postre",
+                      "Cocinar sin añadir sal, usando especias o limón para condimentar",
+                      "Beber agua en lugar de bebidas azucaradas (ejemplo: gaseosas) en el almuerzo",
+                      "Comprar verduras frescas para el día o la semana",
+                      "Preparar una ensalada con verduras de diferentes colores para acompañar una comida",
+                      "Leer las etiquetas de los alimentos y evitar los que dicen \"Alto en Sodio/Azúcar\"",
+                      "Comer una fruta en lugar de galletas",
+                      "Retirar el salero de la mesa antes de sentarme a comer",
+                      "Preparar una botella de agua para tener a mano durante el día"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -12073,7 +13525,19 @@
                     "title": "Metas",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "diabetes"
+                    "metasId": "diabetes",
+                    "metasOptions": [
+                      "Tomar todos mis medicamentos del día como me los indicó el médico",
+                      "Organizar el pastillero para toda la semana",
+                      "Poner una alarma en el celular para tomar mi medicación",
+                      "Anotar dudas o síntomas en un papel para llevar a mi próxima consulta médica",
+                      "Sacar cita para mi próxima consulta médica",
+                      "Revisar cuántos medicamentos me quedan y anotar la fecha para ir a recoger más",
+                      "Aplicar crema humectante en los pies",
+                      "Medir mi glucosa/azúcar y anotar el resultado",
+                      "Revisar mis pies con un espejo para ver que no estén lastimados",
+                      "Medir mi presión arterial y anotar el resultado"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -12195,7 +13659,19 @@
                     "title": "Metas",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "diabetes"
+                    "metasId": "diabetes",
+                    "metasOptions": [
+                      "Tomar todos mis medicamentos del día como me los indicó el médico",
+                      "Organizar el pastillero para toda la semana",
+                      "Poner una alarma en el celular para tomar mi medicación",
+                      "Anotar dudas o síntomas en un papel para llevar a mi próxima consulta médica",
+                      "Sacar cita para mi próxima consulta médica",
+                      "Revisar cuántos medicamentos me quedan y anotar la fecha para ir a recoger más",
+                      "Aplicar crema humectante en los pies",
+                      "Medir mi glucosa/azúcar y anotar el resultado",
+                      "Revisar mis pies con un espejo para ver que no estén lastimados",
+                      "Medir mi presión arterial y anotar el resultado"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -12352,7 +13828,19 @@
                     "title": "Metas",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "diabetes"
+                    "metasId": "diabetes",
+                    "metasOptions": [
+                      "Cenar al menos 2 horas antes de irme a dormir",
+                      "Dejar el celular lejos de la cama o en modo \"No Molestar\"",
+                      "Acostarme de noche a la misma hora durante 3 días seguidos",
+                      "Crear una rutina de relajación antes de dormir (ejemplo: leer, música suave)",
+                      "No tomar café o té 2 horas antes de irme a dormir",
+                      "Apagar todas las luces antes de irme a dormir",
+                      "Hacer ejercicio suave o estiramientos antes de dormir",
+                      "Levantarme a la misma hora por la mañana durante 3 días seguidos",
+                      "Darme un baño o ducha tibia antes de acostarme",
+                      "No hacer siestas de más de 20 minutos"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -12451,7 +13939,19 @@
                     "title": "Metas (Diabetes)",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "diabetes"
+                    "metasId": "diabetes",
+                    "metasOptions": [
+                      "Contarle a un amigo o familiar algo bueno que me pasó esta semana",
+                      "Invitar a un amigo o familiar a tomar un café o té",
+                      "Pedirle a un amigo o familiar que me acompañe a caminar",
+                      "Enviar un mensaje de texto cariñoso a alguien que quiero",
+                      "Visitar a un familiar o amigo",
+                      "Participar en una actividad comunitaria o religiosa",
+                      "Compartir una comida (almuerzo/cena) con alguien, sin prender la televisión o usar el celular",
+                      "Pedir ayuda a un amigo o familiar para una tarea sencilla (ejemplo: arreglar algo de la casa)",
+                      "Jugar un juego de mesa o cartas con la familia o amigos",
+                      "Agradecer a un familiar o amigo que me ha ayudado con algo"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -12631,7 +14131,19 @@
                     "title": "Metas",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "diabetes"
+                    "metasId": "diabetes",
+                    "metasOptions": [
+                      "Contarle a un amigo o familiar algo bueno que me pasó esta semana",
+                      "Invitar a un amigo o familiar a tomar un café o té",
+                      "Pedirle a un amigo o familiar que me acompañe a caminar",
+                      "Enviar un mensaje de texto cariñoso a alguien que quiero",
+                      "Visitar a un familiar o amigo",
+                      "Participar en una actividad comunitaria o religiosa",
+                      "Compartir una comida (almuerzo/cena) con alguien, sin prender la televisión o usar el celular",
+                      "Pedir ayuda a un amigo o familiar para una tarea sencilla (ejemplo: arreglar algo de la casa)",
+                      "Jugar un juego de mesa o cartas con la familia o amigos",
+                      "Agradecer a un familiar o amigo que me ha ayudado con algo"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -12737,7 +14249,19 @@
                     "title": "Metas",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "diabetes"
+                    "metasId": "diabetes",
+                    "metasOptions": [
+                      "Escuchar una de mis canciones favoritas",
+                      "Leer 3 páginas de un libro o una revista o el periódico",
+                      "Ver un capítulo de mi serie favorita o una película",
+                      "Dedicar 15 minutos a un pasatiempo (ejemplo: tejer, pintar, jardinería)",
+                      "Acariciar a mi mascota por 1 minuto",
+                      "Tomarme un breve descanso para tomar un café o infusión",
+                      "Jugar cartas, dominó o algún otro juego de mesa",
+                      "Imaginarme un lugar tranquilo, hermoso o relajante (ejemplo: playa, campo) por 2 minutos",
+                      "Escribir en un papel 1 cosa positiva del día",
+                      "Salir a pasear a algún lugar (ejemplo: un parque o una plaza)"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",
@@ -12860,7 +14384,19 @@
                     "title": "Metas (Diabetes)",
                     "description": "Configura tus metas para esta sesión",
                     "iconResId": "outline_trophy_24",
-                    "metasId": "diabetes"
+                    "metasId": "diabetes",
+                    "metasOptions": [
+                      "Escuchar una de mis canciones favoritas",
+                      "Leer 3 páginas de un libro o una revista o el periódico",
+                      "Ver un capítulo de mi serie favorita o una película",
+                      "Dedicar 15 minutos a un pasatiempo (ejemplo: tejer, pintar, jardinería)",
+                      "Acariciar a mi mascota por 1 minuto",
+                      "Tomarme un breve descanso para tomar un café o infusión",
+                      "Jugar cartas, dominó o algún otro juego de mesa",
+                      "Imaginarme un lugar tranquilo, hermoso o relajante (ejemplo: playa, campo) por 2 minutos",
+                      "Escribir en un papel 1 cosa positiva del día",
+                      "Salir a pasear a algún lugar (ejemplo: un parque o una plaza)"
+                    ]
                   },
                   {
                     "type": "DESCRIPTION",

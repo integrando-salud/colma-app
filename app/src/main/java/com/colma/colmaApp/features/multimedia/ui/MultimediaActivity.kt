@@ -137,6 +137,7 @@ fun MultimediaScreen(
                                 currentOption.metasId?.let {
                                     MetasContent(
                                         metasId = it,
+                                        metasOptions = currentOption.metasOptions,
                                         currentWeekId = uiState.sessionId.toInt(),
                                         currentSessionId = uiState.subSessionId.toInt(),
                                         onFinish = { onEvent(MultimediaEvent.Finish) },

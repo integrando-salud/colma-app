@@ -24,6 +24,7 @@ data class MultimediaOption(
     val contentAssetId: Int? = null, // For raw resource IDs (e.g., R.raw.xxx)
     val questions: List<QuizQuestion>? = null, // New field for embedded quiz questions
     val metasId: String? = null, // New field for metas identification
+    val metasOptions: List<String>? = null, // List of dynamic goal options from content.json
     val descriptionAudios: List<Int>? = null, // Audio resource IDs for description paragraphs
     val isCompleted: Boolean = false, // Indicates if the resource has been viewed/completed
     val localFilePath: String? = null,

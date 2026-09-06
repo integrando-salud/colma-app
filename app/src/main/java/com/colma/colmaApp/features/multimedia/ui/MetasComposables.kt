@@ -41,6 +41,7 @@ import java.util.*
 @Composable
 fun MetasContent(
     metasId: String,
+    metasOptions: List<String>? = null,
     currentWeekId: Int,
     currentSessionId: Int,
     onFinish: () -> Unit,
@@ -202,7 +203,8 @@ fun MetasContent(
                         modifier = Modifier.fillMaxWidth().padding(16.dp),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        val (actividades, conQuienOptions) = getMetasOptions(treatmentType)
+                        val (fallbackActividades, conQuienOptions) = getMetasOptions(treatmentType)
+                        val actividades = if (!metasOptions.isNullOrEmpty()) metasOptions else fallbackActividades
                         CardThatOpensSelectionDialog(
                             title = "¿Qué actividad deseas hacer?",
                             items = actividades,
