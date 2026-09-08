@@ -179,6 +179,13 @@ class MoodQuizViewModel(private val repository: MoodRepository) : ViewModel() {
                             else -> "Registro guardado exitosamente"
                         }
                     }
+                    totalScore in 5..9 -> {
+                        when (paisId) {
+                            1 -> "Tus respuestas sugieren que podés estar sintiendo un leve malestar emocional. \n\n¡Hacer actividad física, darte descansos en la medida de lo posible, y pasar tiempo con personas queridas son cosas que pueden ayudarte!"
+                            2 -> "Tus respuestas sugieren que puedes estar sintiendo un leve malestar emocional. \n\n¡Hacer actividad física, darte descansos en la medida de lo posible, y pasar tiempo con personas queridas son cosas que pueden ayudarte!"
+                            else -> "Registro guardado exitosamente"
+                        }
+                    }
                     else -> "Registro guardado exitosamente"
                 }
 
