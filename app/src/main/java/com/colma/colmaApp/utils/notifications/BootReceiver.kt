@@ -26,6 +26,12 @@ class BootReceiver : BroadcastReceiver() {
                     for (goal in activeGoals) {
                         NotificationHelper.scheduleGoalNotification(context.applicationContext, goal)
                     }
+
+                    val userId = com.colma.colmaApp.servicios.session.SessionManager.getUserId() ?: 1
+                    val primerLogin = dbHelper.getUsuarioPrimerLogin(userId)
+                    if (!primerLogin.isNullOrBlank()) {
+                        NotificationHelper.scheduleAllProductionWeeks(context.applicationContext, primerLogin)
+                    }
                 } catch (e: Exception) {
                     Log.e(TAG, "Error rescheduling goals on boot", e)
                 } finally {

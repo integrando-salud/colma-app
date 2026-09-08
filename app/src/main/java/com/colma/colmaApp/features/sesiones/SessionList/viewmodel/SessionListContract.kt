@@ -11,6 +11,8 @@ data class SessionListUiState(
     val expandedSessionId: Long? = null,
     val isLoading: Boolean = true,
     val treatmentTypes: List<TreatmentType> = emptyList(),
+    val isTestingMode: Boolean = false,
+    val testingToastMessage: String? = null,
     val error: String? = null
 )
 
@@ -25,5 +27,8 @@ sealed class SessionListEvent {
     ) : SessionListEvent()
     object BackClicked : SessionListEvent()
     object DebugAdvanceWeek : SessionListEvent()
+    object ToggleTestingMode : SessionListEvent()
+    object ScheduleNextWeekInTenMinutes : SessionListEvent()
+    object ClearTestingToastMessage : SessionListEvent()
     object Refresh : SessionListEvent()
 }

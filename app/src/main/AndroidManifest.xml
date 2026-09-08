@@ -40,6 +40,9 @@
         <receiver android:name=".utils.notifications.GoalDeadlineReceiver"
             android:exported="false" />
 
+        <receiver android:name=".utils.notifications.WeeklyUnlockReceiver"
+            android:exported="false" />
+
         <receiver android:name=".utils.notifications.BootReceiver"
             android:exported="true">
             <intent-filter>

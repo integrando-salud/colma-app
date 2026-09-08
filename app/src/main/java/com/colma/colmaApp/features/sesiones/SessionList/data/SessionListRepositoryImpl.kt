@@ -21,8 +21,18 @@ class SessionListRepositoryImpl(
     private val context: Context,
     private val dbHelper: DbHelper
 ) : SessionListRepository {
+    companion object {
+        private const val PREFS_NAME = "session_testing_prefs"
+        private const val KEY_IS_TESTING_MODE = "is_testing_mode"
+        private const val KEY_TEST_UNLOCKED_WEEKS = "testing_unlocked_weeks"
+    }
+
     private val TAG = "SessionListRepository"
     private val userId: Int
+
+    private val prefs: android.content.SharedPreferences by lazy {
+        context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+    }
 
     init {
         SessionManager.init(context.applicationContext)
@@ -42,9 +52,18 @@ class SessionListRepositoryImpl(
         }
     }
 
+    private fun getUnlockedWeeksCount(): Int {
+        val isTest = prefs.getBoolean(KEY_IS_TESTING_MODE, false)
+        return if (isTest) {
+            prefs.getInt(KEY_TEST_UNLOCKED_WEEKS, 1)
+        } else {
+            val fechaRegistro = dbHelper.getUsuarioPrimerLogin(userId)
+            getElapsedWeeks(fechaRegistro) + 1
+        }
+    }
+
     override suspend fun getHtaSessions(): List<SessionItem> = withContext(Dispatchers.IO) {
-        val fechaRegistro = dbHelper.getUsuarioPrimerLogin(userId)
-        val elapsedWeeks = getElapsedWeeks(fechaRegistro)
+        val unlockedWeeks = getUnlockedWeeksCount()
 
         contentRepository.getAllTreatments().fold(
             onSuccess = { treatmentContents ->
@@ -52,7 +71,7 @@ class SessionListRepositoryImpl(
                 treatmentContents
                     .filter { it.id == TreatmentType.HTA }
                     .flatMap { it.sessions }
-                    // .filterIndexed { index, _ -> index <= elapsedWeeks }
+                    .filterIndexed { index, _ -> index < unlockedWeeks }
                     .map { sessionContent ->
                         SessionItem(
                             id = sessionContent.id,
@@ -71,8 +90,7 @@ class SessionListRepositoryImpl(
     }
 
     override suspend fun getDiabetesSessions(): List<SessionItem> = withContext(Dispatchers.IO) {
-        val fechaRegistro = dbHelper.getUsuarioPrimerLogin(userId)
-        val elapsedWeeks = getElapsedWeeks(fechaRegistro)
+        val unlockedWeeks = getUnlockedWeeksCount()
 
         contentRepository.getAllTreatments().fold(
             onSuccess = { treatmentContents ->
@@ -80,7 +98,7 @@ class SessionListRepositoryImpl(
                 treatmentContents
                     .filter { it.id == TreatmentType.DIABETES }
                     .flatMap { it.sessions }
-                    // .filterIndexed { index, _ -> index <= elapsedWeeks }
+                    .filterIndexed { index, _ -> index < unlockedWeeks }
                     .map { sessionContent ->
                         SessionItem(
                             id = sessionContent.id,
@@ -99,8 +117,7 @@ class SessionListRepositoryImpl(
     }
 
     override suspend fun getDbtHtaSessions(): List<SessionItem> = withContext(Dispatchers.IO) {
-        val fechaRegistro = dbHelper.getUsuarioPrimerLogin(userId)
-        val elapsedWeeks = getElapsedWeeks(fechaRegistro)
+        val unlockedWeeks = getUnlockedWeeksCount()
 
         contentRepository.getAllTreatments().fold(
             onSuccess = { treatmentContents ->
@@ -108,7 +125,7 @@ class SessionListRepositoryImpl(
                 treatmentContents
                     .filter { it.id == TreatmentType.DBT_HTA }
                     .flatMap { it.sessions }
-                    // .filterIndexed { index, _ -> index <= elapsedWeeks }
+                    .filterIndexed { index, _ -> index < unlockedWeeks }
                     .map { sessionContent ->
                         SessionItem(
                             id = sessionContent.id,
@@ -259,5 +276,46 @@ class SessionListRepositoryImpl(
                     )
                 )
             }
+    }
+
+    override suspend fun isTestingMode(): Boolean = withContext(Dispatchers.IO) {
+        prefs.getBoolean(KEY_IS_TESTING_MODE, false)
+    }
+
+    override suspend fun getTestingUnlockedWeeks(): Int = withContext(Dispatchers.IO) {
+        prefs.getInt(KEY_TEST_UNLOCKED_WEEKS, 1)
+    }
+
+    override suspend fun toggleTestingMode(): Boolean = withContext(Dispatchers.IO) {
+        val current = prefs.getBoolean(KEY_IS_TESTING_MODE, false)
+        val newMode = !current
+        if (newMode) {
+            prefs.edit()
+                .putBoolean(KEY_IS_TESTING_MODE, true)
+                .putInt(KEY_TEST_UNLOCKED_WEEKS, 1)
+                .apply()
+        } else {
+            com.colma.colmaApp.utils.notifications.NotificationHelper.cancelWeeklyTestUnlock(context)
+            prefs.edit()
+                .putBoolean(KEY_IS_TESTING_MODE, false)
+                .putInt(KEY_TEST_UNLOCKED_WEEKS, 1)
+                .apply()
+        }
+        newMode
+    }
+
+    override suspend fun scheduleNextWeekInTenMinutes(): Pair<Int, Long>? = withContext(Dispatchers.IO) {
+        val currentUnlocked = getUnlockedWeeksCount()
+        val nextWeek = currentUnlocked + 1
+        if (nextWeek > 16) return@withContext null
+
+        val triggerTime = System.currentTimeMillis() + 10 * 60 * 1000L // 10 minutes
+        com.colma.colmaApp.utils.notifications.NotificationHelper.scheduleWeeklyUnlock(
+            context = context,
+            weekNumber = nextWeek,
+            triggerTimeMillis = triggerTime,
+            isTestMode = prefs.getBoolean(KEY_IS_TESTING_MODE, false)
+        )
+        Pair(nextWeek, triggerTime)
     }
 }

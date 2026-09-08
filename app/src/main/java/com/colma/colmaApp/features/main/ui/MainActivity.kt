@@ -31,7 +31,12 @@ import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.filled.LockOpen
+import androidx.compose.material.icons.filled.Timer
 import com.colma.colmaApp.features.multimedia.ui.scrollbar
+import com.colma.colmaApp.utils.notifications.NotificationHelper
+import com.colma.colmaApp.servicios.session.SessionManager
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -562,6 +567,8 @@ fun MainAppContainer() {
                                                 )
                                             }
                                         }
+                                    } else {
+                                        topBarConfig.actions?.invoke(this)
                                     }
                                 },
                                 colors = TopAppBarDefaults.topAppBarColors(
@@ -634,6 +641,10 @@ fun MainAppContainer() {
 
                             LaunchedEffect(Unit) {
                                 menuViewModel.onEvent(MenuMainEvent.LoadInitialData)
+                                val userId = SessionManager.getUserId() ?: 1
+                                val dbHelper = DbHelper(context)
+                                val primerLogin = dbHelper.getUsuarioPrimerLogin(userId)
+                                NotificationHelper.scheduleAllProductionWeeks(context, primerLogin)
                             }
 
                             LaunchedEffect(uiState.userName) {
@@ -708,13 +719,49 @@ fun MainAppContainer() {
                                 }
                             }
 
-                            LaunchedEffect(topBarTitle) {
+                            LaunchedEffect(topBarTitle, uiState.isTestingMode) {
                                 topBarConfig = TopBarConfig(
                                     title = topBarTitle,
                                     showBackButton = true,
                                     onBackClick = { sessionListViewModel.onEvent(SessionListEvent.BackClicked) },
-                                    showTopBar = true
+                                    showTopBar = true,
+                                    actions = {
+                                        // Botón 1: Toggle Testing Mode (Bloquear a Semana 1 / Restablecer a modo normal)
+                                        IconButton(
+                                            onClick = {
+                                                sessionListViewModel.onEvent(SessionListEvent.ToggleTestingMode)
+                                            }
+                                        ) {
+                                            Icon(
+                                                imageVector = if (uiState.isTestingMode) Icons.Default.Lock else Icons.Default.LockOpen,
+                                                contentDescription = if (uiState.isTestingMode) "Modo Prueba Activo (Toca para volver a normal)" else "Modo Normal (Toca para activar prueba)",
+                                                tint = if (uiState.isTestingMode) Color(0xFFFFD54F) else Color.White
+                                            )
+                                        }
+
+                                        // Botón 2: Habilitar siguiente semana en 10 min
+                                        if (uiState.isTestingMode) {
+                                            IconButton(
+                                                onClick = {
+                                                    sessionListViewModel.onEvent(SessionListEvent.ScheduleNextWeekInTenMinutes)
+                                                }
+                                            ) {
+                                                Icon(
+                                                    imageVector = Icons.Default.Timer,
+                                                    contentDescription = "Habilitar siguiente semana en 10 min",
+                                                    tint = Color.White
+                                                )
+                                            }
+                                        }
+                                    }
                                 )
+                            }
+
+                            LaunchedEffect(uiState.testingToastMessage) {
+                                uiState.testingToastMessage?.let { msg ->
+                                    android.widget.Toast.makeText(context, msg, android.widget.Toast.LENGTH_LONG).show()
+                                    sessionListViewModel.onEvent(SessionListEvent.ClearTestingToastMessage)
+                                }
                             }
 
                             LaunchedEffect(Unit) {

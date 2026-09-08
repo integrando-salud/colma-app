@@ -152,6 +152,7 @@ fun AdditionalInfoScreen() {
                 Card(
                     modifier = Modifier
                         .fillMaxWidth()
+                        .defaultMinSize(minHeight = 72.dp)
                         .clickable {
                             try {
                                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse(item.url))
@@ -189,15 +190,14 @@ fun AdditionalInfoScreen() {
 
                         // Text column
                         Column(
-                            modifier = Modifier.weight(1f)
+                            modifier = Modifier.weight(1f),
+                            verticalArrangement = Arrangement.Center
                         ) {
                             Text(
                                 text = item.title,
                                 style = MaterialTheme.typography.titleSmall,
                                 fontWeight = FontWeight.Bold,
-                                color = Color.DarkGray,
-                                maxLines = 2,
-                                overflow = TextOverflow.Ellipsis
+                                color = Color.DarkGray
                             )
                         }
 

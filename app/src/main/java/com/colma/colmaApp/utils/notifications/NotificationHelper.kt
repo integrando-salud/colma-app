@@ -17,15 +17,22 @@ object NotificationHelper {
     const val CHANNEL_ID = "goal_deadline_channel"
     private const val CHANNEL_NAME = "Recordatorios de Metas"
 
+    const val WEEKLY_CHANNEL_ID = "weekly_unlock_channel"
+    private const val WEEKLY_CHANNEL_NAME = "Nuevas Semanas Disponibles"
+
     fun createNotificationChannel(context: Context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val importance = NotificationManager.IMPORTANCE_HIGH
-            val channel = NotificationChannel(CHANNEL_ID, CHANNEL_NAME, importance).apply {
+            val goalChannel = NotificationChannel(CHANNEL_ID, CHANNEL_NAME, importance).apply {
                 description = "Notificaciones para metas próximas a vencer"
             }
+            val weeklyChannel = NotificationChannel(WEEKLY_CHANNEL_ID, WEEKLY_CHANNEL_NAME, importance).apply {
+                description = "Notificaciones para nuevas semanas habilitadas en tu tratamiento"
+            }
             val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            notificationManager.createNotificationChannel(channel)
-            Log.d(TAG, "Notification channel created: $CHANNEL_ID")
+            notificationManager.createNotificationChannel(goalChannel)
+            notificationManager.createNotificationChannel(weeklyChannel)
+            Log.d(TAG, "Notification channels created: $CHANNEL_ID, $WEEKLY_CHANNEL_ID")
         }
     }
 
@@ -147,6 +154,97 @@ object NotificationHelper {
             }
         } catch (e: Exception) {
             Log.e(TAG, "Error canceling notification for goal $metaId", e)
+        }
+    }
+
+    fun scheduleWeeklyUnlock(context: Context, weekNumber: Int, triggerTimeMillis: Long, isTestMode: Boolean = false) {
+        try {
+            val now = System.currentTimeMillis()
+            if (triggerTimeMillis <= now) {
+                Log.d(TAG, "Weekly unlock trigger time is in the past for Week $weekNumber, skipping.")
+                return
+            }
+
+            val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+            val intent = Intent(context, WeeklyUnlockReceiver::class.java).apply {
+                putExtra(WeeklyUnlockReceiver.EXTRA_WEEK_NUMBER, weekNumber)
+                putExtra(WeeklyUnlockReceiver.EXTRA_IS_TEST, isTestMode)
+            }
+
+            val requestCode = if (isTestMode) 40000 + weekNumber else 50000 + weekNumber
+            val pendingIntent = PendingIntent.getBroadcast(
+                context,
+                requestCode,
+                intent,
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+            )
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                if (alarmManager.canScheduleExactAlarms()) {
+                    try {
+                        alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, triggerTimeMillis, pendingIntent)
+                        Log.d(TAG, "Scheduled exact weekly unlock for Week $weekNumber at $triggerTimeMillis (isTest: $isTestMode)")
+                    } catch (e: SecurityException) {
+                        alarmManager.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, triggerTimeMillis, pendingIntent)
+                        Log.d(TAG, "Fallback scheduled weekly unlock for Week $weekNumber at $triggerTimeMillis (SecurityException)")
+                    }
+                } else {
+                    alarmManager.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, triggerTimeMillis, pendingIntent)
+                    Log.d(TAG, "Scheduled non-exact weekly unlock for Week $weekNumber at $triggerTimeMillis")
+                }
+            } else {
+                alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, triggerTimeMillis, pendingIntent)
+                Log.d(TAG, "Scheduled exact weekly unlock for Week $weekNumber at $triggerTimeMillis (pre-S)")
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Error scheduling weekly unlock notification for Week $weekNumber", e)
+        }
+    }
+
+    fun cancelWeeklyTestUnlock(context: Context) {
+        try {
+            val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+            for (week in 1..16) {
+                val intent = Intent(context, WeeklyUnlockReceiver::class.java)
+                val pendingIntent = PendingIntent.getBroadcast(
+                    context,
+                    40000 + week,
+                    intent,
+                    PendingIntent.FLAG_NO_CREATE or PendingIntent.FLAG_IMMUTABLE
+                )
+                if (pendingIntent != null) {
+                    alarmManager.cancel(pendingIntent)
+                    pendingIntent.cancel()
+                    Log.d(TAG, "Canceled test weekly unlock alarm for Week $week")
+                }
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Error canceling test weekly unlock alarms", e)
+        }
+    }
+
+    fun scheduleAllProductionWeeks(context: Context, primerLoginDate: String?) {
+        if (primerLoginDate.isNullOrBlank()) return
+        val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+        try {
+            val regDate = sdf.parse(primerLoginDate) ?: return
+            val now = System.currentTimeMillis()
+            for (week in 2..16) {
+                val cal = java.util.Calendar.getInstance().apply {
+                    time = regDate
+                    add(java.util.Calendar.DAY_OF_YEAR, (week - 1) * 7)
+                    set(java.util.Calendar.HOUR_OF_DAY, 9)
+                    set(java.util.Calendar.MINUTE, 0)
+                    set(java.util.Calendar.SECOND, 0)
+                    set(java.util.Calendar.MILLISECOND, 0)
+                }
+                val triggerMillis = cal.timeInMillis
+                if (triggerMillis > now) {
+                    scheduleWeeklyUnlock(context, week, triggerMillis, isTestMode = false)
+                }
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Error scheduling all production weeks from date $primerLoginDate", e)
         }
     }
 }
