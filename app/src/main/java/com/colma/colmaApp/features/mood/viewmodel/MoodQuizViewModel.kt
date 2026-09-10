@@ -27,9 +27,9 @@ class MoodQuizViewModel(private val repository: MoodRepository) : ViewModel() {
         "Problemas para quedarse o permanecer dormido.",
         "Sentirse cansado o con poca energía.",
         "Tiene poco apetito o come mucho.",
-        "Te sientes mal contigo mismo/a, o que eres un fracaso o que te has decepcionado a ti mismo/a o con tu familia.",
-        "Problemas para concentrarte en actividades como leer el periódico o ver la televisión.",
-        "¿Se mueve o habla tan despacio que otras personas podrían haberlo notado? ¿O está tan inquieto/a que se ha estado moviendo mucho más de lo habitual?"
+        "Se siente mal consigo mismo/a, o que es un fracaso o que se ha decepcionado a sí mismo/a o a su familia.",
+        "Problemas para concentrarse en actividades como leer el periódico o ver la televisión.",
+        "Se mueve o habla tan despacio que otras personas podrían haberlo notado, o está tan inquieto/a que se ha estado moviendo mucho más de lo habitual."
     )
 
     private val optionLabels = listOf(
