@@ -18,7 +18,7 @@ La aplicación se construyó siguiendo las mejores prácticas modernas de desarr
 
 ---
 
-##  Requisitos Previos
+## Requisitos Previos
 
 Para poder compilar y ejecutar el proyecto localmente, necesitarás tener instalado:
 
@@ -30,7 +30,7 @@ Para poder compilar y ejecutar el proyecto localmente, necesitarás tener instal
 
 ---
 
-##  Configuración del Entorno Local
+## Configuración del Entorno Local
 
 Para compilar el proyecto correctamente, es fundamental configurar las variables de entorno locales (las cuales están excluidas del control de versiones por seguridad):
 
@@ -46,7 +46,7 @@ Para compilar el proyecto correctamente, es fundamental configurar las variables
 
 ---
 
-##  Compilación y Ejecución
+## Compilación y Ejecución
 
 Una vez que tengas configurado tu archivo `local.properties`:
 
@@ -71,7 +71,7 @@ Para compilar y verificar que todo esté correcto desde la línea de comandos, p
 
 ---
 
-##  Estructura Principal del Proyecto
+## Estructura Principal del Proyecto
 
 La estructura del código fuente se encuentra organizada dentro del módulo `app/src/main/java/com/colma/colmaApp/` de la siguiente forma:
 
@@ -82,14 +82,13 @@ La estructura del código fuente se encuentra organizada dentro del módulo `app
 
 ---
 
-## 🧪 Testing y Aseguramiento de Calidad (QA)
+## Testing y Aseguramiento de Calidad (QA)
 
 El proyecto cuenta con una estrategia integral de pruebas automatizadas y aseguramiento de calidad. Para una guía completa sobre criterios de aceptación, matrices de casos de prueba y checklist de liberación, consulta [docs/QA_TESTING_GUIDE.md](docs/QA_TESTING_GUIDE.md).
 
 ### Stack de Testing
 - **Pruebas Unitarias y Corrutinas**: `JUnit 4`, `MockK`, `kotlinx-coroutines-test`, `Turbine` (para testing reactivo de `StateFlow`/`SharedFlow`).
 - **Pruebas de Red y API**: `MockWebServer` (OkHttp).
-- **Pruebas de UI e Instrumentación**: `Jetpack Compose UI Test`, `Espresso`.
 
 ### Ejecutar Pruebas Locales
 
@@ -101,17 +100,14 @@ El proyecto cuenta con una estrategia integral de pruebas automatizadas y asegur
   ```bash
   ./gradlew lintDebug
   ```
-* **Ejecutar pruebas instrumentadas en emulador / dispositivo**:
-  ```bash
-  ./gradlew connectedAndroidTest
-  ```
 * **Generar reporte completo de compilación y verificación**:
   ```bash
   ./gradlew check
   ```
 
-### 📄 Reporte en PDF Automático
+### Reporte en PDF Automático
 Al ejecutar `./gradlew testDebugUnitTest` o `./gradlew test`, se genera y sobreescribe automáticamente un informe ejecutivo en formato PDF:
 * **Ubicación:** [`app/test/Reporte_Resultados_QA.pdf`](app/test/Reporte_Resultados_QA.pdf)
+
 
 
