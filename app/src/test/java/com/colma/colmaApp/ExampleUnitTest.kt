@@ -5,19 +5,14 @@ import com.google.gson.Gson
 import org.junit.Test
 import org.junit.Assert.*
 
-/**
- * Example local unit test, which will execute on the development machine (host).
- *
- * See [testing documentation](http://d.android.com/tools/testing).
- */
 class ExampleUnitTest {
     @Test
-    fun addition_isCorrect() {
+    fun `verificacion basica de operacion aritmetica`() {
         assertEquals(4, 2 + 2)
     }
 
     @Test
-    fun testSyncDataRequestSerializationOrder() {
+    fun `la serializacion de datos de sincronizacion mantiene el orden requerido de atributos`() {
         val request = SyncDataRequest(
             deviceTimestamp = 1785359996664L,
             userId = 13,
@@ -32,7 +27,6 @@ class ExampleUnitTest {
             multimediaRead = emptyList()
         )
         val json = Gson().toJson(request)
-        println("Serialized JSON: $json")
         
         val expectedKeysOrder = listOf(
             "\"app\":",

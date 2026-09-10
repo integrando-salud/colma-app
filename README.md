@@ -75,7 +75,43 @@ Para compilar y verificar que todo esté correcto desde la línea de comandos, p
 
 La estructura del código fuente se encuentra organizada dentro del módulo `app/src/main/java/com/colma/colmaApp/` de la siguiente forma:
 
-- **`features/`**: Contiene los distintos módulos funcionales de la app (ej: `Login`, `MenuMain`, `multimedia`, `presion`, `sesiones`). Cada feature encapsula su lógica de UI, ViewModel y persistencia/repositorios asociados.
+- **`features/`**: Contiene los distintos módulos funcionales de la app (ej: `login`, `MenuMain`, `multimedia`, `presion`, `sesiones`). Cada feature encapsula su lógica de UI, ViewModel y persistencia/repositorios asociados.
 - **`servicios/`**: Servicios globales de la aplicación, incluyendo comunicación HTTP/Retrofit (`internetCommunication`), persistencia local (`database`) y manejo de sesión (`session`).
 - **`ui/theme/`**: Configuración de estilos globales, tipografías y paleta de colores de Material 3.
 - **`utils/`**: Clases de utilidad generales (cifrado, utilidades de red, reproductores de video locales y manejadores de notificaciones).
+
+---
+
+## 🧪 Testing y Aseguramiento de Calidad (QA)
+
+El proyecto cuenta con una estrategia integral de pruebas automatizadas y aseguramiento de calidad. Para una guía completa sobre criterios de aceptación, matrices de casos de prueba y checklist de liberación, consulta [docs/QA_TESTING_GUIDE.md](docs/QA_TESTING_GUIDE.md).
+
+### Stack de Testing
+- **Pruebas Unitarias y Corrutinas**: `JUnit 4`, `MockK`, `kotlinx-coroutines-test`, `Turbine` (para testing reactivo de `StateFlow`/`SharedFlow`).
+- **Pruebas de Red y API**: `MockWebServer` (OkHttp).
+- **Pruebas de UI e Instrumentación**: `Jetpack Compose UI Test`, `Espresso`.
+
+### Ejecutar Pruebas Locales
+
+* **Ejecutar todas las pruebas unitarias e integración**:
+  ```bash
+  ./gradlew testDebugUnitTest
+  ```
+* **Ejecutar análisis estático (Lint)**:
+  ```bash
+  ./gradlew lintDebug
+  ```
+* **Ejecutar pruebas instrumentadas en emulador / dispositivo**:
+  ```bash
+  ./gradlew connectedAndroidTest
+  ```
+* **Generar reporte completo de compilación y verificación**:
+  ```bash
+  ./gradlew check
+  ```
+
+### 📄 Reporte en PDF Automático
+Al ejecutar `./gradlew testDebugUnitTest` o `./gradlew test`, se genera y sobreescribe automáticamente un informe ejecutivo en formato PDF:
+* **Ubicación:** [`app/test/Reporte_Resultados_QA.pdf`](app/test/Reporte_Resultados_QA.pdf)
+
+

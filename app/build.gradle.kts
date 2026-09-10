@@ -58,6 +58,9 @@ android {
         compose = true
         buildConfig = true
     }
+    testOptions {
+        unitTests.isReturnDefaultValues = true
+    }
 }
 
 dependencies {
@@ -73,11 +76,21 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.androidx.foundation)
     implementation("androidx.compose.material:material-icons-extended")
+    // Testing
     testImplementation(libs.junit)
+    testImplementation(libs.mockk)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.turbine)
+    testImplementation(libs.mockwebserver)
+
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
+    androidTestImplementation(libs.mockk.android)
+    androidTestImplementation(libs.kotlinx.coroutines.test)
+    androidTestImplementation(libs.turbine)
+
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
@@ -90,6 +103,14 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.retrofit.converter.gson)
     implementation("com.squareup.okhttp3:logging-interceptor:3.14.9")
+}
 
+tasks.register<Exec>("generateTestReportPdf") {
+    group = "verification"
+    description = "Generates a PDF summary of the test execution results in app/test/"
+    commandLine("python3", "${rootProject.rootDir}/scripts/generate_test_report_pdf.py")
+}
 
+tasks.matching { it.name == "testDebugUnitTest" || it.name == "test" }.configureEach {
+    finalizedBy("generateTestReportPdf")
 }
