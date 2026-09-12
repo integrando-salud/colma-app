@@ -1,0 +1,19 @@
+{
+  "token": "259|gcT1WK8rgeAqaZ18NJK6Av0FPiSht3ToF04dNUmT514d4c19",
+  "usuario": {
+    "id": 13,
+    "documento": "81306555",
+    "nombre": "Erik Becerra",
+    "email": "erik-becerra-81306555@correo.com",
+    "sexo": "M",
+    "pais": {
+      "id": 2,
+      "nombre": "Perú"
+    },
+    "centro_salud": {
+      "id": 2,
+      "nombre": "Centro de Salud 2"
+    },
+    "primer_login": "2026-07-20 13:30:50"
+  }
+}

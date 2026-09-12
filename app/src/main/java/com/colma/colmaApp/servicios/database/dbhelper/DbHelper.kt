@@ -65,6 +65,39 @@ class DbHelper(context: Context) :
                     PRIMARY KEY (id_usuario, treatment_id, week_id, session_id)
                 );
             """)
+            db.execSQL("""
+                CREATE TABLE IF NOT EXISTS multimedia_read_table (
+                    id_multimedia_read INTEGER PRIMARY KEY AUTOINCREMENT,
+                    id_usuario INTEGER,
+                    treatment_id TEXT,
+                    week_id INTEGER,
+                    session_id INTEGER,
+                    multimedia_type TEXT,
+                    multimedia_unique_key TEXT,
+                    fecha_registro TEXT,
+                    fecha_sincronizacion TEXT,
+                    tratamiento_multimedia_id INTEGER
+                );
+            """)
+            try {
+                var colExists = false
+                db.rawQuery("PRAGMA table_info(multimedia_read_table)", null)?.use { cursor ->
+                    val nameIndex = cursor.getColumnIndex("name")
+                    if (nameIndex != -1) {
+                        while (cursor.moveToNext()) {
+                            if ("tratamiento_multimedia_id" == cursor.getString(nameIndex)) {
+                                colExists = true
+                                break
+                            }
+                        }
+                    }
+                }
+                if (!colExists) {
+                    db.execSQL("ALTER TABLE multimedia_read_table ADD COLUMN tratamiento_multimedia_id INTEGER;")
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -277,9 +310,30 @@ class DbHelper(context: Context) :
                     multimedia_type TEXT,
                     multimedia_unique_key TEXT,
                     fecha_registro TEXT,
-                    fecha_sincronizacion TEXT
+                    fecha_sincronizacion TEXT,
+                    tratamiento_multimedia_id INTEGER
                 );
             """)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+        try {
+            var colExists = false
+            db.rawQuery("PRAGMA table_info(multimedia_read_table)", null)?.use { cursor ->
+                val nameIndex = cursor.getColumnIndex("name")
+                if (nameIndex != -1) {
+                    while (cursor.moveToNext()) {
+                        if ("tratamiento_multimedia_id" == cursor.getString(nameIndex)) {
+                            colExists = true
+                            break
+                        }
+                    }
+                }
+            }
+            if (!colExists) {
+                db.execSQL("ALTER TABLE multimedia_read_table ADD COLUMN tratamiento_multimedia_id INTEGER;")
+            }
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -554,7 +608,8 @@ class DbHelper(context: Context) :
         multimediaType: String,
         multimediaUniqueKey: String,
         fechaRegistro: String? = null,
-        fechaSincronizacion: String? = null
+        fechaSincronizacion: String? = null,
+        tratamientoMultimediaId: Int? = null
     ): Long {
         val db: SQLiteDatabase = writableDatabase
         val values = ContentValues().apply {
@@ -566,6 +621,7 @@ class DbHelper(context: Context) :
             put("multimedia_unique_key", multimediaUniqueKey)
             put("fecha_registro", fechaRegistro ?: defaultDateTimeFormat.format(Date()))
             fechaSincronizacion?.let { put("fecha_sincronizacion", it) } ?: putNull("fecha_sincronizacion")
+            tratamientoMultimediaId?.let { put("tratamiento_multimedia_id", it) } ?: putNull("tratamiento_multimedia_id")
         }
 
         var rowId: Long = -1L
@@ -633,7 +689,8 @@ class DbHelper(context: Context) :
         weekId: Int,
         sessionId: Int,
         multimediaType: String,
-        multimediaUniqueKey: String
+        multimediaUniqueKey: String,
+        tratamientoMultimediaId: Int? = null
     ): Long {
         if (getMultimediaReadRecordExists(idUsuario, treatmentId, weekId, sessionId, multimediaType, multimediaUniqueKey)) {
             return -1L // Record already exists, do not insert
@@ -645,7 +702,8 @@ class DbHelper(context: Context) :
             weekId,
             sessionId,
             multimediaType,
-            multimediaUniqueKey
+            multimediaUniqueKey,
+            tratamientoMultimediaId = tratamientoMultimediaId
         )
     }
 
@@ -2037,7 +2095,8 @@ class DbHelper(context: Context) :
             multimedia_type = c.getStringOrNull("multimedia_type"),
             multimedia_unique_key = c.getStringOrNull("multimedia_unique_key"),
             fecha_registro = c.getStringOrNull("fecha_registro"),
-            fecha_sincronizacion = c.getStringOrNull("fecha_sincronizacion")
+            fecha_sincronizacion = c.getStringOrNull("fecha_sincronizacion"),
+            tratamiento_multimedia_id = c.getIntOrNull("tratamiento_multimedia_id")
         )
     }
 

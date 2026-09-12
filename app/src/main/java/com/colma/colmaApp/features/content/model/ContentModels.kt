@@ -53,7 +53,9 @@ data class MultimediaContent(
     val questions: List<QuizQuestion>? = null,
     @kotlinx.serialization.SerialName("DescriptionAudio")
     val descriptionAudios: List<String>? = null,
-    val descriptionImages: List<String>? = null
+    val descriptionImages: List<String>? = null,
+    @kotlinx.serialization.SerialName("tratamiento_multimedia_id")
+    val tratamientoMultimediaId: Int? = null
 )
 
 @Serializable

@@ -12,7 +12,13 @@ import java.util.concurrent.TimeUnit
 class TreatmentService {
 
     private val okHttpClient = OkHttpClient.Builder()
-        .addInterceptor(HttpLoggingInterceptor().apply {
+        .addInterceptor(HttpLoggingInterceptor { message ->
+            try {
+                android.util.Log.d("TreatmentService", message)
+            } catch (e: Throwable) {
+                println("TreatmentService: $message")
+            }
+        }.apply {
             level = HttpLoggingInterceptor.Level.HEADERS
         })
         .connectTimeout(30, TimeUnit.SECONDS)
@@ -22,6 +28,7 @@ class TreatmentService {
     private val retrofit: Retrofit = Retrofit.Builder()
         .baseUrl(BuildConfig.API_HOST)
         .client(okHttpClient)
+        .addConverterFactory(retrofit2.converter.gson.GsonConverterFactory.create())
         .build()
 
     private val apiService: TreatmentApiService = retrofit.create(TreatmentApiService::class.java)
@@ -35,4 +42,10 @@ class TreatmentService {
         val bearerToken = if (token.startsWith("Bearer ")) token else "Bearer $token"
         return apiService.downloadFile(bearerToken, fileUrl)
     }
+
+    suspend fun getMultimediaCompletados(token: String): Response<com.colma.colmaApp.servicios.internetCommunication.model.MultimediaCompletadosResponse> {
+        val bearerToken = if (token.startsWith("Bearer ")) token else "Bearer $token"
+        return apiService.getMultimediaCompletados(bearerToken)
+    }
 }
+

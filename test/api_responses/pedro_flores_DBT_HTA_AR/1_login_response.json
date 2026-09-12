@@ -1,0 +1,19 @@
+{
+  "token": "262|UqE1JHtZ7vgfzAHMW7xvitDWNPGJnvYhmnyGDolL72d1f828",
+  "usuario": {
+    "id": 86,
+    "documento": "77777777",
+    "nombre": "Pedro Flores",
+    "email": null,
+    "sexo": "M",
+    "pais": {
+      "id": 1,
+      "nombre": "Argentina"
+    },
+    "centro_salud": {
+      "id": 1,
+      "nombre": "Centro de Salud 1"
+    },
+    "primer_login": "2026-07-02 09:59:56"
+  }
+}

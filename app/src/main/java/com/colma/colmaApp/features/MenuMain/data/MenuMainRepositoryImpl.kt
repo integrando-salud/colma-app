@@ -171,7 +171,8 @@ class MenuMainRepositoryImpl(
                 multimediaType = mr.multimedia_type ?: "",
                 multimediaUniqueKey = mr.multimedia_unique_key ?: "",
                 fechaRegistro = mr.fecha_registro ?: clientSyncTimestamp,
-                fechaSincronizacion = clientSyncTimestamp
+                fechaSincronizacion = clientSyncTimestamp,
+                tratamientoMultimediaId = mr.tratamiento_multimedia_id
             )
         }
 

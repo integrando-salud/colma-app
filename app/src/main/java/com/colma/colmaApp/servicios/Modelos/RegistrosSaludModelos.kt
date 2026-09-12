@@ -49,6 +49,7 @@ class RegistrosSaludModelos {
         val multimedia_type: String?,
         val multimedia_unique_key: String?,
         val fecha_registro: String?,
-        val fecha_sincronizacion: String?
+        val fecha_sincronizacion: String?,
+        val tratamiento_multimedia_id: Int? = null
     )
 }

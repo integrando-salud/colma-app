@@ -26,7 +26,14 @@ data class ServerSesion(
 )
 
 data class ServerContentItem(
+    @SerializedName("tratamiento_multimedia_id") val tratamientoMultimediaId: Int? = null,
     @SerializedName("type") val type: String? = null,
     @SerializedName("title") val title: String? = null,
     @SerializedName("link") val link: String? = null
 )
+
+data class MultimediaCompletadosResponse(
+    @SerializedName("multimedia_completados") val multimediaCompletados: List<Int>? = null
+)
+
+

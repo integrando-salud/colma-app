@@ -139,7 +139,8 @@ class MultimediaViewModel(private val repository: SessionStepsRepository) : View
             multimedia_type = multimediaType,
             multimedia_unique_key = multimediaUniqueKey,
             fecha_registro = null,
-            fecha_sincronizacion = null
+            fecha_sincronizacion = null,
+            tratamiento_multimedia_id = option.tratamientoMultimediaId
         )
         viewModelScope.launch(Dispatchers.IO) {
             repository.saveMultimediaRead(record)

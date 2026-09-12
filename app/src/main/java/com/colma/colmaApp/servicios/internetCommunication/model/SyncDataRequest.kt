@@ -173,5 +173,7 @@ data class MultimediaReadData(
     @SerializedName("multimedia_type") val multimediaType: String,
     @SerializedName("multimedia_unique_key") val multimediaUniqueKey: String,
     @SerializedName("fecha_registro") val fechaRegistro: String,
-    @SerializedName("fecha_sincronizacion") val fechaSincronizacion: String
+    @SerializedName("fecha_sincronizacion") val fechaSincronizacion: String,
+    @SerializedName("tratamiento_multimedia_id") val tratamientoMultimediaId: Int? = null
 )
+

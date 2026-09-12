@@ -21,4 +21,12 @@ interface TreatmentApiService {
         @Header("Authorization") token: String,
         @Url fileUrl: String
     ): Response<ResponseBody>
+
+    @Headers("Accept: application/json")
+    @GET("api/multimedia-completados")
+    suspend fun getMultimediaCompletados(
+        @Header("Authorization") token: String
+    ): Response<com.colma.colmaApp.servicios.internetCommunication.model.MultimediaCompletadosResponse>
 }
+
+

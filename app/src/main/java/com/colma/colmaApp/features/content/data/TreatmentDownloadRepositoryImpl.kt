@@ -19,10 +19,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import okhttp3.ResponseBody
+import com.colma.colmaApp.features.sesiones.SessionSteps.domain.MultimediaKeyUtils
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class TreatmentDownloadRepositoryImpl(private val context: Context) : TreatmentDownloadRepository {
 
@@ -144,7 +147,14 @@ class TreatmentDownloadRepositoryImpl(private val context: Context) : TreatmentD
                                         }
                                     }
                                     Log.d(TAG, "Successfully saved file to: ${localFile.absolutePath}")
-                                    downloadedFiles.add(ServerFileMapping(contentItem.type ?: "VIDEO", title, localFile.absolutePath))
+                                    downloadedFiles.add(
+                                        ServerFileMapping(
+                                            type = contentItem.type ?: "VIDEO",
+                                            title = title,
+                                            localPath = localFile.absolutePath,
+                                            tratamientoMultimediaId = contentItem.tratamientoMultimediaId
+                                        )
+                                    )
                                 } catch (e: Exception) {
                                     Log.e(TAG, "Error writing file $title to disk: ${e.message}")
                                     return@withContext Result.failure(e)
@@ -234,6 +244,8 @@ class TreatmentDownloadRepositoryImpl(private val context: Context) : TreatmentD
                                           ?: (if (readingIndexInSubSession >= 0) imageItems.getOrNull(readingIndexInSubSession) else null)
                                           ?: (if (readingItems.size == 1 && imageItems.size == 1) imageItems.firstOrNull() else null)
 
+                                        val matchedMultimediaId = audioItem?.tratamientoMultimediaId ?: imageItem?.tratamientoMultimediaId
+
                                         multimediaList.add(
                                             MultimediaContent(
                                                 type = MultimediaContentType.DESCRIPTION,
@@ -246,7 +258,8 @@ class TreatmentDownloadRepositoryImpl(private val context: Context) : TreatmentD
                                                 metasId = staticItem.metasId,
                                                 questions = staticItem.questions,
                                                 descriptionAudios = if (audioItem != null) listOf(audioItem.localPath) else null,
-                                                descriptionImages = if (imageItem != null) listOf(imageItem.localPath) else null
+                                                descriptionImages = if (imageItem != null) listOf(imageItem.localPath) else null,
+                                                tratamientoMultimediaId = matchedMultimediaId
                                             )
                                         )
                                     } else {
@@ -268,7 +281,8 @@ class TreatmentDownloadRepositoryImpl(private val context: Context) : TreatmentD
                                             metasId = staticItem.metasId,
                                             questions = staticItem.questions,
                                             descriptionAudios = null,
-                                            descriptionImages = null
+                                            descriptionImages = null,
+                                            tratamientoMultimediaId = videoItem?.tratamientoMultimediaId
                                         )
                                     )
                                 }
@@ -289,6 +303,7 @@ class TreatmentDownloadRepositoryImpl(private val context: Context) : TreatmentD
                         if (maxIndex > 0) {
                             val localAudios = audioItems.map { it.localPath }
                             val localImages = imageItems.map { it.localPath }
+                            val matchedMultimediaId = audioItems.firstOrNull()?.tratamientoMultimediaId ?: imageItems.firstOrNull()?.tratamientoMultimediaId
                             multimediaList.add(
                                 MultimediaContent(
                                     type = MultimediaContentType.DESCRIPTION,
@@ -297,7 +312,8 @@ class TreatmentDownloadRepositoryImpl(private val context: Context) : TreatmentD
                                     fullDescription = "",
                                     iconResId = "outline_unknown_document_24",
                                     descriptionAudios = localAudios,
-                                    descriptionImages = localImages
+                                    descriptionImages = localImages,
+                                    tratamientoMultimediaId = matchedMultimediaId
                                 )
                             )
                         }
@@ -308,7 +324,8 @@ class TreatmentDownloadRepositoryImpl(private val context: Context) : TreatmentD
                                     title = videoItem.title,
                                     description = "Ver video de la sesión",
                                     iconImageVector = "PlayArrow",
-                                    contentAsset = videoItem.localPath
+                                    contentAsset = videoItem.localPath,
+                                    tratamientoMultimediaId = videoItem.tratamientoMultimediaId
                                 )
                             )
                         }
@@ -351,6 +368,93 @@ class TreatmentDownloadRepositoryImpl(private val context: Context) : TreatmentD
             val localJsonFile = File(context.filesDir, "treatment_download_${userId}.json")
             localJsonFile.writeText(jsonText)
             Log.d(TAG, "Successfully saved treatment_download_${userId}.json: ${localJsonFile.absolutePath}")
+
+            // Fetch completed multimedia from server to restore user's progress
+            try {
+                onProgress?.invoke(0.98f, "Restaurando progreso previo...")
+                val completadosResponse = treatmentService.getMultimediaCompletados(token)
+                if (completadosResponse.isSuccessful) {
+                    val completedIds = completadosResponse.body()?.multimediaCompletados?.toSet() ?: emptySet()
+                    if (completedIds.isNotEmpty()) {
+                        val now = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(Date())
+                        for (session in mappedSessions) {
+                            val weekId = session.id.toInt()
+                            for (subSession in session.subSessions) {
+                                val subSessionId = subSession.id.toInt()
+                                val processedContents = subSession.multimedia
+                                val size = processedContents.size
+                                var allCompleted = processedContents.isNotEmpty()
+
+                                for ((index, media) in processedContents.withIndex()) {
+                                    val mediaId = media.tratamientoMultimediaId
+                                    if (mediaId != null && completedIds.contains(mediaId)) {
+                                        val isLocalFile = media.contentAsset?.contains("/") == true || media.contentAsset?.contains("\\") == true
+                                        val localFilePath = if (isLocalFile) media.contentAsset else null
+                                        val contentAssetId = if (isLocalFile) null else media.contentAsset?.let {
+                                            val resId = com.colma.colmaApp.utils.ResourceUtils.getResourceId(context, it, "raw")
+                                            if (resId != 0) resId else null
+                                        }
+
+                                        val originalTitle = media.title.trim()
+                                        val finalTitle = if (originalTitle.isNotEmpty()) {
+                                            originalTitle
+                                        } else if (media.type == MultimediaContentType.DESCRIPTION) {
+                                            if (index == 0) {
+                                                "Bienvenida"
+                                            } else if (index == size - 1 && size > 1) {
+                                                "Fin de la sesión"
+                                            } else {
+                                                "Descripción"
+                                            }
+                                        } else {
+                                            media.type.name
+                                        }
+
+                                        val uniqueKey = MultimediaKeyUtils.generateMultimediaUniqueKey(
+                                            type = media.type,
+                                            title = finalTitle,
+                                            contentAssetId = contentAssetId,
+                                            metasId = media.metasId,
+                                            treatmentId = treatmentType.name,
+                                            weekId = weekId.toLong(),
+                                            sessionId = subSessionId.toLong(),
+                                            localFilePath = localFilePath
+                                        )
+
+                                        dbHelper.upsertMultimediaRead(
+                                            idUsuario = userId,
+                                            treatmentId = treatmentType.name,
+                                            weekId = weekId,
+                                            sessionId = subSessionId,
+                                            multimediaType = media.type.name,
+                                            multimediaUniqueKey = uniqueKey,
+                                            tratamientoMultimediaId = mediaId
+                                        )
+                                    } else {
+                                        if (media.tratamientoMultimediaId != null) {
+                                            allCompleted = false
+                                        }
+                                    }
+                                }
+
+                                if (allCompleted) {
+                                    dbHelper.insertCompletedSession(
+                                        idUsuario = userId,
+                                        treatmentId = treatmentType.name,
+                                        weekId = weekId,
+                                        sessionId = subSessionId
+                                    )
+                                }
+                            }
+                        }
+                        Log.d(TAG, "Restaurados ${completedIds.size} multimedia completados desde el servidor.")
+                    }
+                } else {
+                    Log.w(TAG, "getMultimediaCompletados response error: code=${completadosResponse.code()}")
+                }
+            } catch (e: Exception) {
+                Log.w(TAG, "Exception while restoring completed multimedia: ${e.message}")
+            }
 
             onProgress?.invoke(1.0f, "Completado")
             Result.success(Unit)
@@ -402,7 +506,8 @@ class TreatmentDownloadRepositoryImpl(private val context: Context) : TreatmentD
     private data class ServerFileMapping(
         val type: String,
         val title: String,
-        val localPath: String
+        val localPath: String,
+        val tratamientoMultimediaId: Int? = null
     )
 
     private fun logAllAvailableServerResources(serverTreatment: ServerTreatment) {

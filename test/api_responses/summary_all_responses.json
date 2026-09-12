@@ -1,0 +1,67 @@
+[
+  {
+    "usuario": "Guillermo Arribas",
+    "pais": "PE",
+    "condicion": "HTA",
+    "dni": "15864485",
+    "login_status": 200,
+    "tratamiento_status": 200,
+    "multimedia_completados_status": 200,
+    "total_items_multimedia": 134,
+    "items_con_tratamiento_multimedia_id": 134,
+    "multimedia_completados_recibidos": [],
+    "directorio": "guillermo_arribas_HTA_PE"
+  },
+  {
+    "usuario": "Erika Becerra",
+    "pais": "PE",
+    "condicion": "DBT",
+    "dni": "81306555",
+    "login_status": 200,
+    "tratamiento_status": 200,
+    "multimedia_completados_status": 200,
+    "total_items_multimedia": 139,
+    "items_con_tratamiento_multimedia_id": 139,
+    "multimedia_completados_recibidos": [],
+    "directorio": "erika_becerra_DBT_PE"
+  },
+  {
+    "usuario": "Denisse Molina",
+    "pais": "PE",
+    "condicion": "DBT + HTA",
+    "dni": "12253242",
+    "login_status": 200,
+    "tratamiento_status": 200,
+    "multimedia_completados_status": 200,
+    "total_items_multimedia": 155,
+    "items_con_tratamiento_multimedia_id": 155,
+    "multimedia_completados_recibidos": [],
+    "directorio": "denisse_molina_DBT_HTA_PE"
+  },
+  {
+    "usuario": "María González",
+    "pais": "AR",
+    "condicion": "HTA",
+    "dni": "88888888",
+    "login_status": 200,
+    "tratamiento_status": 200,
+    "multimedia_completados_status": 200,
+    "total_items_multimedia": 133,
+    "items_con_tratamiento_multimedia_id": 133,
+    "multimedia_completados_recibidos": [],
+    "directorio": "maria_gonzalez_HTA_AR"
+  },
+  {
+    "usuario": "Pedro Flores",
+    "pais": "AR",
+    "condicion": "DBT + HTA",
+    "dni": "77777777",
+    "login_status": 200,
+    "tratamiento_status": 200,
+    "multimedia_completados_status": 200,
+    "total_items_multimedia": 154,
+    "items_con_tratamiento_multimedia_id": 154,
+    "multimedia_completados_recibidos": [],
+    "directorio": "pedro_flores_DBT_HTA_AR"
+  }
+]

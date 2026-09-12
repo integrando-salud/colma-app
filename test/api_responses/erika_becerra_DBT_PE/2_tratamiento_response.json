@@ -1,0 +1,1226 @@
+{
+  "tratamiento": {
+    "tipo": "DIABETES",
+    "nombre": "Diabetes",
+    "semanas": [
+      {
+        "id": 1,
+        "title": "Semana 1",
+        "sesiones": [
+          {
+            "id": 1,
+            "title": "Sesión 1",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 426,
+                "type": "VIDEO",
+                "title": "video-1.mp4",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-1/sesion-1/video-1.mp4"
+              }
+            ]
+          },
+          {
+            "id": 2,
+            "title": "Sesión 2",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 427,
+                "type": "VIDEO",
+                "title": "video-1.mp4",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-1/sesion-2/video-1.mp4"
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "title": "Sesión 3",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 428,
+                "type": "AUDIO",
+                "title": "audio-1.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-1/sesion-3/audio-1.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 429,
+                "type": "IMAGEN",
+                "title": "imagen-1.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-1/sesion-3/imagen-1.png"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "title": "Semana 2",
+        "sesiones": [
+          {
+            "id": 1,
+            "title": "Sesión 1",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 430,
+                "type": "AUDIO",
+                "title": "audio-1.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-2/sesion-1/audio-1.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 431,
+                "type": "AUDIO",
+                "title": "audio-2.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-2/sesion-1/audio-2.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 432,
+                "type": "AUDIO",
+                "title": "audio-3.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-2/sesion-1/audio-3.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 433,
+                "type": "IMAGEN",
+                "title": "imagen-1.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-2/sesion-1/imagen-1.png"
+              },
+              {
+                "tratamiento_multimedia_id": 434,
+                "type": "IMAGEN",
+                "title": "imagen-2.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-2/sesion-1/imagen-2.png"
+              },
+              {
+                "tratamiento_multimedia_id": 435,
+                "type": "IMAGEN",
+                "title": "imagen-3.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-2/sesion-1/imagen-3.png"
+              }
+            ]
+          },
+          {
+            "id": 2,
+            "title": "Sesión 2",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 436,
+                "type": "AUDIO",
+                "title": "audio-1.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-2/sesion-2/audio-1.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 437,
+                "type": "AUDIO",
+                "title": "audio-2.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-2/sesion-2/audio-2.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 438,
+                "type": "AUDIO",
+                "title": "audio-3.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-2/sesion-2/audio-3.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 439,
+                "type": "AUDIO",
+                "title": "audio-4.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-2/sesion-2/audio-4.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 440,
+                "type": "IMAGEN",
+                "title": "imagen-1.gif",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-2/sesion-2/imagen-1.gif"
+              },
+              {
+                "tratamiento_multimedia_id": 441,
+                "type": "IMAGEN",
+                "title": "imagen-2.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-2/sesion-2/imagen-2.png"
+              },
+              {
+                "tratamiento_multimedia_id": 442,
+                "type": "IMAGEN",
+                "title": "imagen-3.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-2/sesion-2/imagen-3.png"
+              },
+              {
+                "tratamiento_multimedia_id": 443,
+                "type": "IMAGEN",
+                "title": "imagen-4.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-2/sesion-2/imagen-4.png"
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "title": "Sesión 3",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 444,
+                "type": "VIDEO",
+                "title": "video-1.mp4",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-2/sesion-3/video-1.mp4"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "title": "Semana 3",
+        "sesiones": [
+          {
+            "id": 1,
+            "title": "Sesión 1",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 445,
+                "type": "AUDIO",
+                "title": "audio-1.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-3/sesion-1/audio-1.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 446,
+                "type": "AUDIO",
+                "title": "audio-2.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-3/sesion-1/audio-2.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 447,
+                "type": "IMAGEN",
+                "title": "imagen-1.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-3/sesion-1/imagen-1.png"
+              },
+              {
+                "tratamiento_multimedia_id": 448,
+                "type": "IMAGEN",
+                "title": "imagen-2.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-3/sesion-1/imagen-2.png"
+              }
+            ]
+          },
+          {
+            "id": 2,
+            "title": "Sesión 2",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 449,
+                "type": "VIDEO",
+                "title": "video-1.mp4",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-3/sesion-2/video-1.mp4"
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "title": "Sesión 3",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 450,
+                "type": "AUDIO",
+                "title": "audio-1.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-3/sesion-3/audio-1.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 451,
+                "type": "AUDIO",
+                "title": "audio-2.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-3/sesion-3/audio-2.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 452,
+                "type": "IMAGEN",
+                "title": "imagen-1.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-3/sesion-3/imagen-1.png"
+              },
+              {
+                "tratamiento_multimedia_id": 453,
+                "type": "IMAGEN",
+                "title": "imagen-2.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-3/sesion-3/imagen-2.png"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "title": "Semana 4",
+        "sesiones": [
+          {
+            "id": 1,
+            "title": "Sesión 1",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 454,
+                "type": "AUDIO",
+                "title": "audio-1.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-4/sesion-1/audio-1.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 455,
+                "type": "IMAGEN",
+                "title": "imagen-1.gif",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-4/sesion-1/imagen-1.gif"
+              },
+              {
+                "tratamiento_multimedia_id": 456,
+                "type": "VIDEO",
+                "title": "video-1.mp4",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-4/sesion-1/video-1.mp4"
+              }
+            ]
+          },
+          {
+            "id": 2,
+            "title": "Sesión 2",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 457,
+                "type": "AUDIO",
+                "title": "audio-1.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-4/sesion-2/audio-1.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 458,
+                "type": "AUDIO",
+                "title": "audio-2.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-4/sesion-2/audio-2.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 459,
+                "type": "IMAGEN",
+                "title": "imagen-1.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-4/sesion-2/imagen-1.png"
+              },
+              {
+                "tratamiento_multimedia_id": 460,
+                "type": "IMAGEN",
+                "title": "imagen-2.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-4/sesion-2/imagen-2.png"
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "title": "Sesión 3",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 461,
+                "type": "AUDIO",
+                "title": "audio-1.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-4/sesion-3/audio-1.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 462,
+                "type": "IMAGEN",
+                "title": "imagen-1.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-4/sesion-3/imagen-1.png"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": 5,
+        "title": "Semana 5",
+        "sesiones": [
+          {
+            "id": 1,
+            "title": "Sesión 1",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 463,
+                "type": "VIDEO",
+                "title": "video-1.mp4",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-5/sesion-1/video-1.mp4"
+              }
+            ]
+          },
+          {
+            "id": 2,
+            "title": "Sesión 2",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 464,
+                "type": "AUDIO",
+                "title": "audio-1.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-5/sesion-2/audio-1.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 465,
+                "type": "IMAGEN",
+                "title": "imagen-1.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-5/sesion-2/imagen-1.png"
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "title": "Sesión 3",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 466,
+                "type": "AUDIO",
+                "title": "audio-1.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-5/sesion-3/audio-1.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 467,
+                "type": "IMAGEN",
+                "title": "imagen-1.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-5/sesion-3/imagen-1.png"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": 6,
+        "title": "Semana 6",
+        "sesiones": [
+          {
+            "id": 1,
+            "title": "Sesión 1",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 468,
+                "type": "AUDIO",
+                "title": "audio-1.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-6/sesion-1/audio-1.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 469,
+                "type": "AUDIO",
+                "title": "audio-2.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-6/sesion-1/audio-2.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 470,
+                "type": "IMAGEN",
+                "title": "imagen-1.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-6/sesion-1/imagen-1.png"
+              },
+              {
+                "tratamiento_multimedia_id": 471,
+                "type": "IMAGEN",
+                "title": "imagen-2.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-6/sesion-1/imagen-2.png"
+              }
+            ]
+          },
+          {
+            "id": 2,
+            "title": "Sesión 2",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 472,
+                "type": "VIDEO",
+                "title": "video-1.mp4",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-6/sesion-2/video-1.mp4"
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "title": "Sesión 3",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 473,
+                "type": "VIDEO",
+                "title": "video-1.mp4",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-6/sesion-3/video-1.mp4"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": 7,
+        "title": "Semana 7",
+        "sesiones": [
+          {
+            "id": 1,
+            "title": "Sesión 1",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 474,
+                "type": "VIDEO",
+                "title": "video-1.mp4",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-7/sesion-1/video-1.mp4"
+              }
+            ]
+          },
+          {
+            "id": 2,
+            "title": "Sesión 2",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 475,
+                "type": "VIDEO",
+                "title": "video-1.mp4",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-7/sesion-2/video-1.mp4"
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "title": "Sesión 3",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 476,
+                "type": "VIDEO",
+                "title": "video-1.mp4",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-7/sesion-3/video-1.mp4"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": 8,
+        "title": "Semana 8",
+        "sesiones": [
+          {
+            "id": 1,
+            "title": "Sesión 1",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 477,
+                "type": "VIDEO",
+                "title": "video-1.mp4",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-8/sesion-1/video-1.mp4"
+              },
+              {
+                "tratamiento_multimedia_id": 478,
+                "type": "VIDEO",
+                "title": "video-2.mp4",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-8/sesion-1/video-2.mp4"
+              }
+            ]
+          },
+          {
+            "id": 2,
+            "title": "Sesión 2",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 479,
+                "type": "AUDIO",
+                "title": "audio-1.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-8/sesion-2/audio-1.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 480,
+                "type": "AUDIO",
+                "title": "audio-2.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-8/sesion-2/audio-2.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 481,
+                "type": "IMAGEN",
+                "title": "imagen-1.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-8/sesion-2/imagen-1.png"
+              },
+              {
+                "tratamiento_multimedia_id": 482,
+                "type": "IMAGEN",
+                "title": "imagen-2.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-8/sesion-2/imagen-2.png"
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "title": "Sesión 3",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 483,
+                "type": "VIDEO",
+                "title": "video-1.mp4",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-8/sesion-3/video-1.mp4"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": 9,
+        "title": "Semana 9",
+        "sesiones": [
+          {
+            "id": 1,
+            "title": "Sesión 1",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 484,
+                "type": "AUDIO",
+                "title": "audio-1.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-9/sesion-1/audio-1.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 485,
+                "type": "AUDIO",
+                "title": "audio-2.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-9/sesion-1/audio-2.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 486,
+                "type": "IMAGEN",
+                "title": "imagen-1.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-9/sesion-1/imagen-1.png"
+              },
+              {
+                "tratamiento_multimedia_id": 487,
+                "type": "IMAGEN",
+                "title": "imagen-2.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-9/sesion-1/imagen-2.png"
+              }
+            ]
+          },
+          {
+            "id": 2,
+            "title": "Sesión 2",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 488,
+                "type": "AUDIO",
+                "title": "audio-1.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-9/sesion-2/audio-1.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 489,
+                "type": "AUDIO",
+                "title": "audio-2.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-9/sesion-2/audio-2.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 490,
+                "type": "AUDIO",
+                "title": "audio-3.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-9/sesion-2/audio-3.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 491,
+                "type": "IMAGEN",
+                "title": "imagen-1.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-9/sesion-2/imagen-1.png"
+              },
+              {
+                "tratamiento_multimedia_id": 492,
+                "type": "IMAGEN",
+                "title": "imagen-2.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-9/sesion-2/imagen-2.png"
+              },
+              {
+                "tratamiento_multimedia_id": 493,
+                "type": "IMAGEN",
+                "title": "imagen-3.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-9/sesion-2/imagen-3.png"
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "title": "Sesión 3",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 494,
+                "type": "VIDEO",
+                "title": "video-1.mp4",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-9/sesion-3/video-1.mp4"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": 10,
+        "title": "Semana 10",
+        "sesiones": [
+          {
+            "id": 1,
+            "title": "Sesión 1",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 495,
+                "type": "VIDEO",
+                "title": "video-1.mp4",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-10/sesion-1/video-1.mp4"
+              }
+            ]
+          },
+          {
+            "id": 2,
+            "title": "Sesión 2",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 496,
+                "type": "AUDIO",
+                "title": "audio-1.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-10/sesion-2/audio-1.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 497,
+                "type": "AUDIO",
+                "title": "audio-2.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-10/sesion-2/audio-2.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 498,
+                "type": "IMAGEN",
+                "title": "imagen-1.gif",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-10/sesion-2/imagen-1.gif"
+              },
+              {
+                "tratamiento_multimedia_id": 499,
+                "type": "IMAGEN",
+                "title": "imagen-2.gif",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-10/sesion-2/imagen-2.gif"
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "title": "Sesión 3",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 500,
+                "type": "AUDIO",
+                "title": "audio-1.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-10/sesion-3/audio-1.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 501,
+                "type": "AUDIO",
+                "title": "audio-2.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-10/sesion-3/audio-2.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 502,
+                "type": "IMAGEN",
+                "title": "imagen-1.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-10/sesion-3/imagen-1.png"
+              },
+              {
+                "tratamiento_multimedia_id": 503,
+                "type": "IMAGEN",
+                "title": "imagen-2.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-10/sesion-3/imagen-2.png"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": 11,
+        "title": "Semana 11",
+        "sesiones": [
+          {
+            "id": 1,
+            "title": "Sesión 1",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 504,
+                "type": "AUDIO",
+                "title": "audio-1.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-11/sesion-1/audio-1.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 505,
+                "type": "AUDIO",
+                "title": "audio-2.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-11/sesion-1/audio-2.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 506,
+                "type": "IMAGEN",
+                "title": "imagen-1.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-11/sesion-1/imagen-1.png"
+              },
+              {
+                "tratamiento_multimedia_id": 507,
+                "type": "IMAGEN",
+                "title": "imagen-2.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-11/sesion-1/imagen-2.png"
+              }
+            ]
+          },
+          {
+            "id": 2,
+            "title": "Sesión 2",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 508,
+                "type": "VIDEO",
+                "title": "video-1.mp4",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-11/sesion-2/video-1.mp4"
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "title": "Sesión 3",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 509,
+                "type": "VIDEO",
+                "title": "video-1.mp4",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-11/sesion-3/video-1.mp4"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": 12,
+        "title": "Semana 12",
+        "sesiones": [
+          {
+            "id": 1,
+            "title": "Sesión 1",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 510,
+                "type": "AUDIO",
+                "title": "audio-1.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-12/sesion-1/audio-1.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 511,
+                "type": "AUDIO",
+                "title": "audio-2.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-12/sesion-1/audio-2.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 512,
+                "type": "AUDIO",
+                "title": "audio-3.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-12/sesion-1/audio-3.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 513,
+                "type": "IMAGEN",
+                "title": "imagen-1.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-12/sesion-1/imagen-1.png"
+              },
+              {
+                "tratamiento_multimedia_id": 514,
+                "type": "IMAGEN",
+                "title": "imagen-2.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-12/sesion-1/imagen-2.png"
+              },
+              {
+                "tratamiento_multimedia_id": 515,
+                "type": "IMAGEN",
+                "title": "imagen-3.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-12/sesion-1/imagen-3.png"
+              }
+            ]
+          },
+          {
+            "id": 2,
+            "title": "Sesión 2",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 516,
+                "type": "AUDIO",
+                "title": "audio-1.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-12/sesion-2/audio-1.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 517,
+                "type": "AUDIO",
+                "title": "audio-2.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-12/sesion-2/audio-2.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 518,
+                "type": "AUDIO",
+                "title": "audio-3.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-12/sesion-2/audio-3.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 519,
+                "type": "IMAGEN",
+                "title": "imagen-1.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-12/sesion-2/imagen-1.png"
+              },
+              {
+                "tratamiento_multimedia_id": 520,
+                "type": "IMAGEN",
+                "title": "imagen-2.gif",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-12/sesion-2/imagen-2.gif"
+              },
+              {
+                "tratamiento_multimedia_id": 521,
+                "type": "IMAGEN",
+                "title": "imagen-3.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-12/sesion-2/imagen-3.png"
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "title": "Sesión 3",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 522,
+                "type": "AUDIO",
+                "title": "audio-1.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-12/sesion-3/audio-1.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 523,
+                "type": "AUDIO",
+                "title": "audio-2.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-12/sesion-3/audio-2.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 524,
+                "type": "AUDIO",
+                "title": "audio-3.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-12/sesion-3/audio-3.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 525,
+                "type": "IMAGEN",
+                "title": "imagen-1.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-12/sesion-3/imagen-1.png"
+              },
+              {
+                "tratamiento_multimedia_id": 526,
+                "type": "IMAGEN",
+                "title": "imagen-2.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-12/sesion-3/imagen-2.png"
+              },
+              {
+                "tratamiento_multimedia_id": 527,
+                "type": "IMAGEN",
+                "title": "imagen-3.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-12/sesion-3/imagen-3.png"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": 13,
+        "title": "Semana 13",
+        "sesiones": [
+          {
+            "id": 1,
+            "title": "Sesión 1",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 528,
+                "type": "VIDEO",
+                "title": "video-1.mp4",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-13/sesion-1/video-1.mp4"
+              }
+            ]
+          },
+          {
+            "id": 2,
+            "title": "Sesión 2",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 529,
+                "type": "AUDIO",
+                "title": "audio-1.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-13/sesion-2/audio-1.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 530,
+                "type": "IMAGEN",
+                "title": "imagen-1.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-13/sesion-2/imagen-1.png"
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "title": "Sesión 3",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 531,
+                "type": "AUDIO",
+                "title": "audio-1.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-13/sesion-3/audio-1.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 532,
+                "type": "IMAGEN",
+                "title": "imagen-1.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-13/sesion-3/imagen-1.png"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": 14,
+        "title": "Semana 14",
+        "sesiones": [
+          {
+            "id": 1,
+            "title": "Sesión 1",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 533,
+                "type": "VIDEO",
+                "title": "video-1.mp4",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-14/sesion-1/video-1.mp4"
+              }
+            ]
+          },
+          {
+            "id": 2,
+            "title": "Sesión 2",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 534,
+                "type": "AUDIO",
+                "title": "audio-1.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-14/sesion-2/audio-1.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 535,
+                "type": "AUDIO",
+                "title": "audio-2.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-14/sesion-2/audio-2.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 536,
+                "type": "AUDIO",
+                "title": "audio-3.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-14/sesion-2/audio-3.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 537,
+                "type": "AUDIO",
+                "title": "audio-4.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-14/sesion-2/audio-4.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 538,
+                "type": "AUDIO",
+                "title": "audio-5.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-14/sesion-2/audio-5.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 539,
+                "type": "IMAGEN",
+                "title": "imagen-1.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-14/sesion-2/imagen-1.png"
+              },
+              {
+                "tratamiento_multimedia_id": 540,
+                "type": "IMAGEN",
+                "title": "imagen-2.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-14/sesion-2/imagen-2.png"
+              },
+              {
+                "tratamiento_multimedia_id": 541,
+                "type": "IMAGEN",
+                "title": "imagen-3.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-14/sesion-2/imagen-3.png"
+              },
+              {
+                "tratamiento_multimedia_id": 542,
+                "type": "IMAGEN",
+                "title": "imagen-4.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-14/sesion-2/imagen-4.png"
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "title": "Sesión 3",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 543,
+                "type": "AUDIO",
+                "title": "audio-1.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-14/sesion-3/audio-1.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 544,
+                "type": "AUDIO",
+                "title": "audio-2.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-14/sesion-3/audio-2.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 545,
+                "type": "AUDIO",
+                "title": "audio-3.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-14/sesion-3/audio-3.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 546,
+                "type": "AUDIO",
+                "title": "audio-4.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-14/sesion-3/audio-4.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 547,
+                "type": "IMAGEN",
+                "title": "imagen-1.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-14/sesion-3/imagen-1.png"
+              },
+              {
+                "tratamiento_multimedia_id": 548,
+                "type": "IMAGEN",
+                "title": "imagen-2.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-14/sesion-3/imagen-2.png"
+              },
+              {
+                "tratamiento_multimedia_id": 549,
+                "type": "IMAGEN",
+                "title": "imagen-3.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-14/sesion-3/imagen-3.png"
+              },
+              {
+                "tratamiento_multimedia_id": 550,
+                "type": "IMAGEN",
+                "title": "imagen-4.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-14/sesion-3/imagen-4.png"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": 15,
+        "title": "Semana 15",
+        "sesiones": [
+          {
+            "id": 1,
+            "title": "Sesión 1",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 551,
+                "type": "VIDEO",
+                "title": "video-1.mp4",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-15/sesion-1/video-1.mp4"
+              }
+            ]
+          },
+          {
+            "id": 2,
+            "title": "Sesión 2",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 552,
+                "type": "AUDIO",
+                "title": "audio-1.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-15/sesion-2/audio-1.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 553,
+                "type": "AUDIO",
+                "title": "audio-2.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-15/sesion-2/audio-2.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 554,
+                "type": "IMAGEN",
+                "title": "imagen-1.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-15/sesion-2/imagen-1.png"
+              },
+              {
+                "tratamiento_multimedia_id": 555,
+                "type": "IMAGEN",
+                "title": "imagen-2.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-15/sesion-2/imagen-2.png"
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "title": "Sesión 3",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 556,
+                "type": "AUDIO",
+                "title": "audio-1.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-15/sesion-3/audio-1.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 557,
+                "type": "IMAGEN",
+                "title": "imagen-1.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-15/sesion-3/imagen-1.png"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": 16,
+        "title": "Semana 16",
+        "sesiones": [
+          {
+            "id": 1,
+            "title": "Sesión 1",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 558,
+                "type": "AUDIO",
+                "title": "audio-1.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-16/sesion-1/audio-1.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 559,
+                "type": "AUDIO",
+                "title": "audio-2.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-16/sesion-1/audio-2.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 560,
+                "type": "IMAGEN",
+                "title": "imagen-1.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-16/sesion-1/imagen-1.png"
+              },
+              {
+                "tratamiento_multimedia_id": 561,
+                "type": "IMAGEN",
+                "title": "imagen-2.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-16/sesion-1/imagen-2.png"
+              }
+            ]
+          },
+          {
+            "id": 2,
+            "title": "Sesión 2",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 562,
+                "type": "VIDEO",
+                "title": "video-1.mp4",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-16/sesion-2/video-1.mp4"
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "title": "Sesión 3",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 563,
+                "type": "AUDIO",
+                "title": "audio-1.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-16/sesion-3/audio-1.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 564,
+                "type": "IMAGEN",
+                "title": "imagen-1.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/DBT/semana-16/sesion-3/imagen-1.png"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

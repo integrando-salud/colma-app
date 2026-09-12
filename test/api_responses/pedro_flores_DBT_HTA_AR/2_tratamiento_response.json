@@ -1,0 +1,1316 @@
+{
+  "tratamiento": {
+    "tipo": "DBT_HTA",
+    "nombre": "Diabetes e hipertensión arterial",
+    "semanas": [
+      {
+        "id": 1,
+        "title": "Semana 1",
+        "sesiones": [
+          {
+            "id": 1,
+            "title": "Sesión 1",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 272,
+                "type": "VIDEO",
+                "title": "video-1.mp4",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-1/sesion-1/video-1.mp4"
+              }
+            ]
+          },
+          {
+            "id": 2,
+            "title": "Sesión 2",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 273,
+                "type": "VIDEO",
+                "title": "video-1.mp4",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-1/sesion-2/video-1.mp4"
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "title": "Sesión 3",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 274,
+                "type": "VIDEO",
+                "title": "audio-1.m4a",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-1/sesion-3/audio-1.m4a"
+              },
+              {
+                "tratamiento_multimedia_id": 275,
+                "type": "IMAGEN",
+                "title": "imagen-1.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-1/sesion-3/imagen-1.png"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "title": "Semana 2",
+        "sesiones": [
+          {
+            "id": 1,
+            "title": "Sesión 1",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 276,
+                "type": "VIDEO",
+                "title": "audio-1.m4a",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-2/sesion-1/audio-1.m4a"
+              },
+              {
+                "tratamiento_multimedia_id": 277,
+                "type": "VIDEO",
+                "title": "audio-2.m4a",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-2/sesion-1/audio-2.m4a"
+              },
+              {
+                "tratamiento_multimedia_id": 278,
+                "type": "VIDEO",
+                "title": "audio-3.m4a",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-2/sesion-1/audio-3.m4a"
+              },
+              {
+                "tratamiento_multimedia_id": 279,
+                "type": "IMAGEN",
+                "title": "imagen-1.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-2/sesion-1/imagen-1.png"
+              },
+              {
+                "tratamiento_multimedia_id": 280,
+                "type": "IMAGEN",
+                "title": "imagen-2.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-2/sesion-1/imagen-2.png"
+              },
+              {
+                "tratamiento_multimedia_id": 281,
+                "type": "IMAGEN",
+                "title": "imagen-3.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-2/sesion-1/imagen-3.png"
+              }
+            ]
+          },
+          {
+            "id": 2,
+            "title": "Sesión 2",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 282,
+                "type": "VIDEO",
+                "title": "audio-1.m4a",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-2/sesion-2/audio-1.m4a"
+              },
+              {
+                "tratamiento_multimedia_id": 283,
+                "type": "VIDEO",
+                "title": "audio-2.m4a",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-2/sesion-2/audio-2.m4a"
+              },
+              {
+                "tratamiento_multimedia_id": 284,
+                "type": "VIDEO",
+                "title": "audio-3.m4a",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-2/sesion-2/audio-3.m4a"
+              },
+              {
+                "tratamiento_multimedia_id": 285,
+                "type": "VIDEO",
+                "title": "audio-4.m4a",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-2/sesion-2/audio-4.m4a"
+              },
+              {
+                "tratamiento_multimedia_id": 286,
+                "type": "IMAGEN",
+                "title": "imagen-1.gif",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-2/sesion-2/imagen-1.gif"
+              },
+              {
+                "tratamiento_multimedia_id": 287,
+                "type": "IMAGEN",
+                "title": "imagen-2.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-2/sesion-2/imagen-2.png"
+              },
+              {
+                "tratamiento_multimedia_id": 288,
+                "type": "IMAGEN",
+                "title": "imagen-3.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-2/sesion-2/imagen-3.png"
+              },
+              {
+                "tratamiento_multimedia_id": 289,
+                "type": "IMAGEN",
+                "title": "imagen-4.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-2/sesion-2/imagen-4.png"
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "title": "Sesión 3",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 290,
+                "type": "VIDEO",
+                "title": "video-1.mp4",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-2/sesion-3/video-1.mp4"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "title": "Semana 3",
+        "sesiones": [
+          {
+            "id": 1,
+            "title": "Sesión 1",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 291,
+                "type": "VIDEO",
+                "title": "audio-1.m4a",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-3/sesion-1/audio-1.m4a"
+              },
+              {
+                "tratamiento_multimedia_id": 292,
+                "type": "VIDEO",
+                "title": "audio-2.m4a",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-3/sesion-1/audio-2.m4a"
+              },
+              {
+                "tratamiento_multimedia_id": 293,
+                "type": "IMAGEN",
+                "title": "imagen-1.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-3/sesion-1/imagen-1.png"
+              },
+              {
+                "tratamiento_multimedia_id": 294,
+                "type": "IMAGEN",
+                "title": "imagen-2.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-3/sesion-1/imagen-2.png"
+              }
+            ]
+          },
+          {
+            "id": 2,
+            "title": "Sesión 2",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 295,
+                "type": "VIDEO",
+                "title": "video-1.mp4",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-3/sesion-2/video-1.mp4"
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "title": "Sesión 3",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 296,
+                "type": "VIDEO",
+                "title": "audio-1.m4a",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-3/sesion-3/audio-1.m4a"
+              },
+              {
+                "tratamiento_multimedia_id": 297,
+                "type": "VIDEO",
+                "title": "audio-2.m4a",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-3/sesion-3/audio-2.m4a"
+              },
+              {
+                "tratamiento_multimedia_id": 298,
+                "type": "IMAGEN",
+                "title": "imagen-1.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-3/sesion-3/imagen-1.png"
+              },
+              {
+                "tratamiento_multimedia_id": 299,
+                "type": "IMAGEN",
+                "title": "imagen-2.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-3/sesion-3/imagen-2.png"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "title": "Semana 4",
+        "sesiones": [
+          {
+            "id": 1,
+            "title": "Sesión 1",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 300,
+                "type": "VIDEO",
+                "title": "audio-2.m4a",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-4/sesion-1/audio-2.m4a"
+              },
+              {
+                "tratamiento_multimedia_id": 301,
+                "type": "IMAGEN",
+                "title": "imagen-2.gif",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-4/sesion-1/imagen-2.gif"
+              },
+              {
+                "tratamiento_multimedia_id": 302,
+                "type": "VIDEO",
+                "title": "video-1.mp4",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-4/sesion-1/video-1.mp4"
+              },
+              {
+                "tratamiento_multimedia_id": 303,
+                "type": "VIDEO",
+                "title": "video-3.mp4",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-4/sesion-1/video-3.mp4"
+              }
+            ]
+          },
+          {
+            "id": 2,
+            "title": "Sesión 2",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 304,
+                "type": "VIDEO",
+                "title": "audio-1.m4a",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-4/sesion-2/audio-1.m4a"
+              },
+              {
+                "tratamiento_multimedia_id": 305,
+                "type": "VIDEO",
+                "title": "audio-2.m4a",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-4/sesion-2/audio-2.m4a"
+              },
+              {
+                "tratamiento_multimedia_id": 306,
+                "type": "VIDEO",
+                "title": "audio-3.m4a",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-4/sesion-2/audio-3.m4a"
+              },
+              {
+                "tratamiento_multimedia_id": 307,
+                "type": "VIDEO",
+                "title": "audio-4.m4a",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-4/sesion-2/audio-4.m4a"
+              },
+              {
+                "tratamiento_multimedia_id": 308,
+                "type": "IMAGEN",
+                "title": "imagen-1.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-4/sesion-2/imagen-1.png"
+              },
+              {
+                "tratamiento_multimedia_id": 309,
+                "type": "IMAGEN",
+                "title": "imagen-2.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-4/sesion-2/imagen-2.png"
+              },
+              {
+                "tratamiento_multimedia_id": 310,
+                "type": "IMAGEN",
+                "title": "imagen-3.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-4/sesion-2/imagen-3.png"
+              },
+              {
+                "tratamiento_multimedia_id": 311,
+                "type": "IMAGEN",
+                "title": "imagen-4.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-4/sesion-2/imagen-4.png"
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "title": "Sesión 3",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 312,
+                "type": "VIDEO",
+                "title": "audio-1.m4a",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-4/sesion-3/audio-1.m4a"
+              },
+              {
+                "tratamiento_multimedia_id": 313,
+                "type": "IMAGEN",
+                "title": "imagen-1.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-4/sesion-3/imagen-1.png"
+              },
+              {
+                "tratamiento_multimedia_id": 314,
+                "type": "VIDEO",
+                "title": "video-2.mp4",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-4/sesion-3/video-2.mp4"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": 5,
+        "title": "Semana 5",
+        "sesiones": [
+          {
+            "id": 1,
+            "title": "Sesión 1",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 315,
+                "type": "VIDEO",
+                "title": "video-1.mp4",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-5/sesion-1/video-1.mp4"
+              }
+            ]
+          },
+          {
+            "id": 2,
+            "title": "Sesión 2",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 316,
+                "type": "VIDEO",
+                "title": "audio-1.m4a",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-5/sesion-2/audio-1.m4a"
+              },
+              {
+                "tratamiento_multimedia_id": 317,
+                "type": "IMAGEN",
+                "title": "imagen-1.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-5/sesion-2/imagen-1.png"
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "title": "Sesión 3",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 318,
+                "type": "VIDEO",
+                "title": "audio-1.m4a",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-5/sesion-3/audio-1.m4a"
+              },
+              {
+                "tratamiento_multimedia_id": 319,
+                "type": "IMAGEN",
+                "title": "imagen-1.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-5/sesion-3/imagen-1.png"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": 6,
+        "title": "Semana 6",
+        "sesiones": [
+          {
+            "id": 1,
+            "title": "Sesión 1",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 320,
+                "type": "VIDEO",
+                "title": "audio-1.m4a",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-6/sesion-1/audio-1.m4a"
+              },
+              {
+                "tratamiento_multimedia_id": 321,
+                "type": "VIDEO",
+                "title": "audio-2.m4a",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-6/sesion-1/audio-2.m4a"
+              },
+              {
+                "tratamiento_multimedia_id": 322,
+                "type": "IMAGEN",
+                "title": "imagen-1.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-6/sesion-1/imagen-1.png"
+              },
+              {
+                "tratamiento_multimedia_id": 323,
+                "type": "IMAGEN",
+                "title": "imagen-2.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-6/sesion-1/imagen-2.png"
+              }
+            ]
+          },
+          {
+            "id": 2,
+            "title": "Sesión 2",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 324,
+                "type": "VIDEO",
+                "title": "video-1.mp4",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-6/sesion-2/video-1.mp4"
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "title": "Sesión 3",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 325,
+                "type": "VIDEO",
+                "title": "video-1.mp4",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-6/sesion-3/video-1.mp4"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": 7,
+        "title": "Semana 7",
+        "sesiones": [
+          {
+            "id": 1,
+            "title": "Sesión 1",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 326,
+                "type": "VIDEO",
+                "title": "video-1.mp4",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-7/sesion-1/video-1.mp4"
+              }
+            ]
+          },
+          {
+            "id": 2,
+            "title": "Sesión 2",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 327,
+                "type": "VIDEO",
+                "title": "video-1.mp4",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-7/sesion-2/video-1.mp4"
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "title": "Sesión 3",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 328,
+                "type": "VIDEO",
+                "title": "video-1.mp4",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-7/sesion-3/video-1.mp4"
+              },
+              {
+                "tratamiento_multimedia_id": 329,
+                "type": "VIDEO",
+                "title": "video-2.mp4",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-7/sesion-3/video-2.mp4"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": 8,
+        "title": "Semana 8",
+        "sesiones": [
+          {
+            "id": 1,
+            "title": "Sesión 1",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 330,
+                "type": "VIDEO",
+                "title": "video-1.mp4",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-8/sesion-1/video-1.mp4"
+              },
+              {
+                "tratamiento_multimedia_id": 331,
+                "type": "VIDEO",
+                "title": "video-2.mp4",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-8/sesion-1/video-2.mp4"
+              }
+            ]
+          },
+          {
+            "id": 2,
+            "title": "Sesión 2",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 332,
+                "type": "VIDEO",
+                "title": "audio-1.m4a",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-8/sesion-2/audio-1.m4a"
+              },
+              {
+                "tratamiento_multimedia_id": 333,
+                "type": "VIDEO",
+                "title": "audio-2.m4a",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-8/sesion-2/audio-2.m4a"
+              },
+              {
+                "tratamiento_multimedia_id": 334,
+                "type": "IMAGEN",
+                "title": "imagen-1.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-8/sesion-2/imagen-1.png"
+              },
+              {
+                "tratamiento_multimedia_id": 335,
+                "type": "IMAGEN",
+                "title": "imagen-2.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-8/sesion-2/imagen-2.png"
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "title": "Sesión 3",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 336,
+                "type": "VIDEO",
+                "title": "video-1.mp4",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-8/sesion-3/video-1.mp4"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": 9,
+        "title": "Semana 9",
+        "sesiones": [
+          {
+            "id": 1,
+            "title": "Sesión 1",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 337,
+                "type": "VIDEO",
+                "title": "audio-1.m4a",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-9/sesion-1/audio-1.m4a"
+              },
+              {
+                "tratamiento_multimedia_id": 338,
+                "type": "VIDEO",
+                "title": "audio-2.m4a",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-9/sesion-1/audio-2.m4a"
+              },
+              {
+                "tratamiento_multimedia_id": 339,
+                "type": "IMAGEN",
+                "title": "imagen-1.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-9/sesion-1/imagen-1.png"
+              },
+              {
+                "tratamiento_multimedia_id": 340,
+                "type": "IMAGEN",
+                "title": "imagen-2.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-9/sesion-1/imagen-2.png"
+              }
+            ]
+          },
+          {
+            "id": 2,
+            "title": "Sesión 2",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 341,
+                "type": "VIDEO",
+                "title": "audio-1.m4a",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-9/sesion-2/audio-1.m4a"
+              },
+              {
+                "tratamiento_multimedia_id": 342,
+                "type": "VIDEO",
+                "title": "audio-2.m4a",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-9/sesion-2/audio-2.m4a"
+              },
+              {
+                "tratamiento_multimedia_id": 343,
+                "type": "VIDEO",
+                "title": "audio-3.m4a",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-9/sesion-2/audio-3.m4a"
+              },
+              {
+                "tratamiento_multimedia_id": 344,
+                "type": "IMAGEN",
+                "title": "imagen-1.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-9/sesion-2/imagen-1.png"
+              },
+              {
+                "tratamiento_multimedia_id": 345,
+                "type": "IMAGEN",
+                "title": "imagen-2.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-9/sesion-2/imagen-2.png"
+              },
+              {
+                "tratamiento_multimedia_id": 346,
+                "type": "IMAGEN",
+                "title": "imagen-3.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-9/sesion-2/imagen-3.png"
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "title": "Sesión 3",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 347,
+                "type": "VIDEO",
+                "title": "video-1.mp4",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-9/sesion-3/video-1.mp4"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": 10,
+        "title": "Semana 10",
+        "sesiones": [
+          {
+            "id": 1,
+            "title": "Sesión 1",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 348,
+                "type": "VIDEO",
+                "title": "video-1.mp4",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-10/sesion-1/video-1.mp4"
+              }
+            ]
+          },
+          {
+            "id": 2,
+            "title": "Sesión 2",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 349,
+                "type": "VIDEO",
+                "title": "audio-1.m4a",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-10/sesion-2/audio-1.m4a"
+              },
+              {
+                "tratamiento_multimedia_id": 350,
+                "type": "VIDEO",
+                "title": "audio-2.m4a",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-10/sesion-2/audio-2.m4a"
+              },
+              {
+                "tratamiento_multimedia_id": 351,
+                "type": "VIDEO",
+                "title": "audio-3.m4a",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-10/sesion-2/audio-3.m4a"
+              },
+              {
+                "tratamiento_multimedia_id": 352,
+                "type": "IMAGEN",
+                "title": "imagen-1.gif",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-10/sesion-2/imagen-1.gif"
+              },
+              {
+                "tratamiento_multimedia_id": 353,
+                "type": "IMAGEN",
+                "title": "imagen-2.gif",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-10/sesion-2/imagen-2.gif"
+              },
+              {
+                "tratamiento_multimedia_id": 354,
+                "type": "IMAGEN",
+                "title": "imagen-3.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-10/sesion-2/imagen-3.png"
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "title": "Sesión 3",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 355,
+                "type": "VIDEO",
+                "title": "audio-1.m4a",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-10/sesion-3/audio-1.m4a"
+              },
+              {
+                "tratamiento_multimedia_id": 356,
+                "type": "VIDEO",
+                "title": "audio-2.m4a",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-10/sesion-3/audio-2.m4a"
+              },
+              {
+                "tratamiento_multimedia_id": 357,
+                "type": "IMAGEN",
+                "title": "imagen-1.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-10/sesion-3/imagen-1.png"
+              },
+              {
+                "tratamiento_multimedia_id": 358,
+                "type": "IMAGEN",
+                "title": "imagen-2.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-10/sesion-3/imagen-2.png"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": 11,
+        "title": "Semana 11",
+        "sesiones": [
+          {
+            "id": 1,
+            "title": "Sesión 1",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 359,
+                "type": "VIDEO",
+                "title": "audio-1.m4a",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-11/sesion-1/audio-1.m4a"
+              },
+              {
+                "tratamiento_multimedia_id": 360,
+                "type": "VIDEO",
+                "title": "audio-2.m4a",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-11/sesion-1/audio-2.m4a"
+              },
+              {
+                "tratamiento_multimedia_id": 361,
+                "type": "VIDEO",
+                "title": "audio-3.m4a",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-11/sesion-1/audio-3.m4a"
+              },
+              {
+                "tratamiento_multimedia_id": 362,
+                "type": "VIDEO",
+                "title": "audio-4.m4a",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-11/sesion-1/audio-4.m4a"
+              },
+              {
+                "tratamiento_multimedia_id": 363,
+                "type": "IMAGEN",
+                "title": "imagen-1.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-11/sesion-1/imagen-1.png"
+              },
+              {
+                "tratamiento_multimedia_id": 364,
+                "type": "IMAGEN",
+                "title": "imagen-2.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-11/sesion-1/imagen-2.png"
+              },
+              {
+                "tratamiento_multimedia_id": 365,
+                "type": "IMAGEN",
+                "title": "imagen-3.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-11/sesion-1/imagen-3.png"
+              },
+              {
+                "tratamiento_multimedia_id": 366,
+                "type": "IMAGEN",
+                "title": "imagen-4.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-11/sesion-1/imagen-4.png"
+              }
+            ]
+          },
+          {
+            "id": 2,
+            "title": "Sesión 2",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 367,
+                "type": "VIDEO",
+                "title": "video-1.mp4",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-11/sesion-2/video-1.mp4"
+              },
+              {
+                "tratamiento_multimedia_id": 368,
+                "type": "VIDEO",
+                "title": "video-2.mp4",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-11/sesion-2/video-2.mp4"
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "title": "Sesión 3",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 369,
+                "type": "VIDEO",
+                "title": "video-1.mp4",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-11/sesion-3/video-1.mp4"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": 12,
+        "title": "Semana 12",
+        "sesiones": [
+          {
+            "id": 1,
+            "title": "Sesión 1",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 370,
+                "type": "VIDEO",
+                "title": "audio-1.m4a",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-12/sesion-1/audio-1.m4a"
+              },
+              {
+                "tratamiento_multimedia_id": 371,
+                "type": "VIDEO",
+                "title": "audio-2.m4a",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-12/sesion-1/audio-2.m4a"
+              },
+              {
+                "tratamiento_multimedia_id": 372,
+                "type": "VIDEO",
+                "title": "audio-3.m4a",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-12/sesion-1/audio-3.m4a"
+              },
+              {
+                "tratamiento_multimedia_id": 373,
+                "type": "IMAGEN",
+                "title": "imagen-1.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-12/sesion-1/imagen-1.png"
+              },
+              {
+                "tratamiento_multimedia_id": 374,
+                "type": "IMAGEN",
+                "title": "imagen-2.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-12/sesion-1/imagen-2.png"
+              },
+              {
+                "tratamiento_multimedia_id": 375,
+                "type": "IMAGEN",
+                "title": "imagen-3.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-12/sesion-1/imagen-3.png"
+              }
+            ]
+          },
+          {
+            "id": 2,
+            "title": "Sesión 2",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 376,
+                "type": "VIDEO",
+                "title": "audio-1.m4a",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-12/sesion-2/audio-1.m4a"
+              },
+              {
+                "tratamiento_multimedia_id": 377,
+                "type": "VIDEO",
+                "title": "audio-2.m4a",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-12/sesion-2/audio-2.m4a"
+              },
+              {
+                "tratamiento_multimedia_id": 378,
+                "type": "VIDEO",
+                "title": "audio-3.m4a",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-12/sesion-2/audio-3.m4a"
+              },
+              {
+                "tratamiento_multimedia_id": 379,
+                "type": "IMAGEN",
+                "title": "imagen-1.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-12/sesion-2/imagen-1.png"
+              },
+              {
+                "tratamiento_multimedia_id": 380,
+                "type": "IMAGEN",
+                "title": "imagen-2.gif",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-12/sesion-2/imagen-2.gif"
+              },
+              {
+                "tratamiento_multimedia_id": 381,
+                "type": "IMAGEN",
+                "title": "imagen-3.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-12/sesion-2/imagen-3.png"
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "title": "Sesión 3",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 382,
+                "type": "VIDEO",
+                "title": "audio-1.m4a",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-12/sesion-3/audio-1.m4a"
+              },
+              {
+                "tratamiento_multimedia_id": 383,
+                "type": "VIDEO",
+                "title": "audio-2.m4a",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-12/sesion-3/audio-2.m4a"
+              },
+              {
+                "tratamiento_multimedia_id": 384,
+                "type": "VIDEO",
+                "title": "audio-3.m4a",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-12/sesion-3/audio-3.m4a"
+              },
+              {
+                "tratamiento_multimedia_id": 385,
+                "type": "IMAGEN",
+                "title": "imagen-1.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-12/sesion-3/imagen-1.png"
+              },
+              {
+                "tratamiento_multimedia_id": 386,
+                "type": "IMAGEN",
+                "title": "imagen-2.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-12/sesion-3/imagen-2.png"
+              },
+              {
+                "tratamiento_multimedia_id": 387,
+                "type": "IMAGEN",
+                "title": "imagen-3.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-12/sesion-3/imagen-3.png"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": 13,
+        "title": "Semana 13",
+        "sesiones": [
+          {
+            "id": 1,
+            "title": "Sesión 1",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 388,
+                "type": "VIDEO",
+                "title": "video-1.mp4",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-13/sesion-1/video-1.mp4"
+              }
+            ]
+          },
+          {
+            "id": 2,
+            "title": "Sesión 2",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 389,
+                "type": "VIDEO",
+                "title": "audio-1.m4a",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-13/sesion-2/audio-1.m4a"
+              },
+              {
+                "tratamiento_multimedia_id": 390,
+                "type": "IMAGEN",
+                "title": "imagen-1.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-13/sesion-2/imagen-1.png"
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "title": "Sesión 3",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 391,
+                "type": "VIDEO",
+                "title": "audio-1.m4a",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-13/sesion-3/audio-1.m4a"
+              },
+              {
+                "tratamiento_multimedia_id": 392,
+                "type": "VIDEO",
+                "title": "audio-2.m4a",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-13/sesion-3/audio-2.m4a"
+              },
+              {
+                "tratamiento_multimedia_id": 393,
+                "type": "IMAGEN",
+                "title": "imagen-1.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-13/sesion-3/imagen-1.png"
+              },
+              {
+                "tratamiento_multimedia_id": 394,
+                "type": "IMAGEN",
+                "title": "imagen-2.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-13/sesion-3/imagen-2.png"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": 14,
+        "title": "Semana 14",
+        "sesiones": [
+          {
+            "id": 1,
+            "title": "Sesión 1",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 395,
+                "type": "VIDEO",
+                "title": "video-1.mp4",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-14/sesion-1/video-1.mp4"
+              }
+            ]
+          },
+          {
+            "id": 2,
+            "title": "Sesión 2",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 396,
+                "type": "VIDEO",
+                "title": "audio-1.m4a",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-14/sesion-2/audio-1.m4a"
+              },
+              {
+                "tratamiento_multimedia_id": 397,
+                "type": "VIDEO",
+                "title": "audio-2.m4a",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-14/sesion-2/audio-2.m4a"
+              },
+              {
+                "tratamiento_multimedia_id": 398,
+                "type": "VIDEO",
+                "title": "audio-3.m4a",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-14/sesion-2/audio-3.m4a"
+              },
+              {
+                "tratamiento_multimedia_id": 399,
+                "type": "VIDEO",
+                "title": "audio-4.m4a",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-14/sesion-2/audio-4.m4a"
+              },
+              {
+                "tratamiento_multimedia_id": 400,
+                "type": "IMAGEN",
+                "title": "imagen-1.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-14/sesion-2/imagen-1.png"
+              },
+              {
+                "tratamiento_multimedia_id": 401,
+                "type": "IMAGEN",
+                "title": "imagen-2.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-14/sesion-2/imagen-2.png"
+              },
+              {
+                "tratamiento_multimedia_id": 402,
+                "type": "IMAGEN",
+                "title": "imagen-3.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-14/sesion-2/imagen-3.png"
+              },
+              {
+                "tratamiento_multimedia_id": 403,
+                "type": "IMAGEN",
+                "title": "imagen-4.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-14/sesion-2/imagen-4.png"
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "title": "Sesión 3",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 404,
+                "type": "VIDEO",
+                "title": "audio-1.m4a",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-14/sesion-3/audio-1.m4a"
+              },
+              {
+                "tratamiento_multimedia_id": 405,
+                "type": "VIDEO",
+                "title": "audio-2.m4a",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-14/sesion-3/audio-2.m4a"
+              },
+              {
+                "tratamiento_multimedia_id": 406,
+                "type": "VIDEO",
+                "title": "audio-3.m4a",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-14/sesion-3/audio-3.m4a"
+              },
+              {
+                "tratamiento_multimedia_id": 407,
+                "type": "VIDEO",
+                "title": "audio-4.m4a",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-14/sesion-3/audio-4.m4a"
+              },
+              {
+                "tratamiento_multimedia_id": 408,
+                "type": "IMAGEN",
+                "title": "imagen-1.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-14/sesion-3/imagen-1.png"
+              },
+              {
+                "tratamiento_multimedia_id": 409,
+                "type": "IMAGEN",
+                "title": "imagen-2.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-14/sesion-3/imagen-2.png"
+              },
+              {
+                "tratamiento_multimedia_id": 410,
+                "type": "IMAGEN",
+                "title": "imagen-3.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-14/sesion-3/imagen-3.png"
+              },
+              {
+                "tratamiento_multimedia_id": 411,
+                "type": "IMAGEN",
+                "title": "imagen-4.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-14/sesion-3/imagen-4.png"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": 15,
+        "title": "Semana 15",
+        "sesiones": [
+          {
+            "id": 1,
+            "title": "Sesión 1",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 412,
+                "type": "VIDEO",
+                "title": "video-1.mp4",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-15/sesion-1/video-1.mp4"
+              }
+            ]
+          },
+          {
+            "id": 2,
+            "title": "Sesión 2",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 413,
+                "type": "VIDEO",
+                "title": "audio-1.m4a",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-15/sesion-2/audio-1.m4a"
+              },
+              {
+                "tratamiento_multimedia_id": 414,
+                "type": "VIDEO",
+                "title": "audio-2.m4a",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-15/sesion-2/audio-2.m4a"
+              },
+              {
+                "tratamiento_multimedia_id": 415,
+                "type": "IMAGEN",
+                "title": "imagen-1.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-15/sesion-2/imagen-1.png"
+              },
+              {
+                "tratamiento_multimedia_id": 416,
+                "type": "IMAGEN",
+                "title": "imagen-2.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-15/sesion-2/imagen-2.png"
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "title": "Sesión 3",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 417,
+                "type": "VIDEO",
+                "title": "audio-1.m4a",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-15/sesion-3/audio-1.m4a"
+              },
+              {
+                "tratamiento_multimedia_id": 418,
+                "type": "IMAGEN",
+                "title": "imagen-1.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-15/sesion-3/imagen-1.png"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": 16,
+        "title": "Semana 16",
+        "sesiones": [
+          {
+            "id": 1,
+            "title": "Sesión 1",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 419,
+                "type": "VIDEO",
+                "title": "audio-1.m4a",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-16/sesion-1/audio-1.m4a"
+              },
+              {
+                "tratamiento_multimedia_id": 420,
+                "type": "VIDEO",
+                "title": "audio-2.m4a",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-16/sesion-1/audio-2.m4a"
+              },
+              {
+                "tratamiento_multimedia_id": 421,
+                "type": "IMAGEN",
+                "title": "imagen-1.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-16/sesion-1/imagen-1.png"
+              },
+              {
+                "tratamiento_multimedia_id": 422,
+                "type": "IMAGEN",
+                "title": "imagen-2.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-16/sesion-1/imagen-2.png"
+              }
+            ]
+          },
+          {
+            "id": 2,
+            "title": "Sesión 2",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 423,
+                "type": "VIDEO",
+                "title": "video-1.mp4",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-16/sesion-2/video-1.mp4"
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "title": "Sesión 3",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 424,
+                "type": "VIDEO",
+                "title": "audio-1.m4a",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-16/sesion-3/audio-1.m4a"
+              },
+              {
+                "tratamiento_multimedia_id": 425,
+                "type": "IMAGEN",
+                "title": "imagen-1.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/AR/DBT_HTA/semana-16/sesion-3/imagen-1.png"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

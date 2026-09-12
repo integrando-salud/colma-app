@@ -1,0 +1,1196 @@
+{
+  "tratamiento": {
+    "tipo": "HTA",
+    "nombre": "Hipertensión arterial",
+    "semanas": [
+      {
+        "id": 1,
+        "title": "Semana 1",
+        "sesiones": [
+          {
+            "id": 1,
+            "title": "Sesión 1",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 565,
+                "type": "VIDEO",
+                "title": "video-1.mp4",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-1/sesion-1/video-1.mp4"
+              }
+            ]
+          },
+          {
+            "id": 2,
+            "title": "Sesión 2",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 566,
+                "type": "VIDEO",
+                "title": "video-1.mp4",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-1/sesion-2/video-1.mp4"
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "title": "Sesión 3",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 567,
+                "type": "AUDIO",
+                "title": "audio-1.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-1/sesion-3/audio-1.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 568,
+                "type": "IMAGEN",
+                "title": "imagen-1.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-1/sesion-3/imagen-1.png"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "title": "Semana 2",
+        "sesiones": [
+          {
+            "id": 1,
+            "title": "Sesión 1",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 569,
+                "type": "AUDIO",
+                "title": "audio-1.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-2/sesion-1/audio-1.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 570,
+                "type": "AUDIO",
+                "title": "audio-2.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-2/sesion-1/audio-2.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 571,
+                "type": "AUDIO",
+                "title": "audio-3.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-2/sesion-1/audio-3.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 572,
+                "type": "IMAGEN",
+                "title": "imagen-1.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-2/sesion-1/imagen-1.png"
+              },
+              {
+                "tratamiento_multimedia_id": 573,
+                "type": "IMAGEN",
+                "title": "imagen-2.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-2/sesion-1/imagen-2.png"
+              },
+              {
+                "tratamiento_multimedia_id": 574,
+                "type": "IMAGEN",
+                "title": "imagen-3.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-2/sesion-1/imagen-3.png"
+              }
+            ]
+          },
+          {
+            "id": 2,
+            "title": "Sesión 2",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 575,
+                "type": "AUDIO",
+                "title": "audio-1.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-2/sesion-2/audio-1.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 576,
+                "type": "AUDIO",
+                "title": "audio-2.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-2/sesion-2/audio-2.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 577,
+                "type": "AUDIO",
+                "title": "audio-3.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-2/sesion-2/audio-3.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 578,
+                "type": "AUDIO",
+                "title": "audio-4.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-2/sesion-2/audio-4.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 579,
+                "type": "IMAGEN",
+                "title": "imagen-1.gif",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-2/sesion-2/imagen-1.gif"
+              },
+              {
+                "tratamiento_multimedia_id": 580,
+                "type": "IMAGEN",
+                "title": "imagen-2.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-2/sesion-2/imagen-2.png"
+              },
+              {
+                "tratamiento_multimedia_id": 581,
+                "type": "IMAGEN",
+                "title": "imagen-3.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-2/sesion-2/imagen-3.png"
+              },
+              {
+                "tratamiento_multimedia_id": 582,
+                "type": "IMAGEN",
+                "title": "imagen-4.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-2/sesion-2/imagen-4.png"
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "title": "Sesión 3",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 583,
+                "type": "VIDEO",
+                "title": "video-1.mp4",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-2/sesion-3/video-1.mp4"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "title": "Semana 3",
+        "sesiones": [
+          {
+            "id": 1,
+            "title": "Sesión 1",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 584,
+                "type": "AUDIO",
+                "title": "audio-1.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-3/sesion-1/audio-1.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 585,
+                "type": "AUDIO",
+                "title": "audio-2.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-3/sesion-1/audio-2.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 586,
+                "type": "IMAGEN",
+                "title": "imagen-1.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-3/sesion-1/imagen-1.png"
+              },
+              {
+                "tratamiento_multimedia_id": 587,
+                "type": "IMAGEN",
+                "title": "imagen-2.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-3/sesion-1/imagen-2.png"
+              }
+            ]
+          },
+          {
+            "id": 2,
+            "title": "Sesión 2",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 588,
+                "type": "VIDEO",
+                "title": "video-1.mp4",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-3/sesion-2/video-1.mp4"
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "title": "Sesión 3",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 589,
+                "type": "AUDIO",
+                "title": "audio-1.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-3/sesion-3/audio-1.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 590,
+                "type": "AUDIO",
+                "title": "audio-2.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-3/sesion-3/audio-2.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 591,
+                "type": "IMAGEN",
+                "title": "imagen-1.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-3/sesion-3/imagen-1.png"
+              },
+              {
+                "tratamiento_multimedia_id": 592,
+                "type": "IMAGEN",
+                "title": "imagen-2.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-3/sesion-3/imagen-2.png"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "title": "Semana 4",
+        "sesiones": [
+          {
+            "id": 1,
+            "title": "Sesión 1",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 593,
+                "type": "VIDEO",
+                "title": "video-1.mp4",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-4/sesion-1/video-1.mp4"
+              }
+            ]
+          },
+          {
+            "id": 2,
+            "title": "Sesión 2",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 594,
+                "type": "AUDIO",
+                "title": "audio-1.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-4/sesion-2/audio-1.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 595,
+                "type": "AUDIO",
+                "title": "audio-2.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-4/sesion-2/audio-2.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 596,
+                "type": "IMAGEN",
+                "title": "imagen-1.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-4/sesion-2/imagen-1.png"
+              },
+              {
+                "tratamiento_multimedia_id": 597,
+                "type": "IMAGEN",
+                "title": "imagen-2.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-4/sesion-2/imagen-2.png"
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "title": "Sesión 3",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 598,
+                "type": "VIDEO",
+                "title": "video-1.mp4",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-4/sesion-3/video-1.mp4"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": 5,
+        "title": "Semana 5",
+        "sesiones": [
+          {
+            "id": 1,
+            "title": "Sesión 1",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 599,
+                "type": "VIDEO",
+                "title": "video-1.mp4",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-5/sesion-1/video-1.mp4"
+              }
+            ]
+          },
+          {
+            "id": 2,
+            "title": "Sesión 2",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 600,
+                "type": "AUDIO",
+                "title": "audio-1.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-5/sesion-2/audio-1.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 601,
+                "type": "IMAGEN",
+                "title": "imagen-1.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-5/sesion-2/imagen-1.png"
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "title": "Sesión 3",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 602,
+                "type": "AUDIO",
+                "title": "audio-1.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-5/sesion-3/audio-1.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 603,
+                "type": "IMAGEN",
+                "title": "imagen-1.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-5/sesion-3/imagen-1.png"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": 6,
+        "title": "Semana 6",
+        "sesiones": [
+          {
+            "id": 1,
+            "title": "Sesión 1",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 604,
+                "type": "AUDIO",
+                "title": "audio-1.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-6/sesion-1/audio-1.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 605,
+                "type": "AUDIO",
+                "title": "audio-2.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-6/sesion-1/audio-2.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 606,
+                "type": "IMAGEN",
+                "title": "imagen-1.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-6/sesion-1/imagen-1.png"
+              },
+              {
+                "tratamiento_multimedia_id": 607,
+                "type": "IMAGEN",
+                "title": "imagen-2.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-6/sesion-1/imagen-2.png"
+              }
+            ]
+          },
+          {
+            "id": 2,
+            "title": "Sesión 2",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 608,
+                "type": "VIDEO",
+                "title": "video-1.mp4",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-6/sesion-2/video-1.mp4"
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "title": "Sesión 3",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 609,
+                "type": "VIDEO",
+                "title": "video-1.mp4",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-6/sesion-3/video-1.mp4"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": 7,
+        "title": "Semana 7",
+        "sesiones": [
+          {
+            "id": 1,
+            "title": "Sesión 1",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 610,
+                "type": "VIDEO",
+                "title": "video-1.mp4",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-7/sesion-1/video-1.mp4"
+              }
+            ]
+          },
+          {
+            "id": 2,
+            "title": "Sesión 2",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 611,
+                "type": "VIDEO",
+                "title": "video-1.mp4",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-7/sesion-2/video-1.mp4"
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "title": "Sesión 3",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 612,
+                "type": "VIDEO",
+                "title": "video-1.mp4",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-7/sesion-3/video-1.mp4"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": 8,
+        "title": "Semana 8",
+        "sesiones": [
+          {
+            "id": 1,
+            "title": "Sesión 1",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 613,
+                "type": "VIDEO",
+                "title": "video-1.mp4",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-8/sesion-1/video-1.mp4"
+              },
+              {
+                "tratamiento_multimedia_id": 614,
+                "type": "VIDEO",
+                "title": "video-2.mp4",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-8/sesion-1/video-2.mp4"
+              }
+            ]
+          },
+          {
+            "id": 2,
+            "title": "Sesión 2",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 615,
+                "type": "AUDIO",
+                "title": "audio-1.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-8/sesion-2/audio-1.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 616,
+                "type": "AUDIO",
+                "title": "audio-2.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-8/sesion-2/audio-2.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 617,
+                "type": "IMAGEN",
+                "title": "imagen-1.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-8/sesion-2/imagen-1.png"
+              },
+              {
+                "tratamiento_multimedia_id": 618,
+                "type": "IMAGEN",
+                "title": "imagen-2.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-8/sesion-2/imagen-2.png"
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "title": "Sesión 3",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 619,
+                "type": "VIDEO",
+                "title": "video-1.mp4",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-8/sesion-3/video-1.mp4"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": 9,
+        "title": "Semana 9",
+        "sesiones": [
+          {
+            "id": 1,
+            "title": "Sesión 1",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 620,
+                "type": "AUDIO",
+                "title": "audio-1.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-9/sesion-1/audio-1.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 621,
+                "type": "AUDIO",
+                "title": "audio-2.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-9/sesion-1/audio-2.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 622,
+                "type": "IMAGEN",
+                "title": "imagen-1.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-9/sesion-1/imagen-1.png"
+              },
+              {
+                "tratamiento_multimedia_id": 623,
+                "type": "IMAGEN",
+                "title": "imagen-2.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-9/sesion-1/imagen-2.png"
+              }
+            ]
+          },
+          {
+            "id": 2,
+            "title": "Sesión 2",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 624,
+                "type": "AUDIO",
+                "title": "audio-1.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-9/sesion-2/audio-1.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 625,
+                "type": "AUDIO",
+                "title": "audio-2.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-9/sesion-2/audio-2.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 626,
+                "type": "AUDIO",
+                "title": "audio-3.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-9/sesion-2/audio-3.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 627,
+                "type": "IMAGEN",
+                "title": "imagen-1.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-9/sesion-2/imagen-1.png"
+              },
+              {
+                "tratamiento_multimedia_id": 628,
+                "type": "IMAGEN",
+                "title": "imagen-2.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-9/sesion-2/imagen-2.png"
+              },
+              {
+                "tratamiento_multimedia_id": 629,
+                "type": "IMAGEN",
+                "title": "imagen-3.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-9/sesion-2/imagen-3.png"
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "title": "Sesión 3",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 630,
+                "type": "VIDEO",
+                "title": "video-1.mp4",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-9/sesion-3/video-1.mp4"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": 10,
+        "title": "Semana 10",
+        "sesiones": [
+          {
+            "id": 1,
+            "title": "Sesión 1",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 631,
+                "type": "VIDEO",
+                "title": "video-1.mp4",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-10/sesion-1/video-1.mp4"
+              }
+            ]
+          },
+          {
+            "id": 2,
+            "title": "Sesión 2",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 632,
+                "type": "AUDIO",
+                "title": "audio-1.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-10/sesion-2/audio-1.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 633,
+                "type": "IMAGEN",
+                "title": "imagen-1.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-10/sesion-2/imagen-1.png"
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "title": "Sesión 3",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 634,
+                "type": "AUDIO",
+                "title": "audio-1.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-10/sesion-3/audio-1.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 635,
+                "type": "AUDIO",
+                "title": "audio-2.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-10/sesion-3/audio-2.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 636,
+                "type": "IMAGEN",
+                "title": "imagen-1.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-10/sesion-3/imagen-1.png"
+              },
+              {
+                "tratamiento_multimedia_id": 637,
+                "type": "IMAGEN",
+                "title": "imagen-2.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-10/sesion-3/imagen-2.png"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": 11,
+        "title": "Semana 11",
+        "sesiones": [
+          {
+            "id": 1,
+            "title": "Sesión 1",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 638,
+                "type": "AUDIO",
+                "title": "audio-1.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-11/sesion-1/audio-1.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 639,
+                "type": "AUDIO",
+                "title": "audio-2.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-11/sesion-1/audio-2.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 640,
+                "type": "IMAGEN",
+                "title": "imagen-1.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-11/sesion-1/imagen-1.png"
+              },
+              {
+                "tratamiento_multimedia_id": 641,
+                "type": "IMAGEN",
+                "title": "imagen-2.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-11/sesion-1/imagen-2.png"
+              }
+            ]
+          },
+          {
+            "id": 2,
+            "title": "Sesión 2",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 642,
+                "type": "VIDEO",
+                "title": "video-1.mp4",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-11/sesion-2/video-1.mp4"
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "title": "Sesión 3",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 643,
+                "type": "VIDEO",
+                "title": "video-1.mp4",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-11/sesion-3/video-1.mp4"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": 12,
+        "title": "Semana 12",
+        "sesiones": [
+          {
+            "id": 1,
+            "title": "Sesión 1",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 644,
+                "type": "AUDIO",
+                "title": "audio-1.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-12/sesion-1/audio-1.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 645,
+                "type": "AUDIO",
+                "title": "audio-2.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-12/sesion-1/audio-2.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 646,
+                "type": "AUDIO",
+                "title": "audio-3.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-12/sesion-1/audio-3.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 647,
+                "type": "IMAGEN",
+                "title": "imagen-1.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-12/sesion-1/imagen-1.png"
+              },
+              {
+                "tratamiento_multimedia_id": 648,
+                "type": "IMAGEN",
+                "title": "imagen-2.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-12/sesion-1/imagen-2.png"
+              },
+              {
+                "tratamiento_multimedia_id": 649,
+                "type": "IMAGEN",
+                "title": "imagen-3.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-12/sesion-1/imagen-3.png"
+              }
+            ]
+          },
+          {
+            "id": 2,
+            "title": "Sesión 2",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 650,
+                "type": "AUDIO",
+                "title": "audio-1.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-12/sesion-2/audio-1.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 651,
+                "type": "AUDIO",
+                "title": "audio-2.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-12/sesion-2/audio-2.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 652,
+                "type": "AUDIO",
+                "title": "audio-3.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-12/sesion-2/audio-3.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 653,
+                "type": "IMAGEN",
+                "title": "imagen-1.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-12/sesion-2/imagen-1.png"
+              },
+              {
+                "tratamiento_multimedia_id": 654,
+                "type": "IMAGEN",
+                "title": "imagen-2.gif",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-12/sesion-2/imagen-2.gif"
+              },
+              {
+                "tratamiento_multimedia_id": 655,
+                "type": "IMAGEN",
+                "title": "imagen-3.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-12/sesion-2/imagen-3.png"
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "title": "Sesión 3",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 656,
+                "type": "AUDIO",
+                "title": "audio-1.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-12/sesion-3/audio-1.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 657,
+                "type": "AUDIO",
+                "title": "audio-2.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-12/sesion-3/audio-2.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 658,
+                "type": "AUDIO",
+                "title": "audio-3.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-12/sesion-3/audio-3.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 659,
+                "type": "IMAGEN",
+                "title": "imagen-1.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-12/sesion-3/imagen-1.png"
+              },
+              {
+                "tratamiento_multimedia_id": 660,
+                "type": "IMAGEN",
+                "title": "imagen-2.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-12/sesion-3/imagen-2.png"
+              },
+              {
+                "tratamiento_multimedia_id": 661,
+                "type": "IMAGEN",
+                "title": "imagen-3.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-12/sesion-3/imagen-3.png"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": 13,
+        "title": "Semana 13",
+        "sesiones": [
+          {
+            "id": 1,
+            "title": "Sesión 1",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 662,
+                "type": "VIDEO",
+                "title": "video-1.mp4",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-13/sesion-1/video-1.mp4"
+              }
+            ]
+          },
+          {
+            "id": 2,
+            "title": "Sesión 2",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 663,
+                "type": "AUDIO",
+                "title": "audio-1.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-13/sesion-2/audio-1.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 664,
+                "type": "IMAGEN",
+                "title": "imagen-1.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-13/sesion-2/imagen-1.png"
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "title": "Sesión 3",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 665,
+                "type": "AUDIO",
+                "title": "audio-1.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-13/sesion-3/audio-1.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 666,
+                "type": "IMAGEN",
+                "title": "imagen-1.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-13/sesion-3/imagen-1.png"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": 14,
+        "title": "Semana 14",
+        "sesiones": [
+          {
+            "id": 1,
+            "title": "Sesión 1",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 667,
+                "type": "VIDEO",
+                "title": "video-1.mp4",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-14/sesion-1/video-1.mp4"
+              }
+            ]
+          },
+          {
+            "id": 2,
+            "title": "Sesión 2",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 668,
+                "type": "AUDIO",
+                "title": "audio-1.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-14/sesion-2/audio-1.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 669,
+                "type": "AUDIO",
+                "title": "audio-2.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-14/sesion-2/audio-2.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 670,
+                "type": "AUDIO",
+                "title": "audio-3.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-14/sesion-2/audio-3.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 671,
+                "type": "AUDIO",
+                "title": "audio-4.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-14/sesion-2/audio-4.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 672,
+                "type": "AUDIO",
+                "title": "audio-5.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-14/sesion-2/audio-5.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 673,
+                "type": "IMAGEN",
+                "title": "imagen-1.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-14/sesion-2/imagen-1.png"
+              },
+              {
+                "tratamiento_multimedia_id": 674,
+                "type": "IMAGEN",
+                "title": "imagen-2.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-14/sesion-2/imagen-2.png"
+              },
+              {
+                "tratamiento_multimedia_id": 675,
+                "type": "IMAGEN",
+                "title": "imagen-3.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-14/sesion-2/imagen-3.png"
+              },
+              {
+                "tratamiento_multimedia_id": 676,
+                "type": "IMAGEN",
+                "title": "imagen-4.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-14/sesion-2/imagen-4.png"
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "title": "Sesión 3",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 677,
+                "type": "AUDIO",
+                "title": "audio-1.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-14/sesion-3/audio-1.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 678,
+                "type": "AUDIO",
+                "title": "audio-2.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-14/sesion-3/audio-2.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 679,
+                "type": "AUDIO",
+                "title": "audio-3.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-14/sesion-3/audio-3.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 680,
+                "type": "AUDIO",
+                "title": "audio-4.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-14/sesion-3/audio-4.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 681,
+                "type": "IMAGEN",
+                "title": "imagen-1.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-14/sesion-3/imagen-1.png"
+              },
+              {
+                "tratamiento_multimedia_id": 682,
+                "type": "IMAGEN",
+                "title": "imagen-2.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-14/sesion-3/imagen-2.png"
+              },
+              {
+                "tratamiento_multimedia_id": 683,
+                "type": "IMAGEN",
+                "title": "imagen-3.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-14/sesion-3/imagen-3.png"
+              },
+              {
+                "tratamiento_multimedia_id": 684,
+                "type": "IMAGEN",
+                "title": "imagen-4.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-14/sesion-3/imagen-4.png"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": 15,
+        "title": "Semana 15",
+        "sesiones": [
+          {
+            "id": 1,
+            "title": "Sesión 1",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 685,
+                "type": "VIDEO",
+                "title": "video-1.mp4",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-15/sesion-1/video-1.mp4"
+              }
+            ]
+          },
+          {
+            "id": 2,
+            "title": "Sesión 2",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 686,
+                "type": "AUDIO",
+                "title": "audio-1.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-15/sesion-2/audio-1.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 687,
+                "type": "AUDIO",
+                "title": "audio-2.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-15/sesion-2/audio-2.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 688,
+                "type": "IMAGEN",
+                "title": "imagen-1.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-15/sesion-2/imagen-1.png"
+              },
+              {
+                "tratamiento_multimedia_id": 689,
+                "type": "IMAGEN",
+                "title": "imagen-2.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-15/sesion-2/imagen-2.png"
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "title": "Sesión 3",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 690,
+                "type": "AUDIO",
+                "title": "audio-1.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-15/sesion-3/audio-1.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 691,
+                "type": "IMAGEN",
+                "title": "imagen-1.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-15/sesion-3/imagen-1.png"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": 16,
+        "title": "Semana 16",
+        "sesiones": [
+          {
+            "id": 1,
+            "title": "Sesión 1",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 692,
+                "type": "AUDIO",
+                "title": "audio-1.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-16/sesion-1/audio-1.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 693,
+                "type": "AUDIO",
+                "title": "audio-2.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-16/sesion-1/audio-2.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 694,
+                "type": "IMAGEN",
+                "title": "imagen-1.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-16/sesion-1/imagen-1.png"
+              },
+              {
+                "tratamiento_multimedia_id": 695,
+                "type": "IMAGEN",
+                "title": "imagen-2.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-16/sesion-1/imagen-2.png"
+              }
+            ]
+          },
+          {
+            "id": 2,
+            "title": "Sesión 2",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 696,
+                "type": "VIDEO",
+                "title": "video-1.mp4",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-16/sesion-2/video-1.mp4"
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "title": "Sesión 3",
+            "content": [
+              {
+                "tratamiento_multimedia_id": 697,
+                "type": "AUDIO",
+                "title": "audio-1.mp3",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-16/sesion-3/audio-1.mp3"
+              },
+              {
+                "tratamiento_multimedia_id": 698,
+                "type": "IMAGEN",
+                "title": "imagen-1.png",
+                "link": "http://158.69.219.243/api/multimedia/tratamientos/PE/HTA/semana-16/sesion-3/imagen-1.png"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

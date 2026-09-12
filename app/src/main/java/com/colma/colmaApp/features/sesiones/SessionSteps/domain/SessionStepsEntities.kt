@@ -29,7 +29,8 @@ data class MultimediaOption(
     val isCompleted: Boolean = false, // Indicates if the resource has been viewed/completed
     val localFilePath: String? = null,
     val localDescriptionAudios: List<String>? = null,
-    val localDescriptionImages: List<String>? = null
+    val localDescriptionImages: List<String>? = null,
+    val tratamientoMultimediaId: Int? = null
 )
 
 object MultimediaKeyUtils {

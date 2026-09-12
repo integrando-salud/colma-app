@@ -181,7 +181,8 @@ class SessionStepsRepositoryImpl(
                         isCompleted = isCompleted,
                         localFilePath = localFilePath,
                         localDescriptionAudios = localDescriptionAudios,
-                        localDescriptionImages = multimediaContent.descriptionImages
+                        localDescriptionImages = multimediaContent.descriptionImages,
+                        tratamientoMultimediaId = multimediaContent.tratamientoMultimediaId
                     )
                 })
             },
@@ -231,7 +232,8 @@ class SessionStepsRepositoryImpl(
             weekId = weekId,
             sessionId = sessionId,
             multimediaType = multimediaReadRecord.multimedia_type ?: "UNKNOWN",
-            multimediaUniqueKey = multimediaReadRecord.multimedia_unique_key ?: "UNKNOWN"
+            multimediaUniqueKey = multimediaReadRecord.multimedia_unique_key ?: "UNKNOWN",
+            tratamientoMultimediaId = multimediaReadRecord.tratamiento_multimedia_id
         )
 
         // Check if the subsession has been completed
