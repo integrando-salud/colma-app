@@ -304,18 +304,24 @@ class SessionListRepositoryImpl(
         newMode
     }
 
-    override suspend fun scheduleNextWeekInTenMinutes(): Pair<Int, Long>? = withContext(Dispatchers.IO) {
-        val currentUnlocked = getUnlockedWeeksCount()
+    override suspend fun unlockNextWeek(): Int? = withContext(Dispatchers.IO) {
+        val isTest = prefs.getBoolean(KEY_IS_TESTING_MODE, false)
+        if (!isTest) {
+            prefs.edit().putBoolean(KEY_IS_TESTING_MODE, true).apply()
+        }
+        val currentUnlocked = prefs.getInt(KEY_TEST_UNLOCKED_WEEKS, 1)
         val nextWeek = currentUnlocked + 1
         if (nextWeek > 16) return@withContext null
 
-        val triggerTime = System.currentTimeMillis() + 10 * 60 * 1000L // 10 minutes
-        com.colma.colmaApp.utils.notifications.NotificationHelper.scheduleWeeklyUnlock(
-            context = context,
-            weekNumber = nextWeek,
-            triggerTimeMillis = triggerTime,
-            isTestMode = prefs.getBoolean(KEY_IS_TESTING_MODE, false)
-        )
-        Pair(nextWeek, triggerTime)
+        prefs.edit()
+            .putInt(KEY_TEST_UNLOCKED_WEEKS, nextWeek)
+            .apply()
+        Log.d(TAG, "Unlocked test week: $nextWeek")
+        nextWeek
+    }
+
+    override suspend fun scheduleNextWeekInTenMinutes(): Pair<Int, Long>? = withContext(Dispatchers.IO) {
+        val nextWeek = unlockNextWeek() ?: return@withContext null
+        Pair(nextWeek, System.currentTimeMillis())
     }
 }

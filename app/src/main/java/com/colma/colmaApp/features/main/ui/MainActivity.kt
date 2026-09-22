@@ -34,6 +34,7 @@ import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.LockOpen
 import androidx.compose.material.icons.filled.Timer
+import androidx.compose.material.icons.filled.Add
 import com.colma.colmaApp.features.multimedia.ui.scrollbar
 import com.colma.colmaApp.utils.notifications.NotificationHelper
 import com.colma.colmaApp.servicios.session.SessionManager
@@ -739,16 +740,16 @@ fun MainAppContainer() {
                                             )
                                         }
 
-                                        // Botón 2: Habilitar siguiente semana en 10 min
+                                        // Botón 2: Habilitar siguiente semana de prueba al instante
                                         if (uiState.isTestingMode) {
                                             IconButton(
                                                 onClick = {
-                                                    sessionListViewModel.onEvent(SessionListEvent.ScheduleNextWeekInTenMinutes)
+                                                    sessionListViewModel.onEvent(SessionListEvent.UnlockNextWeek)
                                                 }
                                             ) {
                                                 Icon(
-                                                    imageVector = Icons.Default.Timer,
-                                                    contentDescription = "Habilitar siguiente semana en 10 min",
+                                                    imageVector = Icons.Default.Add,
+                                                    contentDescription = "Habilitar siguiente semana de prueba",
                                                     tint = Color.White
                                                 )
                                             }

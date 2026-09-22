@@ -28,6 +28,7 @@ interface SessionListRepository {
     suspend fun debugAdvanceOneWeek()
     suspend fun isTestingMode(): Boolean
     suspend fun toggleTestingMode(): Boolean
+    suspend fun unlockNextWeek(): Int?
     suspend fun scheduleNextWeekInTenMinutes(): Pair<Int, Long>?
     suspend fun getTestingUnlockedWeeks(): Int
 }

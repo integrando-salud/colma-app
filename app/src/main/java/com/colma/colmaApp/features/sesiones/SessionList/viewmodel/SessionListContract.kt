@@ -28,6 +28,7 @@ sealed class SessionListEvent {
     object BackClicked : SessionListEvent()
     object DebugAdvanceWeek : SessionListEvent()
     object ToggleTestingMode : SessionListEvent()
+    object UnlockNextWeek : SessionListEvent()
     object ScheduleNextWeekInTenMinutes : SessionListEvent()
     object ClearTestingToastMessage : SessionListEvent()
     object Refresh : SessionListEvent()

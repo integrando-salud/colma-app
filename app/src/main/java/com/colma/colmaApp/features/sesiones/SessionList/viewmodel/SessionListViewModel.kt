@@ -81,15 +81,13 @@ class SessionListViewModel(private val repository: SessionListRepository) : View
                     loadSessions()
                 }
             }
+            SessionListEvent.UnlockNextWeek,
             SessionListEvent.ScheduleNextWeekInTenMinutes -> {
                 viewModelScope.launch {
-                    val result = repository.scheduleNextWeekInTenMinutes()
-                    val msg = if (result != null) {
-                        "Prueba: Desbloqueo de Semana ${result.first} programado para dentro de 10 minutos con notificación."
-                    } else {
-                        "Ya se han alcanzado todas las semanas (16)."
-                    }
+                    val result = repository.unlockNextWeek()
+                    val msg = "Habilitando semana de prueba"
                     _uiState.update { it.copy(testingToastMessage = msg) }
+                    loadSessions(showLoading = false)
                 }
             }
             SessionListEvent.ClearTestingToastMessage -> {
