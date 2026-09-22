@@ -140,6 +140,7 @@ fun MultimediaScreen(
                                         metasOptions = currentOption.metasOptions,
                                         currentWeekId = uiState.sessionId.toInt(),
                                         currentSessionId = uiState.subSessionId.toInt(),
+                                        tratamientoElementoId = currentOption.elementoId,
                                         onFinish = { onEvent(MultimediaEvent.Finish) },
                                         navigationButtons = navButtons
                                     )
@@ -162,6 +163,7 @@ fun MultimediaScreen(
                                         subSessionId = uiState.subSessionId,
                                         treatmentTypes = uiState.treatmentTypes,
                                         multimediaUniqueKey = quizUniqueKey,
+                                        tratamientoElementoId = currentOption.elementoId,
                                         onQuizSubmit = { quizResponse, questionResponses ->
                                             onEvent(MultimediaEvent.QuizSubmitted(quizResponse, questionResponses))
                                         },
@@ -170,6 +172,7 @@ fun MultimediaScreen(
                                     )
                                 } ?: Text("Quiz not found or questions missing.")
                             }
+
                             else -> {
                                 Text("Content for ${currentOption.type.name}: ${currentOption.title}")
                             }

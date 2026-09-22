@@ -36,7 +36,7 @@ class ExampleUnitTest {
             "\"estado_animo\":",
             "\"glucosa\":",
             "\"metas\":",
-            "\"multimedia_read\":",
+            "\"progreso_elementos\":",
             "\"presion\":",
             "\"quiz\":",
             "\"userId\":"

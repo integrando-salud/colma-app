@@ -402,16 +402,62 @@ class DbHelper(context: Context) :
             e.printStackTrace()
         }
 
-        // Step 5: Ensure 'treatment_type' column exists in 'quiz_response_table'
+        // Ensure tratamiento_elemento_id exists in multimedia_read_table
+        try {
+            var colExists = false
+            db.rawQuery("PRAGMA table_info(multimedia_read_table)", null)?.use { cursor ->
+                val nameIndex = cursor.getColumnIndex("name")
+                if (nameIndex != -1) {
+                    while (cursor.moveToNext()) {
+                        if ("tratamiento_elemento_id" == cursor.getString(nameIndex)) {
+                            colExists = true
+                            break
+                        }
+                    }
+                }
+            }
+            if (!colExists) {
+                db.execSQL("ALTER TABLE multimedia_read_table ADD COLUMN tratamiento_elemento_id INTEGER;")
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+        // Ensure tratamiento_elemento_id exists in metas_table
+        try {
+            var colExists = false
+            db.rawQuery("PRAGMA table_info(metas_table)", null)?.use { cursor ->
+                val nameIndex = cursor.getColumnIndex("name")
+                if (nameIndex != -1) {
+                    while (cursor.moveToNext()) {
+                        if ("tratamiento_elemento_id" == cursor.getString(nameIndex)) {
+                            colExists = true
+                            break
+                        }
+                    }
+                }
+            }
+            if (!colExists) {
+                db.execSQL("ALTER TABLE metas_table ADD COLUMN tratamiento_elemento_id INTEGER;")
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+        // Step 5: Ensure 'treatment_type' and 'tratamiento_elemento_id' columns exist in 'quiz_response_table'
         var treatmentTypeColumnExists = false
+        var quizElementoIdExists = false
         try {
             db.rawQuery("PRAGMA table_info(quiz_response_table)", null)?.use { cursor ->
                 val nameIndex = cursor.getColumnIndex("name")
                 if (nameIndex != -1) {
                     while (cursor.moveToNext()) {
-                        if ("treatment_type" == cursor.getString(nameIndex)) {
+                        val colName = cursor.getString(nameIndex)
+                        if ("treatment_type" == colName) {
                             treatmentTypeColumnExists = true
-                            break
+                        }
+                        if ("tratamiento_elemento_id" == colName) {
+                            quizElementoIdExists = true
                         }
                     }
                 }
@@ -427,6 +473,15 @@ class DbHelper(context: Context) :
                 e.printStackTrace()
             }
         }
+
+        if (!quizElementoIdExists) {
+            try {
+                db.execSQL("ALTER TABLE quiz_response_table ADD COLUMN tratamiento_elemento_id INTEGER;")
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+
 
         // Step 6: Ensure 'posibles_respuestas' column exists in 'question_response_table'
         var posiblesRespuestasColumnExists = false
@@ -609,9 +664,11 @@ class DbHelper(context: Context) :
         multimediaUniqueKey: String,
         fechaRegistro: String? = null,
         fechaSincronizacion: String? = null,
-        tratamientoMultimediaId: Int? = null
+        tratamientoMultimediaId: Int? = null,
+        tratamientoElementoId: Int? = null
     ): Long {
         val db: SQLiteDatabase = writableDatabase
+        val effectiveElementoId = tratamientoElementoId ?: tratamientoMultimediaId
         val values = ContentValues().apply {
             put("id_usuario", idUsuario)
             put("treatment_id", treatmentId)
@@ -621,7 +678,13 @@ class DbHelper(context: Context) :
             put("multimedia_unique_key", multimediaUniqueKey)
             put("fecha_registro", fechaRegistro ?: defaultDateTimeFormat.format(Date()))
             fechaSincronizacion?.let { put("fecha_sincronizacion", it) } ?: putNull("fecha_sincronizacion")
-            tratamientoMultimediaId?.let { put("tratamiento_multimedia_id", it) } ?: putNull("tratamiento_multimedia_id")
+            effectiveElementoId?.let {
+                put("tratamiento_multimedia_id", it)
+                put("tratamiento_elemento_id", it)
+            } ?: run {
+                putNull("tratamiento_multimedia_id")
+                putNull("tratamiento_elemento_id")
+            }
         }
 
         var rowId: Long = -1L
@@ -690,20 +753,22 @@ class DbHelper(context: Context) :
         sessionId: Int,
         multimediaType: String,
         multimediaUniqueKey: String,
-        tratamientoMultimediaId: Int? = null
+        tratamientoMultimediaId: Int? = null,
+        tratamientoElementoId: Int? = null
     ): Long {
         if (getMultimediaReadRecordExists(idUsuario, treatmentId, weekId, sessionId, multimediaType, multimediaUniqueKey)) {
             return -1L // Record already exists, do not insert
         }
         // Record does not exist, proceed with insertion
         return insertMultimediaRead(
-            idUsuario,
-            treatmentId,
-            weekId,
-            sessionId,
-            multimediaType,
-            multimediaUniqueKey,
-            tratamientoMultimediaId = tratamientoMultimediaId
+            idUsuario = idUsuario,
+            treatmentId = treatmentId,
+            weekId = weekId,
+            sessionId = sessionId,
+            multimediaType = multimediaType,
+            multimediaUniqueKey = multimediaUniqueKey,
+            tratamientoMultimediaId = tratamientoMultimediaId,
+            tratamientoElementoId = tratamientoElementoId
         )
     }
 
@@ -735,9 +800,13 @@ class DbHelper(context: Context) :
                 put("correct_answers", quizResponse.correct_answers)
                 put("percentage_correct", quizResponse.percentage_correct)
                 put("multimedia_unique_key", quizResponse.multimedia_unique_key)
+                if (quizResponse.tratamiento_elemento_id != null) {
+                    put("tratamiento_elemento_id", quizResponse.tratamiento_elemento_id)
+                }
                 // treatment_type removed - quiz_type already contains hta/diabetes
             }
             quizResponseId = db.insert("quiz_response_table", null, quizValues)
+
 
             if (quizResponseId != -1L) {
                 for (question in questionResponses) {
@@ -1635,6 +1704,9 @@ class DbHelper(context: Context) :
             put("meta_cumplida", meta.meta_cumplida)
             put("fecha_objetivo", meta.fecha_objetivo)
             put("motivo_incumplimiento", meta.motivo_incumplimiento)
+            if (meta.tratamiento_elemento_id != null) {
+                put("tratamiento_elemento_id", meta.tratamiento_elemento_id)
+            }
         }
 
         var rowId: Long = -1L
@@ -1664,7 +1736,11 @@ class DbHelper(context: Context) :
             put("meta_cumplida", meta.meta_cumplida)
             put("fecha_objetivo", meta.fecha_objetivo)
             put("motivo_incumplimiento", meta.motivo_incumplimiento)
+            if (meta.tratamiento_elemento_id != null) {
+                put("tratamiento_elemento_id", meta.tratamiento_elemento_id)
+            }
         }
+
 
         var affectedRows = 0
         db.beginTransaction()
@@ -1981,7 +2057,17 @@ class DbHelper(context: Context) :
     }
 
 
+    fun hasQuizResponseForElement(idUsuario: Int, tratamientoElementoId: Int): Boolean {
+        val db = readableDatabase
+        val cursor = db.rawQuery(
+            "SELECT 1 FROM quiz_response_table WHERE id_usuario = ? AND tratamiento_elemento_id = ? LIMIT 1",
+            arrayOf(idUsuario.toString(), tratamientoElementoId.toString())
+        )
+        return cursor.use { it.moveToFirst() }
+    }
+
     fun markMetasSent(ids: List<Long>) {
+
         if (ids.isEmpty()) return
         val db = writableDatabase
         db.beginTransaction()
@@ -2081,7 +2167,8 @@ class DbHelper(context: Context) :
             fecha_sincronizacion = c.getStringOrNull("fecha_sincronizacion"),
             meta_cumplida = c.getIntOrNull("meta_cumplida"),
             fecha_objetivo = c.getStringOrNull("fecha_objetivo"),
-            motivo_incumplimiento = c.getStringOrNull("motivo_incumplimiento")
+            motivo_incumplimiento = c.getStringOrNull("motivo_incumplimiento"),
+            tratamiento_elemento_id = c.getIntOrNull("tratamiento_elemento_id")
         )
     }
 
@@ -2096,7 +2183,8 @@ class DbHelper(context: Context) :
             multimedia_unique_key = c.getStringOrNull("multimedia_unique_key"),
             fecha_registro = c.getStringOrNull("fecha_registro"),
             fecha_sincronizacion = c.getStringOrNull("fecha_sincronizacion"),
-            tratamiento_multimedia_id = c.getIntOrNull("tratamiento_multimedia_id")
+            tratamiento_multimedia_id = c.getIntOrNull("tratamiento_multimedia_id") ?: c.getIntOrNull("tratamiento_elemento_id"),
+            tratamiento_elemento_id = c.getIntOrNull("tratamiento_elemento_id") ?: c.getIntOrNull("tratamiento_multimedia_id")
         )
     }
 
@@ -2114,9 +2202,11 @@ class DbHelper(context: Context) :
             correct_answers = c.getIntOrNull("correct_answers"),
             percentage_correct = c.getDoubleOrNull("percentage_correct"),
             multimedia_unique_key = c.getStringOrNull("multimedia_unique_key"),
-            treatment_type = c.getStringOrNull("treatment_type")
+            treatment_type = c.getStringOrNull("treatment_type"),
+            tratamiento_elemento_id = c.getIntOrNull("tratamiento_elemento_id")
         )
     }
+
 
     /**
      * Return all question responses for a given quiz response ID.

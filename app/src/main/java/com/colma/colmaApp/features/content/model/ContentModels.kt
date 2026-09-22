@@ -55,8 +55,15 @@ data class MultimediaContent(
     val descriptionAudios: List<String>? = null,
     val descriptionImages: List<String>? = null,
     @kotlinx.serialization.SerialName("tratamiento_multimedia_id")
-    val tratamientoMultimediaId: Int? = null
-)
+
+    val tratamientoMultimediaId: Int? = null,
+    @kotlinx.serialization.SerialName("tratamiento_elemento_id")
+    val tratamientoElementoId: Int? = null
+) {
+    val elementoId: Int?
+        get() = tratamientoElementoId ?: tratamientoMultimediaId
+}
+
 
 @Serializable
 data class QuizQuestion(

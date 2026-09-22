@@ -101,7 +101,7 @@ class TreatmentDownloadViewModel(
             val result = repository.downloadAndSaveTreatment(token, userId) { progress, status ->
                 _uiState.update { 
                     it.copy(
-                        progress = progress,
+                        progress = progress.coerceIn(0f, 1f),
                         statusText = status
                     )
                 }

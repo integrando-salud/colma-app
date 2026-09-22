@@ -323,7 +323,8 @@ class SessionStepsRepositoryImpl(
             val quizType = (quizResponse.quiz_type ?: "unknown").lowercase(Locale.getDefault())
             
             val quizData = QuizData(
-                idQuiz = quizResponse.id_quiz_response?.toInt() ?: 0,
+                tratamientoElementoId = quizResponse.tratamiento_elemento_id,
+                idQuiz = quizResponse.id_quiz_response.toInt(),
                 idUsuario = userId,
                 quizType = quizType,
                 sessionId = quizResponse.session_id ?: 0,
@@ -336,6 +337,7 @@ class SessionStepsRepositoryImpl(
                 puntajeObtenido = quizResponse.correct_answers ?: 0,
                 porcentajeCorrecto = quizResponse.percentage_correct?.toInt() ?: 0
             )
+
 
             val completedSessionsCount = dbHelper.getCompletedSessionsCount(userId)
             val syncRequest = SyncDataRequest(

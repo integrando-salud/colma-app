@@ -33,12 +33,15 @@ class RegistrosSaludModelos {
         val lugar: String?,
         val acompañante: String?,
         val fecha_regisitro: String?,
+
         val fecha_edicion: String?,
         val fecha_sincronizacion: String?,
         val meta_cumplida: Int?,
         val fecha_objetivo: String?,
-        val motivo_incumplimiento: String? = null
+        val motivo_incumplimiento: String? = null,
+        val tratamiento_elemento_id: Int? = null
     )
+
 
     data class MultimediaReadRecord(
         val id_multimedia_read: Long,
@@ -50,6 +53,10 @@ class RegistrosSaludModelos {
         val multimedia_unique_key: String?,
         val fecha_registro: String?,
         val fecha_sincronizacion: String?,
-        val tratamiento_multimedia_id: Int? = null
-    )
+        val tratamiento_multimedia_id: Int? = null,
+        val tratamiento_elemento_id: Int? = null
+    ) {
+        val elementoId: Int?
+            get() = tratamiento_elemento_id ?: tratamiento_multimedia_id
+    }
 }

@@ -13,8 +13,10 @@ data class QuizResponseRecord(
     val correct_answers: Int?,
     val percentage_correct: Double?,
     val multimedia_unique_key: String?,
-    val treatment_type: String? = null // Optional - quiz_type already indicates hta/diabetes
+    val treatment_type: String? = null, // Optional - quiz_type already indicates hta/diabetes
+    val tratamiento_elemento_id: Int? = null
 )
+
 
 data class QuestionResponseRecord(
     val id_question_response: Long = 0,

@@ -124,6 +124,7 @@ class MenuMainRepositoryImpl(
                 )
             }
             com.colma.colmaApp.servicios.internetCommunication.model.QuizData(
+                tratamientoElementoId = q.tratamiento_elemento_id,
                 idQuiz = q.id_quiz_response.toInt(),
                 idUsuario = q.id_usuario ?: userId,
                 quizType = (q.quiz_type ?: "").lowercase(Locale.ROOT),
@@ -145,6 +146,7 @@ class MenuMainRepositoryImpl(
                 com.colma.colmaApp.servicios.internetCommunication.model.MetaData(
                     idMeta = m.id_meta.toInt(),
                     idUsuario = m.id_usuario ?: userId,
+                    tratamientoElementoId = m.tratamiento_elemento_id,
                     semana = m.semana ?: 0,
                     sesion = m.sesion ?: 0,
                     tipoActividad = m.tipo_actividad ?: "",
@@ -161,6 +163,17 @@ class MenuMainRepositoryImpl(
                 )
             }
 
+        val progresoElementosData = pendingMultimediaRead
+            .filter { it.elementoId != null }
+            .map { mr ->
+                com.colma.colmaApp.servicios.internetCommunication.model.ProgresoElementoData(
+                    tratamientoElementoId = mr.elementoId!!,
+                    completado = true,
+                    fechaEstado = mr.fecha_registro ?: clientSyncTimestamp,
+                    fechaSincronizacion = clientSyncTimestamp
+                )
+            }
+
         val multimediaReadData = pendingMultimediaRead.map { mr ->
             com.colma.colmaApp.servicios.internetCommunication.model.MultimediaReadData(
                 idMultimediaRead = mr.id_multimedia_read.toInt(),
@@ -172,7 +185,7 @@ class MenuMainRepositoryImpl(
                 multimediaUniqueKey = mr.multimedia_unique_key ?: "",
                 fechaRegistro = mr.fecha_registro ?: clientSyncTimestamp,
                 fechaSincronizacion = clientSyncTimestamp,
-                tratamientoMultimediaId = mr.tratamiento_multimedia_id
+                tratamientoMultimediaId = mr.elementoId
             )
         }
 
@@ -189,6 +202,7 @@ class MenuMainRepositoryImpl(
             estadoAnimo = estadoAnimoData,
             quiz = quizData,
             metas = metaData,
+            progresoElementos = progresoElementosData,
             multimediaRead = multimediaReadData
         )
     }
@@ -209,7 +223,7 @@ class MenuMainRepositoryImpl(
             Log.d(TAG, "Sync Request Payload for user $userId:\n$requestBodyJson")
 
             // Exit early if there is nothing to sync
-            if (syncRequest.glucosa.isEmpty() && syncRequest.presion.isEmpty() && syncRequest.estadoAnimo.isEmpty() && syncRequest.quiz.isEmpty() && syncRequest.metas.isEmpty() && syncRequest.multimediaRead.isEmpty()) {
+            if (syncRequest.glucosa.isEmpty() && syncRequest.presion.isEmpty() && syncRequest.estadoAnimo.isEmpty() && syncRequest.quiz.isEmpty() && syncRequest.metas.isEmpty() && syncRequest.progresoElementos.isEmpty() && syncRequest.multimediaRead.isEmpty()) {
                 Log.d(TAG, "No data to synchronize for user $userId.")
                 return Result.success("No data to synchronize.")
             }
@@ -225,7 +239,7 @@ class MenuMainRepositoryImpl(
                 dbHelper.markGlucosaSent(syncRequest.glucosa.map { it.idGlucosa.toLong() })
                 dbHelper.markPresionSent(syncRequest.presion.map { it.idPresion.toLong() })
                 dbHelper.updateEstadoAnimoSyncTimestamps(syncRequest.estadoAnimo.associate { it.idEstadoAnimo.toLong() to nowLocal() })
-                dbHelper.markQuizResponsesSent(syncRequest.quiz.map { it.idQuiz.toLong() })
+                dbHelper.markQuizResponsesSent(syncRequest.quiz.mapNotNull { it.idQuiz?.toLong() })
                 dbHelper.markMetasSent(syncRequest.metas.map { it.idMeta.toLong() })
                 dbHelper.markMultimediaReadSent(syncRequest.multimediaRead.map { it.idMultimediaRead.toLong() })
 
@@ -244,6 +258,7 @@ class MenuMainRepositoryImpl(
             Result.failure(e)
         }
     }
+
 
     override suspend fun saveSynchronizationRecord(timestamp: String, status: String, data: String?) {
         withContext(Dispatchers.IO) {

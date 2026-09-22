@@ -98,7 +98,7 @@ class TratamientoMultimediaSerializationTest {
     }
 
     @Test
-    fun `serializacion de SyncDataRequest incluye tratamiento_multimedia_id en multimedia_read`() {
+    fun `serializacion de SyncDataRequest convierte multimediaRead a progreso_elementos con tratamiento_elemento_id`() {
         val multimediaReadItem = MultimediaReadData(
             idMultimediaRead = 1,
             idUsuario = 10,
@@ -127,12 +127,12 @@ class TratamientoMultimediaSerializationTest {
         )
 
         val json = Gson().toJson(request)
-        assertTrue("JSON debe contener 'tratamiento_multimedia_id'", json.contains("\"tratamiento_multimedia_id\":1"))
+        assertTrue("JSON debe contener 'progreso_elementos'", json.contains("\"progreso_elementos\""))
+        assertTrue("JSON debe contener 'tratamiento_elemento_id'", json.contains("\"tratamiento_elemento_id\":1") || json.contains("\"tratamiento_elemento_id\": 1"))
 
         val deserialized = Gson().fromJson(json, SyncDataRequest::class.java)
-        assertEquals(1, deserialized.multimediaRead.size)
-        assertEquals(1, deserialized.multimediaRead[0].tratamientoMultimediaId)
-        assertEquals("LOCAL_HTA_1_1_video1", deserialized.multimediaRead[0].multimediaUniqueKey)
+        assertEquals(1, deserialized.progresoElementos.size)
+        assertEquals(1, deserialized.progresoElementos[0].tratamientoElementoId)
     }
 
     @Test
@@ -145,7 +145,126 @@ class TratamientoMultimediaSerializationTest {
 
         val response = Gson().fromJson(json, MultimediaCompletadosResponse::class.java)
         assertNotNull(response)
-        assertEquals(listOf(12, 18, 31), response.multimediaCompletados)
+        assertEquals(listOf(12, 18, 31), response.completedIds)
+    }
+
+    @Test
+    fun `serializacion de SyncDataRequest con progreso_elementos y tratamiento_elemento_id`() {
+        val progresoItem = ProgresoElementoData(
+            tratamientoElementoId = 208,
+            completado = true,
+            fechaEstado = "2026-03-31 08:30:00",
+            fechaSincronizacion = "2026-03-31 08:30:00"
+        )
+        val quizItem = QuizData(
+            tratamientoElementoId = 210,
+            fechaRegistro = "2026-03-31 08:35:00",
+            fechaUsuario = "2026-03-31 08:35:00",
+            fechaSincronizacion = "2026-03-31 08:35:00",
+            preguntas = listOf(
+                PreguntaData(
+                    preguntaIndex = 0,
+                    preguntaTexto = "Pregunta 1",
+                    respuestaUsuario = 1,
+                    respuestaUsuarioTexto = "Opción B",
+                    respuestaCorrecta = 1,
+                    respuestaCorrectaTexto = "Opción B",
+                    esCorrecta = true,
+                    posiblesRespuestas = listOf("Opción A", "Opción B")
+                )
+            )
+        )
+        val metaItem = MetaData(
+            idMeta = 1,
+            idUsuario = 70,
+            tratamientoElementoId = 220,
+            semana = 1,
+            sesion = 3,
+            tipoActividad = "caminar",
+            actividad = "Caminar 30 min",
+            lugar = "Parque",
+            acompaniante = "Familiar",
+            fechaRegistro = "2026-03-31 09:00:00",
+            fechaUsuario = "2026-03-31 09:00:00",
+            fechaEdicion = null,
+            fechaSincronizacion = "2026-03-31 09:00:00",
+            metaCumplida = true,
+            fechaObjetivo = "2026-04-05",
+            motivoIncumplimiento = null
+        )
+
+        val request = SyncDataRequest(
+            deviceTimestamp = 1785359996664L,
+            userId = 70,
+            app = "colmaApp",
+            clientSyncTimestamp = "2026-03-31 09:00:00",
+            sesionesCompletadas = 1,
+            glucosa = emptyList(),
+            presion = emptyList(),
+            estadoAnimo = emptyList(),
+            quiz = listOf(quizItem),
+            metas = listOf(metaItem),
+            progresoElementos = listOf(progresoItem)
+        )
+
+        val json = Gson().toJson(request)
+        assertTrue(json.contains("\"progreso_elementos\""))
+        assertTrue(json.contains("\"tratamiento_elemento_id\":208") || json.contains("\"tratamiento_elemento_id\": 208"))
+        assertTrue(json.contains("\"tratamiento_elemento_id\":210") || json.contains("\"tratamiento_elemento_id\": 210"))
+        assertTrue(json.contains("\"tratamiento_elemento_id\":220") || json.contains("\"tratamiento_elemento_id\": 220"))
+
+        val deserialized = Gson().fromJson(json, SyncDataRequest::class.java)
+        assertEquals(1, deserialized.progresoElementos.size)
+        assertEquals(208, deserialized.progresoElementos[0].tratamientoElementoId)
+        assertEquals(210, deserialized.quiz[0].tratamientoElementoId)
+        assertEquals(220, deserialized.metas[0].tratamientoElementoId)
+    }
+
+    @Test
+    fun `deserializacion de ElementosCompletadosResponse y DatosFuncionalesResponse`() {
+        val completadosJson = """
+        {
+            "elementos_completados": [208, 209, 210]
+        }
+        """.trimIndent()
+        val completados = Gson().fromJson(completadosJson, ElementosCompletadosResponse::class.java)
+        assertEquals(listOf(208, 209, 210), completados.elementosCompletados)
+
+        val funcionalesJson = """
+        {
+            "quiz": [
+                {
+                    "tratamiento_elemento_id": 210,
+                    "fecha_registro": "2026-03-31 08:35:00",
+                    "fecha_usuario": "2026-03-31 08:35:00",
+                    "fecha_sincronizacion": "2026-03-31 08:35:00",
+                    "preguntas": []
+                }
+            ],
+            "metas": [
+                {
+                    "id_meta": 1,
+                    "id_usuario": 70,
+                    "tratamiento_elemento_id": 220,
+                    "tipo_actividad": "caminar",
+                    "actividad": "Caminar 30 min",
+                    "lugar": "Parque",
+                    "acompaniante": "Familiar",
+                    "meta_cumplida": true,
+                    "fecha_registro": "2026-03-31 09:00:00",
+                    "fecha_usuario": "2026-03-31 09:00:00",
+                    "fecha_sincronizacion": "2026-03-31 09:00:00",
+                    "fecha_objetivo": "2026-04-05"
+                }
+            ]
+        }
+        """.trimIndent()
+        val funcionales = Gson().fromJson(funcionalesJson, DatosFuncionalesResponse::class.java)
+        assertEquals(1, funcionales.quiz?.size)
+        assertEquals(210, funcionales.quiz?.get(0)?.tratamientoElementoId)
+        assertEquals(1, funcionales.metas?.size)
+        assertEquals(220, funcionales.metas?.get(0)?.tratamientoElementoId)
     }
 }
+
 

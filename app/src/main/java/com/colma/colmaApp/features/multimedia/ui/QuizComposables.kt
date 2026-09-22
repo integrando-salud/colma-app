@@ -31,6 +31,7 @@ fun QuizContent(
     subSessionId: Long,
     treatmentTypes: List<TreatmentType>,
     multimediaUniqueKey: String,
+    tratamientoElementoId: Int? = null,
     onQuizSubmit: (quizResponse: QuizResponseRecord, questionResponses: List<QuestionResponseRecord>) -> Unit,
     onFinish: () -> Unit,
     navigationButtons: @Composable () -> Unit = {}
@@ -91,6 +92,7 @@ fun QuizContent(
             )
         }
 
+
         if (showConfirmationDialog) {
             AlertDialog(
                 onDismissRequest = { showConfirmationDialog = false },
@@ -137,7 +139,8 @@ fun QuizContent(
                                 total_questions = totalQuestions,
                                 correct_answers = correctAnswers,
                                 percentage_correct = percentageCorrect,
-                                multimedia_unique_key = multimediaUniqueKey
+                                multimedia_unique_key = multimediaUniqueKey,
+                                tratamiento_elemento_id = tratamientoElementoId
                             )
                             onQuizSubmit(quizResponseRecord, questionResponses)
                         },

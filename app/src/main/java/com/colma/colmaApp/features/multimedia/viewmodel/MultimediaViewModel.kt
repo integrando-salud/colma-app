@@ -140,7 +140,8 @@ class MultimediaViewModel(private val repository: SessionStepsRepository) : View
             multimedia_unique_key = multimediaUniqueKey,
             fecha_registro = null,
             fecha_sincronizacion = null,
-            tratamiento_multimedia_id = option.tratamientoMultimediaId
+            tratamiento_multimedia_id = option.elementoId,
+            tratamiento_elemento_id = option.elementoId
         )
         viewModelScope.launch(Dispatchers.IO) {
             repository.saveMultimediaRead(record)
@@ -159,6 +160,7 @@ class MultimediaViewModel(private val repository: SessionStepsRepository) : View
                     val weekId = quizResponse.week_id ?: _uiState.value.sessionId.toInt()
                     val sessionId = quizResponse.session_id ?: _uiState.value.subSessionId.toInt()
                     val multimediaUniqueKey = quizResponse.multimedia_unique_key ?: "QUIZ_UNKNOWN"
+                    val elemId = quizResponse.tratamiento_elemento_id ?: _uiState.value.currentMultimediaOption?.elementoId
                     val readRecord = RegistrosSaludModelos.MultimediaReadRecord(
                         id_multimedia_read = 0,
                         id_usuario = userId,
@@ -168,9 +170,12 @@ class MultimediaViewModel(private val repository: SessionStepsRepository) : View
                         multimedia_type = MultimediaContentType.QUIZ.name,
                         multimedia_unique_key = multimediaUniqueKey,
                         fecha_registro = null,
-                        fecha_sincronizacion = null
+                        fecha_sincronizacion = null,
+                        tratamiento_multimedia_id = elemId,
+                        tratamiento_elemento_id = elemId
                     )
                     repository.saveMultimediaRead(readRecord)
+
 
                     // Attempt to sync with server
                     viewModelScope.launch {

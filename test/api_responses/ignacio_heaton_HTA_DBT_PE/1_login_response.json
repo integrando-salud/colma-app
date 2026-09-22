@@ -1,0 +1,19 @@
+{
+  "token": "368|wv0LcX2LDMUTbJNpHEdB2Ru5PIKTgUgnkatbkNiYb3989e59",
+  "usuario": {
+    "id": 64,
+    "documento": "98765432",
+    "nombre": "Ignacio Heaton",
+    "email": "iheaton@gmail.com",
+    "sexo": "M",
+    "pais": {
+      "id": 2,
+      "nombre": "Perú"
+    },
+    "centro_salud": {
+      "id": 2,
+      "nombre": "Centro de Salud 2"
+    },
+    "primer_login": "2026-05-29 15:48:10"
+  }
+}

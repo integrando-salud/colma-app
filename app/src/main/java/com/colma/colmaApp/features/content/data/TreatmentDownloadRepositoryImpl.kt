@@ -14,7 +14,10 @@ import com.colma.colmaApp.features.sesiones.SessionSteps.domain.MultimediaConten
 import com.colma.colmaApp.features.sesiones.SessionSteps.domain.TreatmentType
 import com.colma.colmaApp.servicios.internetCommunication.TreatmentService
 import com.colma.colmaApp.servicios.internetCommunication.model.*
+import com.colma.colmaApp.servicios.Modelos.QuizResponseRecord
+import com.colma.colmaApp.servicios.Modelos.RegistrosSaludModelos
 import com.google.gson.Gson
+
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.encodeToString
@@ -98,7 +101,7 @@ class TreatmentDownloadRepositoryImpl(private val context: Context) : TreatmentD
                 val sesiones = semana.sesiones ?: emptyList()
                 for (sesion in sesiones) {
                     val serverContents = sesion.content ?: emptyList()
-                    totalFiles += serverContents.count { it.title != null && it.link != null }
+                    totalFiles += serverContents.count { it.title != null && it.effectiveLink != null }
                 }
             }
             Log.d(TAG, "Total files to download: $totalFiles")
@@ -122,14 +125,14 @@ class TreatmentDownloadRepositoryImpl(private val context: Context) : TreatmentD
                     val downloadedFiles = mutableListOf<ServerFileMapping>()
                     for (contentItem in serverContents) {
                         val title = contentItem.title ?: continue
-                        val link = contentItem.link ?: continue
+                        val link = contentItem.effectiveLink ?: continue
 
                         // Determine local file path
                         val parsedUri = Uri.parse(link)
                         val relativePath = parsedUri.path?.removePrefix("/") ?: "multimedia/${tipoStr}/${serverSemana.id}/${serverSesion.id}/${title}"
                         val localFile = File(context.filesDir, relativePath)
 
-                        val currentProgress = 0.1f + 0.8f * (downloadedCount.toFloat() / maxOf(1, totalFiles))
+                        val currentProgress = (0.1f + 0.8f * (downloadedCount.toFloat() / maxOf(1, totalFiles))).coerceIn(0.1f, 0.90f)
                         onProgress?.invoke(currentProgress, "Descargando: $title")
 
                         // Download the file
@@ -152,7 +155,7 @@ class TreatmentDownloadRepositoryImpl(private val context: Context) : TreatmentD
                                             type = contentItem.type ?: "VIDEO",
                                             title = title,
                                             localPath = localFile.absolutePath,
-                                            tratamientoMultimediaId = contentItem.tratamientoMultimediaId
+                                            tratamientoMultimediaId = contentItem.elementoId
                                         )
                                     )
                                 } catch (e: Exception) {
@@ -200,135 +203,133 @@ class TreatmentDownloadRepositoryImpl(private val context: Context) : TreatmentD
                         it.title.endsWith(".webm", ignoreCase = true)
                     }
 
-                    if (staticSubSession != null) {
-                        val readingItems = staticSubSession.multimedia.filter { 
-                            it.type == MultimediaContentType.DESCRIPTION && it.title.contains("Lectura", ignoreCase = true) 
-                        }
+                    if (serverContents.isNotEmpty()) {
+                        for ((itemIndex, serverItem) in serverContents.withIndex()) {
+                            val itemType = try {
+                                MultimediaContentType.valueOf(serverItem.type?.uppercase() ?: "DESCRIPTION")
+                            } catch (e: Exception) {
+                                MultimediaContentType.DESCRIPTION
+                            }
+                            val staticItem = staticSubSession?.multimedia?.find { 
+                                it.type == itemType && (it.title.equals(serverItem.title, ignoreCase = true) || (it.metasId != null && it.metasId == serverItem.metasId))
+                            } ?: staticSubSession?.multimedia?.getOrNull(itemIndex)
 
-                        staticSubSession.multimedia.forEach { staticItem ->
-                            when (staticItem.type) {
+                            when (itemType) {
                                 MultimediaContentType.DESCRIPTION -> {
-                                    if (staticItem.title.contains("Lectura", ignoreCase = true)) {
-                                        val readingIndexInSubSession = readingItems.indexOf(staticItem)
-                                        val digits = staticItem.title.filter { it.isDigit() }
-                                        val targetIdx = digits.toIntOrNull() ?: (if (readingIndexInSubSession >= 0) readingIndexInSubSession + 1 else 1)
+                                    val matchedAudio = audioItems.find { it.tratamientoMultimediaId == serverItem.elementoId }
+                                        ?: audioItems.find { it.title == serverItem.title }
+                                        ?: (if (serverItem.title?.contains("Lectura", ignoreCase = true) == true) audioItems.firstOrNull() else null)
+                                    val matchedImage = imageItems.find { it.tratamientoMultimediaId == serverItem.elementoId }
+                                        ?: imageItems.find { it.title == serverItem.title }
+                                        ?: (if (serverItem.title?.contains("Lectura", ignoreCase = true) == true) imageItems.firstOrNull() else null)
 
-                                        val isDmReading = staticItem.title.contains("Diabetes", ignoreCase = true) || staticItem.title.contains("DM", ignoreCase = true)
-                                        val isHtaReading = staticItem.title.contains("Hipertensión", ignoreCase = true) || staticItem.title.contains("HTA", ignoreCase = true)
+                                    val localAudios = if (matchedAudio != null) listOf(matchedAudio.localPath) else null
+                                    val localImages = if (matchedImage != null) listOf(matchedImage.localPath) else null
 
-                                        val audioItem = audioItems.find { item ->
-                                            val itemIdx = extractIndex(item.title)
-                                            val matchesIdx = itemIdx == targetIdx
-                                            val matchesTag = if (isDmReading) item.title.contains("dm", ignoreCase = true) else if (isHtaReading) item.title.contains("hta", ignoreCase = true) else true
-                                            matchesIdx && matchesTag
-                                        } ?: audioItems.find { extractIndex(it.title) == targetIdx }
-                                          ?: audioItems.find { item ->
-                                              if (isDmReading) item.title.contains("dm", ignoreCase = true)
-                                              else if (isHtaReading) item.title.contains("hta", ignoreCase = true)
-                                              else false
-                                          }
-                                          ?: (if (readingIndexInSubSession >= 0) audioItems.getOrNull(readingIndexInSubSession) else null)
-                                          ?: (if (readingItems.size == 1 && audioItems.size == 1) audioItems.firstOrNull() else null)
-
-                                        val imageItem = imageItems.find { item ->
-                                            val itemIdx = extractIndex(item.title)
-                                            val matchesIdx = itemIdx == targetIdx
-                                            val matchesTag = if (isDmReading) item.title.contains("dm", ignoreCase = true) else if (isHtaReading) item.title.contains("hta", ignoreCase = true) else true
-                                            matchesIdx && matchesTag
-                                        } ?: imageItems.find { extractIndex(it.title) == targetIdx }
-                                          ?: imageItems.find { item ->
-                                              if (isDmReading) item.title.contains("dm", ignoreCase = true)
-                                              else if (isHtaReading) item.title.contains("hta", ignoreCase = true)
-                                              else false
-                                          }
-                                          ?: (if (readingIndexInSubSession >= 0) imageItems.getOrNull(readingIndexInSubSession) else null)
-                                          ?: (if (readingItems.size == 1 && imageItems.size == 1) imageItems.firstOrNull() else null)
-
-                                        val matchedMultimediaId = audioItem?.tratamientoMultimediaId ?: imageItem?.tratamientoMultimediaId
-
-                                        multimediaList.add(
-                                            MultimediaContent(
-                                                type = MultimediaContentType.DESCRIPTION,
-                                                title = staticItem.title,
-                                                description = staticItem.description,
-                                                fullDescription = staticItem.fullDescription ?: "",
-                                                iconResId = staticItem.iconResId ?: "outline_unknown_document_24",
-                                                iconImageVector = staticItem.iconImageVector,
-                                                contentAsset = null,
-                                                metasId = staticItem.metasId,
-                                                questions = staticItem.questions,
-                                                descriptionAudios = if (audioItem != null) listOf(audioItem.localPath) else null,
-                                                descriptionImages = if (imageItem != null) listOf(imageItem.localPath) else null,
-                                                tratamientoMultimediaId = matchedMultimediaId
-                                            )
-                                        )
-                                    } else {
-                                        multimediaList.add(staticItem)
-                                    }
-                                }
-                                MultimediaContentType.VIDEO -> {
-                                    val videoIdx = staticSubSession.multimedia.filter { it.type == MultimediaContentType.VIDEO }.indexOf(staticItem) + 1
-                                    val videoItem = videoItems.find { extractIndex(it.title) == videoIdx } ?: videoItems.firstOrNull()
                                     multimediaList.add(
                                         MultimediaContent(
-                                            type = MultimediaContentType.VIDEO,
-                                            title = staticItem.title,
-                                            description = staticItem.description,
-                                            fullDescription = staticItem.fullDescription,
-                                            iconResId = staticItem.iconResId,
-                                            iconImageVector = staticItem.iconImageVector ?: "PlayArrow",
-                                            contentAsset = videoItem?.localPath,
-                                            metasId = staticItem.metasId,
-                                            questions = staticItem.questions,
-                                            descriptionAudios = null,
-                                            descriptionImages = null,
-                                            tratamientoMultimediaId = videoItem?.tratamientoMultimediaId
+                                            type = MultimediaContentType.DESCRIPTION,
+                                            title = serverItem.title ?: staticItem?.title ?: "Descripción",
+                                            description = serverItem.description ?: staticItem?.description ?: "",
+                                            fullDescription = serverItem.fullDescription ?: staticItem?.fullDescription ?: serverItem.description ?: "",
+                                            iconResId = serverItem.iconResId ?: staticItem?.iconResId ?: "outline_unknown_document_24",
+                                            iconImageVector = serverItem.iconImageVector ?: staticItem?.iconImageVector,
+                                            contentAsset = null,
+                                            metasId = serverItem.metasId ?: staticItem?.metasId,
+                                            metasOptions = serverItem.metasOptions ?: staticItem?.metasOptions,
+                                            questions = serverItem.questions ?: staticItem?.questions,
+                                            descriptionAudios = localAudios,
+                                            descriptionImages = localImages,
+                                            tratamientoMultimediaId = serverItem.elementoId,
+                                            tratamientoElementoId = serverItem.elementoId
                                         )
                                     )
                                 }
-                                MultimediaContentType.QUIZ, MultimediaContentType.METAS -> {
-                                    multimediaList.add(staticItem)
+                                MultimediaContentType.VIDEO -> {
+                                    val videoItem = videoItems.find { it.tratamientoMultimediaId == serverItem.elementoId }
+                                        ?: videoItems.find { it.title == serverItem.title }
+                                        ?: videoItems.firstOrNull()
+                                    multimediaList.add(
+                                        MultimediaContent(
+                                            type = MultimediaContentType.VIDEO,
+                                            title = serverItem.title ?: staticItem?.title ?: "Video",
+                                            description = serverItem.description ?: staticItem?.description ?: "Ver video de la sesión",
+                                            fullDescription = serverItem.fullDescription ?: staticItem?.fullDescription,
+                                            iconResId = serverItem.iconResId ?: staticItem?.iconResId,
+                                            iconImageVector = serverItem.iconImageVector ?: staticItem?.iconImageVector ?: "PlayArrow",
+                                            contentAsset = videoItem?.localPath ?: serverItem.effectiveLink,
+                                            metasId = serverItem.metasId ?: staticItem?.metasId,
+                                            metasOptions = serverItem.metasOptions ?: staticItem?.metasOptions,
+                                            questions = serverItem.questions ?: staticItem?.questions,
+                                            descriptionAudios = null,
+                                            descriptionImages = null,
+                                            tratamientoMultimediaId = serverItem.elementoId,
+                                            tratamientoElementoId = serverItem.elementoId
+                                        )
+                                    )
+                                }
+                                MultimediaContentType.QUIZ -> {
+                                    multimediaList.add(
+                                        MultimediaContent(
+                                            type = MultimediaContentType.QUIZ,
+                                            title = serverItem.title ?: staticItem?.title ?: "Pregunta del día",
+                                            description = serverItem.description ?: staticItem?.description ?: "Responde las preguntas de la sesión",
+                                            fullDescription = serverItem.fullDescription ?: staticItem?.fullDescription,
+                                            iconResId = serverItem.iconResId ?: staticItem?.iconResId ?: "outline_trophy_24",
+                                            iconImageVector = serverItem.iconImageVector ?: staticItem?.iconImageVector,
+                                            contentAsset = null,
+                                            metasId = serverItem.metasId ?: staticItem?.metasId,
+                                            metasOptions = serverItem.metasOptions ?: staticItem?.metasOptions,
+                                            questions = serverItem.questions ?: staticItem?.questions,
+                                            descriptionAudios = null,
+                                            descriptionImages = null,
+                                            tratamientoMultimediaId = serverItem.elementoId,
+                                            tratamientoElementoId = serverItem.elementoId
+                                        )
+                                    )
+                                }
+                                MultimediaContentType.METAS -> {
+                                    multimediaList.add(
+                                        MultimediaContent(
+                                            type = MultimediaContentType.METAS,
+                                            title = serverItem.title ?: staticItem?.title ?: "Metas",
+                                            description = serverItem.description ?: staticItem?.description ?: "Planifica tus metas",
+                                            fullDescription = serverItem.fullDescription ?: staticItem?.fullDescription,
+                                            iconResId = serverItem.iconResId ?: staticItem?.iconResId ?: "outline_trophy_24",
+                                            iconImageVector = serverItem.iconImageVector ?: staticItem?.iconImageVector,
+                                            contentAsset = null,
+                                            metasId = serverItem.metasId ?: staticItem?.metasId ?: "1",
+                                            metasOptions = serverItem.metasOptions ?: staticItem?.metasOptions,
+                                            questions = null,
+                                            descriptionAudios = null,
+                                            descriptionImages = null,
+                                            tratamientoMultimediaId = serverItem.elementoId,
+                                            tratamientoElementoId = serverItem.elementoId
+                                        )
+                                    )
                                 }
                                 else -> {
-                                    multimediaList.add(staticItem)
+                                    multimediaList.add(
+                                        MultimediaContent(
+                                            type = itemType,
+                                            title = serverItem.title ?: staticItem?.title ?: "",
+                                            description = serverItem.description ?: staticItem?.description ?: "",
+                                            fullDescription = serverItem.fullDescription ?: staticItem?.fullDescription,
+                                            iconResId = serverItem.iconResId ?: staticItem?.iconResId,
+                                            iconImageVector = serverItem.iconImageVector ?: staticItem?.iconImageVector,
+                                            contentAsset = null,
+                                            metasId = serverItem.metasId ?: staticItem?.metasId,
+                                            metasOptions = serverItem.metasOptions ?: staticItem?.metasOptions,
+                                            questions = serverItem.questions ?: staticItem?.questions,
+                                            tratamientoMultimediaId = serverItem.elementoId,
+                                            tratamientoElementoId = serverItem.elementoId
+                                        )
+                                    )
                                 }
                             }
                         }
-                    } else {
-                        // Fallback fallback loop if static content doesn't exist
-                        val maxIndex = maxOf(
-                            audioItems.mapNotNull { extractIndex(it.title) }.maxOrNull() ?: 0,
-                            imageItems.mapNotNull { extractIndex(it.title) }.maxOrNull() ?: 0
-                        )
-                        if (maxIndex > 0) {
-                            val localAudios = audioItems.map { it.localPath }
-                            val localImages = imageItems.map { it.localPath }
-                            val matchedMultimediaId = audioItems.firstOrNull()?.tratamientoMultimediaId ?: imageItems.firstOrNull()?.tratamientoMultimediaId
-                            multimediaList.add(
-                                MultimediaContent(
-                                    type = MultimediaContentType.DESCRIPTION,
-                                    title = "Lectura",
-                                    description = "Lee y escucha la sesión del día",
-                                    fullDescription = "",
-                                    iconResId = "outline_unknown_document_24",
-                                    descriptionAudios = localAudios,
-                                    descriptionImages = localImages,
-                                    tratamientoMultimediaId = matchedMultimediaId
-                                )
-                            )
-                        }
-                        videoItems.forEach { videoItem ->
-                            multimediaList.add(
-                                MultimediaContent(
-                                    type = MultimediaContentType.VIDEO,
-                                    title = videoItem.title,
-                                    description = "Ver video de la sesión",
-                                    iconImageVector = "PlayArrow",
-                                    contentAsset = videoItem.localPath,
-                                    tratamientoMultimediaId = videoItem.tratamientoMultimediaId
-                                )
-                            )
-                        }
+                    } else if (staticSubSession != null) {
+                        multimediaList.addAll(staticSubSession.multimedia)
                     }
 
                     mappedSubSessions.add(
@@ -369,92 +370,170 @@ class TreatmentDownloadRepositoryImpl(private val context: Context) : TreatmentD
             localJsonFile.writeText(jsonText)
             Log.d(TAG, "Successfully saved treatment_download_${userId}.json: ${localJsonFile.absolutePath}")
 
-            // Fetch completed multimedia from server to restore user's progress
+            // Fetch completed multimedia/elementos from server to restore user's progress
             try {
                 onProgress?.invoke(0.98f, "Restaurando progreso previo...")
-                val completadosResponse = treatmentService.getMultimediaCompletados(token)
-                if (completadosResponse.isSuccessful) {
-                    val completedIds = completadosResponse.body()?.multimediaCompletados?.toSet() ?: emptySet()
-                    if (completedIds.isNotEmpty()) {
-                        val now = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(Date())
-                        for (session in mappedSessions) {
-                            val weekId = session.id.toInt()
-                            for (subSession in session.subSessions) {
-                                val subSessionId = subSession.id.toInt()
-                                val processedContents = subSession.multimedia
-                                val size = processedContents.size
-                                var allCompleted = processedContents.isNotEmpty()
+                val completadosResponse = try {
+                    treatmentService.getElementosCompletados(token)
+                } catch (e: Exception) {
+                    null
+                }
+                val completedIds = completadosResponse?.body()?.elementosCompletados?.toSet()
+                    ?: try {
+                        treatmentService.getMultimediaCompletados(token).body()?.completedIds?.toSet()
+                    } catch (e: Exception) {
+                        null
+                    } ?: emptySet()
 
-                                for ((index, media) in processedContents.withIndex()) {
-                                    val mediaId = media.tratamientoMultimediaId
-                                    if (mediaId != null && completedIds.contains(mediaId)) {
-                                        val isLocalFile = media.contentAsset?.contains("/") == true || media.contentAsset?.contains("\\") == true
-                                        val localFilePath = if (isLocalFile) media.contentAsset else null
-                                        val contentAssetId = if (isLocalFile) null else media.contentAsset?.let {
-                                            val resId = com.colma.colmaApp.utils.ResourceUtils.getResourceId(context, it, "raw")
-                                            if (resId != 0) resId else null
-                                        }
+                if (completedIds.isNotEmpty()) {
+                    for (session in mappedSessions) {
+                        val weekId = session.id.toInt()
+                        for (subSession in session.subSessions) {
+                            val subSessionId = subSession.id.toInt()
+                            val processedContents = subSession.multimedia
+                            val size = processedContents.size
+                            var allCompleted = processedContents.isNotEmpty()
 
-                                        val originalTitle = media.title.trim()
-                                        val finalTitle = if (originalTitle.isNotEmpty()) {
-                                            originalTitle
-                                        } else if (media.type == MultimediaContentType.DESCRIPTION) {
-                                            if (index == 0) {
-                                                "Bienvenida"
-                                            } else if (index == size - 1 && size > 1) {
-                                                "Fin de la sesión"
-                                            } else {
-                                                "Descripción"
-                                            }
-                                        } else {
-                                            media.type.name
-                                        }
-
-                                        val uniqueKey = MultimediaKeyUtils.generateMultimediaUniqueKey(
-                                            type = media.type,
-                                            title = finalTitle,
-                                            contentAssetId = contentAssetId,
-                                            metasId = media.metasId,
-                                            treatmentId = treatmentType.name,
-                                            weekId = weekId.toLong(),
-                                            sessionId = subSessionId.toLong(),
-                                            localFilePath = localFilePath
-                                        )
-
-                                        dbHelper.upsertMultimediaRead(
-                                            idUsuario = userId,
-                                            treatmentId = treatmentType.name,
-                                            weekId = weekId,
-                                            sessionId = subSessionId,
-                                            multimediaType = media.type.name,
-                                            multimediaUniqueKey = uniqueKey,
-                                            tratamientoMultimediaId = mediaId
-                                        )
-                                    } else {
-                                        if (media.tratamientoMultimediaId != null) {
-                                            allCompleted = false
-                                        }
+                            for ((index, media) in processedContents.withIndex()) {
+                                val mediaId = media.elementoId
+                                if (mediaId != null && completedIds.contains(mediaId)) {
+                                    val isLocalFile = media.contentAsset?.contains("/") == true || media.contentAsset?.contains("\\") == true
+                                    val localFilePath = if (isLocalFile) media.contentAsset else null
+                                    val contentAssetId = if (isLocalFile) null else media.contentAsset?.let {
+                                        val resId = com.colma.colmaApp.utils.ResourceUtils.getResourceId(context, it, "raw")
+                                        if (resId != 0) resId else null
                                     }
-                                }
 
-                                if (allCompleted) {
-                                    dbHelper.insertCompletedSession(
+                                    val originalTitle = media.title.trim()
+                                    val finalTitle = if (originalTitle.isNotEmpty()) {
+                                        originalTitle
+                                    } else if (media.type == MultimediaContentType.DESCRIPTION) {
+                                        if (index == 0) {
+                                            "Bienvenida"
+                                        } else if (index == size - 1 && size > 1) {
+                                            "Fin de la sesión"
+                                        } else {
+                                            "Descripción"
+                                        }
+                                    } else {
+                                        media.type.name
+                                    }
+
+                                    val uniqueKey = MultimediaKeyUtils.generateMultimediaUniqueKey(
+                                        type = media.type,
+                                        title = finalTitle,
+                                        contentAssetId = contentAssetId,
+                                        metasId = media.metasId,
+                                        treatmentId = treatmentType.name,
+                                        weekId = weekId.toLong(),
+                                        sessionId = subSessionId.toLong(),
+                                        localFilePath = localFilePath
+                                    )
+
+                                    dbHelper.upsertMultimediaRead(
                                         idUsuario = userId,
                                         treatmentId = treatmentType.name,
                                         weekId = weekId,
-                                        sessionId = subSessionId
+                                        sessionId = subSessionId,
+                                        multimediaType = media.type.name,
+                                        multimediaUniqueKey = uniqueKey,
+                                        tratamientoMultimediaId = mediaId,
+                                        tratamientoElementoId = mediaId
                                     )
+                                } else {
+                                    if (media.elementoId != null) {
+                                        allCompleted = false
+                                    }
                                 }
                             }
+
+                            if (allCompleted) {
+                                dbHelper.insertCompletedSession(
+                                    idUsuario = userId,
+                                    treatmentId = treatmentType.name,
+                                    weekId = weekId,
+                                    sessionId = subSessionId
+                                )
+                            }
                         }
-                        Log.d(TAG, "Restaurados ${completedIds.size} multimedia completados desde el servidor.")
                     }
-                } else {
-                    Log.w(TAG, "getMultimediaCompletados response error: code=${completadosResponse.code()}")
+                    Log.d(TAG, "Restaurados ${completedIds.size} elementos completados desde el servidor.")
+                }
+
+                // Restore functional data (quizzes and metas)
+                try {
+                    val functionalResponse = treatmentService.getDatosFuncionalesTratamiento(token)
+                    if (functionalResponse.isSuccessful) {
+                        val funcBody = functionalResponse.body()
+                        val serverQuizzes = funcBody?.quiz ?: emptyList()
+                        val serverMetas = funcBody?.metas ?: emptyList()
+
+                        for (sq in serverQuizzes) {
+                            val elemId = sq.tratamientoElementoId
+                            if (elemId != null && !dbHelper.hasQuizResponseForElement(userId, elemId)) {
+                                val qRecord = QuizResponseRecord(
+                                    id_usuario = userId,
+                                    quiz_type = sq.quizType,
+                                    week_id = sq.sessionId,
+                                    session_id = sq.subSessionId,
+                                    quiz_title = "Quiz",
+                                    fecha_registro = sq.fechaRegistro,
+                                    fecha_sincronizacion = sq.fechaSincronizacion,
+                                    total_questions = sq.preguntas.size,
+                                    correct_answers = sq.preguntas.count { it.esCorrecta },
+                                    percentage_correct = if (sq.preguntas.isNotEmpty()) (sq.preguntas.count { it.esCorrecta }.toDouble() / sq.preguntas.size) * 100 else 0.0,
+                                    multimedia_unique_key = "QUIZ_${treatmentType.name}_${elemId}",
+                                    tratamiento_elemento_id = elemId
+                                )
+                                val qResponses = sq.preguntas.mapIndexed { idx, p ->
+                                    com.colma.colmaApp.servicios.Modelos.QuestionResponseRecord(
+                                        id_quiz_response = null,
+                                        question_index = p.preguntaIndex,
+                                        question_text = p.preguntaTexto,
+                                        user_answer_index = p.respuestaUsuario,
+                                        user_answer_text = p.respuestaUsuarioTexto,
+                                        correct_answer_index = p.respuestaCorrecta,
+                                        correct_answer_text = p.respuestaCorrectaTexto,
+                                        is_correct = if (p.esCorrecta) 1 else 0,
+                                        posibles_respuestas = Gson().toJson(p.posiblesRespuestas)
+                                    )
+                                }
+                                dbHelper.insertQuizResponse(qRecord, qResponses)
+                            }
+                        }
+
+                        for (sm in serverMetas) {
+                            val existing = dbHelper.getMetaById(sm.idMeta.toLong())
+                            if (existing == null) {
+                                val metaRecord = RegistrosSaludModelos.MetaRecord(
+                                    id_meta = sm.idMeta.toLong(),
+                                    id_usuario = userId,
+                                    semana = sm.semana,
+                                    sesion = sm.sesion,
+                                    tipo_actividad = sm.tipoActividad,
+                                    actividad = sm.actividad,
+                                    lugar = sm.lugar,
+                                    acompañante = sm.acompaniante,
+                                    fecha_regisitro = sm.fechaRegistro,
+                                    fecha_edicion = sm.fechaEdicion,
+                                    fecha_sincronizacion = sm.fechaSincronizacion,
+                                    meta_cumplida = if (sm.metaCumplida) 2 else 0,
+                                    fecha_objetivo = sm.fechaObjetivo,
+                                    motivo_incumplimiento = sm.motivoIncumplimiento,
+                                    tratamiento_elemento_id = sm.tratamientoElementoId
+                                )
+                                dbHelper.insertMeta(metaRecord)
+                            }
+                        }
+                        Log.d(TAG, "Restaurados datos funcionales: ${serverQuizzes.size} quizzes, ${serverMetas.size} metas.")
+                    }
+                } catch (e: Exception) {
+                    Log.w(TAG, "Exception while restoring functional data: ${e.message}")
                 }
             } catch (e: Exception) {
                 Log.w(TAG, "Exception while restoring completed multimedia: ${e.message}")
             }
+
 
             onProgress?.invoke(1.0f, "Completado")
             Result.success(Unit)

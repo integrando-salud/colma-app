@@ -44,9 +44,11 @@ fun MetasContent(
     metasOptions: List<String>? = null,
     currentWeekId: Int,
     currentSessionId: Int,
+    tratamientoElementoId: Int? = null,
     onFinish: () -> Unit,
     navigationButtons: @Composable () -> Unit = {}
 ) {
+
     val treatmentType = try {
         TreatmentType.valueOf(metasId.uppercase(Locale.ROOT))
     } catch (e: Exception) {
@@ -363,7 +365,8 @@ fun MetasContent(
                                 fecha_edicion = fechaEdicion.value,
                                 fecha_sincronizacion = null,
                                 meta_cumplida = 0,
-                                fecha_objetivo = fecha.value
+                                fecha_objetivo = fecha.value,
+                                tratamiento_elemento_id = tratamientoElementoId
                             )
                             val result = withContext(Dispatchers.IO) {
                                 val hWeek = dbHelper.getHighestWeekWithGoal(userId, treatmentType.name.lowercase())
@@ -392,9 +395,12 @@ fun MetasContent(
                                         weekId = currentWeekId,
                                         sessionId = currentSessionId,
                                         multimediaType = com.colma.colmaApp.features.sesiones.SessionSteps.domain.MultimediaContentType.METAS.name,
-                                        multimediaUniqueKey = uniqueKey
+                                        multimediaUniqueKey = uniqueKey,
+                                        tratamientoMultimediaId = tratamientoElementoId,
+                                        tratamientoElementoId = tratamientoElementoId
                                     )
                                 }
+
                                 val scheduledMeta = newMeta.copy(id_meta = result)
                                 com.colma.colmaApp.utils.notifications.NotificationHelper.scheduleGoalNotification(context, scheduledMeta)
                                 withContext(Dispatchers.Main) {

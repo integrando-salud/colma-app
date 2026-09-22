@@ -1,67 +1,122 @@
 [
   {
+    "usuario": "Sonia Venegas",
+    "pais": "AR",
+    "condicion": "DBT",
+    "dni": "03843296",
+    "login_status": 200,
+    "tratamiento_status": 200,
+    "elementos_completados_status": 200,
+    "datos_funcionales_status": 200,
+    "total_items_content": 209,
+    "items_con_tratamiento_elemento_id": 209,
+    "distribucion_tipos": {
+      "DESCRIPTION": 155,
+      "VIDEO": 22,
+      "QUIZ": 16,
+      "METAS": 16
+    },
+    "elementos_completados_recibidos": [],
+    "directorio": "sonia_venegas_DBT_AR"
+  },
+  {
+    "usuario": "Maria Quintanilla",
+    "pais": "AR",
+    "condicion": "HTA + DBT",
+    "dni": "50697085",
+    "login_status": 200,
+    "tratamiento_status": 200,
+    "elementos_completados_status": 200,
+    "datos_funcionales_status": 200,
+    "total_items_content": 236,
+    "items_con_tratamiento_elemento_id": 236,
+    "distribucion_tipos": {
+      "DESCRIPTION": 161,
+      "VIDEO": 25,
+      "QUIZ": 18,
+      "METAS": 32
+    },
+    "elementos_completados_recibidos": [],
+    "directorio": "maria_quintanilla_HTA_DBT_AR"
+  },
+  {
+    "usuario": "Francisca Delapaz",
+    "pais": "AR",
+    "condicion": "HTA",
+    "dni": "44876430",
+    "login_status": 200,
+    "tratamiento_status": 200,
+    "elementos_completados_status": 200,
+    "datos_funcionales_status": 200,
+    "total_items_content": 207,
+    "items_con_tratamiento_elemento_id": 207,
+    "distribucion_tipos": {
+      "DESCRIPTION": 152,
+      "VIDEO": 23,
+      "QUIZ": 16,
+      "METAS": 16
+    },
+    "elementos_completados_recibidos": [],
+    "directorio": "francisca_delapaz_HTA_AR"
+  },
+  {
+    "usuario": "Erik Becerra",
+    "pais": "PE",
+    "condicion": "DBT",
+    "dni": "81306555",
+    "login_status": 200,
+    "tratamiento_status": 200,
+    "elementos_completados_status": 200,
+    "datos_funcionales_status": 200,
+    "total_items_content": 209,
+    "items_con_tratamiento_elemento_id": 209,
+    "distribucion_tipos": {
+      "DESCRIPTION": 155,
+      "VIDEO": 22,
+      "QUIZ": 16,
+      "METAS": 16
+    },
+    "elementos_completados_recibidos": [],
+    "directorio": "erik_becerra_DBT_PE"
+  },
+  {
+    "usuario": "Ignacio Heaton",
+    "pais": "PE",
+    "condicion": "HTA + DBT",
+    "dni": "98765432",
+    "login_status": 200,
+    "tratamiento_status": 200,
+    "elementos_completados_status": 200,
+    "datos_funcionales_status": 200,
+    "total_items_content": 236,
+    "items_con_tratamiento_elemento_id": 236,
+    "distribucion_tipos": {
+      "DESCRIPTION": 161,
+      "VIDEO": 25,
+      "QUIZ": 18,
+      "METAS": 32
+    },
+    "elementos_completados_recibidos": [],
+    "directorio": "ignacio_heaton_HTA_DBT_PE"
+  },
+  {
     "usuario": "Guillermo Arribas",
     "pais": "PE",
     "condicion": "HTA",
     "dni": "15864485",
     "login_status": 200,
     "tratamiento_status": 200,
-    "multimedia_completados_status": 200,
-    "total_items_multimedia": 134,
-    "items_con_tratamiento_multimedia_id": 134,
-    "multimedia_completados_recibidos": [],
+    "elementos_completados_status": 200,
+    "datos_funcionales_status": 200,
+    "total_items_content": 207,
+    "items_con_tratamiento_elemento_id": 207,
+    "distribucion_tipos": {
+      "DESCRIPTION": 152,
+      "VIDEO": 23,
+      "QUIZ": 16,
+      "METAS": 16
+    },
+    "elementos_completados_recibidos": [],
     "directorio": "guillermo_arribas_HTA_PE"
-  },
-  {
-    "usuario": "Erika Becerra",
-    "pais": "PE",
-    "condicion": "DBT",
-    "dni": "81306555",
-    "login_status": 200,
-    "tratamiento_status": 200,
-    "multimedia_completados_status": 200,
-    "total_items_multimedia": 139,
-    "items_con_tratamiento_multimedia_id": 139,
-    "multimedia_completados_recibidos": [],
-    "directorio": "erika_becerra_DBT_PE"
-  },
-  {
-    "usuario": "Denisse Molina",
-    "pais": "PE",
-    "condicion": "DBT + HTA",
-    "dni": "12253242",
-    "login_status": 200,
-    "tratamiento_status": 200,
-    "multimedia_completados_status": 200,
-    "total_items_multimedia": 155,
-    "items_con_tratamiento_multimedia_id": 155,
-    "multimedia_completados_recibidos": [],
-    "directorio": "denisse_molina_DBT_HTA_PE"
-  },
-  {
-    "usuario": "María González",
-    "pais": "AR",
-    "condicion": "HTA",
-    "dni": "88888888",
-    "login_status": 200,
-    "tratamiento_status": 200,
-    "multimedia_completados_status": 200,
-    "total_items_multimedia": 133,
-    "items_con_tratamiento_multimedia_id": 133,
-    "multimedia_completados_recibidos": [],
-    "directorio": "maria_gonzalez_HTA_AR"
-  },
-  {
-    "usuario": "Pedro Flores",
-    "pais": "AR",
-    "condicion": "DBT + HTA",
-    "dni": "77777777",
-    "login_status": 200,
-    "tratamiento_status": 200,
-    "multimedia_completados_status": 200,
-    "total_items_multimedia": 154,
-    "items_con_tratamiento_multimedia_id": 154,
-    "multimedia_completados_recibidos": [],
-    "directorio": "pedro_flores_DBT_HTA_AR"
   }
 ]

@@ -1,0 +1,19 @@
+{
+  "token": "366|4qJB4egmYOxlDxUngmPKFMcaQLOMltEhKEzfETy8f52ae97c",
+  "usuario": {
+    "id": 14,
+    "documento": "44876430",
+    "nombre": "Francisca Delapaz",
+    "email": "francisca-delapaz-44876430@correo.com",
+    "sexo": "F",
+    "pais": {
+      "id": 1,
+      "nombre": "Argentina"
+    },
+    "centro_salud": {
+      "id": 1,
+      "nombre": "Centro de Salud 1"
+    },
+    "primer_login": "2026-09-21 12:45:58"
+  }
+}

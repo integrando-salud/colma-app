@@ -1,6 +1,7 @@
 import os
 import json
 import urllib.request
+import urllib.parse
 import urllib.error
 
 BASE_URL = "http://158.69.219.243"
@@ -8,48 +9,54 @@ OUTPUT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "test
 
 USERS = [
     {
-        "folder": "guillermo_arribas_HTA_PE",
-        "name": "Guillermo Arribas",
-        "country": "PE",
-        "condition": "HTA",
-        "dni": "15864485",
+        "folder": "sonia_venegas_DBT_AR",
+        "name": "Sonia Venegas",
+        "country": "AR",
+        "condition": "DBT",
+        "dni": "03843296",
         "password": "123456"
     },
     {
-        "folder": "erika_becerra_DBT_PE",
-        "name": "Erika Becerra",
+        "folder": "maria_quintanilla_HTA_DBT_AR",
+        "name": "Maria Quintanilla",
+        "country": "AR",
+        "condition": "HTA + DBT",
+        "dni": "50697085",
+        "password": "123456"
+    },
+    {
+        "folder": "francisca_delapaz_HTA_AR",
+        "name": "Francisca Delapaz",
+        "country": "AR",
+        "condition": "HTA",
+        "dni": "44876430",
+        "password": "123456"
+    },
+    {
+        "folder": "erik_becerra_DBT_PE",
+        "name": "Erik Becerra",
         "country": "PE",
         "condition": "DBT",
         "dni": "81306555",
         "password": "123456"
     },
     {
-        "folder": "denisse_molina_DBT_HTA_PE",
-        "name": "Denisse Molina",
+        "folder": "ignacio_heaton_HTA_DBT_PE",
+        "name": "Ignacio Heaton",
         "country": "PE",
-        "condition": "DBT + HTA",
-        "dni": "12253242",
+        "condition": "HTA + DBT",
+        "dni": "98765432",
         "password": "123456"
     },
     {
-        "folder": "maria_gonzalez_HTA_AR",
-        "name": "María González",
-        "country": "AR",
+        "folder": "guillermo_arribas_HTA_PE",
+        "name": "Guillermo Arribas",
+        "country": "PE",
         "condition": "HTA",
-        "dni": "88888888",
-        "password": "123456"
-    },
-    {
-        "folder": "pedro_flores_DBT_HTA_AR",
-        "name": "Pedro Flores",
-        "country": "AR",
-        "condition": "DBT + HTA",
-        "dni": "77777777",
+        "dni": "15864485",
         "password": "123456"
     }
 ]
-
-import urllib.parse
 
 def make_request(url, method="GET", headers=None, data=None, is_form=False):
     if headers is None:
@@ -97,11 +104,10 @@ def main():
         os.makedirs(user_dir, exist_ok=True)
         print(f"\nProcessing user: {user['name']} ({user['country']} - {user['condition']})...")
 
-        # 1. Login (FormUrlEncoded with 'documento' and 'password')
+        # 1. Login
         login_url = f"{BASE_URL}/api/login"
         login_payload = {"documento": user["dni"], "password": user["password"]}
         code_login, body_login = make_request(login_url, method="POST", data=login_payload, is_form=True)
-
         
         login_file = os.path.join(user_dir, "1_login_response.json")
         with open(login_file, "w", encoding="utf-8") as f:
@@ -123,24 +129,35 @@ def main():
             json.dump(body_trat, f, indent=2, ensure_ascii=False)
         print(f"  [2] Tratamiento (Status {code_trat}) -> {trat_file}")
 
-        # 3. Multimedia Completados
-        completados_url = f"{BASE_URL}/api/multimedia-completados"
+        # 3. Elementos Completados (Nuevo Endpoint)
+        completados_url = f"{BASE_URL}/api/elementos-completados"
         code_comp, body_comp = make_request(completados_url, method="GET", headers=auth_headers)
-        comp_file = os.path.join(user_dir, "3_multimedia_completados_response.json")
+        comp_file = os.path.join(user_dir, "3_elementos_completados_response.json")
         with open(comp_file, "w", encoding="utf-8") as f:
             json.dump(body_comp, f, indent=2, ensure_ascii=False)
-        print(f"  [3] Multimedia Completados (Status {code_comp}) -> {comp_file}")
+        print(f"  [3] Elementos Completados (Status {code_comp}) -> {comp_file}")
+
+        # 4. Datos Funcionales Tratamiento (Nuevo Endpoint)
+        funcionales_url = f"{BASE_URL}/api/datos-funcionales-tratamiento"
+        code_func, body_func = make_request(funcionales_url, method="GET", headers=auth_headers)
+        func_file = os.path.join(user_dir, "4_datos_funcionales_response.json")
+        with open(func_file, "w", encoding="utf-8") as f:
+            json.dump(body_func, f, indent=2, ensure_ascii=False)
+        print(f"  [4] Datos Funcionales (Status {code_func}) -> {func_file}")
 
         # Count stats from tratamiento
         semanas = body_trat.get("tratamiento", {}).get("semanas", [])
         total_items = 0
-        items_with_multimedia_id = 0
+        items_with_elemento_id = 0
+        type_counts = {}
         for s in semanas:
             for ses in s.get("sesiones", []):
                 for c in ses.get("content", []):
                     total_items += 1
-                    if "tratamiento_multimedia_id" in c and c["tratamiento_multimedia_id"] is not None:
-                        items_with_multimedia_id += 1
+                    t = c.get("type", "UNKNOWN")
+                    type_counts[t] = type_counts.get(t, 0) + 1
+                    if "tratamiento_elemento_id" in c and c["tratamiento_elemento_id"] is not None:
+                        items_with_elemento_id += 1
 
         summary.append({
             "usuario": user["name"],
@@ -149,10 +166,12 @@ def main():
             "dni": user["dni"],
             "login_status": code_login,
             "tratamiento_status": code_trat,
-            "multimedia_completados_status": code_comp,
-            "total_items_multimedia": total_items,
-            "items_con_tratamiento_multimedia_id": items_with_multimedia_id,
-            "multimedia_completados_recibidos": body_comp.get("multimedia_completados", []),
+            "elementos_completados_status": code_comp,
+            "datos_funcionales_status": code_func,
+            "total_items_content": total_items,
+            "items_con_tratamiento_elemento_id": items_with_elemento_id,
+            "distribucion_tipos": type_counts,
+            "elementos_completados_recibidos": body_comp.get("elementos_completados", []),
             "directorio": user["folder"]
         })
 

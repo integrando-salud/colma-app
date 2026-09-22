@@ -30,8 +30,13 @@ data class MultimediaOption(
     val localFilePath: String? = null,
     val localDescriptionAudios: List<String>? = null,
     val localDescriptionImages: List<String>? = null,
-    val tratamientoMultimediaId: Int? = null
-)
+    val tratamientoMultimediaId: Int? = null,
+    val tratamientoElementoId: Int? = null
+) {
+    val elementoId: Int?
+        get() = tratamientoElementoId ?: tratamientoMultimediaId
+}
+
 
 object MultimediaKeyUtils {
     fun generateMultimediaUniqueKey(

@@ -43,9 +43,20 @@ class TreatmentService {
         return apiService.downloadFile(bearerToken, fileUrl)
     }
 
+    suspend fun getElementosCompletados(token: String): Response<com.colma.colmaApp.servicios.internetCommunication.model.ElementosCompletadosResponse> {
+        val bearerToken = if (token.startsWith("Bearer ")) token else "Bearer $token"
+        return apiService.getElementosCompletados(bearerToken)
+    }
+
     suspend fun getMultimediaCompletados(token: String): Response<com.colma.colmaApp.servicios.internetCommunication.model.MultimediaCompletadosResponse> {
         val bearerToken = if (token.startsWith("Bearer ")) token else "Bearer $token"
         return apiService.getMultimediaCompletados(bearerToken)
     }
+
+    suspend fun getDatosFuncionalesTratamiento(token: String): Response<com.colma.colmaApp.servicios.internetCommunication.model.DatosFuncionalesResponse> {
+        val bearerToken = if (token.startsWith("Bearer ")) token else "Bearer $token"
+        return apiService.getDatosFuncionalesTratamiento(bearerToken)
+    }
 }
+
 

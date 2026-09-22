@@ -17,12 +17,13 @@ data class SyncDataRequest(
     val app: String,
     val clientSyncTimestamp: String,
     @SerializedName("sesiones_completadas") val sesionesCompletadas: Int = 0,
-    val glucosa: List<GlucosaData>,
-    val presion: List<PresionData>,
-    @SerializedName("estado_animo") val estadoAnimo: List<EstadoAnimoData>,
-    val quiz: List<QuizData>,
-    val metas: List<MetaData>,
-    @SerializedName("multimedia_read") val multimediaRead: List<MultimediaReadData>
+    val glucosa: List<GlucosaData> = emptyList(),
+    val presion: List<PresionData> = emptyList(),
+    @SerializedName("estado_animo") val estadoAnimo: List<EstadoAnimoData> = emptyList(),
+    val quiz: List<QuizData> = emptyList(),
+    val metas: List<MetaData> = emptyList(),
+    @SerializedName("progreso_elementos") val progresoElementos: List<ProgresoElementoData> = emptyList(),
+    @SerializedName("multimedia_read") val multimediaRead: List<MultimediaReadData> = emptyList()
 )
 
 class SyncDataRequestAdapter : JsonSerializer<SyncDataRequest>, JsonDeserializer<SyncDataRequest> {
@@ -39,7 +40,22 @@ class SyncDataRequestAdapter : JsonSerializer<SyncDataRequest>, JsonDeserializer
         jsonObject.add("estado_animo", context.serialize(src.estadoAnimo))
         jsonObject.add("glucosa", context.serialize(src.glucosa))
         jsonObject.add("metas", context.serialize(src.metas))
-        jsonObject.add("multimedia_read", context.serialize(src.multimediaRead))
+        // Prefer progreso_elementos, falling back to mapping from multimediaRead if empty
+        val finalProgreso = if (src.progresoElementos.isNotEmpty()) {
+            src.progresoElementos
+        } else {
+            src.multimediaRead.mapNotNull { mr ->
+                mr.tratamientoMultimediaId?.let { id ->
+                    ProgresoElementoData(
+                        tratamientoElementoId = id,
+                        completado = true,
+                        fechaEstado = mr.fechaRegistro,
+                        fechaSincronizacion = mr.fechaSincronizacion
+                    )
+                }
+            }
+        }
+        jsonObject.add("progreso_elementos", context.serialize(finalProgreso))
         jsonObject.add("presion", context.serialize(src.presion))
         jsonObject.add("quiz", context.serialize(src.quiz))
         jsonObject.addProperty("userId", src.userId)
@@ -63,6 +79,7 @@ class SyncDataRequestAdapter : JsonSerializer<SyncDataRequest>, JsonDeserializer
         val estadoAnimo: List<EstadoAnimoData> = context.deserialize<Array<EstadoAnimoData>>(obj.get("estado_animo") ?: obj.get("estadoAnimo"), Array<EstadoAnimoData>::class.java)?.toList() ?: emptyList()
         val quiz: List<QuizData> = context.deserialize<Array<QuizData>>(obj.get("quiz"), Array<QuizData>::class.java)?.toList() ?: emptyList()
         val metas: List<MetaData> = context.deserialize<Array<MetaData>>(obj.get("metas"), Array<MetaData>::class.java)?.toList() ?: emptyList()
+        val progresoElementos: List<ProgresoElementoData> = context.deserialize<Array<ProgresoElementoData>>(obj.get("progreso_elementos"), Array<ProgresoElementoData>::class.java)?.toList() ?: emptyList()
         val multimediaRead: List<MultimediaReadData> = context.deserialize<Array<MultimediaReadData>>(obj.get("multimedia_read") ?: obj.get("multimediaRead"), Array<MultimediaReadData>::class.java)?.toList() ?: emptyList()
 
         return SyncDataRequest(
@@ -76,10 +93,18 @@ class SyncDataRequestAdapter : JsonSerializer<SyncDataRequest>, JsonDeserializer
             estadoAnimo = estadoAnimo,
             quiz = quiz,
             metas = metas,
+            progresoElementos = progresoElementos,
             multimediaRead = multimediaRead
         )
     }
 }
+
+data class ProgresoElementoData(
+    @SerializedName("tratamiento_elemento_id") val tratamientoElementoId: Int,
+    @SerializedName("completado") val completado: Boolean = true,
+    @SerializedName("fecha_estado") val fechaEstado: String,
+    @SerializedName("fecha_sincronizacion") val fechaSincronizacion: String
+)
 
 data class GlucosaData(
     @SerializedName("id_glucosa") val idGlucosa: Int,
@@ -121,18 +146,19 @@ data class EstadoAnimoData(
 )
 
 data class QuizData(
-    @SerializedName("id_quiz") val idQuiz: Int,
-    @SerializedName("id_usuario") val idUsuario: Int,
-    @SerializedName("quiz_type") val quizType: String,
-    val sessionId: Int,
-    val subSessionId: Int?,
+    @SerializedName("tratamiento_elemento_id") val tratamientoElementoId: Int? = null,
     @SerializedName("fecha_registro") val fechaRegistro: String,
     @SerializedName("fecha_usuario") val fechaUsuario: String,
     @SerializedName("fecha_sincronizacion") val fechaSincronizacion: String,
     val preguntas: List<PreguntaData>,
-    @SerializedName("puntaje_total") val puntajeTotal: Int,
-    @SerializedName("puntaje_obtenido") val puntajeObtenido: Int,
-    @SerializedName("porcentaje_correcto") val porcentajeCorrecto: Int
+    @SerializedName("id_quiz") val idQuiz: Int? = null,
+    @SerializedName("id_usuario") val idUsuario: Int? = null,
+    @SerializedName("quiz_type") val quizType: String? = null,
+    val sessionId: Int? = null,
+    val subSessionId: Int? = null,
+    @SerializedName("puntaje_total") val puntajeTotal: Int? = null,
+    @SerializedName("puntaje_obtenido") val puntajeObtenido: Int? = null,
+    @SerializedName("porcentaje_correcto") val porcentajeCorrecto: Int? = null
 )
 
 data class PreguntaData(
@@ -149,8 +175,9 @@ data class PreguntaData(
 data class MetaData(
     @SerializedName("id_meta") val idMeta: Int,
     @SerializedName("id_usuario") val idUsuario: Int,
-    val semana: Int,
-    val sesion: Int,
+    @SerializedName("tratamiento_elemento_id") val tratamientoElementoId: Int? = null,
+    val semana: Int? = null,
+    val sesion: Int? = null,
     @SerializedName("tipo_actividad") val tipoActividad: String,
     val actividad: String,
     val lugar: String,
@@ -176,4 +203,5 @@ data class MultimediaReadData(
     @SerializedName("fecha_sincronizacion") val fechaSincronizacion: String,
     @SerializedName("tratamiento_multimedia_id") val tratamientoMultimediaId: Int? = null
 )
+
 
