@@ -101,7 +101,7 @@ class TreatmentDownloadRepositoryImpl(private val context: Context) : TreatmentD
                 val sesiones = semana.sesiones ?: emptyList()
                 for (sesion in sesiones) {
                     val serverContents = sesion.content ?: emptyList()
-                    totalFiles += serverContents.count { it.title != null && it.effectiveLink != null }
+                    totalFiles += serverContents.sumOf { it.getDownloadableResources().size }
                 }
             }
             Log.d(TAG, "Total files to download: $totalFiles")
@@ -124,51 +124,52 @@ class TreatmentDownloadRepositoryImpl(private val context: Context) : TreatmentD
                     // Download files and map paths
                     val downloadedFiles = mutableListOf<ServerFileMapping>()
                     for (contentItem in serverContents) {
-                        val title = contentItem.title ?: continue
-                        val link = contentItem.effectiveLink ?: continue
+                        val resources = contentItem.getDownloadableResources()
+                        for (resource in resources) {
+                            val link = resource.url
+                            val parsedUri = Uri.parse(link)
+                            val fileName = parsedUri.lastPathSegment ?: "${resource.type.lowercase()}_${contentItem.elementoId}"
+                            val relativePath = parsedUri.path?.removePrefix("/") ?: "multimedia/${tipoStr}/${serverSemana.id}/${serverSesion.id}/${fileName}"
+                            val localFile = File(context.filesDir, relativePath)
 
-                        // Determine local file path
-                        val parsedUri = Uri.parse(link)
-                        val relativePath = parsedUri.path?.removePrefix("/") ?: "multimedia/${tipoStr}/${serverSemana.id}/${serverSesion.id}/${title}"
-                        val localFile = File(context.filesDir, relativePath)
+                            val currentProgress = (0.1f + 0.8f * (downloadedCount.toFloat() / maxOf(1, totalFiles))).coerceIn(0.1f, 0.90f)
+                            onProgress?.invoke(currentProgress, "Descargando: ${resource.resourceName}")
 
-                        val currentProgress = (0.1f + 0.8f * (downloadedCount.toFloat() / maxOf(1, totalFiles))).coerceIn(0.1f, 0.90f)
-                        onProgress?.invoke(currentProgress, "Descargando: $title")
-
-                        // Download the file
-                        Log.d(TAG, "Downloading file: $title from $link")
-                        val fileResponse = treatmentService.downloadFile(token, link)
-                        Log.d(TAG, "File download response code for $title: ${fileResponse.code()}")
-                        if (fileResponse.isSuccessful) {
-                            val body = fileResponse.body()
-                            if (body != null) {
-                                try {
-                                    localFile.parentFile?.mkdirs()
-                                    body.byteStream().use { inputStream ->
-                                        FileOutputStream(localFile).use { outputStream ->
-                                            inputStream.copyTo(outputStream)
+                            // Download the file
+                            Log.d(TAG, "Downloading file (${resource.type}): ${resource.resourceName} from $link")
+                            val fileResponse = treatmentService.downloadFile(token, link)
+                            Log.d(TAG, "File download response code for ${resource.resourceName}: ${fileResponse.code()}")
+                            if (fileResponse.isSuccessful) {
+                                val body = fileResponse.body()
+                                if (body != null) {
+                                    try {
+                                        localFile.parentFile?.mkdirs()
+                                        body.byteStream().use { inputStream ->
+                                            FileOutputStream(localFile).use { outputStream ->
+                                                inputStream.copyTo(outputStream)
+                                            }
                                         }
-                                    }
-                                    Log.d(TAG, "Successfully saved file to: ${localFile.absolutePath}")
-                                    downloadedFiles.add(
-                                        ServerFileMapping(
-                                            type = contentItem.type ?: "VIDEO",
-                                            title = title,
-                                            localPath = localFile.absolutePath,
-                                            tratamientoMultimediaId = contentItem.elementoId
+                                        Log.d(TAG, "Successfully saved file to: ${localFile.absolutePath}")
+                                        downloadedFiles.add(
+                                            ServerFileMapping(
+                                                type = resource.type,
+                                                title = resource.resourceName,
+                                                localPath = localFile.absolutePath,
+                                                tratamientoMultimediaId = contentItem.elementoId
+                                            )
                                         )
-                                    )
-                                } catch (e: Exception) {
-                                    Log.e(TAG, "Error writing file $title to disk: ${e.message}")
-                                    return@withContext Result.failure(e)
+                                    } catch (e: Exception) {
+                                        Log.e(TAG, "Error writing file ${resource.resourceName} to disk: ${e.message}")
+                                        return@withContext Result.failure(e)
+                                    }
                                 }
+                            } else {
+                                val errorBody = fileResponse.errorBody()?.string() ?: ""
+                                Log.e(TAG, "Failed to download file ${resource.resourceName}: code=${fileResponse.code()}, error=$errorBody")
+                                return@withContext Result.failure(IOException("Failed to download file ${resource.resourceName}: code=${fileResponse.code()}, error=$errorBody"))
                             }
-                        } else {
-                            val errorBody = fileResponse.errorBody()?.string() ?: ""
-                            Log.e(TAG, "Failed to download file $title: code=${fileResponse.code()}, error=$errorBody")
-                            return@withContext Result.failure(IOException("Failed to download file $title: code=${fileResponse.code()}, error=$errorBody"))
+                            downloadedCount++
                         }
-                        downloadedCount++
                     }
 
                     // Build mapped MultimediaContent list
@@ -192,7 +193,8 @@ class TreatmentDownloadRepositoryImpl(private val context: Context) : TreatmentD
                         it.title.endsWith(".png", ignoreCase = true) || 
                         it.title.endsWith(".jpg", ignoreCase = true) || 
                         it.title.endsWith(".jpeg", ignoreCase = true) || 
-                        it.title.endsWith(".webp", ignoreCase = true)
+                        it.title.endsWith(".webp", ignoreCase = true) ||
+                        it.title.endsWith(".gif", ignoreCase = true)
                     }
                     val videoItems = downloadedFiles.filter { 
                         it.type.equals("VIDEO", ignoreCase = true) || 
@@ -216,15 +218,28 @@ class TreatmentDownloadRepositoryImpl(private val context: Context) : TreatmentD
 
                             when (itemType) {
                                 MultimediaContentType.DESCRIPTION -> {
-                                    val matchedAudio = audioItems.find { it.tratamientoMultimediaId == serverItem.elementoId }
-                                        ?: audioItems.find { it.title == serverItem.title }
-                                        ?: (if (serverItem.title?.contains("Lectura", ignoreCase = true) == true) audioItems.firstOrNull() else null)
-                                    val matchedImage = imageItems.find { it.tratamientoMultimediaId == serverItem.elementoId }
-                                        ?: imageItems.find { it.title == serverItem.title }
-                                        ?: (if (serverItem.title?.contains("Lectura", ignoreCase = true) == true) imageItems.firstOrNull() else null)
+                                    val matchedAudios = downloadedFiles.filter { 
+                                        it.tratamientoMultimediaId == serverItem.elementoId && it.type.equals("AUDIO", ignoreCase = true) 
+                                    }
+                                    val matchedImages = downloadedFiles.filter { 
+                                        it.tratamientoMultimediaId == serverItem.elementoId && it.type.equals("IMAGE", ignoreCase = true) 
+                                    }
 
-                                    val localAudios = if (matchedAudio != null) listOf(matchedAudio.localPath) else null
-                                    val localImages = if (matchedImage != null) listOf(matchedImage.localPath) else null
+                                    val localAudios = if (matchedAudios.isNotEmpty()) {
+                                        matchedAudios.map { it.localPath }
+                                    } else {
+                                        val fallbackAudio = audioItems.find { it.tratamientoMultimediaId == serverItem.elementoId }
+                                            ?: (if (serverItem.title?.contains("Lectura", ignoreCase = true) == true) audioItems.firstOrNull() else null)
+                                        if (fallbackAudio != null) listOf(fallbackAudio.localPath) else null
+                                    }
+
+                                    val localImages = if (matchedImages.isNotEmpty()) {
+                                        matchedImages.map { it.localPath }
+                                    } else {
+                                        val fallbackImage = imageItems.find { it.tratamientoMultimediaId == serverItem.elementoId }
+                                            ?: (if (serverItem.title?.contains("Lectura", ignoreCase = true) == true) imageItems.firstOrNull() else null)
+                                        if (fallbackImage != null) listOf(fallbackImage.localPath) else null
+                                    }
 
                                     multimediaList.add(
                                         MultimediaContent(
@@ -246,7 +261,8 @@ class TreatmentDownloadRepositoryImpl(private val context: Context) : TreatmentD
                                     )
                                 }
                                 MultimediaContentType.VIDEO -> {
-                                    val videoItem = videoItems.find { it.tratamientoMultimediaId == serverItem.elementoId }
+                                    val videoItem = downloadedFiles.find { it.tratamientoMultimediaId == serverItem.elementoId && it.type.equals("VIDEO", ignoreCase = true) }
+                                        ?: videoItems.find { it.tratamientoMultimediaId == serverItem.elementoId }
                                         ?: videoItems.find { it.title == serverItem.title }
                                         ?: videoItems.firstOrNull()
                                     multimediaList.add(
@@ -257,7 +273,7 @@ class TreatmentDownloadRepositoryImpl(private val context: Context) : TreatmentD
                                             fullDescription = serverItem.fullDescription ?: staticItem?.fullDescription,
                                             iconResId = serverItem.iconResId ?: staticItem?.iconResId,
                                             iconImageVector = serverItem.iconImageVector ?: staticItem?.iconImageVector ?: "PlayArrow",
-                                            contentAsset = videoItem?.localPath ?: serverItem.effectiveLink,
+                                            contentAsset = videoItem?.localPath ?: serverItem.video ?: serverItem.effectiveLink,
                                             metasId = serverItem.metasId ?: staticItem?.metasId,
                                             metasOptions = serverItem.metasOptions ?: staticItem?.metasOptions,
                                             questions = serverItem.questions ?: staticItem?.questions,
@@ -517,7 +533,7 @@ class TreatmentDownloadRepositoryImpl(private val context: Context) : TreatmentD
                                     fecha_regisitro = sm.fechaRegistro,
                                     fecha_edicion = sm.fechaEdicion,
                                     fecha_sincronizacion = sm.fechaSincronizacion,
-                                    meta_cumplida = if (sm.metaCumplida) 2 else 0,
+                                    meta_cumplida = if (sm.metaCumplida) 2 else if (!sm.motivoIncumplimiento.isNullOrBlank()) 1 else 0,
                                     fecha_objetivo = sm.fechaObjetivo,
                                     motivo_incumplimiento = sm.motivoIncumplimiento,
                                     tratamiento_elemento_id = sm.tratamientoElementoId

@@ -108,9 +108,9 @@ fun InformationDisplayContent(
                     InformationCard(
                         title = title,
                         displayContent = paragraphs.getOrNull(page) ?: "",
-                        audioResId = descriptionAudios?.getOrNull(page),
-                        localAudioPath = localDescriptionAudios?.getOrNull(page),
-                        localImagePath = localDescriptionImages?.getOrNull(page)
+                        audioResId = descriptionAudios?.getOrNull(page) ?: (if (descriptionAudios?.size == 1) descriptionAudios.firstOrNull() else null),
+                        localAudioPath = localDescriptionAudios?.getOrNull(page) ?: (if (localDescriptionAudios?.size == 1) localDescriptionAudios.firstOrNull() else null),
+                        localImagePath = localDescriptionImages?.getOrNull(page) ?: (if (localDescriptionImages?.size == 1) localDescriptionImages.firstOrNull() else null)
                     )
                 }
             } else {

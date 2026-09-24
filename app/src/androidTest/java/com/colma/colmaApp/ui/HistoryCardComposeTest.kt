@@ -19,7 +19,7 @@ class HistoryCardComposeTest {
     val composeTestRule = createComposeRule()
 
     @Test
-    fun `el componente HistoryCard muestra registros de salud y ejecuta el callback al hacer clic`() {
+    fun historyCard_displaysEntriesAndExecutesCallbackOnClick() {
         var clickedEntry: HealthEntry? = null
 
         val entries = listOf(

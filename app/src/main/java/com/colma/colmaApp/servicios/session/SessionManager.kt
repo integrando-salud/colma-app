@@ -2,9 +2,11 @@ package com.colma.colmaApp.servicios.session
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.util.Log
 
 object SessionManager {
 
+    private const val TAG = "SessionManager"
     private const val PREF_NAME = "ColmaAppSession"
     private const val KEY_AUTH_TOKEN = "auth_token"
     private const val KEY_USER_ID = "user_id"
@@ -28,19 +30,51 @@ object SessionManager {
                 packageInfo.versionCode.toLong()
             }
 
-            if (lastVersion != -1L) {
-                if (currentVersionCode != lastVersion) {
-                    clearSession()
-                }
-            } else {
+            if (lastVersion != -1L && currentVersionCode != lastVersion) {
+                Log.i(TAG, "App version changed from $lastVersion to $currentVersionCode. Performing complete data reset...")
+                resetAllAppData(context)
+            } else if (lastVersion == -1L) {
                 if (getAuthToken() != null) {
-                    clearSession()
+                    Log.i(TAG, "Existing session detected with no version recorded. Performing complete data reset...")
+                    resetAllAppData(context)
                 }
             }
 
             preferences?.edit()?.putLong(KEY_LAST_APP_VERSION, currentVersionCode)?.apply()
         } catch (e: Exception) {
-            e.printStackTrace()
+            Log.e(TAG, "Error in checkAppUpdate: ${e.message}", e)
+        }
+    }
+
+    fun resetAllAppData(context: Context) {
+        try {
+            // 1. Clear session preferences
+            clearSession()
+
+            // 2. Clear testing preferences
+            context.getSharedPreferences("session_testing_prefs", Context.MODE_PRIVATE).edit().clear().apply()
+
+            // 3. Delete SQLite database
+            context.deleteDatabase("colmadb.db")
+
+            // 4. Delete downloaded treatment files and multimedia in filesDir
+            context.filesDir?.listFiles()?.forEach { file ->
+                file.deleteRecursively()
+            }
+
+            // 5. Delete cacheDir files
+            context.cacheDir?.listFiles()?.forEach { file ->
+                file.deleteRecursively()
+            }
+
+            // 6. Cancel any testing notifications/alarms
+            try {
+                com.colma.colmaApp.utils.notifications.NotificationHelper.cancelWeeklyTestUnlock(context)
+            } catch (ignored: Throwable) {}
+
+            Log.i(TAG, "All application data, database and downloaded files successfully reset.")
+        } catch (e: Exception) {
+            Log.e(TAG, "Error while resetting application data: ${e.message}", e)
         }
     }
 
@@ -67,3 +101,4 @@ object SessionManager {
         editor?.apply()
     }
 }
+

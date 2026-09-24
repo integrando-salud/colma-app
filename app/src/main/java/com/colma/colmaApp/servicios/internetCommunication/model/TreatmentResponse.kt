@@ -29,6 +29,12 @@ data class ServerSesion(
     @SerializedName("content") val content: List<ServerContentItem>? = null
 )
 
+data class DownloadableResourceItem(
+    val url: String,
+    val type: String,
+    val resourceName: String
+)
+
 data class ServerContentItem(
     @SerializedName("tratamiento_elemento_id") val tratamientoElementoId: Int? = null,
     @SerializedName("tratamiento_multimedia_id") val tratamientoMultimediaId: Int? = null,
@@ -52,6 +58,37 @@ data class ServerContentItem(
 
     val effectiveLink: String?
         get() = link ?: video ?: audio ?: image
+
+    fun getDownloadableResources(): List<DownloadableResourceItem> {
+        val list = mutableListOf<DownloadableResourceItem>()
+
+        if (!video.isNullOrBlank()) {
+            list.add(DownloadableResourceItem(video, "VIDEO", title ?: "video"))
+        }
+
+        if (!audio.isNullOrBlank()) {
+            list.add(DownloadableResourceItem(audio, "AUDIO", title ?: "audio"))
+        }
+
+        if (!image.isNullOrBlank()) {
+            list.add(DownloadableResourceItem(image, "IMAGE", title ?: "imagen"))
+        }
+
+        if (!link.isNullOrBlank() && list.none { it.url == link }) {
+            val guessedType = when {
+                link.endsWith(".mp4", ignoreCase = true) || link.endsWith(".mov", ignoreCase = true) || link.endsWith(".mkv", ignoreCase = true) || link.endsWith(".webm", ignoreCase = true) -> "VIDEO"
+                link.endsWith(".mp3", ignoreCase = true) || link.endsWith(".wav", ignoreCase = true) || link.endsWith(".m4a", ignoreCase = true) || link.endsWith(".aac", ignoreCase = true) || link.endsWith(".ogg", ignoreCase = true) -> "AUDIO"
+                link.endsWith(".png", ignoreCase = true) || link.endsWith(".jpg", ignoreCase = true) || link.endsWith(".jpeg", ignoreCase = true) || link.endsWith(".webp", ignoreCase = true) || link.endsWith(".gif", ignoreCase = true) -> "IMAGE"
+                type.equals("VIDEO", ignoreCase = true) -> "VIDEO"
+                type.equals("AUDIO", ignoreCase = true) -> "AUDIO"
+                type.equals("IMAGE", ignoreCase = true) || type.equals("IMAGEN", ignoreCase = true) -> "IMAGE"
+                else -> type ?: "UNKNOWN"
+            }
+            list.add(DownloadableResourceItem(link, guessedType, title ?: "link"))
+        }
+
+        return list
+    }
 }
 
 data class MultimediaCompletadosResponse(
