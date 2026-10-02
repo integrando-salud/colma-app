@@ -1,0 +1,345 @@
+{
+  "quiz": [
+    {
+      "tratamiento_elemento_id": 1098,
+      "fecha_registro": "2026-09-24 16:04:03",
+      "fecha_usuario": "2026-09-24 16:04:03",
+      "fecha_sincronizacion": "2026-09-24 16:04:03",
+      "preguntas": [
+        {
+          "es_correcta": true,
+          "pregunta_index": 0,
+          "pregunta_texto": "Cuando tenemos el ánimo bajo, ¿qué suele ayudar más?",
+          "respuesta_usuario": 2,
+          "respuesta_correcta": 2,
+          "posibles_respuestas": [
+            "Hacer de golpe todos los pendientes para “ponernos al día”.",
+            "Esperar a que vuelvan las ganas antes de hacer algo.",
+            "Empezar de a poco con pequeñas actividades que me hacen bien o son importantes."
+          ],
+          "respuesta_usuario_texto": "Empezar de a poco con pequeñas actividades que me hacen bien o son importantes.",
+          "respuesta_correcta_texto": "Empezar de a poco con pequeñas actividades que me hacen bien o son importantes."
+        }
+      ]
+    },
+    {
+      "tratamiento_elemento_id": 1102,
+      "fecha_registro": "2026-09-24 16:05:42",
+      "fecha_usuario": "2026-09-24 16:05:42",
+      "fecha_sincronizacion": "2026-09-24 16:05:42",
+      "preguntas": [
+        {
+          "es_correcta": true,
+          "pregunta_index": 0,
+          "pregunta_texto": "En la activación conductual, hay que esperar a tener ganas para empezar a hacer cosas.",
+          "respuesta_usuario": 1,
+          "respuesta_correcta": 1,
+          "posibles_respuestas": [
+            "Verdadero",
+            "Falso"
+          ],
+          "respuesta_usuario_texto": "Falso",
+          "respuesta_correcta_texto": "Falso"
+        }
+      ]
+    },
+    {
+      "tratamiento_elemento_id": 1112,
+      "fecha_registro": "2026-09-24 16:16:17",
+      "fecha_usuario": "2026-09-24 16:16:17",
+      "fecha_sincronizacion": "2026-09-24 16:16:17",
+      "preguntas": [
+        {
+          "es_correcta": true,
+          "pregunta_index": 0,
+          "pregunta_texto": "Empezar con acciones pequeñas hace que sea más fácil avanzar hacia una meta.",
+          "respuesta_usuario": 0,
+          "respuesta_correcta": 0,
+          "posibles_respuestas": [
+            "Verdadero",
+            "Falso"
+          ],
+          "respuesta_usuario_texto": "Verdadero",
+          "respuesta_correcta_texto": "Verdadero"
+        }
+      ]
+    },
+    {
+      "tratamiento_elemento_id": 1119,
+      "fecha_registro": "2026-09-24 16:20:18",
+      "fecha_usuario": "2026-09-24 16:20:18",
+      "fecha_sincronizacion": "2026-09-24 16:20:18",
+      "preguntas": [
+        {
+          "es_correcta": true,
+          "pregunta_index": 0,
+          "pregunta_texto": "Cuando aparece una “piedra en el camino” (por ejemplo: “no tengo ganas”), ¿qué es lo más útil?",
+          "respuesta_usuario": 1,
+          "respuesta_correcta": 1,
+          "posibles_respuestas": [
+            "Esperar a sentirte mejor y recién ahí hacerlo.",
+            "Reconocer la barrera y hacer una versión más pequeña del plan.",
+            "Dejar la meta para la próxima semana."
+          ],
+          "respuesta_usuario_texto": "Reconocer la barrera y hacer una versión más pequeña del plan.",
+          "respuesta_correcta_texto": "Reconocer la barrera y hacer una versión más pequeña del plan."
+        }
+      ]
+    },
+    {
+      "tratamiento_elemento_id": 1128,
+      "fecha_registro": "2026-09-24 16:27:53",
+      "fecha_usuario": "2026-09-24 16:27:53",
+      "fecha_sincronizacion": "2026-09-24 16:27:53",
+      "preguntas": [
+        {
+          "es_correcta": true,
+          "pregunta_index": 0,
+          "pregunta_texto": "Un buen premio es solo para cuando cumples tu meta al 100%.",
+          "respuesta_usuario": 1,
+          "respuesta_correcta": 1,
+          "posibles_respuestas": [
+            "Verdadero",
+            "Falso"
+          ],
+          "respuesta_usuario_texto": "Falso",
+          "respuesta_correcta_texto": "Falso"
+        }
+      ]
+    },
+    {
+      "tratamiento_elemento_id": 1132,
+      "fecha_registro": "2026-09-24 16:28:48",
+      "fecha_usuario": "2026-09-24 16:28:48",
+      "fecha_sincronizacion": "2026-09-24 16:28:48",
+      "preguntas": [
+        {
+          "es_correcta": true,
+          "pregunta_index": 0,
+          "pregunta_texto": "Cuando el estado de ánimo está bajo y cuesta cuidarse (por ejemplo, tomar el medicamento), ¿qué estrategia suele ser más útil?",
+          "respuesta_usuario": 1,
+          "respuesta_correcta": 1,
+          "posibles_respuestas": [
+            "Esperar a “sentirse con ganas” para recién empezar.",
+            "Hacer un plan simple (qué/cuándo/dónde) y empezar con un paso pequeño, aunque no haya ganas.",
+            "Dejarlo para la próxima semana para “empezar bien”."
+          ],
+          "respuesta_usuario_texto": "Hacer un plan simple (qué/cuándo/dónde) y empezar con un paso pequeño, aunque no haya ganas.",
+          "respuesta_correcta_texto": "Hacer un plan simple (qué/cuándo/dónde) y empezar con un paso pequeño, aunque no haya ganas."
+        }
+      ]
+    },
+    {
+      "tratamiento_elemento_id": 1146,
+      "fecha_registro": "2026-09-24 17:19:59",
+      "fecha_usuario": "2026-09-24 17:19:59",
+      "fecha_sincronizacion": "2026-09-24 17:19:59",
+      "preguntas": [
+        {
+          "es_correcta": true,
+          "pregunta_index": 0,
+          "pregunta_texto": "La mejor forma de saber cómo está mi glucosa es midiéndola con un glucómetro o un análisis de sangre",
+          "respuesta_usuario": 0,
+          "respuesta_correcta": 0,
+          "posibles_respuestas": [
+            "Verdadero",
+            "Falso"
+          ],
+          "respuesta_usuario_texto": "Verdadero",
+          "respuesta_correcta_texto": "Verdadero"
+        }
+      ]
+    },
+    {
+      "tratamiento_elemento_id": 1157,
+      "fecha_registro": "2026-09-24 17:24:50",
+      "fecha_usuario": "2026-09-24 17:24:50",
+      "fecha_sincronizacion": "2026-09-24 17:24:50",
+      "preguntas": [
+        {
+          "es_correcta": true,
+          "pregunta_index": 0,
+          "pregunta_texto": "¿Cuáles son los beneficios del movimiento y la actividad física en nuestro cuerpo?",
+          "respuesta_usuario": 0,
+          "respuesta_correcta": 0,
+          "posibles_respuestas": [
+            "Mejora la presión, mejora la glucosa, reduce el estrés, mejora el sueño, descenso de peso",
+            "Sólo me ayuda a bajar de peso para tener una mejor figura"
+          ],
+          "respuesta_usuario_texto": "Mejora la presión, mejora la glucosa, reduce el estrés, mejora el sueño, descenso de peso",
+          "respuesta_correcta_texto": "Mejora la presión, mejora la glucosa, reduce el estrés, mejora el sueño, descenso de peso"
+        }
+      ]
+    },
+    {
+      "tratamiento_elemento_id": 1166,
+      "fecha_registro": "2026-09-24 17:27:47",
+      "fecha_usuario": "2026-09-24 17:27:47",
+      "fecha_sincronizacion": "2026-09-24 17:27:47",
+      "preguntas": [
+        {
+          "es_correcta": true,
+          "pregunta_index": 0,
+          "pregunta_texto": "Hacer un poco de ejercicio puede ayudar a sentirse mejor de ánimo.",
+          "respuesta_usuario": 0,
+          "respuesta_correcta": 0,
+          "posibles_respuestas": [
+            "Verdadero",
+            "Falso"
+          ],
+          "respuesta_usuario_texto": "Verdadero",
+          "respuesta_correcta_texto": "Verdadero"
+        }
+      ]
+    },
+    {
+      "tratamiento_elemento_id": 1180,
+      "fecha_registro": "2026-09-24 17:30:57",
+      "fecha_usuario": "2026-09-24 17:30:57",
+      "fecha_sincronizacion": "2026-09-24 17:30:57",
+      "preguntas": [
+        {
+          "es_correcta": true,
+          "pregunta_index": 0,
+          "pregunta_texto": "Organizar mejor tus comidas te ayuda a cuidar tu salud",
+          "respuesta_usuario": 0,
+          "respuesta_correcta": 0,
+          "posibles_respuestas": [
+            "Verdadero",
+            "Falso"
+          ],
+          "respuesta_usuario_texto": "Verdadero",
+          "respuesta_correcta_texto": "Verdadero"
+        }
+      ]
+    },
+    {
+      "tratamiento_elemento_id": 1193,
+      "fecha_registro": "2026-09-24 17:44:05",
+      "fecha_usuario": "2026-09-24 17:44:05",
+      "fecha_sincronizacion": "2026-09-24 17:44:05",
+      "preguntas": [
+        {
+          "es_correcta": true,
+          "pregunta_index": 0,
+          "pregunta_texto": "¿Qué puede hacer María para organizar mejor sus comidas?",
+          "respuesta_usuario": 0,
+          "respuesta_correcta": 0,
+          "posibles_respuestas": [
+            "Planificar un menú semanal junto a su hija.",
+            "Comprar comida cada día sin planificar."
+          ],
+          "respuesta_usuario_texto": "Planificar un menú semanal junto a su hija.",
+          "respuesta_correcta_texto": "Planificar un menú semanal junto a su hija."
+        }
+      ]
+    },
+    {
+      "tratamiento_elemento_id": 1230,
+      "fecha_registro": "2026-09-24 17:54:29",
+      "fecha_usuario": "2026-09-24 17:54:29",
+      "fecha_sincronizacion": "2026-09-24 17:54:29",
+      "preguntas": [
+        {
+          "es_correcta": true,
+          "pregunta_index": 0,
+          "pregunta_texto": "¿Cómo puedo cuidar mi diabetes?",
+          "respuesta_usuario": 1,
+          "respuesta_correcta": 1,
+          "posibles_respuestas": [
+            "No es necesario cuidarse.",
+            "Con medicación y hábitos saludables."
+          ],
+          "respuesta_usuario_texto": "Con medicación y hábitos saludables.",
+          "respuesta_correcta_texto": "Con medicación y hábitos saludables."
+        }
+      ]
+    },
+    {
+      "tratamiento_elemento_id": 1245,
+      "fecha_registro": "2026-09-24 17:57:36",
+      "fecha_usuario": "2026-09-24 17:57:36",
+      "fecha_sincronizacion": "2026-09-24 17:57:36",
+      "preguntas": [
+        {
+          "es_correcta": true,
+          "pregunta_index": 0,
+          "pregunta_texto": "Antes de dormir, es mejor…",
+          "respuesta_usuario": 0,
+          "respuesta_correcta": 0,
+          "posibles_respuestas": [
+            "Comer ligero y tomar poca agua",
+            "Comer comidas pesadas y tomar bastante agua"
+          ],
+          "respuesta_usuario_texto": "Comer ligero y tomar poca agua",
+          "respuesta_correcta_texto": "Comer ligero y tomar poca agua"
+        }
+      ]
+    },
+    {
+      "tratamiento_elemento_id": 1265,
+      "fecha_registro": "2026-09-24 18:03:46",
+      "fecha_usuario": "2026-09-24 18:03:46",
+      "fecha_sincronizacion": "2026-09-24 18:03:46",
+      "preguntas": [
+        {
+          "es_correcta": true,
+          "pregunta_index": 0,
+          "pregunta_texto": "El apoyo de otras personas también puede ayudarte a sostener tus metas de salud y seguir avanzando.",
+          "respuesta_usuario": 0,
+          "respuesta_correcta": 0,
+          "posibles_respuestas": [
+            "Verdadero",
+            "Falso"
+          ],
+          "respuesta_usuario_texto": "Verdadero",
+          "respuesta_correcta_texto": "Verdadero"
+        }
+      ]
+    },
+    {
+      "tratamiento_elemento_id": 1273,
+      "fecha_registro": "2026-09-24 18:05:16",
+      "fecha_usuario": "2026-09-24 18:05:16",
+      "fecha_sincronizacion": "2026-09-24 18:05:16",
+      "preguntas": [
+        {
+          "es_correcta": true,
+          "pregunta_index": 0,
+          "pregunta_texto": "¿Al pedir ayuda, es mejor ser claro y específico sobre lo que necesitas?",
+          "respuesta_usuario": 0,
+          "respuesta_correcta": 0,
+          "posibles_respuestas": [
+            "Verdadero",
+            "Falso"
+          ],
+          "respuesta_usuario_texto": "Verdadero",
+          "respuesta_correcta_texto": "Verdadero"
+        }
+      ]
+    },
+    {
+      "tratamiento_elemento_id": 1299,
+      "fecha_registro": "2026-09-24 18:10:36",
+      "fecha_usuario": "2026-09-24 18:10:36",
+      "fecha_sincronizacion": "2026-09-24 18:10:36",
+      "preguntas": [
+        {
+          "es_correcta": true,
+          "pregunta_index": 0,
+          "pregunta_texto": "Después de una semana difícil en la que no pudiste seguir tu plan, ¿qué es lo más útil?",
+          "respuesta_usuario": 2,
+          "respuesta_correcta": 2,
+          "posibles_respuestas": [
+            "Pensar que todo lo anterior fue en vano y empezar un plan completamente nuevo.",
+            "Esperar a sentirme motivado antes de volver a intentar.",
+            "Retomar mi plan, ás con un paso más pequeño, sin juzgarme por la pausa."
+          ],
+          "respuesta_usuario_texto": "Retomar mi plan, ás con un paso más pequeño, sin juzgarme por la pausa.",
+          "respuesta_correcta_texto": "Retomar mi plan, ás con un paso más pequeño, sin juzgarme por la pausa."
+        }
+      ]
+    }
+  ],
+  "metas": []
+}

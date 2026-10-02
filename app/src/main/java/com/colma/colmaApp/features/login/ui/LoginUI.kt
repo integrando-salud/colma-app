@@ -13,12 +13,17 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.relocation.BringIntoViewRequester
 import androidx.compose.foundation.relocation.bringIntoViewRequester
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
+import androidx.compose.material.icons.outlined.CloudOff
+import androidx.compose.material.icons.outlined.ErrorOutline
+import androidx.compose.material.icons.outlined.Lock
+import androidx.compose.material.icons.outlined.WifiOff
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -40,10 +45,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import com.colma.colmaApp.R
+import com.colma.colmaApp.features.login.viewmodel.LoginErrorType
 import com.colma.colmaApp.features.login.viewmodel.LoginEvent
 import com.colma.colmaApp.features.login.viewmodel.LoginUiState
 import com.colma.colmaApp.features.login.viewmodel.LoginViewModel
@@ -323,6 +330,131 @@ fun LoginScreen(
                         )
                     )
             )
+        }
+
+        // Custom aesthetic dialog for login errors (wrong credentials, no internet, server error, etc.)
+        if (uiState.error != null) {
+            LoginErrorDialog(
+                title = uiState.errorTitle ?: "Aviso",
+                message = uiState.error,
+                errorType = uiState.errorType,
+                onDismiss = { onEvent(LoginEvent.DismissError) }
+            )
+        }
+    }
+}
+
+/**
+ * A visually polished dialog for communicating login feedback and errors.
+ */
+@Composable
+fun LoginErrorDialog(
+    title: String,
+    message: String,
+    errorType: LoginErrorType?,
+    onDismiss: () -> Unit
+) {
+    val (icon, iconBgColor, iconTintColor) = when (errorType) {
+        LoginErrorType.NO_INTERNET -> Triple(
+            Icons.Outlined.WifiOff,
+            Color(0xFFFEF3C7), // Warm amber background
+            Color(0xFFD97706)  // Amber primary icon tint
+        )
+        LoginErrorType.INVALID_CREDENTIALS -> Triple(
+            Icons.Outlined.Lock,
+            Color(0xFFFDE8F1), // Soft pink background
+            Color(0xFFE84589)  // Colma signature pink icon tint
+        )
+        LoginErrorType.SERVER_ERROR -> Triple(
+            Icons.Outlined.CloudOff,
+            Color(0xFFEEF2FF), // Soft indigo background
+            Color(0xFF4F46E5)  // Indigo icon tint
+        )
+        LoginErrorType.UNEXPECTED, null -> Triple(
+            Icons.Outlined.ErrorOutline,
+            Color(0xFFFEE2E2), // Soft red background
+            Color(0xFFDC2626)  // Red icon tint
+        )
+    }
+
+    Dialog(
+        onDismissRequest = onDismiss,
+        properties = DialogProperties(dismissOnBackPress = true, dismissOnClickOutside = true)
+    ) {
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 8.dp),
+            shape = RoundedCornerShape(24.dp),
+            colors = CardDefaults.cardColors(containerColor = Color.White),
+            elevation = CardDefaults.cardElevation(defaultElevation = 12.dp)
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(24.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                // Icon Header with circular container
+                Box(
+                    modifier = Modifier
+                        .size(64.dp)
+                        .background(color = iconBgColor, shape = CircleShape),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(
+                        imageVector = icon,
+                        contentDescription = null,
+                        tint = iconTintColor,
+                        modifier = Modifier.size(32.dp)
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                // Title
+                Text(
+                    text = title,
+                    fontSize = 19.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color(0xFF1E293B),
+                    textAlign = TextAlign.Center
+                )
+
+                Spacer(modifier = Modifier.height(10.dp))
+
+                // Message
+                Text(
+                    text = message,
+                    fontSize = 15.sp,
+                    lineHeight = 22.sp,
+                    color = Color(0xFF64748B),
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.fillMaxWidth()
+                )
+
+                Spacer(modifier = Modifier.height(24.dp))
+
+                // Action Button
+                Button(
+                    onClick = onDismiss,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(48.dp),
+                    shape = RoundedCornerShape(12.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = colorResource(R.color.principal_boton),
+                        contentColor = Color.White
+                    ),
+                    elevation = ButtonDefaults.buttonElevation(defaultElevation = 2.dp)
+                ) {
+                    Text(
+                        text = "Entendido",
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.SemiBold
+                    )
+                }
+            }
         }
     }
 }

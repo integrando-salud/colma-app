@@ -97,10 +97,31 @@ class LoginViewModelTest {
         viewModel.onEvent(LoginEvent.PasswordChanged("wrong_pwd"))
         viewModel.onEvent(LoginEvent.LoginClicked)
 
-        assertEquals(errorMessage, viewModel.uiState.value.error)
+        assertEquals("Credenciales incorrectas", viewModel.uiState.value.errorTitle)
+        assertEquals(LoginErrorType.INVALID_CREDENTIALS, viewModel.uiState.value.errorType)
+        assertTrue(viewModel.uiState.value.error?.isNotEmpty() == true)
         assertFalse(viewModel.uiState.value.isLoading)
 
-        viewModel.clearError()
+        viewModel.onEvent(LoginEvent.DismissError)
         assertNull(viewModel.uiState.value.error)
+        assertNull(viewModel.uiState.value.errorTitle)
+        assertNull(viewModel.uiState.value.errorType)
+    }
+
+    @Test
+    fun `cuando el login falla por conexion, se establece el tipo NO_INTERNET`() = runTest {
+        coEvery { loginRepository.isLoggedIn() } returns false
+        coEvery { loginRepository.login("12345678", "pwd") } returns Result.failure(Exception("Sin conexión a internet"))
+
+        val viewModel = LoginViewModel(loginRepository)
+        advanceTimeBy(3000)
+
+        viewModel.onEvent(LoginEvent.DniChanged("12345678"))
+        viewModel.onEvent(LoginEvent.PasswordChanged("pwd"))
+        viewModel.onEvent(LoginEvent.LoginClicked)
+
+        assertEquals("Sin conexión a internet", viewModel.uiState.value.errorTitle)
+        assertEquals(LoginErrorType.NO_INTERNET, viewModel.uiState.value.errorType)
+        assertFalse(viewModel.uiState.value.isLoading)
     }
 }

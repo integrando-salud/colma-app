@@ -55,10 +55,18 @@ class LoginRepositoryImpl(
                         // Fallback to local credential check for server errors (5xx)
                         if (response.code() >= 500) {
                             Log.w(TAG, "Server error ${response.code()}, trying offline fallback check")
-                            dbHelper.verifyCredentialOffline(dni, password).map { (token, userId) ->
+                            val offlineResult = dbHelper.verifyCredentialOffline(dni, password)
+                            if (offlineResult.isSuccess) {
+                                val (token, userId) = offlineResult.getOrThrow()
                                 SessionManager.saveSession(token, userId)
-                                true
+                                Result.success(true)
+                            } else {
+                                Result.failure(Exception("SERVER_ERROR: El servidor de Colma no se encuentra disponible (código ${response.code()}). Por favor, intenta más tarde."))
                             }
+                        } else if (response.code() in 400..499) {
+                            val errorBody = response.errorBody()?.string() ?: ""
+                            Log.e(TAG, "Client error ${response.code()}: $errorBody")
+                            Result.failure(Exception("INVALID_CREDENTIALS: El usuario o la contraseña ingresados no son correctos. Por favor, verifica tus datos."))
                         } else {
                             val errorBody = response.errorBody()?.string() ?: "Error desconocido"
                             val errorMessage = "Error en el login: ${response.code()} - $errorBody"
@@ -69,16 +77,32 @@ class LoginRepositoryImpl(
                 } catch (e: Exception) {
                     // Fallback to local credential check for network connectivity errors
                     Log.w(TAG, "Network exception: ${e.message}, trying offline fallback check", e)
-                    dbHelper.verifyCredentialOffline(dni, password).map { (token, userId) ->
+                    val offlineResult = dbHelper.verifyCredentialOffline(dni, password)
+                    if (offlineResult.isSuccess) {
+                        val (token, userId) = offlineResult.getOrThrow()
                         SessionManager.saveSession(token, userId)
-                        true
+                        Result.success(true)
+                    } else {
+                        if (dbHelper.getSavedCredentialForDni(dni) == null) {
+                            Result.failure(Exception("NO_INTERNET_FIRST_LOGIN: No fue posible conectar con el servidor. Comprueba tu conexión a internet para iniciar sesión."))
+                        } else {
+                            Result.failure(Exception("INVALID_CREDENTIALS: La contraseña ingresada es incorrecta o no fue posible validar su cuenta sin conexión."))
+                        }
                     }
                 }
             } else {
                 Log.d(TAG, "Device offline. Verifying credentials against local DB.")
-                dbHelper.verifyCredentialOffline(dni, password).map { (token, userId) ->
+                val offlineResult = dbHelper.verifyCredentialOffline(dni, password)
+                if (offlineResult.isSuccess) {
+                    val (token, userId) = offlineResult.getOrThrow()
                     SessionManager.saveSession(token, userId)
-                    true
+                    Result.success(true)
+                } else {
+                    if (dbHelper.getSavedCredentialForDni(dni) == null) {
+                        Result.failure(Exception("NO_INTERNET_FIRST_LOGIN: No tienes conexión a internet. Para iniciar sesión por primera vez en este dispositivo necesitas conexión a la red."))
+                    } else {
+                        Result.failure(Exception("INVALID_CREDENTIALS: La contraseña ingresada es incorrecta."))
+                    }
                 }
             }
         }

@@ -1,0 +1,19 @@
+{
+  "token": "671|1jjJr85BDWlvTB2vu1uJrTBt2YSg8epwUbOinHUp7b1fdce6",
+  "usuario": {
+    "id": 85,
+    "documento": "88888888",
+    "nombre": "María González",
+    "email": null,
+    "sexo": "F",
+    "pais": {
+      "id": 1,
+      "nombre": "Argentina"
+    },
+    "centro_salud": {
+      "id": 1,
+      "nombre": "Centro de Salud 1"
+    },
+    "primer_login": "2026-07-02 09:53:46"
+  }
+}

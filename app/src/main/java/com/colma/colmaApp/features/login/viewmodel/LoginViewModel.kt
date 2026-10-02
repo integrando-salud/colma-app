@@ -44,12 +44,15 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
             LoginEvent.LoginClicked -> {
                 login()
             }
+            LoginEvent.DismissError -> {
+                clearError()
+            }
         }
     }
 
     private fun login() {
         viewModelScope.launch {
-            _uiState.update { it.copy(isLoading = true, error = null) }
+            _uiState.update { it.copy(isLoading = true, error = null, errorTitle = null, errorType = null) }
 
             val result = loginRepository.login(_uiState.value.dni, _uiState.value.password)
 
@@ -57,7 +60,14 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
                 loginRepository.saveSession()
                 _navigationEvent.send(NavigationEvent.NavigateToHome) // Re-enabled navigation after manual login
             }.onFailure { error ->
-                _uiState.update { it.copy(error = error.message) }
+                val (title, message, errorType) = parseError(error)
+                _uiState.update { 
+                    it.copy(
+                        error = message,
+                        errorTitle = title,
+                        errorType = errorType
+                    ) 
+                }
             }
 
             _uiState.update { it.copy(isLoading = false) }
@@ -65,7 +75,62 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
     }
 
     fun clearError() {
-        _uiState.update { it.copy(error = null) }
+        _uiState.update { it.copy(error = null, errorTitle = null, errorType = null) }
+    }
+
+    private fun parseError(throwable: Throwable): Triple<String, String, LoginErrorType> {
+        val rawMessage = throwable.message ?: ""
+        return when {
+            rawMessage.contains("NO_INTERNET", ignoreCase = true) ||
+            rawMessage.contains("No tienes conexión", ignoreCase = true) ||
+            rawMessage.contains("Sin conexión", ignoreCase = true) ||
+            rawMessage.contains("Unable to resolve host", ignoreCase = true) ||
+            rawMessage.contains("ConnectException", ignoreCase = true) ||
+            rawMessage.contains("UnknownHostException", ignoreCase = true) -> {
+                Triple(
+                    "Sin conexión a internet",
+                    if (rawMessage.contains("primera vez", ignoreCase = true)) {
+                        "No se detectó conexión a internet. Para iniciar sesión por primera vez en este dispositivo necesitas conexión a la red."
+                    } else {
+                        "No se pudo conectar con el servidor. Comprueba tu conexión a internet e inténtalo nuevamente."
+                    },
+                    LoginErrorType.NO_INTERNET
+                )
+            }
+            rawMessage.contains("INVALID_CREDENTIALS", ignoreCase = true) ||
+            rawMessage.contains("Contraseña incorrecta", ignoreCase = true) ||
+            rawMessage.contains("credencial", ignoreCase = true) ||
+            rawMessage.contains("401") ||
+            rawMessage.contains("400") ||
+            rawMessage.contains("403") ||
+            rawMessage.contains("404") ||
+            rawMessage.contains("Credenciales incorrectas", ignoreCase = true) -> {
+                Triple(
+                    "Credenciales incorrectas",
+                    "El usuario o la contraseña ingresados no son correctos. Por favor, verifica tus datos e inténtalo nuevamente.",
+                    LoginErrorType.INVALID_CREDENTIALS
+                )
+            }
+            rawMessage.contains("SERVER_ERROR", ignoreCase = true) ||
+            rawMessage.contains("500") ||
+            rawMessage.contains("502") ||
+            rawMessage.contains("503") ||
+            rawMessage.contains("504") ||
+            rawMessage.contains("servidor", ignoreCase = true) -> {
+                Triple(
+                    "Servidor no disponible",
+                    "El servidor de Colma no se encuentra disponible temporalmente. Por favor, intenta más tarde.",
+                    LoginErrorType.SERVER_ERROR
+                )
+            }
+            else -> {
+                Triple(
+                    "Error al iniciar sesión",
+                    if (rawMessage.isNotBlank()) rawMessage else "Ocurrió un error inesperado al intentar iniciar sesión. Por favor, inténtalo nuevamente.",
+                    LoginErrorType.UNEXPECTED
+                )
+            }
+        }
     }
 
     sealed class NavigationEvent {

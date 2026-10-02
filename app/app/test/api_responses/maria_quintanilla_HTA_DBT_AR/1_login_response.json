@@ -1,0 +1,19 @@
+{
+  "token": "669|uLit4hvbvuSGbSIIQdVNOdxsSCjhvas4V5qR5g5E16074892",
+  "usuario": {
+    "id": 71,
+    "documento": "50697085",
+    "nombre": "Maria Quintanilla",
+    "email": "mariaqin@gmail.com",
+    "sexo": "F",
+    "pais": {
+      "id": 1,
+      "nombre": "Argentina"
+    },
+    "centro_salud": {
+      "id": 1,
+      "nombre": "Centro de Salud 1"
+    },
+    "primer_login": "2026-09-21 12:45:11"
+  }
+}

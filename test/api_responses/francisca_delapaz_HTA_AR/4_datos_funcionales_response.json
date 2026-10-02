@@ -1,4 +1,27 @@
 {
-  "quiz": [],
+  "quiz": [
+    {
+      "tratamiento_elemento_id": 3,
+      "fecha_registro": "2026-09-23 14:48:00",
+      "fecha_usuario": "2026-09-23 14:48:00",
+      "fecha_sincronizacion": "2026-09-23 14:48:00",
+      "preguntas": [
+        {
+          "es_correcta": true,
+          "pregunta_index": 0,
+          "pregunta_texto": "Cuando tenemos el ánimo bajo, ¿qué suele ayudar más?",
+          "respuesta_usuario": 2,
+          "respuesta_correcta": 2,
+          "posibles_respuestas": [
+            "Hacer de golpe todos los pendientes para “ponernos al día”.",
+            "Esperar a que vuelvan las ganas antes de hacer algo.",
+            "Empezar de a poco con pequeñas actividades que me hacen bien o son importantes."
+          ],
+          "respuesta_usuario_texto": "Empezar de a poco con pequeñas actividades que me hacen bien o son importantes.",
+          "respuesta_correcta_texto": "Empezar de a poco con pequeñas actividades que me hacen bien o son importantes."
+        }
+      ]
+    }
+  ],
   "metas": []
 }

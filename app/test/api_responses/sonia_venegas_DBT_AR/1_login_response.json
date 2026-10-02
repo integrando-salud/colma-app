@@ -1,0 +1,19 @@
+{
+  "token": "668|n5LwOo619efnEjaq8eV8dD1n2l1F1eMTsfzg6e56f4d4b0d0",
+  "usuario": {
+    "id": 17,
+    "documento": "03843296",
+    "nombre": "Sonia Venegas",
+    "email": "sonia-venegas-03843296@correo.com",
+    "sexo": "F",
+    "pais": {
+      "id": 1,
+      "nombre": "Argentina"
+    },
+    "centro_salud": {
+      "id": 4,
+      "nombre": "Centro de Salud 4"
+    },
+    "primer_login": "2026-06-29 10:15:13"
+  }
+}
