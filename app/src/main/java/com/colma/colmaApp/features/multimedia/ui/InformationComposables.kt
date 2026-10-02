@@ -42,21 +42,33 @@ import kotlinx.coroutines.isActive
 import java.util.*
 
 fun parseMarkdownToAnnotatedString(text: String): AnnotatedString {
+    val unescapedText = text.replace(Regex("""\\([.\-!_()+*#])"""), "$1")
+    val processedText = unescapedText.lines().joinToString("\n") { line ->
+        val trimmed = line.trimStart()
+        if (trimmed.startsWith("* ") || trimmed.startsWith("- ") || trimmed.startsWith("+ ") || trimmed.startsWith("• ")) {
+            val indent = line.takeWhile { it == ' ' || it == '\t' }
+            val content = trimmed.drop(2).trimStart()
+            "$indent● $content"
+        } else {
+            line
+        }
+    }
+
     return buildAnnotatedString {
         val pattern = Regex("\\*\\*(.*?)\\*\\*")
         var currentIndex = 0
-        for (match in pattern.findAll(text)) {
+        for (match in pattern.findAll(processedText)) {
             val range = match.range
             if (range.first > currentIndex) {
-                append(text.substring(currentIndex, range.first))
+                append(processedText.substring(currentIndex, range.first))
             }
             withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
                 append(match.groupValues[1])
             }
             currentIndex = range.last + 1
         }
-        if (currentIndex < text.length) {
-            append(text.substring(currentIndex))
+        if (currentIndex < processedText.length) {
+            append(processedText.substring(currentIndex))
         }
     }
 }
@@ -356,7 +368,19 @@ fun InformationCard(
                                     tts?.stop()
                                     isSpeaking = false
                                 } else {
-                                    val rawText = cleanedDisplayContent.replace("**", "")
+                                    val rawText = cleanedDisplayContent
+                                        .replace("**", "")
+                                        .replace("●", "")
+                                        .replace("•", "")
+                                        .lines()
+                                        .joinToString("\n") { line ->
+                                            val trimmed = line.trimStart()
+                                            if (trimmed.startsWith("* ") || trimmed.startsWith("- ") || trimmed.startsWith("+ ")) {
+                                                trimmed.drop(2).trimStart()
+                                            } else {
+                                                line
+                                            }
+                                        }
                                     val textToSpeak = if (!title.isNullOrBlank()) "$title. $rawText" else rawText
                                     tts?.speak(textToSpeak, TextToSpeech.QUEUE_FLUSH, null, "utteranceId")
                                 }
