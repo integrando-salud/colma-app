@@ -75,8 +75,8 @@ fun InformationDisplayContent(
     val paragraphs = remember(displayContent) {
         val text = displayContent.trim()
         if (text.contains(Regex("(?i)\\bPlaca\\s*(\\d+|uno|dos|tres|cuatro|cinco)\\b"))) {
-            val parts = text.split(Regex("(?i)\\bPlaca\\s*(\\d+|uno|dos|tres|cuatro|cinco):?\\s*"))
-                .map { it.trim() }
+            val parts = text.split(Regex("(?i)(?:\\*\\*\\s*)?\\bPlaca\\s*(\\d+|uno|dos|tres|cuatro|cinco):?\\s*(?:\\*\\*)?"))
+                .map { it.trim().removePrefix("**").removeSuffix("**").trim() }
                 .filter { it.isNotBlank() && !it.matches(Regex("(?i)^(\\d+|uno|dos|tres|cuatro|cinco)$")) }
             if (parts.isNotEmpty()) parts else listOf(text)
         } else {

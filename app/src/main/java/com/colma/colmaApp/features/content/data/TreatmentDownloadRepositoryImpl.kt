@@ -41,16 +41,22 @@ class TreatmentDownloadRepositoryImpl(private val context: Context) : TreatmentD
         onProgress: ((progress: Float, status: String) -> Unit)?
     ): Result<Unit> = withContext(Dispatchers.IO) {
         try {
+            val isMockTestUser = token == "mock_test_token_ar_dbt_hta" || userId == 9999
             onProgress?.invoke(0.05f, "Conectando al servidor...")
-            Log.d(TAG, "Fetching treatment from server...")
-            val response = treatmentService.getTratamiento(token)
-            if (!response.isSuccessful) {
-                val errorMsg = response.errorBody()?.string() ?: "Unknown error"
-                Log.e(TAG, "Failed to fetch treatment: code=${response.code()}, error=$errorMsg")
-                return@withContext Result.failure(IOException("Failed to fetch treatment: ${response.code()}"))
-            }
+            Log.d(TAG, "Fetching treatment from server (isMockTestUser=$isMockTestUser)...")
 
-            val bodyString = response.body()?.string() ?: ""
+            val bodyString = if (isMockTestUser) {
+                Log.d(TAG, "Loading mock treatment from assets/mock_treatment_ar_dbt_hta.json")
+                context.assets.open("mock_treatment_ar_dbt_hta.json").bufferedReader().use { it.readText() }
+            } else {
+                val response = treatmentService.getTratamiento(token)
+                if (!response.isSuccessful) {
+                    val errorMsg = response.errorBody()?.string() ?: "Unknown error"
+                    Log.e(TAG, "Failed to fetch treatment: code=${response.code()}, error=$errorMsg")
+                    return@withContext Result.failure(IOException("Failed to fetch treatment: ${response.code()}"))
+                }
+                response.body()?.string() ?: ""
+            }
             Log.d(TAG, "Successfully fetched treatment JSON response.")
             Log.d(TAG, "Server Treatment Response Body: $bodyString")
 
@@ -164,9 +170,25 @@ class TreatmentDownloadRepositoryImpl(private val context: Context) : TreatmentD
                                     }
                                 }
                             } else {
-                                val errorBody = fileResponse.errorBody()?.string() ?: ""
-                                Log.e(TAG, "Failed to download file ${resource.resourceName}: code=${fileResponse.code()}, error=$errorBody")
-                                return@withContext Result.failure(IOException("Failed to download file ${resource.resourceName}: code=${fileResponse.code()}, error=$errorBody"))
+                                if (isMockTestUser) {
+                                    Log.w(TAG, "Mock test user: File download returned ${fileResponse.code()} for ${resource.resourceName}, continuing with mock placeholder.")
+                                    localFile.parentFile?.mkdirs()
+                                    if (!localFile.exists()) {
+                                        localFile.writeBytes(ByteArray(0))
+                                    }
+                                    downloadedFiles.add(
+                                        ServerFileMapping(
+                                            type = resource.type,
+                                            title = resource.resourceName,
+                                            localPath = localFile.absolutePath,
+                                            tratamientoMultimediaId = contentItem.elementoId
+                                        )
+                                    )
+                                } else {
+                                    val errorBody = fileResponse.errorBody()?.string() ?: ""
+                                    Log.e(TAG, "Failed to download file ${resource.resourceName}: code=${fileResponse.code()}, error=$errorBody")
+                                    return@withContext Result.failure(IOException("Failed to download file ${resource.resourceName}: code=${fileResponse.code()}, error=$errorBody"))
+                                }
                             }
                             downloadedCount++
                         }

@@ -1,7 +1,7 @@
 {
   "app": "colmaApp",
   "clientSyncTimestamp": "2026-09-22 09:45:00",
-  "deviceTimestamp": 1790081960322,
+  "deviceTimestamp": 1790945150366,
   "sesiones_completadas": 1,
   "estado_animo": [
     {
@@ -37,7 +37,7 @@
     {
       "id_meta": 1,
       "id_usuario": 71,
-      "tratamiento_elemento_id": 427,
+      "tratamiento_elemento_id": 1315,
       "semana": 1,
       "sesion": 1,
       "tipo_actividad": "caminar",
@@ -53,19 +53,19 @@
   ],
   "progreso_elementos": [
     {
-      "tratamiento_elemento_id": 417,
+      "tratamiento_elemento_id": 1305,
       "completado": true,
       "fecha_estado": "2026-09-22 09:30:00",
       "fecha_sincronizacion": "2026-09-22 09:35:00"
     },
     {
-      "tratamiento_elemento_id": 418,
+      "tratamiento_elemento_id": 1306,
       "completado": true,
       "fecha_estado": "2026-09-22 09:30:00",
       "fecha_sincronizacion": "2026-09-22 09:35:00"
     },
     {
-      "tratamiento_elemento_id": 420,
+      "tratamiento_elemento_id": 1308,
       "completado": true,
       "fecha_estado": "2026-09-22 09:30:00",
       "fecha_sincronizacion": "2026-09-22 09:35:00"
@@ -85,7 +85,7 @@
   ],
   "quiz": [
     {
-      "tratamiento_elemento_id": 419,
+      "tratamiento_elemento_id": 1307,
       "fecha_registro": "2026-09-22 09:35:00",
       "fecha_usuario": "2026-09-22 09:35:00",
       "fecha_sincronizacion": "2026-09-22 09:40:00",

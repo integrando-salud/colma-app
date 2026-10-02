@@ -23,6 +23,32 @@ class LoginRepositoryImpl(
     override suspend fun login(dni: String, password: String): Result<Boolean> {
         return withContext(Dispatchers.IO) { // Perform operation on IO dispatcher
             Log.d(TAG, "Attempting login for DNI: $dni")
+            
+            // Mock test login for QA and UI verification of corrected treatment payloads
+            if ((dni.trim() == "43527946" || dni.trim() == "usuarioRandom") && password.trim() == "soyunusuario") {
+                Log.d(TAG, "Test credentials entered: logging in with mock DBT+HTA Argentina user.")
+                val mockUser = com.colma.colmaApp.servicios.internetCommunication.model.Usuario(
+                    id = 9999,
+                    documento = "43527946",
+                    nombre = "Usuario de Prueba",
+                    email = "test_dbt_hta@colma.app",
+                    sexo = "M",
+                    pais = com.colma.colmaApp.servicios.internetCommunication.model.Pais(id = 1, nombre = "Argentina"),
+                    centroSalud = com.colma.colmaApp.servicios.internetCommunication.model.CentroSalud(id = 1, nombre = "Centro de Salud de Prueba"),
+                    primerLogin = null
+                )
+                val mockToken = "mock_test_token_ar_dbt_hta"
+                SessionManager.saveSession(mockToken, mockUser.id)
+                dbHelper.upsertUsuario(mockUser)
+                dbHelper.saveOrUpdateCredential(
+                    dni = "43527946",
+                    passwordRaw = password,
+                    tokenRaw = mockToken,
+                    idUsuario = mockUser.id
+                )
+                return@withContext Result.success(true)
+            }
+
             val isOnline = NetworkUtils.isInternetAvailable(context)
             if (isOnline) {
                 try {
