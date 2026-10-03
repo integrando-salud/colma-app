@@ -43,9 +43,20 @@ import java.util.*
 
 fun parseMarkdownToAnnotatedString(text: String): AnnotatedString {
     val unescapedText = text.replace(Regex("""\\([.\-!_()+*#])"""), "$1")
+        .replace(Regex("""\*\*([A-Za-zÁÉÍÓÚáéíóúñÑ0-9 ]+):([“\"])"""), "**$1:** $2")
+        .replace("“*", "“")
+        .replace("*”", "”")
+        .replace("\"*", "\"")
+        .replace("*\"", "\"")
+        .replace("‘*", "‘")
+        .replace("*’", "’")
     val processedText = unescapedText.lines().joinToString("\n") { line ->
         val trimmed = line.trimStart()
-        if (trimmed.startsWith("* ") || trimmed.startsWith("- ") || trimmed.startsWith("+ ") || trimmed.startsWith("• ")) {
+        if (trimmed.startsWith("** ") && !trimmed.drop(3).contains("**")) {
+            val indent = line.takeWhile { it == ' ' || it == '\t' }
+            val content = trimmed.drop(3).trimStart()
+            "$indent● $content"
+        } else if (trimmed.startsWith("* ") || trimmed.startsWith("- ") || trimmed.startsWith("+ ") || trimmed.startsWith("• ")) {
             val indent = line.takeWhile { it == ' ' || it == '\t' }
             val content = trimmed.drop(2).trimStart()
             "$indent● $content"
