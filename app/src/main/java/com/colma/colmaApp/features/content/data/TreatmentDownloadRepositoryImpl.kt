@@ -41,13 +41,19 @@ class TreatmentDownloadRepositoryImpl(private val context: Context) : TreatmentD
         onProgress: ((progress: Float, status: String) -> Unit)?
     ): Result<Unit> = withContext(Dispatchers.IO) {
         try {
-            val isMockTestUser = token == "mock_test_token_ar_dbt_hta" || userId == 9999
+            val mockAssetFile = when {
+                token == "mock_test_token_ar_dbt_hta" || userId == 9999 -> "mock_treatment_ar_dbt_hta.json"
+                token == "mock_test_token_ar_dbt" || userId == 9998 -> "mock_treatment_ar_dbt.json"
+                token == "mock_test_token_ar_hta" || userId == 9997 -> "mock_treatment_ar_hta.json"
+                else -> null
+            }
+            val isMockTestUser = mockAssetFile != null
             onProgress?.invoke(0.05f, "Conectando al servidor...")
-            Log.d(TAG, "Fetching treatment from server (isMockTestUser=$isMockTestUser)...")
+            Log.d(TAG, "Fetching treatment from server (isMockTestUser=$isMockTestUser, mockAssetFile=$mockAssetFile)...")
 
-            val bodyString = if (isMockTestUser) {
-                Log.d(TAG, "Loading mock treatment from assets/mock_treatment_ar_dbt_hta.json")
-                context.assets.open("mock_treatment_ar_dbt_hta.json").bufferedReader().use { it.readText() }
+            val bodyString = if (mockAssetFile != null) {
+                Log.d(TAG, "Loading mock treatment from assets/$mockAssetFile")
+                context.assets.open(mockAssetFile).bufferedReader().use { it.readText() }
             } else {
                 val response = treatmentService.getTratamiento(token)
                 if (!response.isSuccessful) {
