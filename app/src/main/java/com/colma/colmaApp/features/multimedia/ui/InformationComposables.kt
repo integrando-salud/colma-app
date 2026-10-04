@@ -52,13 +52,15 @@ fun parseMarkdownToAnnotatedString(text: String): AnnotatedString {
         .replace("*’", "’")
     val processedText = unescapedText.lines().joinToString("\n") { line ->
         val trimmed = line.trimStart()
+        val indent = line.takeWhile { it == ' ' || it == '\t' }
         if (trimmed.startsWith("** ") && !trimmed.drop(3).contains("**")) {
-            val indent = line.takeWhile { it == ' ' || it == '\t' }
             val content = trimmed.drop(3).trimStart()
             "$indent● $content"
-        } else if (trimmed.startsWith("* ") || trimmed.startsWith("- ") || trimmed.startsWith("+ ") || trimmed.startsWith("• ")) {
-            val indent = line.takeWhile { it == ' ' || it == '\t' }
+        } else if (trimmed.startsWith("* ") || trimmed.startsWith("- ") || trimmed.startsWith("+ ") || trimmed.startsWith("• ") || trimmed.startsWith("● ")) {
             val content = trimmed.drop(2).trimStart()
+            "$indent● $content"
+        } else if (trimmed.startsWith("•") || trimmed.startsWith("●")) {
+            val content = trimmed.drop(1).trimStart()
             "$indent● $content"
         } else {
             line
