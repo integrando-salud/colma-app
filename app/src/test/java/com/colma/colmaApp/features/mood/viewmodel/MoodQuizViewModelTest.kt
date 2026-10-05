@@ -96,4 +96,69 @@ class MoodQuizViewModelTest {
             cancelAndIgnoreRemainingEvents()
         }
     }
+
+    @Test
+    fun `al completar cuestionario con puntaje 0 a 4 se muestra el mensaje de bienestar correspondiente`() = runTest {
+        val viewModel = MoodQuizViewModel(repository)
+
+        viewModel.onEvent(MoodQuizEvent.AnswerQuestion(0, 1))
+        viewModel.onEvent(MoodQuizEvent.AnswerQuestion(1, 1)) // suma = 2 (rango 0..4)
+        viewModel.onEvent(MoodQuizEvent.SaveClicked)
+        viewModel.onEvent(MoodQuizEvent.ConfirmSubmit)
+
+        assertTrue(viewModel.uiState.value.showCompletionDialog)
+        val expectedMessage = "Tus respuestas sugieren que no estarías experimentando malestar emocional importante en este momento. Te animamos a seguir cuidándote. Dormir bien, hacer actividad física y pasar tiempo con personas queridas puede ayudarte a mantener tu bienestar."
+        assertEquals(expectedMessage, viewModel.uiState.value.completionDialogMessage)
+    }
+
+    @Test
+    fun `al completar cuestionario con puntaje 5 a 9 se muestra el mensaje correspondiente para Argentina`() = runTest {
+        coEvery { repository.getUserPaisId() } returns 1
+        val viewModel = MoodQuizViewModel(repository)
+
+        viewModel.onEvent(MoodQuizEvent.AnswerQuestion(0, 2))
+        viewModel.onEvent(MoodQuizEvent.AnswerQuestion(1, 1)) // suma = 3 (>= 3, despliega resto)
+        viewModel.onEvent(MoodQuizEvent.SaveClicked)
+        viewModel.onEvent(MoodQuizEvent.ConfirmMoreQuestions)
+
+        // Responder resto de preguntas con suma total entre 5 y 9 (3 iniciales + 3 en preguntas 2, 3, 4 y 0 en las demas = 6)
+        viewModel.onEvent(MoodQuizEvent.AnswerQuestion(2, 1))
+        viewModel.onEvent(MoodQuizEvent.AnswerQuestion(3, 1))
+        viewModel.onEvent(MoodQuizEvent.AnswerQuestion(4, 1))
+        viewModel.onEvent(MoodQuizEvent.AnswerQuestion(5, 0))
+        viewModel.onEvent(MoodQuizEvent.AnswerQuestion(6, 0))
+        viewModel.onEvent(MoodQuizEvent.AnswerQuestion(7, 0)) // total = 6 (rango 5..9)
+
+        viewModel.onEvent(MoodQuizEvent.SaveClicked)
+        viewModel.onEvent(MoodQuizEvent.ConfirmSubmit)
+
+        assertTrue(viewModel.uiState.value.showCompletionDialog)
+        val expectedMessage = "Tus respuestas sugieren que podés estar sintiendo un leve malestar emocional. \n\n¡Hacer actividad física, darte descansos en la medida de lo posible, y pasar tiempo con personas queridas son cosas que pueden ayudarte!"
+        assertEquals(expectedMessage, viewModel.uiState.value.completionDialogMessage)
+    }
+
+    @Test
+    fun `al completar cuestionario con puntaje 5 a 9 se muestra el mensaje correspondiente para Peru`() = runTest {
+        coEvery { repository.getUserPaisId() } returns 2
+        val viewModel = MoodQuizViewModel(repository)
+
+        viewModel.onEvent(MoodQuizEvent.AnswerQuestion(0, 2))
+        viewModel.onEvent(MoodQuizEvent.AnswerQuestion(1, 1)) // suma = 3
+        viewModel.onEvent(MoodQuizEvent.SaveClicked)
+        viewModel.onEvent(MoodQuizEvent.ConfirmMoreQuestions)
+
+        viewModel.onEvent(MoodQuizEvent.AnswerQuestion(2, 1))
+        viewModel.onEvent(MoodQuizEvent.AnswerQuestion(3, 1))
+        viewModel.onEvent(MoodQuizEvent.AnswerQuestion(4, 1))
+        viewModel.onEvent(MoodQuizEvent.AnswerQuestion(5, 0))
+        viewModel.onEvent(MoodQuizEvent.AnswerQuestion(6, 0))
+        viewModel.onEvent(MoodQuizEvent.AnswerQuestion(7, 0)) // total = 6 (rango 5..9)
+
+        viewModel.onEvent(MoodQuizEvent.SaveClicked)
+        viewModel.onEvent(MoodQuizEvent.ConfirmSubmit)
+
+        assertTrue(viewModel.uiState.value.showCompletionDialog)
+        val expectedMessage = "Tus respuestas sugieren que puedes estar sintiendo un leve malestar emocional. \n\n¡Hacer actividad física, darte descansos en la medida de lo posible, y pasar tiempo con personas queridas son cosas que pueden ayudarte!"
+        assertEquals(expectedMessage, viewModel.uiState.value.completionDialogMessage)
+    }
 }

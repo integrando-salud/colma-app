@@ -183,7 +183,14 @@ class MoodQuizViewModel(private val repository: MoodRepository) : ViewModel() {
                         when (paisId) {
                             1 -> "Tus respuestas sugieren que podés estar sintiendo un leve malestar emocional. \n\n¡Hacer actividad física, darte descansos en la medida de lo posible, y pasar tiempo con personas queridas son cosas que pueden ayudarte!"
                             2 -> "Tus respuestas sugieren que puedes estar sintiendo un leve malestar emocional. \n\n¡Hacer actividad física, darte descansos en la medida de lo posible, y pasar tiempo con personas queridas son cosas que pueden ayudarte!"
-                            else -> "Registro guardado exitosamente"
+                            else -> "Tus respuestas sugieren que podés estar sintiendo un leve malestar emocional. \n\n¡Hacer actividad física, darte descansos en la medida de lo posible, y pasar tiempo con personas queridas son cosas que pueden ayudarte!"
+                        }
+                    }
+                    totalScore in 0..4 -> {
+                        when (paisId) {
+                            1 -> "Tus respuestas sugieren que no estarías experimentando malestar emocional importante en este momento. Te animamos a seguir cuidándote. Dormir bien, hacer actividad física y pasar tiempo con personas queridas puede ayudarte a mantener tu bienestar."
+                            2 -> "Tus respuestas sugieren que no estarías experimentando malestar emocional importante en este momento. Te animamos a seguir cuidándote. Dormir bien, hacer actividad física y pasar tiempo con personas queridas puede ayudarte a mantener tu bienestar."
+                            else -> "Tus respuestas sugieren que no estarías experimentando malestar emocional importante en este momento. Te animamos a seguir cuidándote. Dormir bien, hacer actividad física y pasar tiempo con personas queridas puede ayudarte a mantener tu bienestar."
                         }
                     }
                     else -> "Registro guardado exitosamente"
