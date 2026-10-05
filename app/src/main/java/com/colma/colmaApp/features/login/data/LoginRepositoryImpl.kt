@@ -113,6 +113,28 @@ class LoginRepositoryImpl(
                     idUsuario = mockUser.id
                 )
                 return@withContext Result.success(true)
+            } else if (dni.trim() == "43527950" && password.trim() == "soyunusuario") {
+                Log.d(TAG, "Test credentials entered: logging in with mock DBT Perú user.")
+                val mockUser = com.colma.colmaApp.servicios.internetCommunication.model.Usuario(
+                    id = 9995,
+                    documento = "43527950",
+                    nombre = "Usuario Diabetes Perú Prueba",
+                    email = "test_pe_dbt@colma.app",
+                    sexo = "M",
+                    pais = com.colma.colmaApp.servicios.internetCommunication.model.Pais(id = 2, nombre = "Perú"),
+                    centroSalud = com.colma.colmaApp.servicios.internetCommunication.model.CentroSalud(id = 2, nombre = "Centro de Salud de Prueba Perú"),
+                    primerLogin = null
+                )
+                val mockToken = "mock_test_token_pe_dbt"
+                SessionManager.saveSession(mockToken, mockUser.id)
+                dbHelper.upsertUsuario(mockUser)
+                dbHelper.saveOrUpdateCredential(
+                    dni = "43527950",
+                    passwordRaw = password,
+                    tokenRaw = mockToken,
+                    idUsuario = mockUser.id
+                )
+                return@withContext Result.success(true)
             }
 
             val isOnline = NetworkUtils.isInternetAvailable(context)
