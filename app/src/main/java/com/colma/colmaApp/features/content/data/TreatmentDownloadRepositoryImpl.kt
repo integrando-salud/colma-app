@@ -45,6 +45,7 @@ class TreatmentDownloadRepositoryImpl(private val context: Context) : TreatmentD
                 token == "mock_test_token_ar_dbt_hta" || userId == 9999 -> "mock_treatment_ar_dbt_hta.json"
                 token == "mock_test_token_ar_dbt" || userId == 9998 -> "mock_treatment_ar_dbt.json"
                 token == "mock_test_token_ar_hta" || userId == 9997 -> "mock_treatment_ar_hta.json"
+                token == "mock_test_token_pe_dbt_hta" || userId == 9996 -> "mock_treatment_pe_dbt_hta.json"
                 else -> null
             }
             val isMockTestUser = mockAssetFile != null
