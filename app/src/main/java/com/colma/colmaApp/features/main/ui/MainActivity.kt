@@ -234,8 +234,8 @@ fun MainAppContainer() {
             CustomAlertDialog(
                 show = true,
                 onDismissRequest = { menuViewModel.onEvent(MenuMainEvent.ObjectiveDialogDismissed) },
-                title = "Objetivo para Hoy",
-                description = "¿Completaste este objetivo?: ${menuUiState.todaysObjective!!.actividad ?: "No hay detalles."}",
+                title = "Meta para hoy",
+                description = "¿Completaste esta meta?:\n\n${menuUiState.todaysObjective!!.actividad ?: "No hay detalles."}",
                 onYes = { menuViewModel.onEvent(MenuMainEvent.ObjectiveCompleted) },
                 onNo = { menuViewModel.onEvent(MenuMainEvent.ObjectiveNotCompleted("")) }
             )

@@ -317,6 +317,13 @@ class SessionListRepositoryImpl(
             .putInt(KEY_TEST_UNLOCKED_WEEKS, nextWeek)
             .apply()
         Log.d(TAG, "Unlocked test week: $nextWeek")
+
+        com.colma.colmaApp.utils.notifications.NotificationHelper.sendWeeklyUnlockNotificationNow(
+            context = context,
+            weekNumber = nextWeek,
+            isTestMode = true
+        )
+
         nextWeek
     }
 

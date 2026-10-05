@@ -6,6 +6,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.BitmapFactory
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.colma.colmaApp.R
@@ -50,14 +51,16 @@ class WeeklyUnlockReceiver : BroadcastReceiver() {
         )
 
         val title = "¡Semana $weekNumber disponible!"
-        val message = "Ya puedes acceder a los nuevos contenidos y actividades de la Semana $weekNumber de tu tratamiento."
+        val message = "Ya puedes acceder a los nuevos contenidos y actividades de la Semana $weekNumber"
 
         val notificationBuilder = NotificationCompat.Builder(context, NotificationHelper.WEEKLY_CHANNEL_ID)
-            .setSmallIcon(R.mipmap.ic_launcher)
+            .setSmallIcon(R.drawable.logo_colma)
+            .setLargeIcon(BitmapFactory.decodeResource(context.resources, R.drawable.logo_colma))
             .setContentTitle(title)
             .setContentText(message)
             .setStyle(NotificationCompat.BigTextStyle().bigText(message))
             .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setDefaults(NotificationCompat.DEFAULT_ALL)
             .setAutoCancel(true)
             .setContentIntent(pendingIntent)
 

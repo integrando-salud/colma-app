@@ -201,6 +201,19 @@ object NotificationHelper {
         }
     }
 
+    fun sendWeeklyUnlockNotificationNow(context: Context, weekNumber: Int, isTestMode: Boolean = true) {
+        try {
+            val intent = Intent(context, WeeklyUnlockReceiver::class.java).apply {
+                putExtra(WeeklyUnlockReceiver.EXTRA_WEEK_NUMBER, weekNumber)
+                putExtra(WeeklyUnlockReceiver.EXTRA_IS_TEST, isTestMode)
+            }
+            context.sendBroadcast(intent)
+            Log.d(TAG, "Sent weekly unlock notification broadcast immediately for Week $weekNumber (isTest: $isTestMode)")
+        } catch (e: Exception) {
+            Log.e(TAG, "Error sending weekly unlock notification broadcast for Week $weekNumber", e)
+        }
+    }
+
     fun cancelWeeklyTestUnlock(context: Context) {
         try {
             val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
