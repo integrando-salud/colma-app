@@ -31,10 +31,6 @@ import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.material.icons.filled.KeyboardArrowDown
-import androidx.compose.material.icons.filled.Lock
-import androidx.compose.material.icons.filled.LockOpen
-import androidx.compose.material.icons.filled.Timer
-import androidx.compose.material.icons.filled.Add
 import com.colma.colmaApp.features.multimedia.ui.scrollbar
 import com.colma.colmaApp.utils.notifications.NotificationHelper
 import com.colma.colmaApp.servicios.session.SessionManager
@@ -720,49 +716,13 @@ fun MainAppContainer() {
                                 }
                             }
 
-                            LaunchedEffect(topBarTitle, uiState.isTestingMode) {
+                            LaunchedEffect(topBarTitle) {
                                 topBarConfig = TopBarConfig(
                                     title = topBarTitle,
                                     showBackButton = true,
                                     onBackClick = { sessionListViewModel.onEvent(SessionListEvent.BackClicked) },
-                                    showTopBar = true,
-                                    actions = {
-                                        // Botón 1: Toggle Testing Mode (Bloquear a Semana 1 / Restablecer a modo normal)
-                                        IconButton(
-                                            onClick = {
-                                                sessionListViewModel.onEvent(SessionListEvent.ToggleTestingMode)
-                                            }
-                                        ) {
-                                            Icon(
-                                                imageVector = if (uiState.isTestingMode) Icons.Default.Lock else Icons.Default.LockOpen,
-                                                contentDescription = if (uiState.isTestingMode) "Modo Prueba Activo (Toca para volver a normal)" else "Modo Normal (Toca para activar prueba)",
-                                                tint = if (uiState.isTestingMode) Color(0xFFFFD54F) else Color.White
-                                            )
-                                        }
-
-                                        // Botón 2: Habilitar siguiente semana de prueba al instante
-                                        if (uiState.isTestingMode) {
-                                            IconButton(
-                                                onClick = {
-                                                    sessionListViewModel.onEvent(SessionListEvent.UnlockNextWeek)
-                                                }
-                                            ) {
-                                                Icon(
-                                                    imageVector = Icons.Default.Add,
-                                                    contentDescription = "Habilitar siguiente semana de prueba",
-                                                    tint = Color.White
-                                                )
-                                            }
-                                        }
-                                    }
+                                    showTopBar = true
                                 )
-                            }
-
-                            LaunchedEffect(uiState.testingToastMessage) {
-                                uiState.testingToastMessage?.let { msg ->
-                                    android.widget.Toast.makeText(context, msg, android.widget.Toast.LENGTH_LONG).show()
-                                    sessionListViewModel.onEvent(SessionListEvent.ClearTestingToastMessage)
-                                }
                             }
 
                             LaunchedEffect(Unit) {

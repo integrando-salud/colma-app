@@ -25,10 +25,4 @@ interface SessionListRepository {
     suspend fun getHtaSubSessions(sessionId: Long): List<SubSessionItem>
     suspend fun getDiabetesSubSessions(sessionId: Long): List<SubSessionItem>
     suspend fun getDbtHtaSubSessions(sessionId: Long): List<SubSessionItem>
-    suspend fun debugAdvanceOneWeek()
-    suspend fun isTestingMode(): Boolean
-    suspend fun toggleTestingMode(): Boolean
-    suspend fun unlockNextWeek(): Int?
-    suspend fun scheduleNextWeekInTenMinutes(): Pair<Int, Long>?
-    suspend fun getTestingUnlockedWeeks(): Int
 }

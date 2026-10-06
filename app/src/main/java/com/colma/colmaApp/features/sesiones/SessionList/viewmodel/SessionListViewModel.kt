@@ -6,7 +6,6 @@ import androidx.lifecycle.viewModelScope
 import com.colma.colmaApp.features.sesiones.SessionSteps.domain.TreatmentType
 import com.colma.colmaApp.features.sesiones.SessionList.domain.SessionListRepository
 import com.colma.colmaApp.features.sesiones.SessionList.domain.SubSessionItem
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -63,40 +62,6 @@ class SessionListViewModel(private val repository: SessionListRepository) : View
                     _navigationEvent.send(NavigationEvent.NavigateBack)
                 }
             }
-            SessionListEvent.DebugAdvanceWeek -> {
-                viewModelScope.launch(Dispatchers.IO) {
-                    repository.debugAdvanceOneWeek()
-                    loadSessions()
-                }
-            }
-            SessionListEvent.ToggleTestingMode -> {
-                viewModelScope.launch {
-                    val isTest = repository.toggleTestingMode()
-                    val msg = if (isTest) {
-                        "Modo prueba activado: Solo Semana 1 visible. Toca de nuevo el candado para volver al modo normal."
-                    } else {
-                        "Modo normal restablecido: Semanas calculadas según fecha de registro."
-                    }
-                    _uiState.update { it.copy(isTestingMode = isTest, testingToastMessage = msg) }
-                    loadSessions()
-                }
-            }
-            SessionListEvent.UnlockNextWeek,
-            SessionListEvent.ScheduleNextWeekInTenMinutes -> {
-                viewModelScope.launch {
-                    val result = repository.unlockNextWeek()
-                    val msg = if (result != null) {
-                        "¡Semana $result habilitada! Notificación enviada."
-                    } else {
-                        "Ya se desbloquearon todas las semanas (máximo 16)."
-                    }
-                    _uiState.update { it.copy(testingToastMessage = msg) }
-                    loadSessions(showLoading = false)
-                }
-            }
-            SessionListEvent.ClearTestingToastMessage -> {
-                _uiState.update { it.copy(testingToastMessage = null) }
-            }
             SessionListEvent.Refresh -> {
                 loadSessions(showLoading = false)
                 _uiState.value.expandedSessionId?.let {
@@ -109,11 +74,8 @@ class SessionListViewModel(private val repository: SessionListRepository) : View
     private fun loadSessions(showLoading: Boolean = true) {
         viewModelScope.launch {
             Log.d(TAG, "Loading sessions for treatment types: ${_uiState.value.treatmentTypes}")
-            val isTest = repository.isTestingMode()
             if (showLoading) {
-                _uiState.update { it.copy(isLoading = true, isTestingMode = isTest) }
-            } else {
-                _uiState.update { it.copy(isTestingMode = isTest) }
+                _uiState.update { it.copy(isLoading = true) }
             }
             try {
                 val hasHta = _uiState.value.treatmentTypes.contains(TreatmentType.HTA)

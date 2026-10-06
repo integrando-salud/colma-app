@@ -21,18 +21,8 @@ class SessionListRepositoryImpl(
     private val context: Context,
     private val dbHelper: DbHelper
 ) : SessionListRepository {
-    companion object {
-        private const val PREFS_NAME = "session_testing_prefs"
-        private const val KEY_IS_TESTING_MODE = "is_testing_mode"
-        private const val KEY_TEST_UNLOCKED_WEEKS = "testing_unlocked_weeks"
-    }
-
     private val TAG = "SessionListRepository"
     private val userId: Int
-
-    private val prefs: android.content.SharedPreferences by lazy {
-        context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-    }
 
     init {
         SessionManager.init(context.applicationContext)
@@ -53,13 +43,8 @@ class SessionListRepositoryImpl(
     }
 
     private fun getUnlockedWeeksCount(): Int {
-        val isTest = prefs.getBoolean(KEY_IS_TESTING_MODE, false)
-        return if (isTest) {
-            prefs.getInt(KEY_TEST_UNLOCKED_WEEKS, 1)
-        } else {
-            val fechaRegistro = dbHelper.getUsuarioPrimerLogin(userId)
-            getElapsedWeeks(fechaRegistro) + 1
-        }
+        val fechaRegistro = dbHelper.getUsuarioPrimerLogin(userId)
+        return getElapsedWeeks(fechaRegistro) + 1
     }
 
     override suspend fun getHtaSessions(): List<SessionItem> = withContext(Dispatchers.IO) {
@@ -240,9 +225,6 @@ class SessionListRepositoryImpl(
             }
     }
 
-    override suspend fun debugAdvanceOneWeek() {
-        dbHelper.debugSubtractWeekFromRegistrationDate(userId)
-    }
 
     override suspend fun getHtaSubSessions(sessionId: Long): List<SubSessionItem> = withContext(Dispatchers.IO) {
         contentRepository.getSubSessions(TreatmentType.HTA, sessionId).getOrDefault(emptyList())
@@ -278,57 +260,4 @@ class SessionListRepositoryImpl(
             }
     }
 
-    override suspend fun isTestingMode(): Boolean = withContext(Dispatchers.IO) {
-        prefs.getBoolean(KEY_IS_TESTING_MODE, false)
-    }
-
-    override suspend fun getTestingUnlockedWeeks(): Int = withContext(Dispatchers.IO) {
-        prefs.getInt(KEY_TEST_UNLOCKED_WEEKS, 1)
-    }
-
-    override suspend fun toggleTestingMode(): Boolean = withContext(Dispatchers.IO) {
-        val current = prefs.getBoolean(KEY_IS_TESTING_MODE, false)
-        val newMode = !current
-        if (newMode) {
-            prefs.edit()
-                .putBoolean(KEY_IS_TESTING_MODE, true)
-                .putInt(KEY_TEST_UNLOCKED_WEEKS, 1)
-                .apply()
-        } else {
-            com.colma.colmaApp.utils.notifications.NotificationHelper.cancelWeeklyTestUnlock(context)
-            prefs.edit()
-                .putBoolean(KEY_IS_TESTING_MODE, false)
-                .putInt(KEY_TEST_UNLOCKED_WEEKS, 1)
-                .apply()
-        }
-        newMode
-    }
-
-    override suspend fun unlockNextWeek(): Int? = withContext(Dispatchers.IO) {
-        val isTest = prefs.getBoolean(KEY_IS_TESTING_MODE, false)
-        if (!isTest) {
-            prefs.edit().putBoolean(KEY_IS_TESTING_MODE, true).apply()
-        }
-        val currentUnlocked = prefs.getInt(KEY_TEST_UNLOCKED_WEEKS, 1)
-        val nextWeek = currentUnlocked + 1
-        if (nextWeek > 16) return@withContext null
-
-        prefs.edit()
-            .putInt(KEY_TEST_UNLOCKED_WEEKS, nextWeek)
-            .apply()
-        Log.d(TAG, "Unlocked test week: $nextWeek")
-
-        com.colma.colmaApp.utils.notifications.NotificationHelper.sendWeeklyUnlockNotificationNow(
-            context = context,
-            weekNumber = nextWeek,
-            isTestMode = true
-        )
-
-        nextWeek
-    }
-
-    override suspend fun scheduleNextWeekInTenMinutes(): Pair<Int, Long>? = withContext(Dispatchers.IO) {
-        val nextWeek = unlockNextWeek() ?: return@withContext null
-        Pair(nextWeek, System.currentTimeMillis())
-    }
 }
