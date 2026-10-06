@@ -425,7 +425,7 @@ fun MainAppContainer() {
     CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
         ModalNavigationDrawer(
             drawerState = drawerState,
-            gesturesEnabled = currentRoute != null && currentRoute != "login" && currentRoute != "treatment_download",
+            gesturesEnabled = currentRoute == "menu_main" || drawerState.isOpen,
             modifier = Modifier.systemBarsPadding(),
             drawerContent = {
                 CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
