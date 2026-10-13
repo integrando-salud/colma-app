@@ -82,6 +82,13 @@ La estructura del código fuente se encuentra organizada dentro del módulo `app
 
 ---
 
+## Documentación Técnica
+
+- **[Diccionario de Datos](docs/DICCIONARIO_DE_DATOS.md)**: Estructura completa de tablas, columnas, tipos de datos, restricciones y sincronización de la base de datos local SQLite (`colmadb.db`).
+- **[Guía Integral de Testing y QA](docs/QA_TESTING_GUIDE.md)**: Criterios de aceptación, matrices de casos de prueba y checklist de liberación.
+
+---
+
 ## Testing y Aseguramiento de Calidad (QA)
 
 El proyecto cuenta con una estrategia integral de pruebas automatizadas y aseguramiento de calidad. Para una guía completa sobre criterios de aceptación, matrices de casos de prueba y checklist de liberación, consulta [docs/QA_TESTING_GUIDE.md](docs/QA_TESTING_GUIDE.md).
