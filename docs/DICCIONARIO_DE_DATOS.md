@@ -4,7 +4,7 @@ Documentación clara y directa de la base de datos local de la aplicación móvi
 
 ---
 
-## 📌 Datos Clave de la Base de Datos
+## Datos Clave de la Base de Datos
 
 * **Archivo:** `colmadb.db` (en `app/src/main/assets/databases/colmadb.db`)
 * **Código de gestión:** [DbHelper.kt](../app/src/main/java/com/colma/colmaApp/servicios/database/dbhelper/DbHelper.kt)
@@ -14,7 +14,7 @@ Documentación clara y directa de la base de datos local de la aplicación móvi
 
 ---
 
-## 🗺️ Mapa de Tablas y Relaciones (Vista Rápida)
+## Mapa de Tablas y Relaciones (Vista Rápida)
 
 ```text
 [paises]  ──┐
@@ -33,7 +33,7 @@ Documentación clara y directa de la base de datos local de la aplicación móvi
 
 ---
 
-## 📋 Índice Rápido de Tablas
+## Índice Rápido de Tablas
 
 | Tabla | ¿Qué información guarda? |
 | :--- | :--- |
@@ -53,7 +53,7 @@ Documentación clara y directa de la base de datos local de la aplicación móvi
 
 ---
 
-## 📂 Detalle de Tablas por Módulo
+##  Detalle de Tablas por Módulo
 
 ---
 
